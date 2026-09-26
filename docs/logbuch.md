@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 20:52 – [SESSIONENDE] Schritt 2.7 erledigt, Phasenabschluss 2 offen
+
+- **Dauer:** Fortsetzung 20:10–20:52 UTC (Gesamtsession ab 19:20).
+- **Bearbeitet:** 2.7 `[ERLEDIGT]` mit ADR-019 (Test-Werkzeuge; Nachträge MIT-0/CC0-1.0 nur für Werkzeuge, `@types/node`); Sicherheitsprüfung durch getrennte Instanz, Befund 1 behoben, optionale Härtungen nach Wahl des Eigentümers umgesetzt.
+- **Erreichter Stand:** Alle Schritte von Phase 2 erledigt. 224 Python-Tests, 32 Komponenten-Tests, 4 End-to-End-Tests; Onboarding gegen frischen Worktree validiert (vor den letzten Härtungen; Quick Start seitdem unverändert).
+- **Offen:** Pull Request für 2.7 – Merge nach grüner CI (inkl. neuem Job End-to-End) und Zustimmung des Eigentümers. Phasenabschluss 2.
+- **Nächster Schritt:** neue Session – Phasenabschluss 2: getrennte Instanz bewertet „weiterbauen / gezielt umbauen / neu aufsetzen“, Stellungnahme, `ENTSCHEIDUNG ERFORDERLICH`, ADR; Vision-Re-Derivations-Pass gegen `docs/vision.md` und `docs/requirements.md`; Onboarding-Re-Validation (Trigger 3); danach Archivierung von Phase 2 und Logbuch-Verdichtung. Der Archivierungs-Trigger „Phase vollständig erledigt“ wird damit bewusst bis zum formalen Phasenabschluss verschoben – Landeplatz: dieser nächste Schritt.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5, eingestellt und bedient laut Sitzungsabfrage 20:51). Schritte oberhalb der Empfehlung: 1 (2.7 empfiehlt Routine; Hinweis vorab). Abgegebene Teilarbeiten: Sicherheitsprüfung an Unteragenten mit Sonnet 5 (getrennte Instanz, keine Routine-Abgabe).
+- **Kontextgröße:** 499.835 Token laut Sitzungsabfrage – über der Grenze 200.000 auf ausdrückliche Anweisung „weiter 2.7“. Sitzungskosten laut Abfrage ca. 23,11 $ (Gesamtsession). Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Quick Start, Verwendung, Nächste Schritte); Drift-Prüfung: ADR-019 → 2.7 vorhanden; Modul-Liste unverändert; Reifegrad `ui` passt zu ADR-019 und Umsetzung; Reaktiv-Quote 1/10 über ADR-010..019; Phase 2 weiterhin 7 Schritte; Blocker 0; Anforderungen FR-002/005/007/016 unverändert erledigt. Ablaufdaten-Register: jsdom 30 ergänzt, kein fälliger Vorlauf (Guthaben-Vorlauf ab 2026-10-22). Archivierung: Logbuch unter 800 Zeilen; Phasen-Archiv siehe „Nächster Schritt“. project-context unter 600 Zeilen.
+
 ### 2026-09-26 20:48 – [SICHERHEITSPRÜFUNG] Getrennte Instanz zu 2.7
 
 - **Instanz:** Unteragent mit eigenem Kontext und anderem Modell (Claude Sonnet 5); nur Diff (Oberfläche, Tests, Konfiguration, CI), Bedrohungsmodell, ADR-017, ASVS-Originalkapitel. Führte Komponenten-, Build- und End-to-End-Tests selbst aus.
