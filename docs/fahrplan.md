@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 1 „Erkundung: Modelle, Import, Laufzeit" (begonnen 2026-09-26)
 - **Phasentyp:** ERKUNDUNG
-- **Aktiver Schritt:** keiner (1.1, 1.2, 1.3 und 1.5 erledigt 2026-09-26)
+- **Aktiver Schritt:** 1.4 (seit 2026-09-26; 1.1, 1.2, 1.3 und 1.5 erledigt)
 - **Nächster Schritt:** 1.4 (Reifegrad-Beförderung) – alle Abhängigkeiten erledigt; Empfohlene Klasse Entscheidung
 - **Offene STOPP-Situationen:** keine (STOPP vor 1.1 vom 2026-09-26 aufgelöst: Schlüssel liegt vor; Testdaten erfindet die KI, Festlegung des Eigentümers)
 
@@ -164,7 +164,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 1.4: Reifegrad-Beförderung vor der Umsetzung
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT (seit 2026-09-26)
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Schritt-Art (nur ERKUNDUNG):** sonstiges – Architektur-Abgleich und Beförderung
 - **Zeitbox (nur ERKUNDUNG):** maximal 2 h Arbeit

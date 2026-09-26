@@ -59,7 +59,7 @@ graph LR
 - **Verantwortung:** Welten und ihre Kanon-Einträge (Figur, Ort/Geografie, Gegenstand, Zeitlinie, Regel, Kultur) anlegen, ändern, löschen, finden; Aliasse für die Namenserkennung; einmaliger Import von Welt-Material, zunächst als Markdown (ADR-012); Importer für TypingMind und Notion später (Schritte V.4, V.5) (FR-001–FR-005, FR-023).
 - **Nicht-Verantwortung:** keine Entscheidung, welche Einträge in eine KI-Anfrage gehören (→ `context`); keine geschichtenbezogenen Fakten (→ `manuscript`).
 - **Öffentliche Schnittstellen:** `CanonService` (Abschnitt 4)
-- **Interne Struktur:** Import als eigenes Untermodul `canon.importers` mit je einem Importer pro Quelle.
+- **Interne Struktur:** Import als eigenes Untermodul `canon.importers` mit je einem Importer pro Quelle; erste Ausbaustufe nur Markdown (ADR-012).
 - **Abhängigkeiten (andere Module):** `storage`
 - **Abhängigkeiten (extern):** keine
 - **Offene Fragen:** Inhalt des TypingMind-Agenten-Exports – für die erste Ausbaustufe gegenstandslos (ADR-012), Klärung in Schritt V.4.
@@ -71,26 +71,26 @@ graph LR
 - **Nicht-Verantwortung:** kein Erzeugen von Text oder Zusammenfassungen (→ `ai_gateway`, gesteuert über `api`); kein Welt-Kanon (→ `canon`).
 - **Öffentliche Schnittstellen:** `ManuscriptService` (Abschnitt 4)
 - **Abhängigkeiten (andere Module):** `storage`
-- **Offene Fragen:** Granularität des Wechsels Autor/KI im Manuskript (Absatz-Markierung, wer was schrieb) – verfeinert in der Umsetzung.
+- **Offene Fragen:** keine. Geklärt in 1.4 (2026-09-26): keine Markierung, wer welchen Absatz schrieb – FR-009 verlangt nur, dass übernommener, geänderter oder verworfener KI-Text im selben Manuskript landet; der Manuskript-Text ist ein fortlaufender Markdown-Text (einfachste Lösung, erweiterbar per Markierung, falls später nötig).
 
 ### Modul: context [VORLÄUFIG]
 
-- **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26, Begründung: Kernverfahren, Tauglichkeit und Budget werden im Erkundungsschritt zur Modellwahl geprüft
+- **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26, Begründung: Kernverfahren in 1.1 und 1.5 an einer Testwelt erprobt (86 Läufe, Vorrangfolge von Hand nachgebaut)
 - **Verantwortung:** baut aus Welt, Geschichte, Anweisung und `@`-Verweisen eine KI-Anfrage unter festem Token-Budget; Bausteine in Vorrangfolge: (1) Regeln und Schreibanweisung inkl. Figuren-Schreibweise, (2) per `@` genannte Einträge und Einträge der Figuren der Szene, (3) Gesamtzusammenfassung und Kapitel-Kurzfassungen, (4) letzte Manuskript-Seiten wörtlich (füllt den Rest des Budgets). Baut ebenso die Anfrage für Kapitel-Kurzfassungen. Erkennt Kanon-Namen ohne `@` und liefert sie als Vorschläge (FR-008, FR-010, FR-011, FR-013, FR-014).
 - **Nicht-Verantwortung:** kein Aufruf der KI, kein Schreiben von Daten.
 - **Öffentliche Schnittstellen:** `ContextBuilder` (Abschnitt 4)
 - **Abhängigkeiten (andere Module):** `canon`, `manuscript` (nur lesend)
 - **NFRs:** Token-Budget je Anfrage (Abschnitt 6); Coverage 90 % (project-context Abschnitt 7).
-- **Offene Fragen:** Wert des Token-Budgets; Tokenzählung je Modell (Schätzung vs. Tokenizer) – Erkundungsschritt 1.1.
+- **Offene Fragen:** keine. Geklärt in 1.1 (ADR-010): Budget 30.000 Token Eingabe als Obergrenze; Tokenzählung per Schätzung 3,3 Zeichen je Token mit 10 % Sicherheitsabschlag (Abweichung zu den Anbieter-Zählungen −6 % bis +8 %), kein Tokenizer je Modell. Reihenfolge in der Anfrage: feste Bausteine (Regeln, Welt, Kanon) zuerst, veränderliche (Handlungsstand, letzte Seiten, Anweisung) zuletzt – Zwischenspeicher der Anbieter senkt so die Kosten.
 
 ### Modul: ai_gateway [VORLÄUFIG]
 
 - **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26
-- **Verantwortung:** einheitliche Anbieter-Schnittstelle für KI-Anfragen mit Streaming; OpenRouter als erster Adapter; weitere Anbieter als zusätzliche Adapter, ohne bestehende zu ändern (FR-018, FR-025); Erfassung von Token-Verbrauch und Kosten je Anfrage.
+- **Verantwortung:** einheitliche Anbieter-Schnittstelle für KI-Anfragen mit Streaming; OpenRouter als erster Adapter; weitere Anbieter als zusätzliche Adapter, ohne bestehende zu ändern (FR-018, FR-025); Erfassung von Token-Verbrauch und Kosten je Anfrage; Modell-Konfiguration je Modell (Reasoning aus oder niedrigste Stufe, weil manche Modelle Reasoning verlangen; ausgeschlossene ausführende Anbieter, z. B. solche mit Training auf Eingaben). Modellreihenfolge: grok-4.7 → grok-4.6 → qwen3.8-max (ADR-010, ADR-011).
 - **Nicht-Verantwortung:** keine Fachlogik, keine Kontext-Auswahl.
 - **Öffentliche Schnittstellen:** `ModelProvider` (Abschnitt 4)
 - **Abhängigkeiten (extern):** httpx; OpenRouter-API
-- **Offene Fragen:** Verhalten bei Modell-Ablehnung (Inhaltsfilter) – Erkundungsschritt.
+- **Offene Fragen:** keine. Geklärt in 1.1/1.3: `finish_reason: content_filter` → `ModelRefused`; textliche Weigerung ist technisch nicht erkennbar → Oberfläche bietet bei jedem KI-Text „mit anderem Modell wiederholen"; httpx 0.28.1 trägt auf Python 3.14.7; ein `httpx.AsyncClient` wird beim Start angelegt und wiederverwendet.
 
 ### Modul: storage [VORLÄUFIG]
 
@@ -125,24 +125,28 @@ Alle Verträge sind `[VORLÄUFIG]` seit 2026-09-26 und werden in der Umsetzung v
 - **Anbieter:** `ai_gateway` (je Anbieter ein Adapter)
 - **Konsument:** `api`
 - **Spezifikation:**
-  - **Eingabe:** Modell-Kennung, Liste von Nachrichten (Rolle, Text), Obergrenze für Antwort-Token, Temperatur
+  - **Eingabe:** Modell-Kennung, Liste von Nachrichten (Rolle, Text), Obergrenze für Antwort-Token, Temperatur; Reasoning-Einstellung und Anbieter-Ausschlüsse kommen aus der Modell-Konfiguration, nicht vom Aufrufer
   - **Ausgabe (Erfolg):** Strom von Textstücken; am Ende Nutzungsdaten (Eingabe-/Ausgabe-Token, Kosten falls vom Anbieter gemeldet)
-  - **Ausgabe (Fehler):** `ProviderUnavailable`, `ModelRefused` (Inhaltsfilter), `RateLimited`, `InvalidRequest`
+  - **Ausgabe (Fehler):** `ProviderUnavailable` (Netz, HTTP 5xx, `error` im Strom ohne Filterbezug), `ModelRefused` (`finish_reason: content_filter` oder Filter-Fehler im Strom), `RateLimited` (HTTP 429), `InvalidRequest` (HTTP 400, z. B. „Reasoning is mandatory")
   - **Idempotenz:** nein (jede Anfrage erzeugt neuen Text)
-  - **Timeouts und Retries:** Verbindungsaufbau 10 s; kein automatischer Retry bei begonnenem Strom; einmaliger Retry bei `RateLimited` nach Wartezeit des Anbieters
+  - **Timeouts und Retries:** Verbindungsaufbau 10 s; Wartezeit bis zum ersten Textstück bis 90 s (Modelle mit Vorab-Denken brauchten bis 50 s); danach höchstens 30 s zwischen zwei Textstücken; kein automatischer Retry bei begonnenem Strom; einmaliger Retry bei `RateLimited` nach Wartezeit des Anbieters (im Test trat 429 auf und verschwand beim Wiederholen)
 - **Sicherheit:** API-Schlüssel nur aus Umgebungsvariablen des Servers
 
 ### Schnittstelle: ContextBuilder [VORLÄUFIG]
 
 - **Typ:** Python-Funktions-Export
 - **Anbieter:** `context`; **Konsument:** `api`
-- **Eingabe:** Welt-ID, Geschichte-ID, Kapitel-ID, Anweisung des Autors, Liste der `@`-Verweise, Token-Budget
+- **Eingabe:** Welt-ID, Geschichte-ID, Kapitel-ID, Anweisung des Autors, Liste der `@`-Verweise, Token-Budget (Obergrenze 30.000, ADR-010)
 - **Ausgabe:** Nachrichtenliste für `ModelProvider` plus Protokoll, welche Bausteine mit wie vielen Token enthalten sind (für Nachvollziehbarkeit und Tests)
 
 ### Schnittstelle: CanonService, ManuscriptService, DocumentStore [VORLÄUFIG]
 
 - **Typ:** Python-Funktions-Exporte
-- **Spezifikation:** CRUD-Operationen auf den Entitäten aus Abschnitt 7; Details entstehen in der Umsetzung und werden hier nachgezogen.
+- **Grobvertrag (1.4, 2026-09-26):** Operationen je Dienst; Signaturen und Fehlerarten werden in 2.2–2.5 ausformuliert, ohne Operationen hinzuzufügen oder wegzulassen (sonst Schnittstellenänderung nach `CLAUDE.md` Abschnitt 4).
+  - **DocumentStore** (`storage`): Dokument lesen (Kopf + Text), atomar schreiben, löschen, unter einem Pfad auflisten; Suche nach Name/Alias/Volltext innerhalb einer Welt; Index vollständig aus den Dateien neu aufbauen.
+  - **CanonService** (`canon`): Welten auflisten, lesen, anlegen, ändern; Kanon-Einträge einer Welt auflisten (optional nach Kategorie), lesen, anlegen, ändern, löschen; Einträge nach Name oder Alias finden (für `@`-Menü und Vorschläge); Markdown-Import als Vorschau erzeugen und bestätigt übernehmen (ADR-012).
+  - **ManuscriptService** (`manuscript`): Geschichten einer Welt auflisten, lesen, anlegen, ändern (Form, Perspektive, geführte Figuren); Kapitel auflisten, lesen, speichern, abschließen; Kurzfassung eines Kapitels und Gesamtzusammenfassung setzen; Gast-Verbindungen hinzufügen und entfernen; geschichtenbezogene Fakten hinzufügen und entfernen.
+- **Fehler (gemeinsam):** `NotFound`, `AlreadyExists`, `InvalidInput`; `storage` zusätzlich `StorageError` bei Schreibfehlern (Datei bleibt dann unverändert).
 
 ### Schnittstelle: HTTP-API [VORLÄUFIG]
 
@@ -246,7 +250,15 @@ erDiagram
   Story }o--o{ CanonEntry : "controlled characters"
 ```
 
-**Ablage (Vorschlag):**
+**Kopffelder (YAML, 1.4, 2026-09-26; an der Testwelt aus 1.1 erprobt):**
+
+- **Welt** (`world.md`): `name`; Text: Beschreibung und Grundregeln.
+- **Kanon-Eintrag:** `name`, `aliasse` (Liste), `kategorie` (figur, ort, gegenstand, zeitlinie, regel, kultur); optional `status` (z. B. „tot"). Text: Inhalt des Eintrags; bei Gegenständen Abschnitte Zweck, Verwendung, Auswirkung (FR-003). Kennung ist der Dateiname.
+- **Geschichte** (`story.md`): `titel`, `form` (roman, kurzgeschichte, fragment), `perspektive`, `gefuehrte_figuren` (Liste von Einträgen), `gast_verbindungen` (Liste aus Welt und Eintrag); Text: Gesamtzusammenfassung.
+- **Kapitel:** `kapitel` (Nummer), `titel`, `status` (in-arbeit, abgeschlossen), `kurzfassung`, `kurzfassung_status` (fehlt, erzeugt, geprüft); Text: Manuskript des Kapitels, fortlaufend, ohne Markierung von Autor- und KI-Anteilen.
+- **Geschichtenbezogene Fakten** (`facts.md`): Liste aus Eintrag und Fakt.
+
+**Ablage:**
 
 ```text
 data/
