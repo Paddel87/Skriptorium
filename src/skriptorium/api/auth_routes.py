@@ -1,6 +1,8 @@
 """Endpoints for setup, login, logout, password change and sessions (ADR-017)."""
 
 import logging
+from collections.abc import Iterator
+from contextlib import contextmanager
 from datetime import datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
@@ -13,6 +15,7 @@ from skriptorium.api.access import (
     SetupCodeInvalid,
 )
 from skriptorium.api.access.sessions import ABSOLUTE_LIFETIME
+from skriptorium.api.access.throttle import Attempt, Blocked
 from skriptorium.api.context import (
     SESSION_COOKIE,
     Services,
@@ -62,17 +65,16 @@ class SessionInfo(BaseModel):
 @public.post("/setup", status_code=status.HTTP_204_NO_CONTENT)
 def setup(body: SetupRequest, request: Request, found: ServicesDep) -> None:
     """Set the password with the setup code; all sessions end (ASVS 6.4.1, 6.4.3)."""
-    client, attempt = _begin_attempt(found, request, "einrichtung")
-    if not found.credentials.setup_code_valid(body.code):
-        _fail(client, "einrichtung", "code_ungueltig")
-        raise HTTPException(status.HTTP_403_FORBIDDEN, "Einrichtungscode ungültig")
-    found.throttle.succeeded(client, attempt)
-    _check_new_password(found, body.password)
-    try:
-        found.credentials.set_password_with_code(body.code, body.password)
-    except SetupCodeInvalid as error:  # used or expired by a parallel request meanwhile
-        _fail(client, "einrichtung", "code_verbraucht")
-        raise HTTPException(status.HTTP_403_FORBIDDEN, "Einrichtungscode ungültig") from error
+    with _attempt(found, request, "einrichtung") as (client, attempt):
+        if not found.credentials.setup_code_valid(body.code):
+            _fail(attempt, client, "einrichtung", "code_ungueltig")
+            raise HTTPException(status.HTTP_403_FORBIDDEN, "Einrichtungscode ungültig")
+        _check_new_password(found, body.password)
+        try:
+            found.credentials.set_password_with_code(body.code, body.password)
+        except SetupCodeInvalid as error:  # used or expired by a parallel request meanwhile
+            _fail(attempt, client, "einrichtung", "code_verbraucht")
+            raise HTTPException(status.HTTP_403_FORBIDDEN, "Einrichtungscode ungültig") from error
     found.sessions.end_all()
     _log.info("zugang vorgang=einrichtung ergebnis=erfolg absender=%s", client)
 
@@ -80,15 +82,13 @@ def setup(body: SetupRequest, request: Request, found: ServicesDep) -> None:
 @public.post("/login", status_code=status.HTTP_204_NO_CONTENT)
 def login(body: LoginRequest, request: Request, response: Response, found: ServicesDep) -> None:
     """Log in; a new session token is issued every time (ASVS 7.2.4)."""
-    client, attempt = _begin_attempt(found, request, "anmeldung")
-    if not found.credentials.has_password():
-        found.throttle.succeeded(client, attempt)
-        _log.info("zugang vorgang=anmeldung ergebnis=nicht_eingerichtet absender=%s", client)
-        raise HTTPException(status.HTTP_409_CONFLICT, "Kein Passwort eingerichtet")
-    if not found.credentials.verify_password(body.password):
-        _fail(client, "anmeldung", "falsches_passwort")
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Passwort falsch")
-    found.throttle.succeeded(client, attempt)
+    with _attempt(found, request, "anmeldung") as (client, attempt):
+        if not found.credentials.has_password():
+            _log.info("zugang vorgang=anmeldung ergebnis=nicht_eingerichtet absender=%s", client)
+            raise HTTPException(status.HTTP_409_CONFLICT, "Kein Passwort eingerichtet")
+        if not found.credentials.verify_password(body.password):
+            _fail(attempt, client, "anmeldung", "falsches_passwort")
+            raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Passwort falsch")
     old_token = request.cookies.get(SESSION_COOKIE)
     if old_token:
         found.sessions.end(old_token)
@@ -120,11 +120,10 @@ def change_password(
     found: ServicesDep,
 ) -> None:
     """Change the password with the current one (ASVS 6.2.3, 7.5.1)."""
-    client, attempt = _begin_attempt(found, request, "passwortwechsel")
-    if not found.credentials.verify_password(body.current_password):
-        _fail(client, "passwortwechsel", "falsches_passwort")
-        raise HTTPException(status.HTTP_403_FORBIDDEN, "Bisheriges Passwort falsch")
-    found.throttle.succeeded(client, attempt)
+    with _attempt(found, request, "passwortwechsel") as (client, attempt):
+        if not found.credentials.verify_password(body.current_password):
+            _fail(attempt, client, "passwortwechsel", "falsches_passwort")
+            raise HTTPException(status.HTTP_403_FORBIDDEN, "Bisheriges Passwort falsch")
     _check_new_password(found, body.new_password)
     found.credentials.set_password(body.new_password)
     if body.end_other_sessions:
@@ -154,18 +153,21 @@ def end_session(session_id: str, found: ServicesDep) -> None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Sitzung nicht gefunden")
 
 
-def _begin_attempt(found: Services, request: Request, action: str) -> tuple[str, datetime]:
-    """Reserve an attempt before any check; it stays counted unless taken back on success."""
+@contextmanager
+def _attempt(found: Services, request: Request, action: str) -> Iterator[tuple[str, Attempt]]:
+    """Run an attempt of the caller's address exclusively; HTTP 429 once it is blocked."""
     client = client_address(request)
-    attempt = found.throttle.begin(client)
-    if attempt is None:
+    try:
+        with found.throttle.attempt(client) as attempt:
+            yield client, attempt
+    except Blocked as error:
         _log.warning("zugang vorgang=%s ergebnis=gesperrt absender=%s", action, client)
-        raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, "Zu viele Fehlversuche")
-    return client, attempt
+        raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, "Zu viele Fehlversuche") from error
 
 
-def _fail(client: str, action: str, reason: str) -> None:
-    """Log a failed attempt; it was already counted by :func:`_begin_attempt`."""
+def _fail(attempt: Attempt, client: str, action: str, reason: str) -> None:
+    """Count ``attempt`` as failed and log it."""
+    attempt.fail()
     _log.warning("zugang vorgang=%s ergebnis=%s absender=%s", action, reason, client)
 
 

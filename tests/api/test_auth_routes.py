@@ -98,6 +98,9 @@ def test_successful_logins_do_not_count_as_failures(client: TestClient) -> None:
     set_up_password(client)
     for _ in range(throttle_module.MAX_FAILURES + 2):
         assert _login(client) == 204
+    with ThreadPoolExecutor(max_workers=15) as pool:
+        codes = list(pool.map(lambda _: _login(client), range(15)))
+    assert codes == [204] * 15  # parallel correct logins are never refused
 
 
 def test_setup_code_used_by_parallel_request_is_refused(

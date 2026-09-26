@@ -21,6 +21,7 @@ from skriptorium.api.access import (
 )
 from skriptorium.api.access import sessions as sessions_module
 from skriptorium.api.access import throttle as throttle_module
+from skriptorium.api.access.throttle import Blocked
 from skriptorium.storage import DocumentStore
 from tests.api.conftest import PASSWORD, FakeBreached, FakeClock, cheap_hasher
 
@@ -221,30 +222,54 @@ def test_session_renew_end_and_end_all(clock: FakeClock) -> None:
 # --- throttle ------------------------------------------------------------------------------
 
 
+def _try(throttle: FailureThrottle, client: str, *, fail: bool) -> bool:
+    """One attempt; whether it was allowed to run."""
+    try:
+        with throttle.attempt(client) as attempt:
+            if fail:
+                attempt.fail()
+    except Blocked:
+        return False
+    return True
+
+
 def test_throttle_blocks_one_client_only_within_window(clock: FakeClock) -> None:
     throttle = FailureThrottle(clock)
     for _ in range(throttle_module.MAX_FAILURES):
-        assert throttle.begin("1.2.3.4") is not None  # reserved, never taken back
-    assert throttle.begin("1.2.3.4") is None
-    assert throttle.begin("5.6.7.8") is not None
+        assert _try(throttle, "1.2.3.4", fail=True)
+    assert not _try(throttle, "1.2.3.4", fail=False)
+    assert _try(throttle, "5.6.7.8", fail=True)
     clock.advance(throttle_module.WINDOW)
-    assert throttle.begin("1.2.3.4") is not None
+    assert _try(throttle, "1.2.3.4", fail=False)
 
 
-def test_throttle_success_takes_attempt_back(clock: FakeClock) -> None:
+def test_throttle_counts_only_failures(clock: FakeClock) -> None:
     throttle = FailureThrottle(clock)
     for _ in range(throttle_module.MAX_FAILURES * 3):
-        attempt = throttle.begin("1.2.3.4")
-        assert attempt is not None
-        throttle.succeeded("1.2.3.4", attempt)
-    throttle.succeeded("unbekannt", clock.now)
+        assert _try(throttle, "1.2.3.4", fail=False)
 
 
-def test_throttle_counts_parallel_attempts_before_the_check(clock: FakeClock) -> None:
+def test_throttle_failure_counts_even_when_the_attempt_raises(clock: FakeClock) -> None:
+    throttle = FailureThrottle(clock)
+    for _ in range(throttle_module.MAX_FAILURES):
+        with pytest.raises(RuntimeError), throttle.attempt("1.2.3.4") as attempt:
+            attempt.fail()
+            raise RuntimeError
+    assert not _try(throttle, "1.2.3.4", fail=False)
+
+
+def test_throttle_parallel_failures_cannot_exceed_limit(clock: FakeClock) -> None:
     throttle = FailureThrottle(clock)
     with ThreadPoolExecutor(max_workers=25) as pool:
-        results = list(pool.map(lambda _: throttle.begin("1.2.3.4"), range(25)))
-    assert sum(result is not None for result in results) == throttle_module.MAX_FAILURES
+        results = list(pool.map(lambda _: _try(throttle, "1.2.3.4", fail=True), range(25)))
+    assert results.count(True) == throttle_module.MAX_FAILURES
+
+
+def test_throttle_parallel_successes_are_never_blocked(clock: FakeClock) -> None:
+    throttle = FailureThrottle(clock)
+    with ThreadPoolExecutor(max_workers=25) as pool:
+        results = list(pool.map(lambda _: _try(throttle, "1.2.3.4", fail=False), range(25)))
+    assert all(results)
 
 
 # --- credentials ---------------------------------------------------------------------------
