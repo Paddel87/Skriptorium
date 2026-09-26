@@ -30,7 +30,7 @@
 
 ### Fixiert
 
-Auswahl nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15, „Versionswahl"), Nachweise in `docs/research/versions-verifikation.md`. Tabelle vom Eigentümer bestätigt am 2026-09-26. Lebensende bzw. Nachprüf-Datum im Ablaufdaten-Register (Abschnitt 8). Major-Updates erfordern eine erneute Verifikation und einen ADR. Grundsatzentscheidungen: Eigenbau statt Anpassung, Web-App mit Python-Server und TypeScript-Oberfläche (ADR folgen in Modus 2 Schritt 5).
+Auswahl nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15, „Versionswahl"), Nachweise in `docs/research/versions-verifikation.md`. Tabelle vom Eigentümer bestätigt am 2026-09-26. Lebensende bzw. Nachprüf-Datum im Ablaufdaten-Register (Abschnitt 8). Major-Updates erfordern eine erneute Verifikation und einen ADR. Grundsatzentscheidungen: Eigenbau statt Anpassung (ADR-004), Web-App mit Python-Server und TypeScript-Oberfläche (ADR-002); Versionsregel als Regel-001 in `docs/decisions.md` Teil C.
 
 - **Mindestreife neuer Linien:** Linie mindestens 6 Monate veröffentlicht **und** mit Fehlerkorrektur-Versionen. Innerhalb einer Linie wird die neueste Unterversion gewählt, die bereits mindestens eine Fehlerkorrektur-Version hat (bei 0.x-Paketen: neueste Minor-Version mit mindestens einem Patch-Release). Festgelegt vom Eigentümer am 2026-09-26.
 - **Geplante Projektdauer:** 3 Jahre (bis ca. 2029-09) – das Unterstützungsfenster fixierter Linien muss so weit reichen oder einen Nachprüf-Schritt im Fahrplan haben.
@@ -46,8 +46,8 @@ Auswahl nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15, „Versi
   - React und react-dom 19.2 (19.2.8) — Verifiziert: 2026-09-26, Quelle: npm-Registry, react.dev/versions
   - Vite 8.3 (8.3.1) und @vitejs/plugin-react 6.1 (6.1.1) — Verifiziert: 2026-09-26, Quelle: npm-Registry, vite.dev/releases
   - CodeMirror 6 (@codemirror/state 6.7.6, view 6.43.13, autocomplete 6.20.3, lang-markdown 6.5.2) — Verifiziert: 2026-09-26, Quelle: npm-Registry
-- **Datenbank / Speicher:** [TBD nach Modus 2 Schritt 4 – Speicherform (Markdown-Dateien, ggf. Index) wird in der Architektur entschieden]
-- **Laufzeitumgebung:** Node.js 24 LTS (24.21.0) nur für Build und Entwicklung der Oberfläche — Verifiziert: 2026-09-26, Quelle: nodejs.org, Release-Plan `schedule.json`. Betrieb: [TBD nach Modus 2 Schritt 4a – Hosting]
+- **Datenbank / Speicher:** Markdown-Dateien mit YAML-Kopf als Quelle der Wahrheit; SQLite (in Python enthalten, Version folgt Python 3.14) als abgeleiteter, jederzeit neu aufbaubarer Suchindex – ADR-003
+- **Laufzeitumgebung:** Node.js 24 LTS (24.21.0) nur für Build und Entwicklung der Oberfläche — Verifiziert: 2026-09-26, Quelle: nodejs.org, Release-Plan `schedule.json`. Betrieb: Python 3.14 mit uvicorn auf einem VPS (ADR-006), Anbieter in Schritt 4.2
 - **Package Manager:** uv 0.12 (0.12.19) für Python; npm 11 (11.19.0, mit Node 24 gebündelt) für die Oberfläche — Verifiziert: 2026-09-26, Quelle: PyPI, nodejs.org
 
 ### Empfohlen (freigabefrei nutzbar)
@@ -81,7 +81,19 @@ Entwicklung erfolgt durch den Coding-Agent; der Eigentümer entwickelt nicht sel
 <!-- ANCHOR:architektur-grobstruktur -->
 ## 4. Architektur-Grobstruktur
 
-[TBD nach Modus 2 Schritt 4 – Architektur-Grobschnitt. Feststehend: eine Web-App (Python-Server mit FastAPI, React-Oberfläche mit CodeMirror-6-Editor), KI-Zugriff über eine eigene Anbieter-Schnittstelle mit OpenRouter als erstem Anbieter.]
+Modularer Monolith (ADR-003): ein Python-Server (FastAPI) liefert die React-Oberfläche aus und stellt die Fachfunktionen bereit; Welten und Texte als Markdown-Dateien, SQLite als abgeleiteter Suchindex. Kern ist die Kontext-Zusammenstellung, die jede KI-Anfrage unter festem Token-Budget baut. Details: `docs/architecture.md`.
+
+**Module (Kurzübersicht):**
+
+- `canon` – Welten, Kanon-Einträge, Import von Welt-Material
+- `manuscript` – Geschichten, Kapitel, Kurzfassungen, Figuren-Schreibweise, Gast-Verbindungen, geschichtenbezogene Fakten
+- `context` – Kontext-Zusammenstellung unter Token-Budget, Vorschläge ohne `@`
+- `ai_gateway` – Anbieter-Schnittstelle, OpenRouter als erster Adapter
+- `storage` – Dateien und Suchindex
+- `api` – HTTP-Schicht, Anmeldung, Ablauf-Steuerung
+- `ui` – React-Oberfläche mit CodeMirror-6-Editor
+
+**Kommunikationsmuster:** synchron; HTTP/JSON zwischen Oberfläche und Server, KI-Text per Server-Sent Events; innerhalb des Servers Funktionsaufrufe über öffentliche Modul-Schnittstellen.
 
 <!-- ANCHOR:externe-abhaengigkeiten -->
 ## 5. Externe Abhängigkeiten
@@ -90,12 +102,12 @@ Entwicklung erfolgt durch den Coding-Agent; der Eigentümer entwickelt nicht sel
 
 | Service | Zweck | Authentifizierung | Ausfallverhalten |
 |---|---|---|---|
-| OpenRouter | Zugang zu KI-Modellen verschiedener Anbieter, freie Modellwahl (FR-018) | API-Schlüssel, nur serverseitig, nie im Browser | [TBD nach Modus 2 Schritt 4 – mindestens: Text des Autors geht nie verloren, Fehlermeldung statt stiller Abbruch] |
+| OpenRouter | Zugang zu KI-Modellen verschiedener Anbieter, freie Modellwahl (FR-018) | API-Schlüssel, nur serverseitig, nie im Browser | Text des Autors geht nie verloren; Fehlermeldung statt stillem Abbruch; Wiederholen mit anderem Modell (`docs/architecture.md` Abschnitt 5) |
 | weitere KI-Anbieter | künftig parallel zu OpenRouter (FR-025) | je Anbieter | wie OpenRouter |
 
 ### APIs
 
-- **OpenRouter:** OpenAI-kompatible Chat-Schnittstelle mit Streaming. Modell-Verfügbarkeit und Inhaltsfilter je Modell uneinheitlich; Befund der Bestandsprüfung: 324 von 458 Modellen ohne OpenRouter-eigene Moderation, Filter der ausführenden Anbieter ungeprüft (`docs/research/bestandspruefung.md`). Rate Limits und Preise je Modell: [TBD nach Modus 2 Schritt 4].
+- **OpenRouter:** OpenAI-kompatible Chat-Schnittstelle mit Streaming. Modell-Verfügbarkeit und Inhaltsfilter je Modell uneinheitlich; Befund der Bestandsprüfung: 324 von 458 Modellen ohne OpenRouter-eigene Moderation, Filter der ausführenden Anbieter ungeprüft (`docs/research/bestandspruefung.md`). Rate Limits und Preise je Modell: ermittelt in Schritt 1.1.
 
 <!-- ANCHOR:constraints -->
 ## 6. Constraints (operationalisierbar)
@@ -104,19 +116,19 @@ Entwicklung erfolgt durch den Coding-Agent; der Eigentümer entwickelt nicht sel
 
 ### Datenschutz
 
-- Welten und Texte sind fiktionale Inhalte des Eigentümers; Übermittlung an kommerzielle KI-APIs ist zulässig (Vision Abschnitt 6). Schutzbedarf: normal (ADR in Modus 2 Schritt 5).
+- Welten und Texte sind fiktionale Inhalte des Eigentümers; Übermittlung an kommerzielle KI-APIs ist zulässig (Vision Abschnitt 6). Schutzbedarf: normal (ADR-007).
 - Keine Inhalte aus Welten oder Manuskripten in Server-Logs → Regel: Logs enthalten nur Metadaten (Zeit, Endpunkt, Status, Modell, Token-Zahlen).
 
 ### Sicherheit
 
 - API-Schlüssel der KI-Anbieter liegen ausschließlich serverseitig in Umgebungsvariablen, nie im Browser, im Repo oder in Logs.
-- Sicherheitsniveau OWASP ASVS 5.0.0 Stufe 1, Authentifizierung und Sitzung Stufe 2 → Regel: jede Sicherheitsmaßnahme nennt die ASVS-Anforderung, die sie erfüllt; alles darüber hinaus wird dem Eigentümer als optional vorgelegt.
+- Sicherheitsniveau OWASP ASVS 5.0.0 Stufe 1, Authentifizierung und Sitzung Stufe 2 (ADR-006) → Regel: jede Sicherheitsmaßnahme nennt die ASVS-Anforderung, die sie erfüllt; alles darüber hinaus wird dem Eigentümer als optional vorgelegt.
 - Alle Endpunkte außer Gesundheitsprüfung und Anmeldung verlangen eine gültige Sitzung.
 - Der OpenRouter-Schlüssel trägt eine Ausgabengrenze beim Anbieter.
 
 ### Performance und Kosten
 
-- **Kosten pro Anfrage** unter dem heutigen Stand (Referenz ca. 125.000–140.000 Token pro Anfrage, Vision 4) → Regel: Die Kontext-Zusammenstellung hat ein festes Token-Budget je Anfrage; Wert [TBD nach Modus 2 Schritt 4, `docs/architecture.md` Abschnitt 6].
+- **Kosten pro Anfrage** unter dem heutigen Stand (Referenz ca. 125.000–140.000 Token pro Anfrage, Vision 4) → Regel: Die Kontext-Zusammenstellung hat ein festes Token-Budget je Anfrage; Startwert 30.000 Token, Festlegung in Schritt 1.1 (`docs/architecture.md` Abschnitt 6).
 - **Kein Kontextverlust** bei einer Geschichte vom Umfang der Referenzgeschichte (500.000–700.000 Token Chatverlauf) → Prüfung an einer Geschichte gleichen Umfangs (FR-006 verworfen).
 - KI-Text erscheint beim Schreiben fortlaufend (Streaming), nicht erst nach Abschluss der Antwort.
 
@@ -127,7 +139,7 @@ Entwicklung erfolgt durch den Coding-Agent; der Eigentümer entwickelt nicht sel
 
 ### Compliance und Lizenz
 
-- **Projektlizenz:** AGPL-3.0 (Eigentümer, 2026-09-26; Vision-Frage: „Dürfen andere den Code in ein geschlossenes Produkt übernehmen?" → nein). `LICENSE` enthält den Lizenztext aus der SPDX-Lizenzliste (`AGPL-3.0-only.txt`, abgerufen 2026-09-26; gnu.org aus der Arbeitsumgebung nicht erreichbar).
+- **Projektlizenz:** AGPL-3.0 (Eigentümer, 2026-09-26, ADR-005; Vision-Frage: „Dürfen andere den Code in ein geschlossenes Produkt übernehmen?" → nein). `LICENSE` enthält den Lizenztext aus der SPDX-Lizenzliste (`AGPL-3.0-only.txt`, abgerufen 2026-09-26; gnu.org aus der Arbeitsumgebung nicht erreichbar).
 - **Erlaubte Abhängigkeitslizenzen:** MIT, BSD-2/3-Clause, Apache-2.0, ISC, PSF-2.0, MPL-2.0, LGPL (2.1 oder später, 3.0), GPL-3.0 (bzw. „2.0 oder später"), AGPL-3.0; Artistic-2.0 nur für Werkzeuge (z. B. npm). Bestätigt vom Eigentümer 2026-09-26.
 - **Ausgeschlossene Lizenzen:** GPL-2.0-only (unvereinbar mit AGPL-3.0), proprietäre Lizenzen, Lizenzen mit Nutzungsbeschränkung (z. B. Commons Clause) – Abweichung nur per ADR.
 
@@ -218,13 +230,13 @@ Kein Bestand – Default „Warnungen sind Fehler".
 <!-- ANCHOR:betrieb-und-deployment -->
 ## 8. Betrieb und Deployment
 
-- **Deployment-Ziel:** kleiner gemieteter Server (VPS), öffentlich erreichbar mit Passwortschutz (Eigentümer, 2026-09-26); Anbieter [TBD im Gate-Schritt vor dem ersten öffentlichen Deployment]
-- **CI/CD:** GitHub Actions, `.github/workflows/ci.yml`. Deployment-Workflow: [TBD im Gate-Schritt – bis dahin kein Deployment]
+- **Deployment-Ziel:** kleiner gemieteter Server (VPS), öffentlich erreichbar mit Passwortschutz (Eigentümer, 2026-09-26); Anbieter [TBD in Schritt 4.2]
+- **CI/CD:** GitHub Actions, `.github/workflows/ci.yml`. Deployment-Workflow: [TBD in Schritt 4.7 – bis dahin kein Deployment]
 - **Umgebungen:** lokal (Cloud-Session des Coding-Agents) → Produktion (VPS)
-- **Monitoring:** Erreichbarkeits-Prüfung von außen [TBD im Gate-Schritt]; Kosten je Monat in der Oberfläche
+- **Monitoring:** Erreichbarkeits-Prüfung von außen [TBD in Schritt 4.2]; Kosten je Monat in der Oberfläche
 - **Logging-Level Default:** `INFO` im Betrieb, `DEBUG` nur lokal; keine Inhalte aus Welten oder Manuskripten (Abschnitt 6)
-- **Vertretung:** Verzicht – niemand; Stillstand ist zulässig, Daten bleiben in den Sicherungen (Eigentümer, 2026-09-26; ADR in Modus 2 Schritt 5 mit benanntem Restrisiko)
-- **Notfall-Handbuch:** `docs/onboarding-runbook.md` Abschnitt „Notfall" – [TBD, anzulegen vor dem ersten öffentlichen Deployment]
+- **Vertretung:** Verzicht – niemand; Stillstand ist zulässig, Daten bleiben in den Sicherungen (Eigentümer, 2026-09-26; ADR-008 mit benanntem Restrisiko)
+- **Notfall-Handbuch:** `docs/onboarding-runbook.md` Abschnitt „Notfall" – [TBD, anzulegen in Schritt 4.4]
 - **KI im Betrieb:** Coding-Agent über Claude-Abo Max 5x des Eigentümers; Wochenlimit mit Zurücksetzung sonntags 10:00 (MESZ) plus 5-Stunden-Limit. Rückfallweg ohne KI: Das Skriptorium läuft ohne den Coding-Agent weiter; Neustart und Wiederherstellung nach Notfall-Handbuch. Die KI-Anbieter im Produkt (OpenRouter) sind davon getrennt und über den Kostenrahmen begrenzt.
 - **Zugriff der KI auf die Produktion:** vorerst keiner; Festlegung im Gate-Schritt
 - **Unbeaufsichtigtes Handeln der KI:** nein
@@ -233,21 +245,21 @@ Kein Bestand – Default „Warnungen sind Fehler".
 
 | Was | Ablauf / Lebensende | Vorlauf | Quelle | Fahrplan-Schritt |
 |---|---|---|---|---|
-| Node.js 24 LTS (nur Build) | 2028-04-30 | 6 Monate | Node-Release-Plan `schedule.json` | [TBD in Modus 2 Schritt 6 – Wechsel auf Node 26 LTS frühestens 2026-11-05] |
+| Node.js 24 LTS (nur Build) | 2028-04-30 | 6 Monate | Node-Release-Plan `schedule.json` | D.1 – Wechsel auf Node 26 LTS frühestens 2026-11-05 |
 | Python 3.14 | 2030-10 | 6 Monate | PEP 745 | – (Vorlauf nach Projektdauer) |
-| httpx 0.28 – Python 3.14 nicht offiziell deklariert, Pflege schwach | Nachprüfung 2027-03-26 | – | PyPI, Stichprobe 2026-09-26 | [TBD in Modus 2 Schritt 6 – Test auf 3.14.7 im ersten Umsetzungsschritt] |
-| TypeScript 7 – neue Linie, noch nicht reif | Nachprüfung 2027-01-08 | – | TypeScript-Devblog | [TBD in Modus 2 Schritt 6] |
+| httpx 0.28 – Python 3.14 nicht offiziell deklariert, Pflege schwach | Nachprüfung 2027-03-26 | – | PyPI, Stichprobe 2026-09-26 | 1.3 – Test auf 3.14.7; D.3 – Nachprüfung 2027-03-26 |
+| TypeScript 7 – neue Linie, noch nicht reif | Nachprüfung 2027-01-08 | – | TypeScript-Devblog | D.2 |
 | Wochenkontingent der KI | wöchentlich, So 10:00 (MESZ) | – | Sitzungsabfrage 2026-09-26 | – |
 
 ### Kosten
 
-- **Kostenrahmen:** bis 50 € monatlich für KI-Anfragen und Hosting zusammen (Eigentümer, 2026-09-26). Das Abo für den Coding-Agent ist nicht Teil dieses Rahmens.
+- **Kostenrahmen:** bis 50 € monatlich für KI-Anfragen und Hosting zusammen (Eigentümer, 2026-09-26; BDR-001). Das Abo für den Coding-Agent ist nicht Teil dieses Rahmens.
 - **Kostenregister:** in dieser Tabelle
 
 | Posten | Art (laufend / einmalig / KI-Verbrauch) | Betrag je Monat | Stand vom | Entscheidung nötig ab |
 |---|---|---|---|---|
-| KI-Anfragen über OpenRouter | KI-Verbrauch | [TBD nach Modus 2 Schritt 4 – Schätzung aus Token-Budget und Modellpreis] | 2026-09-26 | Summe über 50 € |
-| Hosting | laufend | [TBD nach Modus 2 Schritt 4a] | 2026-09-26 | Summe über 50 € |
+| KI-Anfragen über OpenRouter | KI-Verbrauch | Schätzung ca. 6–36 $ plus Ausgabe (400 Anfragen × 30.000 Token, 0,50–3 $ je 1 Mio. Token; `docs/architecture.md` Abschnitt 6) – Messung ab Schritt 1.1 | 2026-09-26 | Summe über 50 € |
+| Hosting | laufend | Schätzung ca. 4–6 € (kleiner VPS) – Festlegung in Schritt 4.2 | 2026-09-26 | Summe über 50 € |
 
 <!-- ANCHOR:entscheidungsbefugnisse -->
 ## 9. Entscheidungsbefugnisse

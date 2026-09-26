@@ -1,6 +1,6 @@
 # Requirements – Skriptorium
 
-<!-- Klasse M (Hypothese, ADR-001 im Entwurf): in Modus 2 aus docs/vision.md abgeleitet
+<!-- Klasse M (ADR-001): in Modus 2 aus docs/vision.md abgeleitet
      (templates/projektstart.md Schritt 1a, verkürzte Form). Abschnitte 1, 3, 5, 6 Pflicht;
      2 und 4 optional. Vertiefung auf Anforderung, nicht Mindest-Lektüre (CLAUDE.md Abschnitt 2). -->
 
@@ -13,9 +13,9 @@
 |---|---|
 | Anforderungen gesamt | 25 |
 | davon Muss / Soll / Kann | 19 / 4 / 1 |
-| Muss-Anforderungen ohne Fahrplan-Schritt | 19 – Fahrplan entsteht in Modus 2 Schritt 6 |
+| Muss-Anforderungen ohne Fahrplan-Schritt | 0 (Fahrplan befüllt in Modus 2 Schritt 6, 2026-09-26) |
 | Muss-Anforderungen ohne Test (Pflicht ab Klasse G) | nicht anwendbar (Klasse M) |
-| Verworfen (mit ADR) | 1 (FR-006, ADR folgt in Schritt 5) |
+| Verworfen (mit ADR) | 1 (FR-006, ADR-009) |
 
 **Offene Punkte:** siehe Abschnitt 7 („Klärungsfragen aus der Ableitung").
 
@@ -58,8 +58,8 @@
 | Übergeordnete Multiversums-Ebene (weltübergreifende Kosmologie oder Zeitlinie) | Vision Abschnitt 5 – Verbindungen entstehen nur durch Geschichten | 2026-09-26 (Vision) | Vision-Pivot per ADR |
 | Automatisches Übernehmen von Kanon-Bezügen oder neuen Fakten ohne Zutun des Autors | Vision Abschnitt 3 – nur Vorschlag; Autor trägt selbst ein | 2026-09-26 (Vision) | Vision-Pivot per ADR |
 | Selbst betriebenes KI-Modell | Vision Abschnitt 6 – technisch nicht umsetzbar | 2026-09-26 (Vision) | Rahmenbedingung ändert sich |
-| Publizieren (Satz, Export, Veröffentlichung) | Vision Abschnitt 5 – nicht in der ersten Version, nicht ausgeschlossen | 2026-09-26 (Vision) | Landeplatz als `[VERSCHOBEN]`-Schritt im Fahrplan (Modus 2 Schritt 6) |
-| Bilder und Karten | Vision Abschnitt 5 – nicht in der ersten Version, nicht ausgeschlossen | 2026-09-26 (Vision) | Landeplatz als `[VERSCHOBEN]`-Schritt im Fahrplan (Modus 2 Schritt 6) |
+| Publizieren (Satz, Export, Veröffentlichung) | Vision Abschnitt 5 – nicht in der ersten Version, nicht ausgeschlossen | 2026-09-26 (Vision) | Landeplatz: Fahrplan-Schritt V.1 `[VERSCHOBEN]` → 5.5 |
+| Bilder und Karten | Vision Abschnitt 5 – nicht in der ersten Version, nicht ausgeschlossen | 2026-09-26 (Vision) | Landeplatz: Fahrplan-Schritt V.2 `[VERSCHOBEN]` → 5.5 |
 
 <!-- ANCHOR:kernprozesse -->
 ## 4. Kernprozesse
@@ -75,31 +75,31 @@
 
 | ID | Anforderung | Anwendungsfall | Priorität | Prüfbare Akzeptanz | Fahrplan-Schritt | Test (ab Klasse G) | Status |
 |---|---|---|---|---|---|---|---|
-| FR-001 | Mehrere Welten führen; Kanon und Geschichten jeder Welt sind voneinander getrennt | UC-001 | Muss | Ein Eintrag aus Welt A erscheint weder in Vorschlägen noch im KI-Kontext einer Geschichte in Welt B, solange diese Geschichte keine Verbindung herstellt | TBD (Modus 2 Schritt 6) | – | OFFEN |
-| FR-002 | Kanon-Einträge der Kategorien Figur, Ort/Geografie, Gegenstand, Zeitlinie, Regel, Kultur anlegen, ändern, löschen | UC-002 | Muss | Je Kategorie ein Eintrag anlegbar, änderbar, löschbar; Änderung ist in der nächsten KI-Anfrage wirksam | TBD | – | OFFEN |
-| FR-003 | Gegenstands-Einträge tragen Zweck, Verwendung und Auswirkung auf Welt und Figuren; die KI berücksichtigt sie im weiteren Text | UC-002, UC-006 | Muss | Szenario 5 der Vision: Nach `@Runenklinge` enthält der KI-Text keine Verwendung, die Zweck oder Wirkung widerspricht | TBD | – | OFFEN |
-| FR-004 | Die Zeitlinie ordnet Ereignisse einer Welt in einer Abfolge | UC-002 | Muss | Ereignisse sind in zeitlicher Reihenfolge einsehbar; die KI setzt keine Handlung vor ein Ereignis, das laut Zeitlinie später liegt, ohne dass der Autor es verlangt | TBD | – | OFFEN |
-| FR-005 | Bestehendes Welt-Material (mehrere Dokumente, zweistellige Seitenzahl) einmalig in den Kanon übernehmen | UC-001 | Muss (bestätigt 2026-09-26) | Eine bestehende Welt ist innerhalb des 30-Minuten-Rahmens (FR-022) als Kanon nutzbar | TBD | – | OFFEN |
-| FR-006 | Bestehende Geschichten (insbesondere die Referenzgeschichte) übernehmen und fortschreiben | UC-004 | – | – | – | – | VERWORFEN 2026-09-26 (Entscheidung des Eigentümers; ADR folgt in Modus 2 Schritt 5) |
-| FR-007 | Geschichten je Welt in den Formen Roman (mit Kapiteln), Kurzgeschichte und Fragment führen | UC-011 | Muss | Je Form eine Geschichte anlegbar; Romane in Kapitel gliederbar | TBD | – | OFFEN |
-| FR-008 | Neue Szene aus Vorgabe (Ort, Figuren, Ziel): die KI formuliert einen ersten Absatz unter Kenntnis von Vorgeschichte, Beziehung und Ort | UC-003 | Muss | Szenario 1 der Vision; Absatz widerspricht keinem Kanon-Eintrag der beteiligten Figuren und des Orts | TBD | – | OFFEN |
-| FR-009 | Im Wechsel schreiben: die KI setzt fort, der Autor schreibt und ändert selbst, beides im selben Manuskript | UC-004 | Muss | Autor kann KI-Text übernehmen, ändern oder verwerfen; der Manuskript-Stand ist danach die Grundlage der nächsten Fortsetzung | TBD | – | OFFEN |
-| FR-010 | Beim Weiterschreiben kennt die KI den Handlungsstand aller vorherigen Kapitel, auch bei Umfang der Referenzgeschichte | UC-004 | Muss | Erfolgskriterium „kein Kontextverlust" (Vision 4) an der Referenzgeschichte geprüft; Kostengrenze siehe Abschnitt 6 | TBD | – | OFFEN |
-| FR-011 | Die KI widerspricht dem Kanon der Welt nicht | UC-003, UC-004 | Muss | Höchstens ein beim Redigieren gefundener Kanon-Widerspruch pro Kapitel (Vision 4) | TBD | – | OFFEN |
-| FR-012 | Figuren-Schreibweise: Je Geschichte legt der Autor fest, welche Figur(en) er selbst führt (häufig eine Ich-Figur); die KI führt Welt und übrige Figuren und schreibt die vom Autor geführte Figur nur auf ausdrückliche Anweisung. Erzählperspektive und Aufteilung sind je Geschichte wählbar. Der Wechsel ist das Manuskript, kein getrennter Chat | UC-005, UC-004 | Muss (Hauptarbeitsweise des Eigentümers, 2026-09-26) | In einer Geschichte mit Ich-Figur schreibt die KI ohne Anweisung keine Handlung, Rede oder Gedanken der Ich-Figur; der gesamte Wechsel liegt als fortlaufender Manuskript-Text vor | TBD | – | OFFEN |
-| FR-013 | `@`-Verweis: Eingabe von `@` bietet Einträge der Welt der Geschichte (und ausdrücklich verbundener Einträge) zur Auswahl; der Eintrag wird für die KI herangezogen | UC-006 | Muss | `@Kael` in einer Anweisung → der KI-Text nutzt Wissen, das nur im Eintrag „Kael" steht | TBD | – | OFFEN |
-| FR-014 | Kanon-Bezüge ohne `@` erkennen und nur als Vorschlag anbieten („Meintest du @Kael?"), nie selbstständig heranziehen | UC-007 | Soll (bestätigt 2026-09-26) | Nicht angenommene Vorschläge beeinflussen den KI-Kontext nicht | TBD | – | OFFEN |
-| FR-015 | Textstelle markieren und als neuen Kanon-Eintrag oder als Ergänzung eines bestehenden eintragen | UC-008 | Muss | Vom Markieren bis zum gespeicherten Eintrag unter 10 Sekunden (Vision 4) | TBD | – | OFFEN |
-| FR-016 | Eine Figur in weiteren Geschichten derselben Welt verwenden, ohne dass ihr Kanon verloren geht | UC-010 | Muss | In Geschichte 2 sind alle in Geschichte 1 eingetragenen Fakten der Figur verfügbar | TBD | – | OFFEN |
-| FR-017 | Eine Geschichte kann eine Figur (oder einen anderen Eintrag) aus einer anderen Welt einbinden; die Verbindung gilt nur für diese Geschichte | UC-009 | Muss | Szenario 4 der Vision: Übrige Geschichten beider Welten zeigen den Gast-Eintrag weder in Vorschlägen noch im KI-Kontext | TBD | – | OFFEN |
-| FR-018 | KI-Anbieter und Modell wählen und wechseln, ohne Welten oder Texte zu verlieren; nutzbar mit Modellen ohne restriktive Inhaltsfilter für Fiktion | UC-012 | Muss | Wechsel auf ein anderes Modell ohne Datenverlust; Weiterschreiben mit dem neuen Modell in derselben Geschichte | TBD | – | OFFEN |
-| FR-019 | Schreiben und Kanon-Pflege am Smartphone | UC-013 | Soll | UC-003, UC-004, UC-008 auf einem Smartphone-Browser oder -Gerät durchführbar | TBD | – | OFFEN |
-| FR-020 | Welten und Texte liegen als lesbare Dateien vor (z. B. Markdown) oder lassen sich verlustfrei so ausgeben | UC-014 | Soll | Eine Welt samt Geschichten ist ohne das Skriptorium in einem Texteditor lesbar | TBD | – | OFFEN |
-| FR-021 | Wiederverwendung bestehender Open-Source-Bausteine vor Eigenentwicklung | – | Soll | Bestandsprüfung vor der Stack-Entscheidung dokumentiert (ADR-002) | TBD | – | OFFEN |
-| FR-022 | Vom ersten Öffnen bis zur ersten geschriebenen Szene in einer bestehenden Welt höchstens 30 Minuten ohne Anleitung, einschließlich einmaliger Einrichtung | UC-001 | Muss | Stoppuhr-Test durch den Autor (Vision 4) | TBD | – | OFFEN |
-| FR-024 | Beim Eintragen eines neuen Fakts über eine Gast-Figur aus einer anderen Welt wählt der Autor je Fakt: Kanon der Figur (gilt überall, wo sie auftritt) oder nur die verbindende Geschichte | UC-008, UC-009 | Muss (bestätigt 2026-09-26) | Beide Wege wirken wie gewählt; auch mit der Wahl bleibt das Eintragen unter 10 Sekunden (FR-015) | TBD | – | OFFEN |
-| FR-025 | Die KI-Anbindung ist erweiterbar: Weitere API-Anbieter lassen sich künftig parallel zu OpenRouter hinzufügen, ohne die bestehende Anbindung zu ändern; je Geschichte bzw. Anfrage ist der Anbieter wählbar | UC-012 | Muss (Eigentümer, 2026-09-26) | Ein zweiter Anbieter lässt sich über eine neue Anbindung ergänzen, ohne Code der OpenRouter-Anbindung oder der Schreib-Funktionen zu ändern | TBD | – | OFFEN |
-| FR-023 | Zeitlinien-Einträge optional mit Datumsangaben im Kalender der Welt | UC-002 | Kann | – | TBD | – | OFFEN |
+| FR-001 | Mehrere Welten führen; Kanon und Geschichten jeder Welt sind voneinander getrennt | UC-001 | Muss | Ein Eintrag aus Welt A erscheint weder in Vorschlägen noch im KI-Kontext einer Geschichte in Welt B, solange diese Geschichte keine Verbindung herstellt | 3.2 | – | OFFEN |
+| FR-002 | Kanon-Einträge der Kategorien Figur, Ort/Geografie, Gegenstand, Zeitlinie, Regel, Kultur anlegen, ändern, löschen | UC-002 | Muss | Je Kategorie ein Eintrag anlegbar, änderbar, löschbar; Änderung ist in der nächsten KI-Anfrage wirksam | 2.3 | – | OFFEN |
+| FR-003 | Gegenstands-Einträge tragen Zweck, Verwendung und Auswirkung auf Welt und Figuren; die KI berücksichtigt sie im weiteren Text | UC-002, UC-006 | Muss | Szenario 5 der Vision: Nach `@Runenklinge` enthält der KI-Text keine Verwendung, die Zweck oder Wirkung widerspricht | 3.2 | – | OFFEN |
+| FR-004 | Die Zeitlinie ordnet Ereignisse einer Welt in einer Abfolge | UC-002 | Muss | Ereignisse sind in zeitlicher Reihenfolge einsehbar; die KI setzt keine Handlung vor ein Ereignis, das laut Zeitlinie später liegt, ohne dass der Autor es verlangt | 3.2 | – | OFFEN |
+| FR-005 | Bestehendes Welt-Material (mehrere Dokumente, zweistellige Seitenzahl) einmalig in den Kanon übernehmen | UC-001 | Muss (bestätigt 2026-09-26) | Eine bestehende Welt ist innerhalb des 30-Minuten-Rahmens (FR-022) als Kanon nutzbar | 2.4 | – | OFFEN |
+| FR-006 | Bestehende Geschichten (insbesondere die Referenzgeschichte) übernehmen und fortschreiben | UC-004 | – | – | – | – | VERWORFEN (ADR-009), 2026-09-26 |
+| FR-007 | Geschichten je Welt in den Formen Roman (mit Kapiteln), Kurzgeschichte und Fragment führen | UC-011 | Muss | Je Form eine Geschichte anlegbar; Romane in Kapitel gliederbar | 2.5 | – | OFFEN |
+| FR-008 | Neue Szene aus Vorgabe (Ort, Figuren, Ziel): die KI formuliert einen ersten Absatz unter Kenntnis von Vorgeschichte, Beziehung und Ort | UC-003 | Muss | Szenario 1 der Vision; Absatz widerspricht keinem Kanon-Eintrag der beteiligten Figuren und des Orts | 3.3 | – | OFFEN |
+| FR-009 | Im Wechsel schreiben: die KI setzt fort, der Autor schreibt und ändert selbst, beides im selben Manuskript | UC-004 | Muss | Autor kann KI-Text übernehmen, ändern oder verwerfen; der Manuskript-Stand ist danach die Grundlage der nächsten Fortsetzung | 3.3 | – | OFFEN |
+| FR-010 | Beim Weiterschreiben kennt die KI den Handlungsstand aller vorherigen Kapitel, auch bei Umfang der Referenzgeschichte | UC-004 | Muss | Erfolgskriterium „kein Kontextverlust" (Vision 4) an der Referenzgeschichte geprüft; Kostengrenze siehe Abschnitt 6 | 3.6 (Nachweis Referenzumfang: D.4) | – | OFFEN |
+| FR-011 | Die KI widerspricht dem Kanon der Welt nicht | UC-003, UC-004 | Muss | Höchstens ein beim Redigieren gefundener Kanon-Widerspruch pro Kapitel (Vision 4) | 3.3 | – | OFFEN |
+| FR-012 | Figuren-Schreibweise: Je Geschichte legt der Autor fest, welche Figur(en) er selbst führt (häufig eine Ich-Figur); die KI führt Welt und übrige Figuren und schreibt die vom Autor geführte Figur nur auf ausdrückliche Anweisung. Erzählperspektive und Aufteilung sind je Geschichte wählbar. Der Wechsel ist das Manuskript, kein getrennter Chat | UC-005, UC-004 | Muss (Hauptarbeitsweise des Eigentümers, 2026-09-26) | In einer Geschichte mit Ich-Figur schreibt die KI ohne Anweisung keine Handlung, Rede oder Gedanken der Ich-Figur; der gesamte Wechsel liegt als fortlaufender Manuskript-Text vor | 3.4 | – | OFFEN |
+| FR-013 | `@`-Verweis: Eingabe von `@` bietet Einträge der Welt der Geschichte (und ausdrücklich verbundener Einträge) zur Auswahl; der Eintrag wird für die KI herangezogen | UC-006 | Muss | `@Kael` in einer Anweisung → der KI-Text nutzt Wissen, das nur im Eintrag „Kael" steht | 3.5 | – | OFFEN |
+| FR-014 | Kanon-Bezüge ohne `@` erkennen und nur als Vorschlag anbieten („Meintest du @Kael?"), nie selbstständig heranziehen | UC-007 | Soll (bestätigt 2026-09-26) | Nicht angenommene Vorschläge beeinflussen den KI-Kontext nicht | 5.1 | – | OFFEN |
+| FR-015 | Textstelle markieren und als neuen Kanon-Eintrag oder als Ergänzung eines bestehenden eintragen | UC-008 | Muss | Vom Markieren bis zum gespeicherten Eintrag unter 10 Sekunden (Vision 4) | 3.8 | – | OFFEN |
+| FR-016 | Eine Figur in weiteren Geschichten derselben Welt verwenden, ohne dass ihr Kanon verloren geht | UC-010 | Muss | In Geschichte 2 sind alle in Geschichte 1 eingetragenen Fakten der Figur verfügbar | 2.3 | – | OFFEN |
+| FR-017 | Eine Geschichte kann eine Figur (oder einen anderen Eintrag) aus einer anderen Welt einbinden; die Verbindung gilt nur für diese Geschichte | UC-009 | Muss | Szenario 4 der Vision: Übrige Geschichten beider Welten zeigen den Gast-Eintrag weder in Vorschlägen noch im KI-Kontext | 3.7 | – | OFFEN |
+| FR-018 | KI-Anbieter und Modell wählen und wechseln, ohne Welten oder Texte zu verlieren; nutzbar mit Modellen ohne restriktive Inhaltsfilter für Fiktion | UC-012 | Muss | Wechsel auf ein anderes Modell ohne Datenverlust; Weiterschreiben mit dem neuen Modell in derselben Geschichte | 3.9 | – | OFFEN |
+| FR-019 | Schreiben und Kanon-Pflege am Smartphone | UC-013 | Soll | UC-003, UC-004, UC-008 auf einem Smartphone-Browser oder -Gerät durchführbar | 5.2 | – | OFFEN |
+| FR-020 | Welten und Texte liegen als lesbare Dateien vor (z. B. Markdown) oder lassen sich verlustfrei so ausgeben | UC-014 | Soll | Eine Welt samt Geschichten ist ohne das Skriptorium in einem Texteditor lesbar | 5.3 | – | OFFEN |
+| FR-021 | Wiederverwendung bestehender Open-Source-Bausteine vor Eigenentwicklung | – | Soll | Bestandsprüfung vor der Stack-Entscheidung dokumentiert (ADR-002) | – (in Modus 2 erfüllt: `docs/research/bestandspruefung.md`, ADR-004) | – | ERLEDIGT 2026-09-26 |
+| FR-022 | Vom ersten Öffnen bis zur ersten geschriebenen Szene in einer bestehenden Welt höchstens 30 Minuten ohne Anleitung, einschließlich einmaliger Einrichtung | UC-001 | Muss | Stoppuhr-Test durch den Autor (Vision 4) | 4.8 | – | OFFEN |
+| FR-024 | Beim Eintragen eines neuen Fakts über eine Gast-Figur aus einer anderen Welt wählt der Autor je Fakt: Kanon der Figur (gilt überall, wo sie auftritt) oder nur die verbindende Geschichte | UC-008, UC-009 | Muss (bestätigt 2026-09-26) | Beide Wege wirken wie gewählt; auch mit der Wahl bleibt das Eintragen unter 10 Sekunden (FR-015) | 3.8 | – | OFFEN |
+| FR-025 | Die KI-Anbindung ist erweiterbar: Weitere API-Anbieter lassen sich künftig parallel zu OpenRouter hinzufügen, ohne die bestehende Anbindung zu ändern; je Geschichte bzw. Anfrage ist der Anbieter wählbar | UC-012 | Muss (Eigentümer, 2026-09-26) | Ein zweiter Anbieter lässt sich über eine neue Anbindung ergänzen, ohne Code der OpenRouter-Anbindung oder der Schreib-Funktionen zu ändern | 3.1 | – | OFFEN |
+| FR-023 | Zeitlinien-Einträge optional mit Datumsangaben im Kalender der Welt | UC-002 | Kann | – | 5.4 | – | OFFEN |
 
 **Regeln:**
 

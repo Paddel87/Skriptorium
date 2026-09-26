@@ -62,7 +62,7 @@ graph LR
 - **Interne Struktur:** Import als eigenes Untermodul `canon.importers` mit je einem Importer pro Quelle.
 - **Abhängigkeiten (andere Module):** `storage`
 - **Abhängigkeiten (extern):** keine
-- **Offene Fragen:** Inhalt des TypingMind-Agenten-Exports (enthält er Wissensdateien?) – Klärung an einem echten Export, Fahrplan-Schritt [TBD in Modus 2 Schritt 6].
+- **Offene Fragen:** Inhalt des TypingMind-Agenten-Exports (enthält er Wissensdateien?) – Klärung an einem echten Export, Fahrplan-Schritt 1.2.
 
 ### Modul: manuscript [VORLÄUFIG]
 
@@ -81,7 +81,7 @@ graph LR
 - **Öffentliche Schnittstellen:** `ContextBuilder` (Abschnitt 4)
 - **Abhängigkeiten (andere Module):** `canon`, `manuscript` (nur lesend)
 - **NFRs:** Token-Budget je Anfrage (Abschnitt 6); Coverage 90 % (project-context Abschnitt 7).
-- **Offene Fragen:** Wert des Token-Budgets; Tokenzählung je Modell (Schätzung vs. Tokenizer) – Erkundungsschritt [TBD in Modus 2 Schritt 6].
+- **Offene Fragen:** Wert des Token-Budgets; Tokenzählung je Modell (Schätzung vs. Tokenizer) – Erkundungsschritt 1.1.
 
 ### Modul: ai_gateway [VORLÄUFIG]
 
@@ -182,10 +182,10 @@ Alle Verträge sind `[VORLÄUFIG]` seit 2026-09-26 und werden in der Umsetzung v
 
 ### Performance und Kosten
 
-- **Token-Budget je Schreib-Anfrage:** Startwert 30.000 Token Eingabe `[VORLÄUFIG]` – festgelegt im Erkundungsschritt zur Modellwahl [TBD in Modus 2 Schritt 6].
+- **Token-Budget je Schreib-Anfrage:** Startwert 30.000 Token Eingabe `[VORLÄUFIG]` – festgelegt im Erkundungsschritt zur Modellwahl (Fahrplan-Schritt 1.1).
 - **Kosten:** Summe aus KI-Verbrauch und Hosting ≤ 50 € je Monat bei regelmäßiger Nutzung (mehrmals pro Woche, je 1–2 Stunden; geschätzt ca. 400 Anfragen im Monat) `[VORLÄUFIG]`. Überschlag: 400 × 30.000 Token = 12 Mio. Token Eingabe; bei 0,50–3 $ je 1 Mio. Token etwa 6–36 $ plus Ausgabe und Kurzfassungen. Messung im Betrieb über die Verbrauchsdaten aus `ai_gateway`.
 - **Reaktionszeit:** erstes KI-Textstück sichtbar innerhalb von 5 Sekunden nach dem Absenden, sofern der Anbieter antwortet `[VORLÄUFIG]`.
-- **Kontexttreue:** kein Kontextverlust bei einer Geschichte vom Umfang der Referenzgeschichte `[OFFEN]` – Prüfung erst, wenn eine Geschichte diesen Umfang erreicht (Entscheidung des Eigentümers 2026-09-26) [TBD in Modus 2 Schritt 6].
+- **Kontexttreue:** kein Kontextverlust bei einer Geschichte vom Umfang der Referenzgeschichte `[OFFEN]` – Prüfung erst, wenn eine Geschichte diesen Umfang erreicht (Entscheidung des Eigentümers 2026-09-26, ADR-009) – Fahrplan-Schritt D.4 mit Auslöser „Geschichte ≥ 500.000 Token".
 - **Kanon-Treue:** höchstens ein beim Redigieren gefundener Widerspruch pro Kapitel `[OFFEN]` – messbar erst im Schreibbetrieb; Vorprüfung im Erkundungsschritt.
 
 ### Skalierung
@@ -197,7 +197,7 @@ Alle Verträge sind `[VORLÄUFIG]` seit 2026-09-26 und werden in der Umsetzung v
 
 Angelegt im Sicherheitsgrundriss (Modus 2 Schritt 4a, 2026-09-26). Das System wird **öffentlich im Internet mit Passwortschutz** betrieben (Entscheidung des Eigentümers); das Gate vor dem ersten öffentlichen Deployment (CLAUDE.md Abschnitt 12) gilt vollständig.
 
-- **Sicherheitsniveau:** OWASP ASVS 5.0.0 Stufe 1 für die gesamte Anwendung; für Authentifizierung und Sitzungsverwaltung Stufe 2 – ADR [TBD in Modus 2 Schritt 5] `[BELASTBAR]` nach ADR. Obergrenze für allen Sicherheitsaufwand (CLAUDE.md Abschnitt 6).
+- **Sicherheitsniveau:** OWASP ASVS 5.0.0 Stufe 1 für die gesamte Anwendung; für Authentifizierung und Sitzungsverwaltung Stufe 2 – ADR-006 `[BELASTBAR]`. Obergrenze für allen Sicherheitsaufwand (CLAUDE.md Abschnitt 6).
 - **Bedrohungsmodell (Gesamtsystem):** `[VORLÄUFIG]`
   - **Schützenswerte Güter:** (1) API-Schlüssel der KI-Anbieter – höchster Wert, weil Missbrauch direkt Geld kostet; (2) Welten und Manuskripte – Schutzbedarf normal; (3) Verfügbarkeit – gering, Stillstand ist zulässig.
   - **Angreifer:** automatisierte Internet-Scanner und Bots; Passwort-Rater (Credential Stuffing); opportunistische Ausnutzung ungepatchter Software. Kein gezielter Angreifer mit großen Mitteln angenommen.
@@ -212,10 +212,10 @@ Angelegt im Sicherheitsgrundriss (Modus 2 Schritt 4a, 2026-09-26). Das System wi
   - **Bewusst nicht abgedeckt:** gezielte Angriffe mit großen Mitteln; Zugriff durch den Hosting-Anbieter; Vertraulichkeit gegenüber dem KI-Anbieter (Übermittlung ist laut Vision zulässig).
 - **Schutzmaßnahmen:** siehe Bedrohungsmodell; Umsetzung im Modul `api` (Anmeldung, Sitzung, Herkunftsprüfung) und `ui` (Darstellung ohne ungefiltertes HTML).
 - **Sensitive Datenflüsse:** API-Schlüssel: Umgebungsvariable → `ai_gateway` → HTTPS zum Anbieter. Passwort-Hash: Konfiguration des Servers. Texte: Browser ↔ Server (TLS) → Anbieter (HTTPS).
-- **Host:** [TBD – Anbieter und Härtung im Gate-Schritt vor dem ersten öffentlichen Deployment; Pflicht: Firewall, SSH nur mit Schlüssel, automatische Sicherheitsupdates, Prüfung von außen] `[OFFEN]`
-- **Netz:** von außen nur HTTPS (443) und die Umleitung von HTTP (80); SSH [TBD im Gate-Schritt]; TLS-Zertifikat automatisch erneuert `[VORLÄUFIG]`
-- **Secrets im Betrieb:** API-Schlüssel und Passwort-Hash als Umgebungsvariablen auf dem Server; Rotationsweg: neuen Schlüssel bei OpenRouter erzeugen, eintragen, alten widerrufen [TBD – Ablageort im Gate-Schritt]. Kein Zugriff der KI auf Produktions-Secrets. `[OFFEN]`
-- **Backups und Wiederherstellung:** Datenverzeichnis (Markdown-Dateien) täglich außerhalb des Servers sichern; Index wird nicht gesichert, sondern neu aufgebaut. Ziel und Verfahren [TBD im Gate-Schritt]; Beförderung erst nach erprobter Wiederherstellung. `[OFFEN]`
+- **Host:** [TBD – Anbieter und Härtung in Schritt 4.2; Pflicht: Firewall, SSH nur mit Schlüssel, automatische Sicherheitsupdates, Prüfung von außen] `[OFFEN]`
+- **Netz:** von außen nur HTTPS (443) und die Umleitung von HTTP (80); SSH [TBD in Schritt 4.2]; TLS-Zertifikat automatisch erneuert `[VORLÄUFIG]`
+- **Secrets im Betrieb:** API-Schlüssel und Passwort-Hash als Umgebungsvariablen auf dem Server; Rotationsweg: neuen Schlüssel bei OpenRouter erzeugen, eintragen, alten widerrufen [TBD – Ablageort in Schritt 4.2]. Kein Zugriff der KI auf Produktions-Secrets. `[OFFEN]`
+- **Backups und Wiederherstellung:** Datenverzeichnis (Markdown-Dateien) täglich außerhalb des Servers sichern; Index wird nicht gesichert, sondern neu aufgebaut. Ziel und Verfahren [TBD in Schritt 4.3]; Beförderung erst nach erprobter Wiederherstellung. `[OFFEN]`
 
 ### Observability
 
@@ -225,9 +225,9 @@ Angelegt im Sicherheitsgrundriss (Modus 2 Schritt 4a, 2026-09-26). Das System wi
 
 ### Datenschutz
 
-- **Schutzbedarf:** normal für Welten und Manuskripte („unangenehm, kein Schaden", Eigentümer 2026-09-26) – ADR [TBD in Modus 2 Schritt 5] `[BELASTBAR]` nach ADR. Obergrenze für alle Datenschutz-Maßnahmen.
+- **Schutzbedarf:** normal für Welten und Manuskripte („unangenehm, kein Schaden", Eigentümer 2026-09-26) – ADR-007 `[BELASTBAR]`. Obergrenze für alle Datenschutz-Maßnahmen.
 - **Datenkategorien:** fiktionale Texte des Eigentümers; personenbezogen sind nur Zugangsdaten des einen Nutzers. Keine Daten Dritter.
-- **Speicherort:** Datenverzeichnis auf dem Server; Sicherungen [TBD im Gate-Schritt]; Übermittlung von Ausschnitten an KI-Anbieter (Vision Abschnitt 6).
+- **Speicherort:** Datenverzeichnis auf dem Server; Sicherungen [TBD in Schritt 4.3]; Übermittlung von Ausschnitten an KI-Anbieter (Vision Abschnitt 6).
 - **Retention und Löschung:** nach Wunsch des Eigentümers; keine gesetzliche Löschpflicht gegenüber Dritten.
 
 <!-- ANCHOR:datenmodell -->
@@ -261,12 +261,12 @@ data/
 <!-- ANCHOR:verworfene-alternativen -->
 ## 8. Verworfene Alternativen
 
-- **Anpassung eines vorhandenen Werkzeugs (The Story Nexus, Story Labyrinth, SillyTavern) als Code-Basis:** fremde Form, Rückbau nötig, die unterscheidenden Funktionen wären ohnehin neu zu bauen – siehe ADR [TBD in Modus 2 Schritt 5]
+- **Anpassung eines vorhandenen Werkzeugs (The Story Nexus, Story Labyrinth, SillyTavern) als Code-Basis:** fremde Form, Rückbau nötig, die unterscheidenden Funktionen wären ohnehin neu zu bauen – siehe ADR-004
 - **Obsidian-Plugin statt eigener Web-App:** Empfehlung der KI, vom Eigentümer zugunsten einer eigenen Web-App verworfen – siehe ADR-002
 - **Web-App durchgehend in TypeScript:** eine Sprache, aber schwächeres Ökosystem für KI-Werkzeuge nach Einschätzung des Eigentümers – siehe ADR-002
 - **Svelte statt React:** höheres Fehlerrisiko bei KI-geschriebenem Code nach der Umstellung von Svelte 5 – siehe ADR-002
 - **Mehrere getrennt betriebene Dienste:** kein Nutzen bei einem Nutzer – siehe ADR-003
-- **Nur Datenbank als Speicher / nur Dateien ohne Index:** Datenbank allein widerspricht offenen Formaten; Dateien ohne Index vom Eigentümer zugunsten schnellerer Suche verworfen – siehe ADR-003
+- **Nur Datenbank als Speicher / nur Dateien ohne Index:** Datenbank allein widerspricht offenen Formaten; Dateien ohne Index (Empfehlung der KI) vom Eigentümer zugunsten von Dateien plus Suchindex verworfen – siehe ADR-003
 - **Ganzen Verlauf bei jeder Anfrage mitschicken (Ist-Zustand TypingMind):** Kosten und Kontextgrenzen sind der Anlass des Projekts – siehe ADR-003
 
 <!-- ANCHOR:reifegrad-uebersicht -->
@@ -276,23 +276,23 @@ data/
 |---|---|---|---|
 | Architektur-Pattern Modularer Monolith | BELASTBAR | 2026-09-26 | ADR-003 |
 | Kommunikations-Grundmodus synchron + SSE | VORLÄUFIG | 2026-09-26 | Umsetzung |
-| Modul canon | VORLÄUFIG | 2026-09-26 | Umsetzung; Klärung TypingMind-Export |
+| Modul canon | VORLÄUFIG | 2026-09-26 | Beförderung 1.4; Klärung TypingMind-Export 1.2; Umsetzung 2.3, 2.4 |
 | Modul manuscript | VORLÄUFIG | 2026-09-26 | Umsetzung |
-| Modul context | VORLÄUFIG | 2026-09-26 | Erkundungsschritt Modellwahl und Budget |
-| Modul ai_gateway | VORLÄUFIG | 2026-09-26 | Umsetzung; Erkundungsschritt (Ablehnungen) |
+| Modul context | VORLÄUFIG | 2026-09-26 | Erkundungsschritt 1.1; Beförderung 1.4; Umsetzung 3.2 |
+| Modul ai_gateway | VORLÄUFIG | 2026-09-26 | Erkundungsschritte 1.1 (Ablehnungen), 1.3 (httpx); Beförderung 1.4; Umsetzung 3.1 |
 | Modul storage | VORLÄUFIG | 2026-09-26 | Umsetzung; Tempo bei großen Geschichten |
 | Modul api | VORLÄUFIG | 2026-09-26 | Umsetzung; Zugangsschutz nach 4a |
 | Modul ui | VORLÄUFIG | 2026-09-26 | Umsetzung; Smartphone-Test |
 | Alle Schnittstellen (Abschnitt 4) | VORLÄUFIG | 2026-09-26 | Umsetzung |
 | Datenmodell (Abschnitt 7) | VORLÄUFIG | 2026-09-26 | Umsetzung |
-| NFR Token-Budget | VORLÄUFIG | 2026-09-26 | Erkundungsschritt |
-| NFR Kontexttreue Referenzumfang | OFFEN | 2026-09-26 | Geschichte ≥ Referenzumfang |
-| NFR Kanon-Treue | OFFEN | 2026-09-26 | Schreibbetrieb, Vorprüfung im Erkundungsschritt |
-| Sicherheitsniveau ASVS 5.0.0 L1 / Auth L2 | VORLÄUFIG | 2026-09-26 | ADR in Modus 2 Schritt 5 |
-| Bedrohungsmodell Gesamtsystem | VORLÄUFIG | 2026-09-26 | Gate-Schritt vor erstem öffentlichen Deployment |
-| Schutzbedarf normal | VORLÄUFIG | 2026-09-26 | ADR in Modus 2 Schritt 5 |
-| Host, Secrets im Betrieb, Backups | OFFEN | 2026-09-26 | Gate-Schritt vor erstem öffentlichen Deployment |
-| Netz (nur HTTPS von außen) | VORLÄUFIG | 2026-09-26 | Gate-Schritt |
+| NFR Token-Budget | VORLÄUFIG | 2026-09-26 | Erkundungsschritt 1.1 |
+| NFR Kontexttreue Referenzumfang | OFFEN | 2026-09-26 | Schritt D.4 (Geschichte ≥ 500.000 Token) |
+| NFR Kanon-Treue | OFFEN | 2026-09-26 | Schreibbetrieb ab 3.3, Vorprüfung in 1.1 |
+| Sicherheitsniveau ASVS 5.0.0 L1 / Auth L2 | BELASTBAR | 2026-09-26 | ADR-006 |
+| Bedrohungsmodell Gesamtsystem | VORLÄUFIG | 2026-09-26 | Prüfung 4.5, Gate-Schritt 4.6 |
+| Schutzbedarf normal | BELASTBAR | 2026-09-26 | ADR-007 |
+| Host, Secrets im Betrieb, Backups | OFFEN | 2026-09-26 | Schritte 4.2, 4.3, Gate-Schritt 4.6 |
+| Netz (nur HTTPS von außen) | VORLÄUFIG | 2026-09-26 | Schritt 4.2, Gate-Schritt 4.6 |
 
 <!-- ANCHOR:tooling-inventar -->
 ## 10. Tooling-Inventar

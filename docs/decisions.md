@@ -16,23 +16,26 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-[Tabelle für schnellen Zugriff. Wird zu Sessionende aktualisiert, wenn ADRs hinzugekommen oder Status geändert wurden.
-Sortiert nach Nummer, durch Tag-Spalte filterbar. Diese Übersicht ist die Mindest-Lektüre bei Sessionstart.]
+Stand 2026-09-26 (Modus 2 Schritt 5). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
-| 001 | YYYY-MM-DD | Aktiv | STRATEGISCH | METHODIK | Methodik | Vorlagen-Anpassung |
-| 002 | YYYY-MM-DD | Aktiv | STRATEGISCH | STACK | Externe Abh. | Stack-Wahl |
-| ... | | | | | | |
+| 001 | 2026-09-26 | Aktiv | STRATEGISCH | METHODIK | Methodik | Klasse M und Zuschnitt des Vorlagen-Sets |
+| 002 | 2026-09-26 | Aktiv | STRATEGISCH | STACK | Externe Abh. | Stack: Web-App mit Python-Server und TypeScript-Oberfläche |
+| 003 | 2026-09-26 | Aktiv | STRATEGISCH | MODUL, DATENMODELL, PERFORMANCE | Architektur, Datenmodell | Modularer Monolith, Dateien plus Index, Kontext-Verfahren |
+| 004 | 2026-09-26 | Aktiv | STRATEGISCH | STACK | Architektur, Externe Abh. | Schlanker Eigenbau statt Anpassung eines Werkzeugs |
+| 005 | 2026-09-26 | Aktiv | STRATEGISCH | – | Lizenz | Projektlizenz AGPL-3.0 |
+| 006 | 2026-09-26 | Aktiv | STRATEGISCH | SECURITY, DEPLOYMENT | Sicherheit, Deploy | Öffentlicher Betrieb mit Passwort, ASVS 5.0.0 L1 / Auth L2 |
+| 007 | 2026-09-26 | Aktiv | STRATEGISCH | SECURITY | Sicherheit und Datenschutz | Schutzbedarf normal |
+| 008 | 2026-09-26 | Aktiv | STRATEGISCH | SECURITY, DEPLOYMENT | Sicherheit und Datenschutz | Verzicht auf Vertretung (Gate-Punkt 7) |
+| 009 | 2026-09-26 | Aktiv | STRATEGISCH | METHODIK | Methodik (Descope) | FR-006 verworfen: keine Übernahme bestehender Geschichten |
 
 ### Reaktiv-Quote
 
-[Anzahl `[REAKTIV]`-ADRs / Gesamtzahl ADRs der letzten 30 Tage. Wenn der Wert über
-einem projektspezifischen Schwellenwert liegt: Hinweis auf strukturelles Architekturproblem,
-ggf. ERKUNDUNG-Phase einschieben.]
+Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** [X / Y]
-- **Schwellenwert (in `project-context.md` festgelegt):** [Z]
+- **Aktueller Wert:** 0 / 9 (0 %) – alle ADRs stammen aus der Initialisierung (Modus 2) und sind geplant, nicht reaktiv.
+- **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
 ---
@@ -93,22 +96,219 @@ Durchgehend, keine Lücken. Auch verworfene oder überholte Einträge behalten i
 
 ### Einträge
 
-#### ADR-001: [Beispiel – bei Projektstart durch echte Initialisierungsentscheidung ersetzen]
+Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung) am 2026-09-26. Entscheider ist in allen Fällen der Eigentümer; die KI hat Optionen und Empfehlungen vorgelegt. Wo der Eigentümer anders entschied als empfohlen, steht das neutral im Feld „Entscheidung". Quelle der Angaben: Dialog der Modus-2-Session, festgehalten in der Übergabe-Datei `docs/modus-2-stand.md` (im Initialisierungs-Commit entfernt, in der Git-Historie erhalten), sowie die zum selben Datum befüllten Pflicht-Dokumente.
 
-- **Datum:** [YYYY-MM-DD]
+#### ADR-001: Projektgrößen-Klasse M und Zuschnitt des Vorlagen-Sets
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
 - **Status:** Aktiv
 - **Tags:** `[STRATEGISCH]` `[METHODIK]`
 - **Phasentyp-Kontext:** INITIALISIERUNG
 - **Reifegrad-Wirkung:** keine
 - **Kategorie:** Methodik
-- **Kontext:** Erste Session im Projekt. Vorlagen-Dokumente wurden an die Projektkomplexität angepasst.
+- **Kontext:** Modus 2 verlangt eine zweistufige Klassifikation (`templates/projektstart.md` Abschnitt 2). Stufe 1 (Vision) ergab die Hypothese M: ein Nutzer, eine Betriebseinheit, wenige externe Dienste (OpenRouter), ein fachlich dichter Kern (Kanon, Manuskript, Kontext). Risiko Richtung G war ein möglicher zweiter Speicher für die Kontext-Zusammenstellung langer Geschichten. Stufe 2 (Architektur, Schritt 4) zählte 7 Module (4 fachliche plus `ui`, 2 technische Schichten) und mehr als 5 externe Bibliotheken – zwei G-Indikatoren auf dem Papier.
 - **Optionen:**
-  - A: Volle Vorlagenstruktur übernehmen
-  - B: Reduzierte Struktur für [Projekttyp]
-  - C: Erweiterte Struktur für [Projekttyp]
-- **Entscheidung:** [welche Option]
-- **Konsequenzen:** [welche Abschnitte wurden behalten/entfernt/erweitert]
+  - **A:** Klasse M – Konsequenzen: alle Pflicht-Dokumente in voller Form, `docs/requirements.md` verkürzt aus der Vision abgeleitet, Fahrplan mit 3–5 Phasen, CI mit vollem Gate-Satz je Sprache.
+  - **B:** Klasse G – Konsequenzen: eigener Anforderungsdialog, Tests je Muss-Anforderung, strengerer Reaktiv-Schwellenwert, Aufteilung von Architektur und ADRs in Unterdokumente; mehr Dokumentationsaufwand ohne erkennbaren Nutzen bei einem Nutzer.
+- **Entscheidung:** A – Klasse M. Die Stufe-2-Indikatoren (eine Betriebseinheit, synchrone Kommunikation, eine Quelle der Wahrheit in Dateien mit abgeleitetem Index, ein Nutzer) sprechen für M; die Modulzahl ergibt sich aus der fachlichen Trennung, nicht aus Verteilung. Hypothese vom Eigentümer nach Schritt 1 nicht beanstandet und im Sicherheitsgrundriss (Schritt 4a) ausdrücklich bestätigt.
+- **Vision-Frage, die entschied:** n/a (Methodik-Entscheidung)
+- **Konfidenz zum Zeitpunkt:** n/a (Methodik-Entscheidung)
+- **Konsequenzen:**
+  - Struktur: `docs/decisions.md` als Einzeldatei mit Teil A–C, Teil D optional (genutzt für den Kostenrahmen, BDR-001); `docs/architecture.md` als ein Dokument; `docs/fahrplan.md` mit fünf Phasen plus datierten, ausgelösten und verschobenen Schritten; `docs/requirements.md` und `docs/onboarding-runbook.md` angelegt.
+  - Reaktiv-Schwellenwert 30 % über die letzten 10 ADRs (`docs/project-context.md` Abschnitt 6).
+  - Reklassifikation nach `templates/projektstart.md` Abschnitt 2.4, falls sich ein zweiter Speicher oder weitere Betriebseinheiten als nötig erweisen.
+  - Die temporäre Übergabe-Datei `docs/modus-2-stand.md` entfällt mit dem Initialisierungs-Commit (Modus 2 Schritt 12).
 - **Abgeleitete Regel:** keine (Einzelfall-Entscheidung)
+
+#### ADR-002: Stack – Web-App mit Python-Server und TypeScript-Oberfläche
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[STRATEGISCH]` `[STACK]`
+- **Phasentyp-Kontext:** INITIALISIERUNG
+- **Reifegrad-Wirkung:** keine unmittelbare; die Bausteine sind Grundlage der `[VORLÄUFIG]`-Module in `docs/architecture.md`
+- **Kategorie:** Externe Abhängigkeiten (`CLAUDE.md` Abschnitt 4, Kategorie 3)
+- **Kontext:** Die Vision lässt die Technologie offen (Vision 6), verlangt aber Cloud-KI mit freier Modellwahl, Nutzung am Smartphone und offene Formate (Vision 7). Nach der Bestandsprüfung (`docs/research/bestandspruefung.md`) und der Grundsatzentscheidung für einen Eigenbau (ADR-004) standen Plattform, Bausteine und Versionen an.
+- **Optionen:**
+  - **A:** Web-App durchgehend in TypeScript – Konsequenzen: eine Sprache für Server und Oberfläche; schwächeres Ökosystem für KI-Werkzeuge (Kontext, Zusammenfassung, Suche).
+  - **B:** Eigene Web-App, Server in Python, Oberfläche in TypeScript – Konsequenzen: zwei Sprachen und zwei Werkzeugketten; stärkstes Ökosystem für KI-Werkzeuge; Server, Zugangsschutz, Backups und das Gate vor dem ersten öffentlichen Deployment (`CLAUDE.md` Abschnitt 12) werden Pflicht.
+  - **C:** Obsidian-Plugin – Konsequenzen: kein eigener Server, kein Zugangsschutz, kein Sicherheits-Gate; Obsidian ist kostenlos für jeden Zweck (obsidian.md/license, Stand 2025-02-20), Plugins laufen mobil ohne Node/Electron (docs.obsidian.md, Mobile development); Bindung an die Plugin-Schnittstelle von Obsidian.
+- **Entscheidung:** B. **Empfehlung der KI war C** (Konfidenz mittel), begründet mit dem Wegfall von Server, Zugangsschutz und Sicherheits-Gate. **Der Eigentümer entschied sich für B.** Grund des Eigentümers: Python ist bei KI-Werkzeugen (Kontext, Zusammenfassung, Suche) am stärksten verbreitet – das wiegt für ihn schwerer als eine einzige Sprache. Bausteine (Eigentümer, 2026-09-26): Server FastAPI; Oberfläche React; Editor CodeMirror 6 mit sichtbarem Markdown; KI-Anbindung an OpenRouter direkt über httpx, erweiterbar für weitere Anbieter parallel (FR-025); Werkzeuge uv (Python) und npm (Oberfläche). Die KI hatte für die Oberfläche zunächst Svelte empfohlen und die Empfehlung selbst zugunsten React revidiert (größerer Bestand an Beispielen; Svelte 5 hat 2024 die Schreibweise umgestellt, das erhöht das Fehlerrisiko bei KI-geschriebenem Code; Konfidenz mittel). Versionen nach Versions-Verifikation, vom Eigentümer bestätigt am 2026-09-26 (`docs/research/versions-verifikation.md`, übernommen in `docs/project-context.md` Abschnitt 3): Python 3.14.7, TypeScript 6.0.3, FastAPI 0.141.1 (`<0.142`), Pydantic 2.13.5, uvicorn 0.52.4, httpx 0.28.1, React/react-dom 19.2.8, Vite 8.3.1, @vitejs/plugin-react 6.1.1, CodeMirror 6 (@codemirror/state 6.7.6, view 6.43.13, autocomplete 6.20.3, lang-markdown 6.5.2), Node.js 24.21.0 (nur Build), uv 0.12.19, npm 11.19.0.
+- **Vision-Frage, die entschied:** „Möchtest du in einer vorhandenen Schreib-App schreiben, die das Skriptorium erweitert – oder in einer eigenen Webseite, die komplett nach dir gebaut ist und dafür Server und Pflege braucht?" → eigene Webseite. Zwischen A und B ausschlaggebend die Abwägung des Eigentümers „starkes KI-Ökosystem vor einer einzigen Sprache"; der Verzicht auf Obsidian nimmt Server, Zugangsschutz und Sicherheits-Gate bewusst in Kauf.
+- **Konfidenz zum Zeitpunkt:** Empfehlung C: mittel. Svelte→React-Revision: mittel. Umkehrbarkeit: teuer (Plattform- und Sprachwahl trägt den gesamten Code).
+- **Konsequenzen:**
+  - Stack-Fixierung in `docs/project-context.md` Abschnitt 3; Major-Updates brauchen erneute Verifikation und einen ADR.
+  - Verworfene Alternativen (Obsidian-Plugin, TypeScript-only, Svelte, TipTap) stehen in `docs/architecture.md` Abschnitt 8.
+  - Nachprüfungen und Wechsel im Ablaufdaten-Register (`docs/project-context.md` Abschnitt 8) mit Fahrplan-Schritten: httpx auf Python 3.14.7 (1.3) und Nachprüfung (D.3), TypeScript 7 (D.2), Node 24 → 26 LTS (D.1).
+  - Entwicklungswerkzeuge (Linter, Typprüfer, Test-Runner) werden im Projektgerüst (Schritt 2.1) gepinnt; ein YAML-Parser ist eine neue, freigabepflichtige Abhängigkeit (Schritt 2.2).
+  - Server, Zugangsschutz und Gate sind Pflicht (siehe ADR-006).
+- **Abgeleitete Regel:** Regel-001 (Versionswahl innerhalb einer Linie)
+
+#### ADR-003: Architektur – modularer Monolith, Markdown-Dateien plus SQLite-Index, Kontext-Verfahren
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[STRATEGISCH]` `[MODUL]` `[DATENMODELL]` `[PERFORMANCE]`
+- **Phasentyp-Kontext:** INITIALISIERUNG
+- **Reifegrad-Wirkung:** Architektur-Pattern „Modularer Monolith" → `[BELASTBAR]`. Module, Schnittstellen, Datenmodell und Kontext-Verfahren bleiben `[VORLÄUFIG]`; Token-Budget `[VORLÄUFIG]` bis Schritt 1.1.
+- **Kategorie:** Architekturänderungen und Datenmodell (`CLAUDE.md` Abschnitt 4, Kategorien 1 und 4)
+- **Kontext:** Ein Nutzer, ein Betriebsziel, fachlich dichter Kern. Anlass des Projekts sind Kosten und Kontextgrenzen, weil heute bei jeder Anfrage der gesamte Verlauf mitgeschickt wird (Vision 2, 4). Zu entscheiden waren Bauweise, Speicherform und das Verfahren, mit dem eine KI-Anfrage zusammengestellt wird.
+- **Optionen:**
+  - **Bauweise A:** modularer Monolith – eine Betriebseinheit mit fachlich getrennten Modulen (`canon`, `manuscript`, `context`, `ai_gateway`, `storage`, `api`, `ui`).
+  - **Bauweise B:** mehrere getrennt betriebene Dienste – kein Nutzen bei einem Nutzer, mehr Betriebsaufwand.
+  - **Speicher A:** nur Markdown-Dateien, kein zweiter Speicher.
+  - **Speicher B:** Markdown-Dateien mit YAML-Kopf als Quelle der Wahrheit plus SQLite-Suchindex, der jederzeit vollständig aus den Dateien neu aufgebaut werden kann.
+  - **Speicher C:** nur Datenbank – widerspricht offenen, lesbaren Formaten (Vision 7, FR-020).
+  - **Kontext-Verfahren:** feste Vorrangfolge unter Token-Budget – (1) Regeln und Schreibanweisung inkl. Figuren-Schreibweise, (2) per `@` genannte Einträge und Einträge der Figuren der Szene, (3) Gesamtzusammenfassung und Kapitel-Kurzfassungen, (4) letzte Manuskript-Seiten wörtlich; Alternative „ganzen Verlauf mitschicken" (Ist-Zustand TypingMind).
+- **Entscheidung:** Bauweise A (Empfehlung der KI über Heuristik 1.3: ein Nutzer, ein Betriebsziel, fachliche Komplexität; Konfidenz hoch). **Speicher: Empfehlung der KI war A („nur Dateien"); der Eigentümer entschied sich für B.** Einen eigenen Grund hat der Eigentümer nicht genannt; Option B war ihm als „wie A, dazu schnellere Suche bei sehr großen Beständen; zweiter Speicher, mehr Fehlerquellen, heute kein belegter Bedarf" vorgelegt. Begründung der KI-Empfehlung A: Default-Bias aus `templates/architektur-heuristiken.md` Teil 1 (einfachste Option, bis Bedarf belegt ist); der Index sollte ein späterer Ausbau per ADR bleiben. Umsetzung von B: Die Markdown-Dateien bleiben Quelle der Wahrheit, der SQLite-Index ist jederzeit aus ihnen neu aufbaubar. Kontext-Verfahren wie oben mit Startbudget 30.000 Token Eingabe, ausdrücklich `[VORLÄUFIG]`; Festlegung von Startmodell und Budget im Erkundungsschritt 1.1.
+- **Vision-Fragen, die entschieden:** Bauweise: „Soll das Skriptorium irgendwann viele Nutzer gleichzeitig bedienen?" → nein (Vision 5). Speicher: „Ist es dir wichtig, deine Welten und Texte jederzeit direkt als Dateien öffnen und sichern zu können?" → Dateien bleiben Quelle der Wahrheit, zusätzlich Index. Kontext-Verfahren: „Bist du bereit, Kapitel-Zusammenfassungen bei Bedarf kurz zu prüfen, damit der Handlungsstand stimmt?" → Verfahren nach Erklärung bestätigt.
+- **Konfidenz zum Zeitpunkt:** Bauweise hoch; Speicherform mittel (Tempo bei Geschichten von 500.000 Token nicht gemessen); Kontext-Verfahren mittel (verbreitetes Verfahren, für diesen Kanon nicht erprobt) – bewusst `[VORLÄUFIG]`, geprüft in Schritt 1.1, Beförderung in Schritt 1.4. Umkehrbarkeit: Bauweise mittel, Speicherform mittel, Kontext-Verfahren billig (Budget und Bausteine sind Einstellungen).
+- **Konsequenzen:**
+  - Nur die Beziehungen der Modul-Karte (`docs/architecture.md` Abschnitt 2) sind erlaubt; `storage` ist die einzige Stelle, die Dateien und Index berührt; `context` liest nur; `ai_gateway` kennt keine Fachbegriffe.
+  - Der Index enthält nichts, was nicht aus den Dateien wiederherstellbar ist; gesichert werden nur die Dateien.
+  - Ein YAML-Parser für den Dateikopf ist eine neue externe Abhängigkeit – Freigabe in Schritt 2.2.
+  - Die Prüfung „kein Kontextverlust" beim Referenzumfang ist erst möglich, sobald eine Geschichte ≥ 500.000 Token erreicht (Schritt D.4; FR-006 verworfen, ADR-009).
+- **Abgeleitete Regel:** keine (Leitregeln stehen in `docs/architecture.md` Abschnitt 2)
+
+#### ADR-004: Schlanker Eigenbau statt Anpassung eines vorhandenen Werkzeugs
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[STRATEGISCH]` `[STACK]`
+- **Phasentyp-Kontext:** INITIALISIERUNG
+- **Reifegrad-Wirkung:** keine
+- **Kategorie:** Architektur und externe Abhängigkeiten (`CLAUDE.md` Abschnitt 4, Kategorien 1 und 3)
+- **Kontext:** Vision 7 bevorzugt die Wiederverwendung bestehender Open-Source-Bausteine (FR-021); Vision 9 ließ „Eigenbau vs. Anpassung" bewusst offen bis nach einer Bestandsprüfung. Die Bestandsprüfung (`docs/research/bestandspruefung.md`) ordnete The Story Nexus, Story Labyrinth und SillyTavern (alle AGPL-3.0) als Basis zur Anpassung denkbar ein, weitere Werkzeuge nur als Vorbild für Konzepte. Die unterscheidenden Funktionen (`@`-Menü, Gast-Figuren-Logik FR-017/FR-024) sind bei keinem Werkzeug belegt.
+- **Optionen:**
+  - **A:** Anpassung von The Story Nexus oder Story Labyrinth – Konsequenzen: schneller Start; fremde Form, Rückbau nötig (u. a. Mehrbenutzer-Rollen, großer Funktionsumfang), Differenzierungsmerkmale ohnehin neu zu bauen; AGPL-3.0 würde die Projektlizenz festlegen.
+  - **B:** Schlanker Eigenbau, Konzepte aus der Bestandsprüfung übernehmen, kein fremder Code – Konsequenzen: später nutzbar, dafür genau in der Arbeitsweise des Eigentümers; Projektlizenz frei wählbar.
+  - **C:** Praxistest der Kandidaten vorab – Konsequenzen: Erkenntnis aus Erprobung statt aus Code und Doku, Verzögerung vor jeder Umsetzung.
+- **Entscheidung:** B (Empfehlung der KI über Heuristik 1.3 – weniger Abhängigkeiten – und Default-Bias; vom Eigentümer gewählt).
+- **Vision-Frage, die entschied:** „Schnell mit einem fremden Werkzeug in dessen Form – oder etwas später genau in deiner Arbeitsweise?" → Antwort des Eigentümers: eigene Arbeitsweise.
+- **Konfidenz zum Zeitpunkt:** mittel (belegt aus Code und Dokumentation, nicht erprobt); Umkehrbarkeit: teuer.
+- **Konsequenzen:**
+  - Kein fremdes Werkzeug als Code-Basis (`docs/project-context.md` Abschnitt 3, „Explizit nicht erlaubt"); jede Übernahme einzelner Code-Teile ist freigabepflichtig (Kategorien 3 und 8).
+  - Übernommene Konzepte als Vorbild: u. a. `@`-Verweis (Writingway 2), Markieren → Kanon-Eintrag (NovelCrafter), chatgebundene Lorebooks als Muster für Gast-Verbindungen (SillyTavern), Markdown-Vault als offenes Format (Obsidian).
+  - FR-021 (Bestandsprüfung vor der Stack-Entscheidung) ist damit erfüllt.
+  - Mit der späteren Lizenzwahl AGPL-3.0 (ADR-005) entfällt der Lizenz-Nachteil von Option A; der Eigenbau bleibt aus den übrigen Gründen bestehen (Hinweis an den Eigentümer gegeben).
+- **Abgeleitete Regel:** keine (Einzelfall-Entscheidung)
+
+#### ADR-005: Projektlizenz AGPL-3.0
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[STRATEGISCH]`
+- **Phasentyp-Kontext:** INITIALISIERUNG
+- **Reifegrad-Wirkung:** keine
+- **Kategorie:** Lizenz und Compliance (`CLAUDE.md` Abschnitt 4, Kategorie 8)
+- **Kontext:** Vision 6 sieht Open Source vor und ließ die Lizenz bis nach der Bestandsprüfung offen. Nach ADR-004 (kein fremder Code) war die Wahl frei.
+- **Optionen:**
+  - **A:** freizügige Lizenz (z. B. MIT) – andere dürfen den Code auch in ein geschlossenes Produkt übernehmen.
+  - **B:** Copyleft mit Netzwerk-Klausel (AGPL-3.0) – auch wer den Code als Online-Dienst betreibt, muss den Quelltext offenlegen; geschlossene Weiterverwertung ist ausgeschlossen.
+- **Entscheidung:** B – AGPL-3.0. `LICENSE` enthält den Lizenztext aus der SPDX-Lizenzliste (`AGPL-3.0-only.txt`, abgerufen 2026-09-26; gnu.org aus der Arbeitsumgebung nicht erreichbar).
+- **Vision-Frage, die entschied:** „Dürfen andere den Code in ein geschlossenes Produkt übernehmen?" → Antwort des Eigentümers: nein.
+- **Konfidenz zum Zeitpunkt:** n/a (keine Architekturentscheidung)
+- **Konsequenzen:**
+  - Erlaubte Abhängigkeitslizenzen: MIT, BSD-2/3-Clause, Apache-2.0, ISC, PSF-2.0, MPL-2.0, LGPL (2.1 oder später, 3.0), GPL-3.0 (bzw. „2.0 oder später"), AGPL-3.0; Artistic-2.0 nur für Werkzeuge. Ausgeschlossen: GPL-2.0-only, proprietäre Lizenzen, Lizenzen mit Nutzungsbeschränkung – Abweichung nur per ADR (`docs/project-context.md` Abschnitt 6).
+  - Jede neue Abhängigkeit wird vor der Freigabe gegen diese Liste geprüft.
+- **Abgeleitete Regel:** keine (die Lizenzliste steht in `docs/project-context.md` Abschnitt 6)
+
+#### ADR-006: Öffentlicher Betrieb mit Passwortschutz und Sicherheitsniveau ASVS 5.0.0
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[STRATEGISCH]` `[SECURITY]` `[DEPLOYMENT]`
+- **Phasentyp-Kontext:** INITIALISIERUNG
+- **Reifegrad-Wirkung:** Sicherheitsniveau ASVS 5.0.0 L1 / Auth L2 → `[BELASTBAR]`. Bedrohungsmodell bleibt `[VORLÄUFIG]`; Host, Secrets im Betrieb und Backups bleiben `[OFFEN]` bis zu den Schritten 4.2–4.6.
+- **Kategorie:** Sicherheit und Datenschutz sowie Build- und Deploy-Pipeline (`CLAUDE.md` Abschnitt 4, Kategorien 6 und 7)
+- **Kontext:** Der Eigentümer will am Desktop und am Smartphone schreiben (Vision 7); Cloud-Hosting ist erlaubt (Vision 6). Im Sicherheitsgrundriss (Modus 2 Schritt 4a) standen die Erreichbarkeit und das Sicherheitsniveau an. Wichtigstes Gut laut Bedrohungsmodell ist der API-Schlüssel der KI-Anbieter, weil Missbrauch direkt Geld kostet.
+- **Optionen:**
+  - **Erreichbarkeit A:** nur im privaten Netz erreichbar – kleinere Angriffsfläche.
+  - **Erreichbarkeit B:** öffentlich im Internet auf einem gemieteten Server (VPS), geschützt durch Passwort – volles Gate vor dem ersten öffentlichen Deployment (`CLAUDE.md` Abschnitt 12) mit eigenem Fahrplan-Schritt davor.
+  - **Sicherheitsniveau:** OWASP ASVS 5.0.0 Stufe 1 für die gesamte Anwendung, Stufe 2 für Authentifizierung und Sitzungsverwaltung.
+- **Entscheidung:** **Empfehlung der KI war Erreichbarkeit A (nur privates Netz); der Eigentümer entschied sich für B (öffentlich mit Passwort auf VPS).** Einen eigenen Grund hat der Eigentümer nicht genannt. Sicherheitsniveau: ASVS 5.0.0 L1, Authentifizierung und Sitzung L2 – vom Eigentümer freigegeben.
+- **Vision-Frage, die entschied:** „Ist eine einmal eingerichtete VPN-App auf deinen Geräten für dich in Ordnung – oder muss das Skriptorium von jedem beliebigen Gerät ohne Vorbereitung erreichbar sein?" → Erreichbarkeit ohne Vorbereitung (Option B). Sicherheitsniveau: Obergrenze aus Schutzbedarf normal, Anmeldung als einzige Barriere strenger.
+- **Konfidenz zum Zeitpunkt:** Empfehlung A mittel (verbreitetes Muster; Bedingungen des VPN-Dienstes nicht geprüft). Umkehrbarkeit: billig (später privat machen oder öffentlich lassen ist eine Betriebsfrage).
+- **Konsequenzen:**
+  - Das Gate vor dem ersten öffentlichen Deployment gilt vollständig; es steht als eigener Schritt 4.6 vor dem Deployment-Schritt 4.7.
+  - Das Sicherheitsniveau ist Obergrenze für den Sicherheitsaufwand (`CLAUDE.md` Abschnitt 6): jede Maßnahme nennt die ASVS-Anforderung, die sie erfüllt; alles darüber hinaus wird als optional vorgelegt.
+  - Alle Endpunkte außer Gesundheitsprüfung und Anmeldung verlangen eine gültige Sitzung (Schritt 2.6); der OpenRouter-Schlüssel trägt eine Ausgabengrenze beim Anbieter.
+  - Jede Änderung der Kategorie 6 braucht eine Prüfung durch eine getrennte Instanz (Definition of Done).
+- **Abgeleitete Regel:** keine (die Obergrenzen-Regel steht bereits in `CLAUDE.md` Abschnitt 6)
+
+#### ADR-007: Schutzbedarf normal
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[STRATEGISCH]` `[SECURITY]`
+- **Phasentyp-Kontext:** INITIALISIERUNG
+- **Reifegrad-Wirkung:** Schutzbedarf normal → `[BELASTBAR]`
+- **Kategorie:** Sicherheit und Datenschutz (`CLAUDE.md` Abschnitt 4, Kategorie 6)
+- **Kontext:** Das System verarbeitet fiktionale Welten und Manuskripte des Eigentümers; personenbezogen sind nur die Zugangsdaten des einen Nutzers, Daten Dritter gibt es nicht. Die Übermittlung an kommerzielle KI-APIs ist laut Vision 6 zulässig.
+- **Optionen:**
+  - **A:** normal – Obergrenze für Datenschutz-Maßnahmen auf Grundschutz-Niveau.
+  - **B:** hoch – zusätzliche Maßnahmen (z. B. Verschlüsselung ruhender Daten), mehr Aufwand.
+- **Entscheidung:** A – normal.
+- **Vision-Frage, die entschied:** „Wie schlimm wäre es, wenn diese Daten nach außen gelangen?" → Antwort des Eigentümers: „unangenehm, kein Schaden".
+- **Konfidenz zum Zeitpunkt:** n/a (keine Architekturentscheidung)
+- **Konsequenzen:**
+  - Der Schutzbedarf ist Obergrenze für alle Datenschutz-Maßnahmen (`CLAUDE.md` Abschnitt 6).
+  - Keine Inhalte aus Welten oder Manuskripten in Server-Logs; Logs enthalten nur Metadaten (`docs/project-context.md` Abschnitt 6).
+- **Abgeleitete Regel:** keine
+
+#### ADR-008: Verzicht auf eine Vertretung (Gate-Prüfpunkt 7)
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[STRATEGISCH]` `[SECURITY]` `[DEPLOYMENT]`
+- **Phasentyp-Kontext:** INITIALISIERUNG
+- **Reifegrad-Wirkung:** keine
+- **Kategorie:** Sicherheit und Datenschutz (`CLAUDE.md` Abschnitt 4, Kategorie 6 – Verzicht auf einen Gate-Prüfpunkt ist nur per ADR zulässig, `CLAUDE.md` Abschnitt 12)
+- **Kontext:** Gate-Prüfpunkt 7 verlangt eine zweite Person, die im Notfall eingreifen kann, oder den Verzicht per ADR mit benanntem Restrisiko. Das Skriptorium hat genau einen Nutzer und Betreiber.
+- **Optionen:**
+  - **A:** eine zweite Person benennen und einweisen.
+  - **B:** Verzicht – niemand greift ein; Stillstand ist zulässig, Daten bleiben in den Sicherungen.
+- **Entscheidung:** B – Verzicht (Eigentümer, 2026-09-26).
+- **Vision-Frage, die entschied:** „Wer kann eingreifen, wenn du nicht erreichbar bist – und darf das Projekt laufen, wenn es niemanden gibt?" → Antwort des Eigentümers: niemand; Stillstand ist zulässig.
+- **Konfidenz zum Zeitpunkt:** n/a (keine Architekturentscheidung)
+- **Konsequenzen:**
+  - **Restrisiko (benannt):** Ist der Eigentümer nicht erreichbar, bleibt ein Ausfall, ein Fehlverhalten oder ein Einbruch in den öffentlich erreichbaren Server bis zu seiner Rückkehr unbehandelt; das System kann in dieser Zeit stillstehen oder kompromittiert weiterlaufen.
+  - **Restrisiko:** Missbrauch des API-Schlüssels verursacht bis zum Eingreifen Kosten; begrenzt wird der Schaden nur durch die Ausgabengrenze am Schlüssel bei OpenRouter.
+  - **Restrisiko:** Datenverlust ist nur so weit begrenzt, wie die Sicherungen reichen; ohne Eingreifen wird keine Wiederherstellung ausgelöst.
+  - Das Notfall-Handbuch bleibt Pflicht (Gate-Prüfpunkt 7, zweiter Teil): Abschnitt „Notfall" in `docs/onboarding-runbook.md`, Schritt 4.4 – es erlaubt dem Eigentümer ohne KI, das System anzuhalten, eine Sicherung zu ziehen und wiederherzustellen.
+  - Die Ausgabengrenze am OpenRouter-Schlüssel ist Pflicht (ADR-006) und wird im Gate-Schritt 4.6 belegt.
+  - `docs/project-context.md` Abschnitt 8, „Vertretung", verweist auf diesen ADR.
+- **Abgeleitete Regel:** keine
+
+#### ADR-009: Descope FR-006 – keine Übernahme bestehender Geschichten
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[STRATEGISCH]` `[METHODIK]`
+- **Phasentyp-Kontext:** INITIALISIERUNG
+- **Reifegrad-Wirkung:** NFR „Kontexttreue Referenzumfang" bleibt `[OFFEN]` bis Schritt D.4
+- **Kategorie:** Methodik (Descope einer Anforderung, `CLAUDE.md` Abschnitt 6, „Keine Verschiebung ohne Landeplatz")
+- **Kontext:** Bei der Ableitung der Anforderungen (Modus 2 Schritt 1a) war offen, ob bestehender Bestand übernommen wird: Welt-Material (in TypingMind-Agenten und Notion) und bestehende Geschichten, insbesondere die Referenzgeschichte mit 500.000–700.000 Token Chatverlauf (Klärungsfrage 1 in `docs/requirements.md` Abschnitt 7).
+- **Optionen:**
+  - **A:** Welt-Material und Geschichten übernehmen – die Referenzgeschichte stünde als Prüfmaßstab sofort bereit; zusätzlicher Import- und Aufbereitungsaufwand für Chatverläufe.
+  - **B:** nur Welt-Material übernehmen (FR-005, Muss), Geschichten beginnen neu (FR-006 verworfen).
+- **Entscheidung:** B – FR-006 wird verworfen (Entscheidung des Eigentümers, 2026-09-26).
+- **Vision-Frage, die entschied:** „Übernahme von Bestand – Welt-Material, Geschichten oder beides?" (Klärungsfrage 1) → Antwort des Eigentümers: nur Welt-Material; Geschichten beginnen neu.
+- **Konfidenz zum Zeitpunkt:** n/a (keine Architekturentscheidung)
+- **Konsequenzen:**
+  - FR-006 steht in `docs/requirements.md` auf „VERWORFEN (ADR-009)".
+  - Die Erfolgskriterien „kein Kontextverlust" und „günstiger pro Anfrage" (Vision 4) werden an einer neuen Geschichte gleichen Umfangs geprüft, nicht an der Referenzgeschichte. Landeplatz: Schritt D.4 mit Auslöser „Geschichte ≥ 500.000 Token"; bis dahin gilt das Kriterium als unbelegt.
+  - Der Vision-Abgleich an Phasengrenzen führt FR-006 als bewusst ausgeschlossen.
+- **Abgeleitete Regel:** keine
 
 ---
 
@@ -136,41 +336,24 @@ Durchgehend, keine Lücken. Auch verworfene oder überholte Einträge behalten i
 
 ### Regeln
 
-#### Regel-001: [Beispiel]
+#### Regel-001: Versionswahl innerhalb einer Linie
 
-- **Herkunft:** ADR-[Nr.]
-- **Gilt für:** [...]
-- **Regel:** [...]
-- **Ausnahmen:** [...]
-- **Gegenbeispiel:** [...]
+- **Herkunft:** ADR-002
+- **Gilt für:** jede Fixierung oder Aktualisierung einer Version von Sprache, Framework, Bibliothek, Laufzeitumgebung oder Werkzeug, nachdem die Linie nach `CLAUDE.md` Abschnitt 15 („Versionswahl") gewählt ist.
+- **Regel:** Innerhalb der gewählten Linie wird die neueste Unterversion gewählt, die bereits mindestens eine Fehlerkorrektur-Version hat; bei `0.x`-Paketen die neueste Minor-Version mit mindestens einem Patch-Release. Gepinnt wird auf diese Unterversion (z. B. `>=0.141.1,<0.142`).
+- **Ausnahmen:** keine
+- **Gegenbeispiel:** uvicorn 0.54.0 wählen, weil sie die neueste ist, obwohl sie noch keine Fehlerkorrektur-Version hat (gewählt wurde 0.52.4).
 
 <!-- ANCHOR:teil-d-geschaeftsentscheidungen -->
 ## Teil D: Geschäftsentscheidungen (BDR)
 
-[Entscheidungen, die nicht die Technik betreffen, sondern das Vorhaben: Zielgruppe, Preis, Vertrag, Abläufe beim Nutzer, Zusammenarbeit mit Partnern. ADRs bilden das nicht ab. Optional ab Klasse M, aktiv ab Klasse G, Pflicht bei Klasse V. Nicht Teil der Mindest-Lektüre; gelesen, wenn eine Geschäftsentscheidung ansteht (`CLAUDE.md` Abschnitt 2).]
+Entscheidungen, die nicht die Technik betreffen, sondern das Vorhaben. Bei Klasse M optional (ADR-001); geführt für den Kostenrahmen. Nicht Teil der Mindest-Lektüre; gelesen, wenn eine Geschäftsentscheidung ansteht (`CLAUDE.md` Abschnitt 2).
 
-### BDR-NNN: [Kurztitel]
+### BDR-001: Kostenrahmen 50 € je Monat
 
-- **Datum:** [YYYY-MM-DD]
-- **Entschieden von:** [Rolle, keine Namen]
-- **Frage:** [was war zu entscheiden]
-- **Optionen:** [A / B / C mit Folgen]
-- **Entscheidung:** [...]
-- **Folgen für Anforderungen und Fahrplan:** [FR-IDs, Schritt-IDs, ggf. ADR-Verweis]
-
----
-
-**Initialisierungshinweis (erste Session nach Projektanlage):**
-
-- Beispiel-ADR und Beispiel-Regel durch echte Einträge ersetzen. Typische erste ADRs:
-  - **ADR-001:** Projektgrößen-Klassifikation und Dokumentationsumfang-Anpassung – `[STRATEGISCH] [METHODIK]`
-  - **ADR-002:** Stack-Wahl – `[STRATEGISCH] [STACK]`
-  - **ADR-003:** Verzeichnisstruktur – `[STRATEGISCH] [METHODIK]`
-- Initialisierungs-ADRs sind alle `[STRATEGISCH]` mit Phasentyp-Kontext `INITIALISIERUNG`.
-- Reaktiv-Schwellenwert in `project-context.md` festlegen, klassen-abhängig (Glossar in `CLAUDE.md` Abschnitt 1B, Detail in `templates/projektstart.md` Abschnitt 2.2). Empfehlung pro Klasse: K/M ≤ 30 %, G ≤ 20 %, V ≤ 15 % `[REAKTIV]`-Anteil über die letzten 10 ADRs.
-- **Strukturwahl** (Einzeldatei vs. Verzeichnis mit `decisions/ADR-NNN.md`) richtet sich nach der Projektgrößen-Klassifikation (Glossar in `CLAUDE.md` Abschnitt 1B, Detail in `templates/projektstart.md` Abschnitt 2.2). Default pro Klasse:
-  - **Klasse K/M:** Einzeldatei `decisions.md` mit allen Teilen (Teil D bei K entfernt, bei M optional).
-  - **Klasse G:** Einzeldatei zunächst, Auslagerung in `decisions/ADR-NNN.md`-Dateien sobald die ADR-Anzahl zweistellig wird; `decisions.md` bleibt als Index mit Teil A und Teil C.
-  - **Klasse V:** Pflicht-Verzeichnis `decisions/` mit einer Datei pro ADR von Anfang an; `decisions.md` als Index.
-- **Klasse K:** Teil C (Entscheidungsregeln) kann leer bleiben, bis sich Muster herauskristallisieren. Teil A (Übersicht) trotzdem führen, schon ab ADR-001.
-- Format in allen geführten Teilen ist **nicht optional**.
+- **Datum:** 2026-09-26
+- **Entschieden von:** Eigentümer
+- **Frage:** Was darf das Projekt monatlich kosten? (Vision-Frage aus `templates/projektstart.md` Abschnitt 1.3, Schritt 2)
+- **Optionen:** keine Optionen vorgelegt; der Eigentümer nannte einen Betrag.
+- **Entscheidung:** bis 50 € monatlich für KI-Anfragen und Hosting zusammen. Das Abo für den Coding-Agent ist nicht Teil dieses Rahmens.
+- **Folgen für Anforderungen und Fahrplan:** Kostenregister in `docs/project-context.md` Abschnitt 8; Kosten-NFR in `docs/architecture.md` Abschnitt 6; Kosten je Anfrage sind Vergleichsgröße im Modell-Eignungstest (Schritt 1.1); Hosting-Kosten fließen in die Anbieterwahl (Schritt 4.2). Eine Überschreitung der Summe ist eine neue Geschäftsentscheidung.
