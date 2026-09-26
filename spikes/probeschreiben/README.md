@@ -10,7 +10,7 @@ Datum: 2026-09-26. Zweck: Akzeptanzkriterien von 3.3 mit dem echten Anbieter pr�
 - Kapitel 4 („Die Grotte“, laufendes Kapitel): 7 Fortsetzungen übernommen, davon 1 geändert; 1 verworfen und mit grok-4.6 neu geschrieben.
 - Kapitel 5 („Das Wasser“, neu): 2 Szenen-Einstiege (Ort, Figuren, Ziel) und 5 Fortsetzungen; 1 geändert (Widerspruch zu Kapitel 3 beim Redigieren korrigiert).
 - 1 Abbruch nach dem ersten Textstück.
-- Ergebnisse: `ergebnisse/*.txt` (KI-Texte unverändert), `*.geaendert.txt` (Fassung des Autors), `*.json` (Anfrage, Zeiten, Verbrauch, Aktion), `kapitel-4.md`/`kapitel-5.md` (Manuskript-Stand am Ende), `bewertung-kapitel-*.md` (Bewertungsfassung mit markierten Autor- und KI-Blöcken).
+- Ergebnisse: `ergebnisse/*.txt` (KI-Texte unverändert), `*.geaendert.txt` (Fassung des Autors), `*.json` (Anfrage, Zeiten, Verbrauch, Aktion), `kapitel-4.txt`/`kapitel-5.txt` (Manuskript-Stand am Ende), `bewertung-kapitel-*.md` (Bewertungsfassung mit markierten Autor- und KI-Blöcken).
 
 ## Zeiten und Kosten
 
@@ -39,7 +39,7 @@ Zeiten vom Absenden bis zum Ereignis, gemessen beim Aufrufer.
 - Antwortkopf und Ereignis `start` kamen in allen Läufen nach 0,02–0,03 s – die Oberfläche zeigt „denkt nach …“ ohnehin sofort beim Absenden.
 - **Reaktionszeit-Ziel verfehlt:** grok-4.7 in 14 von 15 Läufen unter 60 s, einmal 77,1 s (Szenen-Einstieg, 5.271 Ausgabe-Token überwiegend Vorab-Denken). grok-4.6 in 2 von 2 Läufen über 10 s (13,2 s und 15,8 s; in 1.5 gemessen 5–8 s). Die Wartezeit bis zum ersten Textstück ist in `ai_gateway` auf 90 s begrenzt – der Lauf mit 77 s lag nahe daran.
 - **Abbruch:** Verbindung nach dem ersten Textstück geschlossen; Log-Zeile `ergebnis=abgebrochen` sofort, Manuskript unverändert (`abbruch.json`: `manuskript_unveraendert: true`).
-- **FR-009:** Jede Fortsetzung baute auf dem gespeicherten Stand auf: Autor-Absätze, geänderte Fassungen (k4-02, k5-04) und der verworfene Text (k4-04 fehlt im Kontext von k4-04b) – nachprüfbar an `kapitel-4.md`, `kapitel-5.md` und den steigenden Token-Zahlen.
+- **FR-009:** Jede Fortsetzung baute auf dem gespeicherten Stand auf: Autor-Absätze, geänderte Fassungen (k4-02, k5-04) und der verworfene Text (k4-04 fehlt im Kontext von k4-04b) – nachprüfbar an `kapitel-4.txt`, `kapitel-5.txt` und den steigenden Token-Zahlen.
 
 ## Bewertung
 

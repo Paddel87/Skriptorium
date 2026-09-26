@@ -29,6 +29,22 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 22:15 – [BEOBACHTUNG] 3.3 vorbereitet – Arbeitsweise per Frage-System entschieden
+
+- **Übernahme:** übernommener KI-Text wird ans Kapitelende angehängt und sofort gespeichert (nicht an der Cursor-Position) – die nächste Fortsetzung knüpft am Ende an.
+- **Szenen-Einstieg:** im laufenden Kapitel; Formular über dem Editor (Ort und Figuren aus dem Kanon, Ziel frei); der erste Absatz ist ein Vorschlag wie jeder KI-Text.
+- **Probeschreiben (FR-008, FR-011, Reaktionszeit):** größerer Umfang, ca. 0,80 $ – zwei Kapitel mit je 6–8 Fortsetzungen an der Testwelt „Die Salzmark“, grok-4.7, dazu Zeitmessung mit grok-4.6; blinde Bewertung durch getrennte Instanz wie in 3.2.
+- **Umfang Modellwechsel:** Das Akzeptanzkriterium „Abbruch und Modellwechsel jederzeit“ (ADR-013) verlangt schon in 3.3 eine Modellwahl je Anfrage. Umgesetzt wird nur: Modell je Anfrage aus der festen Modellreihenfolge und `GET /api/models` (Grobvertrag-Gruppe „Modelle“, additiv). Speicherung der Wahl je Geschichte, Token- und Kostenanzeige bleiben in 3.9.
+- **Schlüssel:** `OPENROUTER_API_KEY` ist jetzt gesetzt (nur Vorhandensein geprüft) – Umbenennung aus der letzten Session erledigt.
+
+### 2026-09-26 22:07 – [SESSIONSTART] Schritt 3.3 auf Anweisung „neue session 3.3“
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 22:07) → Entscheidungs-Klasse.
+- **Kontingent:** Sitzungsabfrage meldet das Wochenlimit mit Status `allowed_warning` (Zurücksetzung sonntags 10:00 MESZ) – Warnschwelle erreicht.
+- **Kontextgröße:** Sitzungsabfrage meldet 0 Token (Wert zu Sessionbeginn noch nicht gefüllt).
+- **Ausgangsstand:** PR #10 gemergt (`59e5e21`), Branch `scp/affectionate-cori-ms2a2h` steht auf `main`. Keine aktiven Blocker, keine offenen STOPP-Situationen.
+- **Klasse:** 3.3 empfiehlt Routine, läuft auf Entscheidung (Routine-Klasse ohne Probelauf, keine Abgabe möglich; Hinweis an den Eigentümer).
+
 ### 2026-09-26 22:02 – [SESSIONENDE] Schritte 3.1 und 3.2 erledigt
 
 - **Dauer:** 20:57–22:02 UTC (Phasenabschluss 2, 3.1 ab 21:27, 3.2 ab 21:48).

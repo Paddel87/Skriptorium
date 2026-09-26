@@ -172,8 +172,11 @@ def export(_: argparse.Namespace) -> None:
     session = client()
     for chapter in session.get(f"{STORY}/chapters").json():
         if chapter["number"] >= 4:
-            path = OUT / f"kapitel-{chapter['number']}.md"
-            path.write_text(f"# {chapter['title']}\n\n{chapter['text']}\n", encoding="utf-8")
+            path = OUT / f"kapitel-{chapter['number']}.txt"
+            path.write_text(
+                f"<!-- Kapitel {chapter['number']}: {chapter['title']} -->\n\n{chapter['text']}\n",
+                encoding="utf-8",
+            )
             print(path)
 
 

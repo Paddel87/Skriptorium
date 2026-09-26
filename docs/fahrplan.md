@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 3 „Schreiben mit KI" (Phase 2 abgeschlossen 2026-09-26, ADR-020: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (3.2 `[ERLEDIGT]` 2026-09-26)
-- **Nächster Schritt:** 3.3 Weiterschreiben mit Streaming und Szenen-Einstieg (neue Session)
+- **Aktiver Schritt:** 3.3 Weiterschreiben mit Streaming und Szenen-Einstieg `[IN ARBEIT]`
+- **Nächster Schritt:** nach 3.3: 3.4 Figuren-Schreibweise
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -148,7 +148,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 3.3: Weiterschreiben mit Streaming und Szenen-Einstieg
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT (seit 2026-09-26)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.7, 3.1, 3.2
 - **Freigabepflichtig:** nein
