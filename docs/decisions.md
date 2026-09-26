@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -41,12 +41,13 @@ Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 019 | 2026-09-26 | Aktiv | OPERATIV | STACK, METHODIK | Externe Abh., Build-Pipeline | Test-Werkzeuge der Oberfläche – Testing Library, jsdom, Playwright |
 | 020 | 2026-09-26 | Aktiv | STRATEGISCH | METHODIK | Pflichtfrage Phasenende | Phasenende 2 – weiterbauen, Abläufe in 3.3 aus den Routen heraushalten |
 | 021 | 2026-09-26 | Aktiv | OPERATIV | MODUL, DATENMODELL | Architektur (Reifegrad) | Observability: Log-Zeile je KI-Anfrage belastbar, Verbrauchsspeicherung in 3.9 |
+| 022 | 2026-09-26 | Aktiv | ERKENNTNIS | PERFORMANCE | Architektur (NFR) | Reaktionszeit verfehlt – Ziel bleibt, Ursache wird in D.6 erkundet |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 1 / 10 (10 %) über ADR-012 bis ADR-021 – ADR-012 bis ADR-014 aus Phase 1 (Erkundung), ADR-015 bis ADR-017 und ADR-019 aus Phase 2 (operativ, geplant in 2.1, 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1); reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
+- **Aktueller Wert:** 1 / 10 (10 %) über ADR-013 bis ADR-022 – ADR-013 und ADR-014 aus Phase 1 (Erkundung), ADR-015 bis ADR-017 und ADR-019 aus Phase 2 (operativ, geplant in 2.1, 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5); reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -631,6 +632,25 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Vision-Frage, die entschied:** „Reicht es, die Kosten bis 3.9 im OpenRouter-Konto und im Server-Log zu sehen, oder soll das Skriptorium jede Anfrage von Anfang an mitzählen?" → Antwort des Eigentümers (Frage-System): A.
 - **Konfidenz zum Zeitpunkt:** hoch – Inhalt folgt aus der Regel „Logs nur mit Metadaten" (`docs/project-context.md` Abschnitt 6); Heuristik 1.1: Speicherung gehört zur Anzeige. Umkehrbarkeit billig (A → B nachrüstbar).
 - **Konsequenzen:** 3.1 ohne Datenmodelländerung; `ai_gateway` bleibt ohne Dateizugriff. Anfragen aus 3.3–3.8 fehlen in der späteren Monatssumme (Testanfragen); 3.9 trägt die Entscheidung zur Speicherung.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-022: Reaktionszeit verfehlt – Ziel bleibt, Ursache wird in D.6 erkundet
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[ERKENNTNIS]` `[PERFORMANCE]`
+- **Phasentyp-Kontext:** UMSETZUNG (Abnahme von Schritt 3.3)
+- **Reifegrad-Wirkung:** NFR Reaktionszeit `[BELASTBAR]` → `[VORLÄUFIG]` bis D.6 (Zielwerte unverändert, Erreichbarkeit unbelegt)
+- **Kategorie:** Architektur – nicht-funktionale Anforderung (ADR-013)
+- **Kontext:** Das Probeschreiben in 3.3 (`spikes/probeschreiben/README.md`, 16 echte Anfragen) erfüllte FR-008, FR-009 und FR-011, verfehlte aber die Reaktionszeit aus ADR-013: grok-4.7 in 14 von 15 Läufen unter 60 s, einmal 77,1 s bis zum ersten Textstück (5.271 Ausgabe-Token, überwiegend Vorab-Denken); grok-4.6 in 2 von 2 Läufen über 10 s (13,2 s, 15,8 s; in 1.5 gemessen 5–8 s). Die Anzeige „denkt nach …“, Abbruch und Modellwechsel wirken sofort. `ai_gateway` bricht nach 90 s ohne erstes Textstück ab.
+- **Optionen:** A Ziel an die Messung anpassen (grok-4.7 meist unter 60 s, höchstens 90 s; grok-4.6 unter 20 s) / B Ziel bleibt, 3.3 wird erledigt, Erkundungsschritt D.6 untersucht Reasoning-Einstellung, Anbieter-Führung und die 90-s-Grenze / C 3.3 bleibt offen bis zur Klärung.
+- **Entscheidung:** B.
+- **Vision-Frage, die entschied:** „Ist eine gelegentliche Wartezeit von über einer Minute bis zum ersten Satz beim Schreiben hinnehmbar, oder stört sie den Schreibfluss so, dass es sich lohnt, das zu untersuchen?“ → Antwort des Eigentümers (Frage-System): untersuchen (B).
+- **Konfidenz zum Zeitpunkt:** mittel – 17 Messungen sind eine Stichprobe mit großer Streuung (7–77 s); die Ursache (Vorab-Denken, Auslastung beim Anbieter) ist vermutet, nicht belegt. Umkehrbarkeit billig (nur Zielwerte und ein Fahrplan-Schritt).
+- **Konsequenzen:** 3.3 `[ERLEDIGT]` mit dokumentiert verfehltem Teilkriterium; neuer Schritt D.6 (Frist: vor 4.8, Stoppuhr-Test); das Zielwert-Kriterium wird dort erneut gemessen oder per neuem ADR angepasst.
 - **Abgeleitete Regel:** keine
 
 ---

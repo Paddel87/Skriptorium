@@ -29,6 +29,26 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 23:05 – [SESSIONENDE] Schritt 3.3 erledigt
+
+- **Dauer:** 22:06–23:05 UTC.
+- **Bearbeitet:** 3.3 `[ERLEDIGT]` (ADR-022): `api.flows.writing`, SSE-Endpunkt, `GET /api/models`, `WritingPanel` in der Oberfläche; Probeschreiben mit 16 echten Anfragen (0,556 $), blind bewertet. FR-008, FR-009, FR-011 erledigt. Neuer Schritt D.6 (Reaktionszeit erkunden, Frist vor 4.8).
+- **Erreichter Stand:** 322 Python-Tests (99 %, `api.flows.writing` 100 % Zeilen), 40 Komponenten-, 5 End-to-End-Tests; CI grün auf den Code-Commits. OpenRouter-Guthaben laut Rechnung ca. 2,66 $ (vorher ca. 3,22 $).
+- **Offen:** Pull Request für diesen Branch. 3.4 muss die Figuren-Schreibweise deutlich schärfen (20 Verstöße in 15 Blöcken).
+- **Nächster Schritt:** neue Session – 3.4 Figuren-Schreibweise.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5, eingestellt und bedient laut Sitzungsabfrage 23:04). Schritte oberhalb der Empfehlung: 1 (3.3 empfiehlt Routine; Hinweis vorab). Abgegebene Teilarbeiten: blinde Kanon-Bewertung an Unteragent mit Sonnet 5 (getrennte Instanz, keine Routine-Abgabe). Sitzungskosten laut Abfrage 9,75 $.
+- **Kontextgröße:** Sitzungsabfrage 23:04: 343.914 Token – über der Grenze 200.000. Zu Sessionbeginn meldete die Abfrage 0 Token; eine Prüfung während des einen Schritts fand nicht statt (Regel: nach jedem abgeschlossenen Schritt). Kein neuer Schritt in dieser Session.
+- **Kontingent:** Wochenlimit weiterhin `allowed_warning`.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Reife, Verwendung, Nächste Schritte). Drift-Prüfung: ADR-022 → 3.3 und D.6 vorhanden; Reifegrade (Reaktionszeit, Kanon-Treue VORLÄUFIG, SSE validiert) passen zu ADR-022; Modul-Liste unverändert; FR-008/009/011 → 3.3 erledigt; Reaktiv-Quote 1/10 (ADR-013 bis ADR-022); Blocker 0; Phase 3 unverändert 9 Schritte. Ablaufdaten-Register: Vorlauf Guthaben ab 2026-10-22, noch nicht erreicht. Archivierung: kein Trigger. Onboarding: nicht Quick-Start-relevant (keine Änderung an Skripten, `.env.example`, Abhängigkeiten). Größen-Budget `project-context.md`: 338 Zeilen.
+
+### 2026-09-26 23:00 – [ADR-ANGELEGT] ADR-022 Reaktionszeit – Ziel bleibt, Erkundung D.6
+
+- Entscheidung des Eigentümers über das Frage-System: B. 3.3 erledigt mit dokumentiert verfehltem Teilkriterium.
+
+### 2026-09-26 23:00 – [REIFEGRAD-WECHSEL] Reaktionszeit und Kanon-Treue VORLÄUFIG, SSE validiert
+
+- NFR Reaktionszeit `[BELASTBAR]` → `[VORLÄUFIG]` (Ziel in 3.3 verfehlt, ADR-022). NFR Kanon-Treue `[OFFEN]` → `[VORLÄUFIG]` (erste Messung). Kommunikations-Grundmodus inkl. SSE bleibt `[BELASTBAR]`, jetzt durch Umsetzung validiert.
+
 ### 2026-09-26 22:55 – [BEOBACHTUNG] Probeschreiben 3.3 ausgewertet – Reaktionszeit verfehlt
 
 - 16 echte Anfragen über den echten Server (15 vollständig, 1 Abbruch), 0,556 $; zwei Kapitel der Testwelt, 2 Szenen-Einstiege, je Kapitel eine Änderung, eine Verwerfung mit Neu-Schreiben per grok-4.6 (`spikes/probeschreiben/README.md`).

@@ -10,7 +10,7 @@
 
 - **Projektname:** Skriptorium
 - **Kurzbeschreibung:** Schreibwerkstatt für einen einzelnen Autor: Mehrere eigene Welten dienen als verbindlicher Kanon, Autor und KI schreiben im Wechsel Prosa darin, ohne der jeweiligen Welt zu widersprechen.
-- **Status:** In Entwicklung – Phase 3 „Schreiben mit KI“ (Phase 2 Grundgerüst abgeschlossen 2026-09-26)
+- **Status:** In Entwicklung – Phase 3 „Schreiben mit KI“, 3.1–3.3 erledigt (Phase 2 Grundgerüst abgeschlossen 2026-09-26)
 - **Version (SemVer):** v0.0.0 – noch keine lauffähige Version
 - **Dokumentationssprache:** Deutsch
 - **Codesprache (Kommentare, Variablennamen):** Englisch (Eigentümer, 2026-09-26); Fachbegriffe einheitlich: world, canon, canon entry, story, manuscript, guest character
