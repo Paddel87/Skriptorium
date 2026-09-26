@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 2 – Grundgerüst (Umsetzung); Schritte 2.1 (Projektgerüst), 2.2 (Dateiablage und Suchindex) 2.3 (Welten und Kanon-Einträge), 2.4 (Markdown-Import) und 2.5 (Geschichten und Kapitel) umgesetzt
+- **Projektphase:** Phase 2 – Grundgerüst (Umsetzung); Schritte 2.1 (Projektgerüst), 2.2 (Dateiablage und Suchindex), 2.3 (Welten und Kanon-Einträge), 2.4 (Markdown-Import) und 2.5 (Geschichten und Kapitel) umgesetzt; 2.6 (HTTP-Schnittstelle mit Anmeldung) in Arbeit
 - **Version:** v0.0.0 – noch keine veröffentlichte Version
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-09-26
@@ -32,13 +32,14 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 
 ## Quick Start
 
-Stand nach Schritt 2.1: Projektgerüst mit Gesundheitsprüfung, noch ohne Fachfunktionen und ohne KI.
+Stand nach Schritt 2.6: Server mit Anmeldung und HTTP-Schnittstelle für Welten, Kanon und Geschichten; noch ohne Oberfläche für diese Funktionen (2.7) und ohne KI.
 
 ### Voraussetzungen
 
 - Python 3.14.7 mit uv 0.12.19
 - Node.js 24.21.0 LTS mit npm 11.19.0 (nur zum Bauen und Prüfen der Oberfläche)
 - git; für Cloud-Sessions des Coding-Agents richtet `scripts/session-start.sh` alles ein (SessionStart-Hook)
+- Internetzugang zu `api.pwnedpasswords.com` beim Festlegen oder Ändern des Passworts
 - ein OpenRouter-API-Schlüssel – erst ab Phase 3
 
 ### Einrichten und starten
@@ -48,8 +49,11 @@ uv python install 3.14.7
 uv sync --frozen --python 3.14.7
 npm ci
 uv run pre-commit install
-uv run uvicorn skriptorium.api:create_app --factory
+uv run skriptorium-einrichtung          # Einrichtungscode für das erste Passwort (einmal, 24 h)
+uv run uvicorn skriptorium.api:create_app --factory --no-access-log
 ```
+
+Datenverzeichnis über `SKRIPTORIUM_DATA_DIR` (Standard `./data`, siehe `.env.example`). Passwörter werden beim Festlegen gegen [Pwned Passwords](https://haveibeenpwned.com/Passwords) von Have I Been Pwned geprüft (Daten unter CC BY 4.0); nur die ersten 5 Zeichen des SHA-1-Hashes verlassen den Server.
 
 Prüfen (zweites Terminal): `curl http://127.0.0.1:8000/api/health` → `{"status":"ok"}`. Tests: `uv run pytest --cov` und `npx vitest run --coverage`. Vollständige Anleitung: [`docs/onboarding-runbook.md`](docs/onboarding-runbook.md).
 

@@ -29,7 +29,21 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
-### 2026-09-26 19:45 – [BEOBACHTUNG] 2.6 vorbereitet – ASVS 5.0.0 im Original geprüft
+### 2026-09-26 19:45 – [PROBLEM-GELÖST] Reibungen in 2.6
+
+- **FastAPI 0.141 hält eingebundene Router als `_IncludedRouter`:** `app.routes` enthält nur noch die direkt angelegten Routen. Das Routenmuster für das Protokoll kommt deshalb aus `scope["route"]` nach der Verarbeitung; der Test „jeder Endpunkt verlangt eine Sitzung" zählt die Routen über `app.openapi()` (die Beschreibung wird trotzdem nicht veröffentlicht).
+- **INFO-Zeilen fehlten unter uvicorn:** uvicorn richtet nur die eigenen Logger ein, erfolgreiche Anmeldungen und das Anfrage-Protokoll gingen verloren (Probelauf gegen echten Server). Lösung: `create_app` gibt dem Logger `skriptorium` einmalig einen Handler mit Stufe INFO.
+- **uvicorn-Zugriffsprotokoll schreibt volle Pfade** (mit Namen von Welten und Einträgen) → Startbefehl mit `--no-access-log`; das eigene Protokoll nennt nur das Routenmuster.
+- **Kontextwörter:** Der Weltname „Die Salzmark" hätte als ganze Zeichenkette ein Passwort mit „Salzmark" durchgelassen – Namen werden jetzt zusätzlich in Wörter ab 4 Zeichen zerlegt (vom ersten Testlauf gefunden).
+- **Beobachtung ohne Änderung:** Der Docstring von `ManuscriptService.save_chapter` nennt `InvalidInput` für eine Nummer, die weder existiert noch die nächste ist; tatsächlich kommt `NotFound` (404). Außerhalb des Schritts 2.6 nicht geändert; Test auf 404.
+- **`# noqa: S105`** für die zwei Test-Passwörter in `tests/api` je Zeile mit Begründung statt einer Datei-Ausnahme.
+
+### 2026-09-26 19:30 – [ADR-ANGELEGT] ADR-017 und ADR-018
+
+- ADR-017 `[OPERATIV]`: Anmeldung und Sitzung – nur Passwort (begründete Abweichung von ASVS 6.3.3), selbst gewählt mit Pwned-Passwords-Prüfung (Empfehlung der KI war: vom Server erzeugt), Sitzungen 7/30 Tage, Anmelde-Protokoll. Freigabe des Eigentümers per Antwortsystem.
+- ADR-018 `[REAKTIV]`: Beziehungen `api → storage` (nur `system/`) und `api → Pwned Passwords`. Reaktiv-Quote 1/10 (Schwelle 30 %).
+
+### 2026-09-26 19:25 – [BEOBACHTUNG] 2.6 vorbereitet – ASVS 5.0.0 im Original geprüft
 
 - Quelle: OWASP/ASVS, Tag `v5.0.0`, Kapitel V6, V7, V11, V3, V16 und Anhang C (raw.githubusercontent.com, abgerufen 2026-09-26).
 - **Befund:** ASVS 6.3.3 (Stufe 2) verlangt Mehr-Faktor-Anmeldung oder eine vollständig begründete Abweichung mit ausgleichenden Maßnahmen. Fahrplan 2.6 und ADR-006 sahen nur „Passwort und Sitzungs-Cookie" vor – die Lücke war bisher nicht benannt.
