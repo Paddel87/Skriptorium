@@ -7,13 +7,13 @@
 <!-- ANCHOR:uebersicht -->
 ## 1. Übersicht (Stand vom 2026-09-26)
 
-**Status:** bestätigt vom Eigentümer am 2026-09-26 (Modus 2 Schritt 1a abgeschlossen).
+**Status:** bestätigt vom Eigentümer am 2026-09-26 (Modus 2 Schritt 1a abgeschlossen). Nachtrag FR-025 am selben Tag (Schritt 2, Quelle: Eigentümer).
 
 | Kennzahl | Wert |
 |---|---|
-| Anforderungen gesamt | 24 |
-| davon Muss / Soll / Kann | 18 / 4 / 1 |
-| Muss-Anforderungen ohne Fahrplan-Schritt | 18 – Fahrplan entsteht in Modus 2 Schritt 6 |
+| Anforderungen gesamt | 25 |
+| davon Muss / Soll / Kann | 19 / 4 / 1 |
+| Muss-Anforderungen ohne Fahrplan-Schritt | 19 – Fahrplan entsteht in Modus 2 Schritt 6 |
 | Muss-Anforderungen ohne Test (Pflicht ab Klasse G) | nicht anwendbar (Klasse M) |
 | Verworfen (mit ADR) | 1 (FR-006, ADR folgt in Schritt 5) |
 
@@ -98,6 +98,7 @@
 | FR-021 | Wiederverwendung bestehender Open-Source-Bausteine vor Eigenentwicklung | – | Soll | Bestandsprüfung vor der Stack-Entscheidung dokumentiert (ADR-002) | TBD | – | OFFEN |
 | FR-022 | Vom ersten Öffnen bis zur ersten geschriebenen Szene in einer bestehenden Welt höchstens 30 Minuten ohne Anleitung, einschließlich einmaliger Einrichtung | UC-001 | Muss | Stoppuhr-Test durch den Autor (Vision 4) | TBD | – | OFFEN |
 | FR-024 | Beim Eintragen eines neuen Fakts über eine Gast-Figur aus einer anderen Welt wählt der Autor je Fakt: Kanon der Figur (gilt überall, wo sie auftritt) oder nur die verbindende Geschichte | UC-008, UC-009 | Muss (bestätigt 2026-09-26) | Beide Wege wirken wie gewählt; auch mit der Wahl bleibt das Eintragen unter 10 Sekunden (FR-015) | TBD | – | OFFEN |
+| FR-025 | Die KI-Anbindung ist erweiterbar: Weitere API-Anbieter lassen sich künftig parallel zu OpenRouter hinzufügen, ohne die bestehende Anbindung zu ändern; je Geschichte bzw. Anfrage ist der Anbieter wählbar | UC-012 | Muss (Eigentümer, 2026-09-26) | Ein zweiter Anbieter lässt sich über eine neue Anbindung ergänzen, ohne Code der OpenRouter-Anbindung oder der Schreib-Funktionen zu ändern | TBD | – | OFFEN |
 | FR-023 | Zeitlinien-Einträge optional mit Datumsangaben im Kalender der Welt | UC-002 | Kann | – | TBD | – | OFFEN |
 
 **Regeln:**
