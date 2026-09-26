@@ -46,9 +46,11 @@ graph LR
   CANON -.-> STORE[storage]
   MS -.-> STORE
   AI -.->|HTTPS| OR[(OpenRouter und weitere Anbieter)]
+  API -.->|nur system/| STORE
+  API -.->|HTTPS| HIBP[(Pwned Passwords)]
 ```
 
-**Leitregeln:** `context` liest nur, schreibt nie. `ai_gateway` kennt keine Fachbegriffe (Welt, Kanon), nur Nachrichten, Modelle und Token. `storage` ist die einzige Stelle, die Dateien und den Index berührt. Die Ablauf-Steuerung (z. B. „Kapitel abschließen → Kurzfassung erzeugen → speichern") liegt in `api`, damit zwischen den Fachmodulen keine Zyklen entstehen.
+**Leitregeln:** `context` liest nur, schreibt nie. `ai_gateway` kennt keine Fachbegriffe (Welt, Kanon), nur Nachrichten, Modelle und Token. `storage` ist die einzige Stelle, die Dateien und den Index berührt; `api` nutzt `storage` nur für die Zugangsdaten unter `system/` und fragt beim Festlegen eines Passworts Pwned Passwords ab (ADR-018, 2026-09-26). Die Ablauf-Steuerung (z. B. „Kapitel abschließen → Kurzfassung erzeugen → speichern") liegt in `api`, damit zwischen den Fachmodulen keine Zyklen entstehen.
 
 <!-- ANCHOR:module -->
 ## 3. Module (detailliert)
@@ -103,9 +105,11 @@ graph LR
 ### Modul: api [BELASTBAR]
 
 - **Reifegrad:** `[BELASTBAR]`, seit 2026-09-26, per ADR-013 (Beförderung in Schritt 1.4)
-- **Verantwortung:** HTTP-Schnittstelle (FastAPI), Zugangsschutz, Ablauf-Steuerung über Modulgrenzen hinweg (z. B. Fortsetzung schreiben, Kapitel abschließen), Auslieferung der gebauten Oberfläche.
+- **Verantwortung:** HTTP-Schnittstelle (FastAPI), Zugangsschutz (Anmeldung, Sitzungen, Passwort-Verwaltung nach ADR-017), Ablauf-Steuerung über Modulgrenzen hinweg (z. B. Fortsetzung schreiben, Kapitel abschließen), Auslieferung der gebauten Oberfläche.
 - **Nicht-Verantwortung:** keine Fachlogik über das Zusammenschalten hinaus.
-- **Abhängigkeiten (andere Module):** `canon`, `manuscript`, `context`, `ai_gateway`
+- **Interne Struktur:** Zugangsschutz als Untermodul `api.access` (Passwort-Hashing, Prüfung neuer Passwörter, Sitzungen, Schutz vor Raten); die Endpunkte der Fachmodule getrennt davon.
+- **Abhängigkeiten (andere Module):** `canon`, `manuscript`, `context`, `ai_gateway`; `storage` nur für `system/` (ADR-018)
+- **Abhängigkeiten (extern):** httpx (Pwned Passwords, ADR-017)
 
 ### Modul: ui [BELASTBAR]
 
@@ -216,7 +220,7 @@ Angelegt im Sicherheitsgrundriss (Modus 2 Schritt 4a, 2026-09-26). Das System wi
   - **Schützenswerte Güter:** (1) API-Schlüssel der KI-Anbieter – höchster Wert, weil Missbrauch direkt Geld kostet; (2) Welten und Manuskripte – Schutzbedarf normal; (3) Verfügbarkeit – gering, Stillstand ist zulässig.
   - **Angreifer:** automatisierte Internet-Scanner und Bots; Passwort-Rater (Credential Stuffing); opportunistische Ausnutzung ungepatchter Software. Kein gezielter Angreifer mit großen Mitteln angenommen.
   - **Bedrohungen und Gegenmaßnahmen:**
-    - Passwort-Raten → ein starkes Passwort (Passphrase), gehasht mit einem aktuellen Verfahren; Sperre bzw. Verzögerung nach Fehlversuchen; Anmeldung nur über TLS.
+    - Passwort-Raten → selbst gewähltes Passwort ab 15 Zeichen, geprüft gegen Pwned Passwords und Kontextwörter, gehasht mit scrypt; Sperre je Absender nach 10 Fehlversuchen in 15 Minuten; Anmeldung nur über TLS; kein zweiter Faktor – begründete Abweichung von ASVS 6.3.3 (ADR-017).
     - Sitzungsdiebstahl über eingeschleustes Skript (XSS) → Markdown-Darstellung ohne ungefiltertes HTML, Content-Security-Policy, Sitzungs-Cookie `HttpOnly`, `Secure`, `SameSite=Strict`.
     - Fremdaufrufe im Namen des Nutzers (CSRF) → `SameSite=Strict` und Prüfung der Herkunft bei ändernden Anfragen.
     - Abfluss des API-Schlüssels → nur serverseitig in Umgebungsvariablen, nie im Browser, Repo oder Log; **Ausgabengrenze am Schlüssel bei OpenRouter** begrenzt den Schaden.
@@ -225,10 +229,10 @@ Angelegt im Sicherheitsgrundriss (Modus 2 Schritt 4a, 2026-09-26). Das System wi
     - Anweisungen in importiertem Material (Prompt Injection) → Wirkung bleibt auf den eigenen KI-Text beschränkt, da die KI keine Werkzeuge ausführt; bewusst nicht weiter abgedeckt.
   - **Bewusst nicht abgedeckt:** gezielte Angriffe mit großen Mitteln; Zugriff durch den Hosting-Anbieter; Vertraulichkeit gegenüber dem KI-Anbieter (Übermittlung ist laut Vision zulässig).
 - **Schutzmaßnahmen:** siehe Bedrohungsmodell; Umsetzung im Modul `api` (Anmeldung, Sitzung, Herkunftsprüfung) und `ui` (Darstellung ohne ungefiltertes HTML).
-- **Sensitive Datenflüsse:** API-Schlüssel: Umgebungsvariable → `ai_gateway` → HTTPS zum Anbieter. Passwort-Hash: Konfiguration des Servers. Texte: Browser ↔ Server (TLS) → Anbieter (HTTPS).
+- **Sensitive Datenflüsse:** API-Schlüssel: Umgebungsvariable → `ai_gateway` → HTTPS zum Anbieter. Passwort: Browser (TLS) → `api` → scrypt-Hash in `system/zugang.md`; beim Festlegen gehen die ersten 5 Hex-Zeichen seines SHA-1-Hashes an Pwned Passwords (ADR-017). Texte: Browser ↔ Server (TLS) → Anbieter (HTTPS).
 - **Host:** [TBD – Anbieter und Härtung in Schritt 4.2; Pflicht: Firewall, SSH nur mit Schlüssel, automatische Sicherheitsupdates, Prüfung von außen] `[OFFEN]`
 - **Netz:** von außen nur HTTPS (443) und die Umleitung von HTTP (80); SSH [TBD in Schritt 4.2]; TLS-Zertifikat automatisch erneuert `[VORLÄUFIG]`
-- **Secrets im Betrieb:** API-Schlüssel und Passwort-Hash als Umgebungsvariablen auf dem Server; Rotationsweg: neuen Schlüssel bei OpenRouter erzeugen, eintragen, alten widerrufen [TBD – Ablageort in Schritt 4.2]. Kein Zugriff der KI auf Produktions-Secrets. `[OFFEN]`
+- **Secrets im Betrieb:** API-Schlüssel als Umgebungsvariable auf dem Server; Passwort-Hash und Hash des Einrichtungscodes in `system/zugang.md` im Datenverzeichnis (ADR-017); Rotationsweg: neuen Schlüssel bei OpenRouter erzeugen, eintragen, alten widerrufen [TBD – Ablageort in Schritt 4.2]. Kein Zugriff der KI auf Produktions-Secrets. `[OFFEN]`
 - **Backups und Wiederherstellung:** Datenverzeichnis (Markdown-Dateien) täglich außerhalb des Servers sichern; Index wird nicht gesichert, sondern neu aufgebaut. Ziel und Verfahren [TBD in Schritt 4.3]; Beförderung erst nach erprobter Wiederherstellung. `[OFFEN]`
 
 ### Observability
@@ -267,6 +271,7 @@ erDiagram
 - **Geschichte** (`story.md`): `titel`, `form` (roman, kurzgeschichte, fragment), `perspektive`, `gefuehrte_figuren` (Liste von Einträgen), `gast_verbindungen` (Liste aus Welt und Eintrag); Text: Gesamtzusammenfassung.
 - **Kapitel:** `kapitel` (Nummer), `titel`, `status` (in-arbeit, abgeschlossen), `kurzfassung`, `kurzfassung_status` (fehlt, erzeugt, geprüft); Text: Manuskript des Kapitels, fortlaufend, ohne Markierung von Autor- und KI-Anteilen.
 - **Geschichtenbezogene Fakten** (`facts.md`): Liste aus Eintrag und Fakt.
+- **Zugangsdaten** (`system/zugang.md`, ADR-017, 2026-09-26): `passwort_hash` (scrypt mit Parametern und Salz), `passwort_geaendert`, `einrichtungscode_hash`, `einrichtungscode_gueltig_bis`; kein Text. Nicht indexiert.
 
 **Ablage:**
 
@@ -277,6 +282,7 @@ data/
   worlds/<welt>/stories/<geschichte>/story.md     Form, geführte Figuren, Perspektive, Gast-Verbindungen, Gesamtzusammenfassung
   worlds/<welt>/stories/<geschichte>/chapters/NN-<titel>.md   Kapiteltext, Kopf mit Kurzfassung
   worlds/<welt>/stories/<geschichte>/facts.md     nur für diese Geschichte geltende Fakten (FR-024)
+  system/zugang.md                                Zugangsdaten (Hashes), ADR-017
   index.sqlite                                    abgeleiteter Suchindex, jederzeit neu aufbaubar
 ```
 

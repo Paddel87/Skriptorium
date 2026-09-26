@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -36,12 +36,14 @@ Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 014 | 2026-09-26 | Aktiv | STRATEGISCH | METHODIK | Pflichtfrage Phasenende | Phasenende 1 – weiterbauen |
 | 015 | 2026-09-26 | Aktiv | OPERATIV | STACK, METHODIK | Externe Abh., Build-Pipeline, Lizenz | Entwicklungswerkzeuge, Linien ohne Patch-Versionen, Werkzeug-Lizenzen, Starlette-Abkündigung |
 | 016 | 2026-09-26 | Aktiv | OPERATIV | STACK, DATENMODELL | Externe Abh. | YAML-Parser für den Dateikopf – PyYAML |
+| 017 | 2026-09-26 | Aktiv | OPERATIV | SECURITY, SCHNITTSTELLE, DATENMODELL | Sicherheit, Datenmodell, API, Externe Abh., Lizenz | Anmeldung und Sitzung – selbst gewähltes Passwort ohne zweiten Faktor |
+| 018 | 2026-09-26 | Aktiv | REAKTIV | MODUL, SECURITY | Architektur | Beziehungen api → storage (Zugangsdaten) und api → Pwned Passwords |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 0 / 10 (0 %) über ADR-007 bis ADR-016 – ADR-007 bis ADR-009 aus der Initialisierung (Modus 2), ADR-010 bis ADR-014 aus Phase 1 (Erkundung), ADR-015 und ADR-016 aus Phase 2 (operativ, geplant in 2.1 bzw. 2.2); keiner reaktiv.
+- **Aktueller Wert:** 1 / 10 (10 %) über ADR-009 bis ADR-018 – ADR-009 aus der Initialisierung (Modus 2), ADR-010 bis ADR-014 aus Phase 1 (Erkundung), ADR-015 bis ADR-017 aus Phase 2 (operativ, geplant in 2.1, 2.2, 2.6); reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -496,6 +498,69 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Konsequenzen:**
   - Laufzeit-Abhängigkeit `pyyaml>=6.0.3,<7`, Entwicklungs-Abhängigkeit `types-pyyaml` (Datumsversion von typeshed, Regel-001: neueste).
   - Kommentare im Dateikopf werden beim Zurückschreiben nicht erhalten; im Onboarding bzw. Nutzerhinweis vermerken, sobald die Oberfläche das Bearbeiten erlaubt (2.7).
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-017: Anmeldung und Sitzung – selbst gewähltes Passwort ohne zweiten Faktor
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[OPERATIV]` `[SECURITY]` `[SCHNITTSTELLE]` `[DATENMODELL]`
+- **Phasentyp-Kontext:** UMSETZUNG (Schritt 2.6, im Fahrplan als „ADR zu Passwort-Hashing und Sitzung" vorgesehen)
+- **Reifegrad-Wirkung:** keine (`api` bleibt `[BELASTBAR]`; Beförderung durch Umsetzung in 2.6)
+- **Kategorie:** Sicherheit und Datenschutz (6), Datenmodell (4), API-Vertrag (5), Externe Abhängigkeiten (3), Lizenz (8)
+- **Kontext:** ADR-006 legt für Anmeldung und Sitzung ASVS 5.0.0 Stufe 2 fest. Die Prüfung am Original (OWASP/ASVS, Tag `v5.0.0`, Logbuch 19:45) ergab Anforderungen, die der Plan („Passwort und Sitzungs-Cookie", Hash in einer Umgebungsvariablen) nicht abdeckte: Mehr-Faktor-Anmeldung oder begründete Abweichung (6.3.3), Passwort ändern (6.2.2, 6.2.3), Sitzungsübersicht mit Beenden (7.5.2), dokumentierte Sitzungsdauer (7.1.1, 7.3.1, 7.3.2) und parallele Sitzungen (7.1.2).
+- **Optionen und Entscheidung** (Vorschlag der KI, Antworten des Eigentümers per Antwortsystem):
+  - **Zweiter Faktor:** A nur Passwort mit begründeter Abweichung / B zusätzlich TOTP-Code mit Notfall-Codes → **A** (Empfehlung der KI).
+  - **Passwort:** A vom Server erzeugt / B selbst gewählt mit Prüfung gegen häufige und geleakte Passwörter / C Hash in Umgebungsvariable, Ändern per Server-Befehl → **B** (Empfehlung der KI war A).
+  - **Prüfung gegen geleakte Passwörter bei B:** A Have I Been Pwned „Pwned Passwords" / B Offline-Liste im Repo / C Offline-Liste plus Verzicht auf 6.2.12 → **A** (Empfehlung der KI).
+  - **Sitzungsdauer:** A 7 Tage Inaktivität, 30 Tage höchstens / B 30 Minuten, 12 Stunden → **A** (Empfehlung der KI).
+  - **Optional (über Stufe 1 hinaus, ASVS 16.3.1):** Anmeldeversuche protokollieren → **ja** (Empfehlung der KI).
+- **Festlegungen:**
+  - **Abweichung von 6.3.3 (kein zweiter Faktor), Begründung:** ein Nutzer, Schutzbedarf normal (ADR-007); das wertvollste Gut, der API-Schlüssel, ist über die Anmeldung nicht erreichbar, Missbrauch der KI-Funktionen ist durch die Ausgabengrenze am Schlüssel gedeckelt. **Ausgleichende Maßnahmen:** Passwort mindestens 15 Zeichen und geprüft gegen rund eine Milliarde geleakter Passwörter; Sperre je Absender nach Fehlversuchen; nur über TLS; Sicherungen (4.3). **Restrisiko:** Wer das Passwort erbeutet (z. B. über eine gefälschte Seite), kann Welten und Manuskripte lesen und ändern. Nachrüsten eines zweiten Faktors ist ohne Datenumbau möglich.
+  - **Passwort (V6):** selbst gewählt, 15 bis 128 Zeichen, jede Zeichenart, keine Zeichenregeln, unverändert geprüft (6.2.1, 6.2.5, 6.2.8, 6.2.9); keine erzwungene Rotation (6.2.10); Ändern nur mit dem bisherigen Passwort (6.2.3, 7.5.1), danach wahlweise alle anderen Sitzungen beenden (7.4.3). Abgelehnt werden Passwörter, die in Pwned Passwords vorkommen (6.2.4, 6.2.12), und solche, die ein Kontextwort enthalten: „skriptorium", „passwort", „password" und die Namen der eigenen Welten (6.1.2, 6.2.11). Ist Pwned Passwords nicht erreichbar, wird das Festlegen abgelehnt. Kein Benutzername, kein Standardkonto (6.3.2).
+  - **Pwned Passwords:** Abfrage `https://api.pwnedpasswords.com/range/<5 Zeichen>` mit `Add-Padding: true`; nur die ersten 5 Hex-Zeichen des SHA-1-Hashes verlassen den Server (k-Anonymität); nur beim Festlegen oder Ändern. Daten unter CC BY 4.0 – Namensnennung am Passwortfeld (2.7) und in der README. Kostenlos, ohne Schlüssel (Nutzungsbedingungen auf haveibeenpwned.com/API/v3, abgerufen 2026-09-26). HTTP-Client httpx 0.28 (bereits fixiert, wandert in die Laufzeit-Abhängigkeiten).
+  - **Erstes Passwort und Zurücksetzen (6.4.1, 6.4.3):** Ein Befehl auf dem Server (`skriptorium-einrichtung`) erzeugt einen Einrichtungscode (128 Bit Zufall), speichert nur dessen Hash und zeigt ihn einmal an; der Code gilt 24 Stunden und nur einmal. Mit ihm wird in der Oberfläche das Passwort festgelegt; dabei enden alle Sitzungen. Derselbe Weg dient bei vergessenem Passwort – wer den Befehl ausführen kann, hat ohnehin Zugriff auf den Server.
+  - **Ablage (Datenmodell):** `system/zugang.md` im Datenverzeichnis mit den Kopffeldern `passwort_hash`, `passwort_geaendert`, `einrichtungscode_hash`, `einrichtungscode_gueltig_bis`; wird mitgesichert, nicht indexiert. Hash-Verfahren scrypt aus der Standardbibliothek mit N = 2^17, r = 8, p = 1, 16 Byte Salz (11.4.2, ASVS Anhang C). Höchstens zwei Hash-Berechnungen gleichzeitig (Speicher 128 MiB je Berechnung).
+  - **Sitzung (V7):** Referenz-Token mit 256 Bit Zufall aus `secrets` (7.2.3, 11.5.1), neu bei jeder Anmeldung (7.2.4), nur im Server geprüft (7.2.1); im Speicher des Servers gehalten – ein Neustart meldet ab. Abmelden oder Ablauf entfernt die Sitzung am Server (7.4.1). Inaktivität 7 Tage, Höchstdauer 30 Tage (7.3.1, 7.3.2) – **Begründung der Abweichung von NIST SP 800-63B AAL2** (7.1.1): ein Faktor entspricht AAL1, deren Höchstdauer 30 Tage ist; Schreibsitzungen auf mehreren Geräten. Höchstens 5 parallele Sitzungen, bei der sechsten endet die älteste (7.1.2). Übersicht der Sitzungen mit Beenden einzelner oder aller anderen (7.5.2, 7.4.5); Abmelden auf jeder Seite der Oberfläche (7.4.4, Schritt 2.7). Neue Sitzung nur durch ausdrückliche Anmeldung (7.6.2). Keine föderierte Anmeldung (7.1.3, 7.6.1 entfallen).
+  - **Cookie (V3, Stufe 1 bzw. 2):** Name `__Host-sitzung`, `Secure`, `HttpOnly`, `SameSite=Strict`, `Path=/`, ohne `Domain` (3.3.1–3.3.4).
+  - **Fremdaufrufe (3.5.1–3.5.3):** Ändernde Anfragen (POST, PUT, PATCH, DELETE) brauchen einen `Origin`-Kopf, der zum eigenen Host passt, und – mit Inhalt – `Content-Type: application/json`; lesende Anfragen ändern nichts. Keine CORS-Kopfzeilen (3.4.2). HSTS mit einem Jahr und Subdomains (3.4.1).
+  - **Schutz vor Raten (6.1.1, 6.3.1):** je Absender-Adresse höchstens 10 Fehlversuche in 15 Minuten, danach Antwort 429 bis zum Ende des Fensters; keine Gesamtsperre, damit ein Fremder den Eigentümer nicht aussperren kann. Gilt für Anmeldung, Passwortänderung und Einrichtungscode. Hinter dem Reverse Proxy (4.2) liefert uvicorn die echte Adresse (`--proxy-headers`).
+  - **Protokoll:** Jede Anmeldung, jeder Passwortwechsel und jede Einrichtung wird mit Zeit, Absender-Adresse, Vorgang und Ergebnis protokolliert, nie mit Passwort, Code oder Token (16.3.1, optional freigegeben).
+  - **HTTP-API:** zusätzliche Endpunkte über den Grobvertrag hinaus – ohne Sitzung: Einrichtung mit Code; mit Sitzung: eigene Sitzung lesen, Passwort ändern, Sitzungen auflisten und beenden. Pfade in `docs/architecture.md` Abschnitt 4.
+- **Vision-Frage, die entschied:** „Wie schlimm wäre es für dich, wenn jemand mit deinem gestohlenen Passwort deine Welten und Manuskripte liest oder ändert – so schlimm, dass du bei jeder Neuanmeldung die Handy-App nutzen willst?" → kein zweiter Faktor. „Ist es in Ordnung, dass beim Passwortwechsel ein Bruchstück des Passwort-Fingerabdrucks an Have I Been Pwned geht?" → ja.
+- **Konfidenz zum Zeitpunkt:** mittel – Anforderungen am Original geprüft; „Abweichung statt zweitem Faktor" ist ein Risikourteil. Umkehrbarkeit: billig.
+- **Konsequenzen:**
+  - Neue Umgebungsvariable `SKRIPTORIUM_DATA_DIR` (Datenverzeichnis), `.env.example` und README im selben Commit.
+  - Architektur: neue Beziehungen `api → storage` (nur `system/`) und `api → Pwned Passwords` – ADR-018.
+  - Oberfläche (2.7): Einrichtung, Anmeldung, Passwort ändern, Sitzungsübersicht, Abmelden auf jeder Seite, Namensnennung am Passwortfeld.
+  - Die Architektur-Angabe „Passwort-Hash als Umgebungsvariable" (Abschnitt 6, project-context Abschnitt 6) ist ersetzt.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-018: Beziehungen api → storage (Zugangsdaten) und api → Pwned Passwords
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer (mit ADR-017 freigegeben)
+- **Status:** Aktiv
+- **Tags:** `[REAKTIV]` `[MODUL]` `[SECURITY]`
+- **Phasentyp-Kontext:** UMSETZUNG (Schritt 2.6) – nicht in der Phasenplanung vorgesehen, daher `[REAKTIV]`
+- **Reifegrad-Wirkung:** Modul-Karte bleibt `[BELASTBAR]`; die neuen Beziehungen sind durch ADR-017 und die Umsetzung in 2.6 belegt
+- **Kategorie:** Architekturänderung (1)
+- **Kontext:** Mit selbst gewähltem, in der Oberfläche änderbarem Passwort (ADR-017) muss `api` den Passwort-Hash dauerhaft ablegen und neue Passwörter bei Pwned Passwords prüfen. Die Modul-Karte kennt weder `api → storage` noch einen Fremddienst außer über `ai_gateway`.
+- **Optionen:**
+  - **A:** `api` nutzt `DocumentStore` direkt, beschränkt auf Pfade unter `system/`; die Pwned-Passwords-Abfrage liegt in `api` (Untermodul für den Zugangsschutz). Keine neue Modulgrenze.
+  - **B:** eigenes Modul `access` für Zugangsdaten und Passwortprüfung (Kategorie 2) – mehr Struktur für wenige Funktionen.
+  - **C:** Abfrage über `ai_gateway` – widerspricht dessen Leitregel (kennt nur Nachrichten, Modelle, Token).
+- **Entscheidung:** A (Empfehlung der KI, Heuristik 1.3: einfachere Option; Zugangsschutz ist laut Modul-Karte Aufgabe von `api`).
+- **Vision-Frage, die entschied:** siehe ADR-017 (Passwort selbst wählen, Prüfung über Pwned Passwords).
+- **Konfidenz zum Zeitpunkt:** hoch – kleine, klar abgegrenzte Beziehung; Umkehrbarkeit billig (Auslagerung in ein eigenes Modul jederzeit möglich).
+- **Konsequenzen:**
+  - Modul-Karte: `API -.->|nur system/| STORE` und `API -.->|HTTPS| HIBP`. Leitregel ergänzt: `storage` bleibt die einzige Stelle, die Dateien berührt; `api` schreibt dort nur unter `system/`.
+  - `api` hat damit Abhängigkeiten zu fünf Modulen; der Smell „Gott-Modul" (Heuristik 1.4) wird beim Phasenende 2 mitgeprüft.
 - **Abgeleitete Regel:** keine
 
 ---

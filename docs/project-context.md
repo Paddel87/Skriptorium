@@ -105,6 +105,7 @@ Modularer Monolith (ADR-003): ein Python-Server (FastAPI) liefert die React-Ober
 |---|---|---|---|
 | OpenRouter | Zugang zu KI-Modellen verschiedener Anbieter, freie Modellwahl (FR-018) | API-Schlüssel, nur serverseitig, nie im Browser | Text des Autors geht nie verloren; Fehlermeldung statt stillem Abbruch; Wiederholen mit anderem Modell (`docs/architecture.md` Abschnitt 5) |
 | weitere KI-Anbieter | künftig parallel zu OpenRouter (FR-025) | je Anbieter | wie OpenRouter |
+| Have I Been Pwned – Pwned Passwords | Prüfung neuer Passwörter gegen geleakte Passwörter (ADR-017); Daten CC BY 4.0, Namensnennung am Passwortfeld und in der README | keine; nur 5 Hex-Zeichen des SHA-1-Hashes verlassen den Server | Festlegen oder Ändern des Passworts wird abgelehnt, bis der Dienst erreichbar ist; Anmeldung unberührt |
 
 ### APIs
 
