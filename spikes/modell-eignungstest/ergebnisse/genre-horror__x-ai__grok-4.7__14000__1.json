@@ -1,0 +1,23 @@
+{
+  "modell": "x-ai/grok-4.7",
+  "anbieter": "xAI",
+  "wiederholung": 1,
+  "szene": "horror",
+  "reasoning": {
+    "effort": "low"
+  },
+  "budget": 14000,
+  "geschaetzt_gesamt": 14002,
+  "geschaetzt_seiten": 7232,
+  "kanon_eintraege": 15,
+  "kanon_zusatz": 1,
+  "prompt_tokens": 14013,
+  "completion_tokens": 1965,
+  "reasoning_tokens": 1018,
+  "kosten_usd": 0.030165696,
+  "erstes_stueck_s": 19.04,
+  "gesamt_s": 39.41,
+  "finish_reason": "stop",
+  "fehler": null,
+  "woerter": 614
+}

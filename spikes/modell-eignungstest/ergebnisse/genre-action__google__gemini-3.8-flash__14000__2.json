@@ -1,0 +1,23 @@
+{
+  "modell": "google/gemini-3.8-flash",
+  "anbieter": "Google AI Studio",
+  "wiederholung": 2,
+  "szene": "action",
+  "reasoning": {
+    "effort": "low"
+  },
+  "budget": 14000,
+  "geschaetzt_gesamt": 13972,
+  "geschaetzt_seiten": 7411,
+  "kanon_eintraege": 14,
+  "kanon_zusatz": 0,
+  "prompt_tokens": 12840,
+  "completion_tokens": 1553,
+  "reasoning_tokens": 0,
+  "kosten_usd": 0.0152992125,
+  "erstes_stueck_s": 23.33,
+  "gesamt_s": 33.78,
+  "finish_reason": "stop",
+  "fehler": null,
+  "woerter": 895
+}

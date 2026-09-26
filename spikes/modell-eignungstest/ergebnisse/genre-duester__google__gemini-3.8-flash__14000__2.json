@@ -1,0 +1,23 @@
+{
+  "modell": "google/gemini-3.8-flash",
+  "anbieter": "Google",
+  "wiederholung": 2,
+  "szene": "duester",
+  "reasoning": {
+    "effort": "low"
+  },
+  "budget": 14000,
+  "geschaetzt_gesamt": 13986,
+  "geschaetzt_seiten": 6761,
+  "kanon_eintraege": 18,
+  "kanon_zusatz": 0,
+  "prompt_tokens": 12938,
+  "completion_tokens": 1811,
+  "reasoning_tokens": 0,
+  "kosten_usd": 0.01115687925,
+  "erstes_stueck_s": 2.14,
+  "gesamt_s": 24.17,
+  "finish_reason": "stop",
+  "fehler": null,
+  "woerter": 1061
+}

@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 19:45 – [BEOBACHTUNG] Schritt 1.5 Genre-Test angelegt und gelaufen
+
+- Auftrag des Eigentümers: Leistung bei düsteren, Horror-, Thriller- und Action-Szenen, ergänzt um weitere Faktoren. Neuer Fahrplan-Schritt 1.5 (Phase 1 jetzt 5 statt 4 Schritte, Wucherungs-Schwelle nicht berührt); 1.4 hängt zusätzlich von 1.5 ab.
+- Vier Szenen mit Brückentext, Kriterien vorab fixiert (Sprache, Genre-Handwerk, Spannung, Atmosphäre, Figuren unter Druck; dazu Abschwächung, Moralisierung, Schreibweise, grobe Kanon-Fehler). Szenen-Einträge je Genre ergänzt (z. B. Gunda, Vogt, Fenn Asch für die Hinrichtungsszene).
+- 32 Läufe (grok-4.7, grok-4.6, qwen3.8-max, gemini-3.8-flash × 4 Szenen × 2), alle erfolgreich, 0 Ablehnungen, `finish_reason` stets `stop`, 0,81 $. Auffällig: gemini-3.8-flash brauchte in zwei Läufen 10–23 s bis zum ersten Textstück (sonst 1,5–2,7 s).
+- Aufträge an die vier Genre-Prüfer ohne Platzhalter formuliert (Lehre aus den zwei Pannen).
+
 ### 2026-09-26 19:20 – [ADR-ANGELEGT] ADR-010 – Schritt 1.1 erledigt
 
 - **Kanon-Nachtest (Runde 3, Eichtexte 0 / 6 / 0 statt 1):** qwen3.8-max 1,4 Widersprüche je 1.000 Wörter (gleichauf mit grok-4.7 1,5), grok-4.6 2,4, qwen3.8-flash 3,9. Runde-3-Prüfer zählten Schreibweise-Verstöße strenger – im Erkenntnisdokument gekennzeichnet.

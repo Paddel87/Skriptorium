@@ -1,0 +1,23 @@
+{
+  "modell": "x-ai/grok-4.7",
+  "anbieter": "xAI",
+  "wiederholung": 1,
+  "szene": "duester",
+  "reasoning": {
+    "effort": "low"
+  },
+  "budget": 14000,
+  "geschaetzt_gesamt": 13986,
+  "geschaetzt_seiten": 6761,
+  "kanon_eintraege": 18,
+  "kanon_zusatz": 0,
+  "prompt_tokens": 14052,
+  "completion_tokens": 2099,
+  "reasoning_tokens": 705,
+  "kosten_usd": 0.03086424,
+  "erstes_stueck_s": 11.33,
+  "gesamt_s": 37.91,
+  "finish_reason": "stop",
+  "fehler": null,
+  "woerter": 884
+}

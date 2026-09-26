@@ -1,0 +1,23 @@
+{
+  "modell": "google/gemini-3.8-flash",
+  "anbieter": "Google",
+  "wiederholung": 2,
+  "szene": "thriller",
+  "reasoning": {
+    "effort": "low"
+  },
+  "budget": 14000,
+  "geschaetzt_gesamt": 13993,
+  "geschaetzt_seiten": 7232,
+  "kanon_eintraege": 16,
+  "kanon_zusatz": 1,
+  "prompt_tokens": 12903,
+  "completion_tokens": 1758,
+  "reasoning_tokens": 0,
+  "kosten_usd": 0.01064945475,
+  "erstes_stueck_s": 5.13,
+  "gesamt_s": 27.78,
+  "finish_reason": "stop",
+  "fehler": null,
+  "woerter": 1013
+}
