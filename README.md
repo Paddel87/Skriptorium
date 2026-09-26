@@ -32,7 +32,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 
 ## Quick Start
 
-Stand nach Schritt 2.6: Server mit Anmeldung und HTTP-Schnittstelle für Welten, Kanon und Geschichten; noch ohne Oberfläche für diese Funktionen (2.7) und ohne KI.
+Stand nach Schritt 2.7: Server mit Anmeldung und Oberfläche für Welten, Kanon, Import und Geschichten; noch ohne KI.
 
 ### Voraussetzungen
 
@@ -50,6 +50,7 @@ uv sync --frozen --python 3.14.7
 npm ci
 uv run pre-commit install
 uv run skriptorium-einrichtung          # Einrichtungscode für das erste Passwort (einmal, 24 h)
+npx vite build                          # Oberfläche nach dist/ui bauen
 uv run uvicorn skriptorium.api:create_app --factory --no-access-log
 ```
 
@@ -82,7 +83,7 @@ Browser (ui) ──HTTP/SSE──> api ──> canon ─────┐
 
 ## Verwendung
 
-Noch nicht verfügbar. Geplante Hauptansichten: Welt wählen, Einstieg über neue Szene oder laufendes Manuskript, Editor mit `@`-Menü, Kanon-Pflege.
+Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:8000` im Browser öffnen (ohne TLS nur über `localhost`, weil das Sitzungs-Cookie `Secure` verlangt). Mit dem Einrichtungscode ein Passwort festlegen, anmelden, Welt anlegen. Verfügbar: Kanon-Einträge je Kategorie, Markdown-Import mit Vorschau, Geschichten und Kapitel mit Markdown-Editor, Passwort ändern und Sitzungen beenden unter „Konto“. Noch ohne KI (Phase 3).
 
 ## Nächste Schritte
 

@@ -587,6 +587,7 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
   - In der Cloud-Session ist ein älteres Chromium vorinstalliert (`/opt/pw-browsers`); lokal kann der Pfad über `PLAYWRIGHT_CHROMIUM_EXECUTABLE` gesetzt werden.
   - Das Passwort für End-to-End-Tests wird ohne Pwned-Passwords-Abfrage direkt über `CredentialStore` gesetzt; die Einrichtungs-Maske ist über Komponenten-Tests abgedeckt – der Server erhält dafür keinen Testmodus.
   - Nachprüf-Einträge im Ablaufdaten-Register: jsdom 30 (mindestreif ab 2027-01-27).
+  - Nachtrag nach Freigabe des Eigentümers: @types/node 24.19.0 (MIT, nur Typen, Linie Node 24) für die Typprüfung der E2E-Dateien und der Playwright-Konfiguration.
   - Lizenzen (Kategorie 8, Nachtrag nach Freigabe des Eigentümers): MIT-0 (`@csstools/color-helpers`, `@csstools/css-syntax-patches-for-csstree`) und CC0-1.0 (`mdn-data`) kommen transitiv über jsdom; erlaubt nur für Werkzeuge.
 - **Abgeleitete Regel:** keine
 

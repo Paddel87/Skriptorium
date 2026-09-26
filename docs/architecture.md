@@ -117,6 +117,7 @@ graph LR
 - **Verantwortung:** React-Oberfläche: Welt wählen, Einstieg (Szene, Manuskript), Editor mit `@`-Menü, Übernahme markierter Textstellen in den Kanon mit Zielwahl (FR-015, FR-024), Kanon-Pflege, Modellwahl; bedienbar auf dem Smartphone (FR-019).
 - **Abhängigkeiten:** nur `api` über HTTP.
 - **Technologie:** TypeScript, React, Vite, CodeMirror 6.
+- **Umgesetzt in 2.7 (2026-09-26):** Anmeldung, Einrichtung mit Code, Passwortwechsel mit Namensnennung Pwned Passwords, Sitzungsübersicht, Abmelden auf jeder Seite (ADR-017); Welten, Kanon-Einträge je Kategorie, Markdown-Import mit Vorschau, Geschichten und Kapitel mit CodeMirror-Editor (Markdown-Quelltext, keine HTML-Darstellung; Editor wird nachgeladen). Navigation ohne Router-Bibliothek. Content-Security-Policy als Meta-Tag im gebauten `index.html` (`script-src 'self'`, `object-src 'none'`, `base-uri 'self'`, `form-action 'self'`; `style-src` mit `'unsafe-inline'` für CodeMirror). `@`-Menü, Modellwahl und Übernahme in den Kanon folgen in Phase 3.
 
 <!-- ANCHOR:schnittstellenvertraege -->
 ## 4. Schnittstellenverträge

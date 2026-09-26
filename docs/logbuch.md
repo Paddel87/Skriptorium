@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 20:42 – [PROBLEM-GELÖST] Reibungen in 2.7
+
+- **Bündelgröße:** Das erste Bündel war 706 kB (Vite-Warnung, Quelle ohne Schalter). Ursache: `@codemirror/lang-markdown` bringt HTML-, CSS- und JavaScript-Hervorhebung mit. Lösung: Editor per `lazy()` nachladen – Hauptbündel 213 kB, Editor 493 kB, keine Warnung.
+- **CSP-Probe mit `eval`:** `page.evaluate` läuft über die DevTools-Schnittstelle, für die das eval-Verbot nicht greift; die Probe meldete fälschlich „erlaubt“. Ersetzt durch ein eingeschleustes Inline-Skript: läuft nicht, der Browser meldet `script-src-elem`.
+- **ESLint `react-hooks/set-state-in-effect`** auch für eine async-Funktion mit `setState` nach `await` → Sitzungsprüfung als Promise mit Callbacks.
+- **`FormEvent` ist in @types/react 19.2 abgekündigt** → `SyntheticEvent`.
+- **Playwright 1.62 und vorinstalliertes Chromium (Revision 1194 statt 1234):** lokal über `PLAYWRIGHT_CHROMIUM_EXECUTABLE`; Runbook-Troubleshooting ergänzt.
+- **Nachträge mit Freigabe:** Lizenzen MIT-0 und CC0-1.0 nur für Werkzeuge; `@types/node` 24.19.0 für die Typprüfung der E2E-Dateien (beide ADR-019).
+
 ### 2026-09-26 20:20 – [ADR-ANGELEGT] ADR-019
 
 - Test-Werkzeuge der Oberfläche: jsdom 29.1.1, Testing Library, Playwright 1.62.1; neuer CI-Job End-to-End. Freigabe des Eigentümers per Antwortsystem (Option A). `[OPERATIV]`; Reaktiv-Quote 1/10.

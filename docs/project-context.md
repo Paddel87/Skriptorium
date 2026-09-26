@@ -191,7 +191,7 @@ Pflichtkategorien: `CLAUDE.md` Abschnitt 15. Toolwahl nach den Skeletten unter `
 - **Type-Checker:** `tsc --noEmit` mit `strict: true` und `noUncheckedIndexedAccess: true`
 - **Security-Scanner:** nicht anwendbar als eigenes Werkzeug, Begründung: kein etabliertes Standard-Werkzeug für React-Oberflächen; abgedeckt durch `eslint`-Regeln (z. B. Verbot von `dangerouslySetInnerHTML` ohne Begründung) und `npm audit`
 - **Dependency-Audit:** `npm audit --audit-level=high`
-- **Test-Runner:** `vitest` mit Coverage
+- **Test-Runner:** `vitest` mit Coverage (Komponenten-Tests mit jsdom und Testing Library); End-to-End mit Playwright gegen den echten Server (`npx playwright test`, ADR-019)
 - **Versionen (ADR-015):** Python: ruff 0.16.9, mypy 1.20.2, bandit 1.9.4, pip-audit 2.10.1, pytest 9.1.1, pytest-cov 7.1.0, pre-commit 4.6.2; TypeScript: eslint 10.9.1, typescript-eslint 8.70.1, eslint-plugin-react-hooks 7.1.1, prettier 3.9.9, vitest 4.1.11 – Nachweise in `docs/research/versions-verifikation.md`
 - **Naming-Konvention:** camelCase für Variablen und Funktionen, PascalCase für Typen, Klassen und React-Komponenten
 
@@ -220,7 +220,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 - **Pre-Commit-Hook-Framework:** `pre-commit`
 - **Konfigurationsdatei:** `.pre-commit-config.yaml`
 - **CI-Plattform:** GitHub Actions
-- **Workflow-Dateien:** `.github/workflows/ci.yml` mit den Jobs Pre-Commit, Python und TypeScript (alle Pflicht-Gates, seit Schritt 2.1 scharf)
+- **Workflow-Dateien:** `.github/workflows/ci.yml` mit den Jobs Pre-Commit, Python, TypeScript (alle Pflicht-Gates, seit Schritt 2.1 scharf) und End-to-End (seit 2.7, ADR-019)
 - **Einrichtung der Cloud-Session:** SessionStart-Hook `.claude/settings.json` → `scripts/session-start.sh` (ADR-015)
 - **Trigger:** `push` auf alle Branches und `pull_request` auf `main`
 - **Verpflichtende CI-Gates (Merge-Block bei Rot):** Lint, Format-Check, Type-Check, Security-Scan, Dependency-Audit (Schwellenwert high), Tests inklusive Coverage-Mindestwert
