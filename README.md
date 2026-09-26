@@ -23,11 +23,11 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 1 – Erkundung (seit 2026-09-26); Schritte 1.1 Modell-Eignungstest und 1.5 Genre-Test erledigt (ADR-010)
+- **Projektphase:** Phase 1 – Erkundung abgeschlossen (2026-09-26); als Nächstes Phase 2 – Grundgerüst (Umsetzung)
 - **Version:** v0.0.0 – noch keine lauffähige Version
 - **Status:** Konzeption
 - **Letzte Änderung:** 2026-09-26
-- **Architektur-Reife:** Architektur-Pattern, Sicherheitsniveau und Schutzbedarf BELASTBAR (ADR-003, ADR-006, ADR-007); alle Module VORLÄUFIG, Beförderung nach Phase 1 (Schritt 1.4); Host, Secrets im Betrieb und Backups OFFEN bis Phase 4
+- **Architektur-Reife:** Module, Schnittstellen, Datenmodell, Token-Budget und Reaktionszeit BELASTBAR (ADR-013); Sicherheitsniveau und Schutzbedarf BELASTBAR (ADR-006, ADR-007); Observability und Bedrohungsmodell VORLÄUFIG; Host, Secrets im Betrieb und Backups OFFEN bis Phase 4
 - **Aktive Blocker:** 0
 
 ## Quick Start
@@ -69,9 +69,11 @@ Noch nicht verfügbar. Geplante Hauptansichten: Welt wählen, Einstieg über neu
 
 ## Nächste Schritte
 
-- **1.2 Import-Klärung:** echte Exporte aus TypingMind und Notion sichten und das Importformat festlegen.
-- **1.3 Laufzeit-Prüfung:** httpx auf Python 3.14.7 testen.
-- **1.4 Reifegrad-Beförderung:** Architektur mit den Ergebnissen aus 1.1–1.3 abgleichen ([Modell-Eignungstest](docs/research/modell-eignungstest.md): Startmodell grok-4.7).
+- **2.1 Projektgerüst und volle CI-Gates:** Python- und TypeScript-Projekt mit den fixierten Versionen, alle Prüf-Gates scharf, erster Quick Start (freigabepflichtig).
+- **2.2 storage:** Dateiablage und Suchindex (YAML-Parser zur Freigabe).
+- **2.3 canon:** Welten und Kanon-Einträge.
+
+Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – Startmodell grok-4.7, Zweitmodell grok-4.6.
 
 → Vollständiger Fahrplan: [`docs/fahrplan.md`](docs/fahrplan.md)
 
