@@ -98,7 +98,7 @@ graph LR
 - **Verantwortung:** Lesen und atomares Schreiben der Markdown-Dateien mit YAML-Kopf (Frontmatter) im Datenverzeichnis; Pflege des SQLite-Suchindex (Namen, Aliasse, Volltext) und dessen vollständiger Neuaufbau aus den Dateien.
 - **Nicht-Verantwortung:** keine Fachregeln. Die Dateien sind die Quelle der Wahrheit; der Index enthält nichts, was nicht aus den Dateien wiederherstellbar ist.
 - **Öffentliche Schnittstellen:** `DocumentStore` (Abschnitt 4)
-- **Abhängigkeiten (extern):** Python-Standardbibliothek (`sqlite3`); YAML-Parser [TBD – freigabepflichtige Abhängigkeit, Auswahl im ersten Umsetzungsschritt]
+- **Abhängigkeiten (extern):** Python-Standardbibliothek (`sqlite3`); PyYAML 6.0 (ADR-016), gelesen mit strengem sicherem Lader
 
 ### Modul: api [BELASTBAR]
 
@@ -144,6 +144,7 @@ Alle Verträge sind `[BELASTBAR]` seit 2026-09-26 (ADR-013). Die Umsetzung formu
 - **Typ:** Python-Funktions-Exporte
 - **Grobvertrag (1.4, 2026-09-26):** Operationen je Dienst; Signaturen und Fehlerarten werden in 2.2–2.5 ausformuliert, ohne Operationen hinzuzufügen oder wegzulassen (sonst Schnittstellenänderung nach `CLAUDE.md` Abschnitt 4).
   - **DocumentStore** (`storage`): Dokument lesen (Kopf + Text), atomar schreiben, löschen, unter einem Pfad auflisten; Suche nach Name/Alias/Volltext innerhalb einer Welt; Index vollständig aus den Dateien neu aufbauen.
+    - **Ausformuliert in 2.2 (2026-09-26):** `DocumentStore(root: Path)`; `read(path) -> Document`; `write(path, header, body, *, create=False) -> Document`; `delete(path)`; `list_paths(prefix="") -> list[str]`; `search(world, query, mode="name" | "fulltext") -> list[SearchHit]`; `rebuild_index()`. `Document(path, header, body)`, `SearchHit(path, name)`. Pfade sind relativ (POSIX) unterhalb des Datenverzeichnisses und enden auf `.md`; `..`, absolute Pfade und Backslashes ergeben `InvalidInput`. Indexiert werden Dokumente unter `worlds/<welt>/`: Name aus `name` oder `titel`, sonst Dateiname; Aliasse aus `aliasse`; Volltext über SQLite FTS5 (Groß-/Kleinschreibung und diakritische Zeichen egal). Namenssuche per Präfix. Der Dateikopf wird streng gelesen: mehrdeutige YAML-1.1-Werte (z. B. `No`, `On`, `012`) und Nicht-Grundwerte (`!!binary`, `!!set`) ergeben `InvalidInput` (ADR-016). Die gemeinsamen Fehlerarten sind in `skriptorium.storage` definiert.
   - **CanonService** (`canon`): Welten auflisten, lesen, anlegen, ändern; Kanon-Einträge einer Welt auflisten (optional nach Kategorie), lesen, anlegen, ändern, löschen; Einträge nach Name oder Alias finden (für `@`-Menü und Vorschläge); Markdown-Import als Vorschau erzeugen und bestätigt übernehmen (ADR-012).
   - **ManuscriptService** (`manuscript`): Geschichten einer Welt auflisten, lesen, anlegen, ändern (Form, Perspektive, geführte Figuren); Kapitel auflisten, lesen, speichern, abschließen; Kurzfassung eines Kapitels und Gesamtzusammenfassung setzen; Gast-Verbindungen hinzufügen und entfernen; geschichtenbezogene Fakten hinzufügen und entfernen.
 - **Fehler (gemeinsam):** `NotFound`, `AlreadyExists`, `InvalidInput`; `storage` zusätzlich `StorageError` bei Schreibfehlern (Datei bleibt dann unverändert).
@@ -298,7 +299,7 @@ data/
 | Modul manuscript | BELASTBAR | 2026-09-26 | ADR-013 |
 | Modul context | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.5 |
 | Modul ai_gateway | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.3 |
-| Modul storage | BELASTBAR | 2026-09-26 | ADR-013; YAML-Parser vor 2.2 zur Freigabe; Tempo bei großen Geschichten beobachten |
+| Modul storage | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.2 (ADR-016, 59 Tests, 100 %); Tempo bei großen Geschichten beobachten |
 | Modul api | BELASTBAR | 2026-09-26 | ADR-013; Zugangsschutz nach ADR-006 |
 | Modul ui | BELASTBAR | 2026-09-26 | ADR-013; Smartphone-Test in 5.2 |
 | Alle Schnittstellen (Abschnitt 4) | BELASTBAR | 2026-09-26 | ADR-013 (Grobverträge) |

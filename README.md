@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 2 – Grundgerüst (Umsetzung); Schritt 2.1 Projektgerüst umgesetzt
+- **Projektphase:** Phase 2 – Grundgerüst (Umsetzung); Schritte 2.1 (Projektgerüst) und 2.2 (Dateiablage und Suchindex) umgesetzt
 - **Version:** v0.0.0 – noch keine veröffentlichte Version
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-09-26
@@ -82,9 +82,9 @@ Noch nicht verfügbar. Geplante Hauptansichten: Welt wählen, Einstieg über neu
 
 ## Nächste Schritte
 
-- **2.2 storage:** Dateiablage und Suchindex (YAML-Parser zur Freigabe).
 - **2.3 canon:** Welten und Kanon-Einträge.
 - **2.4 canon:** Import von Welt-Material als Markdown.
+- **2.5 manuscript:** Geschichten und Kapitel.
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – Startmodell grok-4.7, Zweitmodell grok-4.6.
 

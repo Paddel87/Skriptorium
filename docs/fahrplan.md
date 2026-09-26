@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 2 „Grundgerüst" (bereit; Phase 1 abgeschlossen 2026-09-26, ADR-014: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 2.2 `[WARTET-AUF-FREIGABE]` – YAML-Parser vorgelegt am 2026-09-26
-- **Nächster Schritt:** nach Freigabe ADR-016, dann 2.2 umsetzen
+- **Aktiver Schritt:** keiner (2.2 `[ERLEDIGT]` 2026-09-26)
+- **Nächster Schritt:** 2.3 (canon – Welten und Kanon-Einträge)
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -128,7 +128,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 2.2: storage – Dateiablage und Suchindex
 
-- **Status:** WARTET-AUF-FREIGABE (seit 2026-09-26; YAML-Parser vorgelegt)
+- **Status:** ERLEDIGT (2026-09-26; ADR-016) – Abnahme durch Tests belegt: atomares Schreiben (Abbruch bei `os.replace` und `fsync`), Neuaufbau ergibt denselben Suchstand, Index ohne Inhalt außerhalb der Dateien; 59 Tests, Coverage `storage` 100 % (Zeilen und Zweige)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.1
 - **Freigabepflichtig:** ja – YAML-Parser für den Dateikopf ist eine neue externe Abhängigkeit (Kategorie 3)
@@ -220,7 +220,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** ui
 - **Reifegrad-Wirkung:** `ui` → `[BELASTBAR]` durch Umsetzung
 - **Artefakte:** Code, Tests
-- **Notizen:** –
+- **Notizen:** Zusatz 2026-09-26 (ADR-016): Beim Bearbeiten in der Oberfläche darauf hinweisen, dass Kommentare im Dateikopf beim Speichern nicht erhalten bleiben (PyYAML).
 
 ### Phase 3: Schreiben mit KI – Typ: UMSETZUNG
 

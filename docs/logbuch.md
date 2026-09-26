@@ -29,6 +29,20 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 18:55 – [REIFEGRAD-WECHSEL] storage durch Umsetzung validiert
+
+- `storage` bleibt `[BELASTBAR]`, jetzt „durch Umsetzung validiert“ (Schritt 2.2); `DocumentStore`-Signaturen in `docs/architecture.md` Abschnitt 4 ausformuliert, ohne Operationen hinzuzufügen oder wegzulassen (`list` heißt `list_paths`, weil `list` als Methodenname den eingebauten Typ in Annotationen verdeckt – mypy-Fehler).
+
+### 2026-09-26 18:50 – [PROBLEM-GELÖST] Reibungen in 2.2
+
+- **bandit B506** meldet `yaml.load` auch mit einer Unterklasse von `SafeLoader`. Lösung ohne Unterdrückung: Lader direkt instanziieren (`get_single_data`, `dispose`) – gleiche Wirkung wie `yaml.load`.
+- **Strenger Lader nachgeschärft:** Der sichere Lader von PyYAML macht aus `2026-09-26` ein Datum und kennt `!!binary`/`!!set`; Datumsangaben bleiben jetzt Text, andere Nicht-Grundwerte ergeben `InvalidInput`. `y`/`n` sind bei PyYAML keine Wahrheitswerte (Test angepasst).
+- **Namensregel ruff N818** verlangt `…Error`-Suffix; die Fehlernamen sind im Schnittstellenvertrag festgelegt → Unterdrückung je Klasse mit Begründung.
+
+### 2026-09-26 18:40 – [ADR-ANGELEGT] ADR-016
+
+- YAML-Parser PyYAML 6.0.3 (Option A), Freigabe des Eigentümers per Antwortsystem. `[OPERATIV]`; Reaktiv-Quote 0/10.
+
 ### 2026-09-26 18:35 – [BEOBACHTUNG] 2.2 vorbereitet – YAML-Parser im Probelauf
 
 - PyYAML 6.0.3 (`safe_load`) liest handgeschriebene Werte nach YAML 1.1: Alias `No` → `False`, `On` → `True`, `status: off` → `False`, `012` → `10`. ruamel.yaml 0.19.1 (YAML 1.2) liest sie als Text bzw. `12`, schreibt `No` aber ungequotet – ein YAML-1.1-Leser macht daraus wieder `False`. PyYAML `safe_dump` setzt mehrdeutige Werte in Anführungszeichen.
