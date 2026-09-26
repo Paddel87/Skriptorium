@@ -1,163 +1,311 @@
-# Project Context – Dev-Templates
+# Project Context
 
-<!-- Arbeitsdokument von Dev-Templates selbst (Selbstanwendung der Methodik, ADR-001).
-     Die unausgefüllten Vorlagen für Ziel-Projekte liegen unter templates/docs/.
-     Reduzierte Form nach Klasse K (templates/projektstart.md Abschnitt 2). -->
+<!-- Projektspezifischer Kontext. Wird zu Sessionbeginn als erste Datei gelesen.
+     Dient als Entscheidungsgrundlage für alle autonomen Schritte der KI.
+     Jede Angabe muss so konkret sein, dass daraus maschinell eindeutig Regeln ableitbar sind. -->
 
 <!-- ANCHOR:kerndaten -->
 ## 1. Kerndaten
 
-- **Projektname:** Dev-Templates
-- **Kurzbeschreibung:** Methodik-Framework und Vorlagen-Set für Software-Projekte, die einen KI-Coding-Agent als Hauptentwickler einsetzen. Das Produkt sind Regelwerk und Dokument-Vorlagen, nicht ausführbare Software.
-- **Status:** aktive Entwicklung
-- **Version (SemVer):** keine. Der Methodik-Stand wird über Patch-Wellen (PR-Nummern) in `README.md` geführt, nicht über SemVer-Tags. Begründung: Es gibt kein installierbares Artefakt, dessen Kompatibilität versioniert werden müsste.
-- **Dokumentationssprache:** Deutsch
-- **Codesprache:** nicht anwendbar – das Repo enthält keinen Anwendungscode
-- **Projekttyp:** Methodik- und Dokumentations-Repository
-- **Projektgrößen-Klasse:** K (Klein) – fixiert in ADR-001
+- **Projektname:** [ausfüllen]
+- **Kurzbeschreibung:** [1–2 Sätze: was das System tut und für wen]
+- **Status:** [Konzeption | Aufbau | aktive Entwicklung | Wartung | deprecated]
+- **Version (SemVer):** [z. B. v0.1.0]
+- **Dokumentationssprache:** [z. B. Deutsch]
+- **Codesprache (Kommentare, Variablennamen):** [z. B. Englisch]
+- **Projekttyp:** [CLI | Web-Backend | Web-Frontend | Full-Stack | Daten-Pipeline | ML-System | Library | Mixed]
 
 <!-- ANCHOR:zielgruppe-und-nutzungskontext -->
 ## 2. Zielgruppe und Nutzungskontext
 
-- **Primäre Nutzer:** Einzelpersonen ohne Programmierkenntnisse, die eine Software-Idee und Fachwissen über ihren Anwendungsbereich mitbringen und die technische Umsetzung vollständig einem KI-Coding-Agent überlassen (Vision-Driven Development). Das Regelwerk gleicht zwei Schwächen aus: fehlendes technisches Wissen und fehlenden roten Faden über viele Sessions.
-- **Weniger geeignet:** Teams mit mehreren parallel arbeitenden Menschen (Rollen und Abstimmung nicht geregelt, Issue #33), Wegwerf-Prototypen. Erfahrene Entwickler können die Methodik nutzen, sind aber nicht die Zielgruppe.
-- **Erprobungsstand:** Klasse G an einem Pilotprojekt (seit Mai 2026), Klasse K nur an diesem Repo selbst (ohne Anwendungscode), Klassen M und V unerprobt.
-- **Sekundäre Nutzer:** die Coding-Agents selbst – sie sind Leser und Ausführende des Regelwerks, nicht nur Gegenstand.
-- **Nutzungsumgebung:** Referenz-Werkzeug ist Claude Code. Das Regelwerk ist werkzeugneutral gehalten; Einstiegspunkte für andere Agents sind in `README.md` beschrieben.
+- **Primäre Nutzer:** [wer verwendet das System, technisches Level]
+- **Sekundäre Nutzer / Betreiber:** [wer installiert, konfiguriert, wartet]
+- **Erwartete Last:** [z. B. „10 concurrent users", „1M Requests/Tag", „Batch-Jobs wöchentlich"]
+- **Nutzungsumgebung:** [z. B. „Browser Desktop + Mobile", „CLI auf Linux/macOS", „Kubernetes-Cluster"]
 
 <!-- ANCHOR:technischer-stack -->
 ## 3. Technischer Stack
 
-- **Sprachen:** Markdown (GitHub Flavored). Keine Programmiersprache, keine Laufzeitumgebung, keine Paketverwaltung.
-- **Externe Abhängigkeiten:** keine.
-- **Tooling im Repo:** `.prettierignore` – schließt sämtliche Markdown-Dateien von Prettier aus. Die Datei richtet sich an abgeleitete Projekte, deren Pre-Commit-Hook Prettier auch über Markdown laufen ließe.
+### Fixiert
 
-### Unterstützte Plattformen
+Pflicht: jede Version trägt einen Vermerk `Verifiziert: YYYY-MM-DD` mit Quelle (Datum, an dem die KI die Version gegen offizielle Quellen belegt und der Mensch die Tabelle bestätigt hat). Auswahl nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15, „Versionswahl"); ausgelöst in Modus 2 Schritt 2a (`templates/projektstart.md` Abschnitt 1.3). Lebensende bzw. Nachprüf-Datum jeder Version steht im Ablaufdaten-Register (Abschnitt 8). Major-Updates erfordern eine erneute Verifikation und einen ADR.
 
-Nicht anwendbar in der üblichen Form: Das Repo enthält keine ausführbaren Bestandteile. Verwendbar ist es überall dort, wo ein `AGENTS.md`- oder `CLAUDE.md`-fähiger Coding-Agent läuft.
+- **Mindestreife neuer Linien:** [z. B. „mindestens 3 Monate allgemein verfügbar oder mindestens zwei Fehlerkorrektur-Versionen"]
+- **Geplante Projektdauer:** [z. B. „mindestens 2 Jahre Betrieb" – bestimmt, wie lange das Unterstützungsfenster reichen muss]
+
+- **Sprachen und Versionen:** [z. B. Python 3.12 — Verifiziert: 2026-05-02; TypeScript 5.3 — Verifiziert: 2026-05-02]
+- **Frameworks:** [z. B. FastAPI 0.115 — Verifiziert: 2026-05-02; Next.js 15 — Verifiziert: 2026-05-02]
+- **Datenbank:** [z. B. PostgreSQL 16 — Verifiziert: 2026-05-02]
+- **Laufzeitumgebung:** [z. B. Docker Compose lokal, K8s in Prod — Verifiziert: 2026-05-02]
+- **Package Manager:** [z. B. uv, pnpm — Verifiziert: 2026-05-02]
+
+### Empfohlen (freigabefrei nutzbar)
+
+[Bibliotheken, die bei Bedarf ohne separate Freigabe eingesetzt werden dürfen.
+Beispiele: Standard-Test-Runner, Logging-Bibliothek, ORM, Linter.]
+
+- [Bibliothek 1 – Einsatzzweck]
+- [Bibliothek 2 – Einsatzzweck]
+
+### Explizit nicht erlaubt
+
+[Was bewusst ausgeschlossen ist, mit Begründung.
+Verhindert, dass die KI naheliegende, aber unerwünschte Lösungen wählt.]
+
+- [z. B. „Keine externen Cloud-Services (Self-Hosting-Prinzip)"]
+- [z. B. „Keine GPL-lizenzierten Abhängigkeiten"]
+
+### Unterstützte Entwickler-Plattformen
+
+Diese Tabelle ist **explizit, nicht implizit**. Jede Plattform, die nicht hier steht, ist nicht unterstützt – auch wenn sie technisch funktionieren mag. Plattformen, die mit Einschränkungen unterstützt werden, tragen den Einschränkungs-Hinweis.
+
+| Aspekt                        | Linux (Ubuntu 22.04+ / Debian 12+ / Fedora 40+) | macOS 14+ (Apple Silicon und Intel) | Windows 11 mit Git Bash | Windows 11 mit WSL2 |
+|---|---|---|---|---|
+| **Backend-Entwicklung**       | [✓ / ✗ / ✓ mit Einschränkung] | [...] | [...] | [...] |
+| **Frontend-Entwicklung**      | [...] | [...] | [...] | [...] |
+| **Hilfsskripte (`scripts/`)** | [...] | [...] | [...] | [...] |
+| **Container-Workloads** (Docker Compose lokal) | [...] | [...] | [...] | [...] |
+| **CI-Pipeline**               | [✓ (GitHub-Hosted-Runner)] | [— (kein macOS-Runner in CI)] | [...] | [...] |
+
+**Pflicht-Voraussetzungen pro Plattform:** Siehe README „Voraussetzungen"-Block. Plattform-spezifische Zusatz-Voraussetzungen sind dort namentlich vermerkt (z. B. „Windows: Git Bash oder WSL2 für `scripts/`-Hilfsskripte; `jq` separat installieren").
+
+**Pflege-Regel:** Diese Tabelle wird bei jedem Touch an `scripts/`, `docker-compose.yml`, `pyproject.toml`/`package.json` (Top-Level-Dependencies) oder bei jeder neuen plattform-bezogenen Eskalation (z. B. neuer Plattform-Blocker in `docs/blockers.md`) re-validiert. Verstöße sind im selben Commit zu korrigieren.
+
+**Nicht-Unterstützung:** Wenn eine Plattform bewusst nicht unterstützt wird (z. B. Windows ohne Git Bash und ohne WSL2), wird die Spalte trotzdem gelistet, mit einem ✗ und kurzer Begründung. Stille Nicht-Unterstützung („wir testen halt nur Linux") ist unzulässig – sie wird explizit oder die Plattform wird zur Test-Matrix hinzugefügt.
+
+**Initialisierungs-Hinweis:** Spalten in der Vorlage sind generisch; bei Modus-2-Befüllung werden nicht-relevante Spalten entfernt und projekt-spezifische Plattformen ergänzt (z. B. eingebettete Linux-Distribution, Cloud-Runner mit GPU).
 
 <!-- ANCHOR:architektur-grobstruktur -->
 ## 4. Architektur-Grobstruktur
 
-Drei Bestandteile ohne Laufzeit-Kopplung. Details in `docs/architecture.md`.
+[2–5 Sätze. Details gehören in `architecture.md`.
+Hier nur das, was für die Gesamtorientierung nötig ist.]
 
-- **Regelwerk** (`CLAUDE.md`, `AGENTS.md`) – die verbindliche Methodik, projektübergreifend unverändert
-- **Vorlagen** (`templates/`) – das ausgelieferte Produkt: Dokument-Vorlagen, CI-Skelette, Pre-Commit-Konfigurationen
-- **Selbstanwendung** (`docs/`) – die ausgefüllten Arbeitsdokumente dieses Repos
+**Module (Kurzübersicht):**
+
+- [Modul A] – [Kurzbeschreibung der Verantwortung]
+- [Modul B] – [...]
+
+**Kommunikationsmuster:** [z. B. „REST synchron intern, Events über Queue zwischen Backend und Worker"]
 
 <!-- ANCHOR:externe-abhaengigkeiten -->
 ## 5. Externe Abhängigkeiten
 
-Keine. Weder Services noch APIs noch Bibliotheken.
+### Services
+
+| Service | Zweck | Authentifizierung | Ausfallverhalten |
+|---|---|---|---|
+| [Name] | [wofür] | [wie] | [Fallback bei Nichterreichbarkeit] |
+
+### APIs
+
+[Externe APIs mit Version, Rate Limits, Failure Modes.]
 
 <!-- ANCHOR:constraints -->
 ## 6. Constraints (operationalisierbar)
 
-### Werkzeug- und Modellneutralität
+**Regel: Jeder Constraint muss in eine prüfbare Regel übersetzt sein. Schwammige Angaben wie „sicher" oder „schnell" gehören hier nicht hin.**
 
-- **Regel:** `CLAUDE.md` nennt keine konkreten Werkzeug- oder Modellnamen. Konkretisierungen gehören in `docs/project-context.md` des jeweiligen Projekts.
-- **Prüfung:** Grep über `CLAUDE.md` auf Modell- und Produktnamen muss leer bleiben.
+### Datenschutz
 
-### Einzige Quelle der Wahrheit
+- [z. B. „Keine personenbezogenen Daten in Logs" → Regel: Logger-Wrapper mit Redaction-Liste verwenden]
+- [z. B. „DSGVO-Art. 17: Löschfunktion für Nutzerdaten" → Regel: API-Endpunkt `DELETE /users/{id}` kaskadiert auf verknüpfte Tabellen]
 
-- **Regel:** `AGENTS.md` und weitere Einstiegsdateien verweisen ausschließlich auf `CLAUDE.md` und duplizieren keine Regeln.
-- **Prüfung:** Einstiegsdateien enthalten keine eigenständigen Verhaltensregeln.
+### Sicherheit
 
-### Vorlagen bleiben unbefüllt
+- [z. B. „Alle Endpoints erfordern Authentifizierung außer `/health` und `/login`"]
+- [z. B. „Passwörter werden mit argon2id gehasht, minimum 12 Zeichen, kein Maximum"]
 
-- **Regel:** Dateien unter `templates/docs/` behalten ihre Platzhalter. Konkrete Werte gehören nach `docs/`.
-- **Prüfung:** Jede Datei unter `templates/docs/` enthält mindestens ein Platzhalter-Feld in eckigen Klammern.
+### Performance
+
+- [z. B. „p95-Antwortzeit < 200 ms bei bis zu 100 concurrent users"]
+- [z. B. „Datenbankabfragen dürfen keine `SELECT *` verwenden"]
+
+### Plattform und Kompatibilität
+
+- [z. B. „Lauffähig auf x86_64 und arm64"]
+- [z. B. „Minimum Node 20 LTS"]
 
 ### Compliance und Lizenz
 
-- **Projektlizenz:** CC0 1.0 Universal (Public-Domain-Widmung), ADR-004. `LICENSE`-Datei live von `creativecommons.org` bezogen, nicht aus dem Trainingsstand rekonstruiert.
-- **Erlaubte Abhängigkeitslizenzen:** nicht anwendbar – keine Abhängigkeiten außer `markdownlint-cli2` (MIT, mit CC0 kompatibel) und `pre-commit` (MIT).
-
-### Anforderungen, Schutzbedarf, Kosten
-
-- **`docs/requirements.md`:** nicht anwendbar, Begründung: Klasse K (ADR-001). Die Anforderungen an die Methodik stehen als Issues (z. B. #20, #34) und als Akzeptanzkriterien der Fahrplan-Schritte.
-- **Schutzbedarf:** nicht anwendbar, Begründung: Das Repo verarbeitet keine personenbezogenen Daten.
-- **Kostenrahmen:** keine laufenden Kosten außer dem KI-Verbrauch über das Abo des Eigentümers (Abschnitt „Methodik-Schwellenwerte", Modellklassen-Zuordnung); kein Kostenregister (Klasse K).
+- **Projektlizenz:** [z. B. MIT, AGPLv3, proprietär]
+- **Erlaubte Abhängigkeitslizenzen:** [z. B. MIT, BSD, Apache-2.0, MPL-2.0]
+- **Ausgeschlossene Lizenzen:** [z. B. GPL außer explizit freigegeben]
 
 ### Methodik-Schwellenwerte
 
-- **Reaktiv-ADR-Schwellenwert:** maximal 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse-K-Empfehlung). Methodik-ADRs dieses Repos sind keine Architekturentscheidungen im Sinne der Kategorien 1, 2, 4, 5 aus `CLAUDE.md` Abschnitt 4 und fallen nicht unter die automatische `[REAKTIV]`-Klassifikation (ADR-012).
-- **Wucherungs-Schwelle:** Faktor 2 gegenüber dem ursprünglichen Schrittplan und mindestens 5 zusätzliche Schritte (Default, ADR-012).
-- **Modellklassen-Zuordnung** (Regelwerk: `CLAUDE.md` Abschnitt 0, „Modellklassen-Disziplin"):
-  - **Mechanik-Klasse:** Claude Haiku 4.5 – Probelauf **bestanden am 2026-09-24 für Suchen und Zählen** (Reaktiv-Quote nachzählen, Schritt-IDs gegen den Fahrplan abgleichen, Status-Liste): beide absichtlich eingebauten Fehler gefunden, alle Zählwerte korrekt. Für andere Mechanik-Arbeit noch nicht erprobt.
-  - **Routine-Klasse:** Claude Sonnet 5 – trägt den Normalbetrieb: Vorlagen-Pflege, Logbuch, README-Synchronisation, Drift-Prüfung, Archivierung, Formulierungsarbeit an bestehenden Abschnitten. Probelauf **bestanden am 2026-09-24** für die Drift-Prüfung (beide eingebauten Fehler mit Beleg gefunden, übrige drei Anker korrekt grün, dazu ein echter Nebenbefund) und für einen README-Eintrag (inhaltlich korrekt, jede Aussage belegt; zwei Kernpunkte ausgelassen, daher Prüfung vor dem Commit durch die Entscheidungs-Klasse nötig). Logbuch-Einträge noch nicht erprobt.
-  - **Entscheidungs-Klasse:** Claude Opus, aktuelle Linie (Stand 2026-09-24: Opus 5.5) – Zuständig für Änderungen am Regelwerk selbst, weil jede solche Änderung projektübergreifend wirkt und damit unter die Eskalations-Auslöser aus `CLAUDE.md` Abschnitt 0 fällt.
-  - **Ausnahme-Klasse:** Claude Fable 5.1 – nur auf Vorschlag mit Freigabe.
-  - **Bezugsmodell und knappe Ressource:** Abo (Max 5x); knapp ist das Wochenkontingent, Zurücksetzung sonntags 10:00 (Angabe des Eigentümers), dazu ein Kurzzeitlimit je 5 Stunden.
-  - **Abgabe an Unteragenten:** Claude Code – Modell je Unteragenten-Aufruf oder als `model:` in der Agent-Definition. Erprobt am 2026-09-24.
-  - **Meldet die Laufzeitumgebung das Modell / das Kontingent?** (Stand 2026-09-24, S-19) Sitzungsabfrage in Cloud-Sessions: eingestelltes und bedientes Modell, Kurzzeitlimit mit Zurücksetz-Zeitpunkt, kein Wochenlimit; ihr Kostenzähler wird verzögert und gebündelt aktualisiert und taugt nicht für Messungen je Schritt. Statuszeile laut Doku: `model.id`, `cost.total_cost_usd` (Listenpreis, clientseitig), Token im Kontext und – für Pro/Max – `rate_limits.five_hour` und `rate_limits.seven_day` mit Verbrauch in Prozent und Zurücksetz-Zeitpunkt. Hooks laut Doku: Modell nur optional bei `SessionStart`, Modellwechsel über `PreModelSwitch`/`PostModelSwitch` (`from_model`, `to_model`); keine Kosten- oder Limitfelder; Text ins Gespräch über stdout bei `SessionStart`, `UserPromptSubmit`, `UserPromptExpansion`, `PostModelSwitch`. Nichts davon selbst erprobt.
-  - **Ersparnis der Abgabe (S-19, Modellrechnung, nicht direkt gemessen):** Bei Opus 5.5 kostet das Cache-Lesen so viel wie bei Sonnet 5 (je 0,20 $ je 1 Mio. Token, Listenpreis 2026-06-24); Sonnet ist nur bei neuer Eingabe und Ausgabe halb so teuer, Haiku 4.5 auch beim Cache-Lesen. Lesearbeit mit vielen Werkzeugaufrufen spart durch Abgabe an die Routine-Klasse deshalb kaum etwas; die Drift-Prüfung als Unteragent (13 Aufrufe, rund 136.000 Token Endkontext) war in der Rechnung eher teurer als 3–4 Aufrufe im geladenen Kontext. Größter Hebel ist die Kontextgröße der Hauptsitzung: Jeder Aufruf liest den ganzen Kontext aus dem Cache (bei rund 510.000 Token etwa 0,10 $ je Aufruf). Für das Abo ist die Gewichtung der Modelle im Kontingent nicht veröffentlicht; die Rechnung nutzt Listenpreise als Ersatz.
-  - **Preise je Klasse** (Listenpreis, Stand 2026-06-24, Referenz des Werkzeugs; Eingabe / Ausgabe / Cache-Lesen je 1 Mio. Token): Mechanik (Haiku 4.5) 1 $ / 5 $ / 0,10 $; Routine (Sonnet 5) 2 $ / 10 $ / 0,20 $; Entscheidung (Opus 5.5) 4 $ / 20 $ / 0,20 $; Ausnahme (Fable 5.1) 10 $ / 50 $ / 0,25 $. Folge für die Abgabe (ADR-014): an die Mechanik-Klasse auch Lesearbeit; an die Routine-Klasse nur ausgabelastige Arbeit.
-  - **Grenze der Sessiongröße:** 200.000 Token Kontext (ADR-014). Quelle: Sitzungsabfrage (`context_usage.used_tokens`).
-  - **Kontingent-Warnung:** inaktiv. Skript `templates/werkzeuge/claude-code/kontingent-warnung.py` am 2026-09-24 mit erzwungenem Fehlerfall geprüft (Schwelle 0 % → Warnung; 8 von 8 Fällen wie erwartet). Zustellweg über Statuszeile und Hook unerprobt: Diese Repo-Arbeit läuft in Cloud-Sessions ohne Statuszeile. Aktivierung erst nach einem Probelauf in einer lokalen Terminal-Session des Eigentümers.
-  - **Besonderheit dieses Repos:** Das Produkt *ist* die Methodik. Änderungen an `CLAUDE.md` und `templates/projektstart.md` sind deshalb praktisch immer `[STRATEGISCH]` und lösen die Eskalation aus. Änderungen an `docs/` und an Formulierungen ohne Regelwirkung sind Routine.
+- **Reaktiv-ADR-Schwellenwert:** [z. B. „maximal 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs"] – bei Überschreitung wird in `decisions.md` Teil B (Reaktiv-Quote) ein Hinweis ausgelöst, und Claude legt einen Reflexions-Schritt im Fahrplan an, bevor weitere Umsetzungsschritte beginnen.
+- **Wucherungs-Schwelle** (`CLAUDE.md` Abschnitt 8, Kriterium 9): [Default: Faktor 2 gegenüber dem ursprünglichen Schrittplan **und** mindestens 5 zusätzliche Schritte]
+- **Vorläufig-zu-Belastbar-Verhältnis:** [optional, z. B. „spätestens nach jeder UMSETZUNG-Phase soll mindestens ein `[VORLÄUFIG]`-Bestandteil der berührten Module auf `[BELASTBAR]` befördert sein, sonst Reflexion"]
+- **Modellklassen-Zuordnung** (Regelwerk: `CLAUDE.md` Abschnitt 0, „Modellklassen-Disziplin"). Die Auslöser stehen dort; hier wird nur benannt, welches Modell welche Klasse besetzt und ob der Probelauf bestanden ist. Bei neuen Modellen nachziehen (Eintrag im Ablaufdaten-Register, Abschnitt 8):
+  - **Mechanik-Klasse:** [Modell] – Probelauf: [bestanden am YYYY-MM-DD / offen / gescheitert am YYYY-MM-DD]
+  - **Routine-Klasse:** [Modell] – Probelauf: [bestanden am YYYY-MM-DD / offen / gescheitert am YYYY-MM-DD]
+  - **Entscheidungs-Klasse:** [Modell] – stärkstes regulär eingesetztes Modell
+  - **Ausnahme-Klasse:** [Modell oder „keine"] – nur auf Vorschlag mit Freigabe
+  - **Bezugsmodell und knappe Ressource:** [z. B. „Abo, knapp ist das Wochenkontingent, Zurücksetzung So 10:00" oder „API, knapp ist das Monatsbudget von X"]
+  - **Abgabe an Unteragenten:** [welche Werkzeug-Einstellung ein fest eingestelltes Modell für Unteragenten bewirkt, oder „Werkzeug kennt keine Unteragenten – Abgabe entfällt"]
+  - **Meldet die Laufzeitumgebung das Modell / das Kontingent?** [z. B. „Modell ja, per Sitzungsabfrage; Kurzzeitlimit ja; Wochenlimit nein – Stand YYYY-MM-DD"]
+  - **Preise je Klasse** (Eingabe / Ausgabe / Lesen aus dem Cache, je 1 Mio. Token, mit Stand und Quelle): [Grundlage für die Abgabe-Regel in `CLAUDE.md` Abschnitt 0 – Abgabe nur an eine Klasse mit niedrigerem Cache-Lesepreis oder bei ausgabelastiger Arbeit]
+  - **Grenze der Sessiongröße:** [Default 200.000 Token Kontext] – darüber beginnt die KI keinen neuen Schritt (`CLAUDE.md` Abschnitt 0, „Sessiongröße")
+  - **Kontingent-Warnung:** [z. B. „aktiv – Statuszeile und Hook nach `templates/werkzeuge/claude-code/`, Schwellen 80/95 %, Probelauf bestanden am YYYY-MM-DD" oder „inaktiv, Begründung: …"]
+  - **Falls nur eine Klasse verfügbar ist:** „nur ein Modell verfügbar, Begründung: …". Die Eskalations-Auslöser bleiben dann gültig und erzeugen statt eines Modellwechsels einen ERKUNDUNG-Schritt im Fahrplan – die Regel verliert ihren Zweck also nicht, sie wechselt nur das Mittel.
 
 <!-- ANCHOR:code-standards-und-qualitaetsziele -->
 ## 7. Code-Standards und Qualitätsziele
 
-Die Pflichtkategorien aus `CLAUDE.md` Abschnitt 15 sind überwiegend nicht anwendbar, weil das Repo keine Programmiersprache enthält. Die Einordnung wird hier explizit vorgenommen, nicht weggelassen:
+Pflichtkategorien sind in `CLAUDE.md` Abschnitt 15 definiert. Hier wird pro im Projekt verwendeter Sprache die konkrete Toolwahl festgelegt. Nicht anwendbare Kategorien sind mit Begründung zu vermerken, nicht wegzulassen.
 
-| Kategorie | Status |
-|---|---|
-| Linter | **eingerichtet** – `markdownlint-cli2` v0.23.2 über pre-commit, Konfiguration in `.markdownlint-cli2.jsonc`. MD013 (Zeilenlänge) und MD060 (Tabellen-Ausrichtung) bewusst deaktiviert, siehe ADR-002. Deckt strukturelle Markdown-Fehler ab (fehlende Sprachangabe an Codeblöcken, Leerzeilen-Konventionen, doppelte Überschriften) – **nicht** defekte relative Links und **nicht** fehlende ANCHOR-Kommentare, dafür existiert kein Standard-Regelsatz. |
-| Formatter | bewusst deaktiviert für Markdown – Begründung steht in `.prettierignore`: Tabellen, ANCHOR-Kommentare und Status-Marker sind handgepflegte Strukturen, Auto-Formatierung erzeugt dort Diff-Lärm. |
-| Type-Checker | nicht anwendbar – keine typisierte Sprache im Repo |
-| Security-Scanner | nicht anwendbar – kein ausführbarer Code |
-| Dependency-Audit | nicht anwendbar – kein Paketmanager, keine Abhängigkeiten |
-| Test-Runner mit Coverage | nicht anwendbar – kein ausführbarer Code. Die Qualitätssicherung erfolgt über die Drift-Prüfungen aus `CLAUDE.md` Abschnitt 16. |
+### Tool-Festlegung pro Sprache
+
+#### [Sprache, z. B. Python]
+
+- **Linter:** [z. B. `ruff` mit Konfiguration `pyproject.toml`]
+- **Formatter:** [z. B. `ruff format` oder `black`, Zeilenlänge: 100]
+- **Type-Checker:** [z. B. `mypy --strict`]
+- **Security-Scanner:** [z. B. `bandit`]
+- **Dependency-Audit:** [z. B. `pip-audit`, `safety`]
+- **Test-Runner:** [z. B. `pytest` mit `pytest-cov`]
+- **Naming-Konvention:** [z. B. PEP 8, snake_case für Funktionen/Variablen, PascalCase für Klassen]
+
+#### [Sprache, z. B. TypeScript]
+
+- **Linter:** [z. B. `eslint` mit `@typescript-eslint`]
+- **Formatter:** [z. B. `prettier`]
+- **Type-Checker:** [z. B. `tsc --strict --noUncheckedIndexedAccess`]
+- **Security-Scanner:** [z. B. `eslint-plugin-security`]
+- **Dependency-Audit:** [z. B. `npm audit` oder `pnpm audit` mit Schwellenwert `high`]
+- **Test-Runner:** [z. B. `vitest` mit `--coverage`]
+- **Naming-Konvention:** [z. B. camelCase für Variablen/Funktionen, PascalCase für Typen/Klassen]
+
+[Weitere Sprachen analog. Sprachen ohne etabliertes Tool in einer Kategorie:
+„nicht anwendbar, Begründung: …"]
 
 ### Warnungs-Bestand
 
-Kein Bestand: `markdownlint-cli2` kennt nur Fehler, keine Warnungen. **Warnungsquellen ohne Schalter:** Hinweise der CI-Plattform zu Action-Versionen in `.github/workflows/ci.yml` (Abkündigungen von Laufzeitumgebungen der Actions) – bei jeder Beurteilung eines CI-Laufs im Protokoll zu lesen (`CLAUDE.md` Abschnitt 15).
+[Regeln: `CLAUDE.md` Abschnitt 15, „Warnungen und Abkündigungen". Default ist „Warnungen sind Fehler". Hier steht nur, was davon abweicht – mit Obergrenze, die nur sinken darf.]
+
+| Quelle | Mittel des Werkzeugs | Obergrenze / benannte Ausnahme | Stand vom | Fahrplan-Schritt |
+|---|---|---|---|---|
+| [z. B. pytest] | [`filterwarnings` in `pyproject.toml`] | [z. B. `ignore:…:DeprecationWarning:bibliothek_x`] | [YYYY-MM-DD] | [Schritt-ID] |
+| [z. B. ESLint] | [`--max-warnings`] | [z. B. 12] | [YYYY-MM-DD] | [Schritt-ID] |
+
+**Warnungsquellen ohne Schalter** (werden bei jeder Beurteilung eines CI-Laufs im Protokoll gelesen): [z. B. „Hinweise der CI-Plattform zu Action-Versionen", „Bündelgrößen-Warnungen des Build-Werkzeugs"]
 
 ### Durchsetzungsmechanismen
 
-- **Pre-Commit-Hook:** eingerichtet – `.pre-commit-config.yaml`, ein Hook (`markdownlint-cli2`). Die Skelette unter `templates/pre-commit/` bleiben davon unberührt Produkt, nicht Eigenkonfiguration.
-- **CI-Pipeline:** eingerichtet – `.github/workflows/ci.yml`, ein Job (`pre-commit/action`, führt denselben Hook wie lokal aus). Deckt nur das Linter-Gate ab; die Inter-Pflicht-Drift-Checks aus Abschnitt 16 sind nicht automatisiert, siehe Abschnitt 11.
+Zwei Schichten, die identische Checks ausführen: lokale Pre-Commit-Hooks als erste Verteidigung, GitHub Actions als unabhängige Diagnoseschicht auf Push/PR. Beide Schichten sind Pflicht – die CI ersetzt die Hooks nicht und umgekehrt. Skelette für beide Schichten liegen unter `templates/` (siehe `templates/README.md`) und werden in Modus 2 Schritt 10 kopiert und angepasst.
+
+- **Pre-Commit-Hook-Framework:** [z. B. `pre-commit`, `husky`, `lefthook`]
+- **Konfigurationsdatei:** [z. B. `.pre-commit-config.yaml`, `.husky/`]
+- **CI-Plattform:** GitHub Actions (Default; Abweichung erfordert ADR).
+- **Workflow-Dateien:** Scope und Aufteilung nach Projektgrößen-Klasse (Glossar in `CLAUDE.md` Abschnitt 1B, Detail in `templates/projektstart.md` Abschnitt 2.2):
+  - **Klasse K:** `.github/workflows/ci.yml` mit einem Job (Lint + Test).
+  - **Klasse M/G:** `.github/workflows/ci.yml` mit allen Pflicht-Gates; bei G zusätzlich Aufteilung in `security.yml` / `release.yml`, sobald die Pipeline unübersichtlich wird.
+  - **Klasse V:** je Service ein `.github/workflows/ci-<service>.yml` mit Path-Filtern, plus `integration.yml` für service-übergreifende Tests; `release.yml` und `security.yml` zentral.
+- **Trigger:** mindestens `push` auf alle Branches und `pull_request` auf Hauptbranch.
+- **Verpflichtende CI-Gates (Merge-Block bei Rot):**
+  - Lint
+  - Format-Check (kein Auto-Fix in CI)
+  - Type-Check
+  - Security-Scan
+  - Dependency-Audit (Schwellenwert: [z. B. high oder critical])
+  - Tests inklusive Coverage-Mindestwert
+- **Branch-Protection auf Hauptbranch:** alle Pflicht-Gates müssen grün sein; Force-Push gesperrt; siehe Abschnitt 10.
+
+### Coverage-Mindestwerte
+
+- **Globaler Mindestwert:** [z. B. 80 % Lines, 70 % Branches]
+- **Kritische Pfade (höhere Anforderung):** [Liste der Module/Pfade mit ihrem jeweiligen Mindestwert]
+- **Ausnahmen:** [Module, für die Coverage nicht messbar ist, mit Begründung]
+
+### Commit-Lint
+
+- **Tool:** [z. B. `commitlint` mit Conventional-Commits-Konfiguration; falls nicht verwendet: „nicht aktiv, Begründung: …"]
+- **Erlaubte Typen:** [z. B. feat, fix, refactor, docs, test, chore, perf, build, ci]
+
+### Editor-Integration (empfohlen, nicht erzwungen)
+
+- **EditorConfig:** `.editorconfig` im Repo-Root (Zeilenenden, Einrückung, Encoding)
+- **Editor-Snippets oder Linter-Plugins:** [optional auflisten]
 
 <!-- ANCHOR:betrieb-und-deployment -->
 ## 8. Betrieb und Deployment
 
-Kein Deployment. Das Repo wird geklont oder geforkt und ist damit einsatzbereit.
+- **Deployment-Ziel:** [z. B. „eigener VPS via Ansible", „Kubernetes via Helm"]
+- **CI/CD:** GitHub Actions (Default, siehe Abschnitt 7 für Workflow-Dateien). Deployment-Workflow: [z. B. `.github/workflows/release.yml` – Trigger und Ziel beschreiben, oder „kein Deploy-Workflow, manuelles Deployment"]
+- **Umgebungen:** [z. B. lokal → staging → production]
+- **Monitoring:** [falls vorhanden: was wird erfasst, wo]
+- **Logging-Level Default:** [z. B. `INFO` in Prod, `DEBUG` nur lokal]
+- **Vertretung:** [Person oder Rolle, die im Notfall eingreifen kann, oder „Verzicht, siehe ADR-NNN"]
+- **Notfall-Handbuch:** [Pfad, z. B. `docs/onboarding-runbook.md` Abschnitt „Notfall"; zuletzt erprobt am YYYY-MM-DD]
+- **KI im Betrieb:** [Konto bzw. Bezugsmodell (Abo oder API-Schlüssel); Kontingent und Zurücksetz-Zeitpunkt, z. B. „Wochenlimit, Zurücksetzung So 10:00", bzw. Budget und Nutzungsgrenzen; Rückfallweg ohne KI]
+- **Zugriff der KI auf die Produktion:** [was darf sie lesen, ändern, ausführen – „kein Zugriff" ist zulässig]
+- **Unbeaufsichtigtes Handeln der KI:** [„nein" oder: Befehlsliste unter [Pfad], Probelauf am YYYY-MM-DD]
+
+[Die fünf Zeilen ab „Vertretung" prüft das Gate vor dem ersten öffentlichen Deployment (CLAUDE.md Abschnitt 12). Vorbefüllt in Modus 2, Schritt 4a.]
 
 ### Ablaufdaten-Register
 
+[Alles, was zu einem Datum verfällt oder regelmäßig zurückgesetzt wird. Beim Sessionende prüft die KI, ob ein Vorlauf erreicht ist (`CLAUDE.md` Abschnitt 12, Punkt 8). Typische Einträge: Lebensende der fixierten Versionen aus Abschnitt 3, Zertifikate, Domains, Zugangs-Token (z. B. Registrierungs-Token eines CI-Runners, DNS-Schnittstelle), Kontingente mit Zurücksetz-Zeitpunkt, Abkündigungen aus dem CI-Protokoll.]
+
 | Was | Ablauf / Lebensende | Vorlauf | Quelle | Fahrplan-Schritt |
 |---|---|---|---|---|
-| Actions-Kontingent des Kontos (CI läuft auf `ubuntu-latest`) | monatlicher Reset; genaues Datum offen, vom Eigentümer zu ergänzen | – (bereits erschöpft seit 2026-09-15) | Angabe des Eigentümers, Logbuch 2026-09-23 | S-17 |
+| [z. B. Python 3.13] | [YYYY-MM-DD] | [z. B. 6 Monate] | [Hersteller-Angabe, Link] | [Schritt-ID, sobald Vorlauf erreicht] |
+| [z. B. TLS-Zertifikat] | [YYYY-MM-DD] | [z. B. 14 Tage] | [automatisch erneuert? ja/nein] | [–] |
+
+### Kosten
+
+- **Kostenrahmen:** [Antwort auf „Was darf das Projekt monatlich kosten?" aus Modus 2 – Betrieb, Werkzeuge, KI]
+- **Kostenregister** (optional ab Klasse M): [Pfad oder „nicht geführt"]
+
+| Posten | Art (laufend / einmalig / KI-Verbrauch) | Betrag je Monat | Stand vom | Entscheidung nötig ab |
+|---|---|---|---|---|
+| [z. B. Server] | [laufend] | [Betrag] | [YYYY-MM-DD] | [z. B. Summe über Kostenrahmen] |
 
 <!-- ANCHOR:entscheidungsbefugnisse -->
 ## 9. Entscheidungsbefugnisse
 
-- **Freigabe-Entscheidungen trifft:** der Repo-Eigentümer (Paddel87).
-- **Kommunikationskanal:** direkt im Chat mit dem Coding-Agent, Ergebnis als ADR in `docs/decisions.md`.
+- **Freigabe-Entscheidungen trifft:** [Name/Rolle – normalerweise der Repo-Eigentümer]
+- **Kommunikationskanal für Freigaben:** [z. B. „direkt im Chat / im Pull Request / im Fahrplan als Kommentar"]
+- **Reaktionszeit-Erwartung:** [z. B. „asynchron, keine harte Antwortzeit"]
 
 <!-- ANCHOR:repository-regeln -->
 ## 10. Repository-Regeln
 
-- **Hauptbranch:** `main`
-- **Push-Regel:** Änderungen laufen über Pull Requests, auch bei Alleinarbeit – die PR-Beschreibung ist der Ort, an dem Begründung und Verifikation dokumentiert werden.
-- **Branch-Namen:** Agent-Sessions arbeiten auf `claude/<thema>`-Branches.
-- **Schutzregeln:** keine Force-Pushes auf `main`.
+- **Hauptbranch:** [z. B. `main`]
+- **Push-Regel:** [z. B. „direkter Push erlaubt", „nur über PR", „PR + grüne CI + ein Approval"]
+- **Schutzregeln:** [z. B. „keine Force-Pushes auf main", „gelöschte Branches nur nach Merge"]
 
 <!-- ANCHOR:offene-grundsatzfragen -->
 ## 11. Offene Grundsatzfragen
 
-- ~~**Lizenz**~~ – gelöst 2026-08-13, ADR-004: CC0 1.0 Universal. Korrektur zur ursprünglichen Formulierung dieses Punkts: Das Repo ist derzeit **privat** (per GitHub-API bestätigt) – es gab nie akute Nutzungsunsicherheit für Dritte, da keine Dritten Zugriff hatten. Die Lücke war eine Inkonsistenz zwischen README-Versprechen und Realität, kein akutes Rechtsrisiko.
-- ~~**Markdown-Linter**~~ – gelöst 2026-08-13, ADR-002: `markdownlint-cli2` über pre-commit eingerichtet. Weiterhin ungedeckt: defekte relative Links und fehlende ANCHOR-Kommentare in neuen Abschnitten – dafür existiert kein Standard-Regelsatz, das bleibt manuelle Prüfung.
-- ~~**CI-Pipeline (Linter-Gate)**~~ – gelöst 2026-08-13, ADR-003: `.github/workflows/ci.yml` erzwingt den pre-commit-Hook jetzt auch remote, nicht nur lokal.
-- **CI-Pipeline (Drift-Checks):** Die Inter-Pflicht-Drift-Prüfungen aus `CLAUDE.md` Abschnitt 16 sind weiterhin nicht automatisiert und laufen ausschließlich als Sessionende-Disziplin. Bewusst von der CI-Einrichtung abgespalten, siehe `docs/fahrplan.md` S-7.
-- ~~**README-Struktur**~~ – entschieden 2026-08-13: `README.md` behält die freie Form, keine Umstellung auf `readme-vorlage.md`. Begründung: `README.md` ist hier zugleich Werbetext für das Vorlagen-Set selbst, nicht nur Statusbild eines Projekts – die Status-Block-Form aus der Vorlage ist für diese Doppelrolle nicht passend. Kein ADR nötig, da keine der acht Kategorien aus `CLAUDE.md` Abschnitt 4 berührt ist.
+[Wenn zu Projektstart Punkte noch ungeklärt sind, hier notieren.
+Claude arbeitet nicht an Bereichen, die von offenen Grundsatzfragen abhängen,
+ohne vorher eine Klärung anzustoßen.]
+
+- [z. B. „Hosting-Modell (Self-Hosting vs. Managed) – offen bis Phase 2"]
+- [z. B. „Auth-Provider (Keycloak vs. Better-Auth) – pending Spike"]
 
 <!-- ANCHOR:glossar -->
-## 12. Glossar
+## 12. Glossar (projektspezifische Begriffe)
 
-- **Pflicht-Dokument:** eines der sechs Dokumente der Mindest-Lektüre aus `CLAUDE.md` Abschnitt 2.
-- **Vorlage:** unbefüllte Datei unter `templates/docs/`, bestimmt für das Ziel-Projekt.
-- **Selbstanwendung:** die Praxis, die Methodik auf dieses Repo selbst anzuwenden – festgelegt in ADR-001.
-- **Patch-Welle:** eine zusammenhängende Methodik-Änderung, geführt als PR und in `README.md` unter „Methodik-Stand" verzeichnet.
+[Begriffe, die im Projekt eine definierte Bedeutung haben und sonst mehrdeutig wären.
+Verhindert, dass die KI Begriffe nach allgemeiner Lesart interpretiert.]
+
+- **[Begriff]:** [Definition im Projektkontext]
+
+---
+
+**Pflegehinweis:** Änderungen an Status, Stack oder Constraints sind freigabepflichtig (siehe `CLAUDE.md` Abschnitt 4) und erzeugen einen ADR-Eintrag. Statuswechsel (z. B. `alpha` → `beta`) ziehen außerdem README-Badge- und CHANGELOG-Updates nach sich.
+
+**Initialisierungshinweis (erste Session nach Projektanlage):**
+
+- Alle Platzhalter in eckigen Klammern durch konkrete Werte ersetzen.
+- Abschnitte, die für den Projekttyp nicht relevant sind (z. B. „Performance" bei einem einmaligen Skript), entfernen statt leer zu lassen.
+- Abschnitt 11 (Offene Grundsatzfragen) darf nur Punkte enthalten, die echte Blocker sind – sonst entfernen.
+- **Strukturwahl** richtet sich nach der Projektgrößen-Klassifikation (Glossar in `CLAUDE.md` Abschnitt 1B, Detail in `templates/projektstart.md` Abschnitt 2.2). Default pro Klasse:
+  - **Klasse K (Klein):** Reduzierte Form – nicht relevante Abschnitte (Skalierung, Observability, Stakeholder) entfernen.
+  - **Klasse M (Mittel) und G (Groß):** Ein Dokument, alle Abschnitte ausfüllen, Tiefe an Komplexität anpassen.
+  - **Klasse V (Verteilt-Groß):** Ein Hauptdokument mit klar getrennten Service-Abschnitten, oder Index-Pattern mit `project-context-<service>.md` für Service-spezifische Stack-Details.
+- Reaktiv-ADR-Schwellenwert in „Methodik-Schwellenwerte" klassen-abhängig setzen: K/M ≤ 30 %, G ≤ 20 %, V ≤ 15 %.
+- Die Anpassung selbst als ADR-001 in `decisions.md` festhalten.
