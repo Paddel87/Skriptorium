@@ -248,8 +248,8 @@ Angelegt im Sicherheitsgrundriss (Modus 2 Schritt 4a, 2026-09-26). Das System wi
 
 ### Observability
 
-- **Logging:** strukturierte Zeilen (Zeit, Endpunkt, Status, Modell, Token, Kosten); keine Inhalte aus Welten oder Manuskripten `[VORLÄUFIG]`
-- **Metriken:** Token-Verbrauch und Kosten je Anfrage und je Monat, einsehbar in der Oberfläche `[VORLÄUFIG]`
+- **Logging:** strukturierte Zeilen (Zeit, Endpunkt, Status, Modell, Token, Kosten); keine Inhalte aus Welten oder Manuskripten. Je KI-Anfrage genau eine Zeile von `ai_gateway` (Anbieter, Modell, Ergebnis bzw. Fehlerart, Token ein/aus, Kosten, Dauer, Zeit bis zum ersten Textstück) – nie Nachrichtentext, Antworttext oder Schlüssel `[BELASTBAR]` (ADR-021)
+- **Metriken:** Token-Verbrauch und Kosten je Anfrage und je Monat, einsehbar in der Oberfläche `[VORLÄUFIG]` – `ai_gateway` liefert die Verbrauchsdaten je Anfrage zurück; Speicherung und Anzeige entscheidet Schritt 3.9 (ADR-021)
 - **Tracing:** nicht vorgesehen
 
 ### Datenschutz
@@ -327,6 +327,8 @@ data/
 | NFR Token-Budget | BELASTBAR | 2026-09-26 | ADR-010, ADR-013 |
 | NFR Reaktionszeit (Anzeige 1 s, erstes Textstück 60 s / 10 s) | BELASTBAR | 2026-09-26 | ADR-013 (Eigentümer) |
 | NFR Kontexttreue Referenzumfang | OFFEN | 2026-09-26 | Schritt D.4 (Geschichte ≥ 500.000 Token) |
+| Observability: Logging | BELASTBAR | 2026-09-26 | ADR-021 |
+| Observability: Metriken (Speicherung) | VORLÄUFIG | 2026-09-26 | Schritt 3.9 (ADR-021) |
 | NFR Kanon-Treue | OFFEN | 2026-09-26 | Schreibbetrieb ab 3.3; Vorprüfung in 1.1 erfolgt (ADR-010) |
 | Sicherheitsniveau ASVS 5.0.0 L1 / Auth L2 | BELASTBAR | 2026-09-26 | ADR-006 |
 | Bedrohungsmodell Gesamtsystem | VORLÄUFIG | 2026-09-26 | Prüfung 4.5, Gate-Schritt 4.6 |

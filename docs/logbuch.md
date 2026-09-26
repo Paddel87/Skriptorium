@@ -29,6 +29,18 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 21:30 – [ADR-ANGELEGT] ADR-021 – Beginn 3.1
+
+- Eigentümer (Frage-System): Option A – Log-Zeile je KI-Anfrage `[BELASTBAR]`, Verbrauchsspeicherung in 3.9. Observability/Logging befördert, Metriken bleiben `[VORLÄUFIG]` (Landeplatz 3.9). `[OPERATIV]`, geplant laut Notiz an 3.1; Reaktiv-Quote 1/10.
+- 3.1 `[IN ARBEIT]`. Anfrageform aus dem Spike `spikes/modell-eignungstest/lauf.py`: `reasoning: {"effort": "low"}` für grok-4.7, grok-4.6, qwen3.8-max (Reasoning Pflicht), `usage: {"include": true}`; Anbieter-Ausschluss (StreamLake) nur für deepseek-Modelle nötig – Konfiguration vorgesehen, für die drei Modelle leer.
+- In dieser Umgebung ist kein OpenRouter-Schlüssel gesetzt (nur Vorhandensein geprüft): Adapter wird mit simulierten Antworten (`httpx.MockTransport`) getestet, ein echter Aufruf folgt mit 3.3.
+
+### 2026-09-26 21:27 – [SESSIONSTART] Fortsetzung mit 3.1 auf Anweisung „3.1 hier“
+
+- **Abweichung:** Sessiongröße 239.206 Token über der Grenze 200.000; der Eigentümer hat ausdrücklich „3.1 hier“ angeordnet (`CLAUDE.md` Abschnitt 0, Ausnahme „weiter hier“).
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 21:27) → Entscheidungs-Klasse; 3.1 empfiehlt Routine – Hinweis an den Eigentümer gegeben (Wochenkontingent `allowed_warning`); keine Abgabe ohne Probelauf. Beförderung der Observability (Auslöser 4) verlangte ohnehin die Entscheidungs-Klasse.
+- PR #8 gemergt (`25df654`); Branch `scp/affectionate-euler-piciei` auf `main` vorgespult.
+
 ### 2026-09-26 21:06 – [SESSIONENDE] Phase 2 abgeschlossen
 
 - **Dauer:** 20:57–21:06 UTC.

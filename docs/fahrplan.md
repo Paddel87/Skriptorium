@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 3 „Schreiben mit KI" (Phase 2 abgeschlossen 2026-09-26, ADR-020: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner
-- **Nächster Schritt:** 3.1 `ai_gateway` – Anbieter-Schnittstelle und OpenRouter-Adapter (neue Session)
+- **Aktiver Schritt:** 3.1 `ai_gateway` – Anbieter-Schnittstelle und OpenRouter-Adapter (Observability per ADR-021 geklärt)
+- **Nächster Schritt:** 3.2 `context`
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -116,7 +116,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 3.1: ai_gateway – Anbieter-Schnittstelle und OpenRouter-Adapter
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT (seit 2026-09-26; ADR-021)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 1.3, 2.1
 - **Freigabepflichtig:** nein
@@ -256,7 +256,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** ui, api, ai_gateway
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests
-- **Notizen:** –
+- **Notizen:** Zusatz 2026-09-26 (ADR-021): Speicherung der Verbrauchsdaten je Anfrage für die Monatssumme hier entscheiden (Datenmodell, Kategorie 4); `ai_gateway` liefert sie seit 3.1 zurück.
 
 ### Phase 4: Stabilisierung und erstes öffentliches Deployment – Typ: STABILISIERUNG
 
