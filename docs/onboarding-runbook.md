@@ -71,7 +71,7 @@ uv run pre-commit install
 
 ### Schritt 3: Konfiguration
 
-Einzige Variable bis Phase 3: `SKRIPTORIUM_DATA_DIR` (Datenverzeichnis, Standard `./data`), siehe `.env.example`. Der OpenRouter-Schlüssel kommt in Phase 3 dazu.
+Variablen, siehe `.env.example`: `SKRIPTORIUM_DATA_DIR` (Datenverzeichnis, Standard `./data`) und `OPENROUTER_API_KEY` (Schlüssel für OpenRouter, seit Schritt 3.1; gebraucht erst für KI-Anfragen ab Schritt 3.3 – Server und Tests laufen ohne). Den Schlüssel nur in der Umgebung setzen, beim Anbieter eine Ausgabengrenze einrichten.
 
 Passwort einrichten (ADR-017): Der Befehl erzeugt einen Einrichtungscode, der 24 Stunden und nur einmal gilt; gespeichert wird nur sein Hash in `system/zugang.md`. Mit dem Code wird das Passwort festgelegt (mindestens 15 Zeichen; geprüft gegen Pwned Passwords von Have I Been Pwned, Daten unter CC BY 4.0). Derselbe Weg hilft bei vergessenem Passwort.
 
