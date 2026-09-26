@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 16:30 – [PROBLEM-GELÖST] Läufe 1.1: Pflicht-Reasoning bei drei Modellen
+
+- Testwelt „Die Salzmark" angelegt (29 Kanon-Dateien inkl. Zeitlinie – im Commit-Text stand irrtümlich 27), Prüfliste vor dem ersten Lauf fixiert. Harness `spikes/modell-eignungstest/lauf.py` nur mit Standardbibliothek (`urllib`), damit keine neue Abhängigkeit nötig ist.
+- Kalibrierung: Schätzung 3,3 Zeichen je Token traf `prompt_tokens` bei deepseek-v4-pro fast genau (7.869 geschätzt / 7.887 gemessen). Material reicht nur bis ca. 17.600 Token; die Stufe „30.000" enthält daher alles Material (ca. 17.600) – Grenze im Erkenntnisdokument benennen.
+- Reibung: `reasoning: {enabled: false}` wird von glm-5.3, grok-4.7 und gemini-3.8-flash mit HTTP 400 „Reasoning is mandatory" abgelehnt (18 Fehlläufe, 0 $). Lösung: für diese drei `reasoning: {effort: low}`; im Ergebnis je Lauf vermerkt. Folge für `ai_gateway`: Reasoning-Steuerung muss je Modell konfigurierbar sein.
+- 24 Läufe (4 Modelle × 3 Stufen × 2 Wiederholungen) erfolgreich, 0 Ablehnungen, Gesamtkosten 0,37 $. grok-4.7 braucht durch Pflicht-Reasoning 15–50 s bis zum ersten Textstück (NFR: 5 s).
+- Kleine Panne: Bewertungs-Auftrag an den ersten Prüf-Agenten enthielt einen nicht ersetzten Platzhalter für die Textliste; per Nachricht korrigiert.
+- Bewertung blind: Texte anonymisiert (Zuordnung nur im Scratchpad), vier Prüf-Agenten der Entscheidungs-Klasse parallel.
+
 ### 2026-09-26 15:35 – [BEOBACHTUNG] Guthaben des Coding-Agents
 
 - Eigentümer: eingelöstes Guthaben 250 $, davon 193 $ übrig, gültig bis 2026-11-05 08:59 MEZ; die Cloud-Sessions laufen darüber. Die Sitzungsabfrage meldet `isUsingOverage: false` und zum Guthaben nichts – Angabe des Eigentümers ist die Quelle.

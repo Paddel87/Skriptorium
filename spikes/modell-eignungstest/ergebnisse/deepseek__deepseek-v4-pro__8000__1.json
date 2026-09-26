@@ -1,0 +1,22 @@
+{
+  "modell": "deepseek/deepseek-v4-pro",
+  "anbieter": "StreamLake",
+  "wiederholung": 1,
+  "budget": 8000,
+  "geschaetzt_gesamt": 7869,
+  "geschaetzt_seiten": 1884,
+  "kanon_eintraege": 13,
+  "kanon_zusatz": 0,
+  "prompt_tokens": 7887,
+  "completion_tokens": 1936,
+  "reasoning_tokens": 0,
+  "kosten_usd": 0.00208087209,
+  "erstes_stueck_s": 2.14,
+  "gesamt_s": 47.32,
+  "finish_reason": "stop",
+  "fehler": null,
+  "woerter": 1141,
+  "reasoning": {
+    "enabled": false
+  }
+}

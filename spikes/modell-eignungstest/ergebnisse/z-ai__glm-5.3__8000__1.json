@@ -1,0 +1,22 @@
+{
+  "modell": "z-ai/glm-5.3",
+  "anbieter": "Mistral",
+  "wiederholung": 1,
+  "reasoning": {
+    "effort": "low"
+  },
+  "budget": 8000,
+  "geschaetzt_gesamt": 7869,
+  "geschaetzt_seiten": 1884,
+  "kanon_eintraege": 13,
+  "kanon_zusatz": 0,
+  "prompt_tokens": 7709,
+  "completion_tokens": 1842,
+  "reasoning_tokens": 113,
+  "kosten_usd": 0.018708426,
+  "erstes_stueck_s": 1.8,
+  "gesamt_s": 13.46,
+  "finish_reason": "stop",
+  "fehler": null,
+  "woerter": 1067
+}
