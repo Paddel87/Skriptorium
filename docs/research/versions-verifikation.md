@@ -107,6 +107,7 @@ Transitive Lizenzen (213 Pakete): MIT, Apache-2.0, ISC, MPL-2.0 (lightningcss), 
 | actions/setup-node | v6.5.0 | v7.0.0 | v7: 2026-07-13; v6: 2025-10-13 | wie setup-python |
 | pre-commit/pre-commit-hooks | v6.0.0 | v6.0.0 | v6: 2025-08-09 | einzige Version der Linie (Offener Punkt 9) |
 | markdownlint-cli2 | v0.23.3 | v0.23.3 | Serie 0.x | neueste Minor mit Patch (bisher v0.23.2) |
+| shellcheck-py (ShellCheck, PyPI, Entwicklungsgruppe) | 0.11.0.1, Pin `<0.12` (ShellCheck 0.11.0) | 0.11.0.1 | Serie 0.x; 0.11 seit 2025-08-09 | Nachtrag ADR-015: Unterversionen ohne Fehlerkorrektur-Version → neueste; MIT |
 | pre-commit/action | entfällt | v3.0.1 | – | CI ruft `uv run pre-commit run --all-files` direkt auf – eine Action weniger |
 
 Die bisher in `ci.yml` eingetragenen v7-Actions erfüllen die Mindestreife nicht; der Vorschlag geht auf v6 zurück.
@@ -117,6 +118,6 @@ Starlette 1.7.0 (transitiv über FastAPI 0.141.1) meldet beim Import von `fastap
 
 ### Offene Punkte (Fortsetzung)
 
-9. **Linien ohne Patch-Versionen** (pytest-cov 7, setup-python v6, setup-node v6, pre-commit-hooks v6): Diese Hersteller liefern Korrekturen als Minor- statt als Patch-Versionen. Streng nach Mindestreife und Regel-001 fielen sie auf ältere Linien zurück (pytest-cov 6.2.1 ohne deklariertes Python 3.13/3.14; setup-python v5.1.1 und setup-node v4 aus 2024). Zur Entscheidung.
-10. **Lizenzen CC-BY-4.0 und BlueOak-1.0.0** transitiv im Build-Werkzeug; nicht Teil der ausgelieferten Oberfläche außer als Build-Hilfsdaten. Zur Entscheidung (Erweiterung der Lizenzliste nur für Werkzeuge, analog Artistic-2.0).
-11. **httpx → httpx2:** Wechsel frühestens 2026-11-12 (Mindestreife); betrifft Tests und das Modul `ai_gateway` (Schritt 1.3 validierte httpx 0.28.1).
+- **9 – Linien ohne Patch-Versionen** (pytest-cov 7, setup-python v6, setup-node v6, pre-commit-hooks v6): Diese Hersteller liefern Korrekturen als Minor- statt als Patch-Versionen. Streng nach Mindestreife und Regel-001 fielen sie auf ältere Linien zurück (pytest-cov 6.2.1 ohne deklariertes Python 3.13/3.14; setup-python v5.1.1 und setup-node v4 aus 2024). Zur Entscheidung.
+- **10 – Lizenzen CC-BY-4.0 und BlueOak-1.0.0** transitiv im Build-Werkzeug; nicht Teil der ausgelieferten Oberfläche außer als Build-Hilfsdaten. Zur Entscheidung (Erweiterung der Lizenzliste nur für Werkzeuge, analog Artistic-2.0).
+- **11 – httpx → httpx2:** Wechsel frühestens 2026-11-12 (Mindestreife); betrifft Tests und das Modul `ai_gateway` (Schritt 1.3 validierte httpx 0.28.1).

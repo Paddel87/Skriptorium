@@ -10,7 +10,7 @@
 
 - **Projektname:** Skriptorium
 - **Kurzbeschreibung:** Schreibwerkstatt für einen einzelnen Autor: Mehrere eigene Welten dienen als verbindlicher Kanon, Autor und KI schreiben im Wechsel Prosa darin, ohne der jeweiligen Welt zu widersprechen.
-- **Status:** Konzeption (Initialisierung abgeschlossen 2026-09-26)
+- **Status:** In Entwicklung – Phase 2 (Projektgerüst seit 2026-09-26)
 - **Version (SemVer):** v0.0.0 – noch keine lauffähige Version
 - **Dokumentationssprache:** Deutsch
 - **Codesprache (Kommentare, Variablennamen):** Englisch (Eigentümer, 2026-09-26); Fachbegriffe einheitlich: world, canon, canon entry, story, manuscript, guest character
@@ -193,6 +193,11 @@ Pflichtkategorien: `CLAUDE.md` Abschnitt 15. Toolwahl nach den Skeletten unter `
 - **Versionen (ADR-015):** Python: ruff 0.16.9, mypy 1.20.2, bandit 1.9.4, pip-audit 2.10.1, pytest 9.1.1, pytest-cov 7.1.0, pre-commit 4.6.2; TypeScript: eslint 10.9.1, typescript-eslint 8.70.1, eslint-plugin-react-hooks 7.1.1, prettier 3.9.9, vitest 4.1.11 – Nachweise in `docs/research/versions-verifikation.md`
 - **Naming-Konvention:** camelCase für Variablen und Funktionen, PascalCase für Typen, Klassen und React-Komponenten
 
+#### Bash (Hilfsskripte in `scripts/`)
+
+- **Linter:** `shellcheck` 0.11.0 über das PyPI-Paket shellcheck-py (Entwicklungsgruppe) als lokaler Pre-Commit-Hook (ADR-015, Nachtrag)
+- **Übrige Kategorien:** nicht anwendbar, Begründung: wenige Hilfsskripte; kein etablierter Formatter oder Typprüfer im Projekt-Stack
+
 #### Markdown
 
 - **Linter:** `markdownlint-cli2` mit `.markdownlint-cli2.jsonc` (MD013 und MD060 deaktiviert)
@@ -213,15 +218,16 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 - **Pre-Commit-Hook-Framework:** `pre-commit`
 - **Konfigurationsdatei:** `.pre-commit-config.yaml`
 - **CI-Plattform:** GitHub Actions
-- **Workflow-Dateien:** `.github/workflows/ci.yml` mit allen Pflicht-Gates für Python und TypeScript (Klasse M)
+- **Workflow-Dateien:** `.github/workflows/ci.yml` mit den Jobs Pre-Commit, Python und TypeScript (alle Pflicht-Gates, seit Schritt 2.1 scharf)
+- **Einrichtung der Cloud-Session:** SessionStart-Hook `.claude/settings.json` → `scripts/session-start.sh` (ADR-015)
 - **Trigger:** `push` auf alle Branches und `pull_request` auf `main`
 - **Verpflichtende CI-Gates (Merge-Block bei Rot):** Lint, Format-Check, Type-Check, Security-Scan, Dependency-Audit (Schwellenwert high), Tests inklusive Coverage-Mindestwert
 - **Branch-Protection auf Hauptbranch:** alle Pflicht-Gates müssen grün sein; Force-Push gesperrt; siehe Abschnitt 10
 
 ### Coverage-Mindestwerte
 
-- **Globaler Mindestwert:** 80 % Lines, 70 % Branches (bestätigt vom Eigentümer 2026-09-26)
-- **Kritische Pfade (höhere Anforderung):** Kontext-Zusammenstellung und Kanon-Verwaltung 90 % Lines – dort entstehen Kanon-Widersprüche und Kosten (FR-010, FR-011)
+- **Globaler Mindestwert:** 80 % Lines, 70 % Branches (bestätigt vom Eigentümer 2026-09-26). Umsetzung: TypeScript getrennt nach Zeilen und Zweigen (`vite.config.ts`); Python mit `fail_under = 80` über Zeilen und Zweige zusammen (coverage.py kennt keine getrennten Schwellen).
+- **Kritische Pfade (höhere Anforderung):** Kontext-Zusammenstellung und Kanon-Verwaltung 90 % Lines – dort entstehen Kanon-Widersprüche und Kosten (FR-010, FR-011). CI-Schritt „Coverage kritischer Pfade" greift, sobald `src/skriptorium/canon` bzw. `context` existiert.
 - **Ausnahmen:** keine
 
 ### Commit-Lint

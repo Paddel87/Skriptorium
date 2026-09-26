@@ -1,6 +1,6 @@
 # Onboarding-Runbook – Skriptorium
 
-> **Stand 2026-09-26: noch nicht befüllt.** Es gibt noch keinen lauffähigen Code. Befüllung mit Fahrplan-Schritt 2.1 (Entwicklung und Quick Start) und 4.4 (Abschnitt „Notfall"). Bis dahin ist der Inhalt unten die unveränderte Vorlage.
+> **Stand 2026-09-26 (Schritt 2.1):** Entwicklung und Quick Start befüllt und gegen einen frischen Worktree geprüft. Abschnitt „Notfall" folgt mit Schritt 4.4.
 
 <!-- Vollständige, getestete End-to-End-Anleitung vom Repo-Klon bis zum lauffähigen System.
      Ergänzt die README:
@@ -17,156 +17,110 @@
 
 ## 1. Zweck und Geltungsbereich
 
-[1–2 Sätze, was dieses Runbook leistet und was es nicht leistet.
-Beispiel: „Dieses Runbook führt einen neuen Anwender oder Reviewer
-vom frischen Klon bis zum hochgefahrenen lokalen Stack inklusive
-Smoke-Test. Es ersetzt nicht die README (Statusbild) und nicht die
-Architektur-Dokumentation."]
+Dieses Runbook führt vom frischen Klon bis zum laufenden Server mit Gesundheitsprüfung und zu grünen Prüfungen (Tests, Linter, Typprüfung). Es ersetzt nicht die README (Statusbild) und nicht `docs/architecture.md`.
 
-**Adressat:** [z. B. „Entwickler:innen, die zum ersten Mal lokal arbeiten" / „Reviewer:innen für Code-Audit-Aufgaben" / „Operations für Produktiv-Deploys"]
+**Adressat:** der Coding-Agent in einer Cloud-Session und jede Person, die den Code prüfen oder übernehmen will.
 
-**Voraussetzung an den Leser:** [z. B. „Grundkenntnisse in Bash und Docker; Lese-Zugriff auf das Repository"]
+**Voraussetzung an den Leser:** Grundkenntnisse in Bash; Lese-Zugriff auf das Repository.
 
-**Geprüft am:** [YYYY-MM-DD, auf welcher Plattform validiert]
+**Geprüft am:** 2026-09-26, Linux x86_64 (Cloud-Session des Coding-Agents), frischer `git worktree` von Commit `f94bbb5`.
 
 ## 2. Voraussetzungen pro Plattform
 
-[Verweis auf `docs/project-context.md` Abschnitt 3 „Unterstützte Entwickler-Plattformen" und Pflicht-Voraussetzungen aus dem README.
-Hier nur die konkreten Installations-Befehle pro Plattform.]
+Unterstützt ist nur Linux (`docs/project-context.md` Abschnitt 3, Plattform-Matrix). Versionen: Python 3.14.7, uv 0.12.19, Node.js 24.21.0 mit npm 11.19.0, git, curl.
 
-### Linux (Ubuntu 22.04+ / Debian 12+ / Fedora 40+)
+### Linux (Cloud-Session des Coding-Agents)
 
-```bash
-# z. B. Paketliste, Versionen, Installations-Befehle
-[konkrete Befehle]
-```
+Nichts von Hand: Der SessionStart-Hook (`.claude/settings.json` → `scripts/session-start.sh`) installiert uv 0.12.19 in eine eigene venv unter `~/.cache/skriptorium-tools/`, lädt Node.js 24.21.0 von nodejs.org (SHA-256 geprüft), installiert Python 3.14.7 über uv, führt `uv sync` und `npm install` aus und aktiviert den Pre-Commit-Hook. Er ist nur aktiv, wenn `CLAUDE_CODE_REMOTE=true` gesetzt ist.
 
-### macOS 14+ (Apple Silicon und Intel)
+### Linux (andere Rechner)
 
 ```bash
-# z. B. Homebrew-Befehle, Sonderfälle Apple Silicon
-[konkrete Befehle]
+# uv 0.12.19 (z. B. in eine eigene venv)
+python3 -m venv ~/.cache/skriptorium-tools/uv-0.12.19
+~/.cache/skriptorium-tools/uv-0.12.19/bin/pip install "uv==0.12.19"
+# Node.js 24.21.0: Archiv von https://nodejs.org/dist/v24.21.0/ laden und SHA-256 gegen SHASUMS256.txt prüfen
+export PATH="$HOME/.cache/skriptorium-tools/uv-0.12.19/bin:<pfad-zu-node>/bin:$PATH"
 ```
 
-### Windows 11 mit Git Bash
+Oder ohne eigenes Zutun: `CLAUDE_CODE_REMOTE=true CLAUDE_PROJECT_DIR=$PWD scripts/session-start.sh` (setzt PATH nur im Skript; danach PATH wie oben setzen).
 
-```bash
-# z. B. zusätzliche Tools (jq, openssl), die nicht im Standard-Git-Bash sind
-[konkrete Befehle]
-```
+### macOS, Windows
 
-### Windows 11 mit WSL2
-
-```bash
-# Identisch zu Linux, plus WSL2-spezifische Hinweise (Pfad-Mapping, Docker-Backend)
-[konkrete Befehle]
-```
-
-**Nicht unterstützte Plattformen:** [explizit benennen, mit Begründung. Stille Nicht-Unterstützung ist unzulässig.]
+Nicht unterstützt – der Eigentümer entwickelt nicht lokal (`docs/project-context.md` Abschnitt 3).
 
 ## 3. Setup (End-to-End)
 
-[Sequenz der Befehle, exakt so, wie sie ein neuer Anwender ausführt.
-Jeder Schritt mit erwarteter Ausgabe.
-Bei Bruch: konkret beschreiben, wie der Bruch sich zeigt und welche Aktion ihn löst.]
+Geschätzte Gesamtdauer: unter 2 Minuten bei vorhandenen Werkzeugen (SessionStart-Hook im Wiederholungsfall ca. 12 Sekunden).
 
 ### Schritt 1: Repository klonen
 
 ```bash
-git clone [URL] [zielverzeichnis]
-cd [zielverzeichnis]
+git clone https://github.com/Paddel87/Skriptorium.git
+cd Skriptorium
 ```
-
-**Erwartetes Ergebnis:** Verzeichnis enthält [...]. Falls nicht: [Fehleranalyse-Hinweis].
 
 ### Schritt 2: Tooling installieren
 
 ```bash
-[konkreter Befehl, z. B. uv sync && pnpm install]
+uv python install 3.14.7
+uv sync --frozen --python 3.14.7
+npm ci
+uv run pre-commit install
 ```
-
-**Erwartetes Ergebnis:** Beide Lock-Files unverändert; Abhängigkeiten in der erwarteten Version installiert. **Bei Versions-Konflikten:** [Hinweis].
 
 ### Schritt 3: Konfiguration
 
-```bash
-cp .env.example .env
-# Folgende Werte MÜSSEN ersetzt werden, sonst startet das Backend nicht:
-#   SECRET_KEY=...     → mit `openssl rand -hex 32` generieren
-#   [WEITERE_VARIABLE]=... → siehe [Quelle / Person]
-```
+Keine – bis Phase 3 braucht der Server weder Umgebungsvariablen noch Secrets. Den OpenRouter-Schlüssel führt Phase 3 ein (dann mit `.env.example`).
 
-**Fallstrick:** Vergessene Ersetzung des `SECRET_KEY` führt zu [konkreter Fehlermeldung]. Lösung: Wert ersetzen, Backend neu starten.
-
-### Schritt 4: Stack hochfahren
+### Schritt 4: Server starten
 
 ```bash
-docker compose up -d
-# Wartezeit für Initialisierung: ca. [N] Sekunden
+uv run uvicorn skriptorium.api:create_app --factory
 ```
 
-**Erwartetes Ergebnis:** Alle Container im Status `running` und `healthy`. Prüfen mit `docker compose ps`.
+Start in unter einer Sekunde; Meldung `Uvicorn running on http://127.0.0.1:8000`.
 
 ### Schritt 5: Verifikation
 
 ```bash
-# Smoke-Test gegen die laufende Instanz
-[konkreter Befehl, z. B. ./scripts/dev-smoke.sh oder curl http://localhost:8000/api/health]
+curl http://127.0.0.1:8000/api/health        # → {"status":"ok"}
+uv run pytest --cov                            # Python-Tests mit Coverage (Mindestwert 80 %)
+npx vitest run --coverage                      # Oberflächen-Tests (80 % Zeilen, 70 % Zweige)
+uv run pre-commit run --all-files              # alle Hooks: Markdown, ruff, mypy, bandit, eslint, prettier, tsc
+npx vite build                                 # Oberfläche nach dist/ui bauen
 ```
-
-**Erwartetes Ergebnis:** [konkrete Erfolgs-Antwort, z. B. `{"status":"ok"}`].
 
 ## 4. Troubleshooting
 
-[Häufig auftretende Brüche und ihre Behebung. Wächst mit dem Projekt mit.
-Bei jeder neuen Mehrfach-Reibung: hier ergänzen.]
+### Symptom: `warning: The UV_NATIVE_TLS environment variable is deprecated`
 
-### Symptom: [konkrete Fehlermeldung oder Verhalten]
+- **Ursache:** Die Cloud-Umgebung setzt `UV_NATIVE_TLS`; uv 0.12 kündigt die Variable ab.
+- **Lösung:** `unset UV_NATIVE_TLS; export UV_SYSTEM_CERTS=1` – der SessionStart-Hook schreibt das in die Sitzungsumgebung.
+- **Auftreten:** 2026-09-26 (Schritte 1.3 und 2.1).
 
-- **Wahrscheinliche Ursache:** [...]
-- **Behebung:** [konkrete Schritte]
-- **Vorbeugung:** [optional: was zukünftig vermieden werden sollte]
+### Symptom: `StarletteDeprecationWarning: Using httpx with starlette.testclient is deprecated`
 
-### Symptom: [...]
+- **Ursache:** Starlette 1.7 empfiehlt httpx2; httpx2 ist erst ab 2026-11-12 mindestreif.
+- **Lösung:** keine nötig – benannte Ausnahme in `pyproject.toml` (`filterwarnings`), Wechsel in Schritt D.5 (ADR-015).
+- **Auftreten:** 2026-09-26 (Schritt 2.1).
 
-[...]
+### Symptom: `[ERROR] Your pre-commit configuration is unstaged.`
+
+- **Ursache:** `.pre-commit-config.yaml` wurde geändert, aber nicht gestaged.
+- **Lösung:** `git add .pre-commit-config.yaml` vor dem Commit.
+- **Auftreten:** 2026-09-26 (Schritt 2.1).
 
 ## 5. Plattform-spezifische Hinweise
 
-[Brüche oder Sonderfälle, die nur auf bestimmten Plattformen auftreten.
-Verweisen auf die Plattform-Matrix in `docs/project-context.md` Abschnitt 3.]
-
 ### Linux
 
-- [z. B. „SELinux-Kontext für Compose-Volumes setzen"]
-
-### macOS
-
-- [z. B. „Docker Desktop muss FileSharing für das Repo-Verzeichnis aktivieren"]
-
-### Windows (Git Bash)
-
-- [z. B. „Pfade mit Leerzeichen müssen quotiert werden"]
-
-### Windows (WSL2)
-
-- [z. B. „Compose-Volumes im WSL2-Filesystem, nicht im Windows-Filesystem, sonst signifikanter I/O-Overhead"]
+- Der Pre-Commit-Hook ruft die Werkzeuge über `uv run --frozen` bzw. `npx --no-install` auf; ohne vorheriges `uv sync` und `npm ci` schlagen die Hooks fehl.
+- Das vorinstallierte uv (0.8.x) der Cloud-Umgebung kennt Python 3.14.7 nicht; deshalb installiert der SessionStart-Hook uv 0.12.19 getrennt.
 
 ## 6. Rollen-spezifische Varianten
 
-[Nur Pflicht in Klasse G/V; in Klasse M optional.]
-
-### Variante: Entwickler:in (Default)
-
-[Standardpfad – Setup für interaktive Entwicklung. Inkludiert Hot-Reload, Debug-Modus, lokale Test-Suite.]
-
-### Variante: Reviewer:in
-
-[Setup für Code-/Security-Review – kein Hot-Reload nötig, dafür alle Lint-/Type-/Test-Gates lokal lauffähig. Optional: read-only Klon-Strategie.]
-
-### Variante: Operations
-
-[Setup für Produktiv-nahe Verifikation – Compose-Profile für Production, ohne Dev-Tooling, mit echten Secrets aus Vault statt `.env`.]
+Entfällt (Klasse M, ein Beitragender); Operations folgt mit Phase 4.
 
 ## 7. Notfall
 

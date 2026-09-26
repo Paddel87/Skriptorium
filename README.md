@@ -1,6 +1,6 @@
 # Skriptorium
 
-![Status](https://img.shields.io/badge/status-Konzeption-lightgrey)
+![Status](https://img.shields.io/badge/status-In%20Entwicklung-yellow)
 ![Version](https://img.shields.io/badge/version-v0.0.0-blue)
 ![Build](https://img.shields.io/github/actions/workflow/status/Paddel87/Skriptorium/ci.yml?branch=main)
 ![License](https://img.shields.io/badge/license-AGPL--3.0-blue)
@@ -23,22 +23,35 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 1 – Erkundung abgeschlossen (2026-09-26); als Nächstes Phase 2 – Grundgerüst (Umsetzung)
-- **Version:** v0.0.0 – noch keine lauffähige Version
-- **Status:** Konzeption
+- **Projektphase:** Phase 2 – Grundgerüst (Umsetzung); Schritt 2.1 Projektgerüst umgesetzt
+- **Version:** v0.0.0 – noch keine veröffentlichte Version
+- **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-09-26
 - **Architektur-Reife:** Module, Schnittstellen, Datenmodell, Token-Budget und Reaktionszeit BELASTBAR (ADR-013); Sicherheitsniveau und Schutzbedarf BELASTBAR (ADR-006, ADR-007); Observability und Bedrohungsmodell VORLÄUFIG; Host, Secrets im Betrieb und Backups OFFEN bis Phase 4
 - **Aktive Blocker:** 0
 
 ## Quick Start
 
-Noch nicht verfügbar – es gibt noch keinen lauffähigen Code. Der Quick Start entsteht mit Fahrplan-Schritt 2.1 (Projektgerüst).
+Stand nach Schritt 2.1: Projektgerüst mit Gesundheitsprüfung, noch ohne Fachfunktionen und ohne KI.
 
-### Voraussetzungen (geplant)
+### Voraussetzungen
 
-- Python 3.14 mit uv 0.12
-- Node.js 24 LTS mit npm 11 (nur zum Bauen der Oberfläche)
-- ein OpenRouter-API-Schlüssel
+- Python 3.14.7 mit uv 0.12.19
+- Node.js 24.21.0 LTS mit npm 11.19.0 (nur zum Bauen und Prüfen der Oberfläche)
+- git; für Cloud-Sessions des Coding-Agents richtet `scripts/session-start.sh` alles ein (SessionStart-Hook)
+- ein OpenRouter-API-Schlüssel – erst ab Phase 3
+
+### Einrichten und starten
+
+```bash
+uv python install 3.14.7
+uv sync --frozen --python 3.14.7
+npm ci
+uv run pre-commit install
+uv run uvicorn skriptorium.api:create_app --factory
+```
+
+Prüfen (zweites Terminal): `curl http://127.0.0.1:8000/api/health` → `{"status":"ok"}`. Tests: `uv run pytest --cov` und `npx vitest run --coverage`. Vollständige Anleitung: [`docs/onboarding-runbook.md`](docs/onboarding-runbook.md).
 
 ## Architektur (Überblick)
 
@@ -69,9 +82,9 @@ Noch nicht verfügbar. Geplante Hauptansichten: Welt wählen, Einstieg über neu
 
 ## Nächste Schritte
 
-- **2.1 Projektgerüst und volle CI-Gates:** Python- und TypeScript-Projekt mit den fixierten Versionen, alle Prüf-Gates scharf, erster Quick Start (freigabepflichtig).
 - **2.2 storage:** Dateiablage und Suchindex (YAML-Parser zur Freigabe).
 - **2.3 canon:** Welten und Kanon-Einträge.
+- **2.4 canon:** Import von Welt-Material als Markdown.
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – Startmodell grok-4.7, Zweitmodell grok-4.6.
 

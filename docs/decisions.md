@@ -472,6 +472,7 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
   - Warnungs-Bestand: eine benannte Ausnahme (Starlette-TestClient); Schritt D.5 und Eintrag im Ablaufdaten-Register.
   - Nachprüfung mypy 2 und vitest 5 bei Mindestreife (2026-11-06 bzw. 2027-03-03) über das Ablaufdaten-Register.
 - **Abgeleitete Regel:** Zusatz zu Regel-001 (Teil C)
+- **Nachtrag 2026-09-26 (Eigentümer):** ShellCheck als lokaler Pre-Commit-Hook über das PyPI-Paket shellcheck-py 0.11.0.1 in der Entwicklungsgruppe (ShellCheck 0.11.0, MIT, erschienen 2025-08-09) aufgenommen – der Hook aus dem Git-Repository von shellcheck-py scheiterte, weil sein Bau das Programm von GitHub lädt, was die Arbeitsumgebung sperrt – Pflicht G aus `CLAUDE.md` Abschnitt 15 für `scripts/session-start.sh` (über der Komplexitätsschwelle). Versionswahl nach dem Zusatz zu Regel-001: ShellCheck liefert Korrekturen als Unterversionen (0.9, 0.10, 0.11 ohne Fehlerkorrektur-Version), daher die neueste Version.
 
 ---
 
