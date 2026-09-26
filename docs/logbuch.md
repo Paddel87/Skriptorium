@@ -29,6 +29,16 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 19:20 – [ADR-ANGELEGT] ADR-010 – Schritt 1.1 erledigt
+
+- **Kanon-Nachtest (Runde 3, Eichtexte 0 / 6 / 0 statt 1):** qwen3.8-max 1,4 Widersprüche je 1.000 Wörter (gleichauf mit grok-4.7 1,5), grok-4.6 2,4, qwen3.8-flash 3,9. Runde-3-Prüfer zählten Schreibweise-Verstöße strenger – im Erkenntnisdokument gekennzeichnet.
+- **Stil-Test:** in allen drei Sätzen grok-4.7 Rang 1, grok-4.6 Rang 2, qwen3.8-max Rang 3; gemini-3.8-flash nur Rang 5–6; qwen3.8-flash dreimal letzter (wechselt in die dritte Person).
+- **Ablehnungssignale:** OpenRouter-Doku gesichtet (`finish_reason: content_filter`, `native_finish_reason`, `error` im Strom); im Test nicht live aufgetreten.
+- **ADR-010 [ERKENNTNIS]:** Startmodell grok-4.7, Ausweichmodell qwen3.8-max, schnelle Alternative grok-4.6, Token-Budget 30.000 als Obergrenze. Vision-Frage beantwortet vom Eigentümer („Kanon-Fehler stören mehr"). Reaktiv-Quote 0/10.
+- **Nachgezogen:** `docs/architecture.md` Abschnitt 6 und 9, `docs/project-context.md` Abschnitte 5, 6, 8, Fahrplan (1.1 `[ERLEDIGT]`; 1.4 um Reaktionszeit-Ziel und Lesung durch den Eigentümer ergänzt), README.
+- **Definition of Done für 1.1 (ERKUNDUNG, wissensbasiert):** Akzeptanzkriterien erfüllt (Vergleichstabelle, Monatskosten im Rahmen, Ausweichmodell, Ablehnungsverhalten beschrieben). Code-Punkte der DoD (Linter, Typprüfung, Tests, Coverage) nicht anwendbar: `spikes/modell-eignungstest/lauf.py` ist Wegwerf-Code der Erkundung und wird nicht übernommen; nur Syntaxprüfung (`py_compile`) gelaufen – Python-Werkzeuge werden erst in 2.1 eingerichtet.
+- **Kosten 1.1 gesamt:** 0,85 $ OpenRouter (54 erfolgreiche Läufe).
+
 ### 2026-09-26 18:40 – [BEOBACHTUNG] 1.1: Antworten des Eigentümers, Qwen 3.8, grok-4.6, Stil-Test
 
 - **Eigentümer:** „Kanon-Fehler stören mehr" (als Wartezeit) → Vision-Frage für das Startmodell beantwortet.

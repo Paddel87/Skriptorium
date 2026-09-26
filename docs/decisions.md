@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-26 (Modus 2 Schritt 5). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -29,12 +29,13 @@ Stand 2026-09-26 (Modus 2 Schritt 5). Sortiert nach Nummer; Mindest-Lektüre bei
 | 007 | 2026-09-26 | Aktiv | STRATEGISCH | SECURITY | Sicherheit und Datenschutz | Schutzbedarf normal |
 | 008 | 2026-09-26 | Aktiv | STRATEGISCH | SECURITY, DEPLOYMENT | Sicherheit und Datenschutz | Verzicht auf Vertretung (Gate-Punkt 7) |
 | 009 | 2026-09-26 | Aktiv | STRATEGISCH | METHODIK | Methodik (Descope) | FR-006 verworfen: keine Übernahme bestehender Geschichten |
+| 010 | 2026-09-26 | Aktiv | ERKENNTNIS | PERFORMANCE | – (Ergebnis Schritt 1.1) | Startmodell grok-4.7, Ausweichmodell qwen3.8-max, Token-Budget 30.000 |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 0 / 9 (0 %) – alle ADRs stammen aus der Initialisierung (Modus 2) und sind geplant, nicht reaktiv.
+- **Aktueller Wert:** 0 / 10 (0 %) – ADR-001 bis ADR-009 aus der Initialisierung (Modus 2), ADR-010 Ergebnis eines Erkundungsschritts; keiner reaktiv.
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -308,6 +309,38 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
   - FR-006 steht in `docs/requirements.md` auf „VERWORFEN (ADR-009)".
   - Die Erfolgskriterien „kein Kontextverlust" und „günstiger pro Anfrage" (Vision 4) werden an einer neuen Geschichte gleichen Umfangs geprüft, nicht an der Referenzgeschichte. Landeplatz: Schritt D.4 mit Auslöser „Geschichte ≥ 500.000 Token"; bis dahin gilt das Kriterium als unbelegt.
   - Der Vision-Abgleich an Phasengrenzen führt FR-006 als bewusst ausgeschlossen.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-010: Startmodell, Ausweichmodell und Token-Budget
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer (Wertung Wartezeit gegen Kanon-Treue); Festlegung der Werte durch die KI auf Grundlage des Tests
+- **Status:** Aktiv
+- **Tags:** `[ERKENNTNIS]` `[PERFORMANCE]`
+- **Phasentyp-Kontext:** ERKUNDUNG
+- **Reifegrad-Wirkung:** NFR Token-Budget: Wert festgelegt, bleibt `[VORLÄUFIG]` bis zur Beförderung in Schritt 1.4; NFR Reaktionszeit: Ziel 5 s für das Startmodell nicht erreichbar, Anpassung in 1.4 vorzulegen; NFR Kanon-Treue bleibt `[OFFEN]` (Vorprüfung erfolgt)
+- **Kategorie:** keine aus `CLAUDE.md` Abschnitt 4 (Modellwahl ist Konfiguration über den bestehenden Dienst OpenRouter); Ergebnis des Erkundungsschritts 1.1
+- **Kontext:** Schritt 1.1 sollte Startmodell und Token-Budget begründet festlegen. Test mit erfundener Welt (Material des Eigentümers in der Arbeitsumgebung nicht verwendbar): 9 Modelle, 3 Budget-Stufen (ca. 8.000 / 14.000 / 17.600 Token), 54 Läufe, 0,85 $; Kanon-Treue und sprachliche Ausdrucksweise blind bewertet. Ergebnisse: `docs/research/modell-eignungstest.md`.
+- **Optionen:**
+  - **A:** grok-4.7 – beste Kanon-Treue (1,5 Widersprüche je 1.000 Wörter) und beste Sprache (Rang 1 in allen drei Sätzen), 15–50 s bis zum ersten Textstück, ca. 0,03 $ je Anfrage.
+  - **B:** gemini-3.8-flash – schnell (ca. 2 s), knapp doppelt so viele Kanon-Fehler, Sprache nur Mittelfeld; Nutzungsbedingungen schließen sexuell explizite Inhalte aus; nach Erfahrung des Eigentümers schreiben neuere Gemini-Modelle seine Inhalte nicht mehr.
+  - **C:** grok-4.6 – Mittelweg: 5–8 s, 2,4 Widersprüche je 1.000 Wörter, Sprache Rang 2.
+  - **D:** qwen3.8-max – Kanon-Treue gleichauf mit grok-4.7 (1,4), Sprache Rang 3, 19–27 s, mehr Verstöße gegen die Figuren-Schreibweise.
+- **Entscheidung:**
+  - **Startmodell:** `x-ai/grok-4.7` mit niedrigster Reasoning-Stufe.
+  - **Ausweichmodell:** `qwen/qwen3.8-max-0902` (FR-018) – gleiche Kanon-Treue, anderer Hersteller, vom Eigentümer für seine Inhalte bereits genutzt.
+  - **Schnelle Alternative:** `x-ai/grok-4.6` für Momente, in denen Tempo wichtiger ist.
+  - **Token-Budget:** 30.000 Token Eingabe als **Obergrenze** je Schreib-Anfrage (Startwert aus ADR-003 bestätigt). Zwischen 8.000 und 17.600 Token zeigte sich kein Unterschied; die Obergrenze bleibt, weil echte Welten größer sind als die Testwelt und die Kosten auch bei 30.000 Token im Rahmen bleiben (grok-4.7 hochgerechnet ca. 21 $ im Monat).
+- **Vision-Frage, die entschied:** „Stört es dich beim Schreiben mehr, eine halbe Minute zu warten, oder beim Überarbeiten öfter Kanon-Fehler korrigieren zu müssen?" → Antwort des Eigentümers: „Kanon-Fehler stören mehr."
+- **Konfidenz zum Zeitpunkt:** mittel – Abstand grok-4.7 zu Modellen ohne Vorab-Denken deutlich und über drei Bewertungsrunden stabil (Eichtexte identisch bewertet); aber erfundene Welt, 6 Texte je Modell, Bewertung durch KI. Umkehrbarkeit: billig (Modell und Budget sind Einstellungen).
+- **Konsequenzen:**
+  - Das Reaktionszeit-Ziel „erstes Textstück in 5 s" (`docs/architecture.md` Abschnitt 6) gilt für das Startmodell nicht; Anpassung des Ziels und eine Warteanzeige in der Oberfläche („denkt nach …") sind in Schritt 1.4 bzw. 3.3 vorzusehen.
+  - `ai_gateway` (3.1): Reasoning je Modell einstellbar (manche Modelle verlangen es zwingend, HTTP 400 sonst); `finish_reason: content_filter` → `ModelRefused`; HTTP 429 → `RateLimited`; Anbieter-Routing, damit Anbieter mit Training auf Eingaben (StreamLake) gemieden werden.
+  - `context` (3.2): Feste Teile (Regeln, Kanon) an den Anfang der Anfrage – Zwischenspeicher der Anbieter senkten im Test die Kosten der Folgeanfrage deutlich.
+  - Oberfläche (3.3, 3.9): „mit anderem Modell wiederholen" bei jedem KI-Text, weil textliche Weigerungen technisch nicht erkennbar sind.
+  - Filterverhalten gegenüber den Inhalten des Eigentümers ist nur durch seine Erfahrung belegt; neuere Modellversionen können strenger werden (Befund Gemini) – Modellwechsel bleibt zentral.
 - **Abgeleitete Regel:** keine
 
 ---

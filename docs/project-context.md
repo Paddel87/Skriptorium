@@ -107,7 +107,7 @@ Modularer Monolith (ADR-003): ein Python-Server (FastAPI) liefert die React-Ober
 
 ### APIs
 
-- **OpenRouter:** OpenAI-kompatible Chat-Schnittstelle mit Streaming. Modell-Verfügbarkeit und Inhaltsfilter je Modell uneinheitlich; Befund der Bestandsprüfung: 324 von 458 Modellen ohne OpenRouter-eigene Moderation, Filter der ausführenden Anbieter ungeprüft (`docs/research/bestandspruefung.md`). Rate Limits und Preise je Modell: ermittelt in Schritt 1.1.
+- **OpenRouter:** OpenAI-kompatible Chat-Schnittstelle mit Streaming. Modell-Verfügbarkeit und Inhaltsfilter je Modell uneinheitlich; Befund der Bestandsprüfung: 324 von 458 Modellen ohne OpenRouter-eigene Moderation (`docs/research/bestandspruefung.md`). Startmodell grok-4.7, Ausweichmodell qwen3.8-max, schnelle Alternative grok-4.6 (ADR-010); Preise, Nutzungsbedingungen der ausführenden Anbieter und Ablehnungssignale in `docs/research/modell-eignungstest.md`. Rate Limits: bei qwen3.8-flash HTTP 429 vom Anbieter beobachtet, sonst keine.
 
 <!-- ANCHOR:constraints -->
 ## 6. Constraints (operationalisierbar)
@@ -128,7 +128,7 @@ Modularer Monolith (ADR-003): ein Python-Server (FastAPI) liefert die React-Ober
 
 ### Performance und Kosten
 
-- **Kosten pro Anfrage** unter dem heutigen Stand (Referenz ca. 125.000–140.000 Token pro Anfrage, Vision 4) → Regel: Die Kontext-Zusammenstellung hat ein festes Token-Budget je Anfrage; Startwert 30.000 Token, Festlegung in Schritt 1.1 (`docs/architecture.md` Abschnitt 6).
+- **Kosten pro Anfrage** unter dem heutigen Stand (Referenz ca. 125.000–140.000 Token pro Anfrage, Vision 4) → Regel: Die Kontext-Zusammenstellung hat ein festes Token-Budget je Anfrage; Obergrenze 30.000 Token (ADR-010, `docs/architecture.md` Abschnitt 6).
 - **Kein Kontextverlust** bei einer Geschichte vom Umfang der Referenzgeschichte (500.000–700.000 Token Chatverlauf) → Prüfung an einer Geschichte gleichen Umfangs (FR-006 verworfen).
 - KI-Text erscheint beim Schreiben fortlaufend (Streaming), nicht erst nach Abschluss der Antwort.
 
@@ -259,7 +259,7 @@ Kein Bestand – Default „Warnungen sind Fehler".
 
 | Posten | Art (laufend / einmalig / KI-Verbrauch) | Betrag je Monat | Stand vom | Entscheidung nötig ab |
 |---|---|---|---|---|
-| KI-Anfragen über OpenRouter | KI-Verbrauch | Schätzung ca. 6–36 $ plus Ausgabe (400 Anfragen × 30.000 Token, 0,50–3 $ je 1 Mio. Token; `docs/architecture.md` Abschnitt 6) ; gemessen in 1.1 (Testwelt, bis 17.600 Token): 1–12 $ je Monat je nach Modell, hochgerechnet auf 30.000 Token 2–21 $ (`docs/research/modell-eignungstest.md`) | 2026-09-26 | Summe über 50 € |
+| KI-Anfragen über OpenRouter | KI-Verbrauch | Schätzung ca. 6–36 $ plus Ausgabe (400 Anfragen × 30.000 Token, 0,50–3 $ je 1 Mio. Token; `docs/architecture.md` Abschnitt 6) ; gemessen in 1.1 (Testwelt, bis 17.600 Token): Startmodell grok-4.7 ca. 12 $ je Monat, hochgerechnet auf die Obergrenze 30.000 Token ca. 21 $ (ADR-010, `docs/research/modell-eignungstest.md`) | 2026-09-26 | Summe über 50 € |
 | Hosting | laufend | Schätzung ca. 4–6 € (kleiner VPS) – Festlegung in Schritt 4.2 | 2026-09-26 | Summe über 50 € |
 
 <!-- ANCHOR:entscheidungsbefugnisse -->

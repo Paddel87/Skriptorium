@@ -182,11 +182,11 @@ Alle Verträge sind `[VORLÄUFIG]` seit 2026-09-26 und werden in der Umsetzung v
 
 ### Performance und Kosten
 
-- **Token-Budget je Schreib-Anfrage:** Startwert 30.000 Token Eingabe `[VORLÄUFIG]` – festgelegt im Erkundungsschritt zur Modellwahl (Fahrplan-Schritt 1.1).
+- **Token-Budget je Schreib-Anfrage:** Obergrenze 30.000 Token Eingabe `[VORLÄUFIG]` – im Erkundungsschritt 1.1 bestätigt (ADR-010): zwischen 8.000 und 17.600 Token kein messbarer Unterschied in der Kanon-Treue; Obergrenze bleibt für größere Welten. Beförderung in Schritt 1.4. Feste Teile (Regeln, Kanon) stehen am Anfang der Anfrage (Zwischenspeicher der Anbieter senkt die Kosten).
 - **Kosten:** Summe aus KI-Verbrauch und Hosting ≤ 50 € je Monat bei regelmäßiger Nutzung (mehrmals pro Woche, je 1–2 Stunden; geschätzt ca. 400 Anfragen im Monat) `[VORLÄUFIG]`. Überschlag: 400 × 30.000 Token = 12 Mio. Token Eingabe; bei 0,50–3 $ je 1 Mio. Token etwa 6–36 $ plus Ausgabe und Kurzfassungen. Messung im Betrieb über die Verbrauchsdaten aus `ai_gateway`.
-- **Reaktionszeit:** erstes KI-Textstück sichtbar innerhalb von 5 Sekunden nach dem Absenden, sofern der Anbieter antwortet `[VORLÄUFIG]`.
+- **Reaktionszeit:** erstes KI-Textstück sichtbar innerhalb von 5 Sekunden nach dem Absenden, sofern der Anbieter antwortet `[VORLÄUFIG]`. Befund 1.1 (ADR-010): Das Startmodell grok-4.7 braucht 15–50 s (Vorab-Denken); der Eigentümer zieht Kanon-Treue der Wartezeit vor. Neufassung des Ziels (z. B. Warteanzeige, 5 s nur für die schnelle Alternative grok-4.6) in Schritt 1.4.
 - **Kontexttreue:** kein Kontextverlust bei einer Geschichte vom Umfang der Referenzgeschichte `[OFFEN]` – Prüfung erst, wenn eine Geschichte diesen Umfang erreicht (Entscheidung des Eigentümers 2026-09-26, ADR-009) – Fahrplan-Schritt D.4 mit Auslöser „Geschichte ≥ 500.000 Token".
-- **Kanon-Treue:** höchstens ein beim Redigieren gefundener Widerspruch pro Kapitel `[OFFEN]` – messbar erst im Schreibbetrieb; Vorprüfung im Erkundungsschritt.
+- **Kanon-Treue:** höchstens ein beim Redigieren gefundener Widerspruch pro Kapitel `[OFFEN]` – messbar erst im Schreibbetrieb; Vorprüfung in 1.1 erfolgt (grok-4.7: 1,5 Widersprüche je 1.000 Wörter an einer Testwelt mit bewussten Fallen, `docs/research/modell-eignungstest.md`).
 
 ### Skalierung
 
@@ -285,9 +285,9 @@ data/
 | Modul ui | VORLÄUFIG | 2026-09-26 | Umsetzung; Smartphone-Test |
 | Alle Schnittstellen (Abschnitt 4) | VORLÄUFIG | 2026-09-26 | Umsetzung |
 | Datenmodell (Abschnitt 7) | VORLÄUFIG | 2026-09-26 | Umsetzung |
-| NFR Token-Budget | VORLÄUFIG | 2026-09-26 | Erkundungsschritt 1.1 |
+| NFR Token-Budget | VORLÄUFIG | 2026-09-26 | Wert bestätigt in 1.1 (ADR-010); Beförderung 1.4 |
 | NFR Kontexttreue Referenzumfang | OFFEN | 2026-09-26 | Schritt D.4 (Geschichte ≥ 500.000 Token) |
-| NFR Kanon-Treue | OFFEN | 2026-09-26 | Schreibbetrieb ab 3.3, Vorprüfung in 1.1 |
+| NFR Kanon-Treue | OFFEN | 2026-09-26 | Schreibbetrieb ab 3.3; Vorprüfung in 1.1 erfolgt (ADR-010) |
 | Sicherheitsniveau ASVS 5.0.0 L1 / Auth L2 | BELASTBAR | 2026-09-26 | ADR-006 |
 | Bedrohungsmodell Gesamtsystem | VORLÄUFIG | 2026-09-26 | Prüfung 4.5, Gate-Schritt 4.6 |
 | Schutzbedarf normal | BELASTBAR | 2026-09-26 | ADR-007 |

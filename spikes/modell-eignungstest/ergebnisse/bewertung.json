@@ -542,5 +542,236 @@
   "lauf": "x-ai__grok-4.20__14000__2",
   "blind_id": "text-992",
   "runde": 2
+ },
+ {
+  "k": 0,
+  "f": 1,
+  "k_punkte": [],
+  "lauf": "qwen__qwen3.8-max-0902__30000__2",
+  "blind_id": "text-188",
+  "runde": 3
+ },
+ {
+  "k": 1,
+  "f": 0,
+  "k_punkte": [
+   "K1"
+  ],
+  "lauf": "x-ai__grok-4.6__8000__2",
+  "blind_id": "text-191",
+  "runde": 3
+ },
+ {
+  "k": 3,
+  "f": 1,
+  "k_punkte": [
+   "K9",
+   "K12",
+   "K12b"
+  ],
+  "lauf": "qwen__qwen3.8-flash__8000__1",
+  "blind_id": "text-283",
+  "runde": 3
+ },
+ {
+  "k": 1,
+  "f": 3,
+  "k_punkte": [
+   "K9"
+  ],
+  "hinweis": "3. Person",
+  "lauf": "qwen__qwen3.8-flash__14000__1",
+  "blind_id": "text-513",
+  "runde": 3
+ },
+ {
+  "k": 0,
+  "f": 0,
+  "k_punkte": [],
+  "lauf": "x-ai__grok-4.7__30000__2",
+  "blind_id": "text-738",
+  "runde": 3
+ },
+ {
+  "k": 2,
+  "f": 0,
+  "k_punkte": [
+   "K12",
+   "weitere:pfeifen"
+  ],
+  "lauf": "x-ai__grok-4.6__30000__1",
+  "blind_id": "text-800",
+  "runde": 3
+ },
+ {
+  "k": 4,
+  "f": 0,
+  "k_punkte": [
+   "K5",
+   "K1",
+   "weitere:pfeifen",
+   "weitere:Schweigegeld"
+  ],
+  "lauf": "x-ai__grok-4.6__30000__2",
+  "blind_id": "text-817",
+  "runde": 3
+ },
+ {
+  "k": 2,
+  "f": 1,
+  "k_punkte": [
+   "K5",
+   "K1"
+  ],
+  "lauf": "qwen__qwen3.8-max-0902__14000__2",
+  "blind_id": "text-236",
+  "runde": 3
+ },
+ {
+  "k": 4,
+  "f": 3,
+  "k_punkte": [
+   "K15",
+   "K1",
+   "K16",
+   "K12"
+  ],
+  "hinweis": "3. Person",
+  "lauf": "qwen__qwen3.8-flash__30000__1",
+  "blind_id": "text-304",
+  "runde": 3
+ },
+ {
+  "k": 7,
+  "f": 0,
+  "k_punkte": [
+   "weitere:Mann hinter Gitter",
+   "K5",
+   "K8",
+   "K19",
+   "weitere:heute",
+   "weitere:meiner Mutter",
+   "K12"
+  ],
+  "lauf": "qwen__qwen3.8-flash__8000__2",
+  "blind_id": "text-335",
+  "runde": 3
+ },
+ {
+  "k": 1,
+  "f": 3,
+  "k_punkte": [
+   "K12"
+  ],
+  "hinweis": "3. Person",
+  "lauf": "qwen__qwen3.8-flash__14000__2",
+  "blind_id": "text-489",
+  "runde": 3
+ },
+ {
+  "k": 6,
+  "f": 1,
+  "k_punkte": [
+   "K5",
+   "K8",
+   "K17",
+   "K1",
+   "weitere",
+   "weitere"
+  ],
+  "lauf": "deepseek__deepseek-v4-pro__8000__2",
+  "blind_id": "text-601",
+  "runde": 3
+ },
+ {
+  "k": 2,
+  "f": 0,
+  "k_punkte": [
+   "K5",
+   "weitere:acht Münder"
+  ],
+  "lauf": "x-ai__grok-4.6__8000__1",
+  "blind_id": "text-651",
+  "runde": 3
+ },
+ {
+  "k": 1,
+  "f": 0,
+  "k_punkte": [
+   "K5"
+  ],
+  "lauf": "qwen__qwen3.8-max-0902__30000__1",
+  "blind_id": "text-878",
+  "runde": 3
+ },
+ {
+  "k": 1,
+  "f": 1,
+  "k_punkte": [
+   "K15"
+  ],
+  "lauf": "qwen__qwen3.8-max-0902__14000__1",
+  "blind_id": "text-354",
+  "runde": 3
+ },
+ {
+  "k": 1,
+  "f": 2,
+  "k_punkte": [
+   "K1"
+  ],
+  "lauf": "qwen__qwen3.8-max-0902__8000__1",
+  "blind_id": "text-357",
+  "runde": 3
+ },
+ {
+  "k": 2,
+  "f": 0,
+  "k_punkte": [
+   "K5",
+   "K1"
+  ],
+  "lauf": "x-ai__grok-4.6__14000__1",
+  "blind_id": "text-492",
+  "runde": 3
+ },
+ {
+  "k": 0,
+  "f": 1,
+  "k_punkte": [],
+  "lauf": "google__gemini-3.8-flash__14000__1",
+  "blind_id": "text-531",
+  "runde": 3
+ },
+ {
+  "k": 1,
+  "f": 1,
+  "k_punkte": [
+   "K5"
+  ],
+  "lauf": "x-ai__grok-4.6__14000__2",
+  "blind_id": "text-643",
+  "runde": 3
+ },
+ {
+  "k": 2,
+  "f": 2,
+  "k_punkte": [
+   "K9",
+   "K12"
+  ],
+  "lauf": "qwen__qwen3.8-flash__30000__2",
+  "blind_id": "text-713",
+  "runde": 3
+ },
+ {
+  "k": 1,
+  "f": 2,
+  "k_punkte": [
+   "weitere:Handschuh"
+  ],
+  "lauf": "qwen__qwen3.8-max-0902__8000__2",
+  "blind_id": "text-846",
+  "runde": 3
  }
 ]

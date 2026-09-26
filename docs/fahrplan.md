@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 1 „Erkundung: Modelle, Import, Laufzeit" (begonnen 2026-09-26)
 - **Phasentyp:** ERKUNDUNG
-- **Aktiver Schritt:** 1.1 (seit 2026-09-26)
-- **Nächster Schritt:** 1.1 fortsetzen: Filter-Probe, sobald der Eigentümer die Art früher abgelehnter Inhalte genannt hat; danach Entscheidung zu Startmodell (Reaktionszeit grok-4.7) und Token-Budget, ADR. Parallel ohne Zutun beginnbar: 1.3. 1.2 wartet auf Exporte des Eigentümers
+- **Aktiver Schritt:** keiner (1.1 erledigt 2026-09-26)
+- **Nächster Schritt:** 1.3 (ohne Zutun des Eigentümers beginnbar); 1.2 wartet auf Exporte des Eigentümers; 1.4 nach 1.2 und 1.3
 - **Offene STOPP-Situationen:** keine (STOPP vor 1.1 vom 2026-09-26 aufgelöst: Schlüssel liegt vor; Testdaten erfindet die KI, Festlegung des Eigentümers)
 
 <!-- ANCHOR:phasen-typen -->
@@ -110,7 +110,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 1.1: Modell-Eignungstest (Kanon-Treue, Filterverhalten, Kosten)
 
-- **Status:** IN ARBEIT (seit 2026-09-26) – Zwischenstand 2026-09-26: Vergleich von 4 Modellen × 3 Budgets ausgewertet (`docs/research/modell-eignungstest.md`); offen: Filter-Probe (wartet auf Angabe des Eigentümers zu früher abgelehnten Inhalten), Beschreibung des Ablehnungsverhaltens, Stichprobe der Bewertung durch den Eigentümer, Entscheidung zu Startmodell und Budget, ADR `[ERKENNTNIS]`
+- **Status:** ERLEDIGT (2026-09-26) – Ergebnis ADR-010, `docs/research/modell-eignungstest.md`
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Schritt-Art (nur ERKUNDUNG):** Vergleichsstudie
 - **Zeitbox (nur ERKUNDUNG):** maximal 6 h Arbeit, dann Zwischenstand an den Eigentümer
@@ -178,7 +178,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** canon, manuscript, context, ai_gateway, storage, api, ui
 - **Reifegrad-Wirkung:** siehe Reifegrad-Erwartung der Phase
 - **Artefakte:** ADR zur Beförderung; `docs/architecture.md` Abschnitte 3, 4, 7 und 9
-- **Notizen:** Ohne diesen Schritt dürfte Phase 2 nicht beginnen (CLAUDE.md Abschnitt 6, „Architektur-Reifegrad respektieren").
+- **Notizen:** Ohne diesen Schritt dürfte Phase 2 nicht beginnen (CLAUDE.md Abschnitt 6, „Architektur-Reifegrad respektieren"). Zusatz 2026-09-26 aus 1.1 (ADR-010): (a) Reaktionszeit-Ziel neu fassen – das Startmodell braucht 15–50 s; (b) dem Eigentümer eine eigene Lesung einiger Testtexte anbieten (Stichprobe der KI-Bewertung aus 1.1, `spikes/modell-eignungstest/ergebnisse/`).
 
 ### Phase 2: Grundgerüst – Typ: UMSETZUNG
 
