@@ -9,7 +9,7 @@
 - **Vorbereitung:** erledigt – `docs/` enthält frische Kopien aus `templates/docs/` (Klassen-Hypothese M).
 - **Schritt 1 (Klassifikation):** Hypothese **Klasse M**, vom Eigentümer nicht beanstandet; endgültige Bestätigung nach Schritt 4. Risiko Richtung G: Kontext-Zusammenstellung für lange Geschichten könnte einen zweiten Speicher (z. B. Suchindex) erfordern. ADR-001 wird in Schritt 5 geschrieben.
 - **Schritt 1a (Anforderungen):** abgeschlossen, `docs/requirements.md` vom Eigentümer bestätigt (18 Muss / 4 Soll / 1 Kann / 1 verworfen).
-- **Nächster Schritt:** Schritt 4 – Architektur-Grobschnitt in `docs/architecture.md` (Stufe-2-Bestätigung Klasse M), danach 4a Sicherheitsgrundriss.
+- **Nächster Schritt:** Schritt 4a – Sicherheitsgrundriss (Hosting, Schutzbedarf, Vertretung, KI-Konto, Sicherheitsniveau); Klasse M bestätigen lassen.
 - **Kostenrahmen (Schritt 2):** bis 50 € monatlich für KI-Anfragen und Hosting zusammen (Angabe des Eigentümers, 2026-09-26) → `docs/project-context.md` Abschnitt 8.
 - **Bestandsprüfung:** abgeschlossen 2026-09-26, `docs/research/bestandspruefung.md` (Lizenzen der Gruppe-(a)-Kandidaten gegengeprüft).
 - **Grundsatzentscheidung Eigenbau vs. Anpassung:** **B – schlanker Eigenbau**, Konzepte aus der Bestandsprüfung übernehmen, kein fremder Code (Eigentümer, 2026-09-26). Verworfen: A – Anpassung von The Story Nexus oder Story Labyrinth (AGPL-3.0, fremde Form, Rückbau nötig, Differenzierungsmerkmale ohnehin neu zu bauen); C – Praxistest vorab. Empfehlung über Heuristik 1.3 (weniger Abhängigkeiten) und Default-Bias; Konfidenz mittel (belegt aus Code und Doku, nicht erprobt); Umkehrbarkeit teuer. Vision-Frage, die entschied: „Schnell mit einem fremden Werkzeug in dessen Form – oder etwas später genau in deiner Arbeitsweise?" → eigene Arbeitsweise. Folge: Projektlizenz bleibt frei wählbar (Vision 6). ADR dazu in Schritt 5 (`[STRATEGISCH]`), verworfene Alternativen nach `docs/architecture.md` Abschnitt 8.
@@ -22,9 +22,11 @@
   1. Erfolgskriterium „kein Kontextverlust bei Referenzumfang" ohne übernommene Geschichte vorerst nicht prüfbar → Eigentümer: später prüfen, sobald eine neue Geschichte diesen Umfang erreicht. Landeplatz: eigener Fahrplan-Schritt mit Auslöser „Geschichte ≥ 500.000 Token" (Schritt 6); bis dahin gilt das Kriterium als unbelegt.
   2. Spannung Kanon-Treue ↔ Inhaltsfilter ↔ Kosten (offene Tatsachenfrage) → ERKUNDUNG-Schritt früh im Fahrplan: dieselbe Szene mit 3–4 Modellen, Vergleich von Kanon-Treue, Filterverhalten, Kosten (Schritt 6).
   3. Schreibumfang für Kostenschätzung → Eigentümer: regelmäßig (mehrmals pro Woche, je 1–2 Stunden). Grundlage der Kostenschätzung in Schritt 4.
+- **Schritt 4 (Architektur), 2026-09-26:** Bauweise A – modularer Monolith (ADR-003, Konfidenz hoch); Speicher B – Markdown-Dateien als Quelle der Wahrheit plus SQLite-Suchindex, jederzeit aus den Dateien neu aufbaubar (Eigentümer wählte B statt Empfehlung A „nur Dateien"); Kontext-Verfahren (Regeln, Kanon-Ausschnitt, Kurzfassungen, letzte Seiten wörtlich) mit Startbudget 30.000 Token, `[VORLÄUFIG]`, Festlegung im Erkundungsschritt. `docs/architecture.md` befüllt. Stufe-2-Klassifikation: 7 Module (davon 4 fachlich + ui, 2 technische Schichten), > 5 externe Bibliotheken – zwei G-Indikatoren auf dem Papier; Stufe-2-Indikatoren (1 Betriebseinheit, synchron, 1 Quelle der Wahrheit, 1 Nutzer) sprechen für M. Vorschlag M, Bestätigung durch Eigentümer offen.
 - **Merkposten für spätere Schritte:**
   - ADR zum Verwerfen von FR-006 (Geschichten übernehmen) in Schritt 5.
   - Welt-Material liegt in TypingMind-Agenten und Notion – relevant für FR-005 und Schritt 2.
+  - YAML-Parser für Frontmatter: neue Abhängigkeit, Freigabe im ersten Umsetzungsschritt.
   - Weitere KI-Anbieter neben OpenRouter (FR-025): Erweiterungspunkt in Schritt 4, konkrete zusätzliche Anbieter als `[VERSCHOBEN]`-Schritt in Schritt 6.
   - Publizieren sowie Bilder und Karten brauchen `[VERSCHOBEN]`-Schritte in Schritt 6.
   - Vision fordert öffentliches Cloud-Hosting bei einem einzigen Nutzer ohne Konten → Zugangsschutz trotzdem nötig (Schritt 4a, Härtung in Schritt 3).

@@ -1,10 +1,9 @@
-# Architecture
+# Architecture – Skriptorium
 
 <!-- Systemarchitektur, Modulgrenzen, Schnittstellenverträge.
-     Architektur ist ein lebendes Dokument: sie reift während der Umsetzung.
-     Jeder Architektur-Bestandteil trägt einen Reifegrad-Marker, der seinen Status anzeigt.
-     Änderungen an belastbaren Bestandteilen sind freigabepflichtig (CLAUDE.md Abschnitt 4).
-     Änderungen an vorläufigen oder offenen Bestandteilen sind Teil der normalen Erkenntnisarbeit. -->
+     Befüllt in Modus 2 Schritt 4 (templates/projektstart.md Abschnitt 1.3), Klasse M: ein Dokument.
+     Jeder Bestandteil trägt einen Reifegrad-Marker. Änderungen an belastbaren Bestandteilen sind
+     freigabepflichtig (CLAUDE.md Abschnitt 4). -->
 
 <!-- ANCHOR:reifegrad-system -->
 ## 0. Reifegrad-System
@@ -12,231 +11,269 @@
 Jedes Modul, jede Schnittstelle und jede Architektur-Aussage trägt einen der folgenden Marker:
 
 - `[BELASTBAR]` – Entscheidung getroffen, durch Umsetzung validiert oder durch ADR fixiert. Änderung ist freigabepflichtig (CLAUDE.md Abschnitt 4) und erzeugt einen ADR.
-- `[VORLÄUFIG]` – Entwurfshypothese, plausibel aber nicht durch Umsetzung validiert. Darf in der Implementierung verfeinert werden, ohne separate Freigabe – jede Verfeinerung wird aber im Dokument nachgezogen und mit Datum vermerkt. Wird nach Validierung auf `[BELASTBAR]` befördert.
-- `[OFFEN]` – bewusst nicht entschieden. Wartet auf Erkenntnis aus einer Erkundungsphase, einen Spike oder eine externe Klärung. Kein Code in Bereichen, die von einer `[OFFEN]`-Architektur abhängen, ohne dass die Lücke vorher geschlossen wurde.
+- `[VORLÄUFIG]` – Entwurfshypothese, plausibel aber nicht durch Umsetzung validiert. Darf in der Implementierung verfeinert werden, ohne separate Freigabe – jede Verfeinerung wird im Dokument nachgezogen und mit Datum vermerkt.
+- `[OFFEN]` – bewusst nicht entschieden. Kein Code in Bereichen, die davon abhängen, bevor die Lücke geschlossen ist.
 
-**Beförderungsregel:** Ein Bestandteil wird von `[VORLÄUFIG]` auf `[BELASTBAR]` befördert, wenn:
+**Beförderungsregel:** `[VORLÄUFIG]` → `[BELASTBAR]` durch funktionierende Implementierung **oder** ADR; beides mit Datum und Begründung am Eintrag.
 
-1. Die Annahme durch funktionierende Implementierung bestätigt wurde, **oder**
-2. Ein ADR die Entscheidung explizit fixiert.
+**Ausnahme Schutzmechanismen** (Alarme, Überwachung, Backups/Wiederherstellung, Rate-Limits, Release-/Deploy-Gates): Beförderung erst nach einem absichtlich herbeigeführten Fehlerfall, der vollständig durchlief (CLAUDE.md Abschnitt 6).
 
-Beide Wege sind dokumentationspflichtig: Beförderung mit Datum und kurzer Begründung am betroffenen Eintrag.
-
-**Ausnahme Schutzmechanismen** (Alarme, Überwachung, Backups/Wiederherstellung, Rate-Limits, Release-/Deploy-Gates): Weg 2 genügt nicht. Beförderung erst nach einem absichtlich herbeigeführten Fehlerfall, der vollständig durchlief, mit Datum und Ergebnis am Eintrag (CLAUDE.md Abschnitt 6, „Schutzmechanismen durch erzwungenen Fehler belegen").
-
-**Rückstufungsregel:** Ein `[BELASTBAR]`-Bestandteil kann nur durch ADR auf `[VORLÄUFIG]` oder `[OFFEN]` zurückgestuft werden. Stille Rückstufung ist verboten.
+**Rückstufungsregel:** `[BELASTBAR]` → `[VORLÄUFIG]` oder `[OFFEN]` nur per ADR.
 
 <!-- ANCHOR:ueberblick -->
 ## 1. Überblick
 
-[2–4 Sätze: was wird gebaut, grobe Aufteilung, prägende Kernentscheidung.]
+Das Skriptorium ist eine Web-App für einen einzelnen Autor: ein Python-Server (FastAPI) liefert eine React-Oberfläche mit Markdown-Editor (CodeMirror 6) aus und stellt die Fachfunktionen bereit. Welten, Kanon und Manuskripte liegen als Markdown-Dateien; eine SQLite-Datei dient als jederzeit neu aufbaubarer Suchindex. Prägende Kernentscheidung ist die **Kontext-Zusammenstellung**: Jede KI-Anfrage wird unter einem festen Token-Budget aus Regeln, Kanon-Ausschnitt, verdichtetem Handlungsstand und den letzten Manuskript-Seiten gebaut, statt den ganzen Verlauf mitzuschicken.
 
-**Architektur-Pattern:** [z. B. „Modular Monolith" `[BELASTBAR]`]
+**Architektur-Pattern:** Modularer Monolith – eine Betriebseinheit mit fachlich getrennten Modulen `[BELASTBAR]` (ADR-003, Heuristik 1.3: ein Nutzer, ein Betriebsziel, fachliche Komplexität).
 
-**Kommunikations-Grundmodus:** [z. B. „Synchron REST intern, asynchron via Queue zwischen Services" `[BELASTBAR]`]
+**Kommunikations-Grundmodus:** synchron. Oberfläche ↔ Server über HTTP/JSON; KI-Antworten werden per Streaming (Server-Sent Events) Wort für Wort an die Oberfläche weitergereicht. Module im Server rufen einander als Python-Funktionen über ihre öffentlichen Schnittstellen auf. `[VORLÄUFIG]`
 
 <!-- ANCHOR:modul-karte -->
 ## 2. Modul-Karte
 
-[Diagramm als ASCII oder Mermaid, das die Module und ihre Kommunikationsbeziehungen zeigt.
-Nur diese Beziehungen sind erlaubt – alles andere ist Architekturbruch.
-Vorläufige oder offene Beziehungen werden im Diagramm gekennzeichnet (z. B. gestrichelte Linie für `[VORLÄUFIG]`).]
+Nur die gezeigten Beziehungen sind erlaubt; jede weitere ist ein Architekturbruch. Gestrichelt = `[VORLÄUFIG]`.
 
 ```mermaid
 graph LR
-  A[Modul A] -->|REST [BELASTBAR]| B[Modul B]
-  B -.->|Event [VORLÄUFIG]| C[Modul C]
+  UI[ui – React-Oberfläche] -.->|HTTP/JSON + SSE| API[api – HTTP-Schicht]
+  API -.-> CANON[canon]
+  API -.-> MS[manuscript]
+  API -.-> CTX[context]
+  API -.-> AI[ai_gateway]
+  CTX -.->|liest| CANON
+  CTX -.->|liest| MS
+  CANON -.-> STORE[storage]
+  MS -.-> STORE
+  AI -.->|HTTPS| OR[(OpenRouter und weitere Anbieter)]
 ```
+
+**Leitregeln:** `context` liest nur, schreibt nie. `ai_gateway` kennt keine Fachbegriffe (Welt, Kanon), nur Nachrichten, Modelle und Token. `storage` ist die einzige Stelle, die Dateien und den Index berührt. Die Ablauf-Steuerung (z. B. „Kapitel abschließen → Kurzfassung erzeugen → speichern") liegt in `api`, damit zwischen den Fachmodulen keine Zyklen entstehen.
 
 <!-- ANCHOR:module -->
 ## 3. Module (detailliert)
 
-### Modul: [Name] [REIFEGRAD]
+### Modul: canon [VORLÄUFIG]
 
-- **Reifegrad:** `[BELASTBAR | VORLÄUFIG | OFFEN]`, seit [YYYY-MM-DD], Begründung: [kurz]
-- **Verantwortung:** [was macht dieses Modul – in 1–2 Sätzen]
-- **Nicht-Verantwortung:** [was explizit **nicht** in diesem Modul erledigt wird, obwohl es thematisch naheliegen könnte]
-- **Öffentliche Schnittstellen:** [siehe Abschnitt 4, mit eigenen Reifegraden]
-- **Interne Struktur:** [Kurzbeschreibung; Details sind Implementierungsfreiheit]
-- **Abhängigkeiten (andere Module):** [welche Module werden aufgerufen, auf welche Art]
-- **Abhängigkeiten (extern):** [Services, Bibliotheken mit besonderer Relevanz]
-- **Technologie:** [nur wenn abweichend vom Haupt-Stack]
-- **NFRs (modulspezifisch):** [siehe Abschnitt 6]
-- **Offene Fragen:** [falls Reifegrad `[VORLÄUFIG]` oder `[OFFEN]`: was muss noch geklärt werden, durch welchen Schritt im Fahrplan]
+- **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26, Begründung: aus Vision und Anforderungen abgeleitet, nicht implementiert
+- **Verantwortung:** Welten und ihre Kanon-Einträge (Figur, Ort/Geografie, Gegenstand, Zeitlinie, Regel, Kultur) anlegen, ändern, löschen, finden; Aliasse für die Namenserkennung; einmaliger Import von Welt-Material aus TypingMind (JSON-Export) und Notion (Markdown-Export) (FR-001–FR-005, FR-023).
+- **Nicht-Verantwortung:** keine Entscheidung, welche Einträge in eine KI-Anfrage gehören (→ `context`); keine geschichtenbezogenen Fakten (→ `manuscript`).
+- **Öffentliche Schnittstellen:** `CanonService` (Abschnitt 4)
+- **Interne Struktur:** Import als eigenes Untermodul `canon.importers` mit je einem Importer pro Quelle.
+- **Abhängigkeiten (andere Module):** `storage`
+- **Abhängigkeiten (extern):** keine
+- **Offene Fragen:** Inhalt des TypingMind-Agenten-Exports (enthält er Wissensdateien?) – Klärung an einem echten Export, Fahrplan-Schritt [TBD in Modus 2 Schritt 6].
 
-### Modul: [weiteres Modul] [REIFEGRAD]
+### Modul: manuscript [VORLÄUFIG]
 
-[...]
+- **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26
+- **Verantwortung:** Geschichten je Welt (Roman mit Kapiteln, Kurzgeschichte, Fragment), Manuskript-Text, Kapitel-Kurzfassungen und Gesamtzusammenfassung, Einstellungen der Figuren-Schreibweise je Geschichte (welche Figuren der Autor führt, Erzählperspektive), Gast-Verbindungen zu Einträgen anderer Welten und geschichtenbezogene Fakten (FR-007, FR-009, FR-012, FR-016, FR-017, FR-024).
+- **Nicht-Verantwortung:** kein Erzeugen von Text oder Zusammenfassungen (→ `ai_gateway`, gesteuert über `api`); kein Welt-Kanon (→ `canon`).
+- **Öffentliche Schnittstellen:** `ManuscriptService` (Abschnitt 4)
+- **Abhängigkeiten (andere Module):** `storage`
+- **Offene Fragen:** Granularität des Wechsels Autor/KI im Manuskript (Absatz-Markierung, wer was schrieb) – verfeinert in der Umsetzung.
+
+### Modul: context [VORLÄUFIG]
+
+- **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26, Begründung: Kernverfahren, Tauglichkeit und Budget werden im Erkundungsschritt zur Modellwahl geprüft
+- **Verantwortung:** baut aus Welt, Geschichte, Anweisung und `@`-Verweisen eine KI-Anfrage unter festem Token-Budget; Bausteine in Vorrangfolge: (1) Regeln und Schreibanweisung inkl. Figuren-Schreibweise, (2) per `@` genannte Einträge und Einträge der Figuren der Szene, (3) Gesamtzusammenfassung und Kapitel-Kurzfassungen, (4) letzte Manuskript-Seiten wörtlich (füllt den Rest des Budgets). Baut ebenso die Anfrage für Kapitel-Kurzfassungen. Erkennt Kanon-Namen ohne `@` und liefert sie als Vorschläge (FR-008, FR-010, FR-011, FR-013, FR-014).
+- **Nicht-Verantwortung:** kein Aufruf der KI, kein Schreiben von Daten.
+- **Öffentliche Schnittstellen:** `ContextBuilder` (Abschnitt 4)
+- **Abhängigkeiten (andere Module):** `canon`, `manuscript` (nur lesend)
+- **NFRs:** Token-Budget je Anfrage (Abschnitt 6); Coverage 90 % (project-context Abschnitt 7).
+- **Offene Fragen:** Wert des Token-Budgets; Tokenzählung je Modell (Schätzung vs. Tokenizer) – Erkundungsschritt [TBD in Modus 2 Schritt 6].
+
+### Modul: ai_gateway [VORLÄUFIG]
+
+- **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26
+- **Verantwortung:** einheitliche Anbieter-Schnittstelle für KI-Anfragen mit Streaming; OpenRouter als erster Adapter; weitere Anbieter als zusätzliche Adapter, ohne bestehende zu ändern (FR-018, FR-025); Erfassung von Token-Verbrauch und Kosten je Anfrage.
+- **Nicht-Verantwortung:** keine Fachlogik, keine Kontext-Auswahl.
+- **Öffentliche Schnittstellen:** `ModelProvider` (Abschnitt 4)
+- **Abhängigkeiten (extern):** httpx; OpenRouter-API
+- **Offene Fragen:** Verhalten bei Modell-Ablehnung (Inhaltsfilter) – Erkundungsschritt.
+
+### Modul: storage [VORLÄUFIG]
+
+- **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26
+- **Verantwortung:** Lesen und atomares Schreiben der Markdown-Dateien mit YAML-Kopf (Frontmatter) im Datenverzeichnis; Pflege des SQLite-Suchindex (Namen, Aliasse, Volltext) und dessen vollständiger Neuaufbau aus den Dateien.
+- **Nicht-Verantwortung:** keine Fachregeln. Die Dateien sind die Quelle der Wahrheit; der Index enthält nichts, was nicht aus den Dateien wiederherstellbar ist.
+- **Öffentliche Schnittstellen:** `DocumentStore` (Abschnitt 4)
+- **Abhängigkeiten (extern):** Python-Standardbibliothek (`sqlite3`); YAML-Parser [TBD – freigabepflichtige Abhängigkeit, Auswahl im ersten Umsetzungsschritt]
+
+### Modul: api [VORLÄUFIG]
+
+- **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26
+- **Verantwortung:** HTTP-Schnittstelle (FastAPI), Zugangsschutz, Ablauf-Steuerung über Modulgrenzen hinweg (z. B. Fortsetzung schreiben, Kapitel abschließen), Auslieferung der gebauten Oberfläche.
+- **Nicht-Verantwortung:** keine Fachlogik über das Zusammenschalten hinaus.
+- **Abhängigkeiten (andere Module):** `canon`, `manuscript`, `context`, `ai_gateway`
+
+### Modul: ui [VORLÄUFIG]
+
+- **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26
+- **Verantwortung:** React-Oberfläche: Welt wählen, Einstieg (Szene, Manuskript), Editor mit `@`-Menü, Übernahme markierter Textstellen in den Kanon mit Zielwahl (FR-015, FR-024), Kanon-Pflege, Modellwahl; bedienbar auf dem Smartphone (FR-019).
+- **Abhängigkeiten:** nur `api` über HTTP.
+- **Technologie:** TypeScript, React, Vite, CodeMirror 6.
 
 <!-- ANCHOR:schnittstellenvertraege -->
 ## 4. Schnittstellenverträge
 
-Alle modulübergreifenden Aufrufe sind hier dokumentiert. Änderungen an `[BELASTBAR]`-Schnittstellen sind freigabepflichtig (CLAUDE.md 4.5). `[VORLÄUFIG]`-Schnittstellen dürfen während der Umsetzung verfeinert werden, mit Update hier.
+Alle Verträge sind `[VORLÄUFIG]` seit 2026-09-26 und werden in der Umsetzung verfeinert; Verfeinerungen werden hier mit Datum nachgezogen.
 
-### Schnittstelle: [ID oder sprechender Name] [REIFEGRAD]
+### Schnittstelle: ModelProvider [VORLÄUFIG]
 
-- **Reifegrad:** `[BELASTBAR | VORLÄUFIG | OFFEN]`, seit [YYYY-MM-DD]
-- **Typ:** [HTTP-REST | gRPC | Event | CLI | Funktions-Export | Bibliotheks-API]
-- **Anbieter:** [Modul, das bereitstellt]
-- **Konsument:** [Module, die aufrufen]
+- **Typ:** Python-Protokoll (Funktions-Export)
+- **Anbieter:** `ai_gateway` (je Anbieter ein Adapter)
+- **Konsument:** `api`
 - **Spezifikation:**
-  - **Eingabe:** [Schema, Pflichtfelder, Typen, Validierung]
-  - **Ausgabe (Erfolg):** [Schema, Statuscode/Envelope]
-  - **Ausgabe (Fehler):** [Fehlerklassen, Statuscodes, Fehlerschema]
-  - **Idempotenz:** [ja/nein, wie sichergestellt]
-  - **Timeouts und Retries:** [wer wartet wie lange, wann wird retried]
-- **Versionierung:** [wie werden Breaking Changes gehandhabt]
-- **Sicherheit:** [Auth, Rate Limits]
-- **Beispiel:** [Minimalbeispiel für Request und Response]
-- **Offene Fragen:** [bei nicht-`[BELASTBAR]`: was muss noch validiert werden]
+  - **Eingabe:** Modell-Kennung, Liste von Nachrichten (Rolle, Text), Obergrenze für Antwort-Token, Temperatur
+  - **Ausgabe (Erfolg):** Strom von Textstücken; am Ende Nutzungsdaten (Eingabe-/Ausgabe-Token, Kosten falls vom Anbieter gemeldet)
+  - **Ausgabe (Fehler):** `ProviderUnavailable`, `ModelRefused` (Inhaltsfilter), `RateLimited`, `InvalidRequest`
+  - **Idempotenz:** nein (jede Anfrage erzeugt neuen Text)
+  - **Timeouts und Retries:** Verbindungsaufbau 10 s; kein automatischer Retry bei begonnenem Strom; einmaliger Retry bei `RateLimited` nach Wartezeit des Anbieters
+- **Sicherheit:** API-Schlüssel nur aus Umgebungsvariablen des Servers
 
-### Schnittstelle: [...] [REIFEGRAD]
+### Schnittstelle: ContextBuilder [VORLÄUFIG]
 
-[...]
+- **Typ:** Python-Funktions-Export
+- **Anbieter:** `context`; **Konsument:** `api`
+- **Eingabe:** Welt-ID, Geschichte-ID, Kapitel-ID, Anweisung des Autors, Liste der `@`-Verweise, Token-Budget
+- **Ausgabe:** Nachrichtenliste für `ModelProvider` plus Protokoll, welche Bausteine mit wie vielen Token enthalten sind (für Nachvollziehbarkeit und Tests)
+
+### Schnittstelle: CanonService, ManuscriptService, DocumentStore [VORLÄUFIG]
+
+- **Typ:** Python-Funktions-Exporte
+- **Spezifikation:** CRUD-Operationen auf den Entitäten aus Abschnitt 7; Details entstehen in der Umsetzung und werden hier nachgezogen.
+
+### Schnittstelle: HTTP-API [VORLÄUFIG]
+
+- **Typ:** HTTP-REST (JSON) plus Server-Sent Events für KI-Streaming
+- **Anbieter:** `api`; **Konsument:** `ui`
+- **Sicherheit:** Zugangsschutz für alle Endpunkte außer Gesundheitsprüfung [TBD nach Modus 2 Schritt 4a]
+- **Versionierung:** keine – Oberfläche und Server werden immer gemeinsam ausgeliefert
 
 <!-- ANCHOR:datenfluss -->
 ## 5. Datenfluss
 
-[Wie bewegen sich Daten durch das System. Für jeden nicht-trivialen Flow:]
+### Flow: Weiterschreiben im Wechsel [VORLÄUFIG]
 
-### Flow: [Name, z. B. „Neuregistrierung eines Nutzers"] [REIFEGRAD]
+1. Autor schreibt im Editor (eigener Text wird gespeichert) und gibt eine Anweisung, ggf. mit `@`-Verweisen.
+2. `ui` sendet Anweisung an `api`; `api` lässt `context` die Anfrage bauen (Budget aus Einstellungen).
+3. `api` ruft `ai_gateway` mit dem gewählten Modell; Textstücke gehen per Streaming an `ui`.
+4. Autor übernimmt, ändert oder verwirft den KI-Text; übernommener Text wird über `manuscript` gespeichert.
 
-1. [Schritt 1: wer macht was, mit welchem Input/Output]
-2. [Schritt 2: ...]
-3. [...]
+**Fehlerpfade:** Abbruch oder Ablehnung des Modells → bisheriger Manuskript-Stand bleibt unverändert; Oberfläche zeigt den Grund und bietet Wiederholen mit anderem Modell an (FR-018).
 
-**Fehlerpfade:** [was passiert, wenn ein Schritt fehlschlägt – Rollback, Retry, Compensating Action]
+### Flow: Kapitel abschließen [VORLÄUFIG]
+
+1. Autor markiert ein Kapitel als abgeschlossen.
+2. `api` lässt `context` die Anfrage „Kurzfassung" bauen und ruft `ai_gateway`.
+3. Kurzfassung und fortgeschriebene Gesamtzusammenfassung werden über `manuscript` gespeichert; Autor kann beide ansehen und ändern.
+
+**Fehlerpfade:** Scheitert die Erzeugung, bleibt das Kapitel abgeschlossen und die Kurzfassung als „fehlt" markiert; `context` nutzt dann ersatzweise den Kapitelanfang wörtlich, bis sie nachgeholt ist.
+
+### Flow: Fakt aus dem Text in den Kanon [VORLÄUFIG]
+
+1. Autor markiert eine Textstelle und wählt „in den Kanon".
+2. `ui` schlägt Eintrag und Kategorie vor (Name aus der Markierung, Abgleich über den Index); bei Gast-Figuren Wahl „Kanon der Figur" oder „nur diese Geschichte" (FR-024).
+3. `api` speichert über `canon` bzw. `manuscript`. Ziel: unter 10 Sekunden vom Markieren bis zum Speichern (FR-015).
 
 <!-- ANCHOR:nicht-funktionale-anforderungen -->
 ## 6. Nicht-funktionale Anforderungen
 
-[NFRs tragen ebenfalls Reifegrade, weil Performance- oder Skalierungsannahmen oft erst durch Messung validiert werden.]
+### Performance und Kosten
 
-### Performance
-
-- **Modul [X]:** [Latenz-Ziel, Durchsatz-Ziel, konkrete Werte] `[REIFEGRAD]`
-- **Modul [Y]:** [...] `[REIFEGRAD]`
+- **Token-Budget je Schreib-Anfrage:** Startwert 30.000 Token Eingabe `[VORLÄUFIG]` – festgelegt im Erkundungsschritt zur Modellwahl [TBD in Modus 2 Schritt 6].
+- **Kosten:** Summe aus KI-Verbrauch und Hosting ≤ 50 € je Monat bei regelmäßiger Nutzung (mehrmals pro Woche, je 1–2 Stunden; geschätzt ca. 400 Anfragen im Monat) `[VORLÄUFIG]`. Überschlag: 400 × 30.000 Token = 12 Mio. Token Eingabe; bei 0,50–3 $ je 1 Mio. Token etwa 6–36 $ plus Ausgabe und Kurzfassungen. Messung im Betrieb über die Verbrauchsdaten aus `ai_gateway`.
+- **Reaktionszeit:** erstes KI-Textstück sichtbar innerhalb von 5 Sekunden nach dem Absenden, sofern der Anbieter antwortet `[VORLÄUFIG]`.
+- **Kontexttreue:** kein Kontextverlust bei einer Geschichte vom Umfang der Referenzgeschichte `[OFFEN]` – Prüfung erst, wenn eine Geschichte diesen Umfang erreicht (Entscheidung des Eigentümers 2026-09-26) [TBD in Modus 2 Schritt 6].
+- **Kanon-Treue:** höchstens ein beim Redigieren gefundener Widerspruch pro Kapitel `[OFFEN]` – messbar erst im Schreibbetrieb; Vorprüfung im Erkundungsschritt.
 
 ### Skalierung
 
-- **Horizontal skalierbare Module:** [welche, mit Begründung] `[REIFEGRAD]`
-- **Stateful Module (Skalierung beschränkt):** [welche, wie wird State gehalten] `[REIFEGRAD]`
+- **Horizontal skalierbare Module:** keine – nicht erforderlich (ein Nutzer, Vision Abschnitt 5) `[BELASTBAR]`
+- **Stateful Module:** `storage` (Dateien und Index im Datenverzeichnis); genau eine Server-Instanz `[VORLÄUFIG]`
 
 ### Security
 
-[Angelegt im Sicherheitsgrundriss von Modus 2 (`templates/projektstart.md` Schritt 4a). Vor dem ersten öffentlichen Deployment prüft das Gate in CLAUDE.md Abschnitt 12 diese Rubriken. Backups und Wiederherstellung sind Schutzmechanismen: Beförderung auf `[BELASTBAR]` nur nach erzwungenem Fehlerfall (Abschnitt 0).]
-
-- **Sicherheitsniveau:** [z. B. „OWASP ASVS Level 2, für Authentifizierung und Sessions Level 3", ADR-Referenz] `[REIFEGRAD]`
-- **Bedrohungsmodell:** [für das Gesamtsystem: welche Angriffe werden bedacht, welche bewusst nicht] `[REIFEGRAD]`
-- **Schutzmaßnahmen:** [pro Schicht/Modul]
-- **Sensitive Datenflüsse:** [wo bewegen sich PII, Secrets, kryptographische Schlüssel]
-- **Host:** [Firewall, SSH-Zugang, automatische Updates, weitere Härtung; wie von außen geprüft] `[REIFEGRAD]`
-- **Netz:** [welche Dienste sind von außen erreichbar, welche nur intern; TLS] `[REIFEGRAD]`
-- **Secrets im Betrieb:** [Ablage, wer und was zugreift – auch die KI –, Rotationsweg] `[REIFEGRAD]`
-- **Backups und Wiederherstellung:** [was, wie oft, wohin, verschlüsselt; letzte erprobte Wiederherstellung mit Datum und Ergebnis] `[REIFEGRAD]`
+[TBD nach Modus 2 Schritt 4a – Sicherheitsgrundriss]
 
 ### Observability
 
-- **Logging:** [Format, Level, Aggregation]
-- **Metriken:** [welche werden erfasst, wo]
-- **Tracing:** [falls implementiert: wie]
+- **Logging:** strukturierte Zeilen (Zeit, Endpunkt, Status, Modell, Token, Kosten); keine Inhalte aus Welten oder Manuskripten `[VORLÄUFIG]`
+- **Metriken:** Token-Verbrauch und Kosten je Anfrage und je Monat, einsehbar in der Oberfläche `[VORLÄUFIG]`
+- **Tracing:** nicht vorgesehen
 
 ### Datenschutz
 
-[Falls personenbezogene Daten verarbeitet werden:]
-
-- **Schutzbedarf:** [je Datenkategorie normal / hoch / sehr hoch, z. B. nach dem Standard-Datenschutzmodell; ADR-Referenz] `[REIFEGRAD]` – Obergrenze für alle Maßnahmen (CLAUDE.md Abschnitt 6, „Schutzbedarf ist Obergrenze")
-
-- **Datenkategorien:** [welche Arten von PII]
-- **Speicherort:** [wo liegen die Daten]
-- **Retention:** [wie lange]
-- **Löschung:** [wie wird DSGVO-Art. 17 technisch umgesetzt]
+[TBD nach Modus 2 Schritt 4a – Schutzbedarf]
 
 <!-- ANCHOR:datenmodell -->
 ## 7. Datenmodell
 
-[Grobübersicht der wichtigsten Entitäten und ihrer Beziehungen.
-Details (Spalten, Typen, Indizes) gehören in Migration-Dateien oder ein separates Schema-Dokument,
-nicht hier. Änderungen an `[BELASTBAR]`-Datenmodellen sind freigabepflichtig (CLAUDE.md 4.4).]
+Quelle der Wahrheit sind Markdown-Dateien mit YAML-Kopf; der SQLite-Index ist abgeleitet. Alle Entitäten `[VORLÄUFIG]` seit 2026-09-26.
 
 ```mermaid
 erDiagram
-  User ||--o{ Order : places
-  Order ||--|{ LineItem : contains
+  World ||--o{ CanonEntry : has
+  World ||--o{ Story : has
+  Story ||--o{ Chapter : contains
+  Story ||--o{ GuestLink : "binds entries of other worlds"
+  GuestLink }o--|| CanonEntry : references
+  Story ||--o{ StoryFact : "story-only facts"
+  Story }o--o{ CanonEntry : "controlled characters"
 ```
 
-Reifegrad-Hinweise: pro Entität in Klammern, falls relevant.
+**Ablage (Vorschlag):**
+
+```text
+data/
+  worlds/<welt>/world.md                          Welt-Beschreibung, Regeln
+  worlds/<welt>/canon/<kategorie>/<eintrag>.md    ein Kanon-Eintrag je Datei (Kopf: Name, Aliasse, Felder)
+  worlds/<welt>/stories/<geschichte>/story.md     Form, geführte Figuren, Perspektive, Gast-Verbindungen, Gesamtzusammenfassung
+  worlds/<welt>/stories/<geschichte>/chapters/NN-<titel>.md   Kapiteltext, Kopf mit Kurzfassung
+  worlds/<welt>/stories/<geschichte>/facts.md     nur für diese Geschichte geltende Fakten (FR-024)
+  index.sqlite                                    abgeleiteter Suchindex, jederzeit neu aufbaubar
+```
 
 <!-- ANCHOR:verworfene-alternativen -->
 ## 8. Verworfene Alternativen
 
-[Architekturoptionen, die bewusst nicht gewählt wurden, mit Begründung.
-Verhindert, dass die KI später diese Optionen neu vorschlägt, ohne den Kontext zu kennen.
-Jeder Eintrag verweist auf den entsprechenden ADR in `decisions.md`.]
-
-- **[Verworfene Option]:** [Grund in 1 Satz] – siehe ADR-[Nr.]
+- **Anpassung eines vorhandenen Werkzeugs (The Story Nexus, Story Labyrinth, SillyTavern) als Code-Basis:** fremde Form, Rückbau nötig, die unterscheidenden Funktionen wären ohnehin neu zu bauen – siehe ADR [TBD in Modus 2 Schritt 5]
+- **Obsidian-Plugin statt eigener Web-App:** Empfehlung der KI, vom Eigentümer zugunsten einer eigenen Web-App verworfen – siehe ADR-002
+- **Web-App durchgehend in TypeScript:** eine Sprache, aber schwächeres Ökosystem für KI-Werkzeuge nach Einschätzung des Eigentümers – siehe ADR-002
+- **Svelte statt React:** höheres Fehlerrisiko bei KI-geschriebenem Code nach der Umstellung von Svelte 5 – siehe ADR-002
+- **Mehrere getrennt betriebene Dienste:** kein Nutzen bei einem Nutzer – siehe ADR-003
+- **Nur Datenbank als Speicher / nur Dateien ohne Index:** Datenbank allein widerspricht offenen Formaten; Dateien ohne Index vom Eigentümer zugunsten schnellerer Suche verworfen – siehe ADR-003
+- **Ganzen Verlauf bei jeder Anfrage mitschicken (Ist-Zustand TypingMind):** Kosten und Kontextgrenzen sind der Anlass des Projekts – siehe ADR-003
 
 <!-- ANCHOR:reifegrad-uebersicht -->
-## 9. Reifegrad-Übersicht (Stand vom YYYY-MM-DD)
-
-[Tabelle, die den Gesamtstatus der Architektur auf einen Blick zeigt.
-Wird zu Sessionende aktualisiert, wenn sich Reifegrade geändert haben.]
+## 9. Reifegrad-Übersicht (Stand vom 2026-09-26)
 
 | Bestandteil | Reifegrad | Seit | Validiert durch / wartet auf |
 |---|---|---|---|
-| Modul A | BELASTBAR | YYYY-MM-DD | Implementierung Phase 1 |
-| Schnittstelle X→Y | VORLÄUFIG | YYYY-MM-DD | wartet auf Spike S-3 |
-| NFR Performance Modul Z | OFFEN | YYYY-MM-DD | wartet auf Lasttest in Phase 4 |
+| Architektur-Pattern Modularer Monolith | BELASTBAR | 2026-09-26 | ADR-003 |
+| Kommunikations-Grundmodus synchron + SSE | VORLÄUFIG | 2026-09-26 | Umsetzung |
+| Modul canon | VORLÄUFIG | 2026-09-26 | Umsetzung; Klärung TypingMind-Export |
+| Modul manuscript | VORLÄUFIG | 2026-09-26 | Umsetzung |
+| Modul context | VORLÄUFIG | 2026-09-26 | Erkundungsschritt Modellwahl und Budget |
+| Modul ai_gateway | VORLÄUFIG | 2026-09-26 | Umsetzung; Erkundungsschritt (Ablehnungen) |
+| Modul storage | VORLÄUFIG | 2026-09-26 | Umsetzung; Tempo bei großen Geschichten |
+| Modul api | VORLÄUFIG | 2026-09-26 | Umsetzung; Zugangsschutz nach 4a |
+| Modul ui | VORLÄUFIG | 2026-09-26 | Umsetzung; Smartphone-Test |
+| Alle Schnittstellen (Abschnitt 4) | VORLÄUFIG | 2026-09-26 | Umsetzung |
+| Datenmodell (Abschnitt 7) | VORLÄUFIG | 2026-09-26 | Umsetzung |
+| NFR Token-Budget | VORLÄUFIG | 2026-09-26 | Erkundungsschritt |
+| NFR Kontexttreue Referenzumfang | OFFEN | 2026-09-26 | Geschichte ≥ Referenzumfang |
+| NFR Kanon-Treue | OFFEN | 2026-09-26 | Schreibbetrieb, Vorprüfung im Erkundungsschritt |
+| Security und Datenschutz | OFFEN | 2026-09-26 | Modus 2 Schritt 4a |
 
 <!-- ANCHOR:tooling-inventar -->
 ## 10. Tooling-Inventar
 
-Hilfsskripte (`scripts/`), Build-Skripte (Make-Targets oder Äquivalent), Diagnose-Tools und Setup-Helfer sind Architektur-Bestandteile mit eigenem Reifegrad. Sie werden hier explizit geführt, weil sie das Onboarding und den Betrieb tragen und in den Code-Standards für Anwendungscode (CLAUDE.md Abschnitt 15, Pflichtkategorien 1–6) nicht erfasst sind. Die Pflichten für Hilfsskripte sind in CLAUDE.md Abschnitt 15 unter „Pflichtkategorien für Hilfsskripts" verankert (Pflichten A–H).
-
-### Reifegrad-Skala für Tooling
-
-In Anlehnung an die Architektur-Reifegrade (Abschnitt 0), aber mit eigenen Beförderungs-Kriterien:
-
-- `[ROH]` – Skript existiert, wurde getestet, aber: Voraussetzungs-Header unvollständig, Plattform-Matrix fehlt, oder Idempotenz/Reproduzierbarkeit nicht ausdrücklich. Akzeptabel für frühe Erkundungs- oder Bootstrap-Skripte.
-- `[GEHÄRTET]` – Skript erfüllt die vollständige Pflicht-Liste A–H aus CLAUDE.md Abschnitt 15 (Header mit Zweck-Aussage, Voraussetzungs-Deklaration, Plattform-Matrix-Aussage, Exit-Code-Disziplin, Idempotenz- und Reproduzierbarkeits-Aussage, shellcheck-grün bei Bash). Wird gegen frischen Worktree validiert.
-- `[KRITISCH]` – Skript ist Teil eines automatisierten Pfads (CI, Deploy, Rollback), darf nicht fehlschlagen ohne klare Diagnose. Zusätzlich zu `[GEHÄRTET]`: Unit-Tests (für Python-Skripte) oder bats-Tests (für Bash-Skripte), CI-Integration als eigenständiger Job.
+Hilfsskripte sind Architektur-Bestandteile mit eigenem Reifegrad (Pflichten A–H aus CLAUDE.md Abschnitt 15). Reifegrad-Skala: `[ROH]` → `[GEHÄRTET]` → `[KRITISCH]`, Beförderungsregeln wie in der Vorlage `templates/docs/architecture.md` Abschnitt 10.
 
 ### Inventar
 
-| Skript | Zweck | Reifegrad | Plattform-Matrix (siehe `project-context.md` Abschnitt 3) | Voraussetzungen | Idempotenz |
+| Skript | Zweck | Reifegrad | Plattform-Matrix | Voraussetzungen | Idempotenz |
 |---|---|---|---|---|---|
-| `scripts/<beispiel>.sh` | [Kurzbeschreibung] | `[ROH \| GEHÄRTET \| KRITISCH]` | [z. B. Linux ✓ / macOS ✓ / Windows-Git-Bash ✗ (Grund) / Windows-WSL2 ✓] | [z. B. bash 4+, jq 1.6+, curl] | [idempotent / nicht idempotent + Re-Run-Bedingungen] |
-
-### Beförderungsregel `[ROH]` → `[GEHÄRTET]`
-
-Voraussetzungen:
-
-1. Header-Aussagen vollständig (siehe CLAUDE.md Abschnitt 15, Pflichten A–F).
-2. Mindestens eine erfolgreiche Ausführung auf jeder unterstützten Plattform (oder begründete Plattform-Exklusion in der Plattform-Matrix-Aussage).
-3. Bei Bash: `shellcheck` ohne Warnings (oder explizit unterdrückte Warnings mit Begründungs-Kommentar).
-4. Erfolgreicher Re-Run-Test (entweder idempotent oder Re-Run-Voraussetzungen klar dokumentiert).
-
-Beförderung erfolgt mit Datum und Hinweis im Inventar-Eintrag. Rückstufung erfordert ADR (analog Modul-Reifegrad).
-
-### Beförderungsregel `[GEHÄRTET]` → `[KRITISCH]`
-
-Voraussetzungen zusätzlich zu `[GEHÄRTET]`:
-
-1. Funktions-Tests (bats für Bash, pytest für Python) decken Erfolgs- und mindestens einen Fehlerpfad ab.
-2. CI-Integration als eigenständiger Job mit klarer Diagnose-Ausgabe bei Fehlschlag.
-3. Rollback-Pfad dokumentiert (falls Skript persistente Änderungen vornimmt).
-
----
-
-**Initialisierungshinweis (erste Session nach Projektanlage):**
-
-- **Initiale Reifegrade in Modus 2:** Architektur-Bestandteile, die direkt aus der Vision und der Konzeptphase ableitbar sind, starten als `[VORLÄUFIG]` – nicht als `[BELASTBAR]`. `[BELASTBAR]` setzt Validierung voraus, die in Modus 2 noch nicht stattgefunden hat. Ausnahme: Bestandteile, die durch harte Randbedingungen aus der Vision fixiert sind (z. B. „muss Self-Hosting sein" → Hosting-Pattern `[BELASTBAR]`).
-- **Bestandteile, die in der Konzeptphase bewusst nicht entschieden wurden:** als `[OFFEN]` mit Verweis auf den Erkundungs-Schritt im Fahrplan, der sie klären soll.
-- **Strukturwahl** (ein Dokument vs. Index mit Unterdokumenten) richtet sich nach der Projektgrößen-Klassifikation (Glossar in `CLAUDE.md` Abschnitt 1B, Detail in `templates/projektstart.md` Abschnitt 2.2). Default pro Klasse:
-  - **Klasse K (Klein):** Reduzierte Form – Modul-Karte und Datenfluss können entfallen, Schnittstellenverträge nur wenn nicht-trivial.
-  - **Klasse M (Mittel):** Ein Dokument, alle Abschnitte ausgefüllt.
-  - **Klasse G (Groß):** Ein Hauptdokument, ergänzt um `architecture-<modul>.md` für besonders komplexe Module.
-  - **Klasse V (Verteilt-Groß):** Pflicht-Index, Service-spezifische Dokumente, separates `architecture-integration.md` für übergreifende Verträge.
-- Abschnitt 8 (Verworfene Alternativen) wird im Projektverlauf gefüllt, startet leer.
-- Abschnitt 9 (Reifegrad-Übersicht) startet befüllt mit den initialen Reifegraden aus Modus 2.
-- Klassifikations- und Anpassungsentscheidung in `decisions.md` als ADR-001 festhalten.
+| – | noch keine Skripte (Stand 2026-09-26) | – | – | – | – |
