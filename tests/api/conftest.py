@@ -1,6 +1,7 @@
-"""Fixtures for the ``api`` tests: app on a temporary data directory, cheap scrypt, fake time."""
+"""Fixtures for the ``api`` tests: app on a temporary data directory, cheap scrypt, fake time,
+a fake AI provider."""
 
-from collections.abc import Iterator
+from collections.abc import AsyncIterator, Iterator, Sequence
 from dataclasses import dataclass, field
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -10,6 +11,14 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
+from skriptorium.ai_gateway import (
+    Completed,
+    CompletionRequest,
+    GatewayError,
+    StreamEvent,
+    TextChunk,
+    Usage,
+)
 from skriptorium.api import create_app
 from skriptorium.api.access import PasswordHasher, PwnedUnavailable
 from skriptorium.api.context import Services
@@ -48,6 +57,33 @@ class FakeBreached:
         return password in self.breached
 
 
+@dataclass
+class FakeProvider:
+    """Stands in for the AI provider: streams ``chunks``, then ``Completed`` or ``error``."""
+
+    name: str = "fake"
+    chunks: Sequence[str] = ("Der Nebel ", "hob sich.")
+    error: GatewayError | None = None
+    requests: list[CompletionRequest] = field(default_factory=list)
+    closed: int = 0
+    finished: bool = False
+
+    async def stream(self, request: CompletionRequest) -> AsyncIterator[StreamEvent]:
+        self.requests.append(request)
+        try:
+            for chunk in self.chunks:
+                yield TextChunk(chunk)
+            if self.error is not None:
+                raise self.error
+            yield Completed(Usage(1200, 40, 0.0021), "stop")
+            self.finished = True
+        finally:
+            self.closed += 1
+
+    async def aclose(self) -> None:
+        """Called when the application shuts down."""
+
+
 def cheap_hasher() -> PasswordHasher:
     """scrypt with small cost; the default parameters are tested separately."""
     return PasswordHasher(n=2**10, r=8, p=1)
@@ -64,17 +100,25 @@ def breached() -> FakeBreached:
 
 
 @pytest.fixture
+def provider() -> FakeProvider:
+    return FakeProvider()
+
+
+@pytest.fixture
 def data_dir(tmp_path: Path) -> Path:
     return tmp_path / "data"
 
 
 @pytest.fixture
-def client(data_dir: Path, clock: FakeClock, breached: FakeBreached) -> Iterator[TestClient]:
+def client(
+    data_dir: Path, clock: FakeClock, breached: FakeBreached, provider: FakeProvider
+) -> Iterator[TestClient]:
     app = create_app(
         Settings(data_dir=data_dir, ui_dir=data_dir / "no-ui"),
         hasher=cheap_hasher(),
         breached=breached,
         clock=clock,
+        provider_factory=lambda: provider,
     )
     with TestClient(app, base_url=ORIGIN, headers={"Origin": ORIGIN}) as test_client:
         yield test_client

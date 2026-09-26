@@ -7,6 +7,7 @@ from typing import Annotated, Final
 
 from fastapi import Depends, HTTPException, Request, status
 
+from skriptorium.ai_gateway import ModelProvider
 from skriptorium.api.access import (
     CredentialStore,
     FailureThrottle,
@@ -15,6 +16,7 @@ from skriptorium.api.access import (
     SessionStore,
 )
 from skriptorium.canon import CanonService
+from skriptorium.context import ContextBuilder
 from skriptorium.manuscript import ManuscriptService
 
 SESSION_COOKIE: Final = "__Host-sitzung"
@@ -31,6 +33,9 @@ class Services:
     sessions: SessionStore
     throttle: FailureThrottle
     clock: Callable[[], datetime]
+    context: ContextBuilder
+    # None if no provider is set up (no key); writing then answers 503.
+    provider: ModelProvider | None
 
 
 def services(request: Request) -> Services:
