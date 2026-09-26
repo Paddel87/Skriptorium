@@ -1,11 +1,67 @@
-# Pre-Commit-Konfiguration für Skriptorium (docs/project-context.md Abschnitt 7).
+# Pre-Commit-Konfiguration für Skriptorium (docs/project-context.md Abschnitt 7, ADR-015).
 #
-# Derzeit aktiv: markdownlint-cli2 (Version gepinnt, verifiziert 2026-08-13).
-# TODO(fahrplan-ref: 2.1): Hooks für Python (ruff, ruff-format, mypy, bandit) und
-#   TypeScript (eslint, prettier, tsc, vitest related) aus templates/pre-commit/ ergänzen,
-#   sobald pyproject.toml und package.json existieren; Versionen nach Regel-001 pinnen.
+# Python- und TypeScript-Werkzeuge laufen als lokale Hooks über `uv run` bzw. `npx`:
+# Ihre Versionen stehen damit nur in uv.lock und package-lock.json, nicht doppelt hier.
+# Voraussetzung: `uv sync` und `npm install` sind gelaufen (in Cloud-Sessions erledigt das
+# scripts/session-start.sh). Externe Hook-Repos sind nach Regel-001 gepinnt.
+# Tests laufen nicht vor jedem Commit, sondern in CI (.github/workflows/ci.yml).
+# Vorlagen des Methodik-Sets und Spike-Ergebnisse (Rohdaten der Erkundung) bleiben unverändert.
+exclude: ^(templates|spikes)/
 repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: detect-private-key
+
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.23.2
+    rev: v0.23.3
     hooks:
       - id: markdownlint-cli2
+
+  - repo: local
+    hooks:
+      - id: ruff-check
+        name: ruff check
+        entry: uv run --frozen ruff check --fix --exit-non-zero-on-fix
+        language: system
+        types: [python]
+      - id: ruff-format
+        name: ruff format
+        entry: uv run --frozen ruff format
+        language: system
+        types: [python]
+      - id: mypy
+        name: mypy --strict
+        entry: uv run --frozen mypy --strict src/ tests/
+        language: system
+        types: [python]
+        pass_filenames: false
+      - id: bandit
+        name: bandit
+        entry: uv run --frozen bandit -q -r src/ -c pyproject.toml
+        language: system
+        types: [python]
+        pass_filenames: false
+      - id: eslint
+        name: eslint
+        entry: npx --no-install eslint --max-warnings 0 --report-unused-disable-directives
+        language: system
+        types_or: [javascript, jsx, ts, tsx]
+      - id: prettier
+        name: prettier --check
+        entry: npx --no-install prettier --check --ignore-unknown
+        language: system
+        types_or: [javascript, jsx, ts, tsx, json, css, yaml, html]
+      - id: tsc
+        name: tsc --noEmit
+        entry: npx --no-install tsc --noEmit
+        language: system
+        types_or: [ts, tsx]
+        pass_filenames: false
