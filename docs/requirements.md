@@ -7,7 +7,7 @@
 <!-- ANCHOR:uebersicht -->
 ## 1. Übersicht (Stand vom 2026-09-26)
 
-**Status:** ENTWURF – wartet auf Bestätigung der Anwendungsfälle und Muss-Anforderungen durch den Eigentümer.
+**Status:** bestätigt vom Eigentümer am 2026-09-26 (Modus 2 Schritt 1a abgeschlossen).
 
 | Kennzahl | Wert |
 |---|---|
@@ -122,4 +122,4 @@ Einzige Quelle für Werte ist `docs/architecture.md` Abschnitt 6 (Befüllung in 
 1. ~~**Übernahme von Bestand**~~ – entschieden 2026-09-26: nur Welt-Material (FR-005 Muss), Geschichten beginnen neu (FR-006 verworfen). Folge: Die Erfolgskriterien „kein Kontextverlust" und „günstiger pro Anfrage" (Vision 4) werden an einer Geschichte gleichen Umfangs geprüft, nicht an der übernommenen Referenzgeschichte. Das Welt-Material liegt in TypingMind-Agenten und in Notion vor (Angabe des Eigentümers, 2026-09-26).
 2. ~~**Gesprächs-Einstieg**~~ – geklärt 2026-09-26: gemeint ist keine Nebenunterhaltung, sondern die Hauptarbeitsweise – der Autor führt eine Figur (oft eine neu eingeführte Ich-Figur), die KI Welt und übrige Figuren, Perspektive je Geschichte wechselnd; der Wechsel ist das Manuskript (FR-012, Muss). Abgleich mit Vision 5 und 8: kein Spielbetrieb (keine Würfel, Regeln, Spielleitung) und kein Chat getrennt vom Manuskript – die Abgrenzung bleibt gewahrt.
 3. ~~**Neue Fakten über Gast-Figuren**~~ – entschieden 2026-09-26: Der Autor wählt beim Eintragen je Fakt (FR-024).
-4. **Prioritäten insgesamt:** FR-014 als Soll bestätigt 2026-09-26; Gesamtbestätigung der Liste steht aus.
+4. ~~**Prioritäten insgesamt**~~ – Liste mit allen Prioritäten bestätigt 2026-09-26.
