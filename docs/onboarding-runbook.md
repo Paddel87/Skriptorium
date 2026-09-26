@@ -1,4 +1,6 @@
-# Onboarding Runbook
+# Onboarding-Runbook – Skriptorium
+
+> **Stand 2026-09-26: noch nicht befüllt.** Es gibt noch keinen lauffähigen Code. Befüllung mit Fahrplan-Schritt 2.1 (Entwicklung und Quick Start) und 4.4 (Abschnitt „Notfall"). Bis dahin ist der Inhalt unten die unveränderte Vorlage.
 
 <!-- Vollständige, getestete End-to-End-Anleitung vom Repo-Klon bis zum lauffähigen System.
      Ergänzt die README:

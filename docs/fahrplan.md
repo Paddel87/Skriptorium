@@ -9,7 +9,7 @@
 ## Aktueller Stand
 
 - **Stand vom:** 2026-09-26
-- **Laufende Phase:** keine – Modus 2 (Projektinitialisierung) läuft noch; als Nächstes beginnt Phase 1 „Erkundung: Modelle, Import, Laufzeit"
+- **Laufende Phase:** keine – Modus 2 (Projektinitialisierung) abgeschlossen am 2026-09-26; als Nächstes beginnt Phase 1 „Erkundung: Modelle, Import, Laufzeit"
 - **Phasentyp:** ERKUNDUNG (Phase 1, sobald begonnen)
 - **Aktiver Schritt:** keiner
 - **Nächster Schritt:** 1.1 (Modell-Eignungstest), sobald der Initialisierungs-Commit vorliegt und der Eigentümer einen OpenRouter-Schlüssel mit Ausgabengrenze bereitgestellt hat; 1.2 und 1.3 sind unabhängig davon beginnbar

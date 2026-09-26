@@ -1,4 +1,4 @@
-// Markdown-Lint-Konfiguration für Dev-Templates (S-4, docs/fahrplan.md).
+// Markdown-Lint-Konfiguration für Skriptorium (übernommen aus Dev-Templates; docs/project-context.md Abschnitt 7).
 //
 // Zwei Regeln sind bewusst deaktiviert, aus demselben Grund wie in .prettierignore
 // beschrieben: Diese Dokumente sind handgepflegte, präzise Prosa- und Tabellen-Strukturen,
