@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 2 „Grundgerüst" (bereit; Phase 1 abgeschlossen 2026-09-26, ADR-014: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (2.4 `[ERLEDIGT]` 2026-09-26)
-- **Nächster Schritt:** 2.5 (manuscript – Geschichten und Kapitel)
+- **Aktiver Schritt:** keiner (2.5 `[ERLEDIGT]` 2026-09-26)
+- **Nächster Schritt:** 2.6 (api – HTTP-Schnittstelle mit Anmeldung) – beginnt mit `ENTSCHEIDUNG ERFORDERLICH` (Authentifizierung, Kategorie 6)
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -176,7 +176,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 2.5: manuscript – Geschichten und Kapitel
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-26) – je Form eine Geschichte anlegbar, Romane in Kapitel gegliedert (FR-007); Felder für Figuren-Schreibweise, Kurzfassungen, Gast-Verbindungen und geschichtenbezogene Fakten angelegt; 30 Tests, Coverage `manuscript` 100 %
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.2
 - **Freigabepflichtig:** nein

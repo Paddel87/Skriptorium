@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 20:05 – [REIFEGRAD-WECHSEL] manuscript durch Umsetzung validiert
+
+- Schritt 2.5 erledigt: `ManuscriptService` mit Geschichten (Roman, Kurzgeschichte, Fragment), Kapiteln, Kurzfassungen, Gesamtzusammenfassung, Figuren-Schreibweise (Perspektive, geführte Figuren), Gast-Verbindungen und geschichtenbezogenen Fakten. FR-007 erledigt; FR-012, FR-017, FR-024 haben ihre Felder, Funktion folgt in Phase 3.
+- **Auslegung im Datenmodell:** Kurzgeschichte und Fragment haben genau ein Kapitel (beim Anlegen erzeugt), weil das Datenmodell keine eigene Manuskript-Datei kennt. Verweise auf Kanon-Einträge und die Existenz der Welt prüft `api` (keine Abhängigkeit `manuscript` → `canon` in der Modul-Karte).
+- **Verschiebung zwischen Modulen:** `slugify`/`checked_identifier` von `canon` nach `storage` (additive Erweiterung der `storage`-Exporte; `canon` nutzt sie von dort, Verhalten unverändert, alle Tests grün). Grund: `manuscript` braucht dieselbe Kennungsregel und darf `canon` nicht importieren.
+- **Reibung:** Indexfehler beim Erkennen von Kapiteldateien (Pfad hat 6, nicht 7 Teile) – vom ersten Testlauf gefunden.
+- **Klasse:** 2.5 empfiehlt Routine, lief auf Entscheidung.
+
 ### 2026-09-26 19:40 – [REIFEGRAD-WECHSEL] canon.importers durch Umsetzung validiert
 
 - Schritt 2.4 erledigt: Markdown-Import mit Vorschau und bestätigter Übernahme. Aufteilungsregeln dem Eigentümer gezeigt und bestätigt (Antwortsystem): Überschriften → Einträge, Kategorie aus Gruppen-Überschrift oder Zeile `Kategorie:`, Aliasse aus `Aliasse:`/`Auch genannt:`; doppelte Namen überspringen und anzeigen (je Eintrag überschreibbar); Einleitung an die Weltbeschreibung anhängen.
