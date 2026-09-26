@@ -87,7 +87,7 @@ graph LR
 
 ### Modul: ai_gateway [BELASTBAR]
 
-- **Reifegrad:** `[BELASTBAR]`, seit 2026-09-26, per ADR-013 (Beförderung in Schritt 1.4)
+- **Reifegrad:** `[BELASTBAR]`, seit 2026-09-26, per ADR-013 (Beförderung in Schritt 1.4); durch Umsetzung validiert in 3.1
 - **Verantwortung:** einheitliche Anbieter-Schnittstelle für KI-Anfragen mit Streaming; OpenRouter als erster Adapter; weitere Anbieter als zusätzliche Adapter, ohne bestehende zu ändern (FR-018, FR-025); Erfassung von Token-Verbrauch und Kosten je Anfrage; Modell-Konfiguration je Modell (Reasoning aus oder niedrigste Stufe, weil manche Modelle Reasoning verlangen; ausgeschlossene ausführende Anbieter, z. B. solche mit Training auf Eingaben). Modellreihenfolge: grok-4.7 → grok-4.6 → qwen3.8-max (ADR-010, ADR-011).
 - **Nicht-Verantwortung:** keine Fachlogik, keine Kontext-Auswahl.
 - **Öffentliche Schnittstellen:** `ModelProvider` (Abschnitt 4)
@@ -248,8 +248,8 @@ Angelegt im Sicherheitsgrundriss (Modus 2 Schritt 4a, 2026-09-26). Das System wi
 
 ### Observability
 
-- **Logging:** strukturierte Zeilen (Zeit, Endpunkt, Status, Modell, Token, Kosten); keine Inhalte aus Welten oder Manuskripten `[VORLÄUFIG]`
-- **Metriken:** Token-Verbrauch und Kosten je Anfrage und je Monat, einsehbar in der Oberfläche `[VORLÄUFIG]`
+- **Logging:** strukturierte Zeilen (Zeit, Endpunkt, Status, Modell, Token, Kosten); keine Inhalte aus Welten oder Manuskripten. Je KI-Anfrage genau eine Zeile von `ai_gateway` (Anbieter, Modell, Ergebnis bzw. Fehlerart, Token ein/aus, Kosten, Dauer, Zeit bis zum ersten Textstück) – nie Nachrichtentext, Antworttext oder Schlüssel `[BELASTBAR]` (ADR-021)
+- **Metriken:** Token-Verbrauch und Kosten je Anfrage und je Monat, einsehbar in der Oberfläche `[VORLÄUFIG]` – `ai_gateway` liefert die Verbrauchsdaten je Anfrage zurück; Speicherung und Anzeige entscheidet Schritt 3.9 (ADR-021)
 - **Tracing:** nicht vorgesehen
 
 ### Datenschutz
@@ -309,7 +309,7 @@ data/
 - **Ganzen Verlauf bei jeder Anfrage mitschicken (Ist-Zustand TypingMind):** Kosten und Kontextgrenzen sind der Anlass des Projekts – siehe ADR-003
 
 <!-- ANCHOR:reifegrad-uebersicht -->
-## 9. Reifegrad-Übersicht (Stand vom 2026-09-26, nach Schritt 2.7)
+## 9. Reifegrad-Übersicht (Stand vom 2026-09-26, nach Schritt 3.1)
 
 | Bestandteil | Reifegrad | Seit | Validiert durch / wartet auf |
 |---|---|---|---|
@@ -318,7 +318,7 @@ data/
 | Modul canon | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.3 und 2.4 (61 Tests, 100 %); Markdown-Import (ADR-012) |
 | Modul manuscript | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.5 (30 Tests, 100 %) |
 | Modul context | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.5 |
-| Modul ai_gateway | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.3 |
+| Modul ai_gateway | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.3; durch Umsetzung validiert in 3.1 (49 Tests, 100 %; Sicherheitsprüfung durch getrennte Instanz); echter Anbieter-Aufruf ab 3.3 |
 | Modul storage | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.2 (ADR-016, 59 Tests, 100 %); Tempo bei großen Geschichten beobachten |
 | Modul api | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.6 (ADR-017, ADR-018; Sicherheitsprüfung durch getrennte Instanz, 74 Tests, 99 %) |
 | Modul ui | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.7 (ADR-019; Sicherheitsprüfung durch getrennte Instanz; 32 Komponenten-, 4 End-to-End-Tests, 99 %); Smartphone-Test in 5.2 |
@@ -327,6 +327,8 @@ data/
 | NFR Token-Budget | BELASTBAR | 2026-09-26 | ADR-010, ADR-013 |
 | NFR Reaktionszeit (Anzeige 1 s, erstes Textstück 60 s / 10 s) | BELASTBAR | 2026-09-26 | ADR-013 (Eigentümer) |
 | NFR Kontexttreue Referenzumfang | OFFEN | 2026-09-26 | Schritt D.4 (Geschichte ≥ 500.000 Token) |
+| Observability: Logging | BELASTBAR | 2026-09-26 | ADR-021 |
+| Observability: Metriken (Speicherung) | VORLÄUFIG | 2026-09-26 | Schritt 3.9 (ADR-021) |
 | NFR Kanon-Treue | OFFEN | 2026-09-26 | Schreibbetrieb ab 3.3; Vorprüfung in 1.1 erfolgt (ADR-010) |
 | Sicherheitsniveau ASVS 5.0.0 L1 / Auth L2 | BELASTBAR | 2026-09-26 | ADR-006 |
 | Bedrohungsmodell Gesamtsystem | VORLÄUFIG | 2026-09-26 | Prüfung 4.5, Gate-Schritt 4.6 |

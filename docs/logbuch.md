@@ -29,6 +29,48 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 21:46 – [SESSIONENDE] Phase 2 abgeschlossen, Schritt 3.1 erledigt
+
+- **Dauer:** 20:57–21:46 UTC; Fortsetzung mit 3.1 ab 21:27.
+- **Bearbeitet:** Phasenabschluss 2 (ADR-020, PR #8 gemergt); 3.1 `[ERLEDIGT]` mit ADR-021 (Observability), Sicherheitsprüfung durch getrennte Instanz mit Nachprüfung, zwei optionale Härtungen nach Wahl des Eigentümers.
+- **Erreichter Stand:** `ai_gateway` mit `ModelProvider` und OpenRouter-Adapter; FR-025 erledigt. 273 Python-Tests, gesamt 99,8 %, `ai_gateway` 100 % Zeilen. Kein echter Anbieter-Aufruf (kein Schlüssel in der Umgebung).
+- **Offen:** Pull Request für diesen Branch (Merge nach grüner CI und Zustimmung des Eigentümers). Für 3.3 wird `OPENROUTER_API_KEY` in der Umgebung der Cloud-Session gebraucht.
+- **Nächster Schritt:** neue Session – 3.2 `context` (Kontext-Zusammenstellung unter Token-Budget, kritischer Pfad ≥ 90 %).
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5, eingestellt und bedient laut Sitzungsabfrage 21:43). Schritte oberhalb der Empfehlung: 1 (3.1 empfiehlt Routine; Hinweis vorab). Abgegebene Teilarbeiten: Bewertung Phasenende und Sicherheitsprüfung 3.1 an Unteragenten mit Sonnet 5 (getrennte Instanzen, keine Routine-Abgabe).
+- **Kontextgröße:** 323.754 Token laut Sitzungsabfrage – über der Grenze 200.000 auf ausdrückliche Anweisung „3.1 hier“; kein weiterer Schritt. Sitzungskosten laut Abfrage ca. 11,02 $. Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Voraussetzung `OPENROUTER_API_KEY`, Nächste Schritte). Drift-Prüfung: ADR-021 → 3.1 und 3.9 vorhanden; Modul-Liste unverändert; Reifegrad `ai_gateway` und Observability passen zu ADR-013/ADR-021; Reaktiv-Quote 1/10 über ADR-012..021; Phase 3 unverändert 9 Schritte; Blocker 0; FR-025 → 3.1 erledigt. Ablaufdaten-Register: kein fälliger Vorlauf (Guthaben-Vorlauf ab 2026-10-22). Archivierung: kein Trigger. Onboarding: `.env.example` und README-Voraussetzungen ergänzt, Quick-Start-Befehle unverändert und `OPENROUTER_API_KEY` für Start und Tests nicht nötig (`api` nutzt `ai_gateway` noch nicht) – keine erneute Worktree-Validierung, Begründung hiermit festgehalten.
+
+### 2026-09-26 21:44 – [REIFEGRAD-WECHSEL] ai_gateway durch Umsetzung validiert
+
+- Schritt 3.1 erledigt; `ai_gateway` bleibt `[BELASTBAR]`, jetzt „durch Umsetzung validiert“ – mit der Einschränkung, dass nur simulierte Antworten geprüft sind; der echte Aufruf folgt in 3.3.
+- **Klasse:** 3.1 empfiehlt Routine, lief auf Entscheidung (Hinweis vorab; Beförderung Observability verlangte Entscheidung).
+
+### 2026-09-26 21:42 – [PROBLEM-GELÖST] Reibungen in 3.1
+
+- **`raise … from None` reicht nicht:** Es blendet die Kette nur in der Anzeige aus; `__context__` hält die httpx-Exception samt Request und Authorization-Header weiter fest. Lösung: Fehler außerhalb des `except`-Blocks auslösen; Tests prüfen die ganze Kette (`chained(error) == [error]`).
+- **Test bestand aus falschem Grund:** Der erste Test zur Zeilengrenze schickte die lange Zeile samt Umbruch in einem Stück; sie scheiterte erst am JSON-Parser. Aufgefallen an der ungedeckten Zeile im Coverage-Bericht. Lösung: Prüfung auch für vollständige Zeilen, Test sendet in Stücken und prüft die Fehlermeldung genau.
+- **Kein Plugin für asynchrone Tests:** statt einer neuen Abhängigkeit `asyncio.run` in den Tests.
+- **Ruff:** `S105` bei einer Konstante mit „SECRET“ im Namen (umbenannt), Gedankenstrich in Docstrings (`RUF002`).
+
+### 2026-09-26 21:40 – [SICHERHEITSPRÜFUNG] Getrennte Instanz zu 3.1
+
+- **Instanz:** Unteragent mit eigenem Kontext und anderem Modell (Claude Sonnet 5); nur Code und Tests von `ai_gateway`, Architektur-Abschnitte 4 und 6, ADR-021; eigene Proben gegen httpx-Exceptions.
+- **Befund 1 (mittel):** `raise … from exc` ließ den httpx-Request mit Authorization-Header über die Exception-Kette erreichbar → behoben (`3cb3821`). **Befund 2 (mittel):** JSON-Fehler hielt die rohe Antwortzeile → behoben. **Befund 3 (niedrig-mittel, über dem Niveau):** keine Obergrenze für Zeilen des Ereignisstroms → vom Eigentümer als optional gewählt, umgesetzt (1.000.000 Zeichen). **Befund 4 (niedrig/optional):** Log-Fälschung über Modell- oder Anbieternamen → vom Eigentümer gewählt, umgesetzt (Zeichen bereinigt).
+- **Nachprüfung** durch dieselbe Instanz: alle vier behoben, mit eigenen Proben belegt; keine neuen Befunde. Keine Befunde zu TLS, fester URL, Log-Inhalt, Fehlermeldungen, Retry und Timeouts, `repr`.
+- **Nicht geprüft:** Umgang von `api` mit den Fehlern (kommt mit 3.3), echter Anbieter.
+
+### 2026-09-26 21:30 – [ADR-ANGELEGT] ADR-021 – Beginn 3.1
+
+- Eigentümer (Frage-System): Option A – Log-Zeile je KI-Anfrage `[BELASTBAR]`, Verbrauchsspeicherung in 3.9. Observability/Logging befördert, Metriken bleiben `[VORLÄUFIG]` (Landeplatz 3.9). `[OPERATIV]`, geplant laut Notiz an 3.1; Reaktiv-Quote 1/10.
+- 3.1 `[IN ARBEIT]`. Anfrageform aus dem Spike `spikes/modell-eignungstest/lauf.py`: `reasoning: {"effort": "low"}` für grok-4.7, grok-4.6, qwen3.8-max (Reasoning Pflicht), `usage: {"include": true}`; Anbieter-Ausschluss (StreamLake) nur für deepseek-Modelle nötig – Konfiguration vorgesehen, für die drei Modelle leer.
+- In dieser Umgebung ist kein OpenRouter-Schlüssel gesetzt (nur Vorhandensein geprüft): Adapter wird mit simulierten Antworten (`httpx.MockTransport`) getestet, ein echter Aufruf folgt mit 3.3.
+
+### 2026-09-26 21:27 – [SESSIONSTART] Fortsetzung mit 3.1 auf Anweisung „3.1 hier“
+
+- **Abweichung:** Sessiongröße 239.206 Token über der Grenze 200.000; der Eigentümer hat ausdrücklich „3.1 hier“ angeordnet (`CLAUDE.md` Abschnitt 0, Ausnahme „weiter hier“).
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 21:27) → Entscheidungs-Klasse; 3.1 empfiehlt Routine – Hinweis an den Eigentümer gegeben (Wochenkontingent `allowed_warning`); keine Abgabe ohne Probelauf. Beförderung der Observability (Auslöser 4) verlangte ohnehin die Entscheidungs-Klasse.
+- PR #8 gemergt (`25df654`); Branch `scp/affectionate-euler-piciei` auf `main` vorgespult.
+
 ### 2026-09-26 21:06 – [SESSIONENDE] Phase 2 abgeschlossen
 
 - **Dauer:** 20:57–21:06 UTC.

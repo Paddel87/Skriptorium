@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 3 – Schreiben mit KI (Umsetzung), nächster Schritt 3.1 (Anbieter-Schnittstelle); Phase 2 – Grundgerüst abgeschlossen am 2026-09-26 (ADR-020: weiterbauen)
+- **Projektphase:** Phase 3 – Schreiben mit KI (Umsetzung); 3.1 (Anbieter-Schnittstelle mit OpenRouter) umgesetzt, nächster Schritt 3.2 (Kontext-Zusammenstellung); Phase 2 – Grundgerüst abgeschlossen am 2026-09-26 (ADR-020: weiterbauen)
 - **Version:** v0.0.0 – noch keine veröffentlichte Version
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-09-26
@@ -40,7 +40,7 @@ Stand nach Schritt 2.7: Server mit Anmeldung und Oberfläche für Welten, Kanon,
 - Node.js 24.21.0 LTS mit npm 11.19.0 (nur zum Bauen und Prüfen der Oberfläche)
 - git; für Cloud-Sessions des Coding-Agents richtet `scripts/session-start.sh` alles ein (SessionStart-Hook)
 - Internetzugang zu `api.pwnedpasswords.com` beim Festlegen oder Ändern des Passworts
-- ein OpenRouter-API-Schlüssel – erst ab Phase 3
+- ein OpenRouter-API-Schlüssel in `OPENROUTER_API_KEY` (siehe `.env.example`) – für KI-Anfragen ab Schritt 3.3; Tests laufen ohne Schlüssel
 
 ### Einrichten und starten
 
@@ -87,9 +87,9 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **3.1:** Anbieter-Schnittstelle mit OpenRouter als erstem Anbieter.
 - **3.2:** Kontext-Zusammenstellung unter Token-Budget.
-- **3.3:** Weiterschreiben mit Streaming und Szenen-Einstieg.
+- **3.3:** Weiterschreiben mit Streaming und Szenen-Einstieg – erster echter KI-Aufruf.
+- **3.4:** Figuren-Schreibweise.
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – Startmodell grok-4.7, Zweitmodell grok-4.6.
 

@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -40,12 +40,13 @@ Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 018 | 2026-09-26 | Aktiv | REAKTIV | MODUL, SECURITY | Architektur | Beziehungen api → storage (Zugangsdaten) und api → Pwned Passwords |
 | 019 | 2026-09-26 | Aktiv | OPERATIV | STACK, METHODIK | Externe Abh., Build-Pipeline | Test-Werkzeuge der Oberfläche – Testing Library, jsdom, Playwright |
 | 020 | 2026-09-26 | Aktiv | STRATEGISCH | METHODIK | Pflichtfrage Phasenende | Phasenende 2 – weiterbauen, Abläufe in 3.3 aus den Routen heraushalten |
+| 021 | 2026-09-26 | Aktiv | OPERATIV | MODUL, DATENMODELL | Architektur (Reifegrad) | Observability: Log-Zeile je KI-Anfrage belastbar, Verbrauchsspeicherung in 3.9 |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 1 / 10 (10 %) über ADR-011 bis ADR-020 – ADR-011 bis ADR-014 aus Phase 1 (Erkundung), ADR-015 bis ADR-017 und ADR-019 aus Phase 2 (operativ, geplant in 2.1, 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2; reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
+- **Aktueller Wert:** 1 / 10 (10 %) über ADR-012 bis ADR-021 – ADR-012 bis ADR-014 aus Phase 1 (Erkundung), ADR-015 bis ADR-017 und ADR-019 aus Phase 2 (operativ, geplant in 2.1, 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1); reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -611,6 +612,25 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Vision-Frage, die entschied:** „Soll es jetzt direkt mit dem Schreiben mit KI weitergehen, oder vorher eine Session für vorsorglichen Umbau?" → Antwort des Eigentümers: Empfehlung A.
 - **Konfidenz zum Zeitpunkt:** hoch für „nicht neu aufsetzen" (Prüf-Instanz und bauende KI übereinstimmend); mittel für „Aufteilung von `api` erst in 3.3 reicht" (Wachstum erst an echten Abläufen messbar). Umkehrbarkeit billig (Umbau innerhalb eines Moduls).
 - **Konsequenzen:** Phase 3 beginnt mit Schritt 3.1; keine Umbau- oder Neuaufbau-Schritte. 3.3 trägt die Pflichtnotiz; beim Phasenende 3 wird `api` erneut auf Heuristik 1.4 geprüft.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-021: Observability – Log-Zeile je KI-Anfrage belastbar, Verbrauchsspeicherung in 3.9
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[OPERATIV]` `[MODUL]` `[DATENMODELL]`
+- **Phasentyp-Kontext:** UMSETZUNG (vor Schritt 3.1)
+- **Reifegrad-Wirkung:** Observability/Logging `[VORLÄUFIG]` → `[BELASTBAR]`; Observability/Metriken bleibt `[VORLÄUFIG]` bis 3.9
+- **Kategorie:** Architektur (Beförderung eines Bestandteils, Notiz an 3.1 aus ADR-013); Datenmodell (Verbrauchsspeicherung) bewusst nicht jetzt
+- **Kontext:** `ai_gateway` erfasst ab 3.1 Token und Kosten je Anfrage. Offen war, was davon ins Server-Log geht und ob der Verbrauch schon jetzt dauerhaft gespeichert wird (Monatssumme in der Oberfläche, `docs/architecture.md` Abschnitt 6).
+- **Optionen:** A Logging jetzt festlegen, Speicherung der Verbrauchsdaten in 3.9 entscheiden / B zusätzlich jetzt eine Verbrauchsdatei unter `system/`.
+- **Entscheidung:** A. Je KI-Anfrage schreibt `ai_gateway` genau eine Log-Zeile (Logger `skriptorium.ai_gateway`, Stufe INFO) mit Anbieter, Modell, Ergebnis bzw. Fehlerart, Eingabe- und Ausgabe-Token, Kosten, Gesamtdauer und Zeit bis zum ersten Textstück – nie Nachrichtentext, nie Schlüssel, nie Antworttext des Anbieters. Die Verbrauchsdaten gibt `ai_gateway` an den Aufrufer zurück; wo sie für die Monatssumme gespeichert werden, entscheidet 3.9.
+- **Vision-Frage, die entschied:** „Reicht es, die Kosten bis 3.9 im OpenRouter-Konto und im Server-Log zu sehen, oder soll das Skriptorium jede Anfrage von Anfang an mitzählen?" → Antwort des Eigentümers (Frage-System): A.
+- **Konfidenz zum Zeitpunkt:** hoch – Inhalt folgt aus der Regel „Logs nur mit Metadaten" (`docs/project-context.md` Abschnitt 6); Heuristik 1.1: Speicherung gehört zur Anzeige. Umkehrbarkeit billig (A → B nachrüstbar).
+- **Konsequenzen:** 3.1 ohne Datenmodelländerung; `ai_gateway` bleibt ohne Dateizugriff. Anfragen aus 3.3–3.8 fehlen in der späteren Monatssumme (Testanfragen); 3.9 trägt die Entscheidung zur Speicherung.
 - **Abgeleitete Regel:** keine
 
 ---
