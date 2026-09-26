@@ -11,9 +11,9 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 3 „Schreiben mit KI" (Phase 2 abgeschlossen 2026-09-26, ADR-020: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 3.3 Weiterschreiben mit Streaming und Szenen-Einstieg `[IN ARBEIT]`
+- **Aktiver Schritt:** 3.3 Weiterschreiben mit Streaming und Szenen-Einstieg `[WARTET-AUF-FREIGABE]` – Reaktionszeit-Ziel im Probeschreiben verfehlt, Entscheidung des Eigentümers offen
 - **Nächster Schritt:** nach 3.3: 3.4 Figuren-Schreibweise
-- **Offene STOPP-Situationen:** keine
+- **Offene STOPP-Situationen:** ENTSCHEIDUNG ERFORDERLICH zur Reaktionszeit (NFR, ADR-013) – siehe Logbuch 2026-09-26 22:55
 
 <!-- ANCHOR:phasen-typen -->
 ## Phasen-Typen
@@ -148,7 +148,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 3.3: Weiterschreiben mit Streaming und Szenen-Einstieg
 
-- **Status:** IN ARBEIT (seit 2026-09-26)
+- **Status:** WARTET-AUF-FREIGABE (2026-09-26) – umgesetzt und getestet; FR-008, FR-009, FR-011 im Probeschreiben belegt (`spikes/probeschreiben/README.md`: 0 eindeutige Kanon-Widersprüche je Kapitel); Reaktionszeit verfehlt (grok-4.7 einmal 77 s statt ≤ 60 s, grok-4.6 13,2 s und 15,8 s statt ≤ 10 s) – Entscheidung des Eigentümers offen
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.7, 3.1, 3.2
 - **Freigabepflichtig:** nein
@@ -176,7 +176,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** context, manuscript, ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests
-- **Notizen:** – Zusatz 2026-09-26 (Abnahme 3.2): grok-4.7 schrieb in 1 von 4 Texten Handlung und Rede der vom Autor geführten Ich-Figur trotz Hinweis im Kontext (`spikes/kontext-abnahme/README.md`) – Wortlaut der Figuren-Schreibweise hier schärfen und messen.
+- **Notizen:** – Zusatz 2026-09-26 (Abnahme 3.2): grok-4.7 schrieb in 1 von 4 Texten Handlung und Rede der vom Autor geführten Ich-Figur trotz Hinweis im Kontext (`spikes/kontext-abnahme/README.md`) – Wortlaut der Figuren-Schreibweise hier schärfen und messen. Zusatz 2026-09-26 (Probeschreiben 3.3): 20 Verstöße in 15 KI-Blöcken, darunter wörtliche Rede der Ich-Figur in einem Szenen-Einstieg; Szenen-Einstieg und Kapitelschluss besonders anfällig (`spikes/probeschreiben/README.md`).
 
 #### 3.5: `@`-Menü
 

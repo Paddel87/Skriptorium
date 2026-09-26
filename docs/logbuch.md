@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 22:55 – [BEOBACHTUNG] Probeschreiben 3.3 ausgewertet – Reaktionszeit verfehlt
+
+- 16 echte Anfragen über den echten Server (15 vollständig, 1 Abbruch), 0,556 $; zwei Kapitel der Testwelt, 2 Szenen-Einstiege, je Kapitel eine Änderung, eine Verwerfung mit Neu-Schreiben per grok-4.6 (`spikes/probeschreiben/README.md`).
+- Blinde Bewertung durch getrennte Instanz (Sonnet 5): 0 eindeutige Kanon-Widersprüche in beiden Kapiteln, 2 fragliche (eine vom Autor beim Redigieren korrigiert) → FR-011 und FR-008 erfüllt. Zitate stichprobenartig bestätigt.
+- FR-009 belegt: Autor-Absätze, Änderungen und Verwerfungen bestimmten den Kontext der nächsten Anfrage. Abbruch: Log `ergebnis=abgebrochen`, Manuskript unverändert.
+- **Verfehlt:** erstes Textstück grok-4.7 in 14 von 15 Läufen unter 60 s, einmal 77,1 s (5.271 Ausgabe-Token, überwiegend Vorab-Denken; `ai_gateway` bricht nach 90 s ab); grok-4.6 2 von 2 über 10 s (13,2 s, 15,8 s). Antwortkopf und „denkt nach …“ sofort. → Entscheidung des Eigentümers, 3.3 `[WARTET-AUF-FREIGABE]`.
+- **Nebenbefund 3.4:** 20 Verstöße gegen die Figuren-Schreibweise in 15 Blöcken, darunter wörtliche Rede der Ich-Figur → Notiz an 3.4.
+- **Reibung:** `__Host-`-Cookie ist `Secure`; httpx sendet es über `http://localhost` nicht – Probe-Skript setzt den Cookie-Kopf selbst (Sitzungsdatei vor dem Commit gelöscht). Kapitel-Exporte als `.txt`, weil der Kapiteltext eigene H1-Überschriften trägt (markdownlint MD025). `pkill -f` mit dem Server-Befehl als Muster beendete auch die eigene Shell – Server-Stopp künftig über die Aufgaben-Kennung.
+
 ### 2026-09-26 22:15 – [BEOBACHTUNG] 3.3 vorbereitet – Arbeitsweise per Frage-System entschieden
 
 - **Übernahme:** übernommener KI-Text wird ans Kapitelende angehängt und sofort gespeichert (nicht an der Cursor-Position) – die nächste Fortsetzung knüpft am Ende an.

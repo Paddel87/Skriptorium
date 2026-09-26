@@ -43,4 +43,30 @@ Zeiten vom Absenden bis zum Ereignis, gemessen beim Aufrufer.
 
 ## Bewertung
 
-Folgt (getrennte Instanz, blind gegen den Kanon).
+Getrennte Instanz (Claude Sonnet 5), nur Texte und Kanon-Maßstab (Welt, Kanon, Handlungsstand, bisheriges Kapitel), jeder KI-Block einzeln inklusive verworfener; Zitate stichprobenartig gegen die Dateien bestätigt.
+
+| Block | Kanon-Widersprüche eindeutig / fraglich | Verstöße Figuren-Schreibweise |
+|---|---|---|
+| k4-01 | 0 / 0 | 0 |
+| k4-02 | 0 / 0 | 1 |
+| k4-03 | 0 / 0 | 0 |
+| k4-04 (verworfen) | 0 / 1 | 0 |
+| k4-04b (grok-4.6) | 0 / 0 | 2 |
+| k4-05 | 0 / 0 | 0 |
+| k4-06 | 0 / 0 | 0 |
+| k4-07 | 0 / 0 | 1 |
+| k5-01 Szene | 0 / 0 | 0 |
+| k5-02 (grok-4.6) | 0 / 0 | 0 |
+| k5-03 | 0 / 0 | 3 |
+| k5-04 Szene | 0 / 1 | ca. 4 |
+| k5-05 | 0 / 0 | 0 |
+| k5-06 | 0 / 0 | 5 |
+| k5-07 | 0 / 0 | 4 |
+
+- **FR-011:** 0 eindeutige Widersprüche je Kapitel (Ziel: höchstens 1). Fraglich: Drachs Vorwand „Ich beklage einen Mann …“ (verworfener Block) und Lunds Erinnerung „zwischen den Bänken gesessen“ statt am Mast (Kapitel 3) – letztere vom Autor beim Redigieren korrigiert. Hohe Detailtreue (Jahreszahlen, Tomas trinkt kein Alkohol, Mai schweigt, kein Feuer im Archiv, verlorene Armbrust, Lund einäugig, Sera blind).
+- **FR-008:** Beide Szenen-Einstiege ohne Widerspruch zu Figuren und Ort; Vorgeschichte, Beziehung und Ort erkennbar bekannt (Gunda stellt Wasser statt Wein hin, Lunds Schuld „einmal ohne Strafe“, Sturm aus Kapitel 3).
+- **Nebenbefund für 3.4 (FR-012):** Die KI schreibt Handlung, Gedanken und in k5-04 sogar wörtliche Rede der vom Autor geführten Ich-Figur – 20 Verstöße in 15 Blöcken, in Kapitel 5 zunehmend. Deutlich stärker als in 3.2 (1 von 4 Texten).
+
+## Grenzen
+
+Ein Autor, zwei Kapitel, eine Testwelt; die Autor-Absätze schrieb der Coding-Agent. Die Kanon-Treue im echten Schreibbetrieb des Eigentümers beobachtet die NFR Kanon-Treue weiter.
