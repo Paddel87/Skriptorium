@@ -11,6 +11,8 @@ export default tseslint.config(
       ".venv",
       "spikes",
       "templates",
+      "test-results",
+      "playwright-report",
     ],
   },
   js.configs.recommended,
@@ -24,5 +26,29 @@ export default tseslint.config(
     },
   },
   reactHooks.configs.flat.recommended,
+  {
+    // Threat model (XSS): never render unfiltered HTML (docs/architecture.md section 6).
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "JSXAttribute[name.name='dangerouslySetInnerHTML']",
+          message:
+            "Kein ungefiltertes HTML darstellen (Bedrohungsmodell, XSS).",
+        },
+        {
+          selector:
+            "AssignmentExpression > MemberExpression.left[property.name=/^(innerHTML|outerHTML)$/]",
+          message:
+            "Kein ungefiltertes HTML darstellen (Bedrohungsmodell, XSS).",
+        },
+        {
+          selector: "CallExpression[callee.property.name='insertAdjacentHTML']",
+          message:
+            "Kein ungefiltertes HTML darstellen (Bedrohungsmodell, XSS).",
+        },
+      ],
+    },
+  },
   { files: ["eslint.config.js"], ...tseslint.configs.disableTypeChecked },
 );

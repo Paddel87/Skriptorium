@@ -82,8 +82,11 @@ uv run skriptorium-einrichtung        # zeigt den Code einmal an
 ### Schritt 4: Server starten
 
 ```bash
+npx vite build                                  # Oberfläche nach dist/ui bauen
 uv run uvicorn skriptorium.api:create_app --factory --no-access-log
 ```
+
+Oberfläche unter `http://localhost:8000` (ohne TLS nur über `localhost`, weil das Sitzungs-Cookie `Secure` verlangt). Für die Entwicklung der Oberfläche alternativ `npx vite` (Port 5173, leitet `/api` an Port 8000 weiter; ohne Content-Security-Policy).
 
 Start in unter einer Sekunde; Meldung `Uvicorn running on http://127.0.0.1:8000`. `--no-access-log` schaltet das Zugriffsprotokoll von uvicorn ab, das volle Pfade mit Namen von Welten und Einträgen schreiben würde; das Skriptorium protokolliert selbst nur Methode, Routenmuster, Status und Dauer. Betrieb mit genau einem Prozess (kein `--workers`): Sitzungen und die Sperre nach Fehlversuchen liegen im Speicher. Hinter einem Reverse Proxy muss dieser auf demselben Host laufen, `X-Forwarded-For` setzen und den `Host`-Kopf unverändert weiterreichen; uvicorn wertet Proxy-Kopfzeilen dann standardmäßig nur von `127.0.0.1` aus – `--forwarded-allow-ips` nicht ausweiten (Schritt 4.2).
 
@@ -96,6 +99,7 @@ uv run pytest --cov                            # Python-Tests mit Coverage (Mind
 npx vitest run --coverage                      # Oberflächen-Tests (80 % Zeilen, 70 % Zweige)
 uv run pre-commit run --all-files              # alle Hooks: Markdown, ruff, mypy, bandit, eslint, prettier, tsc
 npx vite build                                 # Oberfläche nach dist/ui bauen
+npx playwright test                            # End-to-End in Chromium (nach dem Build; startet eigenen Server)
 ```
 
 ## 4. Troubleshooting
@@ -123,6 +127,11 @@ npx vite build                                 # Oberfläche nach dist/ui bauen
 - **Ursache:** `pre-commit install` wurde in einem zusätzlichen `git worktree` ausgeführt. Worktrees teilen `.git/hooks`; der Hook zeigt danach auf die venv des Worktrees und bricht, sobald der Worktree entfernt ist.
 - **Lösung:** im Haupt-Checkout erneut `uv run pre-commit install`.
 - **Auftreten:** 2026-09-26 (Onboarding-Validierung in 2.1).
+
+### Symptom: `browserType.launch: Executable doesn't exist` bei `npx playwright test`
+
+- **Ursache:** Playwright 1.62 erwartet Chromium-Revision 1234; die Cloud-Session hat ein älteres Chromium unter `/opt/pw-browsers` vorinstalliert, und Downloads sind dort gesperrt.
+- **Lösung:** `PLAYWRIGHT_CHROMIUM_EXECUTABLE=/opt/pw-browsers/chromium npx playwright test`. Auf anderen Rechnern und in der CI: `npx playwright install chromium`.
 
 ## 5. Plattform-spezifische Hinweise
 

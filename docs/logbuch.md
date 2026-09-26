@@ -29,6 +29,49 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 20:52 – [SESSIONENDE] Schritt 2.7 erledigt, Phasenabschluss 2 offen
+
+- **Dauer:** Fortsetzung 20:10–20:52 UTC (Gesamtsession ab 19:20).
+- **Bearbeitet:** 2.7 `[ERLEDIGT]` mit ADR-019 (Test-Werkzeuge; Nachträge MIT-0/CC0-1.0 nur für Werkzeuge, `@types/node`); Sicherheitsprüfung durch getrennte Instanz, Befund 1 behoben, optionale Härtungen nach Wahl des Eigentümers umgesetzt.
+- **Erreichter Stand:** Alle Schritte von Phase 2 erledigt. 224 Python-Tests, 32 Komponenten-Tests, 4 End-to-End-Tests; Onboarding gegen frischen Worktree validiert (vor den letzten Härtungen; Quick Start seitdem unverändert).
+- **Offen:** Pull Request für 2.7 – Merge nach grüner CI (inkl. neuem Job End-to-End) und Zustimmung des Eigentümers. Phasenabschluss 2.
+- **Nächster Schritt:** neue Session – Phasenabschluss 2: getrennte Instanz bewertet „weiterbauen / gezielt umbauen / neu aufsetzen“, Stellungnahme, `ENTSCHEIDUNG ERFORDERLICH`, ADR; Vision-Re-Derivations-Pass gegen `docs/vision.md` und `docs/requirements.md`; Onboarding-Re-Validation (Trigger 3); danach Archivierung von Phase 2 und Logbuch-Verdichtung. Der Archivierungs-Trigger „Phase vollständig erledigt“ wird damit bewusst bis zum formalen Phasenabschluss verschoben – Landeplatz: dieser nächste Schritt.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5, eingestellt und bedient laut Sitzungsabfrage 20:51). Schritte oberhalb der Empfehlung: 1 (2.7 empfiehlt Routine; Hinweis vorab). Abgegebene Teilarbeiten: Sicherheitsprüfung an Unteragenten mit Sonnet 5 (getrennte Instanz, keine Routine-Abgabe).
+- **Kontextgröße:** 499.835 Token laut Sitzungsabfrage – über der Grenze 200.000 auf ausdrückliche Anweisung „weiter 2.7“. Sitzungskosten laut Abfrage ca. 23,11 $ (Gesamtsession). Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Quick Start, Verwendung, Nächste Schritte); Drift-Prüfung: ADR-019 → 2.7 vorhanden; Modul-Liste unverändert; Reifegrad `ui` passt zu ADR-019 und Umsetzung; Reaktiv-Quote 1/10 über ADR-010..019; Phase 2 weiterhin 7 Schritte; Blocker 0; Anforderungen FR-002/005/007/016 unverändert erledigt. Ablaufdaten-Register: jsdom 30 ergänzt, kein fälliger Vorlauf (Guthaben-Vorlauf ab 2026-10-22). Archivierung: Logbuch unter 800 Zeilen; Phasen-Archiv siehe „Nächster Schritt“. project-context unter 600 Zeilen.
+
+### 2026-09-26 20:48 – [SICHERHEITSPRÜFUNG] Getrennte Instanz zu 2.7
+
+- **Instanz:** Unteragent mit eigenem Kontext und anderem Modell (Claude Sonnet 5); nur Diff (Oberfläche, Tests, Konfiguration, CI), Bedrohungsmodell, ADR-017, ASVS-Originalkapitel. Führte Komponenten-, Build- und End-to-End-Tests selbst aus.
+- **Befund 1 (niedrig):** Endet die Sitzung während der Arbeit, schlug Speichern nur mit einer Fehlzeile fehl → behoben in `aad8728` (Anmeldung über der offenen Ansicht, ungespeicherter Text bleibt; Test).
+- **Hinweise 2–6:** 2 (erneute Anmeldung vor Sitzungsübersicht, ASVS 7.5.2) – Auslegungsfrage, ADR-017 behandelt die bestehende Sitzung als Faktor; keine Änderung. 3–5 über dem Niveau, vom Eigentümer als optional gewählt und umgesetzt: `base-uri 'none'`; ESLint-Regel auch für `innerHTML`, `outerHTML`, `insertAdjacentHTML` (mit Probedatei belegt, 2 Treffer); E2E-Testpasswort über die Umgebung. `frame-ancestors` nur per HTTP-Kopf → Notiz in 4.2. 6 (Chromium-Download im CI-Job) – zur Kenntnis, offizielle Quelle, keine neuen Rechte.
+- Keine Befunde zu XSS, Passwortfeldern (6.2.6, 6.2.7), Speicherung von Zugangsdaten im Browser, Cookie-Zugriff aus JavaScript, Abmelden auf jeder Seite (7.4.4), fremden Anfragen.
+
+### 2026-09-26 20:50 – [REIFEGRAD-WECHSEL] ui durch Umsetzung validiert
+
+- Schritt 2.7 erledigt; `ui` bleibt `[BELASTBAR]`, jetzt „durch Umsetzung validiert“. Kommunikation HTTP/JSON zwischen `ui` und `api` durch End-to-End-Tests belegt.
+- Alle Schritte von Phase 2 erledigt; der Phasenabschluss (Vision-Abgleich, Pflichtfrage mit getrennter Instanz, ADR, Archivierung, Logbuch-Verdichtung) folgt in einer neuen Session – bewusst nicht hier, weil die Session weit über der Kontextgrenze liegt und die Bewertung eine eigene Instanz verlangt.
+- **Klasse:** 2.7 empfiehlt Routine, lief auf Entscheidung (Hinweis an den Eigentümer vorab).
+
+### 2026-09-26 20:42 – [PROBLEM-GELÖST] Reibungen in 2.7
+
+- **Bündelgröße:** Das erste Bündel war 706 kB (Vite-Warnung, Quelle ohne Schalter). Ursache: `@codemirror/lang-markdown` bringt HTML-, CSS- und JavaScript-Hervorhebung mit. Lösung: Editor per `lazy()` nachladen – Hauptbündel 213 kB, Editor 493 kB, keine Warnung.
+- **CSP-Probe mit `eval`:** `page.evaluate` läuft über die DevTools-Schnittstelle, für die das eval-Verbot nicht greift; die Probe meldete fälschlich „erlaubt“. Ersetzt durch ein eingeschleustes Inline-Skript: läuft nicht, der Browser meldet `script-src-elem`.
+- **ESLint `react-hooks/set-state-in-effect`** auch für eine async-Funktion mit `setState` nach `await` → Sitzungsprüfung als Promise mit Callbacks.
+- **`FormEvent` ist in @types/react 19.2 abgekündigt** → `SyntheticEvent`.
+- **Playwright 1.62 und vorinstalliertes Chromium (Revision 1194 statt 1234):** lokal über `PLAYWRIGHT_CHROMIUM_EXECUTABLE`; Runbook-Troubleshooting ergänzt.
+- **Nachträge mit Freigabe:** Lizenzen MIT-0 und CC0-1.0 nur für Werkzeuge; `@types/node` 24.19.0 für die Typprüfung der E2E-Dateien (beide ADR-019).
+
+### 2026-09-26 20:20 – [ADR-ANGELEGT] ADR-019
+
+- Test-Werkzeuge der Oberfläche: jsdom 29.1.1, Testing Library, Playwright 1.62.1; neuer CI-Job End-to-End. Freigabe des Eigentümers per Antwortsystem (Option A). `[OPERATIV]`; Reaktiv-Quote 1/10.
+
+### 2026-09-26 20:10 – [SESSIONSTART] Fortsetzung mit 2.7 auf Anweisung „weiter 2.7“
+
+- **Abweichung:** Sessiongröße 379.453 Token über der Grenze 200.000; der Eigentümer hat ausdrücklich „weiter 2.7“ angeordnet (`CLAUDE.md` Abschnitt 0, Ausnahme „weiter hier“).
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 20:04) → Entscheidungs-Klasse; 2.7 empfiehlt Routine – Hinweis an den Eigentümer vorab (Wochenkontingent im Warnbereich); keine Abgabe ohne Probelauf.
+- PR #6 gemergt (`a5e1f8f`); Branch `claude/neue-session-2-6-tt13wa` neu von `main` aufgesetzt.
+
 ### 2026-09-26 20:05 – [SESSIONENDE] Schritt 2.6 erledigt
 
 - **Dauer:** 19:20–20:05 UTC.

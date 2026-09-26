@@ -117,6 +117,7 @@ graph LR
 - **Verantwortung:** React-Oberfläche: Welt wählen, Einstieg (Szene, Manuskript), Editor mit `@`-Menü, Übernahme markierter Textstellen in den Kanon mit Zielwahl (FR-015, FR-024), Kanon-Pflege, Modellwahl; bedienbar auf dem Smartphone (FR-019).
 - **Abhängigkeiten:** nur `api` über HTTP.
 - **Technologie:** TypeScript, React, Vite, CodeMirror 6.
+- **Umgesetzt in 2.7 (2026-09-26):** Anmeldung, Einrichtung mit Code, Passwortwechsel mit Namensnennung Pwned Passwords, Sitzungsübersicht, Abmelden auf jeder Seite (ADR-017); Welten, Kanon-Einträge je Kategorie, Markdown-Import mit Vorschau, Geschichten und Kapitel mit CodeMirror-Editor (Markdown-Quelltext, keine HTML-Darstellung; Editor wird nachgeladen). Navigation ohne Router-Bibliothek. Content-Security-Policy als Meta-Tag im gebauten `index.html` (`script-src 'self'`, `object-src 'none'`, `base-uri 'none'`, `form-action 'self'`; `style-src` mit `'unsafe-inline'` für CodeMirror; `frame-ancestors` nur per HTTP-Kopf, Schritt 4.2). Endet die Sitzung während der Arbeit, erscheint die Anmeldung über der offenen Ansicht, ungespeicherter Text bleibt stehen. `@`-Menü, Modellwahl und Übernahme in den Kanon folgen in Phase 3.
 
 <!-- ANCHOR:schnittstellenvertraege -->
 ## 4. Schnittstellenverträge
@@ -308,19 +309,19 @@ data/
 - **Ganzen Verlauf bei jeder Anfrage mitschicken (Ist-Zustand TypingMind):** Kosten und Kontextgrenzen sind der Anlass des Projekts – siehe ADR-003
 
 <!-- ANCHOR:reifegrad-uebersicht -->
-## 9. Reifegrad-Übersicht (Stand vom 2026-09-26, nach Schritt 2.6)
+## 9. Reifegrad-Übersicht (Stand vom 2026-09-26, nach Schritt 2.7)
 
 | Bestandteil | Reifegrad | Seit | Validiert durch / wartet auf |
 |---|---|---|---|
 | Architektur-Pattern Modularer Monolith | BELASTBAR | 2026-09-26 | ADR-003 |
-| Kommunikations-Grundmodus synchron + SSE | BELASTBAR | 2026-09-26 | ADR-013 (httpx-Streaming 1.3) |
+| Kommunikations-Grundmodus synchron + SSE | BELASTBAR | 2026-09-26 | ADR-013 (httpx-Streaming 1.3); HTTP/JSON zwischen ui und api durch Umsetzung validiert in 2.6/2.7 (End-to-End-Tests) |
 | Modul canon | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.3 und 2.4 (61 Tests, 100 %); Markdown-Import (ADR-012) |
 | Modul manuscript | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.5 (30 Tests, 100 %) |
 | Modul context | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.5 |
 | Modul ai_gateway | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.3 |
 | Modul storage | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.2 (ADR-016, 59 Tests, 100 %); Tempo bei großen Geschichten beobachten |
 | Modul api | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.6 (ADR-017, ADR-018; Sicherheitsprüfung durch getrennte Instanz, 74 Tests, 99 %) |
-| Modul ui | BELASTBAR | 2026-09-26 | ADR-013; Smartphone-Test in 5.2 |
+| Modul ui | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.7 (ADR-019; Sicherheitsprüfung durch getrennte Instanz; 32 Komponenten-, 4 End-to-End-Tests, 99 %); Smartphone-Test in 5.2 |
 | Alle Schnittstellen (Abschnitt 4) | BELASTBAR | 2026-09-26 | ADR-013 (Grobverträge) |
 | Datenmodell (Abschnitt 7) | BELASTBAR | 2026-09-26 | ADR-013 (Kopffelder an Testwelt erprobt) |
 | NFR Token-Budget | BELASTBAR | 2026-09-26 | ADR-010, ADR-013 |

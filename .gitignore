@@ -17,3 +17,5 @@ coverage/
 
 # Default data directory of a local server (SKRIPTORIUM_DATA_DIR)
 /data/
+test-results/
+playwright-report/

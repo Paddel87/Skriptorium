@@ -9,10 +9,10 @@
 ## Aktueller Stand
 
 - **Stand vom:** 2026-09-26
-- **Laufende Phase:** Phase 2 „Grundgerüst" – 2.1 bis 2.6 erledigt (2026-09-26), offen 2.7
+- **Laufende Phase:** Phase 2 „Grundgerüst" – alle Schritte 2.1 bis 2.7 erledigt (2026-09-26); Phasenabschluss offen: Vision-Abgleich und Pflichtfrage „Weiterbauen, umbauen oder neu aufsetzen“ (CLAUDE.md Abschnitt 12), danach Archivierung der Phase
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (2.6 `[ERLEDIGT]` 2026-09-26)
-- **Nächster Schritt:** 2.7 (ui – Editor und Kanon-Pflege, inkl. Anmeldung, Einrichtung, Passwort, Sitzungsübersicht nach ADR-017)
+- **Aktiver Schritt:** keiner (2.7 `[ERLEDIGT]` 2026-09-26)
+- **Nächster Schritt:** Phasenabschluss 2 in neuer Session: Bewertung durch getrennte Instanz (weiterbauen / gezielt umbauen / neu aufsetzen), Stellungnahme, `ENTSCHEIDUNG ERFORDERLICH` an den Eigentümer, ADR; Vision-Re-Derivations-Pass; Onboarding-Re-Validation (Trigger 3). Erst danach 3.1.
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -208,7 +208,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 2.7: ui – Editor und Kanon-Pflege
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-26; ADR-019) – Abläufe aus 2.3–2.5 über die Oberfläche durchführbar: 32 Komponenten-Tests (Coverage 99 % Zeilen, 96 % Zweige) und 4 End-to-End-Tests in Chromium gegen den echten Server; ESLint ohne Warnungen; Darstellung ohne ungefiltertes HTML (ESLint-Regel), CSP im gebauten `index.html` (per Browser-Probe wirksam); Sicherheitsprüfung durch getrennte Instanz (Logbuch 20:48); Onboarding gegen frischen Worktree validiert
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.6
 - **Freigabepflichtig:** nein
@@ -422,7 +422,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** keine (Betrieb)
 - **Reifegrad-Wirkung:** Host und Netz → `[BELASTBAR]`
 - **Artefakte:** ADR zu Anbieter und Betrieb; `docs/architecture.md` Abschnitt 6; `docs/project-context.md` Abschnitt 8
-- **Notizen:** Zusatz 2026-09-26 (Sicherheitsprüfung 2.6, Befunde 3, 5, 7): Reverse Proxy auf demselben Host, der `X-Forwarded-For` setzt und den `Host`-Kopf unverändert weiterreicht; uvicorn mit genau einem Prozess (kein `--workers`, kein `--reload`), `--no-access-log` und ohne Ausweitung von `--forwarded-allow-ips` über `127.0.0.1` hinaus – sonst teilen sich alle Besucher eine Fehlversuchs-Sperre oder können sie mit erfundenen Adressen umgehen. Wirkung von außen prüfen: Fehlversuche von einer Adresse sperren eine zweite nicht; ein mitgeschicktes `X-Forwarded-For` ändert die gesehene Adresse nicht.
+- **Notizen:** Zusatz 2026-09-26 (Sicherheitsprüfung 2.6, Befunde 3, 5, 7): Reverse Proxy auf demselben Host, der `X-Forwarded-For` setzt und den `Host`-Kopf unverändert weiterreicht; uvicorn mit genau einem Prozess (kein `--workers`, kein `--reload`), `--no-access-log` und ohne Ausweitung von `--forwarded-allow-ips` über `127.0.0.1` hinaus – sonst teilen sich alle Besucher eine Fehlversuchs-Sperre oder können sie mit erfundenen Adressen umgehen. Wirkung von außen prüfen: Fehlversuche von einer Adresse sperren eine zweite nicht; ein mitgeschicktes `X-Forwarded-For` ändert die gesehene Adresse nicht. Zusatz 2026-09-26 (Sicherheitsprüfung 2.7, optional vom Eigentümer gewählt): Reverse Proxy setzt `Content-Security-Policy: frame-ancestors 'none'` als HTTP-Kopf (per Meta-Tag nicht möglich); von außen prüfen, dass die Seite sich nicht in einen fremden Rahmen einbetten lässt.
 
 #### 4.3: Backups mit erprobter Wiederherstellung
 
@@ -656,7 +656,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Betroffene Module:** ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** ADR oder Register-Eintrag
-- **Notizen:** Zusatz 2026-09-26 (ADR-015): vitest 5 mitprüfen – mindestreif erst ab 2027-03-03; ist das bei D.2 noch nicht erreicht, eigenes Nachprüf-Datum im Register setzen. Kompatibilität typescript-eslint mit TypeScript 7 prüfen (8.70.1 verlangt `typescript <6.1.0`).
+- **Notizen:** Zusatz 2026-09-26 (ADR-015): vitest 5 mitprüfen – mindestreif erst ab 2027-03-03; ist das bei D.2 noch nicht erreicht, eigenes Nachprüf-Datum im Register setzen. Kompatibilität typescript-eslint mit TypeScript 7 prüfen (8.70.1 verlangt `typescript <6.1.0`). Zusatz 2026-09-26 (ADR-019): jsdom 30 ab 2027-01-27 mindestreif – mit prüfen.
 
 #### D.3: Nachprüfung httpx
 
