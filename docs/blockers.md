@@ -1,7 +1,8 @@
-# Blockers – Dev-Templates
+# Blockers – Skriptorium
 
-<!-- Arbeitsdokument von Dev-Templates selbst (Selbstanwendung, ADR-001).
-     Die Vorlage für Ziel-Projekte liegt unter templates/docs/blockers.md. -->
+<!-- Ungelöste Probleme und gescheiterte Ansätze.
+     Wird befüllt, wenn ein Arbeitsschritt nach drei Versuchen nicht gelöst werden konnte
+     (CLAUDE.md Abschnitt 10). Gelöste Einträge wandern in den Archiv-Abschnitt. -->
 
 <!-- ANCHOR:blocker-erkennung -->
 ## Blocker-Erkennung (vor dem Dreifach-Versuch)
@@ -10,24 +11,24 @@ Ein Problem ist **sofort** als Blocker zu behandeln, ohne drei Versuche abzuwart
 
 1. **Informationslücke:** Eine für die Lösung nötige Angabe fehlt in allen Pflicht-Dokumenten.
 2. **Widerspruch:** Zwei Dokumente geben unvereinbare Vorgaben und kein ADR löst den Konflikt auf.
-3. **Fremde Modulgrenze:** Die Lösung würde Änderungen in einem Bestandteil erfordern, der nicht Teil des aktuellen Fahrplan-Schritts ist.
-4. **Freigabebedarf:** Die Lösung fällt in eine Kategorie aus `CLAUDE.md` Abschnitt 4.
-5. **Nicht-deterministisches Verhalten:** Das Problem tritt nicht reproduzierbar auf.
+3. **Fremde Modulgrenze:** Die Lösung würde Änderungen in einem Modul erfordern, das nicht Teil des aktuellen Fahrplan-Schritts ist.
+4. **Freigabebedarf:** Die Lösung fällt in eine Kategorie aus CLAUDE.md Abschnitt 4.
+5. **Nicht-deterministisches Verhalten:** Das Problem tritt nicht reproduzierbar auf. Nicht-Reproduzierbarkeit ist selbst ein Blocker, keine akzeptierte Eigenschaft.
 
-Für alle anderen Fälle gilt die Dreifach-Regel aus `CLAUDE.md` Abschnitt 10.
+In diesen Fällen: direkt Eintrag hier anlegen, ohne Dreifach-Versuch.
+
+Für alle anderen Fälle gilt die Dreifach-Regel aus CLAUDE.md Abschnitt 10.
 
 ---
 
 <!-- ANCHOR:aktive-blocker -->
 ## Aktive Blocker
 
-Keine aktiven Blocker.
-
-Die drei offenen Punkte aus `docs/project-context.md` Abschnitt 11 (Lizenz, Markdown-Linter, CI-Pipeline) sind **keine Blocker**: Sie hindern keinen Fahrplan-Schritt an der Fortsetzung, sondern sind selbst als Schritte S-4 bis S-6 geführt. Sie werden hier bewusst nicht dupliziert.
-
----
+Keine aktiven Blocker (Stand 2026-09-26). Die Härtung in Modus 2 Schritt 3 fand drei Befunde; alle wurden in Modus 2 aufgelöst und haben Fahrplan-Schritte als Landeplatz (siehe `docs/decisions.md` und `docs/fahrplan.md`).
 
 <!-- ANCHOR:geloeste-blocker -->
 ## Gelöste Blocker
 
-Noch keine.
+Nach Auflösung hierher verschieben. Ergänzungen: „Lösungsdatum", „Lösung", „ADR-Referenz falls zutreffend". Bei hoher Anzahl: nach `docs/archiv/blockers-YYYY.md` auslagern.
+
+Keine.

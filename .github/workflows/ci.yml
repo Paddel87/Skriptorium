@@ -1,7 +1,11 @@
-# CI fuer Dev-Templates selbst (S-5, docs/fahrplan.md, ADR-003).
-# Klasse K: ein Job, fuehrt denselben pre-commit-Hook aus wie lokal (.pre-commit-config.yaml,
-# ADR-002). Zweite, unabhaengige Diagnoseschicht zusaetzlich zu den lokalen Hooks - ersetzt sie
-# nicht. Aktionsversionen live gegen GitHub-Releases verifiziert (2026-08-13), nicht auf latest.
+# CI für Skriptorium (Klasse M, docs/project-context.md Abschnitt 7).
+# Zweite, unabhängige Diagnoseschicht zusätzlich zu den lokalen Hooks - ersetzt sie nicht.
+# Angelegt in Modus 2 Schritt 10 aus templates/github-workflows/ci-python.yml und
+# ci-typescript.yml. Die Python- und TypeScript-Gates greifen automatisch, sobald
+# pyproject.toml bzw. package.json existieren; bis dahin melden sie „übersprungen".
+# TODO(fahrplan-ref: 2.1): Entwicklungswerkzeuge pinnen (pyproject.toml, package.json),
+#   Action-Versionen nach Regel-001 nachprüfen, Gates als Merge-Block aktivieren.
+# Versionen: docs/project-context.md Abschnitt 3 (verifiziert 2026-09-26).
 
 name: CI
 
@@ -11,15 +15,82 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  PYTHON_VERSION: "3.14.7"
+  UV_VERSION: "0.12.19"
+  NODE_VERSION: "24.21.0"
+
 jobs:
-  lint:
+  markdown:
     name: Markdown-Lint (pre-commit)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.1
-
       - uses: actions/setup-python@v7.0.0
         with:
-          python-version: "3.12"
-
+          python-version: ${{ env.PYTHON_VERSION }}
       - uses: pre-commit/action@v3.0.1
+
+  python:
+    name: Python – Lint, Format, Typen, Sicherheit, Audit, Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - id: detect
+        run: |
+          if [ -f pyproject.toml ]; then echo "present=true" >> "$GITHUB_OUTPUT"; else echo "present=false" >> "$GITHUB_OUTPUT"; echo "pyproject.toml fehlt – Python-Gates übersprungen (Fahrplan 2.1)"; fi
+      - if: steps.detect.outputs.present == 'true'
+        uses: actions/setup-python@v7.0.0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - if: steps.detect.outputs.present == 'true'
+        run: pip install "uv==${UV_VERSION}" && uv sync --frozen
+      - if: steps.detect.outputs.present == 'true'
+        name: Lint
+        run: uv run ruff check .
+      - if: steps.detect.outputs.present == 'true'
+        name: Format-Check
+        run: uv run ruff format --check .
+      - if: steps.detect.outputs.present == 'true'
+        name: Type-Check
+        run: uv run mypy --strict src/
+      - if: steps.detect.outputs.present == 'true'
+        name: Security-Scan
+        run: uv run bandit -r src/ -c pyproject.toml
+      - if: steps.detect.outputs.present == 'true'
+        name: Dependency-Audit
+        run: uv run pip-audit
+      - if: steps.detect.outputs.present == 'true'
+        name: Tests mit Coverage (80 % global; Kanon und Kontext 90 %, Prüfung in 2.1 einrichten)
+        run: uv run pytest --cov=src --cov-report=term --cov-fail-under=80
+
+  typescript:
+    name: TypeScript – Lint, Format, Typen, Audit, Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - id: detect
+        run: |
+          if [ -f package.json ]; then echo "present=true" >> "$GITHUB_OUTPUT"; else echo "present=false" >> "$GITHUB_OUTPUT"; echo "package.json fehlt – TypeScript-Gates übersprungen (Fahrplan 2.1)"; fi
+      - if: steps.detect.outputs.present == 'true'
+        uses: actions/setup-node@v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - if: steps.detect.outputs.present == 'true'
+        run: npm ci
+      - if: steps.detect.outputs.present == 'true'
+        name: Lint
+        run: npx eslint . --max-warnings 0 --report-unused-disable-directives
+      - if: steps.detect.outputs.present == 'true'
+        name: Format-Check
+        run: npx prettier --check .
+      - if: steps.detect.outputs.present == 'true'
+        name: Type-Check
+        run: npx tsc --noEmit
+      - if: steps.detect.outputs.present == 'true'
+        name: Dependency-Audit
+        run: npm audit --audit-level=high
+      - if: steps.detect.outputs.present == 'true'
+        name: Tests mit Coverage
+        run: npx vitest run --coverage

@@ -87,11 +87,11 @@ Dieses Dokument ist Eingang in die Konzeptphase, nicht ihr Ergebnis. Es ersetzt 
 **Überführungs-Status:**
 
 - [x] Vision ausgefüllt (Konzeptdialog 2026-09-26)
-- [ ] Konzeptphase abgeschlossen (Lücken geschlossen, Optionen entschieden)
-- [ ] Härtungsphase abgeschlossen (Blocker und Inkonsistenzen geprüft)
-- [ ] Vorlagen-Set initialisiert (project-context.md, architecture.md, fahrplan.md, decisions.md, blockers.md)
-- [ ] ADR-001 angelegt: Anpassung des Vorlagen-Sets
-- [ ] Datum der Initialisierungs-Abschluss: [YYYY-MM-DD]
+- [x] Konzeptphase abgeschlossen (Lücken geschlossen, Optionen entschieden)
+- [x] Härtungsphase abgeschlossen (Blocker und Inkonsistenzen geprüft)
+- [x] Vorlagen-Set initialisiert (project-context.md, architecture.md, fahrplan.md, decisions.md, blockers.md)
+- [x] ADR-001 angelegt: Anpassung des Vorlagen-Sets
+- [x] Datum der Initialisierungs-Abschluss: 2026-09-26
 
 **Nach abgeschlossener Initialisierung:** Diese Datei wird nicht mehr verändert.
 Spätere Vision-Erweiterungen oder Pivots werden in einem ADR dokumentiert, nicht in dieser Datei.
