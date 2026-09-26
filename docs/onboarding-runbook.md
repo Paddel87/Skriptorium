@@ -71,20 +71,27 @@ uv run pre-commit install
 
 ### Schritt 3: Konfiguration
 
-Keine – bis Phase 3 braucht der Server weder Umgebungsvariablen noch Secrets. Den OpenRouter-Schlüssel führt Phase 3 ein (dann mit `.env.example`).
+Einzige Variable bis Phase 3: `SKRIPTORIUM_DATA_DIR` (Datenverzeichnis, Standard `./data`), siehe `.env.example`. Der OpenRouter-Schlüssel kommt in Phase 3 dazu.
+
+Passwort einrichten (ADR-017): Der Befehl erzeugt einen Einrichtungscode, der 24 Stunden und nur einmal gilt; gespeichert wird nur sein Hash in `system/zugang.md`. Mit dem Code wird das Passwort festgelegt (mindestens 15 Zeichen; geprüft gegen Pwned Passwords von Have I Been Pwned, Daten unter CC BY 4.0). Derselbe Weg hilft bei vergessenem Passwort.
+
+```bash
+uv run skriptorium-einrichtung        # zeigt den Code einmal an
+```
 
 ### Schritt 4: Server starten
 
 ```bash
-uv run uvicorn skriptorium.api:create_app --factory
+uv run uvicorn skriptorium.api:create_app --factory --no-access-log
 ```
 
-Start in unter einer Sekunde; Meldung `Uvicorn running on http://127.0.0.1:8000`.
+Start in unter einer Sekunde; Meldung `Uvicorn running on http://127.0.0.1:8000`. `--no-access-log` schaltet das Zugriffsprotokoll von uvicorn ab, das volle Pfade mit Namen von Welten und Einträgen schreiben würde; das Skriptorium protokolliert selbst nur Methode, Routenmuster, Status und Dauer. Betrieb mit genau einem Prozess (kein `--workers`): Sitzungen und die Sperre nach Fehlversuchen liegen im Speicher. Hinter einem Reverse Proxy muss dieser auf demselben Host laufen, `X-Forwarded-For` setzen und den `Host`-Kopf unverändert weiterreichen; uvicorn wertet Proxy-Kopfzeilen dann standardmäßig nur von `127.0.0.1` aus – `--forwarded-allow-ips` nicht ausweiten (Schritt 4.2).
 
 ### Schritt 5: Verifikation
 
 ```bash
 curl http://127.0.0.1:8000/api/health        # → {"status":"ok"}
+curl http://127.0.0.1:8000/api/worlds        # → 401: alles außer Gesundheitsprüfung verlangt Anmeldung
 uv run pytest --cov                            # Python-Tests mit Coverage (Mindestwert 80 %)
 npx vitest run --coverage                      # Oberflächen-Tests (80 % Zeilen, 70 % Zweige)
 uv run pre-commit run --all-files              # alle Hooks: Markdown, ruff, mypy, bandit, eslint, prettier, tsc

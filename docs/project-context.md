@@ -105,6 +105,7 @@ Modularer Monolith (ADR-003): ein Python-Server (FastAPI) liefert die React-Ober
 |---|---|---|---|
 | OpenRouter | Zugang zu KI-Modellen verschiedener Anbieter, freie Modellwahl (FR-018) | API-Schlüssel, nur serverseitig, nie im Browser | Text des Autors geht nie verloren; Fehlermeldung statt stillem Abbruch; Wiederholen mit anderem Modell (`docs/architecture.md` Abschnitt 5) |
 | weitere KI-Anbieter | künftig parallel zu OpenRouter (FR-025) | je Anbieter | wie OpenRouter |
+| Have I Been Pwned – Pwned Passwords | Prüfung neuer Passwörter gegen geleakte Passwörter (ADR-017); Daten CC BY 4.0, Namensnennung am Passwortfeld und in der README | keine; nur 5 Hex-Zeichen des SHA-1-Hashes verlassen den Server | Festlegen oder Ändern des Passworts wird abgelehnt, bis der Dienst erreichbar ist; Anmeldung unberührt |
 
 ### APIs
 
@@ -246,6 +247,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 - **CI/CD:** GitHub Actions, `.github/workflows/ci.yml`. Deployment-Workflow: [TBD in Schritt 4.7 – bis dahin kein Deployment]
 - **Umgebungen:** lokal (Cloud-Session des Coding-Agents) → Produktion (VPS)
 - **Monitoring:** Erreichbarkeits-Prüfung von außen [TBD in Schritt 4.2]; Kosten je Monat in der Oberfläche
+- **Server-Prozess:** genau ein uvicorn-Prozess hinter einem Reverse Proxy auf demselben Host, `--no-access-log`, `--forwarded-allow-ips` nicht über `127.0.0.1` hinaus – Sitzungen und Sperre nach Fehlversuchen liegen im Speicher (ADR-017, Sicherheitsprüfung 2.6)
 - **Logging-Level Default:** `INFO` im Betrieb, `DEBUG` nur lokal; keine Inhalte aus Welten oder Manuskripten (Abschnitt 6)
 - **Vertretung:** Verzicht – niemand; Stillstand ist zulässig, Daten bleiben in den Sicherungen (Eigentümer, 2026-09-26; ADR-008 mit benanntem Restrisiko)
 - **Notfall-Handbuch:** `docs/onboarding-runbook.md` Abschnitt „Notfall" – [TBD, anzulegen in Schritt 4.4]

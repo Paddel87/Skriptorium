@@ -9,10 +9,10 @@
 ## Aktueller Stand
 
 - **Stand vom:** 2026-09-26
-- **Laufende Phase:** Phase 2 „Grundgerüst" – 2.1 bis 2.5 erledigt (2026-09-26), offen 2.6 und 2.7
+- **Laufende Phase:** Phase 2 „Grundgerüst" – 2.1 bis 2.6 erledigt (2026-09-26), offen 2.7
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (2.5 `[ERLEDIGT]` 2026-09-26)
-- **Nächster Schritt:** 2.6 (api – HTTP-Schnittstelle mit Anmeldung) – beginnt mit `ENTSCHEIDUNG ERFORDERLICH` (Authentifizierung, Kategorie 6)
+- **Aktiver Schritt:** keiner (2.6 `[ERLEDIGT]` 2026-09-26)
+- **Nächster Schritt:** 2.7 (ui – Editor und Kanon-Pflege, inkl. Anmeldung, Einrichtung, Passwort, Sitzungsübersicht nach ADR-017)
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -192,7 +192,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 2.6: api – HTTP-Schnittstelle mit Anmeldung
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-26; ADR-017, ADR-018) – alle 32 geschützten Endpunkte lehnen ohne Sitzung ab (Test je Endpunkt), jede Maßnahme nennt ihre ASVS-Anforderung (ADR-017, Code-Kommentare); Prüfung durch getrennte Instanz mit zwei Nachprüfungen, Befunde behoben oder entschieden (Logbuch 19:58); 224 Tests, Coverage `api` 99 %, gesamt 99 %; Onboarding gegen frischen Worktree validiert
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.3, 2.5
 - **Freigabepflichtig:** ja – Authentifizierung und Sitzung (Kategorie 6); ggf. Bibliothek für Passwort-Hashing (Kategorie 3)
@@ -203,8 +203,8 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Akzeptanzkriterien:** Alle Endpunkte außer Gesundheitsprüfung und Anmeldung lehnen Anfragen ohne gültige Sitzung ab (Test je Endpunkt); jede Maßnahme nennt ihre ASVS-Anforderung; Prüfung durch eine getrennte Instanz erfolgt (Definition of Done, Kategorie 6).
 - **Betroffene Module:** api
 - **Reifegrad-Wirkung:** `api` → `[BELASTBAR]` durch Umsetzung
-- **Artefakte:** Code, Tests, ADR zu Passwort-Hashing und Sitzung
-- **Notizen:** –
+- **Artefakte:** Code, Tests, ADR zu Passwort-Hashing und Sitzung (ADR-017, ADR-018)
+- **Notizen:** Zusatz 2026-09-26 (ADR-017): Umfang erweitert um Einrichtung per Code, Passwort ändern mit Prüfung gegen Pwned Passwords und Kontextwörter, Sitzungsübersicht mit Beenden, Anmelde-Protokoll; die Oberfläche dazu folgt in 2.7.
 
 #### 2.7: ui – Editor und Kanon-Pflege
 
@@ -220,7 +220,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** ui
 - **Reifegrad-Wirkung:** `ui` → `[BELASTBAR]` durch Umsetzung
 - **Artefakte:** Code, Tests
-- **Notizen:** Zusatz 2026-09-26 (ADR-016): Beim Bearbeiten in der Oberfläche darauf hinweisen, dass Kommentare im Dateikopf beim Speichern nicht erhalten bleiben (PyYAML).
+- **Notizen:** Zusatz 2026-09-26 (ADR-017): Einrichtung mit Code, Anmeldung, Passwort ändern (mit Hinweis „Prüfung durch Have I Been Pwned" als Namensnennung nach CC BY 4.0, Eingabefeld `type=password`, Einfügen und Passwort-Manager erlaubt – ASVS 6.2.6, 6.2.7), Sitzungsübersicht mit Beenden und Abmelden auf jeder Seite (7.4.4, 7.5.2). Zusatz 2026-09-26 (ADR-016): Beim Bearbeiten in der Oberfläche darauf hinweisen, dass Kommentare im Dateikopf beim Speichern nicht erhalten bleiben (PyYAML).
 
 ### Phase 3: Schreiben mit KI – Typ: UMSETZUNG
 
@@ -422,7 +422,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** keine (Betrieb)
 - **Reifegrad-Wirkung:** Host und Netz → `[BELASTBAR]`
 - **Artefakte:** ADR zu Anbieter und Betrieb; `docs/architecture.md` Abschnitt 6; `docs/project-context.md` Abschnitt 8
-- **Notizen:** –
+- **Notizen:** Zusatz 2026-09-26 (Sicherheitsprüfung 2.6, Befunde 3, 5, 7): Reverse Proxy auf demselben Host, der `X-Forwarded-For` setzt und den `Host`-Kopf unverändert weiterreicht; uvicorn mit genau einem Prozess (kein `--workers`, kein `--reload`), `--no-access-log` und ohne Ausweitung von `--forwarded-allow-ips` über `127.0.0.1` hinaus – sonst teilen sich alle Besucher eine Fehlversuchs-Sperre oder können sie mit erfundenen Adressen umgehen. Wirkung von außen prüfen: Fehlversuche von einer Adresse sperren eine zweite nicht; ein mitgeschicktes `X-Forwarded-For` ändert die gesehene Adresse nicht.
 
 #### 4.3: Backups mit erprobter Wiederherstellung
 

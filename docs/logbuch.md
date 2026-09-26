@@ -29,6 +29,63 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 20:05 – [SESSIONENDE] Schritt 2.6 erledigt
+
+- **Dauer:** 19:20–20:05 UTC.
+- **Bearbeitet:** 2.6 `[ERLEDIGT]` mit ADR-017 (`[OPERATIV]`) und ADR-018 (`[REAKTIV]`); Freigaben des Eigentümers: nur Passwort, selbst gewählt mit Pwned Passwords, Sitzungen 7/30 Tage, Anmelde-Protokoll; Befund 4 (Anfragegröße) nicht nötig.
+- **Erreichter Stand:** angemeldete HTTP-Schnittstelle über `canon` und `manuscript`; Sicherheitsprüfung durch getrennte Instanz mit zwei Nachprüfungen ohne offenen Befund; 224 Tests, Coverage 99 %; CI-Lauf 68 grün, weitere Läufe auf dem PR.
+- **Offen:** Merge von PR #6 nach grüner CI (vom Eigentümer so gewählt: erst nach der Prüfung).
+- **Nächster Schritt:** neue Session – 2.7 (ui) inklusive Anmeldung, Einrichtung, Passwortwechsel mit Namensnennung Have I Been Pwned, Sitzungsübersicht und CSP.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5, eingestellt und bedient laut Sitzungsabfrage 20:04). Schritte oberhalb der Empfehlung: 0. Abgegebene Teilarbeiten: Sicherheitsprüfung an einen Unteragenten mit Sonnet 5 (Zweck: getrennte Instanz, keine Routine-Abgabe; Ergebnis vor Übernahme geprüft).
+- **Kontextgröße:** 379.453 Token laut Sitzungsabfrage – Grenze 200.000 überschritten während 2.6; kein neuer Schritt begonnen, der laufende Schritt wurde nach der Regel zu Ende geführt. Sitzungskosten laut Abfrage ca. 14,61 $. Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Quick Start, Nächste Schritte); Drift-Prüfung: ADR-017/018 → 2.6 (und 2.7-Notiz) vorhanden; Modul-Liste unverändert (`api.access` ist Untermodul); Reifegrad `api` passt zu ADR-017/018; Reaktiv-Quote 1/10 = Anzahl `[REAKTIV]` in ADR-009..018; Phase 2 weiterhin 7 Schritte; Blocker 0; Anforderungen: 2.6 ohne FR. Ablaufdaten-Register: kein fälliger Vorlauf (Guthaben-Vorlauf ab 2026-10-22). Archivierung: kein Trigger (Logbuch unter 800 Zeilen). project-context 337 Zeilen.
+
+### 2026-09-26 20:03 – [REIFEGRAD-WECHSEL] api durch Umsetzung validiert
+
+- Schritt 2.6 erledigt. Zweite Nachprüfung der getrennten Instanz: Befunde 1, 2, 9 belegt behoben (u. a. 15 parallele korrekte Anmeldungen → 15 × 204; 25 parallele Fehlversuche → 10 × 401, 15 × 429; Lock-Tabelle bleibt bei 500 Adressen leer), keine neuen Befunde. Hinweis der Instanz: Die Serialisierung je Adresse ist nur so gut wie die Adressermittlung (Befund 3, Vorgabe in 4.2).
+- `api` bleibt `[BELASTBAR]`, jetzt „durch Umsetzung validiert"; 224 Tests gesamt (74 in `tests/api`), Coverage 99 %.
+- **Klasse:** 2.6 empfiehlt Entscheidung, lief auf Entscheidung.
+
+### 2026-09-26 19:58 – [SICHERHEITSPRÜFUNG] Getrennte Instanz zu 2.6
+
+- **Instanz:** Unteragent mit eigenem Kontext und anderem Modell (Claude Sonnet 5); erhielt nur Diff, Bedrohungsmodell, ADR-017/018 und die ASVS-Originalkapitel, nicht den Gesprächsverlauf. Prüfte mit eigenen Probeskripten gegen den echten Code.
+- **Befund 1 (hoch, belegt):** Sperre nach Fehlversuchen per Parallelität umgehbar (25 parallele Fehlversuche, keiner gesperrt) → behoben in `28783bd`, endgültig in `6b7044f`.
+- **Befund 2 (mittel, belegt):** Einrichtungscode bei gleichzeitiger Nutzung zweimal wirksam → behoben in `28783bd` (Sperre um Lesen-Ändern-Schreiben).
+- **Befund 3 (hoch, Konfiguration):** Proxy-Kopfzeilen. uvicorn 0.52 wertet sie standardmäßig nur von `127.0.0.1` aus; als Betriebsvorgabe festgehalten (project-context Abschnitt 8, Runbook, Notiz in 4.2).
+- **Befund 4 (niedrig, über dem Niveau):** keine Größengrenze für Anfragen – dem Eigentümer als optional vorgelegt; Entscheidung: nicht nötig (Verfügbarkeit nachrangig laut Bedrohungsmodell).
+- **Befunde 5, 7 (Hinweise):** genau ein Prozess; `Host`-Kopf unverändert durch den Proxy – festgehalten wie Befund 3. **Befund 6, 8:** kein Handlungsbedarf (8: `except A, B:` ist gültige Syntax ab Python 3.14, PEP 758).
+- **Nachprüfung 1:** Befunde 1 und 2 behoben (Probeskripte: 10 × 401, 15 × 429; ein Code wirkt einmal). Neuer **Befund 9 (mittel, belegt):** mehr als 10 gleichzeitige korrekte Anmeldungen eines Absenders bekamen 429 – Folge der Reservierung vor der Prüfung. Behoben in `6b7044f`: Versuche je Adresse laufen nacheinander, nur echte Fehlversuche zählen. Hinweis 10 (Zeitstempel als Kennung) entfällt damit.
+- **Reibung:** `ss` fehlt in der Umgebung; die Meldung „server beendet" im Probelauf 19:39 war deshalb falsch – zwei Testserver liefen weiter und wurden um 19:50 per `kill` beendet.
+
+### 2026-09-26 19:45 – [PROBLEM-GELÖST] Reibungen in 2.6
+
+- **FastAPI 0.141 hält eingebundene Router als `_IncludedRouter`:** `app.routes` enthält nur noch die direkt angelegten Routen. Das Routenmuster für das Protokoll kommt deshalb aus `scope["route"]` nach der Verarbeitung; der Test „jeder Endpunkt verlangt eine Sitzung" zählt die Routen über `app.openapi()` (die Beschreibung wird trotzdem nicht veröffentlicht).
+- **INFO-Zeilen fehlten unter uvicorn:** uvicorn richtet nur die eigenen Logger ein, erfolgreiche Anmeldungen und das Anfrage-Protokoll gingen verloren (Probelauf gegen echten Server). Lösung: `create_app` gibt dem Logger `skriptorium` einmalig einen Handler mit Stufe INFO.
+- **uvicorn-Zugriffsprotokoll schreibt volle Pfade** (mit Namen von Welten und Einträgen) → Startbefehl mit `--no-access-log`; das eigene Protokoll nennt nur das Routenmuster.
+- **Kontextwörter:** Der Weltname „Die Salzmark" hätte als ganze Zeichenkette ein Passwort mit „Salzmark" durchgelassen – Namen werden jetzt zusätzlich in Wörter ab 4 Zeichen zerlegt (vom ersten Testlauf gefunden).
+- **Beobachtung ohne Änderung:** Der Docstring von `ManuscriptService.save_chapter` nennt `InvalidInput` für eine Nummer, die weder existiert noch die nächste ist; tatsächlich kommt `NotFound` (404). Außerhalb des Schritts 2.6 nicht geändert; Test auf 404.
+- **`# noqa: S105`** für die zwei Test-Passwörter in `tests/api` je Zeile mit Begründung statt einer Datei-Ausnahme.
+
+### 2026-09-26 19:30 – [ADR-ANGELEGT] ADR-017 und ADR-018
+
+- ADR-017 `[OPERATIV]`: Anmeldung und Sitzung – nur Passwort (begründete Abweichung von ASVS 6.3.3), selbst gewählt mit Pwned-Passwords-Prüfung (Empfehlung der KI war: vom Server erzeugt), Sitzungen 7/30 Tage, Anmelde-Protokoll. Freigabe des Eigentümers per Antwortsystem.
+- ADR-018 `[REAKTIV]`: Beziehungen `api → storage` (nur `system/`) und `api → Pwned Passwords`. Reaktiv-Quote 1/10 (Schwelle 30 %).
+
+### 2026-09-26 19:25 – [BEOBACHTUNG] 2.6 vorbereitet – ASVS 5.0.0 im Original geprüft
+
+- Quelle: OWASP/ASVS, Tag `v5.0.0`, Kapitel V6, V7, V11, V3, V16 und Anhang C (raw.githubusercontent.com, abgerufen 2026-09-26).
+- **Befund:** ASVS 6.3.3 (Stufe 2) verlangt Mehr-Faktor-Anmeldung oder eine vollständig begründete Abweichung mit ausgleichenden Maßnahmen. Fahrplan 2.6 und ADR-006 sahen nur „Passwort und Sitzungs-Cookie" vor – die Lücke war bisher nicht benannt.
+- **Befund:** Stufe 1 verlangt, dass der Nutzer sein Passwort ändern kann (6.2.2, 6.2.3); ein Passwort-Hash in einer Umgebungsvariablen (Architektur Abschnitt 6, project-context Abschnitt 6) lässt das aus der Oberfläche nicht zu. Ein Ablageort im Datenverzeichnis braucht eine Beziehung `api → storage`, die die Modul-Karte nicht enthält.
+- **Befund:** Stufe 2 verlangt Sitzungsübersicht mit Beenden (7.5.2), dokumentierte Inaktivitäts- und Höchstdauer (7.1.1, 7.3.1, 7.3.2) und eine Regel für parallele Sitzungen (7.1.2) – neue Endpunkt-Gruppen über den Grobvertrag der HTTP-API hinaus.
+- **Befund:** scrypt aus der Python-Standardbibliothek (N = 2^17, r = 8, p = 1) ist nach Anhang C zulässig – keine neue Abhängigkeit für das Passwort-Hashing nötig. OpenSSL 3.5.8 in der Laufzeit.
+
+### 2026-09-26 19:20 – [SESSIONSTART] Schritt 2.6
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage `get_session`, 19:20 UTC) → Entscheidungs-Klasse; entspricht der Empfehlung für 2.6.
+- **Kontingent:** Wochenlimit Status `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ laut Sitzungsabfrage. Kontextgröße laut Abfrage 0 (Wert zu Sessionbeginn noch nicht befüllt).
+- **Mindest-Lektüre:** project-context vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan „Aktueller Stand" und Phase 2; Architektur 1, 2, 9; Decisions Teil A und C; Blocker aktiv (keine). Branch `claude/neue-session-2-6-tt13wa` von `main` (`70627fa`, PR #5 gemergt).
+- **Plan:** 2.6 mit `ENTSCHEIDUNG ERFORDERLICH` (Authentifizierung und Sitzung, Kategorie 6; Passwort-Hashing ggf. Kategorie 3) beginnen.
+
 ### 2026-09-26 20:15 – [SESSIONENDE] Schritte 2.2 bis 2.5 erledigt
 
 - **Dauer:** Fortsetzung 18:30–20:15 UTC (Gesamtsession ab 17:00).
