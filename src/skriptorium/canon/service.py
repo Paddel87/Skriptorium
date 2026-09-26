@@ -12,12 +12,14 @@ lists the events in order, as in the test world of step 1.1.
 """
 
 import re
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence, Set
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import PurePosixPath
-from typing import Final, Literal, cast, get_args
+from typing import Final, cast
 
+from skriptorium.canon.categories import CATEGORIES, Category
+from skriptorium.canon.importers import parse_markdown
 from skriptorium.storage import (
     AlreadyExists,
     Document,
@@ -26,9 +28,6 @@ from skriptorium.storage import (
     InvalidInput,
     NotFound,
 )
-
-Category = Literal["figur", "ort", "gegenstand", "zeitlinie", "regel", "kultur"]
-CATEGORIES: Final[tuple[Category, ...]] = get_args(Category)
 
 _WORLDS = "worlds"
 _WORLD_FILE = "world.md"
@@ -66,6 +65,42 @@ class CanonEntry:
     aliases: tuple[str, ...]
     status: str | None
     body: str
+
+
+@dataclass(frozen=True)
+class ImportItem:
+    """One entry of an import preview.
+
+    ``conflict`` names why the entry is skipped unless it is overwritten: ``"vorhanden"``
+    (an entry with this identifier exists in the world) or ``"doppelt"`` (an earlier entry
+    of the material has the same identifier).
+    """
+
+    id: str
+    name: str
+    category: Category | None
+    aliases: tuple[str, ...]
+    body: str
+    conflict: str | None
+
+
+@dataclass(frozen=True)
+class ImportPreview:
+    """What an import would do; nothing is stored."""
+
+    world: str
+    introduction: str
+    items: tuple[ImportItem, ...]
+    not_taken_over: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class ImportResult:
+    """Identifiers of the entries created, overwritten and skipped by an import."""
+
+    created: tuple[str, ...]
+    overwritten: tuple[str, ...]
+    skipped: tuple[str, ...]
 
 
 class CanonService:
@@ -248,6 +283,107 @@ class CanonService:
             for hit in self._store.search(world_id, text, "name")
             if _is_entry_path(hit.path)
         ]
+
+    # --- import of world material (ADR-012, rules confirmed in 2.4) ------------------------
+
+    def preview_import(self, world_id: str, markdown: str) -> ImportPreview:
+        """Split Markdown world material into entries without storing anything.
+
+        Raises:
+            NotFound: The world does not exist.
+            InvalidInput: A heading yields no identifier.
+        """
+        self.get_world(world_id)
+        material = parse_markdown(markdown)
+        existing = {entry.id for entry in self.list_entries(world_id)}
+        seen: set[str] = set()
+        items: list[ImportItem] = []
+        for parsed in material.entries:
+            entry_id = slugify(parsed.name)
+            conflict = None
+            if entry_id in seen:
+                conflict = "doppelt"
+            elif entry_id in existing:
+                conflict = "vorhanden"
+            seen.add(entry_id)
+            items.append(
+                ImportItem(
+                    id=entry_id,
+                    name=parsed.name,
+                    category=parsed.category,
+                    aliases=parsed.aliases,
+                    body=parsed.body,
+                    conflict=conflict,
+                )
+            )
+        return ImportPreview(
+            world=world_id,
+            introduction=material.introduction,
+            items=tuple(items),
+            not_taken_over=material.not_taken_over,
+        )
+
+    def apply_import(
+        self,
+        world_id: str,
+        markdown: str,
+        *,
+        categories: Mapping[str, Category] | None = None,
+        overwrite: Set[str] = frozenset(),
+    ) -> ImportResult:
+        """Take over the material as previewed by :meth:`preview_import`.
+
+        The introduction is appended to the world description. Entries with a conflict are
+        skipped unless their identifier is in ``overwrite``.
+
+        Args:
+            categories: Category per entry identifier; overrides the recognised category.
+            overwrite: Identifiers whose conflict should be resolved by overwriting.
+
+        Raises:
+            NotFound: The world does not exist.
+            InvalidInput: An entry that would be stored has no category; nothing is stored.
+        """
+        chosen = dict(categories or {})
+        preview = self.preview_import(world_id, markdown)
+        planned: list[tuple[ImportItem, Category]] = []
+        skipped: list[str] = []
+        for item in preview.items:
+            if item.conflict is not None and item.id not in overwrite:
+                skipped.append(item.id)
+                continue
+            category = chosen.get(item.id, item.category)
+            if category is None:
+                raise InvalidInput(f"Eintrag {item.name!r} hat keine Kategorie")
+            planned.append((item, _checked_category(category)))
+
+        if preview.introduction:
+            world = self.get_world(world_id)
+            joined = "\n\n".join(
+                p for p in (world.description.rstrip("\n"), preview.introduction) if p
+            )
+            self.update_world(world_id, description=joined)
+        created: list[str] = []
+        overwritten: list[str] = []
+        for item, category in planned:
+            if item.conflict is None:
+                self.create_entry(
+                    world_id, category, item.name, aliases=item.aliases, body=item.body
+                )
+                created.append(item.id)
+            else:
+                self.update_entry(
+                    world_id,
+                    item.id,
+                    category=category,
+                    name=item.name,
+                    aliases=item.aliases,
+                    body=item.body,
+                )
+                overwritten.append(item.id)
+        return ImportResult(
+            created=tuple(created), overwritten=tuple(overwritten), skipped=tuple(skipped)
+        )
 
     def _entry_path(self, world_id: str, entry_id: str) -> str:
         self.get_world(world_id)

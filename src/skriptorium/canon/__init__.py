@@ -1,10 +1,12 @@
 """Worlds and their canon entries (module ``canon``)."""
 
+from skriptorium.canon.categories import CATEGORIES, Category
 from skriptorium.canon.service import (
-    CATEGORIES,
     CanonEntry,
     CanonService,
-    Category,
+    ImportItem,
+    ImportPreview,
+    ImportResult,
     World,
 )
 from skriptorium.storage import AlreadyExists, InvalidInput, NotFound, StorageError
@@ -15,6 +17,9 @@ __all__ = [
     "CanonEntry",
     "CanonService",
     "Category",
+    "ImportItem",
+    "ImportPreview",
+    "ImportResult",
     "InvalidInput",
     "NotFound",
     "StorageError",
