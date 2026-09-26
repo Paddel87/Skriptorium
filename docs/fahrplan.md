@@ -206,7 +206,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** keine Fachmodule (Projektgerüst, CI)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** `pyproject.toml`, `package.json`, Lock-Dateien, CI- und Hook-Konfiguration, README-Quick-Start, `docs/onboarding-runbook.md`
-- **Notizen:** Quick-Start-relevant – Onboarding-Pfad gegen frischen Worktree validieren (CLAUDE.md Abschnitt 17).
+- **Notizen:** Quick-Start-relevant – Onboarding-Pfad gegen frischen Worktree validieren (CLAUDE.md Abschnitt 17). Zusatz 2026-09-26 (Befund aus 1.1): In der Cloud-Session ist der `pre-commit`-Hook nicht installiert; 2.1 sorgt dafür, dass er zu Sessionbeginn installiert wird (z. B. SessionStart-Hook), sonst greift „Pre-Commit-Hook war aktiv" der Definition of Done nicht.
 
 #### 2.2: storage – Dateiablage und Suchindex
 
