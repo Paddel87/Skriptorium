@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -34,12 +34,13 @@ Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 012 | 2026-09-26 | Aktiv | ERKENNTNIS | DATENMODELL | Datenmodell | Import von Welt-Material zunächst nur als Markdown |
 | 013 | 2026-09-26 | Aktiv | ERKENNTNIS | MODUL, SCHNITTSTELLE, DATENMODELL, PERFORMANCE | Architektur | Reifegrad-Beförderung vor Phase 2, neues Reaktionszeit-Ziel |
 | 014 | 2026-09-26 | Aktiv | STRATEGISCH | METHODIK | Pflichtfrage Phasenende | Phasenende 1 – weiterbauen |
+| 015 | 2026-09-26 | Aktiv | OPERATIV | STACK, METHODIK | Externe Abh., Build-Pipeline, Lizenz | Entwicklungswerkzeuge, Linien ohne Patch-Versionen, Werkzeug-Lizenzen, Starlette-Abkündigung |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 0 / 10 (0 %) über ADR-005 bis ADR-014 – ADR-005 bis ADR-009 aus der Initialisierung (Modus 2), ADR-010 bis ADR-014 aus Phase 1 (Erkundung); keiner reaktiv.
+- **Aktueller Wert:** 0 / 10 (0 %) über ADR-006 bis ADR-015 – ADR-006 bis ADR-009 aus der Initialisierung (Modus 2), ADR-010 bis ADR-014 aus Phase 1 (Erkundung), ADR-015 aus Phase 2 (operativ, geplant in 2.1); keiner reaktiv.
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -444,6 +445,37 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 
 ---
 
+#### ADR-015: Entwicklungswerkzeuge, Linien ohne Fehlerkorrektur-Versionen, Werkzeug-Lizenzen, Starlette-Abkündigung
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[OPERATIV]` `[STACK]` `[METHODIK]`
+- **Phasentyp-Kontext:** UMSETZUNG (Schritt 2.1)
+- **Reifegrad-Wirkung:** keine
+- **Kategorie:** Externe Abhängigkeiten (3), Build-Pipeline (7), Lizenz (8)
+- **Kontext:** Schritt 2.1 pinnt die Entwicklungswerkzeuge aus `docs/project-context.md` Abschnitt 7 und schaltet CI und Pre-Commit scharf. Versionen gegen PyPI, npm-Registry und Git-Tags geprüft, alle Werkzeuge im Probeaufbau gemeinsam auf Python 3.14.7 und Node 24.21.0 grün (`docs/research/versions-verifikation.md`, „Entwicklungswerkzeuge"). Dabei vier offene Fragen: (1) einige Linien haben gar keine Fehlerkorrektur-Version; (2) zwei transitive Werkzeug-Lizenzen außerhalb der Liste; (3) Starlette 1.7.0 kündigt httpx im TestClient zugunsten von httpx2 an, httpx2 ist erst ab 2026-11-12 mindestreif; (4) Aufbau von Repo, Hooks und CI.
+- **Optionen:**
+  - **Linien ohne Fehlerkorrektur-Version – A:** Regel-001 ergänzen: neueste Version einer mindestens 6 Monate alten Linie – Konsequenzen: pytest-cov 7.1.0, setup-python v6.3.0, setup-node v6.5.0, pre-commit-hooks v6.0.0. **B:** streng anwenden – Konsequenzen: pytest-cov 6.2.1 (Python 3.14 nicht deklariert), setup-python v5, setup-node v4 aus 2024.
+  - **Lizenzen – A:** CC-BY-4.0 (caniuse-lite) und BlueOak-1.0.0 (minimatch) nur für Werkzeuge erlauben, wie Artistic-2.0. **B:** ablehnen – Vite und ESLint nicht nutzbar.
+  - **Starlette – A:** benannte Ausnahme im Warnungs-Bestand, Wechsel auf httpx2 als Schritt D.5 mit Frist 2026-11-12. **B:** httpx2 sofort per Ausnahme von der Mindestreife.
+- **Entscheidung:** jeweils A; Werkzeug-Versionen und Aufbau wie vorgeschlagen:
+  - Python (Entwicklungsgruppe): ruff 0.16.9, mypy 1.20.2, bandit 1.9.4, pip-audit 2.10.1, pytest 9.1.1, pytest-cov 7.1.0, pre-commit 4.6.2, httpx 0.28.1.
+  - TypeScript: eslint 10.9.1, @eslint/js 10.0.1, typescript-eslint 8.70.1, eslint-plugin-react-hooks 7.1.1, prettier 3.9.9, vitest 4.1.11, @vitest/coverage-v8 4.1.11, @types/react 19.2.18, @types/react-dom 19.2.7.
+  - CI und Hooks: actions/checkout v6.0.3, actions/setup-python v6.3.0, actions/setup-node v6.5.0, pre-commit-hooks v6.0.0, markdownlint-cli2 v0.23.3; `pre-commit/action` entfällt.
+  - Aufbau: Python-Paket unter `src/skriptorium/<modul>/`, Oberfläche unter `ui/`, `pyproject.toml` und `package.json` im Wurzelverzeichnis; Pre-Commit-Hooks rufen die Werkzeuge über `uv run` bzw. `npx` auf (Versionen nur in den Lock-Dateien); CI ruft `pre-commit` direkt auf; Abdeckungsprüfung 90 % für `canon` und `context`, sobald die Ordner existieren; SessionStart-Hook richtet Cloud-Sessions ein (uv 0.12.19, Python 3.14.7, Node 24.21.0 mit SHA-256-Prüfung, Abhängigkeiten, `pre-commit install`, `UV_SYSTEM_CERTS` statt `UV_NATIVE_TLS`). DOM-Testbibliotheken folgen zur Freigabe in 2.7.
+- **Vision-Frage, die entschied:** „Sollen Entwicklungswerkzeuge, die nicht im fertigen Skriptorium laufen, nach derselben strengen Reife-Regel ausgewählt werden wie die Programmteile – auch wenn das veraltete Werkzeuge bedeutet?" → Antwort des Eigentümers: Regel ergänzen (Option A); alle Empfehlungen freigegeben.
+- **Konfidenz zum Zeitpunkt:** hoch – Probeaufbau mit allen Gates grün; Umkehrbarkeit billig (Versionswechsel sind Einzeiler).
+- **Konsequenzen:**
+  - Regel-001 erhält einen Zusatz für Linien ohne Fehlerkorrektur-Version.
+  - Erlaubte Lizenzen: CC-BY-4.0 und BlueOak-1.0.0 nur für Werkzeuge (`docs/project-context.md` Abschnitt 6).
+  - Warnungs-Bestand: eine benannte Ausnahme (Starlette-TestClient); Schritt D.5 und Eintrag im Ablaufdaten-Register.
+  - Nachprüfung mypy 2 und vitest 5 bei Mindestreife (2026-11-06 bzw. 2027-03-03) über das Ablaufdaten-Register.
+- **Abgeleitete Regel:** Zusatz zu Regel-001 (Teil C)
+- **Nachtrag 2026-09-26 (Eigentümer):** ShellCheck als lokaler Pre-Commit-Hook über das PyPI-Paket shellcheck-py 0.11.0.1 in der Entwicklungsgruppe (ShellCheck 0.11.0, MIT, erschienen 2025-08-09) aufgenommen – der Hook aus dem Git-Repository von shellcheck-py scheiterte, weil sein Bau das Programm von GitHub lädt, was die Arbeitsumgebung sperrt – Pflicht G aus `CLAUDE.md` Abschnitt 15 für `scripts/session-start.sh` (über der Komplexitätsschwelle). Versionswahl nach dem Zusatz zu Regel-001: ShellCheck liefert Korrekturen als Unterversionen (0.9, 0.10, 0.11 ohne Fehlerkorrektur-Version), daher die neueste Version.
+
+---
+
 <!-- ANCHOR:teil-c-entscheidungsregeln -->
 ## Teil C: Entscheidungsregeln
 
@@ -473,6 +505,7 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Herkunft:** ADR-002
 - **Gilt für:** jede Fixierung oder Aktualisierung einer Version von Sprache, Framework, Bibliothek, Laufzeitumgebung oder Werkzeug, nachdem die Linie nach `CLAUDE.md` Abschnitt 15 („Versionswahl") gewählt ist.
 - **Regel:** Innerhalb der gewählten Linie wird die neueste Unterversion gewählt, die bereits mindestens eine Fehlerkorrektur-Version hat; bei `0.x`-Paketen die neueste Minor-Version mit mindestens einem Patch-Release. Gepinnt wird auf diese Unterversion (z. B. `>=0.141.1,<0.142`).
+- **Zusatz (ADR-015):** Hat eine Linie, die die 6 Monate der Mindestreife erfüllt, keine einzige Fehlerkorrektur-Version (der Hersteller liefert Korrekturen als Unterversionen), gilt ihre neueste Version – z. B. pytest-cov 7.1.0, actions/setup-python v6.3.0.
 - **Ausnahmen:** keine
 - **Gegenbeispiel:** uvicorn 0.54.0 wählen, weil sie die neueste ist, obwohl sie noch keine Fehlerkorrektur-Version hat (gewählt wurde 0.52.4).
 

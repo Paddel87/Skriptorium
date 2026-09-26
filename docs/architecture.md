@@ -322,4 +322,4 @@ Hilfsskripte sind Architektur-Bestandteile mit eigenem Reifegrad (Pflichten A–
 
 | Skript | Zweck | Reifegrad | Plattform-Matrix | Voraussetzungen | Idempotenz |
 |---|---|---|---|---|---|
-| – | noch keine Skripte (Stand 2026-09-26) | – | – | – | – |
+| `scripts/session-start.sh` | Cloud-Session einrichten: uv, Python, Node, Abhängigkeiten, Pre-Commit-Hook (SessionStart-Hook, ADR-015) | ROH (seit 2026-09-26; in 2.1 zweimal ausgeführt; ShellCheck im Pre-Commit ohne Befund) | Linux x86_64 | bash 4+, curl, tar (xz), sha256sum, python3 mit venv, git; `CLAUDE_CODE_REMOTE`, `CLAUDE_PROJECT_DIR`, `CLAUDE_ENV_FILE` | ja – vorhandene Werkzeuge werden nicht neu geladen |

@@ -57,3 +57,67 @@ Auslegung „Linie" (zur Bestätigung, siehe Offene Punkte):
 6. **Pydantic 2.13** als Minor ist erst seit 2026-04-13 verfügbar; da Pydantic keine absichtlichen Breaking Changes in v2-Minors zusagt, gilt die v2-Linie (seit 2023-06-30) als Maßstab.
 7. **Nicht geprüft:** Kompatibilität von Werkzeugen außerhalb dieser Liste (z. B. Linter, Typprüfer-Plugins, Test-Runner) mit TypeScript 6 und Python 3.14; Lizenzen transitiver Abhängigkeiten (starlette BSD-3-Clause und pydantic-core wurden nur stichprobenhaft gesehen).
 8. **Ablaufdaten-Register:** Nach Bestätigung sind Python 3.14 (2030-10), Node 24 (2028-04-30) und die Nachprüfungen zu httpx, TypeScript 7 und Node 26 in `docs/project-context.md` Abschnitt 8 einzutragen.
+
+<!-- ANCHOR:entwicklungswerkzeuge-schritt-2-1 -->
+## Entwicklungswerkzeuge (Schritt 2.1)
+
+**Stand:** 2026-09-26, Quellen am selben Tag abgerufen: PyPI-JSON-API (`https://pypi.org/pypi/<paket>/json`), npm-Registry (`https://registry.npmjs.org/<paket>`), Git-Tags der Action-Repositories (`git ls-remote`, Datum aus dem Tag-Commit; die GitHub-API ist aus der Arbeitsumgebung gesperrt). Stichtag Mindestreife: Linie erschienen am oder vor 2026-03-26.
+
+**Probeaufbau:** Alle Werkzeuge der Spalte „Vorschlag" wurden im Scratchpad gemeinsam auf Python 3.14.7 (uv 0.12.19) und Node 24.21.0 (npm 11.19.0) installiert; Lint, Format-Check, Typprüfung, bandit, pip-audit, pytest mit Coverage, ESLint, Prettier, tsc, Vitest mit Coverage, `npm audit` und `vite build` liefen durch. Einziger Befund: die Starlette-Abkündigung unten.
+
+### Python (Entwicklungsgruppe in `pyproject.toml`)
+
+| Werkzeug | Vorschlag | Neueste | Linie seit | Begründung | Python 3.14 deklariert | Lizenz |
+|---|---|---|---|---|---|---|
+| ruff | 0.16.9, Pin `<0.17` | 0.16.9 | Serie 0.x | neueste Minor mit Patch (0.16.1–0.16.9) | ja | MIT |
+| mypy | 1.20.2, Pin `<1.21` | 2.3.1 | Linie 2: 2026-05-06 | **Linie 2 unter 6 Monaten** → Linie 1, neueste Minor 1.20 mit Patch | ja | MIT |
+| bandit | 1.9.4, Pin `<2` | 1.9.4 | Linie 1: 2018 | neueste Minor mit Patch | ja | Apache-2.0 |
+| pip-audit | 2.10.1, Pin `<3` | 2.10.1 | Linie 2: 2022 | neueste Minor mit Patch | ja | Apache-2.0 |
+| pytest | 9.1.1, Pin `<10` | 9.1.1 | Linie 9: 2025-11-08 | neueste Minor mit Patch | ja | MIT |
+| pytest-cov | 7.1.0, Pin `<8` | 7.1.0 | Linie 7: 2025-09-09 | **Linie 7 hat keine Patch-Version** (nur 7.0.0, 7.1.0) – siehe Offener Punkt 9 | ja | MIT |
+| pre-commit | 4.6.2, Pin `<5` | 4.6.2 | Linie 4: 2024 | neueste Minor mit Patch | (keine Classifier; `requires_python >=3.10`) | MIT |
+| httpx (nur Tests, Laufzeit folgt mit `ai_gateway`) | 0.28.1, Pin `<0.29` | 0.28.1 | bereits fixiert (Abschnitt 3) | – | nein (validiert in 1.3) | BSD-3-Clause |
+
+Transitive Lizenzen (64 Pakete im Lock): MIT, BSD-2/3-Clause, Apache-2.0, MPL-2.0 (certifi, pathspec), PSF-2.0 – alle erlaubt.
+
+### TypeScript (`package.json`, exakt gepinnt)
+
+| Werkzeug | Vorschlag | Neueste | Linie seit | Begründung | Kompatibilität | Lizenz |
+|---|---|---|---|---|---|---|
+| eslint | 10.9.1 | 10.11.0 | Linie 10: 2026-02-06 | neueste Minor mit Patch | `engines node >=24` | MIT |
+| @eslint/js | 10.0.1 | 10.0.1 | Linie 10: 2026-02-06 | einzige Minor, hat Patch | Peer `eslint ^10` | MIT |
+| typescript-eslint | 8.70.1 | 8.70.1 | Linie 8: 2024-07-31 | neueste Minor mit Patch | Peer `typescript <6.1.0`, `eslint ^10` | MIT |
+| eslint-plugin-react-hooks | 7.1.1 | 7.1.1 | Linie 7: 2025-10-08 | neueste Minor mit Patch | Peer `eslint ^10` | MIT |
+| prettier | 3.9.9 | 3.9.9 | Linie 3: 2023-07-05 | neueste Minor mit Patch | – | MIT |
+| vitest | 4.1.11 | 5.0.2 | Linie 5: 2026-09-03 | **Linie 5 unter 6 Monaten** → Linie 4, neueste Minor mit Patch | Peer `vite ^8`, Node 24 | MIT |
+| @vitest/coverage-v8 | 4.1.11 | 5.0.2 | wie vitest | folgt vitest | Peer `vitest 4.1.11` | MIT |
+| @types/react | 19.2.18 | 19.3.0 | Linie 19 | passend zu React 19.2.8; 19.3 ohne Patch | – | MIT |
+| @types/react-dom | 19.2.7 | 19.3.0 | Linie 19 | wie oben | – | MIT |
+
+Nicht in 2.1: CodeMirror (fixiert, kommt mit 2.7), Testbibliotheken für Komponenten-Tests im DOM (z. B. jsdom, Testing Library – eigene Freigabe in 2.7), `globals` (nicht nötig: TypeScript-Dateien prüft typescript-eslint ohne `no-undef`).
+
+Transitive Lizenzen (213 Pakete): MIT, Apache-2.0, ISC, MPL-2.0 (lightningcss), BSD-2/3-Clause – erlaubt; **außerhalb der Liste:** `CC-BY-4.0` (caniuse-lite, Browser-Daten für den Build) und `BlueOak-1.0.0` (minimatch, freizügig) – beide nur Build/Entwicklung, siehe Offener Punkt 10.
+
+### CI und Pre-Commit
+
+| Baustein | Vorschlag | Neueste | Linie seit | Begründung |
+|---|---|---|---|---|
+| actions/checkout | v6.0.3 | v7.0.1 | v7: 2026-06-17; v6: 2025-11-20 | **v7 unter 6 Monaten** → v6, neueste Minor mit Patch (6.0) |
+| actions/setup-python | v6.3.0 | v7.0.0 | v7: 2026-07-19; v6: 2025-09-03 | v7 zu jung → v6; **v6 ohne Patch-Version** (Offener Punkt 9) |
+| actions/setup-node | v6.5.0 | v7.0.0 | v7: 2026-07-13; v6: 2025-10-13 | wie setup-python |
+| pre-commit/pre-commit-hooks | v6.0.0 | v6.0.0 | v6: 2025-08-09 | einzige Version der Linie (Offener Punkt 9) |
+| markdownlint-cli2 | v0.23.3 | v0.23.3 | Serie 0.x | neueste Minor mit Patch (bisher v0.23.2) |
+| shellcheck-py (ShellCheck, PyPI, Entwicklungsgruppe) | 0.11.0.1, Pin `<0.12` (ShellCheck 0.11.0) | 0.11.0.1 | Serie 0.x; 0.11 seit 2025-08-09 | Nachtrag ADR-015: Unterversionen ohne Fehlerkorrektur-Version → neueste; MIT |
+| pre-commit/action | entfällt | v3.0.1 | – | CI ruft `uv run pre-commit run --all-files` direkt auf – eine Action weniger |
+
+Die bisher in `ci.yml` eingetragenen v7-Actions erfüllen die Mindestreife nicht; der Vorschlag geht auf v6 zurück.
+
+### Befund: Starlette kündigt httpx im TestClient ab
+
+Starlette 1.7.0 (transitiv über FastAPI 0.141.1) meldet beim Import von `fastapi.testclient`: „Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead." (`StarletteDeprecationWarning`). Mit `filterwarnings = error` bricht jeder Test ab. `httpx2` ist die von Pydantic übernommene Fortführung von httpx (<https://github.com/pydantic/httpx2>, BSD-3-Clause); Linie 2 erschien am 2026-05-12 und erreicht die Mindestreife erst am 2026-11-12. Vorschlag: benannte Ausnahme im Warnungs-Bestand bis zum Wechsel; Wechsel von Tests und `ai_gateway` auf httpx2 als datierter Schritt (Offener Punkt 11).
+
+### Offene Punkte (Fortsetzung)
+
+- **9 – Linien ohne Patch-Versionen** (pytest-cov 7, setup-python v6, setup-node v6, pre-commit-hooks v6): Diese Hersteller liefern Korrekturen als Minor- statt als Patch-Versionen. Streng nach Mindestreife und Regel-001 fielen sie auf ältere Linien zurück (pytest-cov 6.2.1 ohne deklariertes Python 3.13/3.14; setup-python v5.1.1 und setup-node v4 aus 2024). Zur Entscheidung.
+- **10 – Lizenzen CC-BY-4.0 und BlueOak-1.0.0** transitiv im Build-Werkzeug; nicht Teil der ausgelieferten Oberfläche außer als Build-Hilfsdaten. Zur Entscheidung (Erweiterung der Lizenzliste nur für Werkzeuge, analog Artistic-2.0).
+- **11 – httpx → httpx2:** Wechsel frühestens 2026-11-12 (Mindestreife); betrifft Tests und das Modul `ai_gateway` (Schritt 1.3 validierte httpx 0.28.1).

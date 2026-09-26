@@ -18,3 +18,15 @@
 
 # Alle Markdown-Dokumente, in jedem Verzeichnis.
 *.md
+
+# Erzeugte Dateien und Umgebungen (Schritt 2.1).
+dist/
+coverage/
+node_modules/
+.venv/
+uv.lock
+package-lock.json
+
+# Vorlagen des Methodik-Sets und Wegwerf-Code der Erkundung werden nicht formatiert.
+templates/
+spikes/

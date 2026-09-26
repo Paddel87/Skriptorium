@@ -1,3 +1,16 @@
 # Python-Bytecode-Caches (z. B. aus templates/werkzeuge/)
 __pycache__/
 *.py[cod]
+
+# Python-Umgebung und Werkzeug-Caches
+.venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+coverage.xml
+
+# Node und Build-Ausgaben
+node_modules/
+dist/
+coverage/

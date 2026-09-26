@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 2 „Grundgerüst" (bereit; Phase 1 abgeschlossen 2026-09-26, ADR-014: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner
-- **Nächster Schritt:** 2.1 (Projektgerüst und volle CI-Gates) – freigabepflichtig (Werkzeug-Pins, CI-Gates): beginnt mit einem `ENTSCHEIDUNG ERFORDERLICH`; Empfohlene Klasse Entscheidung
+- **Aktiver Schritt:** keiner (2.1 `[ERLEDIGT]` 2026-09-26)
+- **Nächster Schritt:** 2.2 (storage – Dateiablage und Suchindex) – beginnt mit `ENTSCHEIDUNG ERFORDERLICH` zum YAML-Parser; Empfohlene Klasse Entscheidung
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -112,7 +112,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 2.1: Projektgerüst und volle CI-Gates
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-26; ADR-015) – Pre-Commit und CI-Lauf 56 mit allen Gates grün, Coverage Python 100 % (1 Test), Oberfläche 100 % (2 Tests), Onboarding gegen frischen Worktree validiert (Logbuch 18:10)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 1.4
 - **Freigabepflichtig:** ja – Pin der Entwicklungswerkzeuge (Kategorie 3) und Aktivierung der CI-Gates (Kategorie 7)
@@ -656,7 +656,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Betroffene Module:** ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** ADR oder Register-Eintrag
-- **Notizen:** –
+- **Notizen:** Zusatz 2026-09-26 (ADR-015): vitest 5 mitprüfen – mindestreif erst ab 2027-03-03; ist das bei D.2 noch nicht erreicht, eigenes Nachprüf-Datum im Register setzen. Kompatibilität typescript-eslint mit TypeScript 7 prüfen (8.70.1 verlangt `typescript <6.1.0`).
 
 #### D.3: Nachprüfung httpx
 
@@ -691,6 +691,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** NFR Kontexttreue Referenzumfang `[OFFEN]` → `[BELASTBAR]` oder begründeter Erkundungsbedarf
 - **Artefakte:** Messprotokoll, ADR `[ERKENNTNIS]`
 - **Notizen:** Bis dahin gilt das Kriterium als unbelegt.
+
+#### D.5: Wechsel auf httpx2 und Nachprüfung mypy 2
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** 2.1
+- **Frist:** 2026-11-12 (Mindestreife httpx2; mypy 2 ab 2026-11-06)
+- **Freigabepflichtig:** ja – httpx2 ist eine neue externe Abhängigkeit (Kategorie 3)
+- **Empfohlene Klasse:** Entscheidung – Freigabe einer neuen Abhängigkeit (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Frist erreicht
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** httpx2 nach Regel-001 prüfen und zur Freigabe vorlegen; Tests (Starlette-TestClient) und `ai_gateway` auf httpx2 umstellen; benannte Ausnahme aus dem Warnungs-Bestand entfernen; Streaming, Timeout und Abbruch wie in 1.3 erneut prüfen. Mit erledigen: mypy 2 nach Regel-001 prüfen und ggf. wechseln.
+- **Akzeptanzkriterien:** Tests ohne Warnungs-Ausnahme grün; Warnungs-Bestand leer; Ablaufdaten-Register aktualisiert; D.3 angepasst oder aufgelöst.
+- **Betroffene Module:** ai_gateway
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR, Register-Eintrag
+- **Notizen:** Herkunft ADR-015 (Befund aus 2.1). Vitest 5 wird mit D.2 (2027-01-08) bzw. ab Mindestreife 2027-03-03 nachgeprüft.
 
 #### M.1: Branch-Konvention festlegen
 

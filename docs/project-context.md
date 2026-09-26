@@ -10,7 +10,7 @@
 
 - **Projektname:** Skriptorium
 - **Kurzbeschreibung:** Schreibwerkstatt für einen einzelnen Autor: Mehrere eigene Welten dienen als verbindlicher Kanon, Autor und KI schreiben im Wechsel Prosa darin, ohne der jeweiligen Welt zu widersprechen.
-- **Status:** Konzeption (Initialisierung abgeschlossen 2026-09-26)
+- **Status:** In Entwicklung – Phase 2 (Projektgerüst seit 2026-09-26)
 - **Version (SemVer):** v0.0.0 – noch keine lauffähige Version
 - **Dokumentationssprache:** Deutsch
 - **Codesprache (Kommentare, Variablennamen):** Englisch (Eigentümer, 2026-09-26); Fachbegriffe einheitlich: world, canon, canon entry, story, manuscript, guest character
@@ -140,7 +140,7 @@ Modularer Monolith (ADR-003): ein Python-Server (FastAPI) liefert die React-Ober
 ### Compliance und Lizenz
 
 - **Projektlizenz:** AGPL-3.0 (Eigentümer, 2026-09-26, ADR-005; Vision-Frage: „Dürfen andere den Code in ein geschlossenes Produkt übernehmen?" → nein). `LICENSE` enthält den Lizenztext aus der SPDX-Lizenzliste (`AGPL-3.0-only.txt`, abgerufen 2026-09-26; gnu.org aus der Arbeitsumgebung nicht erreichbar).
-- **Erlaubte Abhängigkeitslizenzen:** MIT, BSD-2/3-Clause, Apache-2.0, ISC, PSF-2.0, MPL-2.0, LGPL (2.1 oder später, 3.0), GPL-3.0 (bzw. „2.0 oder später"), AGPL-3.0; Artistic-2.0 nur für Werkzeuge (z. B. npm). Bestätigt vom Eigentümer 2026-09-26.
+- **Erlaubte Abhängigkeitslizenzen:** MIT, BSD-2/3-Clause, Apache-2.0, ISC, PSF-2.0, MPL-2.0, LGPL (2.1 oder später, 3.0), GPL-3.0 (bzw. „2.0 oder später"), AGPL-3.0; Artistic-2.0, CC-BY-4.0 und BlueOak-1.0.0 nur für Werkzeuge (z. B. npm, caniuse-lite, minimatch; letztere ADR-015). Bestätigt vom Eigentümer 2026-09-26.
 - **Ausgeschlossene Lizenzen:** GPL-2.0-only (unvereinbar mit AGPL-3.0), proprietäre Lizenzen, Lizenzen mit Nutzungsbeschränkung (z. B. Commons Clause) – Abweichung nur per ADR.
 
 ### Anforderungen, Schutzbedarf, Kosten
@@ -190,7 +190,13 @@ Pflichtkategorien: `CLAUDE.md` Abschnitt 15. Toolwahl nach den Skeletten unter `
 - **Security-Scanner:** nicht anwendbar als eigenes Werkzeug, Begründung: kein etabliertes Standard-Werkzeug für React-Oberflächen; abgedeckt durch `eslint`-Regeln (z. B. Verbot von `dangerouslySetInnerHTML` ohne Begründung) und `npm audit`
 - **Dependency-Audit:** `npm audit --audit-level=high`
 - **Test-Runner:** `vitest` mit Coverage
+- **Versionen (ADR-015):** Python: ruff 0.16.9, mypy 1.20.2, bandit 1.9.4, pip-audit 2.10.1, pytest 9.1.1, pytest-cov 7.1.0, pre-commit 4.6.2; TypeScript: eslint 10.9.1, typescript-eslint 8.70.1, eslint-plugin-react-hooks 7.1.1, prettier 3.9.9, vitest 4.1.11 – Nachweise in `docs/research/versions-verifikation.md`
 - **Naming-Konvention:** camelCase für Variablen und Funktionen, PascalCase für Typen, Klassen und React-Komponenten
+
+#### Bash (Hilfsskripte in `scripts/`)
+
+- **Linter:** `shellcheck` 0.11.0 über das PyPI-Paket shellcheck-py (Entwicklungsgruppe) als lokaler Pre-Commit-Hook (ADR-015, Nachtrag)
+- **Übrige Kategorien:** nicht anwendbar, Begründung: wenige Hilfsskripte; kein etablierter Formatter oder Typprüfer im Projekt-Stack
 
 #### Markdown
 
@@ -199,7 +205,11 @@ Pflichtkategorien: `CLAUDE.md` Abschnitt 15. Toolwahl nach den Skeletten unter `
 
 ### Warnungs-Bestand
 
-Kein Bestand – Default „Warnungen sind Fehler".
+Default „Warnungen sind Fehler". Benannte Ausnahmen:
+
+| Warnung | Werkzeug-Schalter | Grund | Fahrplan-Schritt |
+|---|---|---|---|
+| `StarletteDeprecationWarning`: „Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead." | `filterwarnings` in `pyproject.toml` (genau diese Meldung) | httpx2 erst ab 2026-11-12 mindestreif (ADR-015) | D.5 |
 
 **Warnungsquellen ohne Schalter:** Hinweise der CI-Plattform zu Action-Versionen; Bündelgrößen-Warnungen von Vite.
 
@@ -208,15 +218,16 @@ Kein Bestand – Default „Warnungen sind Fehler".
 - **Pre-Commit-Hook-Framework:** `pre-commit`
 - **Konfigurationsdatei:** `.pre-commit-config.yaml`
 - **CI-Plattform:** GitHub Actions
-- **Workflow-Dateien:** `.github/workflows/ci.yml` mit allen Pflicht-Gates für Python und TypeScript (Klasse M)
+- **Workflow-Dateien:** `.github/workflows/ci.yml` mit den Jobs Pre-Commit, Python und TypeScript (alle Pflicht-Gates, seit Schritt 2.1 scharf)
+- **Einrichtung der Cloud-Session:** SessionStart-Hook `.claude/settings.json` → `scripts/session-start.sh` (ADR-015)
 - **Trigger:** `push` auf alle Branches und `pull_request` auf `main`
 - **Verpflichtende CI-Gates (Merge-Block bei Rot):** Lint, Format-Check, Type-Check, Security-Scan, Dependency-Audit (Schwellenwert high), Tests inklusive Coverage-Mindestwert
 - **Branch-Protection auf Hauptbranch:** alle Pflicht-Gates müssen grün sein; Force-Push gesperrt; siehe Abschnitt 10
 
 ### Coverage-Mindestwerte
 
-- **Globaler Mindestwert:** 80 % Lines, 70 % Branches (bestätigt vom Eigentümer 2026-09-26)
-- **Kritische Pfade (höhere Anforderung):** Kontext-Zusammenstellung und Kanon-Verwaltung 90 % Lines – dort entstehen Kanon-Widersprüche und Kosten (FR-010, FR-011)
+- **Globaler Mindestwert:** 80 % Lines, 70 % Branches (bestätigt vom Eigentümer 2026-09-26). Umsetzung: TypeScript getrennt nach Zeilen und Zweigen (`vite.config.ts`); Python mit `fail_under = 80` über Zeilen und Zweige zusammen (coverage.py kennt keine getrennten Schwellen).
+- **Kritische Pfade (höhere Anforderung):** Kontext-Zusammenstellung und Kanon-Verwaltung 90 % Lines – dort entstehen Kanon-Widersprüche und Kosten (FR-010, FR-011). CI-Schritt „Coverage kritischer Pfade" greift, sobald `src/skriptorium/canon` bzw. `context` existiert.
 - **Ausnahmen:** keine
 
 ### Commit-Lint
@@ -249,6 +260,9 @@ Kein Bestand – Default „Warnungen sind Fehler".
 | Python 3.14 | 2030-10 | 6 Monate | PEP 745 | – (Vorlauf nach Projektdauer) |
 | httpx 0.28 – Python 3.14 nicht offiziell deklariert, Pflege schwach | Nachprüfung 2027-03-26 | – | PyPI; auf 3.14.7 validiert 2026-09-26 (Schritt 1.3, `spikes/httpx-python-314/README.md`) | D.3 – Nachprüfung 2027-03-26 |
 | TypeScript 7 – neue Linie, noch nicht reif | Nachprüfung 2027-01-08 | – | TypeScript-Devblog | D.2 |
+| Starlette-Abkündigung httpx im TestClient; httpx2 mindestreif | 2026-11-12 | – | Starlette 1.7.0, PyPI httpx2 (ADR-015) | D.5 – Wechsel auf httpx2 |
+| mypy 2 – neue Linie, noch nicht reif | Nachprüfung 2026-11-06 | – | PyPI (ADR-015) | D.5 (mit erledigen) |
+| vitest 5 – neue Linie, noch nicht reif | Nachprüfung 2027-03-03 | – | npm-Registry (ADR-015) | D.2 (mit erledigen) |
 | Guthaben des Coding-Agents (250 $, Stand 193 $) | 2026-11-05 08:59 MEZ | 2 Wochen | Angabe des Eigentümers 2026-09-26 | – (kontingentintensive Arbeit vor dem Ablauf einplanen; Schritt anlegen bei Erreichen des Vorlaufs) |
 | Wochenkontingent der KI | wöchentlich, So 10:00 (MESZ) | – | Sitzungsabfrage 2026-09-26 | – |
 
