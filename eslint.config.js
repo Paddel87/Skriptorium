@@ -36,6 +36,17 @@ export default tseslint.config(
           message:
             "Kein ungefiltertes HTML darstellen (Bedrohungsmodell, XSS).",
         },
+        {
+          selector:
+            "AssignmentExpression > MemberExpression.left[property.name=/^(innerHTML|outerHTML)$/]",
+          message:
+            "Kein ungefiltertes HTML darstellen (Bedrohungsmodell, XSS).",
+        },
+        {
+          selector: "CallExpression[callee.property.name='insertAdjacentHTML']",
+          message:
+            "Kein ungefiltertes HTML darstellen (Bedrohungsmodell, XSS).",
+        },
       ],
     },
   },

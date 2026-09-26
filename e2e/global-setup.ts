@@ -12,20 +12,21 @@ export default function globalSetup(): void {
       "python",
       "-c",
       [
-        "import os, sys",
+        "import os",
         "from datetime import UTC, datetime",
         "from pathlib import Path",
         "from skriptorium.api.access import CredentialStore, PasswordHasher",
         "from skriptorium.storage import DocumentStore",
         "store = DocumentStore(Path(os.environ['SKRIPTORIUM_DATA_DIR']))",
-        "CredentialStore(store, PasswordHasher(), lambda: datetime.now(UTC)).set_password(sys.argv[1])",
+        "CredentialStore(store, PasswordHasher(), lambda: datetime.now(UTC)).set_password(os.environ['SKRIPTORIUM_E2E_PASSWORD'])",
       ].join("\n"),
-      E2E_PASSWORD,
     ],
     {
       env: {
         ...process.env,
         SKRIPTORIUM_DATA_DIR: process.env.SKRIPTORIUM_E2E_DATA,
+        // Passed through the environment, not the command line (not visible in the process list).
+        SKRIPTORIUM_E2E_PASSWORD: E2E_PASSWORD,
       },
       stdio: "inherit",
     },

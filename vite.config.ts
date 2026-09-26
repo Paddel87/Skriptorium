@@ -14,7 +14,7 @@ export const CONTENT_SECURITY_POLICY = [
   "img-src 'self' data:",
   "connect-src 'self'",
   "object-src 'none'",
-  "base-uri 'self'",
+  "base-uri 'none'",
   "form-action 'self'",
 ].join("; ");
 
