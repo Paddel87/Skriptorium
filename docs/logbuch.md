@@ -29,12 +29,75 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 20:15 – [SESSIONENDE] Schritte 2.2 bis 2.5 erledigt
+
+- **Dauer:** Fortsetzung 18:30–20:15 UTC (Gesamtsession ab 17:00).
+- **Bearbeitet:** 2.2 (ADR-016, PyYAML), 2.3, 2.4 (Aufteilungsregeln vom Eigentümer bestätigt), 2.5 – alle `[ERLEDIGT]`. FR-002 (bis auf Teilkriterium KI-Anfrage → 3.2), FR-005, FR-007, FR-016 erledigt.
+- **Erreichter Stand:** `storage`, `canon` (mit Import) und `manuscript` durch Umsetzung validiert; 150 Tests, Coverage 100 % (Zeilen und Zweige). CI zu 2.2, 2.3, 2.4 grün (Läufe 61–63).
+- **Offen:** nichts aus 2.2–2.5. Pull Request für 2.2–2.5 auf Wunsch des Eigentümers am Sessionende angelegt und gemergt, sobald die CI grün ist.
+- **Nächster Schritt:** neue Session – 2.6 (api mit Anmeldung) mit `ENTSCHEIDUNG ERFORDERLICH` beginnen (Kategorie 6; danach Prüfung durch eine getrennte Instanz).
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5, eingestellt und bedient laut Sitzungsabfrage 20:14). Schritte oberhalb der Empfehlung: 3 (2.3, 2.4, 2.5 empfehlen Routine; Hinweis an den Eigentümer jeweils vorab). Abgegebene Teilarbeiten: keine (ohne Probelauf nicht zulässig).
+- **Kontextgröße:** 476.937 Token laut Sitzungsabfrage – Grenze 200.000 überschritten mit ausdrücklicher Anweisung des Eigentümers („hier weiter“, „weiter“). Sitzungskosten laut Abfrage ca. 17,38 $ für die Gesamtsession. Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Nächste Schritte); Drift-Prüfung: ADR-016 → 2.2 und 2.7 (Notiz) vorhanden; Modulnamen unverändert; Reifegrade in Abschnitt 9 passen zu ADR-013/015/016 und den Umsetzungs-Vermerken; Anforderungen FR-002/005/007/016 mit Schritt und Status; Reaktiv-Quote 0/10; Phase 2 weiterhin 7 Schritte; Blocker 0. Ablaufdaten-Register ohne fälligen Vorlauf (Guthaben-Vorlauf ab 2026-10-22). Archivierung: kein Trigger (Logbuch 185 Zeilen). project-context unter 600 Zeilen.
+
+### 2026-09-26 20:05 – [REIFEGRAD-WECHSEL] manuscript durch Umsetzung validiert
+
+- Schritt 2.5 erledigt: `ManuscriptService` mit Geschichten (Roman, Kurzgeschichte, Fragment), Kapiteln, Kurzfassungen, Gesamtzusammenfassung, Figuren-Schreibweise (Perspektive, geführte Figuren), Gast-Verbindungen und geschichtenbezogenen Fakten. FR-007 erledigt; FR-012, FR-017, FR-024 haben ihre Felder, Funktion folgt in Phase 3.
+- **Auslegung im Datenmodell:** Kurzgeschichte und Fragment haben genau ein Kapitel (beim Anlegen erzeugt), weil das Datenmodell keine eigene Manuskript-Datei kennt. Verweise auf Kanon-Einträge und die Existenz der Welt prüft `api` (keine Abhängigkeit `manuscript` → `canon` in der Modul-Karte).
+- **Verschiebung zwischen Modulen:** `slugify`/`checked_identifier` von `canon` nach `storage` (additive Erweiterung der `storage`-Exporte; `canon` nutzt sie von dort, Verhalten unverändert, alle Tests grün). Grund: `manuscript` braucht dieselbe Kennungsregel und darf `canon` nicht importieren.
+- **Reibung:** Indexfehler beim Erkennen von Kapiteldateien (Pfad hat 6, nicht 7 Teile) – vom ersten Testlauf gefunden.
+- **Klasse:** 2.5 empfiehlt Routine, lief auf Entscheidung.
+
+### 2026-09-26 19:40 – [REIFEGRAD-WECHSEL] canon.importers durch Umsetzung validiert
+
+- Schritt 2.4 erledigt: Markdown-Import mit Vorschau und bestätigter Übernahme. Aufteilungsregeln dem Eigentümer gezeigt und bestätigt (Antwortsystem): Überschriften → Einträge, Kategorie aus Gruppen-Überschrift oder Zeile `Kategorie:`, Aliasse aus `Aliasse:`/`Auch genannt:`; doppelte Namen überspringen und anzeigen (je Eintrag überschreibbar); Einleitung an die Weltbeschreibung anhängen.
+- `canon.importers` (in ADR-012 `[VORLÄUFIG]`, mit ADR-013 im Modul `canon` `[BELASTBAR]`) jetzt durch Umsetzung validiert. Kategorie-Wörter in `canon.categories` ausgelagert (Refactoring innerhalb des Moduls).
+- **Messung FR-005/FR-022:** 20 Seiten erfundenes Material (über 10.000 Wörter, 100 Einträge) übernimmt das Programm in 0,3 s. Das Risiko aus ADR-012 liegt damit allein bei der Zuordnung durch den Autor; gemessen in 4.8.
+- **Klasse:** 2.4 empfiehlt Routine, lief auf Entscheidung.
+
+### 2026-09-26 19:15 – [REIFEGRAD-WECHSEL] canon durch Umsetzung validiert
+
+- Schritt 2.3 erledigt: `CanonService` (Welten, Kanon-Einträge aller sechs Kategorien, Suche per Namens-/Alias-Präfix). `canon` bleibt `[BELASTBAR]`, jetzt „durch Umsetzung validiert“; Signaturen in `docs/architecture.md` Abschnitt 4 ausformuliert. FR-002 (bis auf Teilkriterium KI-Anfrage → 3.2) und FR-016 erledigt.
+- **Auslegung ohne Datenmodelländerung:** Die Zeitlinie wird wie in der Testwelt aus 1.1 als Eintrag der Kategorie `zeitlinie` geführt, dessen Text die Ereignisse in Reihenfolge auflistet – kein neues Kopffeld für eine Reihenfolge.
+- **Festlegung im Rahmen des Grobvertrags:** Eintrags-Kennungen sind je Welt über alle Kategorien eindeutig (aus dem Namen gebildet); Kategoriewechsel verschiebt die Datei; unbekannte Kopffelder bleiben beim Ändern erhalten.
+- **Klasse:** 2.3 empfiehlt Routine, lief auf Entscheidung (Hinweis an den Eigentümer vorab; keine Abgabe möglich ohne Probelauf).
+
+### 2026-09-26 19:00 – [SESSIONSTART] Fortsetzung mit 2.3 auf Anweisung „weiter“
+
+- Eigentümer hat nach 2.2 „weiter“ angeordnet; Sessiongröße weiter über der Grenze (Ausnahme „weiter hier“ gilt fort).
+
+### 2026-09-26 18:55 – [REIFEGRAD-WECHSEL] storage durch Umsetzung validiert
+
+- `storage` bleibt `[BELASTBAR]`, jetzt „durch Umsetzung validiert“ (Schritt 2.2); `DocumentStore`-Signaturen in `docs/architecture.md` Abschnitt 4 ausformuliert, ohne Operationen hinzuzufügen oder wegzulassen (`list` heißt `list_paths`, weil `list` als Methodenname den eingebauten Typ in Annotationen verdeckt – mypy-Fehler).
+
+### 2026-09-26 18:50 – [PROBLEM-GELÖST] Reibungen in 2.2
+
+- **bandit B506** meldet `yaml.load` auch mit einer Unterklasse von `SafeLoader`. Lösung ohne Unterdrückung: Lader direkt instanziieren (`get_single_data`, `dispose`) – gleiche Wirkung wie `yaml.load`.
+- **Strenger Lader nachgeschärft:** Der sichere Lader von PyYAML macht aus `2026-09-26` ein Datum und kennt `!!binary`/`!!set`; Datumsangaben bleiben jetzt Text, andere Nicht-Grundwerte ergeben `InvalidInput`. `y`/`n` sind bei PyYAML keine Wahrheitswerte (Test angepasst).
+- **Namensregel ruff N818** verlangt `…Error`-Suffix; die Fehlernamen sind im Schnittstellenvertrag festgelegt → Unterdrückung je Klasse mit Begründung.
+
+### 2026-09-26 18:40 – [ADR-ANGELEGT] ADR-016
+
+- YAML-Parser PyYAML 6.0.3 (Option A), Freigabe des Eigentümers per Antwortsystem. `[OPERATIV]`; Reaktiv-Quote 0/10.
+
+### 2026-09-26 18:35 – [BEOBACHTUNG] 2.2 vorbereitet – YAML-Parser im Probelauf
+
+- PyYAML 6.0.3 (`safe_load`) liest handgeschriebene Werte nach YAML 1.1: Alias `No` → `False`, `On` → `True`, `status: off` → `False`, `012` → `10`. ruamel.yaml 0.19.1 (YAML 1.2) liest sie als Text bzw. `12`, schreibt `No` aber ungequotet – ein YAML-1.1-Leser macht daraus wieder `False`. PyYAML `safe_dump` setzt mehrdeutige Werte in Anführungszeichen.
+- ruamel.yaml erhält beim Zurückschreiben Kommentare und Reihenfolge; PyYAML verwirft Kommentare.
+- Pflegestand: PyYAML letzte Version 2025-09-25, Linie 6 seit 2021; ruamel.yaml letzte Version 2026-01-02, ein Hauptentwickler, Quellen auf SourceForge. Typen: ruamel.yaml bringt eigene mit; PyYAML braucht `types-PyYAML` (Apache-2.0).
+
+### 2026-09-26 18:30 – [SESSIONSTART] Fortsetzung auf Anweisung „hier weiter“
+
+- **Abweichung:** Sessiongröße 227.497 Token über der Grenze 200.000; der Eigentümer hat ausdrücklich „hier weiter“ angeordnet (`CLAUDE.md` Abschnitt 0, Ausnahme).
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 18:15) → Entscheidungs-Klasse; 2.2 empfiehlt Entscheidung.
+- PR #4 gemergt; Branch `claude/neue-session-2-1-uupwbh` neu von `main` (`353aa61`) aufgesetzt.
+
 ### 2026-09-26 18:20 – [SESSIONENDE] Schritt 2.1 erledigt
 
 - **Dauer:** 17:00–18:20 UTC.
 - **Bearbeitet:** 2.1 `[ERLEDIGT]` (ADR-015 mit Nachtrag ShellCheck); neuer Querschnitt-Schritt D.5 (httpx2, mypy 2; Frist 2026-11-12); Zusatz in D.2 (vitest 5, typescript-eslint).
 - **Erreichter Stand:** Projektgerüst mit `/api/health`, Oberflächen-Gerüst, alle Pflicht-Gates in Pre-Commit und CI scharf; CI-Lauf 56 grün (Pre-Commit, Python, TypeScript), Protokolle ohne Warnungen. Nebenbefund behoben: ruff 0.16 formatierte auch Python-Blöcke in Markdown – Markdown vom Formatter ausgenommen (wie `.prettierignore`).
-- **Offen:** nichts aus 2.1. Branch `claude/neue-session-2-1-uupwbh` ist gepusht, Pull Request noch nicht angelegt (auf Anweisung des Eigentümers).
+- **Offen:** nichts aus 2.1. Branch `claude/neue-session-2-1-uupwbh` gepusht; Pull Request #4 danach vom Eigentümer angelegt und gemergt (Korrektur 18:35).
 - **Nächster Schritt:** neue Session – 2.2 mit `ENTSCHEIDUNG ERFORDERLICH` zum YAML-Parser beginnen. Der SessionStart-Hook wirkt erst, wenn er auf `main` liegt.
 - **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5, eingestellt und bedient laut Sitzungsabfrage 17:00 und 18:15). Schritte oberhalb der Empfehlung: 0 (2.1 empfiehlt Entscheidung). Abgegebene Teilarbeiten: keine (Routine-Klasse ohne Probelauf).
 - **Kontextgröße:** 227.497 Token laut Sitzungsabfrage – Grenze 200.000 überschritten, daher kein neuer Schritt. Sitzungskosten laut Abfrage ca. 3,33 $. Wochenlimit weiter `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.

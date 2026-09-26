@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -35,12 +35,13 @@ Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 013 | 2026-09-26 | Aktiv | ERKENNTNIS | MODUL, SCHNITTSTELLE, DATENMODELL, PERFORMANCE | Architektur | Reifegrad-Beförderung vor Phase 2, neues Reaktionszeit-Ziel |
 | 014 | 2026-09-26 | Aktiv | STRATEGISCH | METHODIK | Pflichtfrage Phasenende | Phasenende 1 – weiterbauen |
 | 015 | 2026-09-26 | Aktiv | OPERATIV | STACK, METHODIK | Externe Abh., Build-Pipeline, Lizenz | Entwicklungswerkzeuge, Linien ohne Patch-Versionen, Werkzeug-Lizenzen, Starlette-Abkündigung |
+| 016 | 2026-09-26 | Aktiv | OPERATIV | STACK, DATENMODELL | Externe Abh. | YAML-Parser für den Dateikopf – PyYAML |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 0 / 10 (0 %) über ADR-006 bis ADR-015 – ADR-006 bis ADR-009 aus der Initialisierung (Modus 2), ADR-010 bis ADR-014 aus Phase 1 (Erkundung), ADR-015 aus Phase 2 (operativ, geplant in 2.1); keiner reaktiv.
+- **Aktueller Wert:** 0 / 10 (0 %) über ADR-007 bis ADR-016 – ADR-007 bis ADR-009 aus der Initialisierung (Modus 2), ADR-010 bis ADR-014 aus Phase 1 (Erkundung), ADR-015 und ADR-016 aus Phase 2 (operativ, geplant in 2.1 bzw. 2.2); keiner reaktiv.
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -473,6 +474,29 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
   - Nachprüfung mypy 2 und vitest 5 bei Mindestreife (2026-11-06 bzw. 2027-03-03) über das Ablaufdaten-Register.
 - **Abgeleitete Regel:** Zusatz zu Regel-001 (Teil C)
 - **Nachtrag 2026-09-26 (Eigentümer):** ShellCheck als lokaler Pre-Commit-Hook über das PyPI-Paket shellcheck-py 0.11.0.1 in der Entwicklungsgruppe (ShellCheck 0.11.0, MIT, erschienen 2025-08-09) aufgenommen – der Hook aus dem Git-Repository von shellcheck-py scheiterte, weil sein Bau das Programm von GitHub lädt, was die Arbeitsumgebung sperrt – Pflicht G aus `CLAUDE.md` Abschnitt 15 für `scripts/session-start.sh` (über der Komplexitätsschwelle). Versionswahl nach dem Zusatz zu Regel-001: ShellCheck liefert Korrekturen als Unterversionen (0.9, 0.10, 0.11 ohne Fehlerkorrektur-Version), daher die neueste Version.
+
+---
+
+#### ADR-016: YAML-Parser für den Dateikopf – PyYAML
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[OPERATIV]` `[STACK]` `[DATENMODELL]`
+- **Phasentyp-Kontext:** UMSETZUNG (Schritt 2.2)
+- **Reifegrad-Wirkung:** keine (storage bleibt `[BELASTBAR]`; Beförderung durch Umsetzung in 2.2)
+- **Kategorie:** Externe Abhängigkeiten (3)
+- **Kontext:** `storage` liest und schreibt den YAML-Kopf der Markdown-Dateien (`docs/architecture.md` Abschnitt 7); die Standardbibliothek hat keinen YAML-Parser. Probelauf auf Python 3.14.7 (Logbuch 18:35): PyYAML 6.0.3 liest nach YAML 1.1 (`No` → `False`, `012` → `10`), schreibt mehrdeutige Werte aber gequotet; ruamel.yaml 0.19.1 liest nach YAML 1.2 und erhält Kommentare, schreibt `No` aber ungequotet.
+- **Optionen:**
+  - **A:** PyYAML 6.0.3 (MIT) mit `types-PyYAML` 6.0.12.20260906 (Apache-2.0, nur Typprüfung); Lesen mit einem strengen sicheren Lader, der mehrdeutige Werte (YAML-1.1-Wahrheitswörter außer `true`/`false`, Zahlen mit führender Null, Unterstrich, Sexagesimal-, Oktal-, Hex- oder Binärschreibweise) mit `InvalidInput` ablehnt – Konsequenzen: eindeutige Dateien für jeden Leser; handgeschriebene Kommentare im Kopf gehen beim Speichern verloren.
+  - **B:** ruamel.yaml 0.19.1 (MIT, YAML 1.2) – Konsequenzen: Kommentare und Reihenfolge bleiben erhalten; YAML-1.1-Leser können geschriebene Werte anders deuten; ein Hauptentwickler.
+- **Entscheidung:** A.
+- **Vision-Frage, die entschied:** „Wirst du die Welt- und Kapiteldateien außerhalb des Skriptoriums von Hand bearbeiten und dabei Kommentare in den Dateikopf schreiben?" → Antwort des Eigentümers: Option A (PyYAML) gewählt.
+- **Konfidenz zum Zeitpunkt:** mittel-hoch – beide im Probelauf geprüft; Umkehrbarkeit billig (Parser steckt allein hinter `DocumentStore`, Dateien bleiben gewöhnliches YAML).
+- **Konsequenzen:**
+  - Laufzeit-Abhängigkeit `pyyaml>=6.0.3,<7`, Entwicklungs-Abhängigkeit `types-pyyaml` (Datumsversion von typeshed, Regel-001: neueste).
+  - Kommentare im Dateikopf werden beim Zurückschreiben nicht erhalten; im Onboarding bzw. Nutzerhinweis vermerken, sobald die Oberfläche das Bearbeiten erlaubt (2.7).
+- **Abgeleitete Regel:** keine
 
 ---
 

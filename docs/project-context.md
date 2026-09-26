@@ -45,6 +45,7 @@ Auswahl nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15, „Versi
   - httpx 0.28 (0.28.1) — Verifiziert: 2026-09-26, Quelle: PyPI; Python 3.14 nicht offiziell deklariert; auf 3.14.7 validiert (Schritt 1.3: Streaming, Timeout, Abbruch, sync und async, `-W error`); Nachprüfung im Ablaufdaten-Register
   - React und react-dom 19.2 (19.2.8) — Verifiziert: 2026-09-26, Quelle: npm-Registry, react.dev/versions
   - Vite 8.3 (8.3.1) und @vitejs/plugin-react 6.1 (6.1.1) — Verifiziert: 2026-09-26, Quelle: npm-Registry, vite.dev/releases
+  - PyYAML 6.0 (6.0.3, gepinnt `<7`) — Verifiziert: 2026-09-26, Quelle: PyPI; Dateikopf in `storage` (ADR-016)
   - CodeMirror 6 (@codemirror/state 6.7.6, view 6.43.13, autocomplete 6.20.3, lang-markdown 6.5.2) — Verifiziert: 2026-09-26, Quelle: npm-Registry
 - **Datenbank / Speicher:** Markdown-Dateien mit YAML-Kopf als Quelle der Wahrheit; SQLite (in Python enthalten, Version folgt Python 3.14) als abgeleiteter, jederzeit neu aufbaubarer Suchindex – ADR-003
 - **Laufzeitumgebung:** Node.js 24 LTS (24.21.0) nur für Build und Entwicklung der Oberfläche — Verifiziert: 2026-09-26, Quelle: nodejs.org, Release-Plan `schedule.json`. Betrieb: Python 3.14 mit uvicorn auf einem VPS (ADR-006), Anbieter in Schritt 4.2
