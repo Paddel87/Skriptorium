@@ -15,7 +15,7 @@
 - **Dokumentationssprache:** Deutsch
 - **Codesprache (Kommentare, Variablennamen):** Englisch (Eigentümer, 2026-09-26); Fachbegriffe einheitlich: world, canon, canon entry, story, manuscript, guest character
 - **Projekttyp:** Full-Stack (Web-App: Python-Server, TypeScript-Oberfläche)
-- **Projektgrößen-Klasse:** M (Hypothese aus Modus 2 Schritt 1, Bestätigung nach Schritt 4, ADR-001)
+- **Projektgrößen-Klasse:** M – bestätigt nach der Architektur (Modus 2 Schritt 4) vom Eigentümer am 2026-09-26, ADR-001
 
 <!-- ANCHOR:zielgruppe-und-nutzungskontext -->
 ## 2. Zielgruppe und Nutzungskontext
@@ -104,13 +104,15 @@ Entwicklung erfolgt durch den Coding-Agent; der Eigentümer entwickelt nicht sel
 
 ### Datenschutz
 
-- Welten und Texte sind fiktionale Inhalte des Eigentümers; Übermittlung an kommerzielle KI-APIs ist zulässig (Vision Abschnitt 6). Schutzbedarf: [TBD nach Modus 2 Schritt 4a].
+- Welten und Texte sind fiktionale Inhalte des Eigentümers; Übermittlung an kommerzielle KI-APIs ist zulässig (Vision Abschnitt 6). Schutzbedarf: normal (ADR in Modus 2 Schritt 5).
 - Keine Inhalte aus Welten oder Manuskripten in Server-Logs → Regel: Logs enthalten nur Metadaten (Zeit, Endpunkt, Status, Modell, Token-Zahlen).
 
 ### Sicherheit
 
 - API-Schlüssel der KI-Anbieter liegen ausschließlich serverseitig in Umgebungsvariablen, nie im Browser, im Repo oder in Logs.
-- Weitere Regeln (Zugangsschutz, Sicherheitsniveau): [TBD nach Modus 2 Schritt 4a].
+- Sicherheitsniveau OWASP ASVS 5.0.0 Stufe 1, Authentifizierung und Sitzung Stufe 2 → Regel: jede Sicherheitsmaßnahme nennt die ASVS-Anforderung, die sie erfüllt; alles darüber hinaus wird dem Eigentümer als optional vorgelegt.
+- Alle Endpunkte außer Gesundheitsprüfung und Anmeldung verlangen eine gültige Sitzung.
+- Der OpenRouter-Schlüssel trägt eine Ausgabengrenze beim Anbieter.
 
 ### Performance und Kosten
 
@@ -132,7 +134,7 @@ Entwicklung erfolgt durch den Coding-Agent; der Eigentümer entwickelt nicht sel
 ### Anforderungen, Schutzbedarf, Kosten
 
 - **`docs/requirements.md`:** angelegt (Klasse M), bestätigt am 2026-09-26.
-- **Schutzbedarf:** [TBD nach Modus 2 Schritt 4a]
+- **Schutzbedarf:** normal (Eigentümer, 2026-09-26)
 - **Kostenrahmen:** siehe Abschnitt 8.
 
 ### Methodik-Schwellenwerte
@@ -144,7 +146,7 @@ Entwicklung erfolgt durch den Coding-Agent; der Eigentümer entwickelt nicht sel
   - **Routine-Klasse:** Claude Sonnet 5 – Probelauf: offen (bis dahin übernimmt die Entscheidungs-Klasse)
   - **Entscheidungs-Klasse:** Claude Opus, aktuelle Linie (Stand 2026-09-26: Opus 5.5) – stärkstes regulär eingesetztes Modell
   - **Ausnahme-Klasse:** Claude Fable 5.1 – nur auf Vorschlag mit Freigabe
-  - **Bezugsmodell und knappe Ressource:** [TBD nach Modus 2 Schritt 4a – Frage „Über welches Konto arbeitet die KI, und wann setzt sich ihr Nutzungskontingent zurück?"; Sitzungsabfrage vom 2026-09-26 meldet ein Wochenlimit mit Zurücksetzung So 10:00 (MESZ)]
+  - **Bezugsmodell und knappe Ressource:** Abo (Max 5x); knapp ist das Wochenkontingent, Zurücksetzung sonntags 10:00 (MESZ), dazu ein Kurzzeitlimit je 5 Stunden (Eigentümer, 2026-09-26; Sitzungsabfrage bestätigt den Zeitpunkt)
   - **Abgabe an Unteragenten:** Claude Code – Modell je Unteragenten-Aufruf oder als `model:` in der Agent-Definition. Abgabe an niedrigere Klassen erst nach bestandenem Probelauf.
   - **Meldet die Laufzeitumgebung das Modell / das Kontingent?** Stand 2026-09-26: Sitzungsabfrage meldet eingestelltes und bedientes Modell, Kontextgröße und den Status des Wochenlimits mit Zurücksetz-Zeitpunkt.
   - **Preise je Klasse** (Listenpreis je 1 Mio. Token, Eingabe / Ausgabe / Cache-Lesen, Stand 2026-06-24, übernommen aus der Referenz des Werkzeugs): Mechanik 1 $ / 5 $ / 0,10 $; Routine 2 $ / 10 $ / 0,20 $; Entscheidung 4 $ / 20 $ / 0,20 $; Ausnahme 10 $ / 50 $ / 0,25 $. Folge: an die Mechanik-Klasse auch Lesearbeit; an die Routine-Klasse nur ausgabelastige Arbeit.
@@ -216,15 +218,15 @@ Kein Bestand – Default „Warnungen sind Fehler".
 <!-- ANCHOR:betrieb-und-deployment -->
 ## 8. Betrieb und Deployment
 
-- **Deployment-Ziel:** [TBD nach Modus 2 Schritt 4a]
-- **CI/CD:** GitHub Actions, `.github/workflows/ci.yml`. Deployment-Workflow: [TBD nach Modus 2 Schritt 4a]
-- **Umgebungen:** lokal (Cloud-Session des Coding-Agents) → [TBD nach Modus 2 Schritt 4a]
-- **Monitoring:** [TBD nach Modus 2 Schritt 4a]
+- **Deployment-Ziel:** kleiner gemieteter Server (VPS), öffentlich erreichbar mit Passwortschutz (Eigentümer, 2026-09-26); Anbieter [TBD im Gate-Schritt vor dem ersten öffentlichen Deployment]
+- **CI/CD:** GitHub Actions, `.github/workflows/ci.yml`. Deployment-Workflow: [TBD im Gate-Schritt – bis dahin kein Deployment]
+- **Umgebungen:** lokal (Cloud-Session des Coding-Agents) → Produktion (VPS)
+- **Monitoring:** Erreichbarkeits-Prüfung von außen [TBD im Gate-Schritt]; Kosten je Monat in der Oberfläche
 - **Logging-Level Default:** `INFO` im Betrieb, `DEBUG` nur lokal; keine Inhalte aus Welten oder Manuskripten (Abschnitt 6)
-- **Vertretung:** [TBD nach Modus 2 Schritt 4a]
+- **Vertretung:** Verzicht – niemand; Stillstand ist zulässig, Daten bleiben in den Sicherungen (Eigentümer, 2026-09-26; ADR in Modus 2 Schritt 5 mit benanntem Restrisiko)
 - **Notfall-Handbuch:** `docs/onboarding-runbook.md` Abschnitt „Notfall" – [TBD, anzulegen vor dem ersten öffentlichen Deployment]
-- **KI im Betrieb:** [TBD nach Modus 2 Schritt 4a]
-- **Zugriff der KI auf die Produktion:** [TBD nach Modus 2 Schritt 4a]
+- **KI im Betrieb:** Coding-Agent über Claude-Abo Max 5x des Eigentümers; Wochenlimit mit Zurücksetzung sonntags 10:00 (MESZ) plus 5-Stunden-Limit. Rückfallweg ohne KI: Das Skriptorium läuft ohne den Coding-Agent weiter; Neustart und Wiederherstellung nach Notfall-Handbuch. Die KI-Anbieter im Produkt (OpenRouter) sind davon getrennt und über den Kostenrahmen begrenzt.
+- **Zugriff der KI auf die Produktion:** vorerst keiner; Festlegung im Gate-Schritt
 - **Unbeaufsichtigtes Handeln der KI:** nein
 
 ### Ablaufdaten-Register

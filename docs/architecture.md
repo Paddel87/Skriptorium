@@ -148,7 +148,7 @@ Alle Verträge sind `[VORLÄUFIG]` seit 2026-09-26 und werden in der Umsetzung v
 
 - **Typ:** HTTP-REST (JSON) plus Server-Sent Events für KI-Streaming
 - **Anbieter:** `api`; **Konsument:** `ui`
-- **Sicherheit:** Zugangsschutz für alle Endpunkte außer Gesundheitsprüfung [TBD nach Modus 2 Schritt 4a]
+- **Sicherheit:** Anmeldung mit Passwort und Sitzungs-Cookie für alle Endpunkte außer Gesundheitsprüfung und Anmeldung (ASVS Stufe 2 für Authentifizierung und Sitzung)
 - **Versionierung:** keine – Oberfläche und Server werden immer gemeinsam ausgeliefert
 
 <!-- ANCHOR:datenfluss -->
@@ -195,7 +195,27 @@ Alle Verträge sind `[VORLÄUFIG]` seit 2026-09-26 und werden in der Umsetzung v
 
 ### Security
 
-[TBD nach Modus 2 Schritt 4a – Sicherheitsgrundriss]
+Angelegt im Sicherheitsgrundriss (Modus 2 Schritt 4a, 2026-09-26). Das System wird **öffentlich im Internet mit Passwortschutz** betrieben (Entscheidung des Eigentümers); das Gate vor dem ersten öffentlichen Deployment (CLAUDE.md Abschnitt 12) gilt vollständig.
+
+- **Sicherheitsniveau:** OWASP ASVS 5.0.0 Stufe 1 für die gesamte Anwendung; für Authentifizierung und Sitzungsverwaltung Stufe 2 – ADR [TBD in Modus 2 Schritt 5] `[BELASTBAR]` nach ADR. Obergrenze für allen Sicherheitsaufwand (CLAUDE.md Abschnitt 6).
+- **Bedrohungsmodell (Gesamtsystem):** `[VORLÄUFIG]`
+  - **Schützenswerte Güter:** (1) API-Schlüssel der KI-Anbieter – höchster Wert, weil Missbrauch direkt Geld kostet; (2) Welten und Manuskripte – Schutzbedarf normal; (3) Verfügbarkeit – gering, Stillstand ist zulässig.
+  - **Angreifer:** automatisierte Internet-Scanner und Bots; Passwort-Rater (Credential Stuffing); opportunistische Ausnutzung ungepatchter Software. Kein gezielter Angreifer mit großen Mitteln angenommen.
+  - **Bedrohungen und Gegenmaßnahmen:**
+    - Passwort-Raten → ein starkes Passwort (Passphrase), gehasht mit einem aktuellen Verfahren; Sperre bzw. Verzögerung nach Fehlversuchen; Anmeldung nur über TLS.
+    - Sitzungsdiebstahl über eingeschleustes Skript (XSS) → Markdown-Darstellung ohne ungefiltertes HTML, Content-Security-Policy, Sitzungs-Cookie `HttpOnly`, `Secure`, `SameSite=Strict`.
+    - Fremdaufrufe im Namen des Nutzers (CSRF) → `SameSite=Strict` und Prüfung der Herkunft bei ändernden Anfragen.
+    - Abfluss des API-Schlüssels → nur serverseitig in Umgebungsvariablen, nie im Browser, Repo oder Log; **Ausgabengrenze am Schlüssel bei OpenRouter** begrenzt den Schaden.
+    - Übernahme des Servers über ungepatchte Software → automatische Sicherheitsupdates, Firewall, SSH nur mit Schlüssel (Rubrik Host).
+    - Datenverlust (Fehlbedienung, Defekt, Angriff) → Sicherungen mit erprobter Wiederherstellung (Rubrik Backups).
+    - Anweisungen in importiertem Material (Prompt Injection) → Wirkung bleibt auf den eigenen KI-Text beschränkt, da die KI keine Werkzeuge ausführt; bewusst nicht weiter abgedeckt.
+  - **Bewusst nicht abgedeckt:** gezielte Angriffe mit großen Mitteln; Zugriff durch den Hosting-Anbieter; Vertraulichkeit gegenüber dem KI-Anbieter (Übermittlung ist laut Vision zulässig).
+- **Schutzmaßnahmen:** siehe Bedrohungsmodell; Umsetzung im Modul `api` (Anmeldung, Sitzung, Herkunftsprüfung) und `ui` (Darstellung ohne ungefiltertes HTML).
+- **Sensitive Datenflüsse:** API-Schlüssel: Umgebungsvariable → `ai_gateway` → HTTPS zum Anbieter. Passwort-Hash: Konfiguration des Servers. Texte: Browser ↔ Server (TLS) → Anbieter (HTTPS).
+- **Host:** [TBD – Anbieter und Härtung im Gate-Schritt vor dem ersten öffentlichen Deployment; Pflicht: Firewall, SSH nur mit Schlüssel, automatische Sicherheitsupdates, Prüfung von außen] `[OFFEN]`
+- **Netz:** von außen nur HTTPS (443) und die Umleitung von HTTP (80); SSH [TBD im Gate-Schritt]; TLS-Zertifikat automatisch erneuert `[VORLÄUFIG]`
+- **Secrets im Betrieb:** API-Schlüssel und Passwort-Hash als Umgebungsvariablen auf dem Server; Rotationsweg: neuen Schlüssel bei OpenRouter erzeugen, eintragen, alten widerrufen [TBD – Ablageort im Gate-Schritt]. Kein Zugriff der KI auf Produktions-Secrets. `[OFFEN]`
+- **Backups und Wiederherstellung:** Datenverzeichnis (Markdown-Dateien) täglich außerhalb des Servers sichern; Index wird nicht gesichert, sondern neu aufgebaut. Ziel und Verfahren [TBD im Gate-Schritt]; Beförderung erst nach erprobter Wiederherstellung. `[OFFEN]`
 
 ### Observability
 
@@ -205,7 +225,10 @@ Alle Verträge sind `[VORLÄUFIG]` seit 2026-09-26 und werden in der Umsetzung v
 
 ### Datenschutz
 
-[TBD nach Modus 2 Schritt 4a – Schutzbedarf]
+- **Schutzbedarf:** normal für Welten und Manuskripte („unangenehm, kein Schaden", Eigentümer 2026-09-26) – ADR [TBD in Modus 2 Schritt 5] `[BELASTBAR]` nach ADR. Obergrenze für alle Datenschutz-Maßnahmen.
+- **Datenkategorien:** fiktionale Texte des Eigentümers; personenbezogen sind nur Zugangsdaten des einen Nutzers. Keine Daten Dritter.
+- **Speicherort:** Datenverzeichnis auf dem Server; Sicherungen [TBD im Gate-Schritt]; Übermittlung von Ausschnitten an KI-Anbieter (Vision Abschnitt 6).
+- **Retention und Löschung:** nach Wunsch des Eigentümers; keine gesetzliche Löschpflicht gegenüber Dritten.
 
 <!-- ANCHOR:datenmodell -->
 ## 7. Datenmodell
@@ -265,7 +288,11 @@ data/
 | NFR Token-Budget | VORLÄUFIG | 2026-09-26 | Erkundungsschritt |
 | NFR Kontexttreue Referenzumfang | OFFEN | 2026-09-26 | Geschichte ≥ Referenzumfang |
 | NFR Kanon-Treue | OFFEN | 2026-09-26 | Schreibbetrieb, Vorprüfung im Erkundungsschritt |
-| Security und Datenschutz | OFFEN | 2026-09-26 | Modus 2 Schritt 4a |
+| Sicherheitsniveau ASVS 5.0.0 L1 / Auth L2 | VORLÄUFIG | 2026-09-26 | ADR in Modus 2 Schritt 5 |
+| Bedrohungsmodell Gesamtsystem | VORLÄUFIG | 2026-09-26 | Gate-Schritt vor erstem öffentlichen Deployment |
+| Schutzbedarf normal | VORLÄUFIG | 2026-09-26 | ADR in Modus 2 Schritt 5 |
+| Host, Secrets im Betrieb, Backups | OFFEN | 2026-09-26 | Gate-Schritt vor erstem öffentlichen Deployment |
+| Netz (nur HTTPS von außen) | VORLÄUFIG | 2026-09-26 | Gate-Schritt |
 
 <!-- ANCHOR:tooling-inventar -->
 ## 10. Tooling-Inventar
