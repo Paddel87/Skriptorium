@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -39,12 +39,13 @@ Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 017 | 2026-09-26 | Aktiv | OPERATIV | SECURITY, SCHNITTSTELLE, DATENMODELL | Sicherheit, Datenmodell, API, Externe Abh., Lizenz | Anmeldung und Sitzung – selbst gewähltes Passwort ohne zweiten Faktor |
 | 018 | 2026-09-26 | Aktiv | REAKTIV | MODUL, SECURITY | Architektur | Beziehungen api → storage (Zugangsdaten) und api → Pwned Passwords |
 | 019 | 2026-09-26 | Aktiv | OPERATIV | STACK, METHODIK | Externe Abh., Build-Pipeline | Test-Werkzeuge der Oberfläche – Testing Library, jsdom, Playwright |
+| 020 | 2026-09-26 | Aktiv | STRATEGISCH | METHODIK | Pflichtfrage Phasenende | Phasenende 2 – weiterbauen, Abläufe in 3.3 aus den Routen heraushalten |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 1 / 10 (10 %) über ADR-010 bis ADR-019 – ADR-010 bis ADR-014 aus Phase 1 (Erkundung), ADR-015 bis ADR-017 und ADR-019 aus Phase 2 (operativ, geplant in 2.1, 2.2, 2.6, 2.7); reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
+- **Aktueller Wert:** 1 / 10 (10 %) über ADR-011 bis ADR-020 – ADR-011 bis ADR-014 aus Phase 1 (Erkundung), ADR-015 bis ADR-017 und ADR-019 aus Phase 2 (operativ, geplant in 2.1, 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2; reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -561,7 +562,7 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Konfidenz zum Zeitpunkt:** hoch – kleine, klar abgegrenzte Beziehung; Umkehrbarkeit billig (Auslagerung in ein eigenes Modul jederzeit möglich).
 - **Konsequenzen:**
   - Modul-Karte: `API -.->|nur system/| STORE` und `API -.->|HTTPS| HIBP`. Leitregel ergänzt: `storage` bleibt die einzige Stelle, die Dateien berührt; `api` schreibt dort nur unter `system/`.
-  - `api` hat damit Abhängigkeiten zu fünf Modulen; der Smell „Gott-Modul" (Heuristik 1.4) wird beim Phasenende 2 mitgeprüft.
+  - `api` hat damit Abhängigkeiten zu fünf Modulen; der Smell „Gott-Modul" (Heuristik 1.4) wird beim Phasenende 2 mitgeprüft (geprüft: ADR-020).
 - **Abgeleitete Regel:** keine
 
 ---
@@ -589,6 +590,27 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
   - Nachprüf-Einträge im Ablaufdaten-Register: jsdom 30 (mindestreif ab 2027-01-27).
   - Nachtrag nach Freigabe des Eigentümers: @types/node 24.19.0 (MIT, nur Typen, Linie Node 24) für die Typprüfung der E2E-Dateien und der Playwright-Konfiguration.
   - Lizenzen (Kategorie 8, Nachtrag nach Freigabe des Eigentümers): MIT-0 (`@csstools/color-helpers`, `@csstools/css-syntax-patches-for-csstree`) und CC0-1.0 (`mdn-data`) kommen transitiv über jsdom; erlaubt nur für Werkzeuge.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-020: Phasenende 2 – weiterbauen, Abläufe in 3.3 aus den Routen heraushalten
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[STRATEGISCH]` `[METHODIK]`
+- **Phasentyp-Kontext:** UMSETZUNG (Phasenende)
+- **Reifegrad-Wirkung:** keine
+- **Kategorie:** Pflichtfrage am Phasenende (`CLAUDE.md` Abschnitt 12, „Weiterbauen, umbauen oder neu aufsetzen")
+- **Kontext:** Abschluss von Phase 2 (UMSETZUNG, Schritte 2.1–2.7). Bewertung durch eine getrennte Prüf-Instanz (Unteragent mit Claude Sonnet 5, anderes Modell als die bauende KI, ohne Gesprächsverlauf und ohne Logbuch; erhielt Code, Tests, Konfiguration, Architektur, ADRs, Fahrplan Phase 2/3 und Querschnitt, Vision, Anforderungen; führte Tests und Linter selbst aus), 2026-09-26. Vision-Re-Derivations-Pass und Onboarding-Re-Validation im selben Arbeitsgang ohne Befund (Logbuch 2026-09-26 21:00 und Sessionende).
+- **Bewertung der Prüf-Instanz (zusammengefasst, unverändert in der Aussage):** Weiterbauen, Konfidenz hoch. Belege: Modulgrenzen an den tatsächlichen Imports eingehalten; 224/224 Python-Tests (99,94 %), 32/32 Komponenten-Tests; ruff, mypy, eslint, tsc fehlerfrei; keine TODO-Marker, sieben begründete `noqa`; Datenmodell trägt Phase 3 (Gast-Verbindungen, geschichtenbezogene Fakten, Kurzfassungen); Reaktiv-Quote 1/10. Befunde: (1) `data/index.sqlite` im Git-Index trotz `.gitignore` – niedrig; (2) `spikes/` mit ca. 1,4 MB Rohdaten – niedrig; (3) `context` und `ai_gateway` noch ohne Code, Kernrisiko liegt in Phase 3 – mittel; (4) die in ADR-018 angekündigte Prüfung „Gott-Modul" für `api` (1.418 Zeilen) nicht dokumentiert, Phase 3 bringt weitere Ablauf-Steuerung – mittel; (5) Kontexttreue bei Referenzumfang und Tempo von `storage` ungeprüft, korrekt als `[OFFEN]` mit D.4 geführt – mittel; (6) Sitzungen im Speicher, Neustart während des Schreibens – niedrig. Umbau: kein Fachcode betroffen, nur (1) beheben und (4) nachholen. Neu aufsetzen: kein Beleg.
+- **Stellungnahme der bauenden KI:** Zu (1) Zustimmung; Index geprüft, alle Tabellen leer, seit `53071f0` im Git-Index – wird aus dem Git-Index genommen (Datei bleibt lokal). Zu (2) Widerspruch: Die Rohdaten sind der Beleg für ADR-010 und ADR-011 und werden aus `docs/research/` verlinkt; sie bleiben. Zu (4) Prüfung nach Heuristik 1.4 nachgeholt: `api` kennt alle Fachmodule nach Entwurf (Ablauf-Steuerung liegt laut `docs/architecture.md` Abschnitt 2 in `api`, damit zwischen Fachmodulen keine Zyklen entstehen); die Routen sind dünn (`canon_routes.py` und `manuscript_routes.py` zusammen 8 Verzweigungen, Fachlogik in `canon`/`manuscript`) – heute kein Gott-Modul. Das Risiko entsteht, wenn Streaming, Kurzfassung nach Kapitelabschluss und Fakt → Kanon direkt in den Routen landen. Gegenmittel: Pflichtnotiz an 3.3, Abläufe in ein Untermodul `api.flows` zu legen (Umbau innerhalb eines Moduls). Ergänzung: `pre-commit install` in einem Worktree biegt den Hook des Haupt-Repositorys auf die Umgebung des Worktrees um – Runbook-Hinweis.
+- **Optionen:** A weiterbauen mit zwei Aufräumarbeiten / B `api` vorab in Routen und Ablauf-Steuerung aufteilen / C neu aufsetzen.
+- **Entscheidung:** A – weiterbauen; `data/index.sqlite` aus dem Git-Index nehmen; Notiz „Abläufe in `api.flows`, nicht in die Routen" an 3.3.
+- **Vision-Frage, die entschied:** „Soll es jetzt direkt mit dem Schreiben mit KI weitergehen, oder vorher eine Session für vorsorglichen Umbau?" → Antwort des Eigentümers: Empfehlung A.
+- **Konfidenz zum Zeitpunkt:** hoch für „nicht neu aufsetzen" (Prüf-Instanz und bauende KI übereinstimmend); mittel für „Aufteilung von `api` erst in 3.3 reicht" (Wachstum erst an echten Abläufen messbar). Umkehrbarkeit billig (Umbau innerhalb eines Moduls).
+- **Konsequenzen:** Phase 3 beginnt mit Schritt 3.1; keine Umbau- oder Neuaufbau-Schritte. 3.3 trägt die Pflichtnotiz; beim Phasenende 3 wird `api` erneut auf Heuristik 1.4 geprüft.
 - **Abgeleitete Regel:** keine
 
 ---
