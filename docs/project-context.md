@@ -1,92 +1,87 @@
-# Project Context
+# Project Context – Skriptorium
 
 <!-- Projektspezifischer Kontext. Wird zu Sessionbeginn als erste Datei gelesen.
      Dient als Entscheidungsgrundlage für alle autonomen Schritte der KI.
-     Jede Angabe muss so konkret sein, dass daraus maschinell eindeutig Regeln ableitbar sind. -->
+     Befüllt in Modus 2 (templates/projektstart.md Abschnitt 1.3), Klassen-Hypothese M.
+     Recherchen liegen ausgelagert unter docs/research/ (CLAUDE.md Abschnitt 2, Größen-Budget). -->
 
 <!-- ANCHOR:kerndaten -->
 ## 1. Kerndaten
 
-- **Projektname:** [ausfüllen]
-- **Kurzbeschreibung:** [1–2 Sätze: was das System tut und für wen]
-- **Status:** [Konzeption | Aufbau | aktive Entwicklung | Wartung | deprecated]
-- **Version (SemVer):** [z. B. v0.1.0]
-- **Dokumentationssprache:** [z. B. Deutsch]
-- **Codesprache (Kommentare, Variablennamen):** [z. B. Englisch]
-- **Projekttyp:** [CLI | Web-Backend | Web-Frontend | Full-Stack | Daten-Pipeline | ML-System | Library | Mixed]
+- **Projektname:** Skriptorium
+- **Kurzbeschreibung:** Schreibwerkstatt für einen einzelnen Autor: Mehrere eigene Welten dienen als verbindlicher Kanon, Autor und KI schreiben im Wechsel Prosa darin, ohne der jeweiligen Welt zu widersprechen.
+- **Status:** Konzeption (Modus 2 läuft)
+- **Version (SemVer):** v0.0.0 – noch keine lauffähige Version
+- **Dokumentationssprache:** Deutsch
+- **Codesprache (Kommentare, Variablennamen):** [offen – Frage an den Eigentümer, Modus 2 Schritt 2]
+- **Projekttyp:** Full-Stack (Web-App: Python-Server, TypeScript-Oberfläche)
+- **Projektgrößen-Klasse:** M (Hypothese aus Modus 2 Schritt 1, Bestätigung nach Schritt 4, ADR-001)
 
 <!-- ANCHOR:zielgruppe-und-nutzungskontext -->
 ## 2. Zielgruppe und Nutzungskontext
 
-- **Primäre Nutzer:** [wer verwendet das System, technisches Level]
-- **Sekundäre Nutzer / Betreiber:** [wer installiert, konfiguriert, wartet]
-- **Erwartete Last:** [z. B. „10 concurrent users", „1M Requests/Tag", „Batch-Jobs wöchentlich"]
-- **Nutzungsumgebung:** [z. B. „Browser Desktop + Mobile", „CLI auf Linux/macOS", „Kubernetes-Cluster"]
+- **Primäre Nutzer:** ein Autor (der Eigentümer), ohne Programmierkenntnisse; schreibt Romane, Kurzgeschichten und Fragmente in mehreren eigenen Welten.
+- **Sekundäre Nutzer / Betreiber:** derselbe Eigentümer als Betreiber; technische Umsetzung und Pflege durch den Coding-Agent.
+- **Erwartete Last:** ein gleichzeitiger Nutzer; wenige KI-Anfragen pro Minute während einer Schreibsitzung.
+- **Nutzungsumgebung:** Browser auf Desktop und Smartphone (FR-019, Soll).
 
 <!-- ANCHOR:technischer-stack -->
 ## 3. Technischer Stack
 
 ### Fixiert
 
-Pflicht: jede Version trägt einen Vermerk `Verifiziert: YYYY-MM-DD` mit Quelle (Datum, an dem die KI die Version gegen offizielle Quellen belegt und der Mensch die Tabelle bestätigt hat). Auswahl nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15, „Versionswahl"); ausgelöst in Modus 2 Schritt 2a (`templates/projektstart.md` Abschnitt 1.3). Lebensende bzw. Nachprüf-Datum jeder Version steht im Ablaufdaten-Register (Abschnitt 8). Major-Updates erfordern eine erneute Verifikation und einen ADR.
+Auswahl nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15, „Versionswahl"), Nachweise in `docs/research/versions-verifikation.md`. Tabelle vom Eigentümer bestätigt am 2026-09-26. Lebensende bzw. Nachprüf-Datum im Ablaufdaten-Register (Abschnitt 8). Major-Updates erfordern eine erneute Verifikation und einen ADR. Grundsatzentscheidungen: Eigenbau statt Anpassung, Web-App mit Python-Server und TypeScript-Oberfläche (ADR folgen in Modus 2 Schritt 5).
 
-- **Mindestreife neuer Linien:** [z. B. „mindestens 3 Monate allgemein verfügbar oder mindestens zwei Fehlerkorrektur-Versionen"]
-- **Geplante Projektdauer:** [z. B. „mindestens 2 Jahre Betrieb" – bestimmt, wie lange das Unterstützungsfenster reichen muss]
+- **Mindestreife neuer Linien:** Linie mindestens 6 Monate veröffentlicht **und** mit Fehlerkorrektur-Versionen. Innerhalb einer Linie wird die neueste Unterversion gewählt, die bereits mindestens eine Fehlerkorrektur-Version hat (bei 0.x-Paketen: neueste Minor-Version mit mindestens einem Patch-Release). Festgelegt vom Eigentümer am 2026-09-26.
+- **Geplante Projektdauer:** 3 Jahre (bis ca. 2029-09) – das Unterstützungsfenster fixierter Linien muss so weit reichen oder einen Nachprüf-Schritt im Fahrplan haben.
 
-- **Sprachen und Versionen:** [z. B. Python 3.12 — Verifiziert: 2026-05-02; TypeScript 5.3 — Verifiziert: 2026-05-02]
-- **Frameworks:** [z. B. FastAPI 0.115 — Verifiziert: 2026-05-02; Next.js 15 — Verifiziert: 2026-05-02]
-- **Datenbank:** [z. B. PostgreSQL 16 — Verifiziert: 2026-05-02]
-- **Laufzeitumgebung:** [z. B. Docker Compose lokal, K8s in Prod — Verifiziert: 2026-05-02]
-- **Package Manager:** [z. B. uv, pnpm — Verifiziert: 2026-05-02]
+- **Sprachen und Versionen:**
+  - Python 3.14 (3.14.7) — Verifiziert: 2026-09-26, Quelle: python.org, PEP 745
+  - TypeScript 6.0 (6.0.3) — Verifiziert: 2026-09-26, Quelle: npm-Registry, TypeScript-Devblog
+- **Frameworks und Bibliotheken:**
+  - FastAPI 0.141 (0.141.1, gepinnt `<0.142`) — Verifiziert: 2026-09-26, Quelle: PyPI
+  - Pydantic 2.13 (2.13.5) — Verifiziert: 2026-09-26, Quelle: PyPI, Versionsrichtlinie Pydantic
+  - uvicorn 0.52 (0.52.4) — Verifiziert: 2026-09-26, Quelle: PyPI (0.53/0.54 ohne Fehlerkorrektur-Version)
+  - httpx 0.28 (0.28.1) — Verifiziert: 2026-09-26, Quelle: PyPI; Python 3.14 nicht offiziell deklariert, Streaming-Stichprobe auf 3.14 (Vorabversion) erfolgreich; Nachprüfung im Ablaufdaten-Register
+  - React und react-dom 19.2 (19.2.8) — Verifiziert: 2026-09-26, Quelle: npm-Registry, react.dev/versions
+  - Vite 8.3 (8.3.1) und @vitejs/plugin-react 6.1 (6.1.1) — Verifiziert: 2026-09-26, Quelle: npm-Registry, vite.dev/releases
+  - CodeMirror 6 (@codemirror/state 6.7.6, view 6.43.13, autocomplete 6.20.3, lang-markdown 6.5.2) — Verifiziert: 2026-09-26, Quelle: npm-Registry
+- **Datenbank / Speicher:** [TBD nach Modus 2 Schritt 4 – Speicherform (Markdown-Dateien, ggf. Index) wird in der Architektur entschieden]
+- **Laufzeitumgebung:** Node.js 24 LTS (24.21.0) nur für Build und Entwicklung der Oberfläche — Verifiziert: 2026-09-26, Quelle: nodejs.org, Release-Plan `schedule.json`. Betrieb: [TBD nach Modus 2 Schritt 4a – Hosting]
+- **Package Manager:** uv 0.12 (0.12.19) für Python; npm 11 (11.19.0, mit Node 24 gebündelt) für die Oberfläche — Verifiziert: 2026-09-26, Quelle: PyPI, nodejs.org
 
 ### Empfohlen (freigabefrei nutzbar)
 
-[Bibliotheken, die bei Bedarf ohne separate Freigabe eingesetzt werden dürfen.
-Beispiele: Standard-Test-Runner, Logging-Bibliothek, ORM, Linter.]
-
-- [Bibliothek 1 – Einsatzzweck]
-- [Bibliothek 2 – Einsatzzweck]
+- Standardbibliothek von Python und die Web-Standard-APIs des Browsers – ohne Einschränkung.
+- Weitere Pakete der CodeMirror-6-Familie (`@codemirror/*`, `@lezer/*`) – für Editor-Funktionen.
+- Test-, Lint-, Format- und Typprüf-Werkzeuge aus Abschnitt 7 – nach deren Fixierung in Modus 2 Schritt 10.
 
 ### Explizit nicht erlaubt
 
-[Was bewusst ausgeschlossen ist, mit Begründung.
-Verhindert, dass die KI naheliegende, aber unerwünschte Lösungen wählt.]
-
-- [z. B. „Keine externen Cloud-Services (Self-Hosting-Prinzip)"]
-- [z. B. „Keine GPL-lizenzierten Abhängigkeiten"]
+- **Übernahme von Code aus AGPL- oder GPL-lizenzierten Werkzeugen** (u. a. SillyTavern, The Story Nexus, Story Labyrinth) – Grundsatzentscheidung Eigenbau; nur Konzepte werden übernommen.
+- **Anbieterspezifische KI-Bibliotheken als Pflichtweg** – die KI-Anbindung läuft über eine eigene Anbieter-Schnittstelle (FR-018, FR-025).
+- **Selbst betriebenes KI-Modell** – Vision Abschnitt 6.
+- **Konten- oder Rechteverwaltung für mehrere Nutzer** – Vision Abschnitt 5; ein Zugangsschutz für den einen Nutzer ist davon nicht betroffen.
 
 ### Unterstützte Entwickler-Plattformen
 
-Diese Tabelle ist **explizit, nicht implizit**. Jede Plattform, die nicht hier steht, ist nicht unterstützt – auch wenn sie technisch funktionieren mag. Plattformen, die mit Einschränkungen unterstützt werden, tragen den Einschränkungs-Hinweis.
+Entwicklung erfolgt durch den Coding-Agent; der Eigentümer entwickelt nicht selbst.
 
-| Aspekt                        | Linux (Ubuntu 22.04+ / Debian 12+ / Fedora 40+) | macOS 14+ (Apple Silicon und Intel) | Windows 11 mit Git Bash | Windows 11 mit WSL2 |
-|---|---|---|---|---|
-| **Backend-Entwicklung**       | [✓ / ✗ / ✓ mit Einschränkung] | [...] | [...] | [...] |
-| **Frontend-Entwicklung**      | [...] | [...] | [...] | [...] |
-| **Hilfsskripte (`scripts/`)** | [...] | [...] | [...] | [...] |
-| **Container-Workloads** (Docker Compose lokal) | [...] | [...] | [...] | [...] |
-| **CI-Pipeline**               | [✓ (GitHub-Hosted-Runner)] | [— (kein macOS-Runner in CI)] | [...] | [...] |
+| Aspekt | Linux (Cloud-Session des Coding-Agents, Ubuntu) | macOS | Windows |
+|---|---|---|---|
+| **Backend-Entwicklung** | ✓ | ✗ – nicht getestet, kein Bedarf (Eigentümer entwickelt nicht lokal) | ✗ – wie macOS |
+| **Frontend-Entwicklung** | ✓ | ✗ – wie oben | ✗ – wie oben |
+| **Hilfsskripte (`scripts/`)** | ✓ | ✗ – wie oben | ✗ – wie oben |
+| **CI-Pipeline** | ✓ (GitHub-Hosted-Runner `ubuntu-latest`) | — | — |
 
-**Pflicht-Voraussetzungen pro Plattform:** Siehe README „Voraussetzungen"-Block. Plattform-spezifische Zusatz-Voraussetzungen sind dort namentlich vermerkt (z. B. „Windows: Git Bash oder WSL2 für `scripts/`-Hilfsskripte; `jq` separat installieren").
+**Nutzung (nicht Entwicklung):** aktuelle Browser auf Desktop und Smartphone; konkrete Matrix nach Modus 2 Schritt 4.
 
-**Pflege-Regel:** Diese Tabelle wird bei jedem Touch an `scripts/`, `docker-compose.yml`, `pyproject.toml`/`package.json` (Top-Level-Dependencies) oder bei jeder neuen plattform-bezogenen Eskalation (z. B. neuer Plattform-Blocker in `docs/blockers.md`) re-validiert. Verstöße sind im selben Commit zu korrigieren.
-
-**Nicht-Unterstützung:** Wenn eine Plattform bewusst nicht unterstützt wird (z. B. Windows ohne Git Bash und ohne WSL2), wird die Spalte trotzdem gelistet, mit einem ✗ und kurzer Begründung. Stille Nicht-Unterstützung („wir testen halt nur Linux") ist unzulässig – sie wird explizit oder die Plattform wird zur Test-Matrix hinzugefügt.
-
-**Initialisierungs-Hinweis:** Spalten in der Vorlage sind generisch; bei Modus-2-Befüllung werden nicht-relevante Spalten entfernt und projekt-spezifische Plattformen ergänzt (z. B. eingebettete Linux-Distribution, Cloud-Runner mit GPU).
+**Pflege-Regel:** Diese Tabelle wird bei jedem Touch an `scripts/`, `pyproject.toml`/`package.json` (Top-Level-Dependencies) oder bei jeder neuen plattform-bezogenen Eskalation re-validiert. Verstöße sind im selben Commit zu korrigieren.
 
 <!-- ANCHOR:architektur-grobstruktur -->
 ## 4. Architektur-Grobstruktur
 
-[2–5 Sätze. Details gehören in `architecture.md`.
-Hier nur das, was für die Gesamtorientierung nötig ist.]
-
-**Module (Kurzübersicht):**
-
-- [Modul A] – [Kurzbeschreibung der Verantwortung]
-- [Modul B] – [...]
-
-**Kommunikationsmuster:** [z. B. „REST synchron intern, Events über Queue zwischen Backend und Worker"]
+[TBD nach Modus 2 Schritt 4 – Architektur-Grobschnitt. Feststehend: eine Web-App (Python-Server mit FastAPI, React-Oberfläche mit CodeMirror-6-Editor), KI-Zugriff über eine eigene Anbieter-Schnittstelle mit OpenRouter als erstem Anbieter.]
 
 <!-- ANCHOR:externe-abhaengigkeiten -->
 ## 5. Externe Abhängigkeiten
@@ -95,217 +90,192 @@ Hier nur das, was für die Gesamtorientierung nötig ist.]
 
 | Service | Zweck | Authentifizierung | Ausfallverhalten |
 |---|---|---|---|
-| [Name] | [wofür] | [wie] | [Fallback bei Nichterreichbarkeit] |
+| OpenRouter | Zugang zu KI-Modellen verschiedener Anbieter, freie Modellwahl (FR-018) | API-Schlüssel, nur serverseitig, nie im Browser | [TBD nach Modus 2 Schritt 4 – mindestens: Text des Autors geht nie verloren, Fehlermeldung statt stiller Abbruch] |
+| weitere KI-Anbieter | künftig parallel zu OpenRouter (FR-025) | je Anbieter | wie OpenRouter |
 
 ### APIs
 
-[Externe APIs mit Version, Rate Limits, Failure Modes.]
+- **OpenRouter:** OpenAI-kompatible Chat-Schnittstelle mit Streaming. Modell-Verfügbarkeit und Inhaltsfilter je Modell uneinheitlich; Befund der Bestandsprüfung: 324 von 458 Modellen ohne OpenRouter-eigene Moderation, Filter der ausführenden Anbieter ungeprüft (`docs/research/bestandspruefung.md`). Rate Limits und Preise je Modell: [TBD nach Modus 2 Schritt 4].
 
 <!-- ANCHOR:constraints -->
 ## 6. Constraints (operationalisierbar)
 
-**Regel: Jeder Constraint muss in eine prüfbare Regel übersetzt sein. Schwammige Angaben wie „sicher" oder „schnell" gehören hier nicht hin.**
+**Regel: Jeder Constraint muss in eine prüfbare Regel übersetzt sein.**
 
 ### Datenschutz
 
-- [z. B. „Keine personenbezogenen Daten in Logs" → Regel: Logger-Wrapper mit Redaction-Liste verwenden]
-- [z. B. „DSGVO-Art. 17: Löschfunktion für Nutzerdaten" → Regel: API-Endpunkt `DELETE /users/{id}` kaskadiert auf verknüpfte Tabellen]
+- Welten und Texte sind fiktionale Inhalte des Eigentümers; Übermittlung an kommerzielle KI-APIs ist zulässig (Vision Abschnitt 6). Schutzbedarf: [TBD nach Modus 2 Schritt 4a].
+- Keine Inhalte aus Welten oder Manuskripten in Server-Logs → Regel: Logs enthalten nur Metadaten (Zeit, Endpunkt, Status, Modell, Token-Zahlen).
 
 ### Sicherheit
 
-- [z. B. „Alle Endpoints erfordern Authentifizierung außer `/health` und `/login`"]
-- [z. B. „Passwörter werden mit argon2id gehasht, minimum 12 Zeichen, kein Maximum"]
+- API-Schlüssel der KI-Anbieter liegen ausschließlich serverseitig in Umgebungsvariablen, nie im Browser, im Repo oder in Logs.
+- Weitere Regeln (Zugangsschutz, Sicherheitsniveau): [TBD nach Modus 2 Schritt 4a].
 
-### Performance
+### Performance und Kosten
 
-- [z. B. „p95-Antwortzeit < 200 ms bei bis zu 100 concurrent users"]
-- [z. B. „Datenbankabfragen dürfen keine `SELECT *` verwenden"]
+- **Kosten pro Anfrage** unter dem heutigen Stand (Referenz ca. 125.000–140.000 Token pro Anfrage, Vision 4) → Regel: Die Kontext-Zusammenstellung hat ein festes Token-Budget je Anfrage; Wert [TBD nach Modus 2 Schritt 4, `docs/architecture.md` Abschnitt 6].
+- **Kein Kontextverlust** bei einer Geschichte vom Umfang der Referenzgeschichte (500.000–700.000 Token Chatverlauf) → Prüfung an einer Geschichte gleichen Umfangs (FR-006 verworfen).
+- KI-Text erscheint beim Schreiben fortlaufend (Streaming), nicht erst nach Abschluss der Antwort.
 
 ### Plattform und Kompatibilität
 
-- [z. B. „Lauffähig auf x86_64 und arm64"]
-- [z. B. „Minimum Node 20 LTS"]
+- Oberfläche bedienbar auf Smartphone-Bildschirmen (FR-019, Soll).
+- Welten und Texte liegen als lesbare Markdown-Dateien vor oder lassen sich verlustfrei so ausgeben (FR-020, Soll).
 
 ### Compliance und Lizenz
 
-- **Projektlizenz:** [z. B. MIT, AGPLv3, proprietär]
-- **Erlaubte Abhängigkeitslizenzen:** [z. B. MIT, BSD, Apache-2.0, MPL-2.0]
-- **Ausgeschlossene Lizenzen:** [z. B. GPL außer explizit freigegeben]
+- **Projektlizenz:** [offen – Frage an den Eigentümer, Modus 2 Schritt 2; Vision 6: Open Source beabsichtigt, Festlegung nach der Bestandsprüfung]
+- **Erlaubte Abhängigkeitslizenzen:** MIT, BSD-2/3-Clause, Apache-2.0, ISC, PSF-2.0, Artistic-2.0 (nur Werkzeuge, z. B. npm), MPL-2.0 (nur unverändert genutzt).
+- **Ausgeschlossene Lizenzen:** GPL und AGPL für eingebundenen Code; Lizenzen mit Nutzungsbeschränkung (z. B. Commons Clause) – Abweichung nur per ADR.
+
+### Anforderungen, Schutzbedarf, Kosten
+
+- **`docs/requirements.md`:** angelegt (Klasse M), bestätigt am 2026-09-26.
+- **Schutzbedarf:** [TBD nach Modus 2 Schritt 4a]
+- **Kostenrahmen:** siehe Abschnitt 8.
 
 ### Methodik-Schwellenwerte
 
-- **Reaktiv-ADR-Schwellenwert:** [z. B. „maximal 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs"] – bei Überschreitung wird in `decisions.md` Teil B (Reaktiv-Quote) ein Hinweis ausgelöst, und Claude legt einen Reflexions-Schritt im Fahrplan an, bevor weitere Umsetzungsschritte beginnen.
-- **Wucherungs-Schwelle** (`CLAUDE.md` Abschnitt 8, Kriterium 9): [Default: Faktor 2 gegenüber dem ursprünglichen Schrittplan **und** mindestens 5 zusätzliche Schritte]
-- **Vorläufig-zu-Belastbar-Verhältnis:** [optional, z. B. „spätestens nach jeder UMSETZUNG-Phase soll mindestens ein `[VORLÄUFIG]`-Bestandteil der berührten Module auf `[BELASTBAR]` befördert sein, sonst Reflexion"]
-- **Modellklassen-Zuordnung** (Regelwerk: `CLAUDE.md` Abschnitt 0, „Modellklassen-Disziplin"). Die Auslöser stehen dort; hier wird nur benannt, welches Modell welche Klasse besetzt und ob der Probelauf bestanden ist. Bei neuen Modellen nachziehen (Eintrag im Ablaufdaten-Register, Abschnitt 8):
-  - **Mechanik-Klasse:** [Modell] – Probelauf: [bestanden am YYYY-MM-DD / offen / gescheitert am YYYY-MM-DD]
-  - **Routine-Klasse:** [Modell] – Probelauf: [bestanden am YYYY-MM-DD / offen / gescheitert am YYYY-MM-DD]
-  - **Entscheidungs-Klasse:** [Modell] – stärkstes regulär eingesetztes Modell
-  - **Ausnahme-Klasse:** [Modell oder „keine"] – nur auf Vorschlag mit Freigabe
-  - **Bezugsmodell und knappe Ressource:** [z. B. „Abo, knapp ist das Wochenkontingent, Zurücksetzung So 10:00" oder „API, knapp ist das Monatsbudget von X"]
-  - **Abgabe an Unteragenten:** [welche Werkzeug-Einstellung ein fest eingestelltes Modell für Unteragenten bewirkt, oder „Werkzeug kennt keine Unteragenten – Abgabe entfällt"]
-  - **Meldet die Laufzeitumgebung das Modell / das Kontingent?** [z. B. „Modell ja, per Sitzungsabfrage; Kurzzeitlimit ja; Wochenlimit nein – Stand YYYY-MM-DD"]
-  - **Preise je Klasse** (Eingabe / Ausgabe / Lesen aus dem Cache, je 1 Mio. Token, mit Stand und Quelle): [Grundlage für die Abgabe-Regel in `CLAUDE.md` Abschnitt 0 – Abgabe nur an eine Klasse mit niedrigerem Cache-Lesepreis oder bei ausgabelastiger Arbeit]
-  - **Grenze der Sessiongröße:** [Default 200.000 Token Kontext] – darüber beginnt die KI keinen neuen Schritt (`CLAUDE.md` Abschnitt 0, „Sessiongröße")
-  - **Kontingent-Warnung:** [z. B. „aktiv – Statuszeile und Hook nach `templates/werkzeuge/claude-code/`, Schwellen 80/95 %, Probelauf bestanden am YYYY-MM-DD" oder „inaktiv, Begründung: …"]
-  - **Falls nur eine Klasse verfügbar ist:** „nur ein Modell verfügbar, Begründung: …". Die Eskalations-Auslöser bleiben dann gültig und erzeugen statt eines Modellwechsels einen ERKUNDUNG-Schritt im Fahrplan – die Regel verliert ihren Zweck also nicht, sie wechselt nur das Mittel.
+- **Reaktiv-ADR-Schwellenwert:** maximal 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M). Bei Überschreitung legt die KI einen Reflexions-Schritt im Fahrplan an, bevor weitere Umsetzungsschritte beginnen.
+- **Wucherungs-Schwelle** (`CLAUDE.md` Abschnitt 8, Kriterium 9): Faktor 2 gegenüber dem ursprünglichen Schrittplan **und** mindestens 5 zusätzliche Schritte (Default).
+- **Modellklassen-Zuordnung** (Regelwerk: `CLAUDE.md` Abschnitt 0, „Modellklassen-Disziplin"):
+  - **Mechanik-Klasse:** Claude Haiku 4.5 – Probelauf: offen (für dieses Projekt nicht erprobt; bis dahin übernimmt die Routine-Klasse)
+  - **Routine-Klasse:** Claude Sonnet 5 – Probelauf: offen (bis dahin übernimmt die Entscheidungs-Klasse)
+  - **Entscheidungs-Klasse:** Claude Opus, aktuelle Linie (Stand 2026-09-26: Opus 5.5) – stärkstes regulär eingesetztes Modell
+  - **Ausnahme-Klasse:** Claude Fable 5.1 – nur auf Vorschlag mit Freigabe
+  - **Bezugsmodell und knappe Ressource:** [TBD nach Modus 2 Schritt 4a – Frage „Über welches Konto arbeitet die KI, und wann setzt sich ihr Nutzungskontingent zurück?"; Sitzungsabfrage vom 2026-09-26 meldet ein Wochenlimit mit Zurücksetzung So 10:00 (MESZ)]
+  - **Abgabe an Unteragenten:** Claude Code – Modell je Unteragenten-Aufruf oder als `model:` in der Agent-Definition. Abgabe an niedrigere Klassen erst nach bestandenem Probelauf.
+  - **Meldet die Laufzeitumgebung das Modell / das Kontingent?** Stand 2026-09-26: Sitzungsabfrage meldet eingestelltes und bedientes Modell, Kontextgröße und den Status des Wochenlimits mit Zurücksetz-Zeitpunkt.
+  - **Preise je Klasse** (Listenpreis je 1 Mio. Token, Eingabe / Ausgabe / Cache-Lesen, Stand 2026-06-24, übernommen aus der Referenz des Werkzeugs): Mechanik 1 $ / 5 $ / 0,10 $; Routine 2 $ / 10 $ / 0,20 $; Entscheidung 4 $ / 20 $ / 0,20 $; Ausnahme 10 $ / 50 $ / 0,25 $. Folge: an die Mechanik-Klasse auch Lesearbeit; an die Routine-Klasse nur ausgabelastige Arbeit.
+  - **Grenze der Sessiongröße:** 200.000 Token Kontext (Default) – darüber beginnt die KI keinen neuen Schritt. Quelle: Sitzungsabfrage (`context_usage.used_tokens`).
+  - **Kontingent-Warnung:** inaktiv, Begründung: Arbeit läuft in Cloud-Sessions ohne Statuszeile; Zustellweg unerprobt.
 
 <!-- ANCHOR:code-standards-und-qualitaetsziele -->
 ## 7. Code-Standards und Qualitätsziele
 
-Pflichtkategorien sind in `CLAUDE.md` Abschnitt 15 definiert. Hier wird pro im Projekt verwendeter Sprache die konkrete Toolwahl festgelegt. Nicht anwendbare Kategorien sind mit Begründung zu vermerken, nicht wegzulassen.
+Pflichtkategorien: `CLAUDE.md` Abschnitt 15. Toolwahl nach den Skeletten unter `templates/pre-commit/` und `templates/github-workflows/`; Versionen werden in Modus 2 Schritt 10 gegen offizielle Quellen verifiziert und gepinnt.
 
 ### Tool-Festlegung pro Sprache
 
-#### [Sprache, z. B. Python]
+#### Python
 
-- **Linter:** [z. B. `ruff` mit Konfiguration `pyproject.toml`]
-- **Formatter:** [z. B. `ruff format` oder `black`, Zeilenlänge: 100]
-- **Type-Checker:** [z. B. `mypy --strict`]
-- **Security-Scanner:** [z. B. `bandit`]
-- **Dependency-Audit:** [z. B. `pip-audit`, `safety`]
-- **Test-Runner:** [z. B. `pytest` mit `pytest-cov`]
-- **Naming-Konvention:** [z. B. PEP 8, snake_case für Funktionen/Variablen, PascalCase für Klassen]
+- **Linter:** `ruff check` (Konfiguration in `pyproject.toml`)
+- **Formatter:** `ruff format`, Zeilenlänge 100
+- **Type-Checker:** `mypy --strict`
+- **Security-Scanner:** `bandit`
+- **Dependency-Audit:** `pip-audit`
+- **Test-Runner:** `pytest` mit `pytest-cov`; Warnungen als Fehler (`filterwarnings = error`)
+- **Naming-Konvention:** PEP 8 – snake_case für Funktionen und Variablen, PascalCase für Klassen
 
-#### [Sprache, z. B. TypeScript]
+#### TypeScript
 
-- **Linter:** [z. B. `eslint` mit `@typescript-eslint`]
-- **Formatter:** [z. B. `prettier`]
-- **Type-Checker:** [z. B. `tsc --strict --noUncheckedIndexedAccess`]
-- **Security-Scanner:** [z. B. `eslint-plugin-security`]
-- **Dependency-Audit:** [z. B. `npm audit` oder `pnpm audit` mit Schwellenwert `high`]
-- **Test-Runner:** [z. B. `vitest` mit `--coverage`]
-- **Naming-Konvention:** [z. B. camelCase für Variablen/Funktionen, PascalCase für Typen/Klassen]
+- **Linter:** `eslint` mit `typescript-eslint`, `--max-warnings 0 --report-unused-disable-directives`
+- **Formatter:** `prettier` (nur für Code, nicht für Markdown in `docs/`, siehe `.prettierignore`)
+- **Type-Checker:** `tsc --noEmit` mit `strict: true` und `noUncheckedIndexedAccess: true`
+- **Security-Scanner:** nicht anwendbar als eigenes Werkzeug, Begründung: kein etabliertes Standard-Werkzeug für React-Oberflächen; abgedeckt durch `eslint`-Regeln (z. B. Verbot von `dangerouslySetInnerHTML` ohne Begründung) und `npm audit`
+- **Dependency-Audit:** `npm audit --audit-level=high`
+- **Test-Runner:** `vitest` mit Coverage
+- **Naming-Konvention:** camelCase für Variablen und Funktionen, PascalCase für Typen, Klassen und React-Komponenten
 
-[Weitere Sprachen analog. Sprachen ohne etabliertes Tool in einer Kategorie:
-„nicht anwendbar, Begründung: …"]
+#### Markdown
+
+- **Linter:** `markdownlint-cli2` mit `.markdownlint-cli2.jsonc` (MD013 und MD060 deaktiviert)
+- **Übrige Kategorien:** nicht anwendbar, Begründung: Dokumentation, kein ausführbarer Code
 
 ### Warnungs-Bestand
 
-[Regeln: `CLAUDE.md` Abschnitt 15, „Warnungen und Abkündigungen". Default ist „Warnungen sind Fehler". Hier steht nur, was davon abweicht – mit Obergrenze, die nur sinken darf.]
+Kein Bestand – Default „Warnungen sind Fehler".
 
-| Quelle | Mittel des Werkzeugs | Obergrenze / benannte Ausnahme | Stand vom | Fahrplan-Schritt |
-|---|---|---|---|---|
-| [z. B. pytest] | [`filterwarnings` in `pyproject.toml`] | [z. B. `ignore:…:DeprecationWarning:bibliothek_x`] | [YYYY-MM-DD] | [Schritt-ID] |
-| [z. B. ESLint] | [`--max-warnings`] | [z. B. 12] | [YYYY-MM-DD] | [Schritt-ID] |
-
-**Warnungsquellen ohne Schalter** (werden bei jeder Beurteilung eines CI-Laufs im Protokoll gelesen): [z. B. „Hinweise der CI-Plattform zu Action-Versionen", „Bündelgrößen-Warnungen des Build-Werkzeugs"]
+**Warnungsquellen ohne Schalter:** Hinweise der CI-Plattform zu Action-Versionen; Bündelgrößen-Warnungen von Vite.
 
 ### Durchsetzungsmechanismen
 
-Zwei Schichten, die identische Checks ausführen: lokale Pre-Commit-Hooks als erste Verteidigung, GitHub Actions als unabhängige Diagnoseschicht auf Push/PR. Beide Schichten sind Pflicht – die CI ersetzt die Hooks nicht und umgekehrt. Skelette für beide Schichten liegen unter `templates/` (siehe `templates/README.md`) und werden in Modus 2 Schritt 10 kopiert und angepasst.
-
-- **Pre-Commit-Hook-Framework:** [z. B. `pre-commit`, `husky`, `lefthook`]
-- **Konfigurationsdatei:** [z. B. `.pre-commit-config.yaml`, `.husky/`]
-- **CI-Plattform:** GitHub Actions (Default; Abweichung erfordert ADR).
-- **Workflow-Dateien:** Scope und Aufteilung nach Projektgrößen-Klasse (Glossar in `CLAUDE.md` Abschnitt 1B, Detail in `templates/projektstart.md` Abschnitt 2.2):
-  - **Klasse K:** `.github/workflows/ci.yml` mit einem Job (Lint + Test).
-  - **Klasse M/G:** `.github/workflows/ci.yml` mit allen Pflicht-Gates; bei G zusätzlich Aufteilung in `security.yml` / `release.yml`, sobald die Pipeline unübersichtlich wird.
-  - **Klasse V:** je Service ein `.github/workflows/ci-<service>.yml` mit Path-Filtern, plus `integration.yml` für service-übergreifende Tests; `release.yml` und `security.yml` zentral.
-- **Trigger:** mindestens `push` auf alle Branches und `pull_request` auf Hauptbranch.
-- **Verpflichtende CI-Gates (Merge-Block bei Rot):**
-  - Lint
-  - Format-Check (kein Auto-Fix in CI)
-  - Type-Check
-  - Security-Scan
-  - Dependency-Audit (Schwellenwert: [z. B. high oder critical])
-  - Tests inklusive Coverage-Mindestwert
-- **Branch-Protection auf Hauptbranch:** alle Pflicht-Gates müssen grün sein; Force-Push gesperrt; siehe Abschnitt 10.
+- **Pre-Commit-Hook-Framework:** `pre-commit`
+- **Konfigurationsdatei:** `.pre-commit-config.yaml`
+- **CI-Plattform:** GitHub Actions
+- **Workflow-Dateien:** `.github/workflows/ci.yml` mit allen Pflicht-Gates für Python und TypeScript (Klasse M)
+- **Trigger:** `push` auf alle Branches und `pull_request` auf `main`
+- **Verpflichtende CI-Gates (Merge-Block bei Rot):** Lint, Format-Check, Type-Check, Security-Scan, Dependency-Audit (Schwellenwert high), Tests inklusive Coverage-Mindestwert
+- **Branch-Protection auf Hauptbranch:** alle Pflicht-Gates müssen grün sein; Force-Push gesperrt; siehe Abschnitt 10
 
 ### Coverage-Mindestwerte
 
-- **Globaler Mindestwert:** [z. B. 80 % Lines, 70 % Branches]
-- **Kritische Pfade (höhere Anforderung):** [Liste der Module/Pfade mit ihrem jeweiligen Mindestwert]
-- **Ausnahmen:** [Module, für die Coverage nicht messbar ist, mit Begründung]
+- **Globaler Mindestwert:** 80 % Lines, 70 % Branches (Default der Vorlage)
+- **Kritische Pfade (höhere Anforderung):** Kontext-Zusammenstellung und Kanon-Verwaltung 90 % Lines – dort entstehen Kanon-Widersprüche und Kosten (FR-010, FR-011)
+- **Ausnahmen:** keine
 
 ### Commit-Lint
 
-- **Tool:** [z. B. `commitlint` mit Conventional-Commits-Konfiguration; falls nicht verwendet: „nicht aktiv, Begründung: …"]
-- **Erlaubte Typen:** [z. B. feat, fix, refactor, docs, test, chore, perf, build, ci]
+- **Tool:** nicht aktiv, Begründung: Commit-Format nach `CLAUDE.md` Abschnitt 11 wird von der KI eingehalten; ein zusätzliches Werkzeug bringt bei einem einzelnen Beitragenden keinen Mehrwert.
 
 ### Editor-Integration (empfohlen, nicht erzwungen)
 
-- **EditorConfig:** `.editorconfig` im Repo-Root (Zeilenenden, Einrückung, Encoding)
-- **Editor-Snippets oder Linter-Plugins:** [optional auflisten]
+- **EditorConfig:** `.editorconfig` im Repo-Root (LF, UTF-8, Einrückung 4 Leerzeichen für Python, 2 für TypeScript)
 
 <!-- ANCHOR:betrieb-und-deployment -->
 ## 8. Betrieb und Deployment
 
-- **Deployment-Ziel:** [z. B. „eigener VPS via Ansible", „Kubernetes via Helm"]
-- **CI/CD:** GitHub Actions (Default, siehe Abschnitt 7 für Workflow-Dateien). Deployment-Workflow: [z. B. `.github/workflows/release.yml` – Trigger und Ziel beschreiben, oder „kein Deploy-Workflow, manuelles Deployment"]
-- **Umgebungen:** [z. B. lokal → staging → production]
-- **Monitoring:** [falls vorhanden: was wird erfasst, wo]
-- **Logging-Level Default:** [z. B. `INFO` in Prod, `DEBUG` nur lokal]
-- **Vertretung:** [Person oder Rolle, die im Notfall eingreifen kann, oder „Verzicht, siehe ADR-NNN"]
-- **Notfall-Handbuch:** [Pfad, z. B. `docs/onboarding-runbook.md` Abschnitt „Notfall"; zuletzt erprobt am YYYY-MM-DD]
-- **KI im Betrieb:** [Konto bzw. Bezugsmodell (Abo oder API-Schlüssel); Kontingent und Zurücksetz-Zeitpunkt, z. B. „Wochenlimit, Zurücksetzung So 10:00", bzw. Budget und Nutzungsgrenzen; Rückfallweg ohne KI]
-- **Zugriff der KI auf die Produktion:** [was darf sie lesen, ändern, ausführen – „kein Zugriff" ist zulässig]
-- **Unbeaufsichtigtes Handeln der KI:** [„nein" oder: Befehlsliste unter [Pfad], Probelauf am YYYY-MM-DD]
-
-[Die fünf Zeilen ab „Vertretung" prüft das Gate vor dem ersten öffentlichen Deployment (CLAUDE.md Abschnitt 12). Vorbefüllt in Modus 2, Schritt 4a.]
+- **Deployment-Ziel:** [TBD nach Modus 2 Schritt 4a]
+- **CI/CD:** GitHub Actions, `.github/workflows/ci.yml`. Deployment-Workflow: [TBD nach Modus 2 Schritt 4a]
+- **Umgebungen:** lokal (Cloud-Session des Coding-Agents) → [TBD nach Modus 2 Schritt 4a]
+- **Monitoring:** [TBD nach Modus 2 Schritt 4a]
+- **Logging-Level Default:** `INFO` im Betrieb, `DEBUG` nur lokal; keine Inhalte aus Welten oder Manuskripten (Abschnitt 6)
+- **Vertretung:** [TBD nach Modus 2 Schritt 4a]
+- **Notfall-Handbuch:** `docs/onboarding-runbook.md` Abschnitt „Notfall" – [TBD, anzulegen vor dem ersten öffentlichen Deployment]
+- **KI im Betrieb:** [TBD nach Modus 2 Schritt 4a]
+- **Zugriff der KI auf die Produktion:** [TBD nach Modus 2 Schritt 4a]
+- **Unbeaufsichtigtes Handeln der KI:** nein
 
 ### Ablaufdaten-Register
 
-[Alles, was zu einem Datum verfällt oder regelmäßig zurückgesetzt wird. Beim Sessionende prüft die KI, ob ein Vorlauf erreicht ist (`CLAUDE.md` Abschnitt 12, Punkt 8). Typische Einträge: Lebensende der fixierten Versionen aus Abschnitt 3, Zertifikate, Domains, Zugangs-Token (z. B. Registrierungs-Token eines CI-Runners, DNS-Schnittstelle), Kontingente mit Zurücksetz-Zeitpunkt, Abkündigungen aus dem CI-Protokoll.]
-
 | Was | Ablauf / Lebensende | Vorlauf | Quelle | Fahrplan-Schritt |
 |---|---|---|---|---|
-| [z. B. Python 3.13] | [YYYY-MM-DD] | [z. B. 6 Monate] | [Hersteller-Angabe, Link] | [Schritt-ID, sobald Vorlauf erreicht] |
-| [z. B. TLS-Zertifikat] | [YYYY-MM-DD] | [z. B. 14 Tage] | [automatisch erneuert? ja/nein] | [–] |
+| Node.js 24 LTS (nur Build) | 2028-04-30 | 6 Monate | Node-Release-Plan `schedule.json` | [TBD in Modus 2 Schritt 6 – Wechsel auf Node 26 LTS frühestens 2026-11-05] |
+| Python 3.14 | 2030-10 | 6 Monate | PEP 745 | – (Vorlauf nach Projektdauer) |
+| httpx 0.28 – Python 3.14 nicht offiziell deklariert, Pflege schwach | Nachprüfung 2027-03-26 | – | PyPI, Stichprobe 2026-09-26 | [TBD in Modus 2 Schritt 6 – Test auf 3.14.7 im ersten Umsetzungsschritt] |
+| TypeScript 7 – neue Linie, noch nicht reif | Nachprüfung 2027-01-08 | – | TypeScript-Devblog | [TBD in Modus 2 Schritt 6] |
+| Wochenkontingent der KI | wöchentlich, So 10:00 (MESZ) | – | Sitzungsabfrage 2026-09-26 | – |
 
 ### Kosten
 
-- **Kostenrahmen:** [Antwort auf „Was darf das Projekt monatlich kosten?" aus Modus 2 – Betrieb, Werkzeuge, KI]
-- **Kostenregister** (optional ab Klasse M): [Pfad oder „nicht geführt"]
+- **Kostenrahmen:** bis 50 € monatlich für KI-Anfragen und Hosting zusammen (Eigentümer, 2026-09-26). Das Abo für den Coding-Agent ist nicht Teil dieses Rahmens.
+- **Kostenregister:** in dieser Tabelle
 
 | Posten | Art (laufend / einmalig / KI-Verbrauch) | Betrag je Monat | Stand vom | Entscheidung nötig ab |
 |---|---|---|---|---|
-| [z. B. Server] | [laufend] | [Betrag] | [YYYY-MM-DD] | [z. B. Summe über Kostenrahmen] |
+| KI-Anfragen über OpenRouter | KI-Verbrauch | [TBD nach Modus 2 Schritt 4 – Schätzung aus Token-Budget und Modellpreis] | 2026-09-26 | Summe über 50 € |
+| Hosting | laufend | [TBD nach Modus 2 Schritt 4a] | 2026-09-26 | Summe über 50 € |
 
 <!-- ANCHOR:entscheidungsbefugnisse -->
 ## 9. Entscheidungsbefugnisse
 
-- **Freigabe-Entscheidungen trifft:** [Name/Rolle – normalerweise der Repo-Eigentümer]
-- **Kommunikationskanal für Freigaben:** [z. B. „direkt im Chat / im Pull Request / im Fahrplan als Kommentar"]
-- **Reaktionszeit-Erwartung:** [z. B. „asynchron, keine harte Antwortzeit"]
+- **Freigabe-Entscheidungen trifft:** der Repo-Eigentümer (Paddel87).
+- **Kommunikationskanal für Freigaben:** direkt im Chat mit dem Coding-Agent; Ergebnis als ADR in `docs/decisions.md`.
+- **Reaktionszeit-Erwartung:** asynchron, keine harte Antwortzeit.
 
 <!-- ANCHOR:repository-regeln -->
 ## 10. Repository-Regeln
 
-- **Hauptbranch:** [z. B. `main`]
-- **Push-Regel:** [z. B. „direkter Push erlaubt", „nur über PR", „PR + grüne CI + ein Approval"]
-- **Schutzregeln:** [z. B. „keine Force-Pushes auf main", „gelöschte Branches nur nach Merge"]
+- **Hauptbranch:** `main`
+- **Push-Regel:** Änderungen laufen über Pull Requests; Agent-Sessions arbeiten auf `claude/<thema>`-Branches.
+- **Schutzregeln:** keine Force-Pushes auf `main`; Merge nur bei grüner CI.
 
 <!-- ANCHOR:offene-grundsatzfragen -->
 ## 11. Offene Grundsatzfragen
 
-[Wenn zu Projektstart Punkte noch ungeklärt sind, hier notieren.
-Claude arbeitet nicht an Bereichen, die von offenen Grundsatzfragen abhängen,
-ohne vorher eine Klärung anzustoßen.]
-
-- [z. B. „Hosting-Modell (Self-Hosting vs. Managed) – offen bis Phase 2"]
-- [z. B. „Auth-Provider (Keycloak vs. Better-Auth) – pending Spike"]
+- **Codesprache und Projektlizenz** – offen bis Modus 2 Schritt 2 (Frage an den Eigentümer).
 
 <!-- ANCHOR:glossar -->
 ## 12. Glossar (projektspezifische Begriffe)
 
-[Begriffe, die im Projekt eine definierte Bedeutung haben und sonst mehrdeutig wären.
-Verhindert, dass die KI Begriffe nach allgemeiner Lesart interpretiert.]
-
-- **[Begriff]:** [Definition im Projektkontext]
-
----
-
-**Pflegehinweis:** Änderungen an Status, Stack oder Constraints sind freigabepflichtig (siehe `CLAUDE.md` Abschnitt 4) und erzeugen einen ADR-Eintrag. Statuswechsel (z. B. `alpha` → `beta`) ziehen außerdem README-Badge- und CHANGELOG-Updates nach sich.
-
-**Initialisierungshinweis (erste Session nach Projektanlage):**
-
-- Alle Platzhalter in eckigen Klammern durch konkrete Werte ersetzen.
-- Abschnitte, die für den Projekttyp nicht relevant sind (z. B. „Performance" bei einem einmaligen Skript), entfernen statt leer zu lassen.
-- Abschnitt 11 (Offene Grundsatzfragen) darf nur Punkte enthalten, die echte Blocker sind – sonst entfernen.
-- **Strukturwahl** richtet sich nach der Projektgrößen-Klassifikation (Glossar in `CLAUDE.md` Abschnitt 1B, Detail in `templates/projektstart.md` Abschnitt 2.2). Default pro Klasse:
-  - **Klasse K (Klein):** Reduzierte Form – nicht relevante Abschnitte (Skalierung, Observability, Stakeholder) entfernen.
-  - **Klasse M (Mittel) und G (Groß):** Ein Dokument, alle Abschnitte ausfüllen, Tiefe an Komplexität anpassen.
-  - **Klasse V (Verteilt-Groß):** Ein Hauptdokument mit klar getrennten Service-Abschnitten, oder Index-Pattern mit `project-context-<service>.md` für Service-spezifische Stack-Details.
-- Reaktiv-ADR-Schwellenwert in „Methodik-Schwellenwerte" klassen-abhängig setzen: K/M ≤ 30 %, G ≤ 20 %, V ≤ 15 %.
-- Die Anpassung selbst als ADR-001 in `decisions.md` festhalten.
+- **Welt:** eigenständiges fiktionales Universum mit eigenem Kanon; Welten sind voneinander getrennt.
+- **Kanon:** verbindliches Wissen einer Welt – Figuren, Orte und Geografie, Gegenstände, Zeitlinie, Regeln, Kultur.
+- **Kanon-Eintrag:** ein einzelnes Element des Kanons (z. B. die Figur „Kael").
+- **Geschichte:** Text einer Welt in der Form Roman (mit Kapiteln), Kurzgeschichte oder Fragment.
+- **Manuskript:** der fortlaufende Text einer Geschichte, entstanden im Wechsel von Autor und KI.
+- **@-Verweis:** gezieltes Ansprechen eines Kanon-Eintrags durch vorangestelltes `@` (z. B. `@Kael`).
+- **Figuren-Schreibweise:** Arbeitsweise, bei der der Autor eine oder mehrere Figuren führt (oft eine Ich-Figur) und die KI Welt und übrige Figuren (FR-012).
+- **Gast-Figur:** Figur aus einer anderen Welt, die in einer Geschichte auftritt; die Verbindung gilt nur für diese Geschichte (FR-017).
+- **Referenzgeschichte:** bisher längste Geschichte des Autors (500.000–700.000 Token Chatverlauf); Maßstab für Kontext- und Kostenziele.
+- **Kontext-Zusammenstellung:** Auswahl von Kanon-Ausschnitt und Handlungsstand, die einer KI-Anfrage mitgegeben wird.
