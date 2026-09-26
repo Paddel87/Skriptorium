@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 17:15 – [BEOBACHTUNG] 1.1 Zwischenstand: Bewertung und Nutzungsbedingungen
+
+- Blind-Bewertung der 24 Texte abgeschlossen (4 Prüf-Instanzen). Kanon-Widersprüche: grok-4.7 7, gemini-3.8-flash 19, glm-5.3 24, deepseek-v4-pro 28. Figuren-Schreibweise verletzt nur von deepseek (9) und glm (2). Mechanische Gegenprobe „Totenname nachts" deckungsgleich mit den Prüf-Instanzen.
+- Budget-Stufen 8k/14k/17,6k ohne messbaren Unterschied (29/25/24).
+- Reibung: Prüf-Instanzen zählten K12 (Eid-Inhalt bei Mitnahme des Buchs) uneinheitlich – Auswertung zusätzlich ohne K12 ausgewiesen; Reihenfolge unverändert. Lehre für künftige Prüflisten: Grenzfälle mit Beispiel vorab festlegen.
+- Nutzungsbedingungen gesichtet (xAI am weitesten, Z.ai/StreamLake am engsten; StreamLake darf Eingaben zum Training nutzen).
+- Erkenntnisdokument `docs/research/modell-eignungstest.md` als Zwischenstand; Kostenregister nachgezogen. Offen: Filter-Probe (Antwort des Eigentümers), Reaktionszeit grok-4.7 (15–50 s vs. Ziel 5 s), Stichprobe durch den Eigentümer, ADR.
+
 ### 2026-09-26 16:30 – [PROBLEM-GELÖST] Läufe 1.1: Pflicht-Reasoning bei drei Modellen
 
 - Testwelt „Die Salzmark" angelegt (29 Kanon-Dateien inkl. Zeitlinie – im Commit-Text stand irrtümlich 27), Prüfliste vor dem ersten Lauf fixiert. Harness `spikes/modell-eignungstest/lauf.py` nur mit Standardbibliothek (`urllib`), damit keine neue Abhängigkeit nötig ist.

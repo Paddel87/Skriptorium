@@ -259,7 +259,7 @@ Kein Bestand – Default „Warnungen sind Fehler".
 
 | Posten | Art (laufend / einmalig / KI-Verbrauch) | Betrag je Monat | Stand vom | Entscheidung nötig ab |
 |---|---|---|---|---|
-| KI-Anfragen über OpenRouter | KI-Verbrauch | Schätzung ca. 6–36 $ plus Ausgabe (400 Anfragen × 30.000 Token, 0,50–3 $ je 1 Mio. Token; `docs/architecture.md` Abschnitt 6) – Messung ab Schritt 1.1 | 2026-09-26 | Summe über 50 € |
+| KI-Anfragen über OpenRouter | KI-Verbrauch | Schätzung ca. 6–36 $ plus Ausgabe (400 Anfragen × 30.000 Token, 0,50–3 $ je 1 Mio. Token; `docs/architecture.md` Abschnitt 6) ; gemessen in 1.1 (Testwelt, bis 17.600 Token): 1–12 $ je Monat je nach Modell, hochgerechnet auf 30.000 Token 2–21 $ (`docs/research/modell-eignungstest.md`) | 2026-09-26 | Summe über 50 € |
 | Hosting | laufend | Schätzung ca. 4–6 € (kleiner VPS) – Festlegung in Schritt 4.2 | 2026-09-26 | Summe über 50 € |
 
 <!-- ANCHOR:entscheidungsbefugnisse -->

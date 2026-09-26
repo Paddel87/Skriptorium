@@ -1,0 +1,325 @@
+[
+ {
+  "k": 5,
+  "f": 2,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K14",
+   "K17",
+   "weitere:Rat ließ ertränken, zwölf Jahre"
+  ],
+  "f_punkte": [
+   "F2",
+   "F5"
+  ],
+  "lauf": "deepseek__deepseek-v4-pro__14000__1",
+  "blind_id": "text-174"
+ },
+ {
+  "k": 6,
+  "f": 2,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K8(grenz)",
+   "K17(grenz)",
+   "weitere:zwanzig Jahre Zöllner",
+   "weitere:Wachstafel"
+  ],
+  "f_punkte": [
+   "F1",
+   "F2"
+  ],
+  "hinweis": "1220 Wörter",
+  "lauf": "deepseek__deepseek-v4-pro__14000__2",
+  "blind_id": "text-147"
+ },
+ {
+  "k": 3,
+  "f": 2,
+  "k_punkte": [
+   "K5",
+   "weitere:Asch vor zwei Tagen per Boot",
+   "weitere:Gitter offen"
+  ],
+  "f_punkte": [
+   "F2",
+   "F3"
+  ],
+  "lauf": "deepseek__deepseek-v4-pro__30000__1",
+  "blind_id": "text-116"
+ },
+ {
+  "k": 4,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K3",
+   "K5",
+   "K12"
+  ],
+  "f_punkte": [],
+  "lauf": "deepseek__deepseek-v4-pro__30000__2",
+  "blind_id": "text-700"
+ },
+ {
+  "k": 4,
+  "f": 1,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K12",
+   "K17"
+  ],
+  "f_punkte": [
+   "F5"
+  ],
+  "lauf": "deepseek__deepseek-v4-pro__8000__1",
+  "blind_id": "text-334"
+ },
+ {
+  "k": 6,
+  "f": 2,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K8(grenz)",
+   "K17",
+   "weitere:vor dreißig Jahren sehen",
+   "weitere:Vergehen statt Ertränken"
+  ],
+  "f_punkte": [
+   "F1",
+   "F3"
+  ],
+  "hinweis": "Enthüllung",
+  "lauf": "deepseek__deepseek-v4-pro__8000__2",
+  "blind_id": "text-970"
+ },
+ {
+  "k": 1,
+  "f": 0,
+  "k_punkte": [
+   "K13"
+  ],
+  "f_punkte": [],
+  "hinweis": "1300 Wörter, überladen",
+  "lauf": "google__gemini-3.8-flash__14000__1",
+  "blind_id": "text-617"
+ },
+ {
+  "k": 5,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K12",
+   "K13",
+   "K16",
+   "weitere:Totengeste"
+  ],
+  "f_punkte": [],
+  "lauf": "google__gemini-3.8-flash__14000__2",
+  "blind_id": "text-963"
+ },
+ {
+  "k": 4,
+  "f": 0,
+  "k_punkte": [
+   "K5",
+   "K12",
+   "K13",
+   "weitere:riecht nach Siedehütten"
+  ],
+  "f_punkte": [],
+  "hinweis": "1382 Wörter, Enthüllung",
+  "lauf": "google__gemini-3.8-flash__30000__1",
+  "blind_id": "text-289"
+ },
+ {
+  "k": 3,
+  "f": 0,
+  "k_punkte": [
+   "K4",
+   "K5",
+   "weitere:ungeweihtes Grausalz"
+  ],
+  "f_punkte": [],
+  "hinweis": "1200 Wörter, opulent",
+  "lauf": "google__gemini-3.8-flash__30000__2",
+  "blind_id": "text-742"
+ },
+ {
+  "k": 2,
+  "f": 0,
+  "k_punkte": [
+   "K12",
+   "K17"
+  ],
+  "f_punkte": [],
+  "lauf": "google__gemini-3.8-flash__8000__1",
+  "blind_id": "text-136"
+ },
+ {
+  "k": 4,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K12",
+   "K17"
+  ],
+  "f_punkte": [],
+  "lauf": "google__gemini-3.8-flash__8000__2",
+  "blind_id": "text-217"
+ },
+ {
+  "k": 1,
+  "f": 0,
+  "k_punkte": [
+   "K1"
+  ],
+  "f_punkte": [],
+  "hinweis": "sehr stilsicher",
+  "lauf": "x-ai__grok-4.7__14000__1",
+  "blind_id": "text-480"
+ },
+ {
+  "k": 1,
+  "f": 0,
+  "k_punkte": [
+   "weitere:Asch stottert auch bei Wahrheit"
+  ],
+  "f_punkte": [],
+  "lauf": "x-ai__grok-4.7__14000__2",
+  "blind_id": "text-607"
+ },
+ {
+  "k": 2,
+  "f": 0,
+  "k_punkte": [
+   "K15",
+   "K17"
+  ],
+  "f_punkte": [],
+  "hinweis": "stärkster Stil",
+  "lauf": "x-ai__grok-4.7__30000__1",
+  "blind_id": "text-886"
+ },
+ {
+  "k": 0,
+  "f": 0,
+  "k_punkte": [],
+  "f_punkte": [],
+  "hinweis": "am nächsten am Stil",
+  "lauf": "x-ai__grok-4.7__30000__2",
+  "blind_id": "text-352"
+ },
+ {
+  "k": 2,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K12(leicht)"
+  ],
+  "f_punkte": [],
+  "hinweis": "sehr kanonnah",
+  "lauf": "x-ai__grok-4.7__8000__1",
+  "blind_id": "text-974"
+ },
+ {
+  "k": 1,
+  "f": 0,
+  "k_punkte": [
+   "K1"
+  ],
+  "f_punkte": [],
+  "hinweis": "540 Wörter, unter Vorgabe",
+  "lauf": "x-ai__grok-4.7__8000__2",
+  "blind_id": "text-331"
+ },
+ {
+  "k": 3,
+  "f": 1,
+  "k_punkte": [
+   "K1",
+   "weitere:Ilka klein gebaut",
+   "weitere:zwanzig Jahre Zoll"
+  ],
+  "f_punkte": [
+   "F3"
+  ],
+  "lauf": "z-ai__glm-5.3__14000__1",
+  "blind_id": "text-231"
+ },
+ {
+  "k": 3,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "weitere:Gott",
+   "weitere:zwanzig Jahre Zolldienst"
+  ],
+  "f_punkte": [],
+  "lauf": "z-ai__glm-5.3__14000__2",
+  "blind_id": "text-805"
+ },
+ {
+  "k": 4,
+  "f": 0,
+  "k_punkte": [
+   "K5",
+   "K12",
+   "weitere:vor vier Tagen",
+   "weitere:zwanzig Jahre Zöllner"
+  ],
+  "f_punkte": [],
+  "hinweis": "1100 Wörter, Fehler",
+  "lauf": "z-ai__glm-5.3__30000__1",
+  "blind_id": "text-866"
+ },
+ {
+  "k": 4,
+  "f": 1,
+  "k_punkte": [
+   "K1",
+   "K13",
+   "weitere:vor zwei Tagen",
+   "weitere:zwanzig Jahre Zöllner"
+  ],
+  "f_punkte": [
+   "F1"
+  ],
+  "lauf": "z-ai__glm-5.3__30000__2",
+  "blind_id": "text-518"
+ },
+ {
+  "k": 4,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K17",
+   "weitere:Bibel"
+  ],
+  "f_punkte": [],
+  "lauf": "z-ai__glm-5.3__8000__1",
+  "blind_id": "text-819"
+ },
+ {
+  "k": 6,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K12",
+   "K17",
+   "weitere:zwanzig Jahre Zöllner",
+   "weitere:vor zwei Tagen"
+  ],
+  "f_punkte": [],
+  "hinweis": "Tippfehler; Sera enthüllt Fälschung",
+  "lauf": "z-ai__glm-5.3__8000__2",
+  "blind_id": "text-153"
+ }
+]
