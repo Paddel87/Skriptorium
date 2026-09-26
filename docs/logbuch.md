@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 18:10 – [BEOBACHTUNG] 1.1 Nachtest grok ohne Reasoning
+
+- grok-4.6/4.5: Reasoning ebenfalls Pflicht. grok-4.3 und grok-4.20 lassen es abschalten → 12 Läufe, erstes Textstück < 1 s, 0 Ablehnungen.
+- Blind-Bewertung mit zwei Eichtexten aus Runde 1: beide identisch wiederbewertet (0 bzw. 6) – Bewertung über Runden vergleichbar.
+- Ergebnis je 1.000 Wörter: grok-4.7 1,5; gemini 2,6; glm 3,9; grok-4.3 4,5; deepseek 4,6; grok-4.20 5,1. Ohne Reasoning kein Treue-Vorsprung → Zielkonflikt Reaktionszeit vs. Kanon-Treue geht an den Eigentümer.
+- Nebenbefund: zweite identische Anfrage bei xAI deutlich billiger (Zwischenspeicher) – Folge für die Reihenfolge im Kontext-Verfahren (Festes vorn), im Erkenntnisdokument vermerkt.
+
 ### 2026-09-26 17:40 – [BEOBACHTUNG] Weiterarbeit trotz überschrittener Sessiongröße
 
 - Eigentümer: „Du ignorierst jetzt die Beschränkung und machst hier weiter." – Ausnahme „weiter hier" nach CLAUDE.md Abschnitt 0 („Sessiongröße"); Abweichung hiermit vermerkt. Kontext zu diesem Zeitpunkt ca. 275.000 Token.

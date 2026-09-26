@@ -9,7 +9,7 @@
 - **Kanon-Treue:** `x-ai/grok-4.7` machte mit Abstand die wenigsten Kanon-Widersprüche (7 in 6 Texten), gefolgt von `google/gemini-3.8-flash` (19), `z-ai/glm-5.3` (24) und `deepseek/deepseek-v4-pro` (28). grok-4.7 und gemini-3.8-flash verstießen nie gegen die Figuren-Schreibweise; deepseek-v4-pro in 5 von 6 Texten.
 - **Token-Budget:** Zwischen ca. 8.000, 14.000 und 17.600 Token Eingabe zeigte sich **kein messbarer Unterschied** in der Kanon-Treue (29 / 25 / 24 Widersprüche über alle Modelle). Grenze: Das Testmaterial reicht nur bis 17.600 Token; der Startwert 30.000 konnte nicht direkt geprüft werden.
 - **Kosten:** alle Modelle weit im Kostenrahmen; grok-4.7 ist am teuersten (Mittel 0,03 $ je Anfrage bei 17.600 Token).
-- **Reaktionszeit:** grok-4.7 verletzt das Ziel „erstes Textstück in 5 Sekunden" deutlich (15–50 s), weil es zwingend vorab „denkt". Die übrigen Modelle lagen bei 0,7–2,6 s.
+- **Reaktionszeit:** grok-4.7 verletzt das Ziel „erstes Textstück in 5 Sekunden" deutlich (15–50 s), weil es zwingend vorab „denkt". Die übrigen Modelle lagen bei 0,7–2,6 s. Nachtest: grok-Varianten ohne Vorab-Denken (grok-4.3, grok-4.20) sind schnell, aber nicht kanontreuer als die übrigen Modelle.
 - **Filterverhalten:** In der Testszene (düster, aber ohne drastische Inhalte) gab es **keine Ablehnung** – das sagt über das Filterverhalten bei schärferen Inhalten nichts aus. Filter-Probe offen.
 
 <!-- ANCHOR:aufbau -->
@@ -64,6 +64,23 @@ Kein belastbarer Unterschied bei 8 Texten je Stufe. Deutung: Die Fehler entstehe
 
 Mit Hosting (Schätzung 4–6 €) bleiben alle Modelle unter dem Kostenrahmen von 50 € (BDR-001), grok-4.7 auch bei 30.000 Token. Der Dollar-Euro-Kurs wurde nicht abgerufen; der Abstand zur Grenze ist groß genug, dass er die Aussage nicht ändert. Gemessene Gesamtkosten des Tests: 0,37 $.
 
+### Nachtest: grok-Varianten ohne Reasoning (Reaktionszeit)
+
+Frage: Lässt sich die Kanon-Treue von grok-4.7 ohne dessen Wartezeit haben? grok-4.6 und grok-4.5 verlangen ebenfalls zwingend Reasoning; **grok-4.3** und **grok-4.20** lassen es abschalten (je 1,25 $ / 2,50 $ je 1 Mio. Token). Beide liefen mit denselben 3 Stufen × 2 Wiederholungen, bewertet blind mit zwei Eichtexten aus der ersten Runde (grok-4.7: 0 Widersprüche, deepseek-v4-pro: 6) – beide wurden identisch wiederbewertet.
+
+| Modell | Widersprüche (6 Texte) | je 1.000 Wörter | Schreibweise-Verstöße | erstes Textstück | Kosten je Anfrage (Mittel) | Wörter |
+|---|---|---|---|---|---|---|
+| grok-4.7 (mit Reasoning) | 7 | **1,5** | 0 | 15–50 s | 0,027 $ | 539–911 |
+| gemini-3.8-flash | 19 | 2,6 | 0 | 1,4–2,4 s | 0,017 $ | 982–1.384 |
+| glm-5.3 | 24 | 3,9 | 2 | 0,7–1,8 s | 0,015 $ | 908–1.165 |
+| grok-4.3 (ohne Reasoning) | 14 | 4,5 | 2 | 0,8–1,0 s | 0,012 $ | 375–612 |
+| deepseek-v4-pro | 28 | 4,6 | 9 | 1,6–2,6 s | 0,002 $ | 786–1.222 |
+| grok-4.20 (ohne Reasoning) | 28 | 5,1 | 2 | 0,8–1,0 s | 0,015 $ | 821–1.000 |
+
+**Befund:** Ohne Reasoning sind die grok-Modelle nicht besser als die übrigen; grok-4.3 schreibt zudem deutlich unter der Ziellänge. Der Vorsprung von grok-4.7 hängt also mit dem Vorab-Denken zusammen – schnelle Antwort und hohe Kanon-Treue gibt es in diesem Test nicht im selben Modell. Die schnellste Alternative mit der besten Treue ist gemini-3.8-flash (2,6 je 1.000 Wörter, keine Schreibweise-Verstöße), deren Nutzungsbedingungen aber sexuell explizite Inhalte ausschließen.
+
+**Nebenbefund Zwischenspeicher:** Bei grok-4.3 und grok-4.20 kostete die zweite Wiederholung derselben Anfrage oft nur ein Viertel bis ein Drittel der ersten (z. B. 0,0183 $ → 0,0049 $), vermutlich durch Zwischenspeicherung des gleichbleibenden Anfrage-Anfangs beim Anbieter. Für das Produkt heißt das: Regeln und Kanon an den Anfang der Anfrage, Veränderliches ans Ende – das senkt die Kosten weiter. Nicht gezielt gemessen (Cache-Token wurden nicht protokolliert).
+
 <!-- ANCHOR:nutzungsbedingungen -->
 ## Nutzungsbedingungen der ausführenden Anbieter
 
@@ -96,6 +113,6 @@ Abgerufen 2026-09-26. Zitate über ein Zusammenfassungs-Werkzeug gewonnen, nicht
 
 1. Filter-Probe mit einer Szene, die den früher abgelehnten Inhalten des Eigentümers ähnelt (Rückfrage an den Eigentümer: welche Art von Inhalten).
 2. Verhalten bei Ablehnung beschreiben (Grundlage für `ModelRefused`) – erst nach Filter-Probe möglich.
-3. Reaktionszeit von grok-4.7 gegen das Ziel 5 s: Entscheidung des Eigentümers, ob Kanon-Treue die Wartezeit rechtfertigt, oder Test einer grok-Variante mit abschaltbarem Reasoning.
+3. Reaktionszeit gegen Kanon-Treue: Entscheidung des Eigentümers – grok-4.7 (treuer, 15–50 s Wartezeit) oder ein schnelles Modell (z. B. gemini-3.8-flash). Nachtest mit grok-Varianten ohne Reasoning erledigt: kein Ausweg (siehe oben).
 4. Stichprobe der Bewertung durch den Eigentümer.
 5. Festlegung von Startmodell, Ausweichmodell und Token-Budget als ADR `[ERKENNTNIS]`.
