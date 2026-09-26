@@ -85,7 +85,7 @@ uv run skriptorium-einrichtung        # zeigt den Code einmal an
 uv run uvicorn skriptorium.api:create_app --factory --no-access-log
 ```
 
-Start in unter einer Sekunde; Meldung `Uvicorn running on http://127.0.0.1:8000`. `--no-access-log` schaltet das Zugriffsprotokoll von uvicorn ab, das volle Pfade mit Namen von Welten und Einträgen schreiben würde; das Skriptorium protokolliert selbst nur Methode, Routenmuster, Status und Dauer. Hinter einem Reverse Proxy zusätzlich `--proxy-headers`, damit die Sperre nach Fehlversuchen die echte Absender-Adresse sieht (Schritt 4.2).
+Start in unter einer Sekunde; Meldung `Uvicorn running on http://127.0.0.1:8000`. `--no-access-log` schaltet das Zugriffsprotokoll von uvicorn ab, das volle Pfade mit Namen von Welten und Einträgen schreiben würde; das Skriptorium protokolliert selbst nur Methode, Routenmuster, Status und Dauer. Betrieb mit genau einem Prozess (kein `--workers`): Sitzungen und die Sperre nach Fehlversuchen liegen im Speicher. Hinter einem Reverse Proxy muss dieser auf demselben Host laufen, `X-Forwarded-For` setzen und den `Host`-Kopf unverändert weiterreichen; uvicorn wertet Proxy-Kopfzeilen dann standardmäßig nur von `127.0.0.1` aus – `--forwarded-allow-ips` nicht ausweiten (Schritt 4.2).
 
 ### Schritt 5: Verifikation
 
