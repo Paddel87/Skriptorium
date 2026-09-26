@@ -23,7 +23,7 @@ Dieses Runbook führt vom frischen Klon bis zum laufenden Server mit Gesundheits
 
 **Voraussetzung an den Leser:** Grundkenntnisse in Bash; Lese-Zugriff auf das Repository.
 
-**Geprüft am:** 2026-09-26, Linux x86_64 (Cloud-Session des Coding-Agents), frischer `git worktree` von Commit `f94bbb5`.
+**Geprüft am:** 2026-09-26, Linux x86_64 (Cloud-Session des Coding-Agents), frischer `git worktree` von Commit `646ddfe` (Phasenabschluss 2).
 
 ## 2. Voraussetzungen pro Plattform
 
@@ -125,8 +125,8 @@ npx playwright test                            # End-to-End in Chromium (nach de
 ### Symptom: `` `pre-commit` not found.  Did you forget to activate your virtualenv? ``
 
 - **Ursache:** `pre-commit install` wurde in einem zusätzlichen `git worktree` ausgeführt. Worktrees teilen `.git/hooks`; der Hook zeigt danach auf die venv des Worktrees und bricht, sobald der Worktree entfernt ist.
-- **Lösung:** im Haupt-Checkout erneut `uv run pre-commit install`.
-- **Auftreten:** 2026-09-26 (Onboarding-Validierung in 2.1).
+- **Lösung:** im Haupt-Checkout erneut `uv run pre-commit install` – bei jeder Onboarding-Validierung im Worktree direkt nach dem Entfernen des Worktrees.
+- **Auftreten:** 2026-09-26 (Onboarding-Validierung in 2.1 und beim Phasenabschluss 2).
 
 ### Symptom: `browserType.launch: Executable doesn't exist` bei `npx playwright test`
 
