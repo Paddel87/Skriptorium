@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 20:15 – [SESSIONENDE] Schritte 2.2 bis 2.5 erledigt
+
+- **Dauer:** Fortsetzung 18:30–20:15 UTC (Gesamtsession ab 17:00).
+- **Bearbeitet:** 2.2 (ADR-016, PyYAML), 2.3, 2.4 (Aufteilungsregeln vom Eigentümer bestätigt), 2.5 – alle `[ERLEDIGT]`. FR-002 (bis auf Teilkriterium KI-Anfrage → 3.2), FR-005, FR-007, FR-016 erledigt.
+- **Erreichter Stand:** `storage`, `canon` (mit Import) und `manuscript` durch Umsetzung validiert; 150 Tests, Coverage 100 % (Zeilen und Zweige). CI zu 2.2, 2.3, 2.4 grün (Läufe 61–63).
+- **Offen:** nichts aus 2.2–2.5. Pull Request für 2.2–2.5 auf Wunsch des Eigentümers am Sessionende angelegt und gemergt, sobald die CI grün ist.
+- **Nächster Schritt:** neue Session – 2.6 (api mit Anmeldung) mit `ENTSCHEIDUNG ERFORDERLICH` beginnen (Kategorie 6; danach Prüfung durch eine getrennte Instanz).
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5, eingestellt und bedient laut Sitzungsabfrage 20:14). Schritte oberhalb der Empfehlung: 3 (2.3, 2.4, 2.5 empfehlen Routine; Hinweis an den Eigentümer jeweils vorab). Abgegebene Teilarbeiten: keine (ohne Probelauf nicht zulässig).
+- **Kontextgröße:** 476.937 Token laut Sitzungsabfrage – Grenze 200.000 überschritten mit ausdrücklicher Anweisung des Eigentümers („hier weiter“, „weiter“). Sitzungskosten laut Abfrage ca. 17,38 $ für die Gesamtsession. Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Nächste Schritte); Drift-Prüfung: ADR-016 → 2.2 und 2.7 (Notiz) vorhanden; Modulnamen unverändert; Reifegrade in Abschnitt 9 passen zu ADR-013/015/016 und den Umsetzungs-Vermerken; Anforderungen FR-002/005/007/016 mit Schritt und Status; Reaktiv-Quote 0/10; Phase 2 weiterhin 7 Schritte; Blocker 0. Ablaufdaten-Register ohne fälligen Vorlauf (Guthaben-Vorlauf ab 2026-10-22). Archivierung: kein Trigger (Logbuch 185 Zeilen). project-context unter 600 Zeilen.
+
 ### 2026-09-26 20:05 – [REIFEGRAD-WECHSEL] manuscript durch Umsetzung validiert
 
 - Schritt 2.5 erledigt: `ManuscriptService` mit Geschichten (Roman, Kurzgeschichte, Fragment), Kapiteln, Kurzfassungen, Gesamtzusammenfassung, Figuren-Schreibweise (Perspektive, geführte Figuren), Gast-Verbindungen und geschichtenbezogenen Fakten. FR-007 erledigt; FR-012, FR-017, FR-024 haben ihre Felder, Funktion folgt in Phase 3.

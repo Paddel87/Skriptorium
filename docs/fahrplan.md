@@ -9,7 +9,7 @@
 ## Aktueller Stand
 
 - **Stand vom:** 2026-09-26
-- **Laufende Phase:** Phase 2 „Grundgerüst" (bereit; Phase 1 abgeschlossen 2026-09-26, ADR-014: weiterbauen)
+- **Laufende Phase:** Phase 2 „Grundgerüst" – 2.1 bis 2.5 erledigt (2026-09-26), offen 2.6 und 2.7
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** keiner (2.5 `[ERLEDIGT]` 2026-09-26)
 - **Nächster Schritt:** 2.6 (api – HTTP-Schnittstelle mit Anmeldung) – beginnt mit `ENTSCHEIDUNG ERFORDERLICH` (Authentifizierung, Kategorie 6)
