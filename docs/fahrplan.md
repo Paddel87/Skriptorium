@@ -19,10 +19,9 @@
   STOPP
   Grund: Informationslücke (CLAUDE.md Abschnitt 8, Kriterium 1)
   Kontext: Schritt 1.1 sollte beginnen; Eingangskriterien nicht erfüllt.
-  Benötigt: (1) OpenRouter-Schlüssel mit Ausgabengrenze als
-      Umgebungsvariable OPENROUTER_API_KEY der Cloud-Umgebung (wirkt ab
-      neuer Session); (2) Testszene (Ort, Figuren, Ziel) mit Kanon-Auszug
-      und Festlegung, ob der Text ins Repo darf.
+  Benötigt: (1) erledigt 2026-09-26: Schlüssel liegt als Umgebungsvariable
+      KEY vor, Ausgabengrenze 5 $; (2) offen: Testszene (Ort, Figuren,
+      Ziel) mit Kanon-Auszug und Festlegung, ob der Text ins Repo darf.
   Vorgeschlagene Auflösung: Eigentümer stellt beides bereit; bis dahin
       ist 1.3 ohne Zutun beginnbar.
   ```
@@ -129,7 +128,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein – das Ergebnis (Startmodell, Token-Budget) wird als ADR `[ERKENNTNIS]` festgehalten; berührt es eine Kategorie aus CLAUDE.md Abschnitt 4, wird es als `ENTSCHEIDUNG ERFORDERLICH` vorgelegt
 - **Empfohlene Klasse:** Entscheidung – das Ergebnis legt Startmodell und Token-Budget fest und bereitet die Beförderung von `context` auf `[BELASTBAR]` vor (Eskalations-Auslöser 4 in CLAUDE.md Abschnitt 0).
-- **Eingangskriterien:** OpenRouter-API-Schlüssel mit Ausgabengrenze, vom Eigentümer bereitgestellt – nie im Repo, in Logs oder in der Ausgabe der KI (CLAUDE.md Abschnitt 6); Bereitstellungsweg in der Arbeitsumgebung: [TBD – Frage an Eigentümer: Über welchen Weg stellst du den Schlüssel bereit, z. B. als Secret der Cloud-Umgebung?]. Eine Testszene (Ort, Figuren, Ziel) mit dem zugehörigen Kanon-Auszug aus einer bestehenden Welt, vom Eigentümer ausgewählt.
+- **Eingangskriterien:** OpenRouter-API-Schlüssel mit Ausgabengrenze, vom Eigentümer bereitgestellt – nie im Repo, in Logs oder in der Ausgabe der KI (CLAUDE.md Abschnitt 6); Bereitstellungsweg in der Arbeitsumgebung: Umgebungsvariable `KEY` der Cloud-Umgebung (Eigentümer, 2026-09-26); Ausgabengrenze 5 $ ohne Zurücksetzung, geprüft über OpenRouter `/api/v1/key` am 2026-09-26. Eine Testszene (Ort, Figuren, Ziel) mit dem zugehörigen Kanon-Auszug aus einer bestehenden Welt, vom Eigentümer ausgewählt.
 - **Anforderungen (ab Klasse M):** keine (Vorbereitung für FR-010, FR-011, FR-018; Grundlage für das Kosten-Ziel aus Vision 4)
 - **Zu tun:** Dieselbe Szene mit 3–4 Modellen über OpenRouter schreiben lassen (Auswahl aus den Modellen ohne OpenRouter-eigene Moderation, `docs/research/bestandspruefung.md` Abschnitt „Modell-Verfügbarkeit"), jeweils mit 2–3 Token-Budgets um den Startwert 30.000 Token Eingabe. Die Anfrage wird nach dem Kontext-Verfahren aus ADR-003 von Hand zusammengestellt. Je Lauf festhalten: Kanon-Widersprüche (Bewertung durch den Eigentümer, Maßstab Vision 4), Ablehnungen und Filterverhalten, Eingabe-/Ausgabe-Token, Kosten je Anfrage, Zeit bis zum ersten Textstück. Tokenzählung klären (Schätzung oder Tokenizer je Modell). Nutzungsbedingungen der ausführenden Anbieter der gewählten Modelle auf Einschränkungen für Fiktion sichten.
 - **Akzeptanzkriterien:** Wir können Startmodell und Token-Budget begründet festlegen: Vergleichstabelle (Modell × Budget × Kanon-Widersprüche × Ablehnungen × Kosten je Anfrage) liegt vor; hochgerechnete Monatskosten bei ca. 400 Anfragen liegen zusammen mit dem Hosting im Kostenrahmen von 50 € (BDR-001) oder die Abweichung ist benannt; mindestens ein Ausweichmodell ist benannt (FR-018); das Verhalten bei Ablehnung ist beschrieben (Grundlage für `ModelRefused`).

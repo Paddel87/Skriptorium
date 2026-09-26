@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 15:10 – [PROBLEM-GELÖST] OpenRouter-Schlüssel gefunden
+
+- Eigentümer: Der Schlüssel liegt in der Umgebungsvariable `KEY`, nicht in `OPENROUTER_API_KEY`.
+- Geprüft ohne Wertausgabe: gesetzt, Länge 73, OpenRouter-Präfix vorhanden. Abfrage `/api/v1/key`: Ausgabengrenze 5 $, verbraucht 0 $, keine Zurücksetzung der Grenze, kein Gratis-Kontingent.
+- Beobachtung: Der Name `KEY` ist unspezifisch. Für den Wegwerf-Code aus 1.1 wird er so gelesen; welcher Variablenname im Produkt gilt, entscheidet Schritt 3.1 (`.env.example`).
+- Eingangskriterium 1 von 1.1 erfüllt; die Testszene fehlt weiter, STOPP bleibt bestehen.
+
 ### 2026-09-26 15:00 – [BEOBACHTUNG] Eingangskriterien 1.1 nicht erfüllt – STOPP (Informationslücke)
 
 - Geprüft: Umgebungsvariable `OPENROUTER_API_KEY` ist in der Cloud-Umgebung **nicht gesetzt** (nur Vorhandensein geprüft, kein Wert ausgegeben). Keine andere Variable mit Bezug zu OpenRouter vorhanden.
