@@ -9,10 +9,10 @@
 ## Aktueller Stand
 
 - **Stand vom:** 2026-09-26
-- **Laufende Phase:** keine – Modus 2 (Projektinitialisierung) abgeschlossen am 2026-09-26; als Nächstes beginnt Phase 1 „Erkundung: Modelle, Import, Laufzeit"
-- **Phasentyp:** ERKUNDUNG (Phase 1, sobald begonnen)
+- **Laufende Phase:** Phase 2 „Grundgerüst" (bereit; Phase 1 abgeschlossen 2026-09-26, ADR-014: weiterbauen)
+- **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** keiner
-- **Nächster Schritt:** 1.1 (Modell-Eignungstest), sobald der Initialisierungs-Commit vorliegt und der Eigentümer einen OpenRouter-Schlüssel mit Ausgabengrenze bereitgestellt hat; 1.2 und 1.3 sind unabhängig davon beginnbar
+- **Nächster Schritt:** 2.1 (Projektgerüst und volle CI-Gates) – freigabepflichtig (Werkzeug-Pins, CI-Gates): beginnt mit einem `ENTSCHEIDUNG ERFORDERLICH`; Empfohlene Klasse Entscheidung
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -94,91 +94,9 @@ Jeder Schritt folgt diesem Schema. Abweichungen nur nach Freigabe.
 
 Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen). Phase 1 ist im vollen Format ausgearbeitet; die Phasen 2–5 sind gröber und werden zu Phasenbeginn verfeinert (Verfeinerung ändert den ursprünglichen Schrittplan nicht). Jede Muss-Anforderung aus `docs/requirements.md` ist genau einem Schritt zugeordnet – dem Schritt, der sie abschließt; frühere Schritte schaffen die Grundlage und nennen sie unter „Notizen". Datierte, ausgelöste und verschobene Schritte stehen unter „Querschnitt" am Ende dieses Abschnitts.
 
-### Phase 1: Erkundung – Modelle, Import, Laufzeit – Typ: ERKUNDUNG
+### Phase 1: Erkundung – Modelle, Import, Laufzeit – Typ: ERKUNDUNG – ABGESCHLOSSEN (2026-09-26)
 
-**Ziel:** Die drei offenen Tatsachenfragen vor der Umsetzung sind beantwortet und dokumentiert: (1) welches Modell und welches Token-Budget Kanon-Treue, Filterverhalten und Kosten am besten vereinen, (2) in welchem Format das Welt-Material des Eigentümers importiert wird, (3) ob httpx 0.28.1 auf Python 3.14.7 trägt. Die für Phase 2 und 3 berührten Architektur-Bestandteile sind danach `[BELASTBAR]` oder begründet zurückgestuft.
-
-**Abschlusskriterium:** Schritte 1.1–1.4 `[ERLEDIGT]`; Ergebnisse als ADRs `[ERKENNTNIS]` in `docs/decisions.md` und in `docs/architecture.md` nachgezogen; Reifegrad-Übersicht (`docs/architecture.md` Abschnitt 9) aktualisiert.
-
-**Reifegrad-Erwartung am Phasenende:** Module `storage`, `canon`, `manuscript`, `api`, `ui`, `context`, `ai_gateway`, ihre Schnittstellen und das Datenmodell `[BELASTBAR]`; NFR Token-Budget `[BELASTBAR]`; NFR Kanon-Treue und Kontexttreue Referenzumfang bleiben `[OFFEN]` (Messung erst im Schreibbetrieb bzw. Schritt D.4).
-
-**Ursprünglicher Schrittplan:** 4 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt; Wucherungs-Schwelle nach CLAUDE.md Abschnitt 8, Kriterium 9 (Faktor 2 und mindestens 5 zusätzliche Schritte, `docs/project-context.md` Abschnitt 6)
-
-**Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben (CLAUDE.md Abschnitt 12)
-
-**Hinweis Stabilisierung:** Code aus Phase 1 ist Wegwerf-Code und wird nicht in die Module übernommen; Phase 2 baut neu. Deshalb folgt auf Phase 1 keine eigene Stabilisierungsphase.
-
-#### 1.1: Modell-Eignungstest (Kanon-Treue, Filterverhalten, Kosten)
-
-- **Status:** OFFEN
-- **Phasentyp-Kontext:** ERKUNDUNG
-- **Schritt-Art (nur ERKUNDUNG):** Vergleichsstudie
-- **Zeitbox (nur ERKUNDUNG):** maximal 6 h Arbeit, dann Zwischenstand an den Eigentümer
-- **Abhängigkeiten:** keine
-- **Freigabepflichtig:** nein – das Ergebnis (Startmodell, Token-Budget) wird als ADR `[ERKENNTNIS]` festgehalten; berührt es eine Kategorie aus CLAUDE.md Abschnitt 4, wird es als `ENTSCHEIDUNG ERFORDERLICH` vorgelegt
-- **Empfohlene Klasse:** Entscheidung – das Ergebnis legt Startmodell und Token-Budget fest und bereitet die Beförderung von `context` auf `[BELASTBAR]` vor (Eskalations-Auslöser 4 in CLAUDE.md Abschnitt 0).
-- **Eingangskriterien:** OpenRouter-API-Schlüssel mit Ausgabengrenze, vom Eigentümer bereitgestellt – nie im Repo, in Logs oder in der Ausgabe der KI (CLAUDE.md Abschnitt 6); Bereitstellungsweg in der Arbeitsumgebung: [TBD – Frage an Eigentümer: Über welchen Weg stellst du den Schlüssel bereit, z. B. als Secret der Cloud-Umgebung?]. Eine Testszene (Ort, Figuren, Ziel) mit dem zugehörigen Kanon-Auszug aus einer bestehenden Welt, vom Eigentümer ausgewählt.
-- **Anforderungen (ab Klasse M):** keine (Vorbereitung für FR-010, FR-011, FR-018; Grundlage für das Kosten-Ziel aus Vision 4)
-- **Zu tun:** Dieselbe Szene mit 3–4 Modellen über OpenRouter schreiben lassen (Auswahl aus den Modellen ohne OpenRouter-eigene Moderation, `docs/research/bestandspruefung.md` Abschnitt „Modell-Verfügbarkeit"), jeweils mit 2–3 Token-Budgets um den Startwert 30.000 Token Eingabe. Die Anfrage wird nach dem Kontext-Verfahren aus ADR-003 von Hand zusammengestellt. Je Lauf festhalten: Kanon-Widersprüche (Bewertung durch den Eigentümer, Maßstab Vision 4), Ablehnungen und Filterverhalten, Eingabe-/Ausgabe-Token, Kosten je Anfrage, Zeit bis zum ersten Textstück. Tokenzählung klären (Schätzung oder Tokenizer je Modell). Nutzungsbedingungen der ausführenden Anbieter der gewählten Modelle auf Einschränkungen für Fiktion sichten.
-- **Akzeptanzkriterien:** Wir können Startmodell und Token-Budget begründet festlegen: Vergleichstabelle (Modell × Budget × Kanon-Widersprüche × Ablehnungen × Kosten je Anfrage) liegt vor; hochgerechnete Monatskosten bei ca. 400 Anfragen liegen zusammen mit dem Hosting im Kostenrahmen von 50 € (BDR-001) oder die Abweichung ist benannt; mindestens ein Ausweichmodell ist benannt (FR-018); das Verhalten bei Ablehnung ist beschrieben (Grundlage für `ModelRefused`).
-- **Betroffene Module:** context, ai_gateway (nur als Wegwerf-Code zur Erkundung)
-- **Reifegrad-Wirkung:** NFR Token-Budget `[VORLÄUFIG]` → Wert festgelegt (Beförderung in 1.4); NFR Kanon-Treue bleibt `[OFFEN]`, erhält eine Vorprüfung
-- **Artefakte:** ADR `[ERKENNTNIS]` zu Startmodell und Token-Budget; Erkenntnisdokument `docs/research/modell-eignungstest.md`; Nachtrag in `docs/architecture.md` Abschnitt 6 und im Kostenregister `docs/project-context.md` Abschnitt 8
-- **Notizen:** Szenen- und Kanon-Text des Eigentümers gehören nicht ins Repo, wenn er das nicht ausdrücklich will; im Erkenntnisdokument genügen Kennzahlen und kurze Belegstellen.
-
-#### 1.2: Import-Klärung an echten Exporten (TypingMind, Notion)
-
-- **Status:** OFFEN
-- **Phasentyp-Kontext:** ERKUNDUNG
-- **Schritt-Art (nur ERKUNDUNG):** Spike
-- **Zeitbox (nur ERKUNDUNG):** maximal 3 h Arbeit, dann Zwischenstand
-- **Abhängigkeiten:** keine
-- **Freigabepflichtig:** ja – das festgelegte Importformat ist Teil des Datenmodells (CLAUDE.md Abschnitt 4, Kategorie 4)
-- **Empfohlene Klasse:** Entscheidung – die Festlegung des Importformats ist eine Datenmodell-Entscheidung mit `ENTSCHEIDUNG ERFORDERLICH` (Eskalations-Auslöser 1).
-- **Eingangskriterien:** Echte Exporte des Eigentümers liegen vor: mindestens ein Agenten-JSON aus TypingMind und ein Markdown-Export aus Notion (Seiten mit Unterseiten).
-- **Anforderungen (ab Klasse M):** keine (Vorbereitung für FR-005, umgesetzt in 2.4)
-- **Zu tun:** Klären, ob das TypingMind-Agenten-JSON die Systemanweisung und Wissensdateien bzw. Knowledge-Base-Inhalte enthält und wie sein Schema aussieht; klären, wie Notion Unterseiten im Markdown-Export im Plan des Eigentümers ausgibt (`docs/research/bestandspruefung.md`, Offene Punkte 3 und 4). Abbildung auf Kanon-Kategorien und Dateiablage (`docs/architecture.md` Abschnitt 7) skizzieren; entscheiden, was automatisch zugeordnet wird und was der Autor nach dem Import zuordnet.
-- **Akzeptanzkriterien:** Wir verstehen den Aufbau beider Exporte (belegt an den echten Dateien); das Importformat und die Zuordnung zu Kanon-Kategorien sind festgelegt und freigegeben; der Zeitbedarf für den Import einer bestehenden Welt ist abgeschätzt und mit dem 30-Minuten-Rahmen (FR-022) abgeglichen.
-- **Betroffene Module:** canon
-- **Reifegrad-Wirkung:** Offene Frage im Modul `canon` (`docs/architecture.md` Abschnitt 3) geschlossen; Untermodul `canon.importers` `[VORLÄUFIG]` mit festgelegtem Eingangsformat
-- **Artefakte:** ADR `[ERKENNTNIS]` zum Importformat; Nachtrag in `docs/architecture.md` Abschnitte 3 und 7; ggf. anonymisierte Beispieldateien als Testdaten (nur mit Zustimmung des Eigentümers)
-- **Notizen:** Welt-Material ist Eigentum des Eigentümers; echte Exporte bleiben außerhalb des Repos, sofern er nichts anderes festlegt.
-
-#### 1.3: httpx 0.28.1 auf Python 3.14.7 prüfen
-
-- **Status:** OFFEN
-- **Phasentyp-Kontext:** ERKUNDUNG
-- **Schritt-Art (nur ERKUNDUNG):** Spike
-- **Zeitbox (nur ERKUNDUNG):** maximal 1 h Arbeit
-- **Abhängigkeiten:** keine
-- **Freigabepflichtig:** nein; fällt der Test negativ aus, ist eine Ersatz-Bibliothek eine neue externe Abhängigkeit und freigabepflichtig (Kategorie 3)
-- **Empfohlene Klasse:** Routine – klar spezifizierter Test ohne Architektur- oder Freigabewirkung; bei negativem Ergebnis eskaliert die Folgeentscheidung auf die Entscheidungs-Klasse.
-- **Eingangskriterien:** Python 3.14.7 und uv 0.12.19 in der Arbeitsumgebung verfügbar
-- **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Die Stichprobe aus der Versions-Verifikation (Streaming auf 3.14-Vorabversion) auf der fixierten Version 3.14.7 wiederholen: Streaming-Anfrage (Server-Sent Events) gegen OpenRouter oder einen lokalen Test-Server, Timeout-Verhalten, Abbruch eines laufenden Stroms, Warnungen als Fehler (`-W error`).
-- **Akzeptanzkriterien:** Annahme „httpx 0.28.1 trägt auf Python 3.14.7" ist validiert oder widerlegt, mit Protokoll der ausgeführten Prüfungen; bei Widerlegung liegt ein `ENTSCHEIDUNG ERFORDERLICH` zu einer Alternative vor.
-- **Betroffene Module:** ai_gateway
-- **Reifegrad-Wirkung:** keine direkte; Ergebnis fließt in die Beförderung von `ai_gateway` in 1.4
-- **Artefakte:** Eintrag im Ablaufdaten-Register (`docs/project-context.md` Abschnitt 8) aktualisiert; Logbuch-Eintrag mit Ergebnis
-- **Notizen:** Nachprüfung am 2027-03-26 ist eigener Schritt D.3.
-
-#### 1.4: Reifegrad-Beförderung vor der Umsetzung
-
-- **Status:** OFFEN
-- **Phasentyp-Kontext:** ERKUNDUNG
-- **Schritt-Art (nur ERKUNDUNG):** sonstiges – Architektur-Abgleich und Beförderung
-- **Zeitbox (nur ERKUNDUNG):** maximal 2 h Arbeit
-- **Abhängigkeiten:** 1.1, 1.2, 1.3
-- **Freigabepflichtig:** ja – Beförderung auf `[BELASTBAR]` per ADR; Änderungen am Zuschnitt wären Architekturänderungen (Kategorie 1)
-- **Empfohlene Klasse:** Entscheidung – Beförderung von `[VORLÄUFIG]` auf `[BELASTBAR]` (Eskalations-Auslöser 4).
-- **Eingangskriterien:** Ergebnisse von 1.1–1.3 dokumentiert
-- **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Module, Schnittstellenverträge (Abschnitt 4), Datenmodell (Abschnitt 7) und Kontext-Verfahren von `docs/architecture.md` mit den Erkenntnissen aus 1.1–1.3 abgleichen, nachziehen und zur Beförderung vorlegen. Umkehrbarkeit der Speicher- und Kontext-Entscheidung aus ADR-003 nachtragen. Bestandteile, die nicht tragen, begründet auf `[OFFEN]` setzen und einen ERKUNDUNG-Schritt anlegen.
-- **Akzeptanzkriterien:** Für jeden Bestandteil, den die Phasen 2 und 3 berühren, ist entschieden: `[BELASTBAR]` per ADR oder `[OFFEN]` mit neuem Erkundungsschritt; die Reifegrad-Übersicht ist aktualisiert.
-- **Betroffene Module:** canon, manuscript, context, ai_gateway, storage, api, ui
-- **Reifegrad-Wirkung:** siehe Reifegrad-Erwartung der Phase
-- **Artefakte:** ADR zur Beförderung; `docs/architecture.md` Abschnitte 3, 4, 7 und 9
-- **Notizen:** Ohne diesen Schritt dürfte Phase 2 nicht beginnen (CLAUDE.md Abschnitt 6, „Architektur-Reifegrad respektieren").
+**Phasen-Bilanz:** 5 Schritte (ursprünglich 4; 1.5 Genre-Test auf Wunsch des Eigentümers ergänzt, Wucherungs-Schwelle nicht berührt), alle `[ERLEDIGT]` am 2026-09-26. Ergebnisse: Startmodell grok-4.7, Zweitmodell grok-4.6, Notfall-Reserve qwen3.8-max, Token-Budget 30.000 als Obergrenze (ADR-010, ADR-011); Import zunächst Markdown (ADR-012); httpx 0.28.1 auf Python 3.14.7 validiert; Architektur vor Phase 2 auf `[BELASTBAR]` befördert, neues Reaktionszeit-Ziel (ADR-013); Pflichtfrage am Phasenende: weiterbauen (ADR-014). Reaktiv-Quote 0/10. Kosten OpenRouter gesamt 1,66 $ (laut Schlüssel-Abfrage; Ausgabengrenze 5 $, Rest 3,34 $). Detail-Schritte: [`docs/archiv/fahrplan-phase-1.md`](archiv/fahrplan-phase-1.md).
 
 ### Phase 2: Grundgerüst – Typ: UMSETZUNG
 
@@ -206,7 +124,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** keine Fachmodule (Projektgerüst, CI)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** `pyproject.toml`, `package.json`, Lock-Dateien, CI- und Hook-Konfiguration, README-Quick-Start, `docs/onboarding-runbook.md`
-- **Notizen:** Quick-Start-relevant – Onboarding-Pfad gegen frischen Worktree validieren (CLAUDE.md Abschnitt 17).
+- **Notizen:** Quick-Start-relevant – Onboarding-Pfad gegen frischen Worktree validieren (CLAUDE.md Abschnitt 17). Zusatz 2026-09-26 (Befund aus 1.1): In der Cloud-Session ist der `pre-commit`-Hook nicht installiert; 2.1 sorgt dafür, dass er zu Sessionbeginn installiert wird (z. B. SessionStart-Hook), sonst greift „Pre-Commit-Hook war aktiv" der Definition of Done nicht. Zusatz 2026-09-26 (Befund aus 1.3): Die Cloud-Umgebung setzt `UV_NATIVE_TLS`, das uv 0.12 als abgekündigt meldet (Ersatz `UV_SYSTEM_CERTS`); bei der Einrichtung der Projekt-Werkzeuge prüfen, ob die Warnung in CI oder Pre-Commit auftaucht, und dann Umgebung bzw. Warnungs-Bestand anpassen.
 
 #### 2.2: storage – Dateiablage und Suchindex
 
@@ -247,10 +165,10 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Abhängigkeiten:** 1.2, 2.3
 - **Freigabepflichtig:** nein (Format in 1.2 freigegeben)
 - **Empfohlene Klasse:** Routine – Umsetzung eines in 1.2 festgelegten Formats.
-- **Eingangskriterien:** Importformat per ADR aus 1.2 festgelegt
+- **Eingangskriterien:** Importformat per ADR aus 1.2 festgelegt (ADR-012: Markdown)
 - **Anforderungen (ab Klasse M):** FR-005
-- **Zu tun:** `canon.importers` mit je einem Importer für TypingMind (Agenten-JSON) und Notion (Markdown-Export); Zuordnung zu Kanon-Kategorien wie in 1.2 festgelegt.
-- **Akzeptanzkriterien:** Eine bestehende Welt des Eigentümers ist nach dem Import als Kanon nutzbar; Importzeit passt in den 30-Minuten-Rahmen (FR-022); Tests mit anonymisierten Beispieldaten.
+- **Zu tun:** `canon.importers` mit einem Markdown-Importer (ADR-012): Welt-Material als Markdown-Datei oder eingefügter Text; Aufteilung in Kanon-Einträge und Zuordnung zu Kategorien festlegen, dem Eigentümer zeigen, umsetzen. TypingMind- und Notion-Importer folgen in V.4 und V.5.
+- **Akzeptanzkriterien:** Eine Welt aus Markdown ist nach dem Import als Kanon nutzbar; Importzeit für Welt-Material mit zweistelliger Seitenzahl gemessen und gegen den 30-Minuten-Rahmen (FR-022) gestellt; Tests mit erfundenen Beispieldaten (z. B. Testwelt „Die Salzmark").
 - **Betroffene Module:** canon
 - **Reifegrad-Wirkung:** `canon.importers` → `[BELASTBAR]`
 - **Artefakte:** Code, Tests
@@ -330,7 +248,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** ai_gateway
 - **Reifegrad-Wirkung:** `ai_gateway` → `[BELASTBAR]` durch Umsetzung
 - **Artefakte:** Code, Tests
-- **Notizen:** Konkrete weitere Anbieter sind Schritt V.3.
+- **Notizen:** Konkrete weitere Anbieter sind Schritt V.3. Zusatz 2026-09-26 (ADR-013): Observability (Logging, Metriken, `docs/architecture.md` Abschnitt 6) ist noch `[VORLÄUFIG]` und vor Beginn von 3.1 zu befördern; Modell-Konfiguration je Modell (Reasoning, Anbieter-Ausschlüsse) und Timeouts bis zum ersten Textstück nach Abschnitt 4 (ModelProvider).
 
 #### 3.2: context – Kontext-Zusammenstellung unter Token-Budget
 
@@ -358,7 +276,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Eingangskriterien:** Abläufe in `docs/architecture.md` Abschnitt 5 `[BELASTBAR]`
 - **Anforderungen (ab Klasse M):** FR-008, FR-009, FR-011
 - **Zu tun:** Ablauf „Weiterschreiben im Wechsel" in `api` (SSE) und `ui`: Anweisung senden, Text fortlaufend anzeigen, übernehmen, ändern oder verwerfen; Einstieg mit neuer Szene (Ort, Figuren, Ziel); Fehlerpfad bei Abbruch oder Ablehnung.
-- **Akzeptanzkriterien:** Szenario 1 der Vision: erster Absatz widerspricht keinem Kanon-Eintrag der beteiligten Figuren und des Orts (FR-008); übernommener, geänderter oder verworfener Text ist Grundlage der nächsten Fortsetzung (FR-009); Kanon-Treue im Probeschreiben höchstens ein Widerspruch pro Kapitel (FR-011); erstes Textstück binnen 5 s; bei Abbruch bleibt der Manuskript-Stand unverändert.
+- **Akzeptanzkriterien:** Szenario 1 der Vision: erster Absatz widerspricht keinem Kanon-Eintrag der beteiligten Figuren und des Orts (FR-008); übernommener, geänderter oder verworfener Text ist Grundlage der nächsten Fortsetzung (FR-009); Kanon-Treue im Probeschreiben höchstens ein Widerspruch pro Kapitel (FR-011); Anzeige „denkt nach …" innerhalb 1 s, erstes Textstück beim Startmodell innerhalb 60 s, beim Zweitmodell grok-4.6 innerhalb 10 s, Abbruch und Modellwechsel jederzeit (ADR-013); bei Abbruch bleibt der Manuskript-Stand unverändert.
 - **Betroffene Module:** api, ui
 - **Reifegrad-Wirkung:** Kommunikations-Grundmodus inkl. SSE → `[BELASTBAR]`; NFR Kanon-Treue erhält erste Messung
 - **Artefakte:** Code, Tests
@@ -774,6 +692,22 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Artefakte:** Messprotokoll, ADR `[ERKENNTNIS]`
 - **Notizen:** Bis dahin gilt das Kriterium als unbelegt.
 
+#### M.1: Branch-Konvention festlegen
+
+- **Status:** ERLEDIGT (2026-09-26)
+- **Phasentyp-Kontext:** querschnittlich (Methodik)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** nein (Dokumentation der Repository-Regeln, `docs/project-context.md` Abschnitt 10; keine Umbenennung des Hauptbranches)
+- **Empfohlene Klasse:** Routine – Dokumentationspflege ohne Architekturwirkung.
+- **Eingangskriterien:** Auftrag des Eigentümers vom 2026-09-26 („vernünftige Branch-Konvention: Feature, Bugfix usw.")
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Branch-Typen, Namensform, Umgang mit werkzeugvergebenen `claude/`-Branches, Lebensdauer und Merge-Art festhalten.
+- **Akzeptanzkriterien:** Konvention steht in `docs/project-context.md` Abschnitt 10 und ist mit `CLAUDE.md` Abschnitt 11 vereinbar.
+- **Betroffene Module:** keine
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** `docs/project-context.md` Abschnitt 10
+- **Notizen:** –
+
 #### V.1: Publizieren (Satz, Export, Veröffentlichung)
 
 - **Status:** VERSCHOBEN
@@ -823,6 +757,40 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Betroffene Module:** ai_gateway
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** –
+- **Notizen:** –
+
+#### V.4: Import aus TypingMind (Agenten-JSON)
+
+- **Status:** VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 – vorgezogen, falls der 30-Minuten-Test (4.8) am Import scheitert (ADR-012)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 2.4
+- **Freigabepflichtig:** ja – Eingangsformat ist Teil des Datenmodells (Kategorie 4)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell-Festlegung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** ein TypingMind-Agenten-Export liegt vor (z. B. Test-Agent mit erfundenem Inhalt)
+- **Anforderungen (ab Klasse M):** keine (FR-005 in 2.4 erfüllt)
+- **Zu tun:** Schema des Exports klären (Systemanweisung, Wissensdateien), Importer in `canon.importers` ergänzen.
+- **Akzeptanzkriterien:** Ein Agenten-Export wird ohne Handarbeit als Welt-Material übernommen.
+- **Betroffene Module:** canon
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR zum Format, Code, Tests
+- **Notizen:** –
+
+#### V.5: Import aus Notion (Markdown-Export mit Unterseiten)
+
+- **Status:** VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 – vorgezogen, falls der 30-Minuten-Test (4.8) am Import scheitert (ADR-012)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 2.4
+- **Freigabepflichtig:** ja – Eingangsformat ist Teil des Datenmodells (Kategorie 4)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell-Festlegung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** ein Notion-Markdown-Export mit Unterseiten liegt vor (z. B. Testseite mit erfundenem Inhalt)
+- **Anforderungen (ab Klasse M):** keine (FR-005 in 2.4 erfüllt)
+- **Zu tun:** Verhalten von Unterseiten und Dateistruktur des Exports klären, Importer auf dem Markdown-Importer aus 2.4 aufbauen.
+- **Akzeptanzkriterien:** Ein Notion-Export mit Unterseiten wird ohne Handarbeit als Welt-Material übernommen.
+- **Betroffene Module:** canon
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR zum Format, Code, Tests
 - **Notizen:** –
 
 ---

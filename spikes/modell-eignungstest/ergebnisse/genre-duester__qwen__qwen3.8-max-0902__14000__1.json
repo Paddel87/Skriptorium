@@ -1,0 +1,23 @@
+{
+  "modell": "qwen/qwen3.8-max-0902",
+  "anbieter": "Alibaba",
+  "wiederholung": 1,
+  "szene": "duester",
+  "reasoning": {
+    "effort": "low"
+  },
+  "budget": 14000,
+  "geschaetzt_gesamt": 13986,
+  "geschaetzt_seiten": 6761,
+  "kanon_eintraege": 18,
+  "kanon_zusatz": 0,
+  "prompt_tokens": 13056,
+  "completion_tokens": 1897,
+  "reasoning_tokens": 538,
+  "kosten_usd": 0.03179682,
+  "erstes_stueck_s": 16.87,
+  "gesamt_s": 58.55,
+  "finish_reason": "stop",
+  "fehler": null,
+  "woerter": 895
+}

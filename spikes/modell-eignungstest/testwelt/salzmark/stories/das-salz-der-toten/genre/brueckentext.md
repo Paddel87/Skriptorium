@@ -1,0 +1,3 @@
+# Handlungsstand nach Kapitel 7 (für den Genre-Test)
+
+Die Äbtissin Sera Kolb ließ Ilka und Tomas ein, nachdem Tomas seinen toten Bruder beklagt hatte – ohne den Namen zu nennen. Beide schworen den Salzeid: nichts zu entfernen, nichts zu verändern. Im zweiten Gewölbe fanden sie das schwarze Buch zwischen den Totenbüchern. Weil der Eid die Mitnahme verbietet, schreibt Ilka die entscheidenden Seiten ab; die Äbtissin hat zugesagt, die Abschrift mit ihrem Siegel zu beglaubigen, sobald sie fertig ist. Das dauert mehrere Nächte. Tomas wohnt so lange in der Kammer des Fährmanns an der Grotte, Ilka schreibt nachts im Archiv. Fenn Asch weiß inzwischen, dass jemand das Buch gefunden hat.

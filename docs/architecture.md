@@ -27,12 +27,12 @@ Das Skriptorium ist eine Web-App für einen einzelnen Autor: ein Python-Server (
 
 **Architektur-Pattern:** Modularer Monolith – eine Betriebseinheit mit fachlich getrennten Modulen `[BELASTBAR]` (ADR-003, Heuristik 1.3: ein Nutzer, ein Betriebsziel, fachliche Komplexität).
 
-**Kommunikations-Grundmodus:** synchron. Oberfläche ↔ Server über HTTP/JSON; KI-Antworten werden per Streaming (Server-Sent Events) Wort für Wort an die Oberfläche weitergereicht. Module im Server rufen einander als Python-Funktionen über ihre öffentlichen Schnittstellen auf. `[VORLÄUFIG]`
+**Kommunikations-Grundmodus:** synchron. Oberfläche ↔ Server über HTTP/JSON; KI-Antworten werden per Streaming (Server-Sent Events) Wort für Wort an die Oberfläche weitergereicht. Module im Server rufen einander als Python-Funktionen über ihre öffentlichen Schnittstellen auf. `[BELASTBAR]` (ADR-013; Streaming vom Anbieter mit httpx in 1.3 erprobt)
 
 <!-- ANCHOR:modul-karte -->
 ## 2. Modul-Karte
 
-Nur die gezeigten Beziehungen sind erlaubt; jede weitere ist ein Architekturbruch. Gestrichelt = `[VORLÄUFIG]`.
+Nur die gezeigten Beziehungen sind erlaubt; jede weitere ist ein Architekturbruch. Alle Beziehungen `[BELASTBAR]` seit 2026-09-26 (ADR-013); die Striche der Grafik bleiben aus der Entwurfszeit.
 
 ```mermaid
 graph LR
@@ -53,63 +53,63 @@ graph LR
 <!-- ANCHOR:module -->
 ## 3. Module (detailliert)
 
-### Modul: canon [VORLÄUFIG]
+### Modul: canon [BELASTBAR]
 
-- **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26, Begründung: aus Vision und Anforderungen abgeleitet, nicht implementiert
-- **Verantwortung:** Welten und ihre Kanon-Einträge (Figur, Ort/Geografie, Gegenstand, Zeitlinie, Regel, Kultur) anlegen, ändern, löschen, finden; Aliasse für die Namenserkennung; einmaliger Import von Welt-Material aus TypingMind (JSON-Export) und Notion (Markdown-Export) (FR-001–FR-005, FR-023).
+- **Reifegrad:** `[BELASTBAR]`, seit 2026-09-26, per ADR-013 (Beförderung in Schritt 1.4) – vorher Begründung: aus Vision und Anforderungen abgeleitet, nicht implementiert
+- **Verantwortung:** Welten und ihre Kanon-Einträge (Figur, Ort/Geografie, Gegenstand, Zeitlinie, Regel, Kultur) anlegen, ändern, löschen, finden; Aliasse für die Namenserkennung; einmaliger Import von Welt-Material, zunächst als Markdown (ADR-012); Importer für TypingMind und Notion später (Schritte V.4, V.5) (FR-001–FR-005, FR-023).
 - **Nicht-Verantwortung:** keine Entscheidung, welche Einträge in eine KI-Anfrage gehören (→ `context`); keine geschichtenbezogenen Fakten (→ `manuscript`).
 - **Öffentliche Schnittstellen:** `CanonService` (Abschnitt 4)
-- **Interne Struktur:** Import als eigenes Untermodul `canon.importers` mit je einem Importer pro Quelle.
+- **Interne Struktur:** Import als eigenes Untermodul `canon.importers` mit je einem Importer pro Quelle; erste Ausbaustufe nur Markdown (ADR-012).
 - **Abhängigkeiten (andere Module):** `storage`
 - **Abhängigkeiten (extern):** keine
-- **Offene Fragen:** Inhalt des TypingMind-Agenten-Exports (enthält er Wissensdateien?) – Klärung an einem echten Export, Fahrplan-Schritt 1.2.
+- **Offene Fragen:** Inhalt des TypingMind-Agenten-Exports – für die erste Ausbaustufe gegenstandslos (ADR-012), Klärung in Schritt V.4.
 
-### Modul: manuscript [VORLÄUFIG]
+### Modul: manuscript [BELASTBAR]
 
-- **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26
+- **Reifegrad:** `[BELASTBAR]`, seit 2026-09-26, per ADR-013 (Beförderung in Schritt 1.4)
 - **Verantwortung:** Geschichten je Welt (Roman mit Kapiteln, Kurzgeschichte, Fragment), Manuskript-Text, Kapitel-Kurzfassungen und Gesamtzusammenfassung, Einstellungen der Figuren-Schreibweise je Geschichte (welche Figuren der Autor führt, Erzählperspektive), Gast-Verbindungen zu Einträgen anderer Welten und geschichtenbezogene Fakten (FR-007, FR-009, FR-012, FR-016, FR-017, FR-024).
 - **Nicht-Verantwortung:** kein Erzeugen von Text oder Zusammenfassungen (→ `ai_gateway`, gesteuert über `api`); kein Welt-Kanon (→ `canon`).
 - **Öffentliche Schnittstellen:** `ManuscriptService` (Abschnitt 4)
 - **Abhängigkeiten (andere Module):** `storage`
-- **Offene Fragen:** Granularität des Wechsels Autor/KI im Manuskript (Absatz-Markierung, wer was schrieb) – verfeinert in der Umsetzung.
+- **Offene Fragen:** keine. Geklärt in 1.4 (2026-09-26): keine Markierung, wer welchen Absatz schrieb – FR-009 verlangt nur, dass übernommener, geänderter oder verworfener KI-Text im selben Manuskript landet; der Manuskript-Text ist ein fortlaufender Markdown-Text (einfachste Lösung, erweiterbar per Markierung, falls später nötig).
 
-### Modul: context [VORLÄUFIG]
+### Modul: context [BELASTBAR]
 
-- **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26, Begründung: Kernverfahren, Tauglichkeit und Budget werden im Erkundungsschritt zur Modellwahl geprüft
+- **Reifegrad:** `[BELASTBAR]`, seit 2026-09-26, per ADR-013 (Beförderung in Schritt 1.4) – vorher Begründung: Kernverfahren in 1.1 und 1.5 an einer Testwelt erprobt (86 Läufe, Vorrangfolge von Hand nachgebaut)
 - **Verantwortung:** baut aus Welt, Geschichte, Anweisung und `@`-Verweisen eine KI-Anfrage unter festem Token-Budget; Bausteine in Vorrangfolge: (1) Regeln und Schreibanweisung inkl. Figuren-Schreibweise, (2) per `@` genannte Einträge und Einträge der Figuren der Szene, (3) Gesamtzusammenfassung und Kapitel-Kurzfassungen, (4) letzte Manuskript-Seiten wörtlich (füllt den Rest des Budgets). Baut ebenso die Anfrage für Kapitel-Kurzfassungen. Erkennt Kanon-Namen ohne `@` und liefert sie als Vorschläge (FR-008, FR-010, FR-011, FR-013, FR-014).
 - **Nicht-Verantwortung:** kein Aufruf der KI, kein Schreiben von Daten.
 - **Öffentliche Schnittstellen:** `ContextBuilder` (Abschnitt 4)
 - **Abhängigkeiten (andere Module):** `canon`, `manuscript` (nur lesend)
 - **NFRs:** Token-Budget je Anfrage (Abschnitt 6); Coverage 90 % (project-context Abschnitt 7).
-- **Offene Fragen:** Wert des Token-Budgets; Tokenzählung je Modell (Schätzung vs. Tokenizer) – Erkundungsschritt 1.1.
+- **Offene Fragen:** keine. Geklärt in 1.1 (ADR-010): Budget 30.000 Token Eingabe als Obergrenze; Tokenzählung per Schätzung 3,3 Zeichen je Token mit 10 % Sicherheitsabschlag (Abweichung zu den Anbieter-Zählungen −6 % bis +8 %), kein Tokenizer je Modell. Reihenfolge in der Anfrage: feste Bausteine (Regeln, Welt, Kanon) zuerst, veränderliche (Handlungsstand, letzte Seiten, Anweisung) zuletzt – Zwischenspeicher der Anbieter senkt so die Kosten.
 
-### Modul: ai_gateway [VORLÄUFIG]
+### Modul: ai_gateway [BELASTBAR]
 
-- **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26
-- **Verantwortung:** einheitliche Anbieter-Schnittstelle für KI-Anfragen mit Streaming; OpenRouter als erster Adapter; weitere Anbieter als zusätzliche Adapter, ohne bestehende zu ändern (FR-018, FR-025); Erfassung von Token-Verbrauch und Kosten je Anfrage.
+- **Reifegrad:** `[BELASTBAR]`, seit 2026-09-26, per ADR-013 (Beförderung in Schritt 1.4)
+- **Verantwortung:** einheitliche Anbieter-Schnittstelle für KI-Anfragen mit Streaming; OpenRouter als erster Adapter; weitere Anbieter als zusätzliche Adapter, ohne bestehende zu ändern (FR-018, FR-025); Erfassung von Token-Verbrauch und Kosten je Anfrage; Modell-Konfiguration je Modell (Reasoning aus oder niedrigste Stufe, weil manche Modelle Reasoning verlangen; ausgeschlossene ausführende Anbieter, z. B. solche mit Training auf Eingaben). Modellreihenfolge: grok-4.7 → grok-4.6 → qwen3.8-max (ADR-010, ADR-011).
 - **Nicht-Verantwortung:** keine Fachlogik, keine Kontext-Auswahl.
 - **Öffentliche Schnittstellen:** `ModelProvider` (Abschnitt 4)
 - **Abhängigkeiten (extern):** httpx; OpenRouter-API
-- **Offene Fragen:** Verhalten bei Modell-Ablehnung (Inhaltsfilter) – Erkundungsschritt.
+- **Offene Fragen:** keine. Geklärt in 1.1/1.3: `finish_reason: content_filter` → `ModelRefused`; textliche Weigerung ist technisch nicht erkennbar → Oberfläche bietet bei jedem KI-Text „mit anderem Modell wiederholen"; httpx 0.28.1 trägt auf Python 3.14.7; ein `httpx.AsyncClient` wird beim Start angelegt und wiederverwendet.
 
-### Modul: storage [VORLÄUFIG]
+### Modul: storage [BELASTBAR]
 
-- **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26
+- **Reifegrad:** `[BELASTBAR]`, seit 2026-09-26, per ADR-013 (Beförderung in Schritt 1.4)
 - **Verantwortung:** Lesen und atomares Schreiben der Markdown-Dateien mit YAML-Kopf (Frontmatter) im Datenverzeichnis; Pflege des SQLite-Suchindex (Namen, Aliasse, Volltext) und dessen vollständiger Neuaufbau aus den Dateien.
 - **Nicht-Verantwortung:** keine Fachregeln. Die Dateien sind die Quelle der Wahrheit; der Index enthält nichts, was nicht aus den Dateien wiederherstellbar ist.
 - **Öffentliche Schnittstellen:** `DocumentStore` (Abschnitt 4)
 - **Abhängigkeiten (extern):** Python-Standardbibliothek (`sqlite3`); YAML-Parser [TBD – freigabepflichtige Abhängigkeit, Auswahl im ersten Umsetzungsschritt]
 
-### Modul: api [VORLÄUFIG]
+### Modul: api [BELASTBAR]
 
-- **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26
+- **Reifegrad:** `[BELASTBAR]`, seit 2026-09-26, per ADR-013 (Beförderung in Schritt 1.4)
 - **Verantwortung:** HTTP-Schnittstelle (FastAPI), Zugangsschutz, Ablauf-Steuerung über Modulgrenzen hinweg (z. B. Fortsetzung schreiben, Kapitel abschließen), Auslieferung der gebauten Oberfläche.
 - **Nicht-Verantwortung:** keine Fachlogik über das Zusammenschalten hinaus.
 - **Abhängigkeiten (andere Module):** `canon`, `manuscript`, `context`, `ai_gateway`
 
-### Modul: ui [VORLÄUFIG]
+### Modul: ui [BELASTBAR]
 
-- **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26
+- **Reifegrad:** `[BELASTBAR]`, seit 2026-09-26, per ADR-013 (Beförderung in Schritt 1.4)
 - **Verantwortung:** React-Oberfläche: Welt wählen, Einstieg (Szene, Manuskript), Editor mit `@`-Menü, Übernahme markierter Textstellen in den Kanon mit Zielwahl (FR-015, FR-024), Kanon-Pflege, Modellwahl; bedienbar auf dem Smartphone (FR-019).
 - **Abhängigkeiten:** nur `api` über HTTP.
 - **Technologie:** TypeScript, React, Vite, CodeMirror 6.
@@ -117,44 +117,54 @@ graph LR
 <!-- ANCHOR:schnittstellenvertraege -->
 ## 4. Schnittstellenverträge
 
-Alle Verträge sind `[VORLÄUFIG]` seit 2026-09-26 und werden in der Umsetzung verfeinert; Verfeinerungen werden hier mit Datum nachgezogen.
+Alle Verträge sind `[BELASTBAR]` seit 2026-09-26 (ADR-013). Die Umsetzung formuliert Signaturen und Felder aus; Verfeinerungen innerhalb der Grobverträge werden hier mit Datum nachgezogen, Änderungen an Operationen oder Endpunkt-Gruppen sind Schnittstellenänderungen (`CLAUDE.md` Abschnitt 4).
 
-### Schnittstelle: ModelProvider [VORLÄUFIG]
+### Schnittstelle: ModelProvider [BELASTBAR]
 
 - **Typ:** Python-Protokoll (Funktions-Export)
 - **Anbieter:** `ai_gateway` (je Anbieter ein Adapter)
 - **Konsument:** `api`
 - **Spezifikation:**
-  - **Eingabe:** Modell-Kennung, Liste von Nachrichten (Rolle, Text), Obergrenze für Antwort-Token, Temperatur
+  - **Eingabe:** Modell-Kennung, Liste von Nachrichten (Rolle, Text), Obergrenze für Antwort-Token, Temperatur; Reasoning-Einstellung und Anbieter-Ausschlüsse kommen aus der Modell-Konfiguration, nicht vom Aufrufer
   - **Ausgabe (Erfolg):** Strom von Textstücken; am Ende Nutzungsdaten (Eingabe-/Ausgabe-Token, Kosten falls vom Anbieter gemeldet)
-  - **Ausgabe (Fehler):** `ProviderUnavailable`, `ModelRefused` (Inhaltsfilter), `RateLimited`, `InvalidRequest`
+  - **Ausgabe (Fehler):** `ProviderUnavailable` (Netz, HTTP 5xx, `error` im Strom ohne Filterbezug), `ModelRefused` (`finish_reason: content_filter` oder Filter-Fehler im Strom), `RateLimited` (HTTP 429), `InvalidRequest` (HTTP 400, z. B. „Reasoning is mandatory")
   - **Idempotenz:** nein (jede Anfrage erzeugt neuen Text)
-  - **Timeouts und Retries:** Verbindungsaufbau 10 s; kein automatischer Retry bei begonnenem Strom; einmaliger Retry bei `RateLimited` nach Wartezeit des Anbieters
+  - **Timeouts und Retries:** Verbindungsaufbau 10 s; Wartezeit bis zum ersten Textstück bis 90 s (Modelle mit Vorab-Denken brauchten bis 50 s); danach höchstens 30 s zwischen zwei Textstücken; kein automatischer Retry bei begonnenem Strom; einmaliger Retry bei `RateLimited` nach Wartezeit des Anbieters (im Test trat 429 auf und verschwand beim Wiederholen)
 - **Sicherheit:** API-Schlüssel nur aus Umgebungsvariablen des Servers
 
-### Schnittstelle: ContextBuilder [VORLÄUFIG]
+### Schnittstelle: ContextBuilder [BELASTBAR]
 
 - **Typ:** Python-Funktions-Export
 - **Anbieter:** `context`; **Konsument:** `api`
-- **Eingabe:** Welt-ID, Geschichte-ID, Kapitel-ID, Anweisung des Autors, Liste der `@`-Verweise, Token-Budget
+- **Eingabe:** Welt-ID, Geschichte-ID, Kapitel-ID, Anweisung des Autors, Liste der `@`-Verweise, Token-Budget (Obergrenze 30.000, ADR-010)
 - **Ausgabe:** Nachrichtenliste für `ModelProvider` plus Protokoll, welche Bausteine mit wie vielen Token enthalten sind (für Nachvollziehbarkeit und Tests)
 
-### Schnittstelle: CanonService, ManuscriptService, DocumentStore [VORLÄUFIG]
+### Schnittstelle: CanonService, ManuscriptService, DocumentStore [BELASTBAR]
 
 - **Typ:** Python-Funktions-Exporte
-- **Spezifikation:** CRUD-Operationen auf den Entitäten aus Abschnitt 7; Details entstehen in der Umsetzung und werden hier nachgezogen.
+- **Grobvertrag (1.4, 2026-09-26):** Operationen je Dienst; Signaturen und Fehlerarten werden in 2.2–2.5 ausformuliert, ohne Operationen hinzuzufügen oder wegzulassen (sonst Schnittstellenänderung nach `CLAUDE.md` Abschnitt 4).
+  - **DocumentStore** (`storage`): Dokument lesen (Kopf + Text), atomar schreiben, löschen, unter einem Pfad auflisten; Suche nach Name/Alias/Volltext innerhalb einer Welt; Index vollständig aus den Dateien neu aufbauen.
+  - **CanonService** (`canon`): Welten auflisten, lesen, anlegen, ändern; Kanon-Einträge einer Welt auflisten (optional nach Kategorie), lesen, anlegen, ändern, löschen; Einträge nach Name oder Alias finden (für `@`-Menü und Vorschläge); Markdown-Import als Vorschau erzeugen und bestätigt übernehmen (ADR-012).
+  - **ManuscriptService** (`manuscript`): Geschichten einer Welt auflisten, lesen, anlegen, ändern (Form, Perspektive, geführte Figuren); Kapitel auflisten, lesen, speichern, abschließen; Kurzfassung eines Kapitels und Gesamtzusammenfassung setzen; Gast-Verbindungen hinzufügen und entfernen; geschichtenbezogene Fakten hinzufügen und entfernen.
+- **Fehler (gemeinsam):** `NotFound`, `AlreadyExists`, `InvalidInput`; `storage` zusätzlich `StorageError` bei Schreibfehlern (Datei bleibt dann unverändert).
 
-### Schnittstelle: HTTP-API [VORLÄUFIG]
+### Schnittstelle: HTTP-API [BELASTBAR]
 
 - **Typ:** HTTP-REST (JSON) plus Server-Sent Events für KI-Streaming
 - **Anbieter:** `api`; **Konsument:** `ui`
 - **Sicherheit:** Anmeldung mit Passwort und Sitzungs-Cookie für alle Endpunkte außer Gesundheitsprüfung und Anmeldung (ASVS Stufe 2 für Authentifizierung und Sitzung)
 - **Versionierung:** keine – Oberfläche und Server werden immer gemeinsam ausgeliefert
+- **Grobvertrag (1.4, 2026-09-26):** Endpunkt-Gruppen, je eine Operation der Dienste aus den Grobverträgen oben; Pfade und Felder werden in 2.6 ausformuliert, ohne Gruppen hinzuzufügen oder wegzulassen.
+  - Gesundheitsprüfung (ohne Anmeldung); Anmelden, Abmelden (ohne Sitzung zugänglich nur Anmelden)
+  - Welten; Kanon-Einträge einer Welt; Suche nach Name/Alias; Markdown-Import (Vorschau, Übernahme)
+  - Geschichten einer Welt; Kapitel; Kapitel abschließen (löst Kurzfassung aus); Gast-Verbindungen; geschichtenbezogene Fakten
+  - Schreiben: Anweisung senden → KI-Text als Server-Sent Events (Textstücke, dann Nutzungsdaten oder Fehlerart); Abbruch durch Schließen der Verbindung
+  - Modelle: verfügbare Modelle und Voreinstellung lesen, Modell je Geschichte wählen
 
 <!-- ANCHOR:datenfluss -->
 ## 5. Datenfluss
 
-### Flow: Weiterschreiben im Wechsel [VORLÄUFIG]
+### Flow: Weiterschreiben im Wechsel [BELASTBAR]
 
 1. Autor schreibt im Editor (eigener Text wird gespeichert) und gibt eine Anweisung, ggf. mit `@`-Verweisen.
 2. `ui` sendet Anweisung an `api`; `api` lässt `context` die Anfrage bauen (Budget aus Einstellungen).
@@ -163,7 +173,7 @@ Alle Verträge sind `[VORLÄUFIG]` seit 2026-09-26 und werden in der Umsetzung v
 
 **Fehlerpfade:** Abbruch oder Ablehnung des Modells → bisheriger Manuskript-Stand bleibt unverändert; Oberfläche zeigt den Grund und bietet Wiederholen mit anderem Modell an (FR-018).
 
-### Flow: Kapitel abschließen [VORLÄUFIG]
+### Flow: Kapitel abschließen [BELASTBAR]
 
 1. Autor markiert ein Kapitel als abgeschlossen.
 2. `api` lässt `context` die Anfrage „Kurzfassung" bauen und ruft `ai_gateway`.
@@ -171,7 +181,7 @@ Alle Verträge sind `[VORLÄUFIG]` seit 2026-09-26 und werden in der Umsetzung v
 
 **Fehlerpfade:** Scheitert die Erzeugung, bleibt das Kapitel abgeschlossen und die Kurzfassung als „fehlt" markiert; `context` nutzt dann ersatzweise den Kapitelanfang wörtlich, bis sie nachgeholt ist.
 
-### Flow: Fakt aus dem Text in den Kanon [VORLÄUFIG]
+### Flow: Fakt aus dem Text in den Kanon [BELASTBAR]
 
 1. Autor markiert eine Textstelle und wählt „in den Kanon".
 2. `ui` schlägt Eintrag und Kategorie vor (Name aus der Markierung, Abgleich über den Index); bei Gast-Figuren Wahl „Kanon der Figur" oder „nur diese Geschichte" (FR-024).
@@ -182,11 +192,11 @@ Alle Verträge sind `[VORLÄUFIG]` seit 2026-09-26 und werden in der Umsetzung v
 
 ### Performance und Kosten
 
-- **Token-Budget je Schreib-Anfrage:** Startwert 30.000 Token Eingabe `[VORLÄUFIG]` – festgelegt im Erkundungsschritt zur Modellwahl (Fahrplan-Schritt 1.1).
+- **Token-Budget je Schreib-Anfrage:** Obergrenze 30.000 Token Eingabe `[BELASTBAR]` (ADR-013) – in 1.1 bestätigt (ADR-010): zwischen 8.000 und 17.600 Token kein messbarer Unterschied in der Kanon-Treue; Obergrenze bleibt für größere Welten, Verhalten oberhalb 17.600 Token wird im Schreibbetrieb beobachtet (3.2, D.4). Feste Teile (Regeln, Kanon) stehen am Anfang der Anfrage (Zwischenspeicher der Anbieter senkt die Kosten).
 - **Kosten:** Summe aus KI-Verbrauch und Hosting ≤ 50 € je Monat bei regelmäßiger Nutzung (mehrmals pro Woche, je 1–2 Stunden; geschätzt ca. 400 Anfragen im Monat) `[VORLÄUFIG]`. Überschlag: 400 × 30.000 Token = 12 Mio. Token Eingabe; bei 0,50–3 $ je 1 Mio. Token etwa 6–36 $ plus Ausgabe und Kurzfassungen. Messung im Betrieb über die Verbrauchsdaten aus `ai_gateway`.
-- **Reaktionszeit:** erstes KI-Textstück sichtbar innerhalb von 5 Sekunden nach dem Absenden, sofern der Anbieter antwortet `[VORLÄUFIG]`.
+- **Reaktionszeit:** innerhalb 1 s nach dem Absenden zeigt die Oberfläche „denkt nach …" mit laufender Zeit; erstes KI-Textstück beim Startmodell grok-4.7 innerhalb 60 s, beim Zweitmodell grok-4.6 innerhalb 10 s; Abbruch und Wechsel auf grok-4.6 jederzeit möglich `[BELASTBAR]` (Eigentümer, 2026-09-26, ADR-013; ersetzt das Ziel „erstes Textstück in 5 s", das mit dem Startmodell nicht erreichbar ist – gemessen 15–50 s bzw. 5–8 s).
 - **Kontexttreue:** kein Kontextverlust bei einer Geschichte vom Umfang der Referenzgeschichte `[OFFEN]` – Prüfung erst, wenn eine Geschichte diesen Umfang erreicht (Entscheidung des Eigentümers 2026-09-26, ADR-009) – Fahrplan-Schritt D.4 mit Auslöser „Geschichte ≥ 500.000 Token".
-- **Kanon-Treue:** höchstens ein beim Redigieren gefundener Widerspruch pro Kapitel `[OFFEN]` – messbar erst im Schreibbetrieb; Vorprüfung im Erkundungsschritt.
+- **Kanon-Treue:** höchstens ein beim Redigieren gefundener Widerspruch pro Kapitel `[OFFEN]` – messbar erst im Schreibbetrieb; Vorprüfung in 1.1 erfolgt (grok-4.7: 1,5 Widersprüche je 1.000 Wörter an einer Testwelt mit bewussten Fallen, `docs/research/modell-eignungstest.md`).
 
 ### Skalierung
 
@@ -233,7 +243,7 @@ Angelegt im Sicherheitsgrundriss (Modus 2 Schritt 4a, 2026-09-26). Das System wi
 <!-- ANCHOR:datenmodell -->
 ## 7. Datenmodell
 
-Quelle der Wahrheit sind Markdown-Dateien mit YAML-Kopf; der SQLite-Index ist abgeleitet. Alle Entitäten `[VORLÄUFIG]` seit 2026-09-26.
+Quelle der Wahrheit sind Markdown-Dateien mit YAML-Kopf; der SQLite-Index ist abgeleitet. Alle Entitäten `[BELASTBAR]` seit 2026-09-26 (ADR-013).
 
 ```mermaid
 erDiagram
@@ -246,7 +256,15 @@ erDiagram
   Story }o--o{ CanonEntry : "controlled characters"
 ```
 
-**Ablage (Vorschlag):**
+**Kopffelder (YAML, 1.4, 2026-09-26; an der Testwelt aus 1.1 erprobt):**
+
+- **Welt** (`world.md`): `name`; Text: Beschreibung und Grundregeln.
+- **Kanon-Eintrag:** `name`, `aliasse` (Liste), `kategorie` (figur, ort, gegenstand, zeitlinie, regel, kultur); optional `status` (z. B. „tot"). Text: Inhalt des Eintrags; bei Gegenständen Abschnitte Zweck, Verwendung, Auswirkung (FR-003). Kennung ist der Dateiname.
+- **Geschichte** (`story.md`): `titel`, `form` (roman, kurzgeschichte, fragment), `perspektive`, `gefuehrte_figuren` (Liste von Einträgen), `gast_verbindungen` (Liste aus Welt und Eintrag); Text: Gesamtzusammenfassung.
+- **Kapitel:** `kapitel` (Nummer), `titel`, `status` (in-arbeit, abgeschlossen), `kurzfassung`, `kurzfassung_status` (fehlt, erzeugt, geprüft); Text: Manuskript des Kapitels, fortlaufend, ohne Markierung von Autor- und KI-Anteilen.
+- **Geschichtenbezogene Fakten** (`facts.md`): Liste aus Eintrag und Fakt.
+
+**Ablage:**
 
 ```text
 data/
@@ -270,24 +288,25 @@ data/
 - **Ganzen Verlauf bei jeder Anfrage mitschicken (Ist-Zustand TypingMind):** Kosten und Kontextgrenzen sind der Anlass des Projekts – siehe ADR-003
 
 <!-- ANCHOR:reifegrad-uebersicht -->
-## 9. Reifegrad-Übersicht (Stand vom 2026-09-26)
+## 9. Reifegrad-Übersicht (Stand vom 2026-09-26, nach Schritt 1.4)
 
 | Bestandteil | Reifegrad | Seit | Validiert durch / wartet auf |
 |---|---|---|---|
 | Architektur-Pattern Modularer Monolith | BELASTBAR | 2026-09-26 | ADR-003 |
-| Kommunikations-Grundmodus synchron + SSE | VORLÄUFIG | 2026-09-26 | Umsetzung |
-| Modul canon | VORLÄUFIG | 2026-09-26 | Beförderung 1.4; Klärung TypingMind-Export 1.2; Umsetzung 2.3, 2.4 |
-| Modul manuscript | VORLÄUFIG | 2026-09-26 | Umsetzung |
-| Modul context | VORLÄUFIG | 2026-09-26 | Erkundungsschritt 1.1; Beförderung 1.4; Umsetzung 3.2 |
-| Modul ai_gateway | VORLÄUFIG | 2026-09-26 | Erkundungsschritte 1.1 (Ablehnungen), 1.3 (httpx); Beförderung 1.4; Umsetzung 3.1 |
-| Modul storage | VORLÄUFIG | 2026-09-26 | Umsetzung; Tempo bei großen Geschichten |
-| Modul api | VORLÄUFIG | 2026-09-26 | Umsetzung; Zugangsschutz nach 4a |
-| Modul ui | VORLÄUFIG | 2026-09-26 | Umsetzung; Smartphone-Test |
-| Alle Schnittstellen (Abschnitt 4) | VORLÄUFIG | 2026-09-26 | Umsetzung |
-| Datenmodell (Abschnitt 7) | VORLÄUFIG | 2026-09-26 | Umsetzung |
-| NFR Token-Budget | VORLÄUFIG | 2026-09-26 | Erkundungsschritt 1.1 |
+| Kommunikations-Grundmodus synchron + SSE | BELASTBAR | 2026-09-26 | ADR-013 (httpx-Streaming 1.3) |
+| Modul canon | BELASTBAR | 2026-09-26 | ADR-013; Import zunächst Markdown (ADR-012) |
+| Modul manuscript | BELASTBAR | 2026-09-26 | ADR-013 |
+| Modul context | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.5 |
+| Modul ai_gateway | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.3 |
+| Modul storage | BELASTBAR | 2026-09-26 | ADR-013; YAML-Parser vor 2.2 zur Freigabe; Tempo bei großen Geschichten beobachten |
+| Modul api | BELASTBAR | 2026-09-26 | ADR-013; Zugangsschutz nach ADR-006 |
+| Modul ui | BELASTBAR | 2026-09-26 | ADR-013; Smartphone-Test in 5.2 |
+| Alle Schnittstellen (Abschnitt 4) | BELASTBAR | 2026-09-26 | ADR-013 (Grobverträge) |
+| Datenmodell (Abschnitt 7) | BELASTBAR | 2026-09-26 | ADR-013 (Kopffelder an Testwelt erprobt) |
+| NFR Token-Budget | BELASTBAR | 2026-09-26 | ADR-010, ADR-013 |
+| NFR Reaktionszeit (Anzeige 1 s, erstes Textstück 60 s / 10 s) | BELASTBAR | 2026-09-26 | ADR-013 (Eigentümer) |
 | NFR Kontexttreue Referenzumfang | OFFEN | 2026-09-26 | Schritt D.4 (Geschichte ≥ 500.000 Token) |
-| NFR Kanon-Treue | OFFEN | 2026-09-26 | Schreibbetrieb ab 3.3, Vorprüfung in 1.1 |
+| NFR Kanon-Treue | OFFEN | 2026-09-26 | Schreibbetrieb ab 3.3; Vorprüfung in 1.1 erfolgt (ADR-010) |
 | Sicherheitsniveau ASVS 5.0.0 L1 / Auth L2 | BELASTBAR | 2026-09-26 | ADR-006 |
 | Bedrohungsmodell Gesamtsystem | VORLÄUFIG | 2026-09-26 | Prüfung 4.5, Gate-Schritt 4.6 |
 | Schutzbedarf normal | BELASTBAR | 2026-09-26 | ADR-007 |

@@ -42,7 +42,7 @@ Auswahl nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15, „Versi
   - FastAPI 0.141 (0.141.1, gepinnt `<0.142`) — Verifiziert: 2026-09-26, Quelle: PyPI
   - Pydantic 2.13 (2.13.5) — Verifiziert: 2026-09-26, Quelle: PyPI, Versionsrichtlinie Pydantic
   - uvicorn 0.52 (0.52.4) — Verifiziert: 2026-09-26, Quelle: PyPI (0.53/0.54 ohne Fehlerkorrektur-Version)
-  - httpx 0.28 (0.28.1) — Verifiziert: 2026-09-26, Quelle: PyPI; Python 3.14 nicht offiziell deklariert, Streaming-Stichprobe auf 3.14 (Vorabversion) erfolgreich; Nachprüfung im Ablaufdaten-Register
+  - httpx 0.28 (0.28.1) — Verifiziert: 2026-09-26, Quelle: PyPI; Python 3.14 nicht offiziell deklariert; auf 3.14.7 validiert (Schritt 1.3: Streaming, Timeout, Abbruch, sync und async, `-W error`); Nachprüfung im Ablaufdaten-Register
   - React und react-dom 19.2 (19.2.8) — Verifiziert: 2026-09-26, Quelle: npm-Registry, react.dev/versions
   - Vite 8.3 (8.3.1) und @vitejs/plugin-react 6.1 (6.1.1) — Verifiziert: 2026-09-26, Quelle: npm-Registry, vite.dev/releases
   - CodeMirror 6 (@codemirror/state 6.7.6, view 6.43.13, autocomplete 6.20.3, lang-markdown 6.5.2) — Verifiziert: 2026-09-26, Quelle: npm-Registry
@@ -107,7 +107,7 @@ Modularer Monolith (ADR-003): ein Python-Server (FastAPI) liefert die React-Ober
 
 ### APIs
 
-- **OpenRouter:** OpenAI-kompatible Chat-Schnittstelle mit Streaming. Modell-Verfügbarkeit und Inhaltsfilter je Modell uneinheitlich; Befund der Bestandsprüfung: 324 von 458 Modellen ohne OpenRouter-eigene Moderation, Filter der ausführenden Anbieter ungeprüft (`docs/research/bestandspruefung.md`). Rate Limits und Preise je Modell: ermittelt in Schritt 1.1.
+- **OpenRouter:** OpenAI-kompatible Chat-Schnittstelle mit Streaming. Modell-Verfügbarkeit und Inhaltsfilter je Modell uneinheitlich; Befund der Bestandsprüfung: 324 von 458 Modellen ohne OpenRouter-eigene Moderation (`docs/research/bestandspruefung.md`). Startmodell grok-4.7, Zweitmodell grok-4.6, Notfall-Reserve qwen3.8-max (ADR-010, ADR-011); Preise, Nutzungsbedingungen der ausführenden Anbieter und Ablehnungssignale in `docs/research/modell-eignungstest.md`. Rate Limits: bei qwen3.8-flash HTTP 429 vom Anbieter beobachtet, sonst keine.
 
 <!-- ANCHOR:constraints -->
 ## 6. Constraints (operationalisierbar)
@@ -128,7 +128,7 @@ Modularer Monolith (ADR-003): ein Python-Server (FastAPI) liefert die React-Ober
 
 ### Performance und Kosten
 
-- **Kosten pro Anfrage** unter dem heutigen Stand (Referenz ca. 125.000–140.000 Token pro Anfrage, Vision 4) → Regel: Die Kontext-Zusammenstellung hat ein festes Token-Budget je Anfrage; Startwert 30.000 Token, Festlegung in Schritt 1.1 (`docs/architecture.md` Abschnitt 6).
+- **Kosten pro Anfrage** unter dem heutigen Stand (Referenz ca. 125.000–140.000 Token pro Anfrage, Vision 4) → Regel: Die Kontext-Zusammenstellung hat ein festes Token-Budget je Anfrage; Obergrenze 30.000 Token (ADR-010, `docs/architecture.md` Abschnitt 6).
 - **Kein Kontextverlust** bei einer Geschichte vom Umfang der Referenzgeschichte (500.000–700.000 Token Chatverlauf) → Prüfung an einer Geschichte gleichen Umfangs (FR-006 verworfen).
 - KI-Text erscheint beim Schreiben fortlaufend (Streaming), nicht erst nach Abschluss der Antwort.
 
@@ -158,7 +158,7 @@ Modularer Monolith (ADR-003): ein Python-Server (FastAPI) liefert die React-Ober
   - **Routine-Klasse:** Claude Sonnet 5 – Probelauf: offen (bis dahin übernimmt die Entscheidungs-Klasse)
   - **Entscheidungs-Klasse:** Claude Opus, aktuelle Linie (Stand 2026-09-26: Opus 5.5) – stärkstes regulär eingesetztes Modell
   - **Ausnahme-Klasse:** Claude Fable 5.1 – nur auf Vorschlag mit Freigabe
-  - **Bezugsmodell und knappe Ressource:** Abo (Max 5x); knapp ist das Wochenkontingent, Zurücksetzung sonntags 10:00 (MESZ), dazu ein Kurzzeitlimit je 5 Stunden (Eigentümer, 2026-09-26; Sitzungsabfrage bestätigt den Zeitpunkt)
+  - **Bezugsmodell und knappe Ressource:** Abo (Max 5x); knapp ist das Wochenkontingent, Zurücksetzung sonntags 10:00 (MESZ), dazu ein Kurzzeitlimit je 5 Stunden (Eigentümer, 2026-09-26; Sitzungsabfrage bestätigt den Zeitpunkt). Zusätzlich ein eingelöstes Guthaben von 250 $ (Stand 2026-09-26: 193 $ übrig), gültig bis 2026-11-05 08:59 MEZ; laut Eigentümer laufen die Cloud-Sessions des Coding-Agents über dieses Guthaben (Eigentümer, 2026-09-26; die Sitzungsabfrage zeigt dazu nichts an)
   - **Abgabe an Unteragenten:** Claude Code – Modell je Unteragenten-Aufruf oder als `model:` in der Agent-Definition. Abgabe an niedrigere Klassen erst nach bestandenem Probelauf.
   - **Meldet die Laufzeitumgebung das Modell / das Kontingent?** Stand 2026-09-26: Sitzungsabfrage meldet eingestelltes und bedientes Modell, Kontextgröße und den Status des Wochenlimits mit Zurücksetz-Zeitpunkt.
   - **Preise je Klasse** (Listenpreis je 1 Mio. Token, Eingabe / Ausgabe / Cache-Lesen, Stand 2026-06-24, übernommen aus der Referenz des Werkzeugs): Mechanik 1 $ / 5 $ / 0,10 $; Routine 2 $ / 10 $ / 0,20 $; Entscheidung 4 $ / 20 $ / 0,20 $; Ausnahme 10 $ / 50 $ / 0,25 $. Folge: an die Mechanik-Klasse auch Lesearbeit; an die Routine-Klasse nur ausgabelastige Arbeit.
@@ -247,8 +247,9 @@ Kein Bestand – Default „Warnungen sind Fehler".
 |---|---|---|---|---|
 | Node.js 24 LTS (nur Build) | 2028-04-30 | 6 Monate | Node-Release-Plan `schedule.json` | D.1 – Wechsel auf Node 26 LTS frühestens 2026-11-05 |
 | Python 3.14 | 2030-10 | 6 Monate | PEP 745 | – (Vorlauf nach Projektdauer) |
-| httpx 0.28 – Python 3.14 nicht offiziell deklariert, Pflege schwach | Nachprüfung 2027-03-26 | – | PyPI, Stichprobe 2026-09-26 | 1.3 – Test auf 3.14.7; D.3 – Nachprüfung 2027-03-26 |
+| httpx 0.28 – Python 3.14 nicht offiziell deklariert, Pflege schwach | Nachprüfung 2027-03-26 | – | PyPI; auf 3.14.7 validiert 2026-09-26 (Schritt 1.3, `spikes/httpx-python-314/README.md`) | D.3 – Nachprüfung 2027-03-26 |
 | TypeScript 7 – neue Linie, noch nicht reif | Nachprüfung 2027-01-08 | – | TypeScript-Devblog | D.2 |
+| Guthaben des Coding-Agents (250 $, Stand 193 $) | 2026-11-05 08:59 MEZ | 2 Wochen | Angabe des Eigentümers 2026-09-26 | – (kontingentintensive Arbeit vor dem Ablauf einplanen; Schritt anlegen bei Erreichen des Vorlaufs) |
 | Wochenkontingent der KI | wöchentlich, So 10:00 (MESZ) | – | Sitzungsabfrage 2026-09-26 | – |
 
 ### Kosten
@@ -258,7 +259,7 @@ Kein Bestand – Default „Warnungen sind Fehler".
 
 | Posten | Art (laufend / einmalig / KI-Verbrauch) | Betrag je Monat | Stand vom | Entscheidung nötig ab |
 |---|---|---|---|---|
-| KI-Anfragen über OpenRouter | KI-Verbrauch | Schätzung ca. 6–36 $ plus Ausgabe (400 Anfragen × 30.000 Token, 0,50–3 $ je 1 Mio. Token; `docs/architecture.md` Abschnitt 6) – Messung ab Schritt 1.1 | 2026-09-26 | Summe über 50 € |
+| KI-Anfragen über OpenRouter | KI-Verbrauch | Schätzung ca. 6–36 $ plus Ausgabe (400 Anfragen × 30.000 Token, 0,50–3 $ je 1 Mio. Token; `docs/architecture.md` Abschnitt 6) ; gemessen in 1.1 (Testwelt, bis 17.600 Token): Startmodell grok-4.7 ca. 12 $ je Monat, hochgerechnet auf die Obergrenze 30.000 Token ca. 21 $ (ADR-010, `docs/research/modell-eignungstest.md`) | 2026-09-26 | Summe über 50 € |
 | Hosting | laufend | Schätzung ca. 4–6 € (kleiner VPS) – Festlegung in Schritt 4.2 | 2026-09-26 | Summe über 50 € |
 
 <!-- ANCHOR:entscheidungsbefugnisse -->
@@ -272,8 +273,32 @@ Kein Bestand – Default „Warnungen sind Fehler".
 ## 10. Repository-Regeln
 
 - **Hauptbranch:** `main`
-- **Push-Regel:** Änderungen laufen über Pull Requests; Agent-Sessions arbeiten auf `claude/<thema>`-Branches.
+- **Push-Regel:** Änderungen laufen über Pull Requests; nie direkt auf `main`.
 - **Schutzregeln:** keine Force-Pushes auf `main`; Merge nur bei grüner CI.
+
+### Branch-Konvention
+
+Festgelegt 2026-09-26 auf Wunsch des Eigentümers; ergänzt `CLAUDE.md` Abschnitt 11 (Commit-Format, Grundtypen `feat/`, `fix/`, `refactor/`).
+
+- **Form:** `<typ>/<fahrplan-id>-<kurztitel>` – Kleinbuchstaben, Wörter mit Bindestrich, Umlaute transliteriert (`ae`/`oe`/`ue`/`ss`), höchstens ca. 40 Zeichen. Beispiele: `feat/2.3-kanon-eintraege`, `fix/3.1-stream-abbruch`, `spike/1.3-httpx-python-314`.
+- **Typen:**
+
+| Typ | Wofür | Commit-Bereich (Beispiel) |
+|---|---|---|
+| `feat/` | neue Funktion aus einem UMSETZUNG-Schritt | Modulname, z. B. `canon:` |
+| `fix/` | Fehlerbehebung ohne neue Funktion | Modulname |
+| `refactor/` | Umbau innerhalb eines Moduls ohne Verhaltensänderung | Modulname |
+| `spike/` | Erkundung mit Wegwerf-Code (ERKUNDUNG-Schritte) | `spike:` |
+| `docs/` | nur Dokumentation | `docs:` |
+| `ci/` | Pipeline, Pre-Commit, Werkzeug-Konfiguration (freigabepflichtig nach `CLAUDE.md` Abschnitt 4, Kategorie 7) | `ci:` |
+| `deps/` | Abhängigkeiten aktualisieren (Regel-001) | `deps:` |
+| `chore/` | Aufräumen ohne fachliche Wirkung | `chore:` |
+| `hotfix/` | nur nach dem ersten öffentlichen Deployment (Schritt 4.7): dringender Fix für den laufenden Betrieb | Modulname |
+
+- **Cloud-Sessions des Coding-Agents:** Das Werkzeug vergibt den Branch-Namen selbst (`claude/<name>`), und der Agent darf nur auf diesen Branch pushen. Dort trägt der **Titel des Pull Requests** den Typ: `<typ>(<fahrplan-id>): <titel>`, z. B. `feat(2.3): Welten und Kanon-Einträge anlegen`. Wer eine Session startet und den Branch-Namen wählen kann, nutzt die Form oben.
+- **Umfang:** ein Branch = ein Pull Request = ein Fahrplan-Schritt oder ein zusammenhängendes Bündel mit genannten Schritt-IDs. Commit-Bereiche sind die Modulnamen (`canon`, `manuscript`, `context`, `ai_gateway`, `storage`, `api`, `ui`) oder `docs`, `spike`, `ci`, `deps`, `chore`.
+- **Lebensdauer:** Branches werden nach dem Merge gelöscht; außer `main` gibt es keine dauerhaften Branches.
+- **Merge:** Merge-Commit, kein Squash – die atomaren Commits mit Fahrplan-Referenz (`CLAUDE.md` Abschnitt 11) bleiben in der Historie erhalten (bisherige Praxis bei PR #1 und #2).
 
 <!-- ANCHOR:offene-grundsatzfragen -->
 ## 11. Offene Grundsatzfragen

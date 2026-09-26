@@ -1,0 +1,22 @@
+{
+  "modell": "qwen/qwen3.8-max-0902",
+  "anbieter": "Alibaba",
+  "wiederholung": 1,
+  "reasoning": {
+    "effort": "low"
+  },
+  "budget": 30000,
+  "geschaetzt_gesamt": 17673,
+  "geschaetzt_seiten": 9334,
+  "kanon_eintraege": 29,
+  "kanon_zusatz": 16,
+  "prompt_tokens": 16661,
+  "completion_tokens": 1848,
+  "reasoning_tokens": 789,
+  "kosten_usd": 0.03864366,
+  "erstes_stueck_s": 21.55,
+  "gesamt_s": 51.06,
+  "finish_reason": "stop",
+  "fehler": null,
+  "woerter": 680
+}

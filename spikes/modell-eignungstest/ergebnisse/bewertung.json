@@ -1,0 +1,777 @@
+[
+ {
+  "k": 5,
+  "f": 2,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K14",
+   "K17",
+   "weitere:Rat ließ ertränken, zwölf Jahre"
+  ],
+  "f_punkte": [
+   "F2",
+   "F5"
+  ],
+  "lauf": "deepseek__deepseek-v4-pro__14000__1",
+  "blind_id": "text-174",
+  "runde": 1
+ },
+ {
+  "k": 6,
+  "f": 2,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K8(grenz)",
+   "K17(grenz)",
+   "weitere:zwanzig Jahre Zöllner",
+   "weitere:Wachstafel"
+  ],
+  "f_punkte": [
+   "F1",
+   "F2"
+  ],
+  "hinweis": "1220 Wörter",
+  "lauf": "deepseek__deepseek-v4-pro__14000__2",
+  "blind_id": "text-147",
+  "runde": 1
+ },
+ {
+  "k": 3,
+  "f": 2,
+  "k_punkte": [
+   "K5",
+   "weitere:Asch vor zwei Tagen per Boot",
+   "weitere:Gitter offen"
+  ],
+  "f_punkte": [
+   "F2",
+   "F3"
+  ],
+  "lauf": "deepseek__deepseek-v4-pro__30000__1",
+  "blind_id": "text-116",
+  "runde": 1
+ },
+ {
+  "k": 4,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K3",
+   "K5",
+   "K12"
+  ],
+  "f_punkte": [],
+  "lauf": "deepseek__deepseek-v4-pro__30000__2",
+  "blind_id": "text-700",
+  "runde": 1
+ },
+ {
+  "k": 4,
+  "f": 1,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K12",
+   "K17"
+  ],
+  "f_punkte": [
+   "F5"
+  ],
+  "lauf": "deepseek__deepseek-v4-pro__8000__1",
+  "blind_id": "text-334",
+  "runde": 1
+ },
+ {
+  "k": 6,
+  "f": 2,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K8(grenz)",
+   "K17",
+   "weitere:vor dreißig Jahren sehen",
+   "weitere:Vergehen statt Ertränken"
+  ],
+  "f_punkte": [
+   "F1",
+   "F3"
+  ],
+  "hinweis": "Enthüllung",
+  "lauf": "deepseek__deepseek-v4-pro__8000__2",
+  "blind_id": "text-970",
+  "runde": 1
+ },
+ {
+  "k": 1,
+  "f": 0,
+  "k_punkte": [
+   "K13"
+  ],
+  "f_punkte": [],
+  "hinweis": "1300 Wörter, überladen",
+  "lauf": "google__gemini-3.8-flash__14000__1",
+  "blind_id": "text-617",
+  "runde": 1
+ },
+ {
+  "k": 5,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K12",
+   "K13",
+   "K16",
+   "weitere:Totengeste"
+  ],
+  "f_punkte": [],
+  "lauf": "google__gemini-3.8-flash__14000__2",
+  "blind_id": "text-963",
+  "runde": 1
+ },
+ {
+  "k": 4,
+  "f": 0,
+  "k_punkte": [
+   "K5",
+   "K12",
+   "K13",
+   "weitere:riecht nach Siedehütten"
+  ],
+  "f_punkte": [],
+  "hinweis": "1382 Wörter, Enthüllung",
+  "lauf": "google__gemini-3.8-flash__30000__1",
+  "blind_id": "text-289",
+  "runde": 1
+ },
+ {
+  "k": 3,
+  "f": 0,
+  "k_punkte": [
+   "K4",
+   "K5",
+   "weitere:ungeweihtes Grausalz"
+  ],
+  "f_punkte": [],
+  "hinweis": "1200 Wörter, opulent",
+  "lauf": "google__gemini-3.8-flash__30000__2",
+  "blind_id": "text-742",
+  "runde": 1
+ },
+ {
+  "k": 2,
+  "f": 0,
+  "k_punkte": [
+   "K12",
+   "K17"
+  ],
+  "f_punkte": [],
+  "lauf": "google__gemini-3.8-flash__8000__1",
+  "blind_id": "text-136",
+  "runde": 1
+ },
+ {
+  "k": 4,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K12",
+   "K17"
+  ],
+  "f_punkte": [],
+  "lauf": "google__gemini-3.8-flash__8000__2",
+  "blind_id": "text-217",
+  "runde": 1
+ },
+ {
+  "k": 1,
+  "f": 0,
+  "k_punkte": [
+   "K1"
+  ],
+  "f_punkte": [],
+  "hinweis": "sehr stilsicher",
+  "lauf": "x-ai__grok-4.7__14000__1",
+  "blind_id": "text-480",
+  "runde": 1
+ },
+ {
+  "k": 1,
+  "f": 0,
+  "k_punkte": [
+   "weitere:Asch stottert auch bei Wahrheit"
+  ],
+  "f_punkte": [],
+  "lauf": "x-ai__grok-4.7__14000__2",
+  "blind_id": "text-607",
+  "runde": 1
+ },
+ {
+  "k": 2,
+  "f": 0,
+  "k_punkte": [
+   "K15",
+   "K17"
+  ],
+  "f_punkte": [],
+  "hinweis": "stärkster Stil",
+  "lauf": "x-ai__grok-4.7__30000__1",
+  "blind_id": "text-886",
+  "runde": 1
+ },
+ {
+  "k": 0,
+  "f": 0,
+  "k_punkte": [],
+  "f_punkte": [],
+  "hinweis": "am nächsten am Stil",
+  "lauf": "x-ai__grok-4.7__30000__2",
+  "blind_id": "text-352",
+  "runde": 1
+ },
+ {
+  "k": 2,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K12(leicht)"
+  ],
+  "f_punkte": [],
+  "hinweis": "sehr kanonnah",
+  "lauf": "x-ai__grok-4.7__8000__1",
+  "blind_id": "text-974",
+  "runde": 1
+ },
+ {
+  "k": 1,
+  "f": 0,
+  "k_punkte": [
+   "K1"
+  ],
+  "f_punkte": [],
+  "hinweis": "540 Wörter, unter Vorgabe",
+  "lauf": "x-ai__grok-4.7__8000__2",
+  "blind_id": "text-331",
+  "runde": 1
+ },
+ {
+  "k": 3,
+  "f": 1,
+  "k_punkte": [
+   "K1",
+   "weitere:Ilka klein gebaut",
+   "weitere:zwanzig Jahre Zoll"
+  ],
+  "f_punkte": [
+   "F3"
+  ],
+  "lauf": "z-ai__glm-5.3__14000__1",
+  "blind_id": "text-231",
+  "runde": 1
+ },
+ {
+  "k": 3,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "weitere:Gott",
+   "weitere:zwanzig Jahre Zolldienst"
+  ],
+  "f_punkte": [],
+  "lauf": "z-ai__glm-5.3__14000__2",
+  "blind_id": "text-805",
+  "runde": 1
+ },
+ {
+  "k": 4,
+  "f": 0,
+  "k_punkte": [
+   "K5",
+   "K12",
+   "weitere:vor vier Tagen",
+   "weitere:zwanzig Jahre Zöllner"
+  ],
+  "f_punkte": [],
+  "hinweis": "1100 Wörter, Fehler",
+  "lauf": "z-ai__glm-5.3__30000__1",
+  "blind_id": "text-866",
+  "runde": 1
+ },
+ {
+  "k": 4,
+  "f": 1,
+  "k_punkte": [
+   "K1",
+   "K13",
+   "weitere:vor zwei Tagen",
+   "weitere:zwanzig Jahre Zöllner"
+  ],
+  "f_punkte": [
+   "F1"
+  ],
+  "lauf": "z-ai__glm-5.3__30000__2",
+  "blind_id": "text-518",
+  "runde": 1
+ },
+ {
+  "k": 4,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K17",
+   "weitere:Bibel"
+  ],
+  "f_punkte": [],
+  "lauf": "z-ai__glm-5.3__8000__1",
+  "blind_id": "text-819",
+  "runde": 1
+ },
+ {
+  "k": 6,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K12",
+   "K17",
+   "weitere:zwanzig Jahre Zöllner",
+   "weitere:vor zwei Tagen"
+  ],
+  "f_punkte": [],
+  "hinweis": "Tippfehler; Sera enthüllt Fälschung",
+  "lauf": "z-ai__glm-5.3__8000__2",
+  "blind_id": "text-153",
+  "runde": 1
+ },
+ {
+  "k": 0,
+  "f": 0,
+  "k_punkte": [],
+  "f_punkte": [],
+  "lauf": "x-ai__grok-4.7__30000__2",
+  "blind_id": "text-149",
+  "runde": 2
+ },
+ {
+  "k": 2,
+  "f": 0,
+  "k_punkte": [
+   "K14",
+   "weitere:Hedda stand am Gitter"
+  ],
+  "f_punkte": [],
+  "hinweis": "440 Wörter",
+  "lauf": "x-ai__grok-4.3__30000__1",
+  "blind_id": "text-451",
+  "runde": 2
+ },
+ {
+  "k": 3,
+  "f": 1,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K16"
+  ],
+  "f_punkte": [
+   "F2"
+  ],
+  "lauf": "x-ai__grok-4.3__14000__2",
+  "blind_id": "text-466",
+  "runde": 2
+ },
+ {
+  "k": 5,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K9",
+   "K12",
+   "K19"
+  ],
+  "f_punkte": [],
+  "lauf": "x-ai__grok-4.20__30000__1",
+  "blind_id": "text-602",
+  "runde": 2
+ },
+ {
+  "k": 3,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K9",
+   "K16"
+  ],
+  "f_punkte": [],
+  "lauf": "x-ai__grok-4.20__30000__2",
+  "blind_id": "text-811",
+  "runde": 2
+ },
+ {
+  "k": 3,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K8",
+   "K12"
+  ],
+  "f_punkte": [],
+  "hinweis": "375 Wörter",
+  "lauf": "x-ai__grok-4.3__8000__2",
+  "blind_id": "text-892",
+  "runde": 2
+ },
+ {
+  "k": 0,
+  "f": 0,
+  "k_punkte": [],
+  "f_punkte": [],
+  "lauf": "x-ai__grok-4.3__8000__1",
+  "blind_id": "text-926",
+  "runde": 2
+ },
+ {
+  "k": 5,
+  "f": 2,
+  "k_punkte": [
+   "K1",
+   "K9",
+   "K12",
+   "K16",
+   "K19"
+  ],
+  "f_punkte": [
+   "F2",
+   "F5"
+  ],
+  "lauf": "x-ai__grok-4.20__8000__2",
+  "blind_id": "text-128",
+  "runde": 2
+ },
+ {
+  "k": 4,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K9",
+   "K13",
+   "K16"
+  ],
+  "f_punkte": [],
+  "lauf": "x-ai__grok-4.20__14000__1",
+  "blind_id": "text-239",
+  "runde": 2
+ },
+ {
+  "k": 6,
+  "f": 1,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K8",
+   "K17",
+   "weitere:vor dreißig Jahren sehen",
+   "weitere:Vergehen statt Ertränken"
+  ],
+  "f_punkte": [
+   "F1"
+  ],
+  "lauf": "deepseek__deepseek-v4-pro__8000__2",
+  "blind_id": "text-407",
+  "runde": 2
+ },
+ {
+  "k": 5,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K9",
+   "K13",
+   "weitere:Hand am Salzbeutel"
+  ],
+  "f_punkte": [],
+  "lauf": "x-ai__grok-4.20__8000__1",
+  "blind_id": "text-663",
+  "runde": 2
+ },
+ {
+  "k": 4,
+  "f": 1,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K13",
+   "weitere:Stimme der Mutter"
+  ],
+  "f_punkte": [
+   "F3"
+  ],
+  "lauf": "x-ai__grok-4.3__30000__2",
+  "blind_id": "text-783",
+  "runde": 2
+ },
+ {
+  "k": 2,
+  "f": 0,
+  "k_punkte": [
+   "K5",
+   "weitere:Stimme"
+  ],
+  "f_punkte": [],
+  "lauf": "x-ai__grok-4.3__14000__1",
+  "blind_id": "text-967",
+  "runde": 2
+ },
+ {
+  "k": 6,
+  "f": 0,
+  "k_punkte": [
+   "K1",
+   "K5",
+   "K12",
+   "K16",
+   "K17",
+   "K19"
+  ],
+  "f_punkte": [],
+  "lauf": "x-ai__grok-4.20__14000__2",
+  "blind_id": "text-992",
+  "runde": 2
+ },
+ {
+  "k": 0,
+  "f": 1,
+  "k_punkte": [],
+  "lauf": "qwen__qwen3.8-max-0902__30000__2",
+  "blind_id": "text-188",
+  "runde": 3
+ },
+ {
+  "k": 1,
+  "f": 0,
+  "k_punkte": [
+   "K1"
+  ],
+  "lauf": "x-ai__grok-4.6__8000__2",
+  "blind_id": "text-191",
+  "runde": 3
+ },
+ {
+  "k": 3,
+  "f": 1,
+  "k_punkte": [
+   "K9",
+   "K12",
+   "K12b"
+  ],
+  "lauf": "qwen__qwen3.8-flash__8000__1",
+  "blind_id": "text-283",
+  "runde": 3
+ },
+ {
+  "k": 1,
+  "f": 3,
+  "k_punkte": [
+   "K9"
+  ],
+  "hinweis": "3. Person",
+  "lauf": "qwen__qwen3.8-flash__14000__1",
+  "blind_id": "text-513",
+  "runde": 3
+ },
+ {
+  "k": 0,
+  "f": 0,
+  "k_punkte": [],
+  "lauf": "x-ai__grok-4.7__30000__2",
+  "blind_id": "text-738",
+  "runde": 3
+ },
+ {
+  "k": 2,
+  "f": 0,
+  "k_punkte": [
+   "K12",
+   "weitere:pfeifen"
+  ],
+  "lauf": "x-ai__grok-4.6__30000__1",
+  "blind_id": "text-800",
+  "runde": 3
+ },
+ {
+  "k": 4,
+  "f": 0,
+  "k_punkte": [
+   "K5",
+   "K1",
+   "weitere:pfeifen",
+   "weitere:Schweigegeld"
+  ],
+  "lauf": "x-ai__grok-4.6__30000__2",
+  "blind_id": "text-817",
+  "runde": 3
+ },
+ {
+  "k": 2,
+  "f": 1,
+  "k_punkte": [
+   "K5",
+   "K1"
+  ],
+  "lauf": "qwen__qwen3.8-max-0902__14000__2",
+  "blind_id": "text-236",
+  "runde": 3
+ },
+ {
+  "k": 4,
+  "f": 3,
+  "k_punkte": [
+   "K15",
+   "K1",
+   "K16",
+   "K12"
+  ],
+  "hinweis": "3. Person",
+  "lauf": "qwen__qwen3.8-flash__30000__1",
+  "blind_id": "text-304",
+  "runde": 3
+ },
+ {
+  "k": 7,
+  "f": 0,
+  "k_punkte": [
+   "weitere:Mann hinter Gitter",
+   "K5",
+   "K8",
+   "K19",
+   "weitere:heute",
+   "weitere:meiner Mutter",
+   "K12"
+  ],
+  "lauf": "qwen__qwen3.8-flash__8000__2",
+  "blind_id": "text-335",
+  "runde": 3
+ },
+ {
+  "k": 1,
+  "f": 3,
+  "k_punkte": [
+   "K12"
+  ],
+  "hinweis": "3. Person",
+  "lauf": "qwen__qwen3.8-flash__14000__2",
+  "blind_id": "text-489",
+  "runde": 3
+ },
+ {
+  "k": 6,
+  "f": 1,
+  "k_punkte": [
+   "K5",
+   "K8",
+   "K17",
+   "K1",
+   "weitere",
+   "weitere"
+  ],
+  "lauf": "deepseek__deepseek-v4-pro__8000__2",
+  "blind_id": "text-601",
+  "runde": 3
+ },
+ {
+  "k": 2,
+  "f": 0,
+  "k_punkte": [
+   "K5",
+   "weitere:acht Münder"
+  ],
+  "lauf": "x-ai__grok-4.6__8000__1",
+  "blind_id": "text-651",
+  "runde": 3
+ },
+ {
+  "k": 1,
+  "f": 0,
+  "k_punkte": [
+   "K5"
+  ],
+  "lauf": "qwen__qwen3.8-max-0902__30000__1",
+  "blind_id": "text-878",
+  "runde": 3
+ },
+ {
+  "k": 1,
+  "f": 1,
+  "k_punkte": [
+   "K15"
+  ],
+  "lauf": "qwen__qwen3.8-max-0902__14000__1",
+  "blind_id": "text-354",
+  "runde": 3
+ },
+ {
+  "k": 1,
+  "f": 2,
+  "k_punkte": [
+   "K1"
+  ],
+  "lauf": "qwen__qwen3.8-max-0902__8000__1",
+  "blind_id": "text-357",
+  "runde": 3
+ },
+ {
+  "k": 2,
+  "f": 0,
+  "k_punkte": [
+   "K5",
+   "K1"
+  ],
+  "lauf": "x-ai__grok-4.6__14000__1",
+  "blind_id": "text-492",
+  "runde": 3
+ },
+ {
+  "k": 0,
+  "f": 1,
+  "k_punkte": [],
+  "lauf": "google__gemini-3.8-flash__14000__1",
+  "blind_id": "text-531",
+  "runde": 3
+ },
+ {
+  "k": 1,
+  "f": 1,
+  "k_punkte": [
+   "K5"
+  ],
+  "lauf": "x-ai__grok-4.6__14000__2",
+  "blind_id": "text-643",
+  "runde": 3
+ },
+ {
+  "k": 2,
+  "f": 2,
+  "k_punkte": [
+   "K9",
+   "K12"
+  ],
+  "lauf": "qwen__qwen3.8-flash__30000__2",
+  "blind_id": "text-713",
+  "runde": 3
+ },
+ {
+  "k": 1,
+  "f": 2,
+  "k_punkte": [
+   "weitere:Handschuh"
+  ],
+  "lauf": "qwen__qwen3.8-max-0902__8000__2",
+  "blind_id": "text-846",
+  "runde": 3
+ }
+]

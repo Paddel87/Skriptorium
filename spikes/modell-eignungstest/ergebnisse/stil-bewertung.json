@@ -1,0 +1,119 @@
+[
+ {
+  "modell": "x-ai__grok-4.7",
+  "raenge": [
+   1,
+   1,
+   1
+  ],
+  "punkte_summe_je_satz": [
+   28,
+   26,
+   29
+  ]
+ },
+ {
+  "modell": "x-ai__grok-4.6",
+  "raenge": [
+   2,
+   2,
+   2
+  ],
+  "punkte_summe_je_satz": [
+   25,
+   24,
+   25
+  ]
+ },
+ {
+  "modell": "qwen__qwen3.8-max-0902",
+  "raenge": [
+   3,
+   3,
+   3
+  ],
+  "punkte_summe_je_satz": [
+   25,
+   23,
+   23
+  ]
+ },
+ {
+  "modell": "deepseek__deepseek-v4-pro",
+  "raenge": [
+   4,
+   5,
+   4
+  ],
+  "punkte_summe_je_satz": [
+   22,
+   18,
+   18
+  ]
+ },
+ {
+  "modell": "z-ai__glm-5.3",
+  "raenge": [
+   5,
+   4,
+   8
+  ],
+  "punkte_summe_je_satz": [
+   20,
+   20,
+   13
+  ]
+ },
+ {
+  "modell": "google__gemini-3.8-flash",
+  "raenge": [
+   6,
+   6,
+   5
+  ],
+  "punkte_summe_je_satz": [
+   15,
+   17,
+   18
+  ]
+ },
+ {
+  "modell": "x-ai__grok-4.20",
+  "raenge": [
+   8,
+   7,
+   6
+  ],
+  "punkte_summe_je_satz": [
+   14,
+   16,
+   16
+  ]
+ },
+ {
+  "modell": "x-ai__grok-4.3",
+  "raenge": [
+   7,
+   8,
+   7
+  ],
+  "punkte_summe_je_satz": [
+   16,
+   14,
+   17
+  ]
+ },
+ {
+  "modell": "qwen__qwen3.8-flash",
+  "raenge": [
+   9,
+   9,
+   9
+  ],
+  "punkte_summe_je_satz": [
+   13,
+   13,
+   10
+  ]
+ }
+]

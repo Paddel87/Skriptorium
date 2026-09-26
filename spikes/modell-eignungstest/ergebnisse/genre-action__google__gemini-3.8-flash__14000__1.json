@@ -1,0 +1,23 @@
+{
+  "modell": "google/gemini-3.8-flash",
+  "anbieter": "Google",
+  "wiederholung": 1,
+  "szene": "action",
+  "reasoning": {
+    "effort": "low"
+  },
+  "budget": 14000,
+  "geschaetzt_gesamt": 13972,
+  "geschaetzt_seiten": 7411,
+  "kanon_eintraege": 14,
+  "kanon_zusatz": 0,
+  "prompt_tokens": 12838,
+  "completion_tokens": 1393,
+  "reasoning_tokens": 0,
+  "kosten_usd": 0.0147037275,
+  "erstes_stueck_s": 1.52,
+  "gesamt_s": 18.8,
+  "finish_reason": "stop",
+  "fehler": null,
+  "woerter": 835
+}

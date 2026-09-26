@@ -1,0 +1,23 @@
+{
+  "modell": "x-ai/grok-4.7",
+  "anbieter": "xAI",
+  "wiederholung": 2,
+  "szene": "thriller",
+  "reasoning": {
+    "effort": "low"
+  },
+  "budget": 14000,
+  "geschaetzt_gesamt": 13993,
+  "geschaetzt_seiten": 7232,
+  "kanon_eintraege": 16,
+  "kanon_zusatz": 1,
+  "prompt_tokens": 14026,
+  "completion_tokens": 1936,
+  "reasoning_tokens": 321,
+  "kosten_usd": 0.03004848,
+  "erstes_stueck_s": 4.31,
+  "gesamt_s": 29.03,
+  "finish_reason": "stop",
+  "fehler": null,
+  "woerter": 1013
+}

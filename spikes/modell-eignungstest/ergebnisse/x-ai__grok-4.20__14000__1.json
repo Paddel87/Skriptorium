@@ -1,0 +1,22 @@
+{
+  "modell": "x-ai/grok-4.20",
+  "anbieter": "xAI",
+  "wiederholung": 1,
+  "reasoning": {
+    "enabled": false
+  },
+  "budget": 14000,
+  "geschaetzt_gesamt": 14015,
+  "geschaetzt_seiten": 7883,
+  "kanon_eintraege": 13,
+  "kanon_zusatz": 0,
+  "prompt_tokens": 12911,
+  "completion_tokens": 1522,
+  "reasoning_tokens": 0,
+  "kosten_usd": 0.0196112565,
+  "erstes_stueck_s": 1.0,
+  "gesamt_s": 19.98,
+  "finish_reason": "stop",
+  "fehler": null,
+  "woerter": 966
+}

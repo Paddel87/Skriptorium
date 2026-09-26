@@ -1,0 +1,23 @@
+{
+  "modell": "qwen/qwen3.8-max-0902",
+  "anbieter": "Alibaba",
+  "wiederholung": 2,
+  "szene": "horror",
+  "reasoning": {
+    "effort": "low"
+  },
+  "budget": 14000,
+  "geschaetzt_gesamt": 14002,
+  "geschaetzt_seiten": 7232,
+  "kanon_eintraege": 15,
+  "kanon_zusatz": 1,
+  "prompt_tokens": 12996,
+  "completion_tokens": 1824,
+  "reasoning_tokens": 534,
+  "kosten_usd": 0.0146124,
+  "erstes_stueck_s": 15.34,
+  "gesamt_s": 53.69,
+  "finish_reason": "stop",
+  "fehler": null,
+  "woerter": 811
+}
