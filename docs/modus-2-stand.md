@@ -9,7 +9,7 @@
 - **Vorbereitung:** erledigt – `docs/` enthält frische Kopien aus `templates/docs/` (Klassen-Hypothese M).
 - **Schritt 1 (Klassifikation):** Hypothese **Klasse M**, vom Eigentümer nicht beanstandet; endgültige Bestätigung nach Schritt 4. Risiko Richtung G: Kontext-Zusammenstellung für lange Geschichten könnte einen zweiten Speicher (z. B. Suchindex) erfordern. ADR-001 wird in Schritt 5 geschrieben.
 - **Schritt 1a (Anforderungen):** abgeschlossen, `docs/requirements.md` vom Eigentümer bestätigt (18 Muss / 4 Soll / 1 Kann / 1 verworfen).
-- **Nächster Schritt:** Schritt 3 – Härtung (Inkonsistenz-Suche Vision ↔ Constraints ↔ Entscheidungen), danach Schritt 4 Architektur und 4a Sicherheitsgrundriss.
+- **Nächster Schritt:** Schritt 4 – Architektur-Grobschnitt in `docs/architecture.md` (Stufe-2-Bestätigung Klasse M), danach 4a Sicherheitsgrundriss.
 - **Kostenrahmen (Schritt 2):** bis 50 € monatlich für KI-Anfragen und Hosting zusammen (Angabe des Eigentümers, 2026-09-26) → `docs/project-context.md` Abschnitt 8.
 - **Bestandsprüfung:** abgeschlossen 2026-09-26, `docs/research/bestandspruefung.md` (Lizenzen der Gruppe-(a)-Kandidaten gegengeprüft).
 - **Grundsatzentscheidung Eigenbau vs. Anpassung:** **B – schlanker Eigenbau**, Konzepte aus der Bestandsprüfung übernehmen, kein fremder Code (Eigentümer, 2026-09-26). Verworfen: A – Anpassung von The Story Nexus oder Story Labyrinth (AGPL-3.0, fremde Form, Rückbau nötig, Differenzierungsmerkmale ohnehin neu zu bauen); C – Praxistest vorab. Empfehlung über Heuristik 1.3 (weniger Abhängigkeiten) und Default-Bias; Konfidenz mittel (belegt aus Code und Doku, nicht erprobt); Umkehrbarkeit teuer. Vision-Frage, die entschied: „Schnell mit einem fremden Werkzeug in dessen Form – oder etwas später genau in deiner Arbeitsweise?" → eigene Arbeitsweise. Folge: Projektlizenz bleibt frei wählbar (Vision 6). ADR dazu in Schritt 5 (`[STRATEGISCH]`), verworfene Alternativen nach `docs/architecture.md` Abschnitt 8.
@@ -18,6 +18,10 @@
 - **2a Versions-Verifikation:** Tabelle bestätigt 2026-09-26 (`docs/research/versions-verifikation.md`); Regel „neueste Unterversion mit mindestens einer Fehlerkorrektur"; httpx behalten mit Nachprüfung; Node 24 jetzt, Wechsel auf 26 als Fahrplan-Schritt. Eingetragen in `docs/project-context.md` Abschnitt 3 und 8.
 - **Lizenz und Codesprache:** AGPL-3.0 (Vision-Frage: geschlossene Weiterverwertung durch andere → nein), `LICENSE` ersetzt (SPDX-Text); Codesprache Englisch. Erlaubte Abhängigkeitslizenzen und Coverage 80 % / 90 % (Kanon, Kontext) bestätigt. Hinweis an den Eigentümer gegeben: Mit AGPL entfällt der Lizenz-Nachteil der verworfenen Option A; Eigenbau bleibt aus den übrigen Gründen. ADR zur Lizenz in Schritt 5.
 - **Vorgaben für 2a:** Mindestreife = Linie mindestens 6 Monate veröffentlicht und mit Fehlerkorrektur-Versionen; geplante Projektdauer = 3 Jahre (bis ca. Ende 2029). → `docs/project-context.md` Abschnitt 3.
+- **Schritt 3 (Härtung), 2026-09-26 – drei Befunde, alle in Modus 2 aufgelöst, kein aktiver Blocker:**
+  1. Erfolgskriterium „kein Kontextverlust bei Referenzumfang" ohne übernommene Geschichte vorerst nicht prüfbar → Eigentümer: später prüfen, sobald eine neue Geschichte diesen Umfang erreicht. Landeplatz: eigener Fahrplan-Schritt mit Auslöser „Geschichte ≥ 500.000 Token" (Schritt 6); bis dahin gilt das Kriterium als unbelegt.
+  2. Spannung Kanon-Treue ↔ Inhaltsfilter ↔ Kosten (offene Tatsachenfrage) → ERKUNDUNG-Schritt früh im Fahrplan: dieselbe Szene mit 3–4 Modellen, Vergleich von Kanon-Treue, Filterverhalten, Kosten (Schritt 6).
+  3. Schreibumfang für Kostenschätzung → Eigentümer: regelmäßig (mehrmals pro Woche, je 1–2 Stunden). Grundlage der Kostenschätzung in Schritt 4.
 - **Merkposten für spätere Schritte:**
   - ADR zum Verwerfen von FR-006 (Geschichten übernehmen) in Schritt 5.
   - Welt-Material liegt in TypingMind-Agenten und Notion – relevant für FR-005 und Schritt 2.
