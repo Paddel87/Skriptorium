@@ -13,7 +13,7 @@
 - **Status:** Konzeption (Modus 2 läuft)
 - **Version (SemVer):** v0.0.0 – noch keine lauffähige Version
 - **Dokumentationssprache:** Deutsch
-- **Codesprache (Kommentare, Variablennamen):** [offen – Frage an den Eigentümer, Modus 2 Schritt 2]
+- **Codesprache (Kommentare, Variablennamen):** Englisch (Eigentümer, 2026-09-26); Fachbegriffe einheitlich: world, canon, canon entry, story, manuscript, guest character
 - **Projekttyp:** Full-Stack (Web-App: Python-Server, TypeScript-Oberfläche)
 - **Projektgrößen-Klasse:** M (Hypothese aus Modus 2 Schritt 1, Bestätigung nach Schritt 4, ADR-001)
 
@@ -58,7 +58,7 @@ Auswahl nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15, „Versi
 
 ### Explizit nicht erlaubt
 
-- **Übernahme von Code aus AGPL- oder GPL-lizenzierten Werkzeugen** (u. a. SillyTavern, The Story Nexus, Story Labyrinth) – Grundsatzentscheidung Eigenbau; nur Konzepte werden übernommen.
+- **Ein fremdes Werkzeug als Code-Basis** (u. a. SillyTavern, The Story Nexus, Story Labyrinth) – Grundsatzentscheidung Eigenbau. Lizenzrechtlich wären Übernahmen aus AGPL-/GPL-3.0-Code mit der Projektlizenz vereinbar; jede Übernahme einzelner Code-Teile ist trotzdem freigabepflichtig (`CLAUDE.md` Abschnitt 4, Kategorie 3 und 8).
 - **Anbieterspezifische KI-Bibliotheken als Pflichtweg** – die KI-Anbindung läuft über eine eigene Anbieter-Schnittstelle (FR-018, FR-025).
 - **Selbst betriebenes KI-Modell** – Vision Abschnitt 6.
 - **Konten- oder Rechteverwaltung für mehrere Nutzer** – Vision Abschnitt 5; ein Zugangsschutz für den einen Nutzer ist davon nicht betroffen.
@@ -125,9 +125,9 @@ Entwicklung erfolgt durch den Coding-Agent; der Eigentümer entwickelt nicht sel
 
 ### Compliance und Lizenz
 
-- **Projektlizenz:** [offen – Frage an den Eigentümer, Modus 2 Schritt 2; Vision 6: Open Source beabsichtigt, Festlegung nach der Bestandsprüfung]
-- **Erlaubte Abhängigkeitslizenzen:** MIT, BSD-2/3-Clause, Apache-2.0, ISC, PSF-2.0, Artistic-2.0 (nur Werkzeuge, z. B. npm), MPL-2.0 (nur unverändert genutzt).
-- **Ausgeschlossene Lizenzen:** GPL und AGPL für eingebundenen Code; Lizenzen mit Nutzungsbeschränkung (z. B. Commons Clause) – Abweichung nur per ADR.
+- **Projektlizenz:** AGPL-3.0 (Eigentümer, 2026-09-26; Vision-Frage: „Dürfen andere den Code in ein geschlossenes Produkt übernehmen?" → nein). `LICENSE` enthält den Lizenztext aus der SPDX-Lizenzliste (`AGPL-3.0-only.txt`, abgerufen 2026-09-26; gnu.org aus der Arbeitsumgebung nicht erreichbar).
+- **Erlaubte Abhängigkeitslizenzen:** MIT, BSD-2/3-Clause, Apache-2.0, ISC, PSF-2.0, MPL-2.0, LGPL (2.1 oder später, 3.0), GPL-3.0 (bzw. „2.0 oder später"), AGPL-3.0; Artistic-2.0 nur für Werkzeuge (z. B. npm). Bestätigt vom Eigentümer 2026-09-26.
+- **Ausgeschlossene Lizenzen:** GPL-2.0-only (unvereinbar mit AGPL-3.0), proprietäre Lizenzen, Lizenzen mit Nutzungsbeschränkung (z. B. Commons Clause) – Abweichung nur per ADR.
 
 ### Anforderungen, Schutzbedarf, Kosten
 
@@ -201,7 +201,7 @@ Kein Bestand – Default „Warnungen sind Fehler".
 
 ### Coverage-Mindestwerte
 
-- **Globaler Mindestwert:** 80 % Lines, 70 % Branches (Default der Vorlage)
+- **Globaler Mindestwert:** 80 % Lines, 70 % Branches (bestätigt vom Eigentümer 2026-09-26)
 - **Kritische Pfade (höhere Anforderung):** Kontext-Zusammenstellung und Kanon-Verwaltung 90 % Lines – dort entstehen Kanon-Widersprüche und Kosten (FR-010, FR-011)
 - **Ausnahmen:** keine
 
@@ -264,7 +264,7 @@ Kein Bestand – Default „Warnungen sind Fehler".
 <!-- ANCHOR:offene-grundsatzfragen -->
 ## 11. Offene Grundsatzfragen
 
-- **Codesprache und Projektlizenz** – offen bis Modus 2 Schritt 2 (Frage an den Eigentümer).
+- keine (Stand 2026-09-26; Codesprache und Projektlizenz entschieden)
 
 <!-- ANCHOR:glossar -->
 ## 12. Glossar (projektspezifische Begriffe)
