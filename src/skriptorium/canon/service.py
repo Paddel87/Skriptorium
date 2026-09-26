@@ -11,7 +11,6 @@ categories. The timeline of a world is kept as entries of category ``zeitlinie``
 lists the events in order, as in the test world of step 1.1.
 """
 
-import re
 from collections.abc import Mapping, Sequence, Set
 from dataclasses import dataclass
 from enum import Enum
@@ -27,13 +26,14 @@ from skriptorium.storage import (
     HeaderValue,
     InvalidInput,
     NotFound,
+    checked_identifier,
+    slugify,
 )
 
 _WORLDS = "worlds"
 _WORLD_FILE = "world.md"
 _CANON = "canon"
 _ITEM_TEMPLATE = "## Zweck\n\n## Verwendung\n\n## Auswirkung\n"
-_TRANSLITERATION = str.maketrans({"ä": "ae", "ö": "oe", "ü": "ue", "ß": "ss"})
 
 
 class _Keep(Enum):
@@ -393,7 +393,7 @@ class CanonService:
         return path
 
     def _find_entry_path(self, world_id: str, entry_id: str) -> str | None:
-        _checked_identifier(entry_id)
+        checked_identifier(entry_id)
         for category in CATEGORIES:
             path = _entry_path(world_id, category, entry_id)
             try:
@@ -402,25 +402,6 @@ class CanonService:
                 continue
             return path
         return None
-
-
-def slugify(name: str) -> str:
-    """Derive an identifier from a name: ``"Kael der Ältere"`` → ``"kael-der-aeltere"``.
-
-    Raises:
-        InvalidInput: The name contains no letters or digits.
-    """
-    text = name.strip().lower().translate(_TRANSLITERATION)
-    slug = re.sub(r"[^a-z0-9]+", "-", text).strip("-")
-    if not slug:
-        raise InvalidInput(f"Aus {name!r} lässt sich keine Kennung bilden")
-    return slug
-
-
-def _checked_identifier(identifier: str) -> str:
-    if identifier != slugify(identifier):
-        raise InvalidInput(f"Ungültige Kennung: {identifier!r}")
-    return identifier
 
 
 def _checked_category(category: str) -> Category:
@@ -443,11 +424,11 @@ def _clean_aliases(aliases: Sequence[str]) -> list[str]:
 
 
 def _world_path(world_id: str) -> str:
-    return f"{_WORLDS}/{_checked_identifier(world_id)}/{_WORLD_FILE}"
+    return f"{_WORLDS}/{checked_identifier(world_id)}/{_WORLD_FILE}"
 
 
 def _entry_path(world_id: str, category: Category, entry_id: str) -> str:
-    return f"{_WORLDS}/{_checked_identifier(world_id)}/{_CANON}/{category}/{entry_id}.md"
+    return f"{_WORLDS}/{checked_identifier(world_id)}/{_CANON}/{category}/{entry_id}.md"
 
 
 def _is_entry_path(path: str) -> bool:

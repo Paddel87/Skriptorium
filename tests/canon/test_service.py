@@ -12,8 +12,7 @@ from skriptorium.canon import (
     InvalidInput,
     NotFound,
 )
-from skriptorium.canon.service import slugify
-from skriptorium.storage import DocumentStore
+from skriptorium.storage import DocumentStore, slugify
 
 
 @pytest.fixture

@@ -6,6 +6,7 @@ from them and can be rebuilt at any time (ADR-003).
 
 from skriptorium.storage.errors import AlreadyExists, InvalidInput, NotFound, StorageError
 from skriptorium.storage.frontmatter import HeaderValue
+from skriptorium.storage.identifiers import checked_identifier, slugify
 from skriptorium.storage.store import Document, DocumentStore, SearchHit, SearchMode
 
 __all__ = [
@@ -18,4 +19,6 @@ __all__ = [
     "SearchHit",
     "SearchMode",
     "StorageError",
+    "checked_identifier",
+    "slugify",
 ]
