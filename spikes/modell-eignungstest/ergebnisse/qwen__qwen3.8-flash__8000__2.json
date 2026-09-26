@@ -1,0 +1,22 @@
+{
+  "modell": "qwen/qwen3.8-flash",
+  "anbieter": "Alibaba",
+  "wiederholung": 2,
+  "reasoning": {
+    "enabled": false
+  },
+  "budget": 8000,
+  "geschaetzt_gesamt": 7869,
+  "geschaetzt_seiten": 1884,
+  "kanon_eintraege": 13,
+  "kanon_zusatz": 0,
+  "prompt_tokens": 7426,
+  "completion_tokens": 1560,
+  "reasoning_tokens": 0,
+  "kosten_usd": 0.001828629,
+  "erstes_stueck_s": 4.4,
+  "gesamt_s": 35.67,
+  "finish_reason": "stop",
+  "fehler": null,
+  "woerter": 923
+}

@@ -30,7 +30,13 @@ OUT = ROOT / "ergebnisse"
 # Grobe Schätzung für deutsche Prosa; wird gegen prompt_tokens der Anbieter kalibriert.
 CHARS_PER_TOKEN = 3.3
 
-REASONING_MANDATORY = {"z-ai/glm-5.3", "x-ai/grok-4.7", "google/gemini-3.8-flash"}
+REASONING_MANDATORY = {
+    "z-ai/glm-5.3",
+    "x-ai/grok-4.7",
+    "google/gemini-3.8-flash",
+    "qwen/qwen3.8-max-0902",
+    "x-ai/grok-4.6",
+}
 
 # Einträge der Szene (Vorrang 2 in ADR-003): Figuren der Szene und berührte Orte/Regeln.
 SCENE_ENTRIES = [
