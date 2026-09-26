@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 19:15 – [REIFEGRAD-WECHSEL] canon durch Umsetzung validiert
+
+- Schritt 2.3 erledigt: `CanonService` (Welten, Kanon-Einträge aller sechs Kategorien, Suche per Namens-/Alias-Präfix). `canon` bleibt `[BELASTBAR]`, jetzt „durch Umsetzung validiert“; Signaturen in `docs/architecture.md` Abschnitt 4 ausformuliert. FR-002 (bis auf Teilkriterium KI-Anfrage → 3.2) und FR-016 erledigt.
+- **Auslegung ohne Datenmodelländerung:** Die Zeitlinie wird wie in der Testwelt aus 1.1 als Eintrag der Kategorie `zeitlinie` geführt, dessen Text die Ereignisse in Reihenfolge auflistet – kein neues Kopffeld für eine Reihenfolge.
+- **Festlegung im Rahmen des Grobvertrags:** Eintrags-Kennungen sind je Welt über alle Kategorien eindeutig (aus dem Namen gebildet); Kategoriewechsel verschiebt die Datei; unbekannte Kopffelder bleiben beim Ändern erhalten.
+- **Klasse:** 2.3 empfiehlt Routine, lief auf Entscheidung (Hinweis an den Eigentümer vorab; keine Abgabe möglich ohne Probelauf).
+
+### 2026-09-26 19:00 – [SESSIONSTART] Fortsetzung mit 2.3 auf Anweisung „weiter“
+
+- Eigentümer hat nach 2.2 „weiter“ angeordnet; Sessiongröße weiter über der Grenze (Ausnahme „weiter hier“ gilt fort).
+
 ### 2026-09-26 18:55 – [REIFEGRAD-WECHSEL] storage durch Umsetzung validiert
 
 - `storage` bleibt `[BELASTBAR]`, jetzt „durch Umsetzung validiert“ (Schritt 2.2); `DocumentStore`-Signaturen in `docs/architecture.md` Abschnitt 4 ausformuliert, ohne Operationen hinzuzufügen oder wegzulassen (`list` heißt `list_paths`, weil `list` als Methodenname den eingebauten Typ in Annotationen verdeckt – mypy-Fehler).

@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 2 „Grundgerüst" (bereit; Phase 1 abgeschlossen 2026-09-26, ADR-014: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (2.2 `[ERLEDIGT]` 2026-09-26)
-- **Nächster Schritt:** 2.3 (canon – Welten und Kanon-Einträge)
+- **Aktiver Schritt:** keiner (2.3 `[ERLEDIGT]` 2026-09-26)
+- **Nächster Schritt:** 2.4 (canon – Import von Welt-Material)
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -144,7 +144,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 2.3: canon – Welten und Kanon-Einträge
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-26) – je Kategorie anlegen, ändern, löschen (FR-002), Figur mit allen Fakten in weiterer Geschichte (FR-016), Welten getrennt; 38 Tests, Coverage `canon` 100 % (kritischer Pfad ≥ 90 %)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.2
 - **Freigabepflichtig:** nein
