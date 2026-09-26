@@ -224,7 +224,7 @@ def run(model: str, budget: int, rep: int) -> None:
     OUT.mkdir(exist_ok=True)
     stem = f"{model.replace('/', '__')}__{budget}__{rep}"
     (OUT / f"{stem}.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
-    (OUT / f"{stem}.md").write_text("".join(text).strip() + "\n", encoding="utf-8")
+    (OUT / f"{stem}.txt").write_text("".join(text).strip() + "\n", encoding="utf-8")
     print(json.dumps(result, ensure_ascii=False))
 
 

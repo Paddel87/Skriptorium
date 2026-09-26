@@ -36,6 +36,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - Reibung: `reasoning: {enabled: false}` wird von glm-5.3, grok-4.7 und gemini-3.8-flash mit HTTP 400 „Reasoning is mandatory" abgelehnt (18 Fehlläufe, 0 $). Lösung: für diese drei `reasoning: {effort: low}`; im Ergebnis je Lauf vermerkt. Folge für `ai_gateway`: Reasoning-Steuerung muss je Modell konfigurierbar sein.
 - 24 Läufe (4 Modelle × 3 Stufen × 2 Wiederholungen) erfolgreich, 0 Ablehnungen, Gesamtkosten 0,37 $. grok-4.7 braucht durch Pflicht-Reasoning 15–50 s bis zum ersten Textstück (NFR: 5 s).
 - Kleine Panne: Bewertungs-Auftrag an den ersten Prüf-Agenten enthielt einen nicht ersetzten Platzhalter für die Textliste; per Nachricht korrigiert.
+- Reibung: Der `pre-commit`-Hook ist in der Cloud-Session nicht installiert (`.git/hooks` leer); markdownlint lief nur von Hand und hätte die Modell-Rohtexte (`.md`) in CI angemahnt (MD041). Lösung: Rohtexte als `.txt` abgelegt. Offen: Hook-Installation beim Sessionstart – Landeplatz Schritt 2.1 (Projektgerüst und volle CI-Gates).
 - Bewertung blind: Texte anonymisiert (Zuordnung nur im Scratchpad), vier Prüf-Agenten der Entscheidungs-Klasse parallel.
 
 ### 2026-09-26 15:35 – [BEOBACHTUNG] Guthaben des Coding-Agents
