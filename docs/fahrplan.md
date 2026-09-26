@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 1 „Erkundung: Modelle, Import, Laufzeit" (begonnen 2026-09-26)
 - **Phasentyp:** ERKUNDUNG
-- **Aktiver Schritt:** keiner (1.1 erledigt 2026-09-26)
+- **Aktiver Schritt:** 1.5 (seit 2026-09-26; 1.1 erledigt 2026-09-26)
 - **Nächster Schritt:** 1.3 (ohne Zutun des Eigentümers beginnbar); 1.2 wartet auf Exporte des Eigentümers; 1.4 nach 1.2 und 1.3
 - **Offene STOPP-Situationen:** keine (STOPP vor 1.1 vom 2026-09-26 aufgelöst: Schlüssel liegt vor; Testdaten erfindet die KI, Festlegung des Eigentümers)
 
@@ -98,7 +98,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Ziel:** Die drei offenen Tatsachenfragen vor der Umsetzung sind beantwortet und dokumentiert: (1) welches Modell und welches Token-Budget Kanon-Treue, Filterverhalten und Kosten am besten vereinen, (2) in welchem Format das Welt-Material des Eigentümers importiert wird, (3) ob httpx 0.28.1 auf Python 3.14.7 trägt. Die für Phase 2 und 3 berührten Architektur-Bestandteile sind danach `[BELASTBAR]` oder begründet zurückgestuft.
 
-**Abschlusskriterium:** Schritte 1.1–1.4 `[ERLEDIGT]`; Ergebnisse als ADRs `[ERKENNTNIS]` in `docs/decisions.md` und in `docs/architecture.md` nachgezogen; Reifegrad-Übersicht (`docs/architecture.md` Abschnitt 9) aktualisiert.
+**Abschlusskriterium:** Schritte 1.1–1.5 `[ERLEDIGT]` (1.5 ergänzt 2026-09-26 auf Wunsch des Eigentümers); Ergebnisse als ADRs `[ERKENNTNIS]` in `docs/decisions.md` und in `docs/architecture.md` nachgezogen; Reifegrad-Übersicht (`docs/architecture.md` Abschnitt 9) aktualisiert.
 
 **Reifegrad-Erwartung am Phasenende:** Module `storage`, `canon`, `manuscript`, `api`, `ui`, `context`, `ai_gateway`, ihre Schnittstellen und das Datenmodell `[BELASTBAR]`; NFR Token-Budget `[BELASTBAR]`; NFR Kanon-Treue und Kontexttreue Referenzumfang bleiben `[OFFEN]` (Messung erst im Schreibbetrieb bzw. Schritt D.4).
 
@@ -168,7 +168,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Schritt-Art (nur ERKUNDUNG):** sonstiges – Architektur-Abgleich und Beförderung
 - **Zeitbox (nur ERKUNDUNG):** maximal 2 h Arbeit
-- **Abhängigkeiten:** 1.1, 1.2, 1.3
+- **Abhängigkeiten:** 1.1, 1.2, 1.3, 1.5
 - **Freigabepflichtig:** ja – Beförderung auf `[BELASTBAR]` per ADR; Änderungen am Zuschnitt wären Architekturänderungen (Kategorie 1)
 - **Empfohlene Klasse:** Entscheidung – Beförderung von `[VORLÄUFIG]` auf `[BELASTBAR]` (Eskalations-Auslöser 4).
 - **Eingangskriterien:** Ergebnisse von 1.1–1.3 dokumentiert
@@ -179,6 +179,24 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** siehe Reifegrad-Erwartung der Phase
 - **Artefakte:** ADR zur Beförderung; `docs/architecture.md` Abschnitte 3, 4, 7 und 9
 - **Notizen:** Ohne diesen Schritt dürfte Phase 2 nicht beginnen (CLAUDE.md Abschnitt 6, „Architektur-Reifegrad respektieren"). Zusatz 2026-09-26 aus 1.1 (ADR-010): (a) Reaktionszeit-Ziel neu fassen – das Startmodell braucht 15–50 s; (b) dem Eigentümer eine eigene Lesung einiger Testtexte anbieten (Stichprobe der KI-Bewertung aus 1.1, `spikes/modell-eignungstest/ergebnisse/`).
+
+#### 1.5: Genre-Test – düstere, Horror-, Thriller- und Action-Szenen
+
+- **Status:** IN ARBEIT (seit 2026-09-26)
+- **Phasentyp-Kontext:** ERKUNDUNG
+- **Schritt-Art (nur ERKUNDUNG):** Vergleichsstudie
+- **Zeitbox (nur ERKUNDUNG):** maximal 3 h Arbeit
+- **Abhängigkeiten:** 1.1 (Testwelt, Harness, Modellauswahl)
+- **Freigabepflichtig:** nein – Ergebnis ergänzt ADR-010 als Erkenntnis; ändert es die Modellwahl, wird es dem Eigentümer vorgelegt
+- **Empfohlene Klasse:** Entscheidung – Bewertung und mögliche Änderung der Modellwahl aus ADR-010.
+- **Eingangskriterien:** Auftrag des Eigentümers vom 2026-09-26 („Performance bei düsteren Szenen … Horror, Thriller, Action … ggf. von dir ergänzt und weitere Faktoren")
+- **Anforderungen (ab Klasse M):** keine (Vorbereitung FR-018)
+- **Zu tun:** Vier Genre-Szenen in der Testwelt (Horror, Thriller/Verfolgung, Action/Kampf, düster/Grausamkeit), je mit Autoren-Einstieg und Anweisung; Kriterien vor der Bewertung fixieren (Sprache, Spannung, Atmosphäre, Genre-Handwerk, Abschwächung/Moralisierung, Figurenkonsistenz, Kanon-Stichprobe); grok-4.7, grok-4.6, qwen3.8-max, gemini-3.8-flash je 2 Läufe pro Szene; blind je Genre bewerten.
+- **Akzeptanzkriterien:** Wir wissen, ob die Modellwahl aus ADR-010 auch für diese Genres trägt: Rangfolge je Genre, Abschwächungs- und Ablehnungsrate je Modell, Befund im Erkenntnisdokument; bei abweichendem Ergebnis Vorlage an den Eigentümer.
+- **Betroffene Module:** context, ai_gateway (nur als Wegwerf-Code zur Erkundung)
+- **Reifegrad-Wirkung:** keine direkte; Ergebnis fließt in 1.4
+- **Artefakte:** Abschnitt „Genre-Test" in `docs/research/modell-eignungstest.md`; Nachtrag zu ADR-010 falls nötig
+- **Notizen:** Zusatzschritt auf Wunsch des Eigentümers; Phase 1 damit 5 Schritte (ursprünglich 4, Wucherungs-Schwelle nicht berührt). Keine sexuellen Inhalte in den Testszenen.
 
 ### Phase 2: Grundgerüst – Typ: UMSETZUNG
 

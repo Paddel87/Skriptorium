@@ -9,7 +9,7 @@ Voraussetzungen: Python 3.11+, nur Standardbibliothek; Umgebungsvariable KEY
 
 Aufruf:
     python3 lauf.py groessen                 # Bausteine und Schätzung zeigen
-    python3 lauf.py lauf MODELL BUDGET WDH   # ein Lauf
+    python3 lauf.py lauf MODELL BUDGET WDH [GENRE]   # ein Lauf; GENRE: horror|thriller|action|duester
 """
 
 from __future__ import annotations
@@ -55,6 +55,20 @@ SCENE_ENTRIES = [
     "gegenstaende/schwarzes-buch.md",
 ]
 
+# Zusätzliche Szenen-Einträge je Genre-Szene (Fahrplan 1.5), Vorrang 2 wie SCENE_ENTRIES.
+GENRE_ENTRIES = {
+    "horror": ["figuren/hedda-varn.md"],
+    "thriller": ["figuren/fenn-asch.md", "orte/vogtshaus.md"],
+    "action": ["figuren/fenn-asch.md"],
+    "duester": [
+        "figuren/gunda-hollt.md",
+        "figuren/anselm-drach.md",
+        "figuren/fenn-asch.md",
+        "orte/kerrow.md",
+        "gegenstaende/siegelring.md",
+    ],
+}
+
 PAGES = [  # neueste zuerst; Kapitel 7 (Anfang) ist immer vollständig dabei
     "chapters/06-der-nordkai.md",
     "chapters/05-das-vogtshaus.md",
@@ -78,7 +92,7 @@ def raw(path: Path) -> str:
     return path.read_text(encoding="utf-8").strip()
 
 
-def build(budget: int) -> tuple[list[dict[str, str]], dict[str, object]]:
+def build(budget: int, genre: str | None = None) -> tuple[list[dict[str, str]], dict[str, object]]:
     story = raw(STORY / "story.md")
     schreibweise = story.split("## Gesamtzusammenfassung")[0]
     zusammenfassung = "## Gesamtzusammenfassung" + story.split("## Gesamtzusammenfassung")[1]
@@ -89,14 +103,21 @@ def build(budget: int) -> tuple[list[dict[str, str]], dict[str, object]]:
         raw(WORLD / "world.md"),
         schreibweise,
     ]
-    scene = [raw(WORLD / "canon" / e) for e in SCENE_ENTRIES]
+    entries = SCENE_ENTRIES + GENRE_ENTRIES.get(genre or "", [])
+    scene = [raw(WORLD / "canon" / e) for e in entries]
     other = sorted(
         str(p.relative_to(WORLD / "canon"))
         for p in (WORLD / "canon").rglob("*.md")
-        if str(p.relative_to(WORLD / "canon")) not in SCENE_ENTRIES
+        if str(p.relative_to(WORLD / "canon")) not in entries
     )
     ch7 = body(STORY / "chapters" / "07-die-grotte.md")
     anweisung = raw(STORY / "anweisung-kapitel-7.md")
+    if genre:  # Genre-Test (Fahrplan 1.5): Brückentext + Einstieg ersetzen Kapitel-7-Anweisung
+        szene = raw(STORY / "genre" / f"{genre}.md")
+        einstieg, anweisung = szene.split("## Anweisung")
+        zusammenfassung += "\n\n" + raw(STORY / "genre" / "brueckentext.md")
+        ch7 = ch7 + "\n\n[…]\n\n" + einstieg.strip().rstrip("-").strip()
+        anweisung = anweisung.strip()
 
     fixed = "\n\n".join(system_parts + scene) + zusammenfassung + ch7 + anweisung
     remaining = budget - est(fixed) - 200  # Rahmen und Überschriften
@@ -148,8 +169,8 @@ def build(budget: int) -> tuple[list[dict[str, str]], dict[str, object]]:
     return [{"role": "system", "content": system}, {"role": "user", "content": user}], info
 
 
-def run(model: str, budget: int, rep: int) -> None:
-    messages, info = build(budget)
+def run(model: str, budget: int, rep: int, genre: str | None = None) -> None:
+    messages, info = build(budget, genre)
     # Denken aus, wo das Modell es erlaubt; sonst niedrigste Stufe (Befund 2026-09-26:
     # glm-5.3, grok-4.7 und gemini-3.8-flash verlangen Reasoning zwingend).
     reasoning: dict[str, object] = (
@@ -215,6 +236,7 @@ def run(model: str, budget: int, rep: int) -> None:
         "modell": model,
         "anbieter": provider,
         "wiederholung": rep,
+        "szene": genre or "kapitel-7",
         "reasoning": reasoning,
         **info,
         "prompt_tokens": usage.get("prompt_tokens"),
@@ -229,6 +251,8 @@ def run(model: str, budget: int, rep: int) -> None:
     }
     OUT.mkdir(exist_ok=True)
     stem = f"{model.replace('/', '__')}__{budget}__{rep}"
+    if genre:
+        stem = f"genre-{genre}__{stem}"
     (OUT / f"{stem}.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
     (OUT / f"{stem}.txt").write_text("".join(text).strip() + "\n", encoding="utf-8")
     print(json.dumps(result, ensure_ascii=False))
@@ -240,7 +264,7 @@ def main() -> None:
             _, info = build(b)
             print(info)
     elif sys.argv[1:2] == ["lauf"]:
-        run(sys.argv[2], int(sys.argv[3]), int(sys.argv[4]))
+        run(sys.argv[2], int(sys.argv[3]), int(sys.argv[4]), (sys.argv[5:6] or [None])[0])
     else:
         sys.exit(__doc__)
 
