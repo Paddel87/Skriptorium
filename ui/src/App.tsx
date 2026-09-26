@@ -1,6 +1,146 @@
-/** Root component; the real screens follow in step 2.7. */
+import { useEffect, useState } from "react";
+import { api, type Story, type World } from "./api";
+import { Account } from "./views/Account";
+import { Login } from "./views/Login";
+import { Setup } from "./views/Setup";
+import { StoryPage } from "./views/StoryPage";
+import { WorldPage } from "./views/WorldPage";
+import { Worlds } from "./views/Worlds";
+
+type Screen =
+  | { kind: "worlds" }
+  | { kind: "world"; world: World }
+  | { kind: "story"; world: World; story: Story }
+  | { kind: "account" };
+
+type Access = "checking" | "login" | "setup" | "in";
+
+/** Root component: access check, then the screens of the logged-in author. */
 export function App() {
-  return <h1>{appTitle()}</h1>;
+  const [access, setAccess] = useState<Access>("checking");
+  const [screen, setScreen] = useState<Screen>({ kind: "worlds" });
+
+  useEffect(() => {
+    // No valid session (401) or no server: both lead to the login.
+    api.session().then(
+      () => {
+        setAccess("in");
+      },
+      () => {
+        setAccess("login");
+      },
+    );
+  }, []);
+
+  async function logout() {
+    try {
+      await api.logout();
+    } finally {
+      setScreen({ kind: "worlds" });
+      setAccess("login");
+    }
+  }
+
+  if (access === "checking") {
+    return <p className="card narrow">Lädt …</p>;
+  }
+  if (access === "login") {
+    return (
+      <Login
+        onLoggedIn={() => {
+          setAccess("in");
+        }}
+        onSetup={() => {
+          setAccess("setup");
+        }}
+      />
+    );
+  }
+  if (access === "setup") {
+    const toLogin = () => {
+      setAccess("login");
+    };
+    return <Setup onDone={toLogin} onBack={toLogin} />;
+  }
+
+  return (
+    <div className="app">
+      <header className="top">
+        <button
+          type="button"
+          className="link brand"
+          onClick={() => {
+            setScreen({ kind: "worlds" });
+          }}
+        >
+          {appTitle()}
+        </button>
+        <Breadcrumb screen={screen} onScreen={setScreen} />
+        <span className="spacer" />
+        <button
+          type="button"
+          className="link"
+          onClick={() => {
+            setScreen({ kind: "account" });
+          }}
+        >
+          Konto
+        </button>
+        <button type="button" onClick={() => void logout()}>
+          Abmelden
+        </button>
+      </header>
+      <main>
+        {screen.kind === "worlds" && (
+          <Worlds
+            onOpen={(world) => {
+              setScreen({ kind: "world", world });
+            }}
+          />
+        )}
+        {screen.kind === "world" && (
+          <WorldPage
+            world={screen.world}
+            onOpenStory={(story) => {
+              setScreen({ kind: "story", world: screen.world, story });
+            }}
+          />
+        )}
+        {screen.kind === "story" && <StoryPage story={screen.story} />}
+        {screen.kind === "account" && <Account />}
+      </main>
+    </div>
+  );
+}
+
+function Breadcrumb({
+  screen,
+  onScreen,
+}: {
+  screen: Screen;
+  onScreen: (screen: Screen) => void;
+}) {
+  if (screen.kind === "world") {
+    return <span className="crumb">› {screen.world.name}</span>;
+  }
+  if (screen.kind === "story") {
+    return (
+      <span className="crumb">
+        ›{" "}
+        <button
+          type="button"
+          className="link"
+          onClick={() => {
+            onScreen({ kind: "world", world: screen.world });
+          }}
+        >
+          {screen.world.name}
+        </button>{" "}
+        › {screen.story.title}
+      </span>
+    );
+  }
+  return null;
 }
 
 /** Title shown in the header. */
