@@ -49,6 +49,11 @@ repos:
         language: system
         types: [python]
         pass_filenames: false
+      - id: shellcheck
+        name: shellcheck
+        entry: uv run --frozen shellcheck
+        language: system
+        types: [shell]
       - id: eslint
         name: eslint
         entry: npx --no-install eslint --max-warnings 0 --report-unused-disable-directives
