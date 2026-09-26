@@ -178,7 +178,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** canon, manuscript, context, ai_gateway, storage, api, ui
 - **Reifegrad-Wirkung:** siehe Reifegrad-Erwartung der Phase
 - **Artefakte:** ADR zur Beförderung; `docs/architecture.md` Abschnitte 3, 4, 7 und 9
-- **Notizen:** Ohne diesen Schritt dürfte Phase 2 nicht beginnen (CLAUDE.md Abschnitt 6, „Architektur-Reifegrad respektieren"). Zusatz 2026-09-26 aus 1.1 (ADR-010): (a) Reaktionszeit-Ziel neu fassen – das Startmodell braucht 15–50 s; (b) dem Eigentümer eine eigene Lesung einiger Testtexte anbieten (Stichprobe der KI-Bewertung aus 1.1, `spikes/modell-eignungstest/ergebnisse/`).
+- **Notizen:** Ohne diesen Schritt dürfte Phase 2 nicht beginnen (CLAUDE.md Abschnitt 6, „Architektur-Reifegrad respektieren"). Zusatz 2026-09-26 aus 1.1 (ADR-010): (a) Reaktionszeit-Ziel neu fassen – das Startmodell braucht 15–50 s; (b) dem Eigentümer eine eigene Lesung einiger Testtexte anbieten (Stichprobe der KI-Bewertung aus 1.1, `spikes/modell-eignungstest/ergebnisse/`). Stand 2026-09-26: Der Eigentümer verzichtet auf die eigene Lesung (b) – seine Erfahrung mit grok 4.7, grok 4.6 und Qwen deckt sich mit dem Testergebnis.
 
 #### 1.5: Genre-Test – düstere, Horror-, Thriller- und Action-Szenen
 
@@ -791,6 +791,22 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** NFR Kontexttreue Referenzumfang `[OFFEN]` → `[BELASTBAR]` oder begründeter Erkundungsbedarf
 - **Artefakte:** Messprotokoll, ADR `[ERKENNTNIS]`
 - **Notizen:** Bis dahin gilt das Kriterium als unbelegt.
+
+#### M.1: Branch-Konvention festlegen
+
+- **Status:** ERLEDIGT (2026-09-26)
+- **Phasentyp-Kontext:** querschnittlich (Methodik)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** nein (Dokumentation der Repository-Regeln, `docs/project-context.md` Abschnitt 10; keine Umbenennung des Hauptbranches)
+- **Empfohlene Klasse:** Routine – Dokumentationspflege ohne Architekturwirkung.
+- **Eingangskriterien:** Auftrag des Eigentümers vom 2026-09-26 („vernünftige Branch-Konvention: Feature, Bugfix usw.")
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Branch-Typen, Namensform, Umgang mit werkzeugvergebenen `claude/`-Branches, Lebensdauer und Merge-Art festhalten.
+- **Akzeptanzkriterien:** Konvention steht in `docs/project-context.md` Abschnitt 10 und ist mit `CLAUDE.md` Abschnitt 11 vereinbar.
+- **Betroffene Module:** keine
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** `docs/project-context.md` Abschnitt 10
+- **Notizen:** –
 
 #### V.1: Publizieren (Satz, Export, Veröffentlichung)
 

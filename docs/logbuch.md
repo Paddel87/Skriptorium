@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 20:40 – [BEOBACHTUNG] Branch-Konvention (M.1), Antworten des Eigentümers
+
+- Antworten über das Frage-System (Wunsch des Eigentümers: Rückfragen künftig dort stellen): hier weiterarbeiten; Branch-Konvention erstellen; Exporte für 1.2 **nicht** nutzbar; eigene Lesung der Testtexte nicht nötig (in 1.4 vermerkt).
+- Branch-Konvention in `docs/project-context.md` Abschnitt 10: `<typ>/<fahrplan-id>-<kurztitel>` mit Typen feat, fix, refactor, spike, docs, ci, deps, chore, hotfix (erst nach 4.7). Grenze benannt: Cloud-Sessions bekommen ihren Branch vom Werkzeug (`claude/…`), dort trägt der PR-Titel den Typ. Merge-Commit statt Squash (bisherige Praxis). Fahrplan-Landeplatz: neuer Querschnitt-Schritt M.1.
+- Offen: 1.2 ohne echte Exporte – Rückfrage zu Alternativen folgt über das Frage-System.
+
 ### 2026-09-26 20:25 – [ADR-ANGELEGT] ADR-011 – grok-4.6 Zweitmodell
 
 - Eigentümer: grok-4.7 bei CNC-Inhalten sehr gut, grok-4.6 gut bei Charakter-Konsistenz und Figuren-Simulation; „Qwen ist wirklich nur eine Notfalllösung."

@@ -273,8 +273,32 @@ Kein Bestand – Default „Warnungen sind Fehler".
 ## 10. Repository-Regeln
 
 - **Hauptbranch:** `main`
-- **Push-Regel:** Änderungen laufen über Pull Requests; Agent-Sessions arbeiten auf `claude/<thema>`-Branches.
+- **Push-Regel:** Änderungen laufen über Pull Requests; nie direkt auf `main`.
 - **Schutzregeln:** keine Force-Pushes auf `main`; Merge nur bei grüner CI.
+
+### Branch-Konvention
+
+Festgelegt 2026-09-26 auf Wunsch des Eigentümers; ergänzt `CLAUDE.md` Abschnitt 11 (Commit-Format, Grundtypen `feat/`, `fix/`, `refactor/`).
+
+- **Form:** `<typ>/<fahrplan-id>-<kurztitel>` – Kleinbuchstaben, Wörter mit Bindestrich, Umlaute transliteriert (`ae`/`oe`/`ue`/`ss`), höchstens ca. 40 Zeichen. Beispiele: `feat/2.3-kanon-eintraege`, `fix/3.1-stream-abbruch`, `spike/1.3-httpx-python-314`.
+- **Typen:**
+
+| Typ | Wofür | Commit-Bereich (Beispiel) |
+|---|---|---|
+| `feat/` | neue Funktion aus einem UMSETZUNG-Schritt | Modulname, z. B. `canon:` |
+| `fix/` | Fehlerbehebung ohne neue Funktion | Modulname |
+| `refactor/` | Umbau innerhalb eines Moduls ohne Verhaltensänderung | Modulname |
+| `spike/` | Erkundung mit Wegwerf-Code (ERKUNDUNG-Schritte) | `spike:` |
+| `docs/` | nur Dokumentation | `docs:` |
+| `ci/` | Pipeline, Pre-Commit, Werkzeug-Konfiguration (freigabepflichtig nach `CLAUDE.md` Abschnitt 4, Kategorie 7) | `ci:` |
+| `deps/` | Abhängigkeiten aktualisieren (Regel-001) | `deps:` |
+| `chore/` | Aufräumen ohne fachliche Wirkung | `chore:` |
+| `hotfix/` | nur nach dem ersten öffentlichen Deployment (Schritt 4.7): dringender Fix für den laufenden Betrieb | Modulname |
+
+- **Cloud-Sessions des Coding-Agents:** Das Werkzeug vergibt den Branch-Namen selbst (`claude/<name>`), und der Agent darf nur auf diesen Branch pushen. Dort trägt der **Titel des Pull Requests** den Typ: `<typ>(<fahrplan-id>): <titel>`, z. B. `feat(2.3): Welten und Kanon-Einträge anlegen`. Wer eine Session startet und den Branch-Namen wählen kann, nutzt die Form oben.
+- **Umfang:** ein Branch = ein Pull Request = ein Fahrplan-Schritt oder ein zusammenhängendes Bündel mit genannten Schritt-IDs. Commit-Bereiche sind die Modulnamen (`canon`, `manuscript`, `context`, `ai_gateway`, `storage`, `api`, `ui`) oder `docs`, `spike`, `ci`, `deps`, `chore`.
+- **Lebensdauer:** Branches werden nach dem Merge gelöscht; außer `main` gibt es keine dauerhaften Branches.
+- **Merge:** Merge-Commit, kein Squash – die atomaren Commits mit Fahrplan-Referenz (`CLAUDE.md` Abschnitt 11) bleiben in der Historie erhalten (bisherige Praxis bei PR #1 und #2).
 
 <!-- ANCHOR:offene-grundsatzfragen -->
 ## 11. Offene Grundsatzfragen
