@@ -13,7 +13,19 @@
 - **Phasentyp:** ERKUNDUNG (Phase 1, sobald begonnen)
 - **Aktiver Schritt:** keiner
 - **Nächster Schritt:** 1.1 (Modell-Eignungstest), sobald der Initialisierungs-Commit vorliegt und der Eigentümer einen OpenRouter-Schlüssel mit Ausgabengrenze bereitgestellt hat; 1.2 und 1.3 sind unabhängig davon beginnbar
-- **Offene STOPP-Situationen:** keine
+- **Offene STOPP-Situationen:** eine (2026-09-26):
+
+  ```text
+  STOPP
+  Grund: Informationslücke (CLAUDE.md Abschnitt 8, Kriterium 1)
+  Kontext: Schritt 1.1 sollte beginnen; Eingangskriterien nicht erfüllt.
+  Benötigt: (1) OpenRouter-Schlüssel mit Ausgabengrenze als
+      Umgebungsvariable OPENROUTER_API_KEY der Cloud-Umgebung (wirkt ab
+      neuer Session); (2) Testszene (Ort, Figuren, Ziel) mit Kanon-Auszug
+      und Festlegung, ob der Text ins Repo darf.
+  Vorgeschlagene Auflösung: Eigentümer stellt beides bereit; bis dahin
+      ist 1.3 ohne Zutun beginnbar.
+  ```
 
 <!-- ANCHOR:phasen-typen -->
 ## Phasen-Typen

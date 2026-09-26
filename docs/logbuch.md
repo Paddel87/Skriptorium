@@ -29,7 +29,19 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
-Noch keine Einträge.
+### 2026-09-26 15:00 – [BEOBACHTUNG] Eingangskriterien 1.1 nicht erfüllt – STOPP (Informationslücke)
+
+- Geprüft: Umgebungsvariable `OPENROUTER_API_KEY` ist in der Cloud-Umgebung **nicht gesetzt** (nur Vorhandensein geprüft, kein Wert ausgegeben). Keine andere Variable mit Bezug zu OpenRouter vorhanden.
+- Testszene (Ort, Figuren, Ziel) mit Kanon-Auszug liegt nicht vor.
+- Bereitstellungsweg für den Schlüssel ist im Fahrplan als `[TBD]` offen. Vorschlag an den Eigentümer: Umgebungsvariable `OPENROUTER_API_KEY` in den Einstellungen der Cloud-Umgebung; wirkt erst in einer neuen Session.
+- Folge: 1.1 bleibt `[OFFEN]`, STOPP nach CLAUDE.md Abschnitt 8, Kriterium 1; STOPP-Block im Fahrplan „Aktueller Stand" hinterlegt. 1.2 braucht ebenfalls Material des Eigentümers (Exporte); 1.3 ist ohne Zutun beginnbar.
+
+### 2026-09-26 14:56 – [SESSIONSTART] Auftrag: Schritt 1.1
+
+- **Modell:** eingestellt `claude-opus-5-5`, bedient `claude-opus-5-5` → Entscheidungs-Klasse (Quelle: Sitzungsabfrage `get_session`). Empfohlene Klasse für 1.1: Entscheidung – keine Abweichung.
+- **Kontextgröße:** Sitzungsabfrage meldet `used_tokens: 0` bei `max_tokens: 1.000.000` – Wert offensichtlich nicht aktuell; Größenregel wird mit Vorbehalt angewendet.
+- **Kontingent:** Wochenlimit Status `allowed_warning` (Zurücksetzung So 2026-09-27 10:00 MESZ) – Hinweis an den Eigentümer.
+- **Einstieg:** erster regulärer Sessionstart nach Modus 2; kein vorheriger `[SESSIONENDE]`-Eintrag. Mindest-Lektüre vollständig durchlaufen.
 
 <!-- ANCHOR:eintragstypen -->
 ## Eintragstypen (Übersicht)
