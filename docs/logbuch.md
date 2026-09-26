@@ -33,6 +33,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 
 - Eigentümer: Der Schlüssel liegt in der Umgebungsvariable `KEY`, nicht in `OPENROUTER_API_KEY`.
 - Geprüft ohne Wertausgabe: gesetzt, Länge 73, OpenRouter-Präfix vorhanden. Abfrage `/api/v1/key`: Ausgabengrenze 5 $, verbraucht 0 $, keine Zurücksetzung der Grenze, kein Gratis-Kontingent.
+- Reibung: Der Eigentümer hatte zuerst den Namen „Open Router Key“ versucht; die Umgebungs-Konfiguration hat ihn abgelehnt. Wahrscheinliche Ursache: Namen von Umgebungsvariablen dürfen keine Leerzeichen enthalten; `OPENROUTER_API_KEY` (Großbuchstaben, Unterstriche) sollte angenommen werden. Nicht selbst geprüft, da die Konfiguration nur dem Eigentümer zugänglich ist.
 - Beobachtung: Der Name `KEY` ist unspezifisch. Für den Wegwerf-Code aus 1.1 wird er so gelesen; welcher Variablenname im Produkt gilt, entscheidet Schritt 3.1 (`.env.example`).
 - Eingangskriterium 1 von 1.1 erfüllt; die Testszene fehlt weiter, STOPP bleibt bestehen.
 
