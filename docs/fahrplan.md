@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 1 „Erkundung: Modelle, Import, Laufzeit" (begonnen 2026-09-26)
 - **Phasentyp:** ERKUNDUNG
-- **Aktiver Schritt:** 1.5 (seit 2026-09-26; 1.1 erledigt 2026-09-26)
+- **Aktiver Schritt:** keiner (1.1 und 1.5 erledigt 2026-09-26)
 - **Nächster Schritt:** 1.3 (ohne Zutun des Eigentümers beginnbar); 1.2 wartet auf Exporte des Eigentümers; 1.4 nach 1.2 und 1.3
 - **Offene STOPP-Situationen:** keine (STOPP vor 1.1 vom 2026-09-26 aufgelöst: Schlüssel liegt vor; Testdaten erfindet die KI, Festlegung des Eigentümers)
 
@@ -182,7 +182,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 1.5: Genre-Test – düstere, Horror-, Thriller- und Action-Szenen
 
-- **Status:** IN ARBEIT (seit 2026-09-26)
+- **Status:** ERLEDIGT (2026-09-26) – Ergebnis `docs/research/modell-eignungstest.md` Abschnitt „Genre-Test"; ADR-010 bestätigt
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Schritt-Art (nur ERKUNDUNG):** Vergleichsstudie
 - **Zeitbox (nur ERKUNDUNG):** maximal 3 h Arbeit

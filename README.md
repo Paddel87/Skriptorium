@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 1 – Erkundung (seit 2026-09-26); Schritt 1.1 Modell-Eignungstest erledigt (ADR-010)
+- **Projektphase:** Phase 1 – Erkundung (seit 2026-09-26); Schritte 1.1 Modell-Eignungstest und 1.5 Genre-Test erledigt (ADR-010)
 - **Version:** v0.0.0 – noch keine lauffähige Version
 - **Status:** Konzeption
 - **Letzte Änderung:** 2026-09-26

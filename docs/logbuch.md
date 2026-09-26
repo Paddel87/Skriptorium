@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 20:10 – [BEOBACHTUNG] Schritt 1.5 erledigt
+
+- Genre-Bewertung (4 Prüf-Instanzen, je Szene 8 Texte blind): grok-4.7 in allen vier Szenen Rang 1 und 2 (Punkte 22,5/25), grok-4.6 18,1, gemini-3.8-flash 16,6, qwen3.8-max 16,0. Keine Ablehnung, keine Moralisierung; Abschwächung selten (qwen 2, grok-4.6 1); Schreibweise-Verstöße vor allem bei qwen (5/8).
+- Reibung: erste Aggregation gruppierte nach Anbieter statt Modell (falsches Feld im Dateinamen) – sofort bemerkt, weil grok-Zeilen zusammenfielen; korrigiert.
+- ADR-010 bestätigt; offene Frage an den Eigentümer: grok-4.6 statt qwen3.8-max als bevorzugtes Zweitmodell? (Zielkonflikt Genre-Qualität vs. Herstellervielfalt.)
+
 ### 2026-09-26 19:45 – [BEOBACHTUNG] Schritt 1.5 Genre-Test angelegt und gelaufen
 
 - Auftrag des Eigentümers: Leistung bei düsteren, Horror-, Thriller- und Action-Szenen, ergänzt um weitere Faktoren. Neuer Fahrplan-Schritt 1.5 (Phase 1 jetzt 5 statt 4 Schritte, Wucherungs-Schwelle nicht berührt); 1.4 hängt zusätzlich von 1.5 ab.

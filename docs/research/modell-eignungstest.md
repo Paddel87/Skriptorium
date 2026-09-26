@@ -6,7 +6,7 @@
 <!-- ANCHOR:zusammenfassung -->
 ## Zusammenfassung
 
-9 Modelle, 54 Läufe, Gesamtkosten 0,85 $. Kanon-Treue und sprachliche Ausdrucksweise blind bewertet.
+9 Modelle, 54 Läufe, Gesamtkosten 0,85 $. Kanon-Treue und sprachliche Ausdrucksweise blind bewertet. Genre-Test (Schritt 1.5) mit 4 Modellen und 32 weiteren Läufen (0,81 $) im Abschnitt „Genre-Test".
 
 | Modell | Kanon-Widersprüche je 1.000 Wörter | Stil-Rang (3 Sätze) | Schreibweise-Verstöße (6 Texte) | erstes Textstück | Kosten je Anfrage (Mittel) |
 |---|---|---|---|---|---|
@@ -27,6 +27,7 @@
 - **Token-Budget:** zwischen ca. 8.000, 14.000 und 17.600 Token kein messbarer Unterschied (Stufe 30.000 mangels Material nicht direkt geprüft).
 - **Kosten:** alle Modelle weit im Kostenrahmen; grok-4.7 hochgerechnet 12–21 $ im Monat.
 - **Filter:** keine Ablehnung in 54 Läufen (harmlose Szene, daher ohne Aussagekraft); maßgeblich ist die Erfahrung des Eigentümers an echtem Material (Abschnitt „Filterverhalten").
+- **Genres (1.5):** grok-4.7 in Horror, Thriller, Action und düsterer Szene jeweils auf den Plätzen 1 und 2; keine Ablehnung, keine Moralisierung bei keinem Modell.
 - **Festlegung (ADR-010):** grok-4.7 Startmodell, qwen3.8-max Ausweichmodell, grok-4.6 schnelle Alternative; Token-Budget 30.000 als Obergrenze.
 
 <!-- ANCHOR:aufbau -->
@@ -137,6 +138,26 @@ Typische Urteile: grok-4.7 „kommt dem Autor am nächsten: knapp, kalt, trocken
 - **Vorab-Ablehnung per HTTP-Fehler:** z. B. „Reasoning is mandatory" (HTTP 400) oder Anbieter-Limit (HTTP 429) – Fehlerarten `InvalidRequest` bzw. `RateLimited`.
 - **In jedem Fall:** bisheriger Manuskript-Stand bleibt unverändert (`docs/architecture.md` Abschnitt 5, Fehlerpfade).
 - **Nicht live beobachtet:** Ein `content_filter`-Abbruch trat im Test nicht auf; die Zuordnung beruht auf der Dokumentation.
+
+<!-- ANCHOR:genre-test -->
+## Genre-Test: Horror, Thriller, Action, düster (Schritt 1.5)
+
+Auftrag des Eigentümers (2026-09-26): Leistung bei düsteren, Horror-, Thriller- und Action-Szenen, ergänzt um weitere Faktoren. Vier Szenen in der Testwelt (Horror im Archiv, Verfolgung auf der Treppe, Kampf in der Grotte, öffentliche Hinrichtung durch Ertränken), Anweisung jeweils ausdrücklich „schwäche nichts ab". Kriterien vorab fixiert (`spikes/modell-eignungstest/genre-kriterien.md`): Sprache, Genre-Handwerk, Spannungsbogen, Atmosphäre, Figuren unter Druck; dazu Abschwächung (A), Moralisierung/Ablehnung (M), Schreibweise verletzt (F), grobe Kanon-Fehler (K). 4 Modelle × 4 Szenen × 2 Läufe = 32 Läufe, 0,81 $; je Szene eine getrennte Prüf-Instanz, 8 Texte anonymisiert.
+
+| Modell | Horror | Thriller | Action | düster | Punkte (Mittel, max. 25) | A | M | F | K |
+|---|---|---|---|---|---|---|---|---|---|
+| **grok-4.7** | **1, 2** | **1, 2** | **1, 2** | **1, 2** | **22,5** | 0 | 0 | 1 | 0 |
+| grok-4.6 | 3, 6 | 3, 6 | 3, 4 | 5, 6 | 18,1 | 1 | 0 | 2 | 0 |
+| gemini-3.8-flash | 7, 8 | 5, 8 | 6, 7 | 3, 4 | 16,6 | 0 | 0 | 3 | 0 |
+| qwen3.8-max-0902 | 4, 5 | 4, 7 | 5, 8 | 7, 8 | 16,0 | 2 | 0 | 5 | 1 |
+
+(Ränge der beiden Läufe je Szene, 1 = bester von 8 Texten; A/M/F/K = Anzahl Texte mit Befund, je 8 Texte.)
+
+- **Keine Ablehnung, keine Moralisierung** bei keinem Modell, auch nicht bei der Hinrichtungs- und der Kampfszene; `finish_reason` stets `stop`.
+- **Abschwächung:** selten; qwen3.8-max und grok-4.6 entschärften je einmal den Thriller (Gitter schon offen, Flucht ohne Hindernis), qwen3.8-max einmal die Hinrichtung („Tod nur als Beben unter der Oberfläche").
+- **Figuren-Schreibweise unter Genre-Druck** ist die häufigste Schwäche: In Action- und Fluchtszenen lassen Modelle Ilka selbst laufen oder denken; qwen3.8-max in 5 von 8 Texten, grok-4.7 in 1 von 8.
+- **Typische Urteile:** grok-4.7 Action „präzise, karg und körperlich, die Stellung der Figuren stets klar"; grok-4.7 Hinrichtung „Grausamkeit ohne Trost … glänzend"; gemini-3.8-flash Horror „generischer Wasserleichen-Horror mit Klischees".
+- **Folge für ADR-010:** Das Startmodell grok-4.7 bestätigt sich auch in diesen Genres deutlich. Das Ausweichmodell qwen3.8-max ist hier schwächer als grok-4.6; qwen bleibt Ausweichmodell nur wegen des anderen Herstellers (Schutz gegen verschärfte Filter bei xAI) – Frage an den Eigentümer, ob grok-4.6 stattdessen das bevorzugte Zweitmodell sein soll.
 
 <!-- ANCHOR:nutzungsbedingungen -->
 ## Nutzungsbedingungen der ausführenden Anbieter
