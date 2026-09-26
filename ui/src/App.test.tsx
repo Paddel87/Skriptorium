@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
@@ -170,5 +170,61 @@ describe("App", () => {
     expect(
       await screen.findByRole("button", { name: "Anmelden" }),
     ).toBeDefined();
+  });
+});
+
+describe("expired session", () => {
+  it("asks to log in again above the open screen and keeps it", async () => {
+    let expired = false;
+    fakeApi({
+      ...loggedIn,
+      "GET /api/worlds/salzmark/stories": () =>
+        expired
+          ? { status: 401, body: { detail: "Anmeldung erforderlich" } }
+          : { status: 200, body: [] },
+      "POST /api/worlds/salzmark/stories": () => ({
+        status: 401,
+        body: { detail: "Anmeldung erforderlich" },
+      }),
+      "POST /api/auth/login": () => {
+        expired = false;
+        return { status: 204 };
+      },
+    });
+    const user = userEvent.setup();
+    render(<App />);
+    await user.click(
+      await screen.findByRole("button", { name: "Die Salzmark" }),
+    );
+    await user.type(
+      await screen.findByLabelText("Titel"),
+      "Mein ungespeicherter Titel",
+    );
+    expired = true;
+    await user.click(
+      screen.getByRole("button", { name: "Geschichte anlegen" }),
+    );
+    const dialog = await screen.findByRole("dialog", {
+      name: "Sitzung abgelaufen",
+    });
+    expect(screen.getByLabelText("Titel")).toHaveProperty(
+      "value",
+      "Mein ungespeicherter Titel",
+    );
+    expect(
+      within(dialog).queryByRole("button", { name: /Einrichtungscode/ }),
+    ).toBeNull();
+    await user.type(
+      within(dialog).getByLabelText("Passwort"),
+      "ein langes Passwort hier",
+    );
+    await user.click(within(dialog).getByRole("button", { name: "Anmelden" }));
+    await waitFor(() => {
+      expect(screen.queryByRole("dialog")).toBeNull();
+    });
+    expect(screen.getByLabelText("Titel")).toHaveProperty(
+      "value",
+      "Mein ungespeicherter Titel",
+    );
   });
 });

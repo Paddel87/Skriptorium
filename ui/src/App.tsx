@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { api, type Story, type World } from "./api";
+import { api, setUnauthorizedHandler, type Story, type World } from "./api";
 import { Account } from "./views/Account";
 import { Login } from "./views/Login";
 import { Setup } from "./views/Setup";
@@ -19,6 +19,17 @@ type Access = "checking" | "login" | "setup" | "in";
 export function App() {
   const [access, setAccess] = useState<Access>("checking");
   const [screen, setScreen] = useState<Screen>({ kind: "worlds" });
+  // Session ended while working: log in again above the open screen, so unsaved text stays.
+  const [expired, setExpired] = useState(false);
+
+  useEffect(() => {
+    setUnauthorizedHandler(() => {
+      setExpired(true);
+    });
+    return () => {
+      setUnauthorizedHandler(null);
+    };
+  }, []);
 
   useEffect(() => {
     // No valid session (401) or no server: both lead to the login.
@@ -37,6 +48,7 @@ export function App() {
       await api.logout();
     } finally {
       setScreen({ kind: "worlds" });
+      setExpired(false);
       setAccess("login");
     }
   }
@@ -90,6 +102,26 @@ export function App() {
           Abmelden
         </button>
       </header>
+      {expired && (
+        <div
+          className="overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Sitzung abgelaufen"
+        >
+          <Login
+            title="Sitzung abgelaufen"
+            onLoggedIn={() => {
+              setExpired(false);
+            }}
+          />
+          <p className="card narrow note">
+            Bitte erneut anmelden. Die geöffnete Ansicht bleibt erhalten; nicht
+            gespeicherter Text geht nicht verloren – danach einfach noch einmal
+            speichern.
+          </p>
+        </div>
+      )}
       <main>
         {screen.kind === "worlds" && (
           <Worlds

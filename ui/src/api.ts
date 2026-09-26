@@ -109,6 +109,15 @@ export class ApiError extends Error {
 
 type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
+/** Paths whose 401 is an expected answer, not an expired session. */
+const OWN_401 = new Set(["/api/auth/login", "/api/auth/session"]);
+let unauthorizedHandler: (() => void) | null = null;
+
+/** Called when a request fails because the session has ended (e.g. timeout, ended elsewhere). */
+export function setUnauthorizedHandler(handler: (() => void) | null): void {
+  unauthorizedHandler = handler;
+}
+
 /** Send one request; resolves with the JSON body or `undefined` for 204. */
 export async function request(
   method: Method,
@@ -126,6 +135,9 @@ export async function request(
   }
   const data: unknown = await response.json().catch(() => null);
   if (!response.ok) {
+    if (response.status === 401 && !OWN_401.has(path)) {
+      unauthorizedHandler?.();
+    }
     throw errorFrom(response.status, data);
   }
   return data;

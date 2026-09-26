@@ -168,3 +168,11 @@ td {
   padding: 0.3rem;
   border-bottom: 1px solid #ddd8cc;
 }
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 45%);
+  overflow-y: auto;
+  z-index: 10;
+}

@@ -6,9 +6,11 @@ import { ErrorText, Field } from "./Common";
 export function Login({
   onLoggedIn,
   onSetup,
+  title = "Skriptorium",
 }: {
   onLoggedIn: () => void;
-  onSetup: () => void;
+  onSetup?: () => void;
+  title?: string;
 }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -30,7 +32,7 @@ export function Login({
 
   return (
     <form className="card narrow" onSubmit={(event) => void submit(event)}>
-      <h1>Skriptorium</h1>
+      <h1>{title}</h1>
       <Field label="Passwort">
         <input
           type="password"
@@ -46,9 +48,11 @@ export function Login({
       <button type="submit" disabled={busy}>
         Anmelden
       </button>
-      <button type="button" className="link" onClick={onSetup}>
-        Mit Einrichtungscode ein Passwort festlegen
-      </button>
+      {onSetup !== undefined && (
+        <button type="button" className="link" onClick={onSetup}>
+          Mit Einrichtungscode ein Passwort festlegen
+        </button>
+      )}
     </form>
   );
 }

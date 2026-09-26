@@ -1,6 +1,12 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { fail, fakeApi, noContent, ok } from "../fake-api";
-import { api, ApiError, describeError, request } from "./api";
+import {
+  api,
+  ApiError,
+  describeError,
+  request,
+  setUnauthorizedHandler,
+} from "./api";
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -79,5 +85,24 @@ describe("describeError", () => {
     expect(describeError(new TypeError("fetch failed"))).toMatch(
       /Keine Verbindung/,
     );
+  });
+});
+
+describe("unauthorized handler", () => {
+  it("is called for an ended session but not for login or the session check", async () => {
+    const handler = vi.fn();
+    setUnauthorizedHandler(handler);
+    fakeApi({
+      "GET /api/worlds": fail(401, "Anmeldung erforderlich"),
+      "POST /api/auth/login": fail(401, "Passwort falsch"),
+      "GET /api/auth/session": fail(401, "Anmeldung erforderlich"),
+    });
+    await expect(api.login("x")).rejects.toBeInstanceOf(ApiError);
+    await expect(api.session()).rejects.toBeInstanceOf(ApiError);
+    expect(handler).not.toHaveBeenCalled();
+    await expect(api.worlds()).rejects.toMatchObject({ status: 401 });
+    expect(handler).toHaveBeenCalledTimes(1);
+    setUnauthorizedHandler(null);
+    await expect(api.worlds()).rejects.toMatchObject({ status: 401 });
   });
 });
