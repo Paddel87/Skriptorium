@@ -10,6 +10,7 @@ import asyncio
 import json
 import logging
 import os
+import re
 import time
 from collections.abc import AsyncIterator, Awaitable, Callable, Mapping
 from dataclasses import dataclass
@@ -40,6 +41,10 @@ _FIRST_CHUNK_TIMEOUT_SECONDS: Final = 90.0
 _CHUNK_TIMEOUT_SECONDS: Final = 30.0
 _DEFAULT_RETRY_AFTER_SECONDS: Final = 5.0
 _MAX_RETRY_AFTER_SECONDS: Final = 60.0
+# Longest accepted line of the event stream; guards memory against a broken provider (review 3.1).
+MAX_LINE_CHARS: Final = 1_000_000
+# Characters kept in model and provider names of the log line; others become "_" (review 3.1).
+_LOG_NAME: Final = re.compile(r"[^A-Za-z0-9._/:@+-]")
 _FILTER_HINTS: Final = ("moderation", "content_filter", "content filter", "flagged", "policy")
 
 _log = logging.getLogger("skriptorium.ai_gateway")
@@ -143,6 +148,7 @@ class OpenRouterProvider:
         """At most two attempts: one retry after HTTP 429, never after the stream has begun."""
         payload = _payload(request, config_for(request.model, self._models))
         for attempt in range(2):
+            failure: str | None = None
             try:
                 async with self._client.stream(
                     "POST", _URL, json=payload, headers=self._headers
@@ -155,16 +161,18 @@ class OpenRouterProvider:
                             yield event
                         return
             except httpx.HTTPError as exc:
-                raise ProviderUnavailable(
-                    f"Verbindung fehlgeschlagen ({type(exc).__name__})"
-                ) from exc
+                failure = type(exc).__name__
+            if failure is not None:
+                # Raised outside the except clause: the httpx error carries the request with its
+                # authorization header and must not stay reachable via __context__ (review 3.1).
+                raise ProviderUnavailable(f"Verbindung fehlgeschlagen ({failure})")
             await self._sleep(delay)
 
     async def _events(
         self, response: httpx.Response, outcome: _Outcome, start: float
     ) -> AsyncIterator[StreamEvent]:
         """Turn the Server-Sent Events of one response into stream events."""
-        lines = response.aiter_lines()
+        lines = _bounded_lines(response.aiter_text())
         deadline = time.monotonic() + self._first_chunk_timeout
         finish_reason: str | None = None
         usage = Usage(input_tokens=None, output_tokens=None, cost_usd=None)
@@ -214,6 +222,24 @@ def _payload(request: CompletionRequest, config: ModelConfig) -> dict[str, objec
     return payload
 
 
+async def _bounded_lines(chunks: AsyncIterator[str]) -> AsyncIterator[str]:
+    """Lines of the decoded stream without their line breaks.
+
+    Raises:
+        ProviderUnavailable: A line grows beyond :data:`MAX_LINE_CHARS`.
+    """
+    pending = ""
+    async for chunk in chunks:
+        pending += chunk
+        *complete, pending = pending.split("\n")
+        if any(len(line) > MAX_LINE_CHARS for line in (*complete, pending)):
+            raise ProviderUnavailable("Antwortzeile des Anbieters zu lang")
+        for line in complete:
+            yield line.removesuffix("\r")
+    if pending:
+        yield pending.removesuffix("\r")
+
+
 async def _next_line(lines: AsyncIterator[str], deadline: float) -> str | None:
     """Next line of the stream, ``None`` at its end or after ``data: [DONE]``.
 
@@ -223,13 +249,16 @@ async def _next_line(lines: AsyncIterator[str], deadline: float) -> str | None:
     remaining = deadline - time.monotonic()
     if remaining <= 0:
         raise ProviderUnavailable("Zeitüberschreitung beim Warten auf Text")
+    timed_out = False
     try:
         async with asyncio.timeout(remaining):
             line = await anext(lines)
     except StopAsyncIteration:
         return None
-    except TimeoutError as exc:
-        raise ProviderUnavailable("Zeitüberschreitung beim Warten auf Text") from exc
+    except TimeoutError:
+        timed_out = True
+    if timed_out:
+        raise ProviderUnavailable("Zeitüberschreitung beim Warten auf Text")
     return None if line.strip() == "data: [DONE]" else line
 
 
@@ -239,8 +268,9 @@ def _parse(line: str) -> dict[str, object] | None:
         return None
     try:
         chunk = json.loads(line.removeprefix("data:").strip())
-    except json.JSONDecodeError as exc:
-        raise ProviderUnavailable("Unlesbare Antwort des Anbieters") from exc
+    except json.JSONDecodeError:
+        # The decode error holds the raw response line; it must not stay reachable (ADR-021).
+        chunk = None
     if not isinstance(chunk, dict):
         raise ProviderUnavailable("Unlesbare Antwort des Anbieters")
     return chunk
@@ -337,8 +367,8 @@ def _log_request(model: str, outcome: _Outcome, start: float) -> None:
     _log.info(
         "ki_anfrage anbieter=openrouter modell=%s ausfuehrend=%s ergebnis=%s token_ein=%s "
         "token_aus=%s kosten_usd=%s dauer_ms=%d erstes_textstueck_ms=%s",
-        model,
-        outcome.upstream or "-",
+        _LOG_NAME.sub("_", model),
+        _LOG_NAME.sub("_", outcome.upstream or "-"),
         outcome.result,
         _or_dash(usage.input_tokens),
         _or_dash(usage.output_tokens),

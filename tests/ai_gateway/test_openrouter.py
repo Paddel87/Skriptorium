@@ -23,6 +23,7 @@ from skriptorium.ai_gateway import (
     TextChunk,
     Usage,
 )
+from skriptorium.ai_gateway.openrouter import MAX_LINE_CHARS
 
 KEY = "sk-or-test-key-not-real"
 STORY_TEXT = "Ilka zieht die Runenklinge"
@@ -444,3 +445,95 @@ def test_expired_deadline_stops_before_reading() -> None:
 
     assert events == []
     assert isinstance(error, ProviderUnavailable)
+
+
+def chained(error: BaseException) -> list[BaseException]:
+    found: list[BaseException] = []
+    current: BaseException | None = error
+    while current is not None:
+        found.append(current)
+        current = current.__cause__ or current.__context__
+    return found
+
+
+def test_network_error_does_not_keep_the_key_reachable() -> None:
+    adapter, _ = provider(Recorder(httpx.ConnectError("refused")))
+
+    _, error = run(adapter)
+
+    assert error is not None
+    assert chained(error) == [error]
+
+
+def test_unreadable_line_is_not_kept_in_the_error() -> None:
+    adapter, _ = provider(Recorder(ok([f"data: {{{STORY_TEXT}\n"])))
+
+    _, error = run(adapter)
+
+    assert error is not None
+    assert chained(error) == [error]
+    assert STORY_TEXT not in str(error)
+
+
+def test_timeout_error_has_no_chain() -> None:
+    adapter, _ = provider(Recorder(ok([0.3, text("spät")])), first_chunk_timeout=0.1)
+
+    _, error = run(adapter)
+
+    assert isinstance(error, ProviderUnavailable)
+    assert chained(error) == [error]
+
+
+class Pieces(httpx.AsyncByteStream):
+    """Response body sent exactly as given, without added line breaks."""
+
+    def __init__(self, *pieces: str) -> None:
+        self._pieces = pieces
+
+    async def __aiter__(self) -> AsyncIterator[bytes]:
+        for piece in self._pieces:
+            yield piece.encode()
+
+
+@pytest.mark.parametrize("line_break", ["", "\n"])
+def test_overlong_line_is_rejected_without_its_content(line_break: str) -> None:
+    half = "A" * (MAX_LINE_CHARS // 2 + 10)
+    body = Pieces(text("x"), "data: " + half, half + line_break, finish())
+    adapter, _ = provider(Recorder(httpx.Response(200, stream=body)))
+
+    events, error = run(adapter)
+
+    assert events == [TextChunk("x")]
+    assert isinstance(error, ProviderUnavailable)
+    assert str(error) == "Antwortzeile des Anbieters zu lang"
+
+
+def test_lines_split_across_chunks_and_crlf_are_joined() -> None:
+    whole = text("zusammen").rstrip("\n")
+    parts: list[str | float] = [whole[:10], whole[10:] + "\r\n", finish(), "data: [DONE]"]
+
+    class Raw(httpx.AsyncByteStream):
+        async def __aiter__(self) -> AsyncIterator[bytes]:
+            for part in parts:
+                assert isinstance(part, str)
+                yield part.encode()
+
+    adapter, _ = provider(Recorder(httpx.Response(200, stream=Raw())))
+
+    events, error = run(adapter)
+
+    assert error is None
+    assert events[0] == TextChunk("zusammen")
+
+
+def test_log_line_cannot_be_forged_through_names(caplog: pytest.LogCaptureFixture) -> None:
+    caplog.set_level(logging.INFO, logger="skriptorium.ai_gateway")
+    forged = data({"provider": "Evil\nergebnis=erfolg", "choices": [{"delta": {"content": "x"}}]})
+    adapter, _ = provider(Recorder(ok([forged, finish()])))
+
+    run(adapter, request("a/b\nki_anfrage ergebnis=erfolg"))
+
+    line = log_lines(caplog)[0]
+    assert "\n" not in line
+    assert "modell=a/b_ki_anfrage_ergebnis_erfolg" in line
+    assert "ausfuehrend=Evil_ergebnis_erfolg" in line
