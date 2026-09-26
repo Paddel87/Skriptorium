@@ -29,6 +29,19 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 21:05 – [ONBOARDING-VALIDATION] Phasenabschluss 2 (Trigger 3)
+
+- **Form (Klasse M):** frischer Worktree von `646ddfe` im Scratchpad, eigenes Datenverzeichnis; README-Quick-Start exakt wie dokumentiert: `uv python install 3.14.7`, `uv sync --frozen`, `npm ci` (0 Schwachstellen), `pre-commit install`, `skriptorium-einrichtung` (Exit 0; Ausgabe mit dem Einrichtungscode nicht angezeigt), `npx vite build`, uvicorn.
+- **Ergebnis:** `/api/health` → `{"status":"ok"}`; `/` → 200 (Oberfläche); `/api/worlds` ohne Sitzung → 401; Server-Log ohne Warnung. `pytest --cov`: 224 bestanden, 99,94 %; `vitest --coverage`: 32 bestanden, 99,02 % Zeilen. Smoke-Test `scripts/session-start.sh` im Worktree: Exit 0.
+- **Befund:** keiner im Onboarding-Pfad. End-to-End-Tests nicht im Worktree wiederholt (laufen im CI-Job End-to-End). Nebenbefund: `data/index.sqlite` liegt im Git-Index, obwohl `/data/` ignoriert ist (leerer Index, seit `53071f0`) – Behandlung nach der Bewertung der getrennten Instanz.
+
+### 2026-09-26 20:57 – [SESSIONSTART] Phasenabschluss 2
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 20:57) → Entscheidungs-Klasse. Der Phasenabschluss enthält einen `ENTSCHEIDUNG ERFORDERLICH`-Block (Eskalations-Auslöser 1) – Klasse passt, kein Stopp.
+- **Kontextgröße:** 0 Token laut Sitzungsabfrage (neue Session). Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+- PR #7 gemergt (`646ddfe`); Branch `scp/affectionate-euler-piciei` steht auf `main`.
+- **Vorhaben:** Pflichtfrage „Weiterbauen, umbauen oder neu aufsetzen“ mit getrennter Instanz; Vision-Re-Derivations-Pass gegen `docs/vision.md` und `docs/requirements.md`; Onboarding-Re-Validation (Trigger 3); nach der Entscheidung ADR, Archivierung von Phase 2, Logbuch-Verdichtung.
+
 ### 2026-09-26 20:52 – [SESSIONENDE] Schritt 2.7 erledigt, Phasenabschluss 2 offen
 
 - **Dauer:** Fortsetzung 20:10–20:52 UTC (Gesamtsession ab 19:20).
