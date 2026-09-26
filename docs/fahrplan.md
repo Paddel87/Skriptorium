@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 2 „Grundgerüst" (bereit; Phase 1 abgeschlossen 2026-09-26, ADR-014: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (2.3 `[ERLEDIGT]` 2026-09-26)
-- **Nächster Schritt:** 2.4 (canon – Import von Welt-Material)
+- **Aktiver Schritt:** keiner (2.4 `[ERLEDIGT]` 2026-09-26)
+- **Nächster Schritt:** 2.5 (manuscript – Geschichten und Kapitel)
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -160,7 +160,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 2.4: canon – Import von Welt-Material
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-26) – Aufteilungsregeln vom Eigentümer bestätigt; importierte Welt als Kanon nutzbar (Test); Importzeit für 20 Seiten (über 10.000 Wörter, 100 Einträge) 0,3 s – der 30-Minuten-Rahmen hängt damit an der Zuordnung durch den Autor (4.8); 23 Tests, Coverage `canon` 100 %
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 1.2, 2.3
 - **Freigabepflichtig:** nein (Format in 1.2 freigegeben)

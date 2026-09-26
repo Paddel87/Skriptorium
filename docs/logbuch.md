@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 19:40 – [REIFEGRAD-WECHSEL] canon.importers durch Umsetzung validiert
+
+- Schritt 2.4 erledigt: Markdown-Import mit Vorschau und bestätigter Übernahme. Aufteilungsregeln dem Eigentümer gezeigt und bestätigt (Antwortsystem): Überschriften → Einträge, Kategorie aus Gruppen-Überschrift oder Zeile `Kategorie:`, Aliasse aus `Aliasse:`/`Auch genannt:`; doppelte Namen überspringen und anzeigen (je Eintrag überschreibbar); Einleitung an die Weltbeschreibung anhängen.
+- `canon.importers` (in ADR-012 `[VORLÄUFIG]`, mit ADR-013 im Modul `canon` `[BELASTBAR]`) jetzt durch Umsetzung validiert. Kategorie-Wörter in `canon.categories` ausgelagert (Refactoring innerhalb des Moduls).
+- **Messung FR-005/FR-022:** 20 Seiten erfundenes Material (über 10.000 Wörter, 100 Einträge) übernimmt das Programm in 0,3 s. Das Risiko aus ADR-012 liegt damit allein bei der Zuordnung durch den Autor; gemessen in 4.8.
+- **Klasse:** 2.4 empfiehlt Routine, lief auf Entscheidung.
+
 ### 2026-09-26 19:15 – [REIFEGRAD-WECHSEL] canon durch Umsetzung validiert
 
 - Schritt 2.3 erledigt: `CanonService` (Welten, Kanon-Einträge aller sechs Kategorien, Suche per Namens-/Alias-Präfix). `canon` bleibt `[BELASTBAR]`, jetzt „durch Umsetzung validiert“; Signaturen in `docs/architecture.md` Abschnitt 4 ausformuliert. FR-002 (bis auf Teilkriterium KI-Anfrage → 3.2) und FR-016 erledigt.
