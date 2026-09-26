@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 17:30 – [SESSIONENDE] Grenze der Sessiongröße überschritten
+
+- **Dauer:** ca. 14:56–17:30 UTC.
+- **Bearbeitet:** Phase 1 begonnen; Schritt 1.1 `[IN ARBEIT]`: Schlüssel-Bereitstellung geklärt (`KEY`), erfundene Testwelt und Prüfliste, Harness, 24 Läufe (0,37 $), Blind-Bewertung, Sichtung der Nutzungsbedingungen, Zwischenstand in `docs/research/modell-eignungstest.md`.
+- **Erreichter Stand:** grok-4.7 mit Abstand am kanontreuesten (7 Widersprüche gegenüber 19–28), aber 15–50 s bis zum ersten Textstück (Ziel 5 s); Budget 8k–17,6k ohne messbaren Unterschied; alle Modelle im Kostenrahmen.
+- **Offen:** Filter-Probe (Rückfrage an den Eigentümer: welche Art von Inhalten wurde früher abgelehnt?), Ablehnungsverhalten, Stichprobe der Bewertung durch den Eigentümer, Entscheidung zu Startmodell/Ausweichmodell/Budget als `ENTSCHEIDUNG ERFORDERLICH` bzw. ADR `[ERKENNTNIS]`.
+- **Nächster Schritt:** neue Session – 1.1 fortsetzen (Filter-Probe), parallel 1.3 möglich.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5, eingestellt und bedient laut Sitzungsabfrage). Schritte oberhalb der Empfehlung: 0 (1.1 empfiehlt Entscheidung). Abgegebene Teilarbeiten: 4 Bewertungs-Instanzen und 1 Recherche-Instanz, alle auf derselben Klasse (niedrigere Klassen ohne Probelauf nicht zulässig); Routine-Teilarbeiten (Logbuch, README) blieben in der aktiven Klasse, weil der Kontext geladen war.
+- **Kontextgröße:** 273.042 Token laut Sitzungsabfrage (Grenze 200.000) – überschritten, deshalb Abschluss ohne neuen Schritt. Die Sitzungsabfrage meldete zu Sessionbeginn 0 und aktualisierte sich erst spät; die Grenze wurde deshalb erst nach der Auswertung bemerkt. Sitzungskosten laut Abfrage ca. 10 $.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, nächste Schritte, Research-Verweis). Drift-Prüfung: keine neuen ADRs, Modulnamen unverändert, keine Blocker, Phase 1 weiter 4 Schritte (Schwelle nicht berührt). Ablaufdaten-Register: kein Vorlauf erreicht (Guthaben-Vorlauf ab 2026-10-22). Größen-Budget `project-context.md` eingehalten (ca. 300 Zeilen).
+
 ### 2026-09-26 17:15 – [BEOBACHTUNG] 1.1 Zwischenstand: Bewertung und Nutzungsbedingungen
 
 - Blind-Bewertung der 24 Texte abgeschlossen (4 Prüf-Instanzen). Kanon-Widersprüche: grok-4.7 7, gemini-3.8-flash 19, glm-5.3 24, deepseek-v4-pro 28. Figuren-Schreibweise verletzt nur von deepseek (9) und glm (2). Mechanische Gegenprobe „Totenname nachts" deckungsgleich mit den Prüf-Instanzen.

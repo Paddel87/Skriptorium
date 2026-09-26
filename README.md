@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Initialisierung abgeschlossen (2026-09-26); als Nächstes Phase 1 – Erkundung (Modell-Eignungstest, Import-Klärung)
+- **Projektphase:** Phase 1 – Erkundung (seit 2026-09-26); Schritt 1.1 Modell-Eignungstest in Arbeit
 - **Version:** v0.0.0 – noch keine lauffähige Version
 - **Status:** Konzeption
 - **Letzte Änderung:** 2026-09-26
@@ -69,7 +69,7 @@ Noch nicht verfügbar. Geplante Hauptansichten: Welt wählen, Einstieg über neu
 
 ## Nächste Schritte
 
-- **1.1 Modell-Eignungstest:** dieselbe Szene mit 3–4 Modellen und mehreren Token-Budgets schreiben; Kanon-Treue, Inhaltsfilter und Kosten vergleichen.
+- **1.1 Modell-Eignungstest:** Vergleich von 4 Modellen und 3 Budgets liegt vor ([Zwischenstand](docs/research/modell-eignungstest.md)); offen sind Filter-Probe und Festlegung von Startmodell und Budget.
 - **1.2 Import-Klärung:** echte Exporte aus TypingMind und Notion sichten und das Importformat festlegen.
 - **1.3 Laufzeit-Prüfung:** httpx auf Python 3.14.7 testen.
 
@@ -95,7 +95,7 @@ Privates Einzelprojekt; die Umsetzung erfolgt durch einen KI-Coding-Agent nach d
 | [`docs/decisions.md`](docs/decisions.md) | Entscheidungen (ADRs) |
 | [`docs/blockers.md`](docs/blockers.md) | Aktive Blocker und gelöste Probleme |
 | [`docs/logbuch.md`](docs/logbuch.md) | Chronologisches Arbeitsprotokoll |
-| [`docs/research/`](docs/research/) | Bestandsprüfung und Versions-Verifikation |
+| [`docs/research/`](docs/research/) | Bestandsprüfung, Versions-Verifikation, Modell-Eignungstest |
 | [`CHANGELOG.md`](CHANGELOG.md) | Versionshistorie |
 
 ## Lizenz

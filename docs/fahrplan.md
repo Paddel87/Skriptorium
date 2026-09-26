@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 1 „Erkundung: Modelle, Import, Laufzeit" (begonnen 2026-09-26)
 - **Phasentyp:** ERKUNDUNG
 - **Aktiver Schritt:** 1.1 (seit 2026-09-26)
-- **Nächster Schritt:** 1.3 (ohne Zutun des Eigentümers beginnbar); 1.2 wartet auf Exporte des Eigentümers
+- **Nächster Schritt:** 1.1 fortsetzen: Filter-Probe, sobald der Eigentümer die Art früher abgelehnter Inhalte genannt hat; danach Entscheidung zu Startmodell (Reaktionszeit grok-4.7) und Token-Budget, ADR. Parallel ohne Zutun beginnbar: 1.3. 1.2 wartet auf Exporte des Eigentümers
 - **Offene STOPP-Situationen:** keine (STOPP vor 1.1 vom 2026-09-26 aufgelöst: Schlüssel liegt vor; Testdaten erfindet die KI, Festlegung des Eigentümers)
 
 <!-- ANCHOR:phasen-typen -->
@@ -110,7 +110,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 1.1: Modell-Eignungstest (Kanon-Treue, Filterverhalten, Kosten)
 
-- **Status:** IN ARBEIT (seit 2026-09-26)
+- **Status:** IN ARBEIT (seit 2026-09-26) – Zwischenstand 2026-09-26: Vergleich von 4 Modellen × 3 Budgets ausgewertet (`docs/research/modell-eignungstest.md`); offen: Filter-Probe (wartet auf Angabe des Eigentümers zu früher abgelehnten Inhalten), Beschreibung des Ablehnungsverhaltens, Stichprobe der Bewertung durch den Eigentümer, Entscheidung zu Startmodell und Budget, ADR `[ERKENNTNIS]`
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Schritt-Art (nur ERKUNDUNG):** Vergleichsstudie
 - **Zeitbox (nur ERKUNDUNG):** maximal 6 h Arbeit, dann Zwischenstand an den Eigentümer
