@@ -1,0 +1,37 @@
+{
+  "name": "k4-05",
+  "kapitel": 4,
+  "anfrage": {
+    "instruction": "Die Äbtissin antwortet dem Vogt. Schreib weiter (ca. 300 Wörter) und ende an einer Stelle, an der Ilka handeln muss.",
+    "model": "x-ai/grok-4.7"
+  },
+  "autor_absatz": "Ich zog den Handschuh nicht aus. Ich trat neben Asch, so nah, dass ich seinen Atem roch, Zwiebeln und Angst, und sagte zu der Äbtissin, nicht zu Drach: „Mutter Sera. Der Vogt will etwas aus Eurem Gewölbe entfernen. Gilt Euer Eid auch für ihn?“\n",
+  "zeiten": {
+    "kopf_s": 0.03,
+    "start_s": 0.03,
+    "erstes_textstueck_s": 15.24,
+    "gesamt_s": 22.35
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 21141
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 18780,
+        "output_tokens": 1806,
+        "cost_usd": 0.036961056,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 343,
+  "aktion": "accept"
+}

@@ -1,0 +1,37 @@
+{
+  "name": "k4-03",
+  "kapitel": 4,
+  "anfrage": {
+    "instruction": "Mai schlägt das Buch auf, Tomas liest die Zahlen. Schreib weiter (ca. 300 Wörter); ende, als von oben ein Geräusch kommt.",
+    "model": "x-ai/grok-4.7"
+  },
+  "autor_absatz": "Ich sah das Buch an. Schwarzes Leder, an den Ecken abgestoßen, ein Faden hing aus dem Rücken. Zwölf Jahre Zoll, dachte ich, und meine Mutter irgendwo dazwischen als eine Zahl.\n\n„Dann lesen wir es hier“, sagte ich. „Im Stehen. Mai kann es aufschlagen, und wir fassen nichts an. Das ist kein Verändern.“\n",
+  "zeiten": {
+    "kopf_s": 0.02,
+    "start_s": 0.02,
+    "erstes_textstueck_s": 27.94,
+    "gesamt_s": 32.75
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 19588
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 17471,
+        "output_tokens": 2200,
+        "cost_usd": 0.036759888,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 260,
+  "aktion": "accept"
+}

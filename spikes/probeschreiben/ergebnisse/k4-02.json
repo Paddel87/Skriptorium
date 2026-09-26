@@ -1,0 +1,37 @@
+{
+  "name": "k4-02",
+  "kapitel": 4,
+  "anfrage": {
+    "instruction": "Die Äbtissin verlangt den Eid und lässt sie ein. Schreib weiter (ca. 300 Wörter) bis ins zweite Gewölbe; ende an einer Stelle, an der Ilka handeln muss.",
+    "model": "x-ai/grok-4.7"
+  },
+  "autor_absatz": "„Hedda Varn“, sagte ich. Meine Stimme klang fremd in dem Gewölbe, zu laut. „Wir beklagen Hedda Varn. Ertränkt im Jahr 401, weil sie ein Schloss gebunden hat. Und wir wollen das Buch, das Fenn Asch gestern gebracht hat. Nicht, um es zu stehlen. Um es zu lesen.“\n\nIch zog den Handschuh wieder über die linke Hand. Die Äbtissin konnte das nicht sehen, aber ich tat es trotzdem.\n",
+  "zeiten": {
+    "kopf_s": 0.02,
+    "start_s": 0.02,
+    "erstes_textstueck_s": 44.76,
+    "gesamt_s": 49.82
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 18733
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 16779,
+        "output_tokens": 4646,
+        "cost_usd": 0.047287152,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 370,
+  "aktion": "edit"
+}

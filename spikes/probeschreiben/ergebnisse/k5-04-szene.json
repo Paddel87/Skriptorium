@@ -1,0 +1,44 @@
+{
+  "name": "k5-04-szene",
+  "kapitel": 5,
+  "anfrage": {
+    "instruction": "Ca. 300 Wörter; ende an einer Stelle, an der Ilka antworten muss.",
+    "model": "x-ai/grok-4.7",
+    "scene": {
+      "place": "salzbucht",
+      "characters": [
+        "oskar-lund"
+      ],
+      "goal": "Ilka trifft Kapitän Oskar Lund am Ufer der Salzbucht und bittet ihn, die Nachricht nach Tolm zu bringen; Lund erinnert sich an den Sturm auf der Rückfahrt."
+    }
+  },
+  "autor_absatz": null,
+  "zeiten": {
+    "kopf_s": 0.03,
+    "start_s": 0.03,
+    "erstes_textstueck_s": 34.96,
+    "gesamt_s": 45.18
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 24951
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 21961,
+        "output_tokens": 2461,
+        "cost_usd": 0.04511232,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 333,
+  "aktion": "edit"
+}

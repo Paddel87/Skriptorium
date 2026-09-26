@@ -1,0 +1,37 @@
+{
+  "name": "k4-04",
+  "kapitel": 4,
+  "anfrage": {
+    "instruction": "Wer kommt die Treppe herunter? Schreib weiter (ca. 300 Wörter) und ende an einer Stelle, an der Ilka handeln muss.",
+    "model": "x-ai/grok-4.7"
+  },
+  "autor_absatz": "Ich legte die Hand auf Tomas' Arm. Er hörte es auch: Schritte auf der Treppe über dem ersten Gewölbe, schwer, mehr als einer.\n",
+  "zeiten": {
+    "kopf_s": 0.02,
+    "start_s": 0.02,
+    "erstes_textstueck_s": 27.01,
+    "gesamt_s": 36.42
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 20174
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 17955,
+        "output_tokens": 2265,
+        "cost_usd": 0.018523296,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 343,
+  "aktion": "discard"
+}
