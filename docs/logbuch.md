@@ -29,6 +29,45 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 22:02 – [SESSIONENDE] Schritte 3.1 und 3.2 erledigt
+
+- **Dauer:** 20:57–22:02 UTC (Phasenabschluss 2, 3.1 ab 21:27, 3.2 ab 21:48).
+- **Bearbeitet:** 3.2 `[ERLEDIGT]`: `ContextBuilder`, Präzisierung des Verfahrens durch den Eigentümer, Abnahme FR-003/FR-004 mit 4 echten Läufen (grok-4.7, ca. 0,12 $), blind bewertet. FR-001, FR-003, FR-004 erledigt; Teilkriterium von FR-002 belegt.
+- **Erreichter Stand:** 297 Python-Tests, gesamt 99 %+, `context` 100 % Zeilen und Zweige (kritischer Pfad ≥ 90 % lokal geprüft). Adapter aus 3.1 erstmals gegen den echten Anbieter gelaufen. OpenRouter-Guthaben laut Abfrage vor den Läufen 3,34 $, danach ca. 3,22 $.
+- **Offen:** Pull Request für diesen Branch. Umgebungsvariable `KEY` → `OPENROUTER_API_KEY` umbenennen (Eigentümer, Umgebungs-Einstellungen). 3.4: Figuren-Schreibweise schärfen (Nebenbefund).
+- **Nächster Schritt:** neue Session – 3.3 Weiterschreiben mit Streaming und Szenen-Einstieg (`api.flows` nach ADR-020).
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5, eingestellt und bedient laut Sitzungsabfrage 21:59). Schritte oberhalb der Empfehlung in dieser Session: 2 (3.1 und 3.2 empfehlen Routine; jeweils Hinweis vorab). Abgegebene Teilarbeiten: Bewertung Phasenende, Sicherheitsprüfung 3.1 und Bewertung der Abnahme 3.2 an Unteragenten mit Sonnet 5 (getrennte Instanzen, keine Routine-Abgabe).
+- **Kontextgröße:** Sitzungsabfrage 21:59 meldet unverändert 358.125 Token und 13,19 $ wie um 21:50 – die Werte wurden seitdem nicht aktualisiert, tatsächlich höher. Weit über der Grenze 200.000 auf ausdrückliche Anweisung „3.2 hier“; kein weiterer Schritt in dieser Session.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Nächste Schritte). Drift-Prüfung: keine neuen ADRs; Präzisierung in `docs/architecture.md` Abschnitt 3 verweist auf die Entscheidung des Eigentümers (Logbuch 21:50); Reifegrad `context` passt; Modul-Liste unverändert; Reaktiv-Quote 1/10; Phase 3 unverändert 9 Schritte; Blocker 0; FR-001/003/004 → 3.2 erledigt. Ablaufdaten-Register: kein fälliger Vorlauf. Archivierung: kein Trigger. Onboarding: nicht berührt.
+
+### 2026-09-26 22:00 – [REIFEGRAD-WECHSEL] context durch Umsetzung validiert
+
+- Schritt 3.2 erledigt; `context` bleibt `[BELASTBAR]`, jetzt „durch Umsetzung validiert“, FR-003/FR-004 an echten KI-Texten belegt.
+- **Klasse:** 3.2 empfiehlt Routine, lief auf Entscheidung (Hinweis vorab).
+
+### 2026-09-26 21:58 – [PROBLEM-GELÖST] Reibungen in 3.2
+
+- **Trenner nicht mitgezählt:** Die Budget-Rechnung zählte die `\n\n` zwischen Bausteinen nicht; die Garantie „nie überschritten“ hing am Aufrunden. Jetzt zählt jeder Baustein seinen Trenner mit.
+- **Test erwartete Seiten bei 500 Token Budget:** Bei so kleinem Budget passt kein ganzer Absatz – das Verhalten ist gewollt, der Test prüft die Seiten erst ab 1.500 Token.
+- **Modulgrenze:** `context` darf `ai_gateway` nicht kennen – eigene Nachrichtenliste (`PromptMessage`), Übersetzung in `api` (3.3).
+
+### 2026-09-26 21:57 – [BEOBACHTUNG] Abnahme 3.2 mit echten Läufen
+
+- 4 Läufe grok-4.7 an der Testwelt „Die Salzmark“ plus „Runenklinge“; Schätzung 18.012 Token, Anbieter zählte 16.194 (Schätzung mit Sicherheitsabschlag liegt sicher darüber). Kosten ca. 0,12 $.
+- Blinde Bewertung durch getrennte Instanz (Sonnet 5): FR-003 0 Widersprüche in 2 Texten (Blut vor dem Schnitt, danach kalt und unbenutzbar), FR-004 0 in 2 Texten (Falle „Drach 397 schon Vogt?“ beide Male richtig aufgelöst). Nebenbefund: 1 von 4 Texten schreibt Handlung und Rede der Ich-Figur („Ich drehte mich um.“, „Ich seh ihn.“) → Notiz an 3.4. Zitate stichprobenartig in den Dateien bestätigt.
+
+### 2026-09-26 21:50 – [BEOBACHTUNG] 3.2 vorbereitet – Verfahren präzisiert, Schlüssel gefunden
+
+- **Korrektur zu 3.1:** Ein OpenRouter-Schlüssel ist in der Umgebung gesetzt – unter dem Namen `KEY` aus dem Spike von Phase 1, nicht `OPENROUTER_API_KEY`. In 3.1 wurde nur nach den neuen Namen gesucht; die Aussage „kein Schlüssel in der Umgebung“ war falsch. Geprüft nur Vorhandensein (Länge 73, Hash-Präfix fbc5c79b) und Schlüssel-Abfrage: Grenze 5 $, verbraucht 1,66 $, Rest 3,34 $. Empfehlung an den Eigentümer: Variable in der Umgebung auf `OPENROUTER_API_KEY` umbenennen.
+- **Offene Punkte des Kontext-Verfahrens** (nicht in ADR-003 oder Architektur festgelegt) per Frage-System entschieden: Grundgerüst (Welt, Regeln, Zeitlinie, geführte Figuren) immer plus Auffüllen mit weiteren Kanon-Einträgen; bei zu kleinem Budget ablehnen mit Hinweis; Akzeptanz FR-003/FR-004 mit echten Läufen (grok-4.7, getrennte bewertende Instanz). Festgehalten in `docs/architecture.md` Abschnitt 3 (`context`).
+- **Klasse:** 3.2 empfiehlt Routine, läuft auf Entscheidung (Hinweis an den Eigentümer).
+
+### 2026-09-26 21:48 – [SESSIONSTART] Fortsetzung mit 3.2 auf Anweisung „3.2 hier“
+
+- **Abweichung:** Sessiongröße 358.125 Token über der Grenze 200.000; der Eigentümer hat ausdrücklich „3.2 hier“ angeordnet.
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 21:50) → Entscheidungs-Klasse.
+- PR #9 gemergt (`2a8d877`); Branch neu auf `main` gesetzt.
+
 ### 2026-09-26 21:46 – [SESSIONENDE] Phase 2 abgeschlossen, Schritt 3.1 erledigt
 
 - **Dauer:** 20:57–21:46 UTC; Fortsetzung mit 3.1 ab 21:27.

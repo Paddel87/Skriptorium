@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 3 „Schreiben mit KI" (Phase 2 abgeschlossen 2026-09-26, ADR-020: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (3.1 `[ERLEDIGT]` 2026-09-26)
-- **Nächster Schritt:** 3.2 `context` – Kontext-Zusammenstellung unter Token-Budget (neue Session)
+- **Aktiver Schritt:** keiner (3.2 `[ERLEDIGT]` 2026-09-26)
+- **Nächster Schritt:** 3.3 Weiterschreiben mit Streaming und Szenen-Einstieg (neue Session)
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -132,7 +132,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 3.2: context – Kontext-Zusammenstellung unter Token-Budget
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-26) – `ContextBuilder` mit Vorrangfolge, Auffüllen und Ablehnung bei zu kleinem Budget (Präzisierung durch den Eigentümer, `docs/architecture.md` Abschnitt 3); Welten strikt getrennt, Budget nie überschritten, Änderung eines Eintrags in der nächsten Anfrage wirksam (24 Tests, Coverage `context` 100 % Zeilen und Zweige); FR-003 und FR-004 mit 4 echten Läufen (grok-4.7) ohne Widerspruch, blind bewertet (`spikes/kontext-abnahme/README.md`); Nebenbefund Figuren-Schreibweise → 3.4
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 1.1, 2.3, 2.5
 - **Freigabepflichtig:** nein
@@ -176,7 +176,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** context, manuscript, ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests
-- **Notizen:** –
+- **Notizen:** – Zusatz 2026-09-26 (Abnahme 3.2): grok-4.7 schrieb in 1 von 4 Texten Handlung und Rede der vom Autor geführten Ich-Figur trotz Hinweis im Kontext (`spikes/kontext-abnahme/README.md`) – Wortlaut der Figuren-Schreibweise hier schärfen und messen.
 
 #### 3.5: `@`-Menü
 

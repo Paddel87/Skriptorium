@@ -77,13 +77,13 @@ graph LR
 
 ### Modul: context [BELASTBAR]
 
-- **Reifegrad:** `[BELASTBAR]`, seit 2026-09-26, per ADR-013 (Beförderung in Schritt 1.4) – vorher Begründung: Kernverfahren in 1.1 und 1.5 an einer Testwelt erprobt (86 Läufe, Vorrangfolge von Hand nachgebaut)
+- **Reifegrad:** `[BELASTBAR]`, seit 2026-09-26, per ADR-013 (Beförderung in Schritt 1.4); durch Umsetzung validiert in 3.2 – vorher Begründung: Kernverfahren in 1.1 und 1.5 an einer Testwelt erprobt (86 Läufe, Vorrangfolge von Hand nachgebaut)
 - **Verantwortung:** baut aus Welt, Geschichte, Anweisung und `@`-Verweisen eine KI-Anfrage unter festem Token-Budget; Bausteine in Vorrangfolge: (1) Regeln und Schreibanweisung inkl. Figuren-Schreibweise, (2) per `@` genannte Einträge und Einträge der Figuren der Szene, (3) Gesamtzusammenfassung und Kapitel-Kurzfassungen, (4) letzte Manuskript-Seiten wörtlich (füllt den Rest des Budgets). Baut ebenso die Anfrage für Kapitel-Kurzfassungen. Erkennt Kanon-Namen ohne `@` und liefert sie als Vorschläge (FR-008, FR-010, FR-011, FR-013, FR-014).
 - **Nicht-Verantwortung:** kein Aufruf der KI, kein Schreiben von Daten.
 - **Öffentliche Schnittstellen:** `ContextBuilder` (Abschnitt 4)
 - **Abhängigkeiten (andere Module):** `canon`, `manuscript` (nur lesend)
 - **NFRs:** Token-Budget je Anfrage (Abschnitt 6); Coverage 90 % (project-context Abschnitt 7).
-- **Offene Fragen:** keine. Geklärt in 1.1 (ADR-010): Budget 30.000 Token Eingabe als Obergrenze; Tokenzählung per Schätzung 3,3 Zeichen je Token mit 10 % Sicherheitsabschlag (Abweichung zu den Anbieter-Zählungen −6 % bis +8 %), kein Tokenizer je Modell. Reihenfolge in der Anfrage: feste Bausteine (Regeln, Welt, Kanon) zuerst, veränderliche (Handlungsstand, letzte Seiten, Anweisung) zuletzt – Zwischenspeicher der Anbieter senkt so die Kosten.
+- **Offene Fragen:** keine. Geklärt in 1.1 (ADR-010): Budget 30.000 Token Eingabe als Obergrenze; Tokenzählung per Schätzung 3,3 Zeichen je Token mit 10 % Sicherheitsabschlag (Abweichung zu den Anbieter-Zählungen −6 % bis +8 %), kein Tokenizer je Modell. Reihenfolge in der Anfrage: feste Bausteine (Regeln, Welt, Kanon) zuerst, veränderliche (Handlungsstand, letzte Seiten, Anweisung) zuletzt – Zwischenspeicher der Anbieter senkt so die Kosten. **Präzisiert vor 3.2 (Eigentümer, Frage-System, 2026-09-26):** Vorrang 1 umfasst Weltbeschreibung, Figuren-Schreibweise, alle Einträge der Kategorien Regel und Zeitlinie; Vorrang 2 die per `@` genannten Einträge, die vom Autor geführten Figuren und die geschichtenbezogenen Fakten; nach den letzten Seiten füllen weitere Kanon-Einträge der Welt den Rest des Budgets (wie im Eignungstest). Passen Vorrang 1–3 und die Anweisung nicht ins Budget, wird die Anfrage abgelehnt und die größten Bausteine werden genannt – nichts ausdrücklich Angesprochenes fällt still weg. `context` liefert eine eigene Nachrichtenliste (Rolle, Text); `api` übersetzt sie in `ai_gateway`-Nachrichten (Modul-Karte: `context` kennt `ai_gateway` nicht).
 
 ### Modul: ai_gateway [BELASTBAR]
 
@@ -309,7 +309,7 @@ data/
 - **Ganzen Verlauf bei jeder Anfrage mitschicken (Ist-Zustand TypingMind):** Kosten und Kontextgrenzen sind der Anlass des Projekts – siehe ADR-003
 
 <!-- ANCHOR:reifegrad-uebersicht -->
-## 9. Reifegrad-Übersicht (Stand vom 2026-09-26, nach Schritt 3.1)
+## 9. Reifegrad-Übersicht (Stand vom 2026-09-26, nach Schritt 3.2)
 
 | Bestandteil | Reifegrad | Seit | Validiert durch / wartet auf |
 |---|---|---|---|
@@ -317,7 +317,7 @@ data/
 | Kommunikations-Grundmodus synchron + SSE | BELASTBAR | 2026-09-26 | ADR-013 (httpx-Streaming 1.3); HTTP/JSON zwischen ui und api durch Umsetzung validiert in 2.6/2.7 (End-to-End-Tests) |
 | Modul canon | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.3 und 2.4 (61 Tests, 100 %); Markdown-Import (ADR-012) |
 | Modul manuscript | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.5 (30 Tests, 100 %) |
-| Modul context | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.5 |
+| Modul context | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.5; durch Umsetzung validiert in 3.2 (24 Tests, 100 %; FR-003/FR-004 mit echten Läufen) |
 | Modul ai_gateway | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.3; durch Umsetzung validiert in 3.1 (49 Tests, 100 %; Sicherheitsprüfung durch getrennte Instanz); echter Anbieter-Aufruf ab 3.3 |
 | Modul storage | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.2 (ADR-016, 59 Tests, 100 %); Tempo bei großen Geschichten beobachten |
 | Modul api | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.6 (ADR-017, ADR-018; Sicherheitsprüfung durch getrennte Instanz, 74 Tests, 99 %) |
