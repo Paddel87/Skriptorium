@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 3 „Schreiben mit KI" (Phase 2 abgeschlossen 2026-09-26, ADR-020: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 3.1 `ai_gateway` – Anbieter-Schnittstelle und OpenRouter-Adapter (Observability per ADR-021 geklärt)
-- **Nächster Schritt:** 3.2 `context`
+- **Aktiver Schritt:** keiner (3.1 `[ERLEDIGT]` 2026-09-26)
+- **Nächster Schritt:** 3.2 `context` – Kontext-Zusammenstellung unter Token-Budget (neue Session)
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -116,7 +116,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 3.1: ai_gateway – Anbieter-Schnittstelle und OpenRouter-Adapter
 
-- **Status:** IN ARBEIT (seit 2026-09-26; ADR-021)
+- **Status:** ERLEDIGT (2026-09-26; ADR-021) – `ModelProvider` mit vier Fehlerarten, Timeouts 10/90/30 s, einem Retry bei HTTP 429 und Modell-Konfiguration; OpenRouter-Adapter über httpx; zweiter Test-Adapter ohne Änderung am OpenRouter-Code (FR-025, `tests/ai_gateway/test_second_adapter.py`); jede Fehlerart per Test; Log-Zeile nur mit Metadaten, kein Schlüssel und kein Text in Logs oder Fehlerketten (Tests); 49 Tests, Coverage `ai_gateway` 100 % Zeilen, 65/66 Zweige; Sicherheitsprüfung durch getrennte Instanz mit Nachprüfung (Logbuch 21:40); nur mit simulierten Antworten geprüft – kein Schlüssel in der Umgebung, echter Aufruf mit 3.3
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 1.3, 2.1
 - **Freigabepflichtig:** nein
