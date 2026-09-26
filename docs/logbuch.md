@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 17:40 – [BEOBACHTUNG] Weiterarbeit trotz überschrittener Sessiongröße
+
+- Eigentümer: „Du ignorierst jetzt die Beschränkung und machst hier weiter." – Ausnahme „weiter hier" nach CLAUDE.md Abschnitt 0 („Sessiongröße"); Abweichung hiermit vermerkt. Kontext zu diesem Zeitpunkt ca. 275.000 Token.
+- Fortsetzung von 1.1 ohne Zutun des Eigentümers: Test von grok-Varianten mit abschaltbarem Reasoning (Reaktionszeit).
+
 ### 2026-09-26 17:30 – [SESSIONENDE] Grenze der Sessiongröße überschritten
 
 - **Dauer:** ca. 14:56–17:30 UTC.
