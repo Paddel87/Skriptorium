@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 15:25 – [BEOBACHTUNG] 1.1 begonnen mit erfundenen Testdaten
+
+- Festlegung des Eigentümers: Sein Welt-Material kann in der Arbeitsumgebung nicht verwendet werden; die KI erfindet Testwelt, Kanon-Auszug, Handlungsstand und Szene. Eingangskriterium im Fahrplan entsprechend geändert, STOPP aufgelöst, 1.1 auf `[IN ARBEIT]`.
+- Grenzen der Aussagekraft (im Fahrplan vermerkt): Kanon-Treue wird gegen erfundenen Kanon gemessen; Filterverhalten hängt davon ab, wie nah die Szene an den früher abgelehnten Inhalten liegt – dazu Rückfrage an den Eigentümer gestellt (welche Art Inhalte wurde abgelehnt?).
+- Vorarbeit: Modell-Liste von OpenRouter erneut abgerufen (458 Modelle, wie am Vormittag); Kandidaten ohne OpenRouter-Moderation mit Preisen vorausgewählt (Details folgen in `docs/research/modell-eignungstest.md`).
+
 ### 2026-09-26 15:10 – [PROBLEM-GELÖST] OpenRouter-Schlüssel gefunden
 
 - Eigentümer: Der Schlüssel liegt in der Umgebungsvariable `KEY`, nicht in `OPENROUTER_API_KEY`.

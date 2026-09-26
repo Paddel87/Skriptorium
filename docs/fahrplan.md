@@ -9,22 +9,11 @@
 ## Aktueller Stand
 
 - **Stand vom:** 2026-09-26
-- **Laufende Phase:** keine – Modus 2 (Projektinitialisierung) abgeschlossen am 2026-09-26; als Nächstes beginnt Phase 1 „Erkundung: Modelle, Import, Laufzeit"
-- **Phasentyp:** ERKUNDUNG (Phase 1, sobald begonnen)
-- **Aktiver Schritt:** keiner
-- **Nächster Schritt:** 1.1 (Modell-Eignungstest), sobald der Initialisierungs-Commit vorliegt und der Eigentümer einen OpenRouter-Schlüssel mit Ausgabengrenze bereitgestellt hat; 1.2 und 1.3 sind unabhängig davon beginnbar
-- **Offene STOPP-Situationen:** eine (2026-09-26):
-
-  ```text
-  STOPP
-  Grund: Informationslücke (CLAUDE.md Abschnitt 8, Kriterium 1)
-  Kontext: Schritt 1.1 sollte beginnen; Eingangskriterien nicht erfüllt.
-  Benötigt: (1) erledigt 2026-09-26: Schlüssel liegt als Umgebungsvariable
-      KEY vor, Ausgabengrenze 5 $; (2) offen: Testszene (Ort, Figuren,
-      Ziel) mit Kanon-Auszug und Festlegung, ob der Text ins Repo darf.
-  Vorgeschlagene Auflösung: Eigentümer stellt beides bereit; bis dahin
-      ist 1.3 ohne Zutun beginnbar.
-  ```
+- **Laufende Phase:** Phase 1 „Erkundung: Modelle, Import, Laufzeit" (begonnen 2026-09-26)
+- **Phasentyp:** ERKUNDUNG
+- **Aktiver Schritt:** 1.1 (seit 2026-09-26)
+- **Nächster Schritt:** 1.3 (ohne Zutun des Eigentümers beginnbar); 1.2 wartet auf Exporte des Eigentümers
+- **Offene STOPP-Situationen:** keine (STOPP vor 1.1 vom 2026-09-26 aufgelöst: Schlüssel liegt vor; Testdaten erfindet die KI, Festlegung des Eigentümers)
 
 <!-- ANCHOR:phasen-typen -->
 ## Phasen-Typen
@@ -121,21 +110,21 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 1.1: Modell-Eignungstest (Kanon-Treue, Filterverhalten, Kosten)
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT (seit 2026-09-26)
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Schritt-Art (nur ERKUNDUNG):** Vergleichsstudie
 - **Zeitbox (nur ERKUNDUNG):** maximal 6 h Arbeit, dann Zwischenstand an den Eigentümer
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein – das Ergebnis (Startmodell, Token-Budget) wird als ADR `[ERKENNTNIS]` festgehalten; berührt es eine Kategorie aus CLAUDE.md Abschnitt 4, wird es als `ENTSCHEIDUNG ERFORDERLICH` vorgelegt
 - **Empfohlene Klasse:** Entscheidung – das Ergebnis legt Startmodell und Token-Budget fest und bereitet die Beförderung von `context` auf `[BELASTBAR]` vor (Eskalations-Auslöser 4 in CLAUDE.md Abschnitt 0).
-- **Eingangskriterien:** OpenRouter-API-Schlüssel mit Ausgabengrenze, vom Eigentümer bereitgestellt – nie im Repo, in Logs oder in der Ausgabe der KI (CLAUDE.md Abschnitt 6); Bereitstellungsweg in der Arbeitsumgebung: Umgebungsvariable `KEY` der Cloud-Umgebung (Eigentümer, 2026-09-26); Ausgabengrenze 5 $ ohne Zurücksetzung, geprüft über OpenRouter `/api/v1/key` am 2026-09-26. Eine Testszene (Ort, Figuren, Ziel) mit dem zugehörigen Kanon-Auszug aus einer bestehenden Welt, vom Eigentümer ausgewählt.
+- **Eingangskriterien:** OpenRouter-API-Schlüssel mit Ausgabengrenze, vom Eigentümer bereitgestellt – nie im Repo, in Logs oder in der Ausgabe der KI (CLAUDE.md Abschnitt 6); Bereitstellungsweg in der Arbeitsumgebung: Umgebungsvariable `KEY` der Cloud-Umgebung (Eigentümer, 2026-09-26); Ausgabengrenze 5 $ ohne Zurücksetzung, geprüft über OpenRouter `/api/v1/key` am 2026-09-26. ~~Eine Testszene (Ort, Figuren, Ziel) mit dem zugehörigen Kanon-Auszug aus einer bestehenden Welt, vom Eigentümer ausgewählt.~~ Geändert am 2026-09-26 (Eigentümer): Das Material des Eigentümers kann in der Arbeitsumgebung nicht verwendet werden; die KI erfindet Testwelt, Kanon-Auszug, bisherigen Handlungsstand und Testszene selbst. Folgen für die Aussagekraft: Kanon-Widersprüche werden gegen den erfundenen Kanon gezählt (Erstbewertung durch die KI nach einer vorab festgelegten Prüfliste, Stichprobe durch den Eigentümer); das Filterverhalten ist nur so aussagekräftig, wie die Testszene der Art von Inhalten ähnelt, die bei früheren Anbietern abgelehnt wurden. Testwelt und Szene dürfen ins Repo (erfunden, kein Material des Eigentümers).
 - **Anforderungen (ab Klasse M):** keine (Vorbereitung für FR-010, FR-011, FR-018; Grundlage für das Kosten-Ziel aus Vision 4)
 - **Zu tun:** Dieselbe Szene mit 3–4 Modellen über OpenRouter schreiben lassen (Auswahl aus den Modellen ohne OpenRouter-eigene Moderation, `docs/research/bestandspruefung.md` Abschnitt „Modell-Verfügbarkeit"), jeweils mit 2–3 Token-Budgets um den Startwert 30.000 Token Eingabe. Die Anfrage wird nach dem Kontext-Verfahren aus ADR-003 von Hand zusammengestellt. Je Lauf festhalten: Kanon-Widersprüche (Bewertung durch den Eigentümer, Maßstab Vision 4), Ablehnungen und Filterverhalten, Eingabe-/Ausgabe-Token, Kosten je Anfrage, Zeit bis zum ersten Textstück. Tokenzählung klären (Schätzung oder Tokenizer je Modell). Nutzungsbedingungen der ausführenden Anbieter der gewählten Modelle auf Einschränkungen für Fiktion sichten.
 - **Akzeptanzkriterien:** Wir können Startmodell und Token-Budget begründet festlegen: Vergleichstabelle (Modell × Budget × Kanon-Widersprüche × Ablehnungen × Kosten je Anfrage) liegt vor; hochgerechnete Monatskosten bei ca. 400 Anfragen liegen zusammen mit dem Hosting im Kostenrahmen von 50 € (BDR-001) oder die Abweichung ist benannt; mindestens ein Ausweichmodell ist benannt (FR-018); das Verhalten bei Ablehnung ist beschrieben (Grundlage für `ModelRefused`).
 - **Betroffene Module:** context, ai_gateway (nur als Wegwerf-Code zur Erkundung)
 - **Reifegrad-Wirkung:** NFR Token-Budget `[VORLÄUFIG]` → Wert festgelegt (Beförderung in 1.4); NFR Kanon-Treue bleibt `[OFFEN]`, erhält eine Vorprüfung
 - **Artefakte:** ADR `[ERKENNTNIS]` zu Startmodell und Token-Budget; Erkenntnisdokument `docs/research/modell-eignungstest.md`; Nachtrag in `docs/architecture.md` Abschnitt 6 und im Kostenregister `docs/project-context.md` Abschnitt 8
-- **Notizen:** Szenen- und Kanon-Text des Eigentümers gehören nicht ins Repo, wenn er das nicht ausdrücklich will; im Erkenntnisdokument genügen Kennzahlen und kurze Belegstellen.
+- **Notizen:** Szenen- und Kanon-Text des Eigentümers gehören nicht ins Repo, wenn er das nicht ausdrücklich will; im Erkenntnisdokument genügen Kennzahlen und kurze Belegstellen. Wegwerf-Code liegt unter `spikes/modell-eignungstest/` und wird nicht in die Module übernommen (Phasen-Hinweis oben).
 
 #### 1.2: Import-Klärung an echten Exporten (TypingMind, Notion)
 
