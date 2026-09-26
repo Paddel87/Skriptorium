@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 1 „Erkundung: Modelle, Import, Laufzeit" (begonnen 2026-09-26)
 - **Phasentyp:** ERKUNDUNG
-- **Aktiver Schritt:** 1.3 (seit 2026-09-26; 1.1, 1.2 und 1.5 erledigt)
-- **Nächster Schritt:** 1.3 (in Arbeit ab 2026-09-26), danach 1.4 (Reifegrad-Beförderung)
+- **Aktiver Schritt:** keiner (1.1, 1.2, 1.3 und 1.5 erledigt 2026-09-26)
+- **Nächster Schritt:** 1.4 (Reifegrad-Beförderung) – alle Abhängigkeiten erledigt; Empfohlene Klasse Entscheidung
 - **Offene STOPP-Situationen:** keine (STOPP vor 1.1 vom 2026-09-26 aufgelöst: Schlüssel liegt vor; Testdaten erfindet die KI, Festlegung des Eigentümers)
 
 <!-- ANCHOR:phasen-typen -->
@@ -146,7 +146,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 1.3: httpx 0.28.1 auf Python 3.14.7 prüfen
 
-- **Status:** IN ARBEIT (seit 2026-09-26)
+- **Status:** ERLEDIGT (2026-09-26) – validiert, 9/9 Prüfungen (`spikes/httpx-python-314/README.md`)
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Schritt-Art (nur ERKUNDUNG):** Spike
 - **Zeitbox (nur ERKUNDUNG):** maximal 1 h Arbeit
@@ -224,7 +224,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** keine Fachmodule (Projektgerüst, CI)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** `pyproject.toml`, `package.json`, Lock-Dateien, CI- und Hook-Konfiguration, README-Quick-Start, `docs/onboarding-runbook.md`
-- **Notizen:** Quick-Start-relevant – Onboarding-Pfad gegen frischen Worktree validieren (CLAUDE.md Abschnitt 17). Zusatz 2026-09-26 (Befund aus 1.1): In der Cloud-Session ist der `pre-commit`-Hook nicht installiert; 2.1 sorgt dafür, dass er zu Sessionbeginn installiert wird (z. B. SessionStart-Hook), sonst greift „Pre-Commit-Hook war aktiv" der Definition of Done nicht.
+- **Notizen:** Quick-Start-relevant – Onboarding-Pfad gegen frischen Worktree validieren (CLAUDE.md Abschnitt 17). Zusatz 2026-09-26 (Befund aus 1.1): In der Cloud-Session ist der `pre-commit`-Hook nicht installiert; 2.1 sorgt dafür, dass er zu Sessionbeginn installiert wird (z. B. SessionStart-Hook), sonst greift „Pre-Commit-Hook war aktiv" der Definition of Done nicht. Zusatz 2026-09-26 (Befund aus 1.3): Die Cloud-Umgebung setzt `UV_NATIVE_TLS`, das uv 0.12 als abgekündigt meldet (Ersatz `UV_SYSTEM_CERTS`); bei der Einrichtung der Projekt-Werkzeuge prüfen, ob die Warnung in CI oder Pre-Commit auftaucht, und dann Umgebung bzw. Warnungs-Bestand anpassen.
 
 #### 2.2: storage – Dateiablage und Suchindex
 

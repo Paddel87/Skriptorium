@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 21:20 – [BEOBACHTUNG] Schritt 1.3 erledigt – httpx 0.28.1 trägt auf Python 3.14.7
+
+- Eingangskriterium zunächst nicht erfüllt: installiertes uv 0.8.17 kannte nur Python 3.14.0rc2. Lösung: uv 0.12.19 in einer Scratchpad-venv installiert, damit Python 3.14.7 geladen (nur Testumgebung, keine Projekt-Abhängigkeit).
+- Prüfskript `spikes/httpx-python-314/pruefung.py` (Standardbibliothek + httpx): Streaming, ReadTimeout, Abbruch – je sync und async – plus echter OpenRouter-Stream; 9/9 bestanden, lokale Prüfungen 3× wiederholt, `-X dev -W error` ohne Warnung.
+- Reibung: „Broken pipe" aus dem eigenen Testserver nach absichtlichem Timeout – im Server abgefangen. Einmalige asyncio-Meldung „took 0.211 seconds" nicht reproduzierbar; Folge für 3.1: AsyncClient einmal anlegen.
+- Beobachtung Umgebung: uv meldet `UV_NATIVE_TLS` als abgekündigt (`UV_SYSTEM_CERTS` verwenden). Die Variable setzt die Cloud-Umgebung, nicht das Projekt; kein Projekt-Werkzeug betroffen, daher kein Fahrplan-Schritt. Landeplatz: Notiz in Schritt 2.1 (dort prüfen, ob die Warnung in CI oder Pre-Commit auftaucht).
+- Ablaufdaten-Register und Stack-Eintrag httpx nachgezogen; D.3 (Nachprüfung 2027-03-26) bleibt.
+
 ### 2026-09-26 20:55 – [ADR-ANGELEGT] ADR-012 – Import zunächst Markdown; 1.2 erledigt, 1.3 begonnen
 
 - Eigentümer (Frage-System): „Wir beginnen erst mal mit Markdown-Import und nehmen TypingMind und Notion später dazu." Empfehlung der KI war Dummy-Exporte; Entscheidung B, neutral im ADR vermerkt.

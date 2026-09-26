@@ -42,7 +42,7 @@ Auswahl nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15, „Versi
   - FastAPI 0.141 (0.141.1, gepinnt `<0.142`) — Verifiziert: 2026-09-26, Quelle: PyPI
   - Pydantic 2.13 (2.13.5) — Verifiziert: 2026-09-26, Quelle: PyPI, Versionsrichtlinie Pydantic
   - uvicorn 0.52 (0.52.4) — Verifiziert: 2026-09-26, Quelle: PyPI (0.53/0.54 ohne Fehlerkorrektur-Version)
-  - httpx 0.28 (0.28.1) — Verifiziert: 2026-09-26, Quelle: PyPI; Python 3.14 nicht offiziell deklariert, Streaming-Stichprobe auf 3.14 (Vorabversion) erfolgreich; Nachprüfung im Ablaufdaten-Register
+  - httpx 0.28 (0.28.1) — Verifiziert: 2026-09-26, Quelle: PyPI; Python 3.14 nicht offiziell deklariert; auf 3.14.7 validiert (Schritt 1.3: Streaming, Timeout, Abbruch, sync und async, `-W error`); Nachprüfung im Ablaufdaten-Register
   - React und react-dom 19.2 (19.2.8) — Verifiziert: 2026-09-26, Quelle: npm-Registry, react.dev/versions
   - Vite 8.3 (8.3.1) und @vitejs/plugin-react 6.1 (6.1.1) — Verifiziert: 2026-09-26, Quelle: npm-Registry, vite.dev/releases
   - CodeMirror 6 (@codemirror/state 6.7.6, view 6.43.13, autocomplete 6.20.3, lang-markdown 6.5.2) — Verifiziert: 2026-09-26, Quelle: npm-Registry
@@ -247,7 +247,7 @@ Kein Bestand – Default „Warnungen sind Fehler".
 |---|---|---|---|---|
 | Node.js 24 LTS (nur Build) | 2028-04-30 | 6 Monate | Node-Release-Plan `schedule.json` | D.1 – Wechsel auf Node 26 LTS frühestens 2026-11-05 |
 | Python 3.14 | 2030-10 | 6 Monate | PEP 745 | – (Vorlauf nach Projektdauer) |
-| httpx 0.28 – Python 3.14 nicht offiziell deklariert, Pflege schwach | Nachprüfung 2027-03-26 | – | PyPI, Stichprobe 2026-09-26 | 1.3 – Test auf 3.14.7; D.3 – Nachprüfung 2027-03-26 |
+| httpx 0.28 – Python 3.14 nicht offiziell deklariert, Pflege schwach | Nachprüfung 2027-03-26 | – | PyPI; auf 3.14.7 validiert 2026-09-26 (Schritt 1.3, `spikes/httpx-python-314/README.md`) | D.3 – Nachprüfung 2027-03-26 |
 | TypeScript 7 – neue Linie, noch nicht reif | Nachprüfung 2027-01-08 | – | TypeScript-Devblog | D.2 |
 | Guthaben des Coding-Agents (250 $, Stand 193 $) | 2026-11-05 08:59 MEZ | 2 Wochen | Angabe des Eigentümers 2026-09-26 | – (kontingentintensive Arbeit vor dem Ablauf einplanen; Schritt anlegen bei Erreichen des Vorlaufs) |
 | Wochenkontingent der KI | wöchentlich, So 10:00 (MESZ) | – | Sitzungsabfrage 2026-09-26 | – |
