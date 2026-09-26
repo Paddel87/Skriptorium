@@ -33,6 +33,10 @@ target-version = "py314"
 extend-exclude = ["spikes", "templates"]
 force-exclude = true
 
+[tool.ruff.format]
+# Documentation is hand-maintained and not auto-formatted (same rule as .prettierignore).
+exclude = ["*.md"]
+
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "B", "UP", "S", "N", "SIM", "RUF"]
 
