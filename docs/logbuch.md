@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 18:40 – [BEOBACHTUNG] 1.1: Antworten des Eigentümers, Qwen 3.8, grok-4.6, Stil-Test
+
+- **Eigentümer:** „Kanon-Fehler stören mehr" (als Wartezeit) → Vision-Frage für das Startmodell beantwortet.
+- **Filterverhalten (Angabe des Eigentümers):** CNC-Inhalte liefen früher mit Gemini 2.5 Pro, die neueren Gemini-Modelle schreiben sie nicht mehr; heute nutzt er grok 4.7 oder Qwen 3.8. Die KI schreibt keine eigene Probe-Szene mit sexueller Nicht-Einvernehmlichkeit; die Erfahrung des Eigentümers an echtem Material gilt als Befund zum Filterverhalten (stärker als eine synthetische Probe).
+- **Neuer Auftrag des Eigentümers:** zusätzlich die sprachliche Ausdrucksweise prüfen (nach seiner Erfahrung Gemini stark, grok seit 4.6 nah dran). Kriterien vor der Bewertung fixiert (`spikes/modell-eignungstest/stil-kriterien.md`).
+- **Läufe:** qwen3.8-max-0902 (Reasoning Pflicht, 19–27 s bis zum ersten Textstück), qwen3.8-flash (ohne Reasoning, 1,5–4,4 s; 4 Läufe zuerst HTTP 429 vom Anbieter, beim Wiederholen erfolgreich), grok-4.6 (Reasoning Pflicht, aber nur 240–380 Reasoning-Token, 5–8 s). 0 Ablehnungen.
+- **Panne wiederholt:** Auch der erste Stil-Auftrag enthielt einen nicht ersetzten Platzhalter (`SATZ`), per Nachricht korrigiert. Lehre: Aufträge an Prüf-Instanzen ohne Platzhalter formulieren, nicht aus einer Vorlage kopieren.
+
 ### 2026-09-26 18:10 – [BEOBACHTUNG] 1.1 Nachtest grok ohne Reasoning
 
 - grok-4.6/4.5: Reasoning ebenfalls Pflicht. grok-4.3 und grok-4.20 lassen es abschalten → 12 Läufe, erstes Textstück < 1 s, 0 Ablehnungen.
