@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 2 „Grundgerüst" (bereit; Phase 1 abgeschlossen 2026-09-26, ADR-014: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (2.1 `[ERLEDIGT]` 2026-09-26)
-- **Nächster Schritt:** 2.2 (storage – Dateiablage und Suchindex) – beginnt mit `ENTSCHEIDUNG ERFORDERLICH` zum YAML-Parser; Empfohlene Klasse Entscheidung
+- **Aktiver Schritt:** 2.2 `[WARTET-AUF-FREIGABE]` – YAML-Parser vorgelegt am 2026-09-26
+- **Nächster Schritt:** nach Freigabe ADR-016, dann 2.2 umsetzen
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -128,7 +128,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 2.2: storage – Dateiablage und Suchindex
 
-- **Status:** OFFEN
+- **Status:** WARTET-AUF-FREIGABE (seit 2026-09-26; YAML-Parser vorgelegt)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.1
 - **Freigabepflichtig:** ja – YAML-Parser für den Dateikopf ist eine neue externe Abhängigkeit (Kategorie 3)

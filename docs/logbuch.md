@@ -29,12 +29,24 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 18:35 – [BEOBACHTUNG] 2.2 vorbereitet – YAML-Parser im Probelauf
+
+- PyYAML 6.0.3 (`safe_load`) liest handgeschriebene Werte nach YAML 1.1: Alias `No` → `False`, `On` → `True`, `status: off` → `False`, `012` → `10`. ruamel.yaml 0.19.1 (YAML 1.2) liest sie als Text bzw. `12`, schreibt `No` aber ungequotet – ein YAML-1.1-Leser macht daraus wieder `False`. PyYAML `safe_dump` setzt mehrdeutige Werte in Anführungszeichen.
+- ruamel.yaml erhält beim Zurückschreiben Kommentare und Reihenfolge; PyYAML verwirft Kommentare.
+- Pflegestand: PyYAML letzte Version 2025-09-25, Linie 6 seit 2021; ruamel.yaml letzte Version 2026-01-02, ein Hauptentwickler, Quellen auf SourceForge. Typen: ruamel.yaml bringt eigene mit; PyYAML braucht `types-PyYAML` (Apache-2.0).
+
+### 2026-09-26 18:30 – [SESSIONSTART] Fortsetzung auf Anweisung „hier weiter“
+
+- **Abweichung:** Sessiongröße 227.497 Token über der Grenze 200.000; der Eigentümer hat ausdrücklich „hier weiter“ angeordnet (`CLAUDE.md` Abschnitt 0, Ausnahme).
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 18:15) → Entscheidungs-Klasse; 2.2 empfiehlt Entscheidung.
+- PR #4 gemergt; Branch `claude/neue-session-2-1-uupwbh` neu von `main` (`353aa61`) aufgesetzt.
+
 ### 2026-09-26 18:20 – [SESSIONENDE] Schritt 2.1 erledigt
 
 - **Dauer:** 17:00–18:20 UTC.
 - **Bearbeitet:** 2.1 `[ERLEDIGT]` (ADR-015 mit Nachtrag ShellCheck); neuer Querschnitt-Schritt D.5 (httpx2, mypy 2; Frist 2026-11-12); Zusatz in D.2 (vitest 5, typescript-eslint).
 - **Erreichter Stand:** Projektgerüst mit `/api/health`, Oberflächen-Gerüst, alle Pflicht-Gates in Pre-Commit und CI scharf; CI-Lauf 56 grün (Pre-Commit, Python, TypeScript), Protokolle ohne Warnungen. Nebenbefund behoben: ruff 0.16 formatierte auch Python-Blöcke in Markdown – Markdown vom Formatter ausgenommen (wie `.prettierignore`).
-- **Offen:** nichts aus 2.1. Branch `claude/neue-session-2-1-uupwbh` ist gepusht, Pull Request noch nicht angelegt (auf Anweisung des Eigentümers).
+- **Offen:** nichts aus 2.1. Branch `claude/neue-session-2-1-uupwbh` gepusht; Pull Request #4 danach vom Eigentümer angelegt und gemergt (Korrektur 18:35).
 - **Nächster Schritt:** neue Session – 2.2 mit `ENTSCHEIDUNG ERFORDERLICH` zum YAML-Parser beginnen. Der SessionStart-Hook wirkt erst, wenn er auf `main` liegt.
 - **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5, eingestellt und bedient laut Sitzungsabfrage 17:00 und 18:15). Schritte oberhalb der Empfehlung: 0 (2.1 empfiehlt Entscheidung). Abgegebene Teilarbeiten: keine (Routine-Klasse ohne Probelauf).
 - **Kontextgröße:** 227.497 Token laut Sitzungsabfrage – Grenze 200.000 überschritten, daher kein neuer Schritt. Sitzungskosten laut Abfrage ca. 3,33 $. Wochenlimit weiter `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
