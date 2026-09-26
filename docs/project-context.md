@@ -158,7 +158,7 @@ Modularer Monolith (ADR-003): ein Python-Server (FastAPI) liefert die React-Ober
   - **Routine-Klasse:** Claude Sonnet 5 – Probelauf: offen (bis dahin übernimmt die Entscheidungs-Klasse)
   - **Entscheidungs-Klasse:** Claude Opus, aktuelle Linie (Stand 2026-09-26: Opus 5.5) – stärkstes regulär eingesetztes Modell
   - **Ausnahme-Klasse:** Claude Fable 5.1 – nur auf Vorschlag mit Freigabe
-  - **Bezugsmodell und knappe Ressource:** Abo (Max 5x); knapp ist das Wochenkontingent, Zurücksetzung sonntags 10:00 (MESZ), dazu ein Kurzzeitlimit je 5 Stunden (Eigentümer, 2026-09-26; Sitzungsabfrage bestätigt den Zeitpunkt)
+  - **Bezugsmodell und knappe Ressource:** Abo (Max 5x); knapp ist das Wochenkontingent, Zurücksetzung sonntags 10:00 (MESZ), dazu ein Kurzzeitlimit je 5 Stunden (Eigentümer, 2026-09-26; Sitzungsabfrage bestätigt den Zeitpunkt). Zusätzlich ein eingelöstes Guthaben von 250 $ (Stand 2026-09-26: 193 $ übrig), gültig bis 2026-11-05 08:59 MEZ; laut Eigentümer laufen die Cloud-Sessions des Coding-Agents über dieses Guthaben (Eigentümer, 2026-09-26; die Sitzungsabfrage zeigt dazu nichts an)
   - **Abgabe an Unteragenten:** Claude Code – Modell je Unteragenten-Aufruf oder als `model:` in der Agent-Definition. Abgabe an niedrigere Klassen erst nach bestandenem Probelauf.
   - **Meldet die Laufzeitumgebung das Modell / das Kontingent?** Stand 2026-09-26: Sitzungsabfrage meldet eingestelltes und bedientes Modell, Kontextgröße und den Status des Wochenlimits mit Zurücksetz-Zeitpunkt.
   - **Preise je Klasse** (Listenpreis je 1 Mio. Token, Eingabe / Ausgabe / Cache-Lesen, Stand 2026-06-24, übernommen aus der Referenz des Werkzeugs): Mechanik 1 $ / 5 $ / 0,10 $; Routine 2 $ / 10 $ / 0,20 $; Entscheidung 4 $ / 20 $ / 0,20 $; Ausnahme 10 $ / 50 $ / 0,25 $. Folge: an die Mechanik-Klasse auch Lesearbeit; an die Routine-Klasse nur ausgabelastige Arbeit.
@@ -249,6 +249,7 @@ Kein Bestand – Default „Warnungen sind Fehler".
 | Python 3.14 | 2030-10 | 6 Monate | PEP 745 | – (Vorlauf nach Projektdauer) |
 | httpx 0.28 – Python 3.14 nicht offiziell deklariert, Pflege schwach | Nachprüfung 2027-03-26 | – | PyPI, Stichprobe 2026-09-26 | 1.3 – Test auf 3.14.7; D.3 – Nachprüfung 2027-03-26 |
 | TypeScript 7 – neue Linie, noch nicht reif | Nachprüfung 2027-01-08 | – | TypeScript-Devblog | D.2 |
+| Guthaben des Coding-Agents (250 $, Stand 193 $) | 2026-11-05 08:59 MEZ | 2 Wochen | Angabe des Eigentümers 2026-09-26 | – (kontingentintensive Arbeit vor dem Ablauf einplanen; Schritt anlegen bei Erreichen des Vorlaufs) |
 | Wochenkontingent der KI | wöchentlich, So 10:00 (MESZ) | – | Sitzungsabfrage 2026-09-26 | – |
 
 ### Kosten

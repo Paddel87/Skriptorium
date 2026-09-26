@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 15:35 – [BEOBACHTUNG] Guthaben des Coding-Agents
+
+- Eigentümer: eingelöstes Guthaben 250 $, davon 193 $ übrig, gültig bis 2026-11-05 08:59 MEZ; die Cloud-Sessions laufen darüber. Die Sitzungsabfrage meldet `isUsingOverage: false` und zum Guthaben nichts – Angabe des Eigentümers ist die Quelle.
+- Nachgetragen in `docs/project-context.md` Abschnitt 6 (Bezugsmodell) und Abschnitt 8 (Ablaufdaten-Register, Vorlauf 2 Wochen).
+- Folge für 1.1: Die Kontingent-Warnung aus dem Sessionstart ist entschärft; die Testwelt wird jetzt geschrieben.
+
 ### 2026-09-26 15:25 – [BEOBACHTUNG] 1.1 begonnen mit erfundenen Testdaten
 
 - Festlegung des Eigentümers: Sein Welt-Material kann in der Arbeitsumgebung nicht verwendet werden; die KI erfindet Testwelt, Kanon-Auszug, Handlungsstand und Szene. Eingangskriterium im Fahrplan entsprechend geändert, STOPP aufgelöst, 1.1 auf `[IN ARBEIT]`.
