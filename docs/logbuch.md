@@ -29,7 +29,24 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
-### 2026-09-26 20:05 – [SICHERHEITSPRÜFUNG] Getrennte Instanz zu 2.6
+### 2026-09-26 20:05 – [SESSIONENDE] Schritt 2.6 erledigt
+
+- **Dauer:** 19:20–20:05 UTC.
+- **Bearbeitet:** 2.6 `[ERLEDIGT]` mit ADR-017 (`[OPERATIV]`) und ADR-018 (`[REAKTIV]`); Freigaben des Eigentümers: nur Passwort, selbst gewählt mit Pwned Passwords, Sitzungen 7/30 Tage, Anmelde-Protokoll; Befund 4 (Anfragegröße) nicht nötig.
+- **Erreichter Stand:** angemeldete HTTP-Schnittstelle über `canon` und `manuscript`; Sicherheitsprüfung durch getrennte Instanz mit zwei Nachprüfungen ohne offenen Befund; 224 Tests, Coverage 99 %; CI-Lauf 68 grün, weitere Läufe auf dem PR.
+- **Offen:** Merge von PR #6 nach grüner CI (vom Eigentümer so gewählt: erst nach der Prüfung).
+- **Nächster Schritt:** neue Session – 2.7 (ui) inklusive Anmeldung, Einrichtung, Passwortwechsel mit Namensnennung Have I Been Pwned, Sitzungsübersicht und CSP.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5, eingestellt und bedient laut Sitzungsabfrage 20:04). Schritte oberhalb der Empfehlung: 0. Abgegebene Teilarbeiten: Sicherheitsprüfung an einen Unteragenten mit Sonnet 5 (Zweck: getrennte Instanz, keine Routine-Abgabe; Ergebnis vor Übernahme geprüft).
+- **Kontextgröße:** 379.453 Token laut Sitzungsabfrage – Grenze 200.000 überschritten während 2.6; kein neuer Schritt begonnen, der laufende Schritt wurde nach der Regel zu Ende geführt. Sitzungskosten laut Abfrage ca. 14,61 $. Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Quick Start, Nächste Schritte); Drift-Prüfung: ADR-017/018 → 2.6 (und 2.7-Notiz) vorhanden; Modul-Liste unverändert (`api.access` ist Untermodul); Reifegrad `api` passt zu ADR-017/018; Reaktiv-Quote 1/10 = Anzahl `[REAKTIV]` in ADR-009..018; Phase 2 weiterhin 7 Schritte; Blocker 0; Anforderungen: 2.6 ohne FR. Ablaufdaten-Register: kein fälliger Vorlauf (Guthaben-Vorlauf ab 2026-10-22). Archivierung: kein Trigger (Logbuch unter 800 Zeilen). project-context 337 Zeilen.
+
+### 2026-09-26 20:03 – [REIFEGRAD-WECHSEL] api durch Umsetzung validiert
+
+- Schritt 2.6 erledigt. Zweite Nachprüfung der getrennten Instanz: Befunde 1, 2, 9 belegt behoben (u. a. 15 parallele korrekte Anmeldungen → 15 × 204; 25 parallele Fehlversuche → 10 × 401, 15 × 429; Lock-Tabelle bleibt bei 500 Adressen leer), keine neuen Befunde. Hinweis der Instanz: Die Serialisierung je Adresse ist nur so gut wie die Adressermittlung (Befund 3, Vorgabe in 4.2).
+- `api` bleibt `[BELASTBAR]`, jetzt „durch Umsetzung validiert"; 224 Tests gesamt (74 in `tests/api`), Coverage 99 %.
+- **Klasse:** 2.6 empfiehlt Entscheidung, lief auf Entscheidung.
+
+### 2026-09-26 19:58 – [SICHERHEITSPRÜFUNG] Getrennte Instanz zu 2.6
 
 - **Instanz:** Unteragent mit eigenem Kontext und anderem Modell (Claude Sonnet 5); erhielt nur Diff, Bedrohungsmodell, ADR-017/018 und die ASVS-Originalkapitel, nicht den Gesprächsverlauf. Prüfte mit eigenen Probeskripten gegen den echten Code.
 - **Befund 1 (hoch, belegt):** Sperre nach Fehlversuchen per Parallelität umgehbar (25 parallele Fehlversuche, keiner gesperrt) → behoben in `28783bd`, endgültig in `6b7044f`.
