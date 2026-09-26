@@ -1,0 +1,37 @@
+{
+  "name": "k4-06",
+  "kapitel": 4,
+  "anfrage": {
+    "instruction": "Drach gibt scheinbar nach, droht aber. Schreib weiter (ca. 300 Wörter) und ende an einer Stelle, an der Ilka antworten muss.",
+    "model": "x-ai/grok-4.7"
+  },
+  "autor_absatz": "Ich packte das Handgelenk des Dicken mit der rechten Hand, bevor seine Finger das Leder berührten. Es war, als hielte ich einen nassen Tampen: schwer, kalt, nicht aufzuhalten. Aber er hielt inne.\n\n„Es gilt, was die Mutter sagt“, sagte ich. „Das Buch bleibt stehen. Wer es haben will, soll es beim Salzrat verlangen. In Tolm.“\n",
+  "zeiten": {
+    "kopf_s": 0.02,
+    "start_s": 0.02,
+    "erstes_textstueck_s": 27.09,
+    "gesamt_s": 38.45
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 21938
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 19438,
+        "output_tokens": 1950,
+        "cost_usd": 0.038687616,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 330,
+  "aktion": "accept"
+}

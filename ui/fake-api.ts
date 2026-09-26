@@ -10,7 +10,7 @@ export interface Call {
 type Handler = (
   body: unknown,
   path: string,
-) => { status: number; body?: unknown };
+) => { status: number; body?: unknown; stream?: ReadableStream<string> };
 
 export function fakeApi(routes: Record<string, Handler>) {
   const calls: Call[] = [];
@@ -27,6 +27,14 @@ export function fakeApi(routes: Record<string, Handler>) {
     const result = handler
       ? handler(body, path)
       : { status: 404, body: { detail: `kein Fake für ${key}` } };
+    if (result.stream !== undefined) {
+      return Promise.resolve(
+        new Response(abortable(result.stream, init?.signal), {
+          status: result.status,
+          headers: { "Content-Type": "text/event-stream" },
+        }),
+      );
+    }
     return Promise.resolve(
       new Response(
         result.status === 204 ? null : JSON.stringify(result.body ?? null),
@@ -39,6 +47,56 @@ export function fakeApi(routes: Record<string, Handler>) {
   });
   vi.stubGlobal("fetch", fetchMock);
   return { calls, fetchMock };
+}
+
+/** The body as bytes; aborting the request errors it like a real `fetch` does. */
+function abortable(
+  source: ReadableStream<string>,
+  signal: AbortSignal | null | undefined,
+): ReadableStream<Uint8Array> {
+  const encoder = new TextEncoder();
+  const reader = source.getReader();
+  return new ReadableStream<Uint8Array>({
+    start(controller) {
+      signal?.addEventListener("abort", () => {
+        controller.error(new DOMException("aborted", "AbortError"));
+        void reader.cancel();
+      });
+    },
+    async pull(controller) {
+      const { value, done } = await reader.read().catch(() => ({
+        value: undefined,
+        done: true,
+      }));
+      if (signal?.aborted === true) {
+        return;
+      }
+      if (done) {
+        controller.close();
+      } else if (value !== undefined) {
+        controller.enqueue(encoder.encode(value));
+      }
+    },
+  });
+}
+
+/** A Server-Sent-Events body the test feeds event by event. */
+export function sseFeed() {
+  let feed: ReadableStreamDefaultController<string> | undefined;
+  const stream = new ReadableStream<string>({
+    start(controller) {
+      feed = controller;
+    },
+  });
+  return {
+    stream,
+    send(name: string, data: unknown) {
+      feed?.enqueue(`event: ${name}\ndata: ${JSON.stringify(data)}\n\n`);
+    },
+    close() {
+      feed?.close();
+    },
+  };
 }
 
 function match(pattern: string, key: string): boolean {

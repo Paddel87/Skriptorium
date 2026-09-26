@@ -1,0 +1,131 @@
+# Kapitel 5 – Bewertungsfassung (KI-Texte unverändert)
+
+[KI k5-01-szene – Szenen-Einstieg: {'place': 'zum-nassen-grab', 'characters': ['tomas-rehl', 'gunda-hollt', 'pell-sund'], 'goal': 'Im Morgengrauen zurück in Gundas Schänke; Pell berichtet, dass Drachs Männer den Hafen absperren. Sie brauchen einen Weg, Ysolde Marr in Tolm zu benachrichtigen.'}]
+Im Morgengrauen roch die Schänke nach Fisch und kaltem Tran, die Hunde lagen noch vor dem Herd, und Tomas kam durch die Hintertür, das rechte Bein steif, die Stufen hinter sich leise verflucht. Gunda stand schon am Tisch. Sie hatte eine Kanne Wasser hingestellt, keinen Becher Wein, fragte nicht, wo die Nacht geblieben war, sah nur auf seine nassen Stiefel und auf den Walknochengriff an seinem Gürtel und sagte: „Salz auf euch.“ Er berührte mit dem Daumen die Lippen, knapp, und setzte sich nicht. Pell kam hinter ihm herein, barfuß, nass bis zu den Knien, und redete, ehe die Tür zu war. „Die sperren den Hafen. Graue Mäntel an beiden Kais. Am Südhafen ein Tau quer übers Becken, am Nordkai auch. Der Dicke mit der Narbe sagt, kein Kahn raus, bevor die Sonne richtig oben ist, und wer nach Tolm will, braucht ein Schreiben vom Vogt. Hab ich hinter den Fässern gehört. Die gehen nicht mehr von Tür zu Tür. Die passen auf, wer wegfährt.“ Gunda stemmte die Hände in die Hüften; Pökel hob den Kopf und ließ ihn sinken. „Dann sitzt ihr, bis der Nebel euch frisst“, sagte sie. „Oder ihr schickt einen, der nicht hinkt. Der Junge kann laufen. Lesen kann er nicht.“ Tomas rieb sich die Narbe auf dem Nasenrücken und pfiff nicht. „Die Ratsherrin in Tolm“, sagte er leise. „Zwei Tage bei gutem Wind. Ohne das Buch in der Hand, aber mit dem, was drinsteht, sonst schickt sie niemanden. Und Drach schreibt, sobald die Glocke ihm recht gibt.“ Er wandte den Kopf. „Varn. Der Hafen ist zu. Wie kommt unser Wort vor seins hin?“
+
+[AUTOR]
+„Nicht übers Wasser“, sagte ich. „Oskar Lund liegt mit der Möwenschrei in der Salzbucht, wenn er Wort gehalten hat. Pell läuft über die Klippen hin, nicht durch den Hafen. Lund schuldet dir was, Tomas. Er fährt, und er kann lesen.“
+
+[KI k5-02-grok46]
+Tomas blieb stehen, die nassen Stiefel auf Gundas Dielen. Gunda schob die Kanne näher, als könne Wasser den Plan trinken.
+
+„Die Klippen“, sagte sie. „Nebel. Ein Junge von zwölf. Und Lund fährt nicht, weil ein Waise keucht und nach Silberschalen riecht.“
+
+„Er schuldet mir was“, sagte Tomas. „Einmal ohne Strafe. Das merkt sich ein Kapitän.“ Er rieb die Narbe. „Aber er liest. Und Marr liest nur, was schwarz auf weiß kommt, nicht was ein Hafenjunge vom Hörensagen hat.“
+
+Gunda sah Pell an, der barfuß am Herd stand und so tat, als zähle er die Hunde. „Dann schreib. Kurz. Kein Name, den Drach in ein Becken legen kann, bevor der Wind steht.“
+
+Tomas zog aus dem Wams eine Zollquittung, die Rückseite leer, und Gundas Kohle vom Herd. Er schrieb langsam, wie er die Schiffe gezählt hatte: Jahre, Schalen, der Orden, das Gewölbe, Fenn Aschs Hand. Kein Siegel. Am Rand drei Töne, die niemand pfiff.
+
+„Zwei Tage“, murmelte er. „Wenn Lund Wort hält. Wenn der Ostwind nicht kommt.“
+
+„Ostwind kommt selten“, sagte Gunda. „Drachs Schreiben kommt mit der Glocke. Wer zuerst in Tolm ist, hat recht. Wer zweiter ist, hat ein leeres Fach.“
+
+Pell trat von einem Fuß auf den anderen. „Ich lauf. Ich war schon oben, als die Wäscherin–“
+
+„Du läufst nicht mit dem einzigen Blatt, das Marr gelten lässt“, sagte Tomas. Er faltete die Quittung, einmal, zweimal, und hielt sie nicht Pell hin. Er hielt sie in die Luft zwischen uns, als müsse jemand sie nehmen, der den Geruch der Siedereien kennt und Lunds einäugiges Gesicht.
+
+Draußen schlug keine Glocke. Nur Pökel knurrte gegen die Hintertür, leise, und Gunda ging nicht hin.
+
+Tomas sah mich an.
+
+„Varn. Du musst.“
+
+[AUTOR]
+Ich nahm das Blatt und steckte es unter den Handschuh, an die Stelle, wo die Finger fehlten. Dort sucht keiner.
+
+„Ich gehe über die Klippen“, sagte ich. „Pell zeigt mir den Weg bis zur Bucht. Aufs Schiff gehe ich nicht. Lund nimmt das Blatt, und ich komme zurück, bevor Drachs Glocke schlägt.“
+
+[KI k5-03]
+Der Nebel lag noch auf den Dächern, als Pell mich aus der Hintergasse zog, weg vom Hafen, hinauf zwischen Zäunen und nassem Gras. Er lief barfuß und redete nicht. Ich hielt die linke Hand am Gürtel, das Blatt unter dem Handschuh, dort, wo die Finger fehlten.
+
+Der Weg war keiner. Nur Steine, die die Fischer kannten, und dazwischen Disteln, die am Mantel hängen blieben. Unter uns schlug das Meer an die Klippe, unsichtbar, nur ein dumpfes Atmen. Ich sah nicht hinunter. Pell schon. Einmal blieb er stehen und spuckte in den weißen Dunst, als messe er die Tiefe daran.
+
+„Links", sagte er. „Rechts kommen die Grauen."
+
+Wir gingen oberhalb der Stadt, dann ostwärts, wo der Fels flacher wurde und nach Salz roch, noch bevor man die Bucht sah. Der Geruch traf mich wie eine Hand. Rauch, Lauge, heißes Eisen. Ich hatte ihn seit elf Jahren nicht so nah gehabt. Meine Füße wollten umkehren. Sie taten es nicht.
+
+Pell blieb am letzten Stein stehen, wo der Hang in die Gärten fiel.
+
+„Weiter kenn ich nicht", sagte er. „Da unten beißen die Hunde, und ich hab nichts gestohlen. Heute."
+
+Der Nebel riss ein Stück auf, nicht viel, nur so weit wie ein Segel. Unten im flachen Wasser lag eine Kogge, der Rumpf dunkel, das eine Auge am Bug weiß gekalkt. Auf dem Heck stand der Name, den Tomas mir oft genug gesagt hatte, ohne dass ich ihn hatte lesen wollen.
+
+Die Möwenschrei.
+
+[KI k5-04-szene – Szenen-Einstieg: {'place': 'salzbucht', 'characters': ['oskar-lund'], 'goal': 'Ilka trifft Kapitän Oskar Lund am Ufer der Salzbucht und bittet ihn, die Nachricht nach Tolm zu bringen; Lund erinnert sich an den Sturm auf der Rückfahrt.'}]
+Der Geruch traf mich noch einmal, als der Hang unter mir nachgab und ich zwischen den Siedereihütten hindurch auf das flache Wasser zulief, Rauch und Lauge und heißes Eisen, und ich sah keine der Hütten an. Die Möwenschrei lag weiter draußen, wo der Nebel dünner war; am Ufer stand ein Mann bis zu den Knien im Schlick und hielt ein Bootstau, als halte er ein Tier. Das rechte Auge fehlte. Das linke fand mich, bevor ich den Mund aufmachte.
+
+„Lund“, sagte ich. „Tomas Rehl schickt mich. Ihr schuldet ihm was. Einmal ohne Strafe.“
+
+Er spuckte seitlich ins Wasser und lachte nicht. „Rehl“, sagte er, der Tolmer Ton dick wie Tran. „Der lässt einen fahren, und dann schickt er die Varn durch die Gärten, wo sie seit elf Jahren nich hingehört. Wat will er?“
+
+Ich zog das Blatt nicht ganz hervor. Nur die Ecke, unter dem Handschuh, dort, wo die Finger fehlten. „Nach Tolm. An die Ratsherrin Marr. Nicht durch den Hafen. Der ist zu. Ihr liegt hier, wenn Ihr Wort gehalten habt. Zwei Tage bei Westwind. Was draufsteht, ist schwarz und eng, und Ihr könnt es lesen. Pell nicht. Ich geh nicht an Bord.“
+
+Lund sah an mir vorbei zur Kogge, dann auf meine linke Hand, als kenne er die ausgestopften Finger schon von der letzten Fahrt. „Auf der Rückfahrt“, sagte er langsam, „is der Wind umgesprungen, südost von Tolm, und die Möwenschrei hat sich gelegt, bis das Ruder sang. Rehl hat gehalten. Ihr habt zwischen den Bänken gesessen und das Wasser nich angesehen, die ganze Nacht, und Emla war rot auf der See wie jetzt. Ich hab gedacht, die holt uns beide. Hat sie nich.“ Er wickelte das Tau einmal um die Faust. „Jetzt steht der Vogt am Hafen, und Ihr wollt, dass ich wieder rausfahre, mit einem Zettel und ohne Siegel. Sagts grade, Varn: Steht auf dem Blatt, dass Rehl noch lebt und dass ich’s für ihn tu — oder schickt Ihr mich allein in einen Sturm, den ich schon kenn?“
+
+[AUTOR]
+„Rehl lebt“, sagte ich. „Und er sitzt in Gundas Schänke und zählt Hunde, bis Ihr zurück seid. Lest selbst.“
+
+Ich zog das Blatt ganz heraus und hielt es ihm hin. Das Tau ließ er nicht los.
+
+[KI k5-05]
+Lund nahm das Blatt mit der freien Hand, das Tau blieb um die Faust. Er hielt es weit vom Gesicht weg, das linke Auge schmal, und las, ohne die Lippen zu bewegen. Einmal spuckte er seitlich in den Schlick. Sonst nichts.
+
+„Vierhundertzwei“, sagte er. „Schalen. Orden. Gewölbe. Aschs Krähenkrallen, die kenn ich von den Zollzetteln.“ Er drehte den Rand. „Und drei Striche, die kein Mensch pfeift außer Rehl, wenn er denkt. Kein Siegel. Kein Name, den man ins Becken legen kann.“ Er faltete das Blatt nicht. Er steckte es unter den Gürtel, neben das Messer, das er immer dort trug. „Ich fahr. Zwei Tage, wenn der West hält. Marr kriegt das Schwarz auf Weiß, und ich sag, von wem. Das schulde ich ihm. Einmal ohne Strafe.“
+
+Er wickelte das Tau fester. Das Boot zog am Schlick, die Möwenschrei lag weiter draußen, wo der Nebel dünner war.
+
+„Aber ich fahr nicht mit einem Zettel allein“, sagte er. „Die Grauen sind an der Bucht. Wenn sie mich anhalten und nur das Blatt finden, bin ich ein Kapitän mit einem zweiten Buch im Gürtel und keiner, der sagt, woher. Du kommst mit bis zur Reede. Nicht nach Tolm. Bis das Segel steht und das Wasser unter dem Kiel ist. Dann springst du an Land, wo der Fels flach ist, und läufst zurück, bevor seine Glocke schlägt.“
+
+Er hielt das Tau hin, nass, schwer, und sah an mir vorbei zur Kogge.
+
+„Jetzt, Varn. Oder das Blatt bleibt bei mir, und du stehst hier, wenn sie aus dem Nebel kommen.“
+
+[AUTOR]
+Ich sah das Wasser an. Grau, flach, nicht tiefer als bis zu Lunds Knien, und weiter draußen schwarz.
+
+„Bis zur Reede“, sagte ich. „Und wenn ich über Bord gehe, holt Ihr mich raus. Ich schwimme nicht.“
+
+Ich nahm das Tau.
+
+[KI k5-06]
+Lund zog, ich hielt das Tau, und das Boot schabte vom Schlick los, ehe ich die Knie recht drin hatte. Das Wasser war flach, grau, nicht tiefer als sein Gürtel. Trotzdem setzte ich mich auf den Boden, nicht auf die Bank, und sah die Riemen an, nicht über den Rand.
+
+Er ruderte nicht. Er watete, bis es ihm an die Hüfte ging, und schob. Die Möwenschrei wurde größer, der weiße Kalk am Bug, das Tau, das an ihrer Bordwand hing. Jemand oben rief etwas auf Tolmer, das ich nicht verstand. Lund antwortete mit einem Fluch und einem Ruck.
+
+„Rein“, sagte er. „Hände an die Sprossen. Nich an mich.“
+
+Die Leiter war nass. Ich stieg, die linke Hand unnütz im Handschuh, die rechte am Holz. An Deck roch es nach Teer und Fisch. Das Blatt steckte unter seinem Gürtel, neben dem Messer. Ich fasste es nicht an.
+
+Sie setzten das Segel, klein, nur so viel, dass der West uns von der Bucht wegdrückte. Die Reede war kein Ort. Nur tieferes Wasser, wo der Kiel frei lag und der Nebel dünner wurde. Hinter uns wurden die Siedereien zu Rauch. Ich zählte nicht die Wellen. Ich zählte meine Atemzüge.
+
+„Da“, sagte Lund.
+
+Am Ufer, wo der Hang in die Gärten fiel, riss der Nebel auf wie ein schlechtes Segel. Graue Mäntel. Drei, dann fünf. Der Dicke mit der Narbe stand bis zu den Knöcheln im Schlick und zeigte auf uns. Einer lief schon am Wasser entlang, dorthin, wo der Fels flach wurde. Der Weg, den Lund mir zum Springen versprochen hatte.
+
+„Ich halt nich an“, sagte Lund. „Wenn du jetzt springst, fällst du ihnen vor die Stiefel. Wenn du bleibst, fährst du nach Tolm, und Rehl sitzt ohne dich in der Schänke.“
+
+Das Segel zog. Das flache Ufer glitt vorbei, noch nah genug für einen Sprung, noch nah genug für einen Knüppel. Lund sah mich mit dem einen Auge an und hielt das Ruder fest.
+
+Ich musste wählen.
+
+[AUTOR]
+„Ich fahre mit“, sagte ich. „Wenn ich jetzt springe, haben sie mich, und Tomas hat nichts. Wenn ich fahre, hat Marr zwei, die reden können.“
+
+Ich setzte mich wieder auf die Planken und hielt mich am Mast fest, wie beim letzten Mal.
+
+[KI k5-07]
+Der West hielt. Lund ließ das Segel stehen, klein und schmutzig, und die Möwenschrei schob sich aus dem flachen Wasser, weg von den Gärten, weg von den grauen Mänteln im Schlick. Der Dicke mit der Narbe blieb am Ufer stehen. Sein Knüppel reichte nicht übers Meer. Einer lief noch ein Stück am Wasser entlang, dann gab der Schlick nach, und er blieb stecken wie ein Pfahl.
+
+Ich hielt den Mast. Das Holz war nass und roch nach Teer. Unter dem Kiel wurde es dunkel, und ich sah nicht hin. Ich zählte die Atemzüge, wie auf der letzten Fahrt, und kam bis zwanzig, bevor ich wieder von vorn anfing.
+
+„Tolm“, sagte Lund. Das eine Auge blieb auf dem Wasser. „Zwei Tage, wenn der West nich umfällt. Marr kriegt das Blatt, und sie kriegt dich dazu. Rehl hat gehalten. Du hältst auch.“
+
+Die Siedereien wurden zu Rauch. Rauch, Lauge, heißes Eisen – elf Jahre, und dann war es hinter uns, dünn wie Nebel. Die Klippe im Westen blieb länger. Oben darauf der Turm, schwarz, ohne Licht.
+
+Dann schlug die Glocke.
+
+Mittag. Man hörte sie übers Wasser besser als in der Stadt, dünn und weit, als falle etwas von der Nordklippe herunter und komme nicht an. Lund spuckte seitlich über die Bordwand. Ich ließ den Mast nicht los.
+
+Die Salzbucht lag hinter uns. Voraus war nur grau, und darunter das, was ich nicht ansehen wollte.

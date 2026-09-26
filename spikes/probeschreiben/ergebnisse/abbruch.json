@@ -1,0 +1,27 @@
+{
+  "name": "abbruch",
+  "kapitel": 4,
+  "anfrage": {
+    "instruction": "Schreib weiter.",
+    "model": "x-ai/grok-4.7"
+  },
+  "autor_absatz": null,
+  "zeiten": {
+    "kopf_s": 0.02,
+    "start_s": 0.02,
+    "erstes_textstueck_s": 26.88,
+    "gesamt_s": 26.88
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 23160
+      }
+    ]
+  ],
+  "abgebrochen": true,
+  "manuskript_unveraendert": true,
+  "woerter": 1
+}

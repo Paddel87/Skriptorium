@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 3 „Schreiben mit KI" (Phase 2 abgeschlossen 2026-09-26, ADR-020: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (3.2 `[ERLEDIGT]` 2026-09-26)
-- **Nächster Schritt:** 3.3 Weiterschreiben mit Streaming und Szenen-Einstieg (neue Session)
+- **Aktiver Schritt:** keiner (3.3 `[ERLEDIGT]` 2026-09-26, ADR-022)
+- **Nächster Schritt:** 3.4 Figuren-Schreibweise (neue Session); datiert: D.6 Reaktionszeit erkunden vor 4.8
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -148,7 +148,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 3.3: Weiterschreiben mit Streaming und Szenen-Einstieg
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-26; ADR-022) – `api.flows.writing` mit SSE-Endpunkt und `GET /api/models`, Schreib-Bereich in der Oberfläche (Szenen-Einstieg, Übernehmen ans Kapitelende, Ändern, Verwerfen, Abbruch, Neu schreiben mit anderem Modell); 322 Python-Tests (`api.flows.writing` 100 % Zeilen), 40 Komponenten- und 5 End-to-End-Tests; Probeschreiben mit 16 echten Anfragen (0,556 $, `spikes/probeschreiben/README.md`): FR-008, FR-009, FR-011 erfüllt (0 eindeutige Kanon-Widersprüche je Kapitel, blind bewertet), Abbruch lässt das Manuskript unverändert. **Teilkriterium Reaktionszeit verfehlt** (grok-4.7 einmal 77 s statt ≤ 60 s, grok-4.6 13,2 s und 15,8 s statt ≤ 10 s) – Ziel bleibt, Erkundung in D.6 (Entscheidung des Eigentümers, ADR-022)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.7, 3.1, 3.2
 - **Freigabepflichtig:** nein
@@ -176,7 +176,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** context, manuscript, ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests
-- **Notizen:** – Zusatz 2026-09-26 (Abnahme 3.2): grok-4.7 schrieb in 1 von 4 Texten Handlung und Rede der vom Autor geführten Ich-Figur trotz Hinweis im Kontext (`spikes/kontext-abnahme/README.md`) – Wortlaut der Figuren-Schreibweise hier schärfen und messen.
+- **Notizen:** – Zusatz 2026-09-26 (Abnahme 3.2): grok-4.7 schrieb in 1 von 4 Texten Handlung und Rede der vom Autor geführten Ich-Figur trotz Hinweis im Kontext (`spikes/kontext-abnahme/README.md`) – Wortlaut der Figuren-Schreibweise hier schärfen und messen. Zusatz 2026-09-26 (Probeschreiben 3.3): 20 Verstöße in 15 KI-Blöcken, darunter wörtliche Rede der Ich-Figur in einem Szenen-Einstieg; Szenen-Einstieg und Kapitelschluss besonders anfällig (`spikes/probeschreiben/README.md`).
 
 #### 3.5: `@`-Menü
 
@@ -588,6 +588,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** ADR, Register-Eintrag
 - **Notizen:** Herkunft ADR-015 (Befund aus 2.1). Vitest 5 wird mit D.2 (2027-01-08) bzw. ab Mindestreife 2027-03-03 nachgeprüft.
+
+#### D.6: Reaktionszeit bis zum ersten Textstück erkunden
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** ERKUNDUNG
+- **Abhängigkeiten:** 3.3
+- **Frist:** vor 4.8 (Stoppuhr-Test FR-022)
+- **Freigabepflichtig:** nein (Erkundung); eine Änderung an Timeouts oder Modell-Konfiguration aus dem Ergebnis ist eine Schnittstellenänderung und freigabepflichtig
+- **Empfohlene Klasse:** Routine – Messreihe mit festgelegtem Aufbau; Entscheidung erst im Anschluss.
+- **Eingangskriterien:** `spikes/probeschreiben/probe.py` lauffähig; OpenRouter-Guthaben für ca. 0,30–0,50 $
+- **Anforderungen (ab Klasse M):** keine (NFR Reaktionszeit, ADR-013)
+- **Zu tun:** Erstes Textstück bei grok-4.7 und grok-4.6 je ca. 10 Anfragen messen; Einfluss der Reasoning-Einstellung (Stufe, Obergrenze für Denk-Token, sofern der Anbieter sie anbietet), des ausführenden Anbieters und der Tageszeit prüfen; Anteil der Denk-Token an den Ausgabe-Token erfassen; prüfen, ob die 90-s-Grenze in `ai_gateway` reicht.
+- **Akzeptanzkriterien:** Wissensbasiert: Ursache der Ausreißer belegt oder als nicht beeinflussbar belegt; Vorschlag an den Eigentümer (Einstellung ändern oder Zielwerte per ADR anpassen); NFR Reaktionszeit wieder `[BELASTBAR]`.
+- **Betroffene Module:** ai_gateway
+- **Reifegrad-Wirkung:** NFR Reaktionszeit `[VORLÄUFIG]` → `[BELASTBAR]`
+- **Artefakte:** Spike-Bericht, ADR
+- **Notizen:** Herkunft ADR-022 (Abnahme 3.3).
 
 #### M.1: Branch-Konvention festlegen
 

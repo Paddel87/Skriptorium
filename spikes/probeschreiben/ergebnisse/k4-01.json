@@ -1,0 +1,37 @@
+{
+  "name": "k4-01",
+  "kapitel": 4,
+  "anfrage": {
+    "instruction": "Die Äbtissin spricht die beiden durch das Gitter an. Schreib weiter (ca. 300 Wörter) und ende an einer Stelle, an der Ilka antworten muss.",
+    "model": "x-ai/grok-4.7"
+  },
+  "autor_absatz": null,
+  "zeiten": {
+    "kopf_s": 0.03,
+    "start_s": 0.03,
+    "erstes_textstueck_s": 16.43,
+    "gesamt_s": 26.11
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 17993
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 16176,
+        "output_tokens": 1443,
+        "cost_usd": 0.031111344,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 317,
+  "aktion": "accept"
+}

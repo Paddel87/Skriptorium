@@ -29,6 +29,51 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 23:05 – [SESSIONENDE] Schritt 3.3 erledigt
+
+- **Dauer:** 22:06–23:05 UTC.
+- **Bearbeitet:** 3.3 `[ERLEDIGT]` (ADR-022): `api.flows.writing`, SSE-Endpunkt, `GET /api/models`, `WritingPanel` in der Oberfläche; Probeschreiben mit 16 echten Anfragen (0,556 $), blind bewertet. FR-008, FR-009, FR-011 erledigt. Neuer Schritt D.6 (Reaktionszeit erkunden, Frist vor 4.8).
+- **Erreichter Stand:** 322 Python-Tests (99 %, `api.flows.writing` 100 % Zeilen), 40 Komponenten-, 5 End-to-End-Tests; CI grün auf den Code-Commits. OpenRouter-Guthaben laut Rechnung ca. 2,66 $ (vorher ca. 3,22 $).
+- **Offen:** Pull Request für diesen Branch. 3.4 muss die Figuren-Schreibweise deutlich schärfen (20 Verstöße in 15 Blöcken).
+- **Nächster Schritt:** neue Session – 3.4 Figuren-Schreibweise.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5, eingestellt und bedient laut Sitzungsabfrage 23:04). Schritte oberhalb der Empfehlung: 1 (3.3 empfiehlt Routine; Hinweis vorab). Abgegebene Teilarbeiten: blinde Kanon-Bewertung an Unteragent mit Sonnet 5 (getrennte Instanz, keine Routine-Abgabe). Sitzungskosten laut Abfrage 9,75 $.
+- **Kontextgröße:** Sitzungsabfrage 23:04: 343.914 Token – über der Grenze 200.000. Zu Sessionbeginn meldete die Abfrage 0 Token; eine Prüfung während des einen Schritts fand nicht statt (Regel: nach jedem abgeschlossenen Schritt). Kein neuer Schritt in dieser Session.
+- **Kontingent:** Wochenlimit weiterhin `allowed_warning`.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Reife, Verwendung, Nächste Schritte). Drift-Prüfung: ADR-022 → 3.3 und D.6 vorhanden; Reifegrade (Reaktionszeit, Kanon-Treue VORLÄUFIG, SSE validiert) passen zu ADR-022; Modul-Liste unverändert; FR-008/009/011 → 3.3 erledigt; Reaktiv-Quote 1/10 (ADR-013 bis ADR-022); Blocker 0; Phase 3 unverändert 9 Schritte. Ablaufdaten-Register: Vorlauf Guthaben ab 2026-10-22, noch nicht erreicht. Archivierung: kein Trigger. Onboarding: nicht Quick-Start-relevant (keine Änderung an Skripten, `.env.example`, Abhängigkeiten). Größen-Budget `project-context.md`: 338 Zeilen.
+
+### 2026-09-26 23:00 – [ADR-ANGELEGT] ADR-022 Reaktionszeit – Ziel bleibt, Erkundung D.6
+
+- Entscheidung des Eigentümers über das Frage-System: B. 3.3 erledigt mit dokumentiert verfehltem Teilkriterium.
+
+### 2026-09-26 23:00 – [REIFEGRAD-WECHSEL] Reaktionszeit und Kanon-Treue VORLÄUFIG, SSE validiert
+
+- NFR Reaktionszeit `[BELASTBAR]` → `[VORLÄUFIG]` (Ziel in 3.3 verfehlt, ADR-022). NFR Kanon-Treue `[OFFEN]` → `[VORLÄUFIG]` (erste Messung). Kommunikations-Grundmodus inkl. SSE bleibt `[BELASTBAR]`, jetzt durch Umsetzung validiert.
+
+### 2026-09-26 22:55 – [BEOBACHTUNG] Probeschreiben 3.3 ausgewertet – Reaktionszeit verfehlt
+
+- 16 echte Anfragen über den echten Server (15 vollständig, 1 Abbruch), 0,556 $; zwei Kapitel der Testwelt, 2 Szenen-Einstiege, je Kapitel eine Änderung, eine Verwerfung mit Neu-Schreiben per grok-4.6 (`spikes/probeschreiben/README.md`).
+- Blinde Bewertung durch getrennte Instanz (Sonnet 5): 0 eindeutige Kanon-Widersprüche in beiden Kapiteln, 2 fragliche (eine vom Autor beim Redigieren korrigiert) → FR-011 und FR-008 erfüllt. Zitate stichprobenartig bestätigt.
+- FR-009 belegt: Autor-Absätze, Änderungen und Verwerfungen bestimmten den Kontext der nächsten Anfrage. Abbruch: Log `ergebnis=abgebrochen`, Manuskript unverändert.
+- **Verfehlt:** erstes Textstück grok-4.7 in 14 von 15 Läufen unter 60 s, einmal 77,1 s (5.271 Ausgabe-Token, überwiegend Vorab-Denken; `ai_gateway` bricht nach 90 s ab); grok-4.6 2 von 2 über 10 s (13,2 s, 15,8 s). Antwortkopf und „denkt nach …“ sofort. → Entscheidung des Eigentümers, 3.3 `[WARTET-AUF-FREIGABE]`.
+- **Nebenbefund 3.4:** 20 Verstöße gegen die Figuren-Schreibweise in 15 Blöcken, darunter wörtliche Rede der Ich-Figur → Notiz an 3.4.
+- **Reibung:** `__Host-`-Cookie ist `Secure`; httpx sendet es über `http://localhost` nicht – Probe-Skript setzt den Cookie-Kopf selbst (Sitzungsdatei vor dem Commit gelöscht). Kapitel-Exporte als `.txt`, weil der Kapiteltext eigene H1-Überschriften trägt (markdownlint MD025). `pkill -f` mit dem Server-Befehl als Muster beendete auch die eigene Shell – Server-Stopp künftig über die Aufgaben-Kennung.
+
+### 2026-09-26 22:15 – [BEOBACHTUNG] 3.3 vorbereitet – Arbeitsweise per Frage-System entschieden
+
+- **Übernahme:** übernommener KI-Text wird ans Kapitelende angehängt und sofort gespeichert (nicht an der Cursor-Position) – die nächste Fortsetzung knüpft am Ende an.
+- **Szenen-Einstieg:** im laufenden Kapitel; Formular über dem Editor (Ort und Figuren aus dem Kanon, Ziel frei); der erste Absatz ist ein Vorschlag wie jeder KI-Text.
+- **Probeschreiben (FR-008, FR-011, Reaktionszeit):** größerer Umfang, ca. 0,80 $ – zwei Kapitel mit je 6–8 Fortsetzungen an der Testwelt „Die Salzmark“, grok-4.7, dazu Zeitmessung mit grok-4.6; blinde Bewertung durch getrennte Instanz wie in 3.2.
+- **Umfang Modellwechsel:** Das Akzeptanzkriterium „Abbruch und Modellwechsel jederzeit“ (ADR-013) verlangt schon in 3.3 eine Modellwahl je Anfrage. Umgesetzt wird nur: Modell je Anfrage aus der festen Modellreihenfolge und `GET /api/models` (Grobvertrag-Gruppe „Modelle“, additiv). Speicherung der Wahl je Geschichte, Token- und Kostenanzeige bleiben in 3.9.
+- **Schlüssel:** `OPENROUTER_API_KEY` ist jetzt gesetzt (nur Vorhandensein geprüft) – Umbenennung aus der letzten Session erledigt.
+
+### 2026-09-26 22:07 – [SESSIONSTART] Schritt 3.3 auf Anweisung „neue session 3.3“
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 22:07) → Entscheidungs-Klasse.
+- **Kontingent:** Sitzungsabfrage meldet das Wochenlimit mit Status `allowed_warning` (Zurücksetzung sonntags 10:00 MESZ) – Warnschwelle erreicht.
+- **Kontextgröße:** Sitzungsabfrage meldet 0 Token (Wert zu Sessionbeginn noch nicht gefüllt).
+- **Ausgangsstand:** PR #10 gemergt (`59e5e21`), Branch `scp/affectionate-cori-ms2a2h` steht auf `main`. Keine aktiven Blocker, keine offenen STOPP-Situationen.
+- **Klasse:** 3.3 empfiehlt Routine, läuft auf Entscheidung (Routine-Klasse ohne Probelauf, keine Abgabe möglich; Hinweis an den Eigentümer).
+
 ### 2026-09-26 22:02 – [SESSIONENDE] Schritte 3.1 und 3.2 erledigt
 
 - **Dauer:** 20:57–22:02 UTC (Phasenabschluss 2, 3.1 ab 21:27, 3.2 ab 21:48).

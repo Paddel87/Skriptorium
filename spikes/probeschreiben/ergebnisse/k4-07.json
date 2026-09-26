@@ -1,0 +1,37 @@
+{
+  "name": "k4-07",
+  "kapitel": 4,
+  "anfrage": {
+    "instruction": "Das Kapitel endet: Drach zieht mit seinen Männern ab, die Äbtissin schickt Ilka und Tomas vor der Morgenglocke fort. Schreib den Schluss des Kapitels (ca. 250 Wörter).",
+    "model": "x-ai/grok-4.7"
+  },
+  "autor_absatz": "„Fragt Euren Schreiber, Herr“, sagte ich. „Der stottert, wenn einer lügt. Ich nicht.“\n\nIch sah Asch an. Er sah auf den Boden.\n",
+  "zeiten": {
+    "kopf_s": 0.02,
+    "start_s": 0.02,
+    "erstes_textstueck_s": 19.25,
+    "gesamt_s": 22.76
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 22658
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 20031,
+        "output_tokens": 2010,
+        "cost_usd": 0.039912048,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 282,
+  "aktion": "accept"
+}

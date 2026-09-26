@@ -5,7 +5,8 @@ Requirements from ASVS 5.0.0 (ADR-006, ADR-017) are named where they are impleme
 
 import logging
 import time
-from collections.abc import Awaitable, Callable
+from collections.abc import AsyncIterator, Awaitable, Callable
+from contextlib import asynccontextmanager
 from datetime import UTC, datetime
 from typing import Final
 from urllib.parse import urlsplit
@@ -15,7 +16,8 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from skriptorium.api import auth_routes, canon_routes, manuscript_routes
+from skriptorium.ai_gateway import ModelProvider, OpenRouterProvider, ProviderUnavailable
+from skriptorium.api import auth_routes, canon_routes, manuscript_routes, writing_routes
 from skriptorium.api.access import (
     CredentialStore,
     FailureThrottle,
@@ -28,6 +30,7 @@ from skriptorium.api.access.pwned import BreachedPasswordCheck
 from skriptorium.api.context import Services
 from skriptorium.api.settings import Settings
 from skriptorium.canon import CanonService
+from skriptorium.context import ContextBuilder
 from skriptorium.manuscript import ManuscriptService
 from skriptorium.storage import (
     AlreadyExists,
@@ -42,6 +45,7 @@ _HSTS: Final = "max-age=31536000; includeSubDomains"
 _log = logging.getLogger("skriptorium.api")
 
 Clock = Callable[[], datetime]
+ProviderFactory = Callable[[], ModelProvider | None]
 
 
 class Health(BaseModel):
@@ -56,6 +60,7 @@ def create_app(
     hasher: PasswordHasher | None = None,
     breached: BreachedPasswordCheck | None = None,
     clock: Clock | None = None,
+    provider_factory: ProviderFactory | None = None,
 ) -> FastAPI:
     """Build the FastAPI application.
 
@@ -64,20 +69,37 @@ def create_app(
         hasher: Password hasher; tests pass cheaper scrypt parameters.
         breached: Check against breached passwords; Pwned Passwords if missing.
         clock: Source of the current time (UTC); tests pass a controllable clock.
+        provider_factory: Creates the AI provider; OpenRouter with the key from the environment
+            if missing. Without a key the server runs, writing answers 503.
     """
     _configure_logging()
     settings = settings or Settings.from_environment()
     now = clock or (lambda: datetime.now(UTC))
     store = DocumentStore(settings.data_dir)
-    app = FastAPI(title="Skriptorium", docs_url=None, redoc_url=None, openapi_url=None)
+    canon = CanonService(store)
+    manuscript = ManuscriptService(store)
+    provider = (provider_factory or _provider_from_environment)()
+
+    @asynccontextmanager
+    async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+        yield
+        close = getattr(provider, "aclose", None)
+        if close is not None:
+            await close()
+
+    app = FastAPI(
+        title="Skriptorium", docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan
+    )
     app.state.services = Services(
-        canon=CanonService(store),
-        manuscript=ManuscriptService(store),
+        canon=canon,
+        manuscript=manuscript,
         credentials=CredentialStore(store, hasher or PasswordHasher(), now),
         policy=PasswordPolicy(breached or PwnedPasswords()),
         sessions=SessionStore(now),
         throttle=FailureThrottle(now),
         clock=now,
+        context=ContextBuilder(canon, manuscript),
+        provider=provider,
     )
 
     @app.get("/api/health")
@@ -89,6 +111,7 @@ def create_app(
     app.include_router(auth_routes.protected)
     app.include_router(canon_routes.router)
     app.include_router(manuscript_routes.router)
+    app.include_router(writing_routes.router)
     _add_error_handlers(app)
     app.middleware("http")(_origin_check)
     app.middleware("http")(_security_headers)
@@ -99,6 +122,15 @@ def create_app(
 
 
 Next = Callable[[Request], Awaitable[Response]]
+
+
+def _provider_from_environment() -> ModelProvider | None:
+    """OpenRouter with the key from ``OPENROUTER_API_KEY``; ``None`` if the key is missing."""
+    try:
+        return OpenRouterProvider.from_environment()
+    except ProviderUnavailable:
+        _log.warning("ki-anbieter nicht eingerichtet schluessel=fehlt")
+        return None
 
 
 def _configure_logging() -> None:

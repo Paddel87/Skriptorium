@@ -1,0 +1,46 @@
+{
+  "name": "k5-01-szene",
+  "kapitel": 5,
+  "anfrage": {
+    "instruction": "Ca. 250 Wörter; ende an einer Stelle, an der Ilka antworten muss.",
+    "model": "x-ai/grok-4.7",
+    "scene": {
+      "place": "zum-nassen-grab",
+      "characters": [
+        "tomas-rehl",
+        "gunda-hollt",
+        "pell-sund"
+      ],
+      "goal": "Im Morgengrauen zurück in Gundas Schänke; Pell berichtet, dass Drachs Männer den Hafen absperren. Sie brauchen einen Weg, Ysolde Marr in Tolm zu benachrichtigen."
+    }
+  },
+  "autor_absatz": null,
+  "zeiten": {
+    "kopf_s": 0.03,
+    "start_s": 0.03,
+    "erstes_textstueck_s": 77.06,
+    "gesamt_s": 82.73
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 23278
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 20546,
+        "output_tokens": 5271,
+        "cost_usd": 0.05622408,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 268,
+  "aktion": "accept"
+}

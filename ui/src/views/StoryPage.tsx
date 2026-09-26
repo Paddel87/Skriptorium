@@ -8,6 +8,7 @@ import {
 import { api, describeError, type Chapter, type Story } from "../api";
 import { useLoad } from "../useLoad";
 import { ErrorText, Field } from "./Common";
+import { WritingPanel } from "./WritingPanel";
 
 // The editor with its Markdown grammar is large; it is loaded when a chapter is opened.
 const ManuscriptEditor = lazy(() =>
@@ -111,7 +112,7 @@ function ChapterEditor({
   const [state, setState] = useState<"clean" | "dirty" | "saved">("clean");
   const [error, setError] = useState<string | null>(null);
 
-  async function save() {
+  async function save(): Promise<boolean> {
     setError(null);
     try {
       await api.saveChapter(chapter.world, chapter.story, chapter.number, {
@@ -120,9 +121,24 @@ function ChapterEditor({
       });
       setState("saved");
       onSaved();
+      return true;
     } catch (reason: unknown) {
       setError(describeError(reason));
+      return false;
     }
+  }
+
+  /** Taken-over AI text goes to the end of the chapter and is saved at once (FR-009). */
+  async function append(proposal: string) {
+    const own = text.trimEnd();
+    const next = own === "" ? proposal.trim() : `${own}\n\n${proposal.trim()}`;
+    await api.saveChapter(chapter.world, chapter.story, chapter.number, {
+      title,
+      text: next,
+    });
+    setText(next);
+    setState("saved");
+    onSaved();
   }
 
   async function complete() {
@@ -174,6 +190,13 @@ function ChapterEditor({
           </button>
         )}
       </div>
+      <WritingPanel
+        world={chapter.world}
+        story={chapter.story}
+        chapter={chapter.number}
+        prepare={() => (state === "dirty" ? save() : Promise.resolve(true))}
+        onAccept={append}
+      />
     </section>
   );
 }

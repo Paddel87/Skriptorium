@@ -107,7 +107,7 @@ graph LR
 - **Reifegrad:** `[BELASTBAR]`, seit 2026-09-26, per ADR-013 (Beförderung in Schritt 1.4)
 - **Verantwortung:** HTTP-Schnittstelle (FastAPI), Zugangsschutz (Anmeldung, Sitzungen, Passwort-Verwaltung nach ADR-017), Ablauf-Steuerung über Modulgrenzen hinweg (z. B. Fortsetzung schreiben, Kapitel abschließen), Auslieferung der gebauten Oberfläche.
 - **Nicht-Verantwortung:** keine Fachlogik über das Zusammenschalten hinaus.
-- **Interne Struktur:** Zugangsschutz als Untermodul `api.access` (Passwort-Hashing, Prüfung neuer Passwörter, Sitzungen, Schutz vor Raten); die Endpunkte der Fachmodule getrennt davon.
+- **Interne Struktur:** Zugangsschutz als Untermodul `api.access` (Passwort-Hashing, Prüfung neuer Passwörter, Sitzungen, Schutz vor Raten); die Endpunkte der Fachmodule getrennt davon. Abläufe über Modulgrenzen im Untermodul `api.flows` (ADR-020), die Routen bleiben dünn; seit 3.3 `api.flows.writing` (Weiterschreiben, Szenen-Einstieg). Der KI-Anbieter wird beim Start aus `OPENROUTER_API_KEY` angelegt und beim Herunterfahren geschlossen; fehlt der Schlüssel, läuft der Server und Schreiben antwortet 503.
 - **Abhängigkeiten (andere Module):** `canon`, `manuscript`, `context`, `ai_gateway`; `storage` nur für `system/` (ADR-018)
 - **Abhängigkeiten (extern):** httpx (Pwned Passwords, ADR-017)
 
@@ -117,7 +117,7 @@ graph LR
 - **Verantwortung:** React-Oberfläche: Welt wählen, Einstieg (Szene, Manuskript), Editor mit `@`-Menü, Übernahme markierter Textstellen in den Kanon mit Zielwahl (FR-015, FR-024), Kanon-Pflege, Modellwahl; bedienbar auf dem Smartphone (FR-019).
 - **Abhängigkeiten:** nur `api` über HTTP.
 - **Technologie:** TypeScript, React, Vite, CodeMirror 6.
-- **Umgesetzt in 2.7 (2026-09-26):** Anmeldung, Einrichtung mit Code, Passwortwechsel mit Namensnennung Pwned Passwords, Sitzungsübersicht, Abmelden auf jeder Seite (ADR-017); Welten, Kanon-Einträge je Kategorie, Markdown-Import mit Vorschau, Geschichten und Kapitel mit CodeMirror-Editor (Markdown-Quelltext, keine HTML-Darstellung; Editor wird nachgeladen). Navigation ohne Router-Bibliothek. Content-Security-Policy als Meta-Tag im gebauten `index.html` (`script-src 'self'`, `object-src 'none'`, `base-uri 'none'`, `form-action 'self'`; `style-src` mit `'unsafe-inline'` für CodeMirror; `frame-ancestors` nur per HTTP-Kopf, Schritt 4.2). Endet die Sitzung während der Arbeit, erscheint die Anmeldung über der offenen Ansicht, ungespeicherter Text bleibt stehen. `@`-Menü, Modellwahl und Übernahme in den Kanon folgen in Phase 3.
+- **Umgesetzt in 2.7 (2026-09-26):** Anmeldung, Einrichtung mit Code, Passwortwechsel mit Namensnennung Pwned Passwords, Sitzungsübersicht, Abmelden auf jeder Seite (ADR-017); Welten, Kanon-Einträge je Kategorie, Markdown-Import mit Vorschau, Geschichten und Kapitel mit CodeMirror-Editor (Markdown-Quelltext, keine HTML-Darstellung; Editor wird nachgeladen). Navigation ohne Router-Bibliothek. Content-Security-Policy als Meta-Tag im gebauten `index.html` (`script-src 'self'`, `object-src 'none'`, `base-uri 'none'`, `form-action 'self'`; `style-src` mit `'unsafe-inline'` für CodeMirror; `frame-ancestors` nur per HTTP-Kopf, Schritt 4.2). Endet die Sitzung während der Arbeit, erscheint die Anmeldung über der offenen Ansicht, ungespeicherter Text bleibt stehen. `@`-Menü, Speichern der Modellwahl je Geschichte und Übernahme in den Kanon folgen in Phase 3. **Umgesetzt in 3.3 (2026-09-26):** Schreib-Bereich unter dem Kapitel-Editor (`WritingPanel`): Anweisung oder neue Szene (Ort und Figuren aus dem Kanon, Ziel frei) senden; ungespeicherter eigener Text wird vorher gespeichert; „denkt nach …“ mit laufender Zeit sofort, Vorschlag erscheint fortlaufend, Abbrechen jederzeit; danach übernehmen (ans Kapitelende, sofort gespeichert – Entscheidung des Eigentümers), ändern oder verwerfen, neu schreiben mit anderem Modell (Auswahl je Anfrage). Der Strom wird mit `fetch` gelesen (POST, daher kein `EventSource`).
 
 <!-- ANCHOR:schnittstellenvertraege -->
 ## 4. Schnittstellenverträge
@@ -170,7 +170,10 @@ Alle Verträge sind `[BELASTBAR]` seit 2026-09-26 (ADR-013). Die Umsetzung formu
   - Schreiben: Anweisung senden → KI-Text als Server-Sent Events (Textstücke, dann Nutzungsdaten oder Fehlerart); Abbruch durch Schließen der Verbindung
   - Modelle: verfügbare Modelle und Voreinstellung lesen, Modell je Geschichte wählen
   - **Erweitert mit ADR-017 (2026-09-26):** Einrichtung mit Einrichtungscode (ohne Sitzung); eigene Sitzung lesen, Passwort ändern, Sitzungen auflisten und beenden.
-  - **Ausformuliert in 2.6 (2026-09-26)** – Gruppen „Schreiben" und „Modelle" folgen in 3.3 und 3.9. Alle Körper JSON; ändernde Anfragen brauchen einen `Origin`-Kopf des eigenen Hosts (sonst 403) und mit Inhalt `Content-Type: application/json` (sonst 415). Fehler: 401 ohne gültige Sitzung, 404 `NotFound`, 409 `AlreadyExists`, 422 `InvalidInput` bzw. ungültige Felder, 429 Sperre nach Fehlversuchen, 500 `StorageError` ohne Einzelheiten, 503 Pwned Passwords nicht erreichbar.
+  - **Ausformuliert in 3.3 (2026-09-26)** – Gruppen „Schreiben" und „Modelle" (lesen; Wahl je Geschichte folgt in 3.9):
+    - `GET /api/models` → `{models, default}` (Modellreihenfolge aus `ai_gateway`, Voreinstellung grok-4.7)
+    - `POST /api/worlds/{world_id}/stories/{story_id}/chapters/{number}/write` `{instruction, references, scene: {place, characters, goal} | null, model}` → `text/event-stream`. Ereignisse: `start` `{model, estimated_tokens}`, je Textstück `text` `{text}`, am Ende `done` `{input_tokens, output_tokens, cost_usd, finish_reason}` oder `error` `{kind}` mit `abgelehnt`, `zu_viele_anfragen`, `ungueltig`, `nicht_erreichbar`. Leere Anweisung ohne Szene heißt „am Ende fortsetzen“; Szenen-Ort muss ein Eintrag der Kategorie `ort`, Szenen-Figuren der Kategorie `figur` der Welt sein. Vor dem Strom: 404 für Welt, Geschichte oder Kapitel; 422 für unbekanntes Modell, unbekannte oder unpassende Einträge, leere Szene oder zu großen Kontext (Meldung nennt die größten Bausteine); 503 ohne eingerichteten Anbieter. Gespeichert wird nichts; Abbruch durch Schließen der Verbindung schließt auch die Anfrage beim Anbieter. Antwort-Token höchstens 8.000, Temperatur 0,8 (Werte aus 1.1 und 3.2).
+  - **Ausformuliert in 2.6 (2026-09-26)** – Gruppen „Schreiben" und „Modelle" siehe 3.3 oben. Alle Körper JSON; ändernde Anfragen brauchen einen `Origin`-Kopf des eigenen Hosts (sonst 403) und mit Inhalt `Content-Type: application/json` (sonst 415). Fehler: 401 ohne gültige Sitzung, 404 `NotFound`, 409 `AlreadyExists`, 422 `InvalidInput` bzw. ungültige Felder, 429 Sperre nach Fehlversuchen, 500 `StorageError` ohne Einzelheiten, 503 Pwned Passwords nicht erreichbar.
     - `GET /api/health` (ohne Sitzung)
     - `POST /api/auth/setup` `{code, password}` → 204, beendet alle Sitzungen (ohne Sitzung; 403 bei ungültigem Code, 422 `{reason}` mit `too_short`, `too_long`, `context_word`, `breached`)
     - `POST /api/auth/login` `{password}` → 204 mit Cookie `__Host-sitzung` (ohne Sitzung; 401 falsches Passwort, 409 noch kein Passwort)
@@ -213,9 +216,9 @@ Alle Verträge sind `[BELASTBAR]` seit 2026-09-26 (ADR-013). Die Umsetzung formu
 
 - **Token-Budget je Schreib-Anfrage:** Obergrenze 30.000 Token Eingabe `[BELASTBAR]` (ADR-013) – in 1.1 bestätigt (ADR-010): zwischen 8.000 und 17.600 Token kein messbarer Unterschied in der Kanon-Treue; Obergrenze bleibt für größere Welten, Verhalten oberhalb 17.600 Token wird im Schreibbetrieb beobachtet (3.2, D.4). Feste Teile (Regeln, Kanon) stehen am Anfang der Anfrage (Zwischenspeicher der Anbieter senkt die Kosten).
 - **Kosten:** Summe aus KI-Verbrauch und Hosting ≤ 50 € je Monat bei regelmäßiger Nutzung (mehrmals pro Woche, je 1–2 Stunden; geschätzt ca. 400 Anfragen im Monat) `[VORLÄUFIG]`. Überschlag: 400 × 30.000 Token = 12 Mio. Token Eingabe; bei 0,50–3 $ je 1 Mio. Token etwa 6–36 $ plus Ausgabe und Kurzfassungen. Messung im Betrieb über die Verbrauchsdaten aus `ai_gateway`.
-- **Reaktionszeit:** innerhalb 1 s nach dem Absenden zeigt die Oberfläche „denkt nach …" mit laufender Zeit; erstes KI-Textstück beim Startmodell grok-4.7 innerhalb 60 s, beim Zweitmodell grok-4.6 innerhalb 10 s; Abbruch und Wechsel auf grok-4.6 jederzeit möglich `[BELASTBAR]` (Eigentümer, 2026-09-26, ADR-013; ersetzt das Ziel „erstes Textstück in 5 s", das mit dem Startmodell nicht erreichbar ist – gemessen 15–50 s bzw. 5–8 s).
+- **Reaktionszeit:** innerhalb 1 s nach dem Absenden zeigt die Oberfläche „denkt nach …" mit laufender Zeit; erstes KI-Textstück beim Startmodell grok-4.7 innerhalb 60 s, beim Zweitmodell grok-4.6 innerhalb 10 s; Abbruch und Wechsel auf grok-4.6 jederzeit möglich `[VORLÄUFIG]` (Eigentümer, 2026-09-26, ADR-013; ersetzt das Ziel „erstes Textstück in 5 s", das mit dem Startmodell nicht erreichbar ist – gemessen 15–50 s bzw. 5–8 s). Probeschreiben 3.3: Anzeige, Abbruch und Wechsel sofort; erstes Textstück grok-4.7 in 14 von 15 Läufen unter 60 s, einmal 77 s; grok-4.6 13–16 s – Ziel bleibt, Ursache in D.6 (ADR-022).
 - **Kontexttreue:** kein Kontextverlust bei einer Geschichte vom Umfang der Referenzgeschichte `[OFFEN]` – Prüfung erst, wenn eine Geschichte diesen Umfang erreicht (Entscheidung des Eigentümers 2026-09-26, ADR-009) – Fahrplan-Schritt D.4 mit Auslöser „Geschichte ≥ 500.000 Token".
-- **Kanon-Treue:** höchstens ein beim Redigieren gefundener Widerspruch pro Kapitel `[OFFEN]` – messbar erst im Schreibbetrieb; Vorprüfung in 1.1 erfolgt (grok-4.7: 1,5 Widersprüche je 1.000 Wörter an einer Testwelt mit bewussten Fallen, `docs/research/modell-eignungstest.md`).
+- **Kanon-Treue:** höchstens ein beim Redigieren gefundener Widerspruch pro Kapitel `[VORLÄUFIG]` – erste Messung im Probeschreiben 3.3: 0 eindeutige, 2 fragliche Widersprüche in zwei Kapiteln (15 KI-Blöcke, blind bewertet, `spikes/probeschreiben/README.md`); belastbar erst im Schreibbetrieb des Eigentümers; Vorprüfung in 1.1 erfolgt (grok-4.7: 1,5 Widersprüche je 1.000 Wörter an einer Testwelt mit bewussten Fallen, `docs/research/modell-eignungstest.md`).
 
 ### Skalierung
 
@@ -309,27 +312,27 @@ data/
 - **Ganzen Verlauf bei jeder Anfrage mitschicken (Ist-Zustand TypingMind):** Kosten und Kontextgrenzen sind der Anlass des Projekts – siehe ADR-003
 
 <!-- ANCHOR:reifegrad-uebersicht -->
-## 9. Reifegrad-Übersicht (Stand vom 2026-09-26, nach Schritt 3.2)
+## 9. Reifegrad-Übersicht (Stand vom 2026-09-26, nach Schritt 3.3)
 
 | Bestandteil | Reifegrad | Seit | Validiert durch / wartet auf |
 |---|---|---|---|
 | Architektur-Pattern Modularer Monolith | BELASTBAR | 2026-09-26 | ADR-003 |
-| Kommunikations-Grundmodus synchron + SSE | BELASTBAR | 2026-09-26 | ADR-013 (httpx-Streaming 1.3); HTTP/JSON zwischen ui und api durch Umsetzung validiert in 2.6/2.7 (End-to-End-Tests) |
+| Kommunikations-Grundmodus synchron + SSE | BELASTBAR | 2026-09-26 | ADR-013 (httpx-Streaming 1.3); HTTP/JSON zwischen ui und api durch Umsetzung validiert in 2.6/2.7 (End-to-End-Tests); SSE durch Umsetzung validiert in 3.3 (Probeschreiben mit echtem Anbieter, Abbruch) |
 | Modul canon | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.3 und 2.4 (61 Tests, 100 %); Markdown-Import (ADR-012) |
 | Modul manuscript | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.5 (30 Tests, 100 %) |
 | Modul context | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.5; durch Umsetzung validiert in 3.2 (24 Tests, 100 %; FR-003/FR-004 mit echten Läufen) |
-| Modul ai_gateway | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.3; durch Umsetzung validiert in 3.1 (49 Tests, 100 %; Sicherheitsprüfung durch getrennte Instanz); echter Anbieter-Aufruf ab 3.3 |
+| Modul ai_gateway | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.3; durch Umsetzung validiert in 3.1 (49 Tests, 100 %; Sicherheitsprüfung durch getrennte Instanz); echte Anbieter-Aufrufe in 3.2 und 3.3 |
 | Modul storage | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.2 (ADR-016, 59 Tests, 100 %); Tempo bei großen Geschichten beobachten |
 | Modul api | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.6 (ADR-017, ADR-018; Sicherheitsprüfung durch getrennte Instanz, 74 Tests, 99 %) |
 | Modul ui | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.7 (ADR-019; Sicherheitsprüfung durch getrennte Instanz; 32 Komponenten-, 4 End-to-End-Tests, 99 %); Smartphone-Test in 5.2 |
 | Alle Schnittstellen (Abschnitt 4) | BELASTBAR | 2026-09-26 | ADR-013 (Grobverträge) |
 | Datenmodell (Abschnitt 7) | BELASTBAR | 2026-09-26 | ADR-013 (Kopffelder an Testwelt erprobt) |
 | NFR Token-Budget | BELASTBAR | 2026-09-26 | ADR-010, ADR-013 |
-| NFR Reaktionszeit (Anzeige 1 s, erstes Textstück 60 s / 10 s) | BELASTBAR | 2026-09-26 | ADR-013 (Eigentümer) |
+| NFR Reaktionszeit (Anzeige 1 s, erstes Textstück 60 s / 10 s) | VORLÄUFIG | 2026-09-26 | ADR-013 (Eigentümer); in 3.3 verfehlt (ADR-022), Erkundung D.6 |
 | NFR Kontexttreue Referenzumfang | OFFEN | 2026-09-26 | Schritt D.4 (Geschichte ≥ 500.000 Token) |
 | Observability: Logging | BELASTBAR | 2026-09-26 | ADR-021 |
 | Observability: Metriken (Speicherung) | VORLÄUFIG | 2026-09-26 | Schritt 3.9 (ADR-021) |
-| NFR Kanon-Treue | OFFEN | 2026-09-26 | Schreibbetrieb ab 3.3; Vorprüfung in 1.1 erfolgt (ADR-010) |
+| NFR Kanon-Treue | VORLÄUFIG | 2026-09-26 | Vorprüfung 1.1 (ADR-010); erste Messung im Probeschreiben 3.3 (0 eindeutige Widersprüche je Kapitel); Schreibbetrieb des Eigentümers |
 | Sicherheitsniveau ASVS 5.0.0 L1 / Auth L2 | BELASTBAR | 2026-09-26 | ADR-006 |
 | Bedrohungsmodell Gesamtsystem | VORLÄUFIG | 2026-09-26 | Prüfung 4.5, Gate-Schritt 4.6 |
 | Schutzbedarf normal | BELASTBAR | 2026-09-26 | ADR-007 |

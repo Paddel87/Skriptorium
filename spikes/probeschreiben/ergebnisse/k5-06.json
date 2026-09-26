@@ -1,0 +1,37 @@
+{
+  "name": "k5-06",
+  "kapitel": 5,
+  "anfrage": {
+    "instruction": "Überfahrt im Beiboot zur Kogge und bis zur Reede, graue Mäntel tauchen am Ufer auf. Ca. 300 Wörter; ende an einer Stelle, an der Ilka handeln muss.",
+    "model": "x-ai/grok-4.7"
+  },
+  "autor_absatz": "Ich sah das Wasser an. Grau, flach, nicht tiefer als bis zu Lunds Knien, und weiter draußen schwarz.\n\n„Bis zur Reede“, sagte ich. „Und wenn ich über Bord gehe, holt Ihr mich raus. Ich schwimme nicht.“\n\nIch nahm das Tau.\n",
+  "zeiten": {
+    "kopf_s": 0.02,
+    "start_s": 0.02,
+    "erstes_textstueck_s": 7.17,
+    "gesamt_s": 17.6
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 26128
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 22971,
+        "output_tokens": 893,
+        "cost_usd": 0.017667936,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 325,
+  "aktion": "accept"
+}

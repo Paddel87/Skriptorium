@@ -1,0 +1,37 @@
+{
+  "name": "k5-05",
+  "kapitel": 5,
+  "anfrage": {
+    "instruction": "Lund liest und entscheidet sich. Ca. 250 Wörter; ende an einer Stelle, an der Ilka handeln muss.",
+    "model": "x-ai/grok-4.7"
+  },
+  "autor_absatz": "„Rehl lebt“, sagte ich. „Und er sitzt in Gundas Schänke und zählt Hunde, bis Ihr zurück seid. Lest selbst.“\n\nIch zog das Blatt ganz heraus und hielt es ihm hin. Das Tau ließ er nicht los.\n",
+  "zeiten": {
+    "kopf_s": 0.03,
+    "start_s": 0.03,
+    "erstes_textstueck_s": 21.95,
+    "gesamt_s": 29.95
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 25562
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 22478,
+        "output_tokens": 1611,
+        "cost_usd": 0.041892048,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 255,
+  "aktion": "accept"
+}

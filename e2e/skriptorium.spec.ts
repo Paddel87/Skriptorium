@@ -111,3 +111,51 @@ test("password change form reaches the server", async ({ page }) => {
   );
   await expect(page.getByText("(diese Sitzung)")).toBeVisible();
 });
+
+test("taken-over AI text is appended to the chapter and saved", async ({
+  page,
+}) => {
+  // The provider stream is replaced in the browser; the server stays real (saving, reload).
+  let sent: unknown = null;
+  await page.route("**/chapters/1/write", async (route) => {
+    sent = route.request().postDataJSON();
+    await route.fulfill({
+      status: 200,
+      contentType: "text/event-stream",
+      body: [
+        'event: start\ndata: {"model": "x-ai/grok-4.7", "estimated_tokens": 300}\n\n',
+        'event: text\ndata: {"text": "Nebel lag über dem Wasser."}\n\n',
+        'event: done\ndata: {"input_tokens": 300, "output_tokens": 8, "cost_usd": null, "finish_reason": "stop"}\n\n',
+      ].join(""),
+    });
+  });
+  await login(page);
+  await page.getByLabel("Name").fill("Die Nebelküste");
+  await page.getByRole("button", { name: "Welt anlegen" }).click();
+  await page.getByRole("button", { name: "Geschichten" }).click();
+  await page.getByLabel("Titel").fill("Am Ufer");
+  await page.getByRole("button", { name: "Geschichte anlegen" }).click();
+  await page.getByLabel("Titel des neuen Kapitels").fill("Ankunft");
+  await page.getByRole("button", { name: "Kapitel anlegen" }).click();
+  await page.getByLabel("Manuskript").click();
+  await page.keyboard.type("Das Boot lief auf Grund.");
+
+  await page.getByRole("button", { name: "Weiterschreiben" }).click();
+  await expect(page.getByLabel("Vorschlag der KI")).toHaveValue(
+    "Nebel lag über dem Wasser.",
+  );
+  await page.getByRole("button", { name: "Übernehmen" }).click();
+  await expect(page.getByLabel("Vorschlag der KI")).toBeHidden();
+  expect(sent).toEqual({
+    instruction: "",
+    model: "x-ai/grok-4.7",
+    scene: null,
+  });
+
+  await page.reload();
+  await page.getByRole("button", { name: "Die Nebelküste" }).click();
+  await page.getByRole("button", { name: "Am Ufer" }).click();
+  await expect(page.getByLabel("Manuskript")).toHaveText(
+    "Das Boot lief auf Grund.Nebel lag über dem Wasser.",
+  );
+});

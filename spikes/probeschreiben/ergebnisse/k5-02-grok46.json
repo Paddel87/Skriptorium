@@ -1,0 +1,37 @@
+{
+  "name": "k5-02-grok46",
+  "kapitel": 5,
+  "anfrage": {
+    "instruction": "Tomas und Gunda wägen den Plan ab; Tomas schreibt die Nachricht an Marr. Ca. 250 Wörter; ende an einer Stelle, an der Ilka handeln muss.",
+    "model": "x-ai/grok-4.6"
+  },
+  "autor_absatz": "„Nicht übers Wasser“, sagte ich. „Oskar Lund liegt mit der Möwenschrei in der Salzbucht, wenn er Wort gehalten hat. Pell läuft über die Klippen hin, nicht durch den Hafen. Lund schuldet dir was, Tomas. Er fährt, und er kann lesen.“\n",
+  "zeiten": {
+    "kopf_s": 0.02,
+    "start_s": 0.02,
+    "erstes_textstueck_s": 15.75,
+    "gesamt_s": 26.84
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.6",
+        "estimated_tokens": 23783
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 19932,
+        "output_tokens": 1307,
+        "cost_usd": 0.04722894,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 279,
+  "aktion": "accept"
+}
