@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 2 „Grundgerüst" (bereit; Phase 1 abgeschlossen 2026-09-26, ADR-014: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 2.1 `[IN ARBEIT]` – freigegeben mit ADR-015
-- **Nächster Schritt:** 2.2 (YAML-Parser zur Freigabe)
+- **Aktiver Schritt:** keiner (2.1 `[ERLEDIGT]` 2026-09-26)
+- **Nächster Schritt:** 2.2 (storage – Dateiablage und Suchindex) – beginnt mit `ENTSCHEIDUNG ERFORDERLICH` zum YAML-Parser; Empfohlene Klasse Entscheidung
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -112,7 +112,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 2.1: Projektgerüst und volle CI-Gates
 
-- **Status:** IN ARBEIT (seit 2026-09-26; freigegeben mit ADR-015)
+- **Status:** ERLEDIGT (2026-09-26; ADR-015) – Pre-Commit und CI-Lauf 56 mit allen Gates grün, Coverage Python 100 % (1 Test), Oberfläche 100 % (2 Tests), Onboarding gegen frischen Worktree validiert (Logbuch 18:10)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 1.4
 - **Freigabepflichtig:** ja – Pin der Entwicklungswerkzeuge (Kategorie 3) und Aktivierung der CI-Gates (Kategorie 7)

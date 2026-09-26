@@ -111,6 +111,12 @@ npx vite build                                 # Oberfläche nach dist/ui bauen
 - **Lösung:** `git add .pre-commit-config.yaml` vor dem Commit.
 - **Auftreten:** 2026-09-26 (Schritt 2.1).
 
+### Symptom: `` `pre-commit` not found.  Did you forget to activate your virtualenv? ``
+
+- **Ursache:** `pre-commit install` wurde in einem zusätzlichen `git worktree` ausgeführt. Worktrees teilen `.git/hooks`; der Hook zeigt danach auf die venv des Worktrees und bricht, sobald der Worktree entfernt ist.
+- **Lösung:** im Haupt-Checkout erneut `uv run pre-commit install`.
+- **Auftreten:** 2026-09-26 (Onboarding-Validierung in 2.1).
+
 ## 5. Plattform-spezifische Hinweise
 
 ### Linux
