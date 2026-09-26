@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -32,12 +32,14 @@ Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 010 | 2026-09-26 | Aktiv (Zweitmodell ersetzt durch ADR-011) | ERKENNTNIS | PERFORMANCE | – (Ergebnis Schritt 1.1) | Startmodell grok-4.7, Ausweichmodell qwen3.8-max, Token-Budget 30.000 |
 | 011 | 2026-09-26 | Aktiv | ERKENNTNIS | PERFORMANCE | – (Ergebnis Schritt 1.5) | grok-4.6 Zweitmodell, qwen3.8-max nur Notfall-Reserve |
 | 012 | 2026-09-26 | Aktiv | ERKENNTNIS | DATENMODELL | Datenmodell | Import von Welt-Material zunächst nur als Markdown |
+| 013 | 2026-09-26 | Aktiv | ERKENNTNIS | MODUL, SCHNITTSTELLE, DATENMODELL, PERFORMANCE | Architektur | Reifegrad-Beförderung vor Phase 2, neues Reaktionszeit-Ziel |
+| 014 | 2026-09-26 | Aktiv | STRATEGISCH | METHODIK | Pflichtfrage Phasenende | Phasenende 1 – weiterbauen |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 0 / 10 (0 %) über ADR-003 bis ADR-012 – ADR-003 bis ADR-009 aus der Initialisierung (Modus 2), ADR-010 bis ADR-012 Ergebnisse von Erkundungsschritten; keiner reaktiv.
+- **Aktueller Wert:** 0 / 10 (0 %) über ADR-005 bis ADR-014 – ADR-005 bis ADR-009 aus der Initialisierung (Modus 2), ADR-010 bis ADR-014 aus Phase 1 (Erkundung); keiner reaktiv.
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -391,6 +393,53 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
   - Schritt 2.4 baut einen Markdown-Importer; Einzelheiten der Zuordnung (z. B. Überschriften als Einträge, Kategorie-Wahl durch den Autor) werden in 2.4 festgelegt und dem Eigentümer gezeigt.
   - TypingMind-Import → Schritt V.4, Notion-Import → Schritt V.5 (beide `[VERSCHOBEN]`, Landeplatz 5.5).
   - **Risiko FR-005/FR-022:** Welt-Material mit zweistelliger Seitenzahl von Hand zu kopieren und zuzuordnen kann den 30-Minuten-Rahmen der Einrichtung sprengen. Gemessen wird das im 30-Minuten-Test (4.8); reicht die Zeit nicht, werden V.4/V.5 vorgezogen.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-013: Reifegrad-Beförderung vor Phase 2 und neues Reaktionszeit-Ziel
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[ERKENNTNIS]` `[MODUL]` `[SCHNITTSTELLE]` `[DATENMODELL]` `[PERFORMANCE]`
+- **Phasentyp-Kontext:** ERKUNDUNG
+- **Reifegrad-Wirkung:** `[VORLÄUFIG]` → `[BELASTBAR]`: Kommunikations-Grundmodus; Module canon, manuscript, context, ai_gateway, storage, api, ui; alle Schnittstellen (Grobverträge, `docs/architecture.md` Abschnitt 4); Datenflüsse (Abschnitt 5); Datenmodell mit Kopffeldern (Abschnitt 7); NFR Token-Budget; NFR Reaktionszeit (neu gefasst). Unverändert `[VORLÄUFIG]`: Stateful-Aussage, Observability (Logging, Metriken), Bedrohungsmodell, Netz; `[OFFEN]`: Kanon-Treue, Kontexttreue Referenzumfang, Host, Secrets im Betrieb, Backups.
+- **Kategorie:** Architekturänderungen (`CLAUDE.md` Abschnitt 4, Kategorie 1; Eskalations-Auslöser 4)
+- **Kontext:** Phase 2 darf erst beginnen, wenn die berührten Bestandteile `[BELASTBAR]` sind (`CLAUDE.md` Abschnitt 6). Die Erkundung 1.1–1.5 klärte Budget, Tokenzählung, Ablehnungssignale, Modellwahl, Laufzeit (httpx) und Importformat; in 1.4 wurden die offenen Fragen geschlossen und Grobverträge für CanonService, ManuscriptService, DocumentStore und die HTTP-API sowie die Kopffelder des Datenmodells ergänzt. Das bisherige Reaktionszeit-Ziel (erstes Textstück in 5 s) ist mit dem Startmodell nicht erreichbar (ADR-010).
+- **Optionen:**
+  - **A:** alle genannten Bestandteile freigeben – Phase 2 kann starten.
+  - **B:** nur die in Phase 1 erprobten Teile (context, ai_gateway, Token-Budget) freigeben, für die übrigen je einen Test-Schritt anlegen – mehr Gewissheit, Phase 2 verzögert sich.
+  - Reaktionszeit: (a) sofortige Anzeige, erstes Textstück 60 s / 10 s; (b) nur Abbruch nach 90 s; (c) 10 s Pflicht mit grok-4.6 als Standard.
+- **Entscheidung:** A; Reaktionszeit (a): Innerhalb 1 s zeigt die Oberfläche „denkt nach …" mit laufender Zeit; erstes Textstück beim Startmodell grok-4.7 innerhalb 60 s, beim Zweitmodell grok-4.6 innerhalb 10 s; Abbruch und Wechsel jederzeit (Empfehlungen der KI, vom Eigentümer gewählt).
+- **Vision-Frage, die entschied:** „Reicht dir die geprüfte Planung für die Standard-Bausteine, oder willst du vorher kleine Tests sehen?" → Planung reicht. Zur Wartezeit: sofortige Anzeige statt schnellerem Standardmodell (folgt aus „Kanon-Fehler stören mehr", ADR-010).
+- **Konfidenz zum Zeitpunkt:** mittel-hoch – context und ai_gateway an 86 Läufen erprobt, Laufzeit in 1.3 geprüft; storage, api, ui und manuscript folgen verbreiteten Mustern, sind aber nicht erprobt (Heuristik 1.3 und Smell-Prüfung 1.4 aus `templates/architektur-heuristiken.md`; von einer getrennten Prüf-Instanz bestätigt, ADR-014). Umkehrbarkeit: mittel – vor dem ersten Code billig, danach je Modul teurer.
+- **Konsequenzen:**
+  - Phase 2 kann beginnen; Änderungen an Modulgrenzen, Grobverträgen oder Datenmodell sind ab jetzt freigabepflichtig und in einer UMSETZUNG-Phase reaktiv zu kennzeichnen, wenn ungeplant.
+  - Schritt 3.3: Akzeptanzkriterium zur Reaktionszeit an das neue Ziel angepasst.
+  - Observability (Logging, Metriken) wird in 3.1 berührt und ist vorher zu befördern – Vermerk in Schritt 3.1.
+  - YAML-Parser (freigabepflichtige Abhängigkeit) wird vor 2.2 vorgelegt.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-014: Phasenende 1 – weiterbauen
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[STRATEGISCH]` `[METHODIK]`
+- **Phasentyp-Kontext:** ERKUNDUNG (Phasenende)
+- **Reifegrad-Wirkung:** keine
+- **Kategorie:** Pflichtfrage am Phasenende (`CLAUDE.md` Abschnitt 12, „Weiterbauen, umbauen oder neu aufsetzen")
+- **Kontext:** Abschluss von Phase 1 (ERKUNDUNG, Schritte 1.1–1.5). Bewertung durch eine getrennte Prüf-Instanz (anderes Modell als die bauende KI, ohne Kenntnis des Gesprächsverlaufs; erhielt Vision, Architektur, ADRs, Fahrplan und Spike-Code), 2026-09-26.
+- **Bewertung der Prüf-Instanz (zusammengefasst, unverändert in der Aussage):** Weiterbauen – Architektur und Plan tragen; keine Zyklen, kein Gott-Modul, keine reaktiven ADRs (0/10), kein Produktivcode, Spikes sauber getrennt; gemessene Lücken (Token-Budget nur bis 17.600 geprüft) korrekt als vorläufig gekennzeichnet. Umbau: kein struktureller Bedarf, nur Abschluss von 1.4. Neu aufsetzen: kein Beleg. Befunde vor Phase 2: (1) 1.4 abschließen, (2) Reaktionszeit-Ziel in Architektur und Schritt 3.3 angleichen, (3) YAML-Parser vor 2.2 vorlegen, (4) Erkenntnisdokument zur Lesung des Eigentümers nachziehen.
+- **Stellungnahme der bauenden KI:** Zustimmung; Befunde (1), (2) und (4) mit ADR-013 bzw. im selben Arbeitsgang behoben, (3) steht als Freigabe in 2.2. Ergänzung: Die Grobverträge für die Dienst- und HTTP-Schnittstellen wurden erst in 1.4 geschrieben; ihre Tragfähigkeit zeigt sich in 2.2–2.6.
+- **Optionen:** weiterbauen / gezielt umbauen / neu aufsetzen.
+- **Entscheidung:** weiterbauen.
+- **Vision-Frage, die entschied:** „Weiterbauen, gezielt umbauen oder neu aufsetzen?" → Antwort des Eigentümers: weiterbauen.
+- **Konfidenz zum Zeitpunkt:** hoch (übereinstimmend: Prüf-Instanz, bauende KI, Eigentümer); Umkehrbarkeit billig (noch kein Produktivcode).
+- **Konsequenzen:** Phase 2 beginnt mit Schritt 2.1; keine Umbau- oder Neuaufbau-Schritte.
 - **Abgeleitete Regel:** keine
 
 ---

@@ -164,7 +164,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 1.4: Reifegrad-Beförderung vor der Umsetzung
 
-- **Status:** IN ARBEIT (seit 2026-09-26)
+- **Status:** ERLEDIGT (2026-09-26) – Beförderung per ADR-013, Pflichtfrage Phasenende per ADR-014 (weiterbauen)
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Schritt-Art (nur ERKUNDUNG):** sonstiges – Architektur-Abgleich und Beförderung
 - **Zeitbox (nur ERKUNDUNG):** maximal 2 h Arbeit
@@ -348,7 +348,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** ai_gateway
 - **Reifegrad-Wirkung:** `ai_gateway` → `[BELASTBAR]` durch Umsetzung
 - **Artefakte:** Code, Tests
-- **Notizen:** Konkrete weitere Anbieter sind Schritt V.3.
+- **Notizen:** Konkrete weitere Anbieter sind Schritt V.3. Zusatz 2026-09-26 (ADR-013): Observability (Logging, Metriken, `docs/architecture.md` Abschnitt 6) ist noch `[VORLÄUFIG]` und vor Beginn von 3.1 zu befördern; Modell-Konfiguration je Modell (Reasoning, Anbieter-Ausschlüsse) und Timeouts bis zum ersten Textstück nach Abschnitt 4 (ModelProvider).
 
 #### 3.2: context – Kontext-Zusammenstellung unter Token-Budget
 
@@ -376,7 +376,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Eingangskriterien:** Abläufe in `docs/architecture.md` Abschnitt 5 `[BELASTBAR]`
 - **Anforderungen (ab Klasse M):** FR-008, FR-009, FR-011
 - **Zu tun:** Ablauf „Weiterschreiben im Wechsel" in `api` (SSE) und `ui`: Anweisung senden, Text fortlaufend anzeigen, übernehmen, ändern oder verwerfen; Einstieg mit neuer Szene (Ort, Figuren, Ziel); Fehlerpfad bei Abbruch oder Ablehnung.
-- **Akzeptanzkriterien:** Szenario 1 der Vision: erster Absatz widerspricht keinem Kanon-Eintrag der beteiligten Figuren und des Orts (FR-008); übernommener, geänderter oder verworfener Text ist Grundlage der nächsten Fortsetzung (FR-009); Kanon-Treue im Probeschreiben höchstens ein Widerspruch pro Kapitel (FR-011); erstes Textstück binnen 5 s; bei Abbruch bleibt der Manuskript-Stand unverändert.
+- **Akzeptanzkriterien:** Szenario 1 der Vision: erster Absatz widerspricht keinem Kanon-Eintrag der beteiligten Figuren und des Orts (FR-008); übernommener, geänderter oder verworfener Text ist Grundlage der nächsten Fortsetzung (FR-009); Kanon-Treue im Probeschreiben höchstens ein Widerspruch pro Kapitel (FR-011); Anzeige „denkt nach …" innerhalb 1 s, erstes Textstück beim Startmodell innerhalb 60 s, beim Zweitmodell grok-4.6 innerhalb 10 s, Abbruch und Modellwechsel jederzeit (ADR-013); bei Abbruch bleibt der Manuskript-Stand unverändert.
 - **Betroffene Module:** api, ui
 - **Reifegrad-Wirkung:** Kommunikations-Grundmodus inkl. SSE → `[BELASTBAR]`; NFR Kanon-Treue erhält erste Messung
 - **Artefakte:** Code, Tests

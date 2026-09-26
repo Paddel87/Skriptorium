@@ -189,6 +189,6 @@ Abgerufen 2026-09-26. Zitate über ein Zusammenfassungs-Werkzeug gewonnen, nicht
 <!-- ANCHOR:offene-punkte -->
 ## Offene Punkte
 
-1. Eigene Lesung einiger Texte durch den Eigentümer (Stichprobe Kanon- und Stil-Bewertung) – empfohlen, Landeplatz Schritt 1.4.
+1. ~~Eigene Lesung einiger Texte durch den Eigentümer~~ – entfällt (Eigentümer, 2026-09-26): seine Erfahrung mit grok 4.7, grok 4.6 und Qwen deckt sich mit dem Ergebnis.
 2. Prüfung des Token-Budgets an größerem Material und Ablehnungsverhalten im echten Betrieb – mit der Umsetzung in 3.2 (Kontext-Zusammenstellung) bzw. 3.1 (`ai_gateway`).
 3. Anbieter-Routing: StreamLake (Training auf Eingaben) meiden, falls deepseek-Modelle genutzt werden – Umsetzung in 3.1.
