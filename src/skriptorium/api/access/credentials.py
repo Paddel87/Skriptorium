@@ -7,6 +7,7 @@ Header fields: ``passwort_hash``, ``passwort_geaendert``, ``einrichtungscode_has
 import hashlib
 import hmac
 import secrets
+import threading
 from collections.abc import Callable
 from datetime import datetime, timedelta
 from typing import Final
@@ -33,6 +34,9 @@ class CredentialStore:
         self._store = store
         self._hasher = hasher
         self._clock = clock
+        # Every read-modify-write of the file runs under this lock, so a setup code is
+        # used at most once and no change is lost (ASVS 6.4.1).
+        self._lock = threading.Lock()
 
     def has_password(self) -> bool:
         """Whether a password has been set."""
@@ -47,18 +51,22 @@ class CredentialStore:
 
     def set_password(self, password: str) -> None:
         """Store the hash of ``password``; an open setup code stays valid."""
-        header = self._header()
-        header["passwort_hash"] = self._hasher.hash(password)
-        header["passwort_geaendert"] = self._clock().isoformat()
-        self._write(header)
+        new_hash = self._hasher.hash(password)
+        with self._lock:
+            header = self._header()
+            header["passwort_hash"] = new_hash
+            header["passwort_geaendert"] = self._clock().isoformat()
+            self._write(header)
 
     def create_setup_code(self) -> str:
         """Create a new setup code (128 bits), store its hash and return it once."""
         code = secrets.token_urlsafe(_SETUP_CODE_BYTES)
-        header = self._header()
-        header["einrichtungscode_hash"] = _code_digest(code)
-        header["einrichtungscode_gueltig_bis"] = (self._clock() + SETUP_CODE_LIFETIME).isoformat()
-        self._write(header)
+        with self._lock:
+            header = self._header()
+            header["einrichtungscode_hash"] = _code_digest(code)
+            valid_until = self._clock() + SETUP_CODE_LIFETIME
+            header["einrichtungscode_gueltig_bis"] = valid_until.isoformat()
+            self._write(header)
         return code
 
     def setup_code_valid(self, code: str) -> bool:
@@ -71,14 +79,16 @@ class CredentialStore:
         Raises:
             SetupCodeInvalid: No code, wrong code or expired code.
         """
-        header = self._header()
-        if not self._code_valid(header, code):
-            raise SetupCodeInvalid
-        del header["einrichtungscode_hash"]
-        del header["einrichtungscode_gueltig_bis"]
-        header["passwort_hash"] = self._hasher.hash(password)
-        header["passwort_geaendert"] = self._clock().isoformat()
-        self._write(header)
+        new_hash = self._hasher.hash(password)
+        with self._lock:
+            header = self._header()
+            if not self._code_valid(header, code):
+                raise SetupCodeInvalid
+            del header["einrichtungscode_hash"]
+            del header["einrichtungscode_gueltig_bis"]
+            header["passwort_hash"] = new_hash
+            header["passwort_geaendert"] = self._clock().isoformat()
+            self._write(header)
 
     def _code_valid(self, header: dict[str, HeaderValue], code: str) -> bool:
         stored = header.get("einrichtungscode_hash")

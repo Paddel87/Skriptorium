@@ -1,7 +1,8 @@
 """Limit of failed attempts per client address (ASVS 6.1.1, 6.3.1, ADR-017).
 
 Only the address that failed is blocked; there is no global lockout, so nobody can lock the
-owner out by guessing from elsewhere.
+owner out by guessing from elsewhere. Every attempt is counted *before* the password is
+checked and taken back on success, so parallel requests cannot exceed the limit.
 """
 
 import threading
@@ -14,29 +15,36 @@ WINDOW: Final = timedelta(minutes=15)
 
 
 class FailureThrottle:
-    """Counts failures per client within a sliding window."""
+    """Counts attempts per client within a sliding window."""
 
     def __init__(self, clock: Callable[[], datetime]) -> None:
         """Use ``clock`` as the source of the current time."""
         self._clock = clock
         self._lock = threading.Lock()
-        self._failures: dict[str, list[datetime]] = {}
+        self._attempts: dict[str, list[datetime]] = {}
 
-    def blocked(self, client: str) -> bool:
-        """Whether ``client`` has used up its attempts in the current window."""
-        with self._lock:
-            return len(self._recent(client)) >= MAX_FAILURES
+    def begin(self, client: str) -> datetime | None:
+        """Reserve one attempt for ``client``; ``None`` if its attempts are used up.
 
-    def record_failure(self, client: str) -> None:
-        """Count one failed attempt of ``client``."""
+        The reservation counts as a failure until :meth:`succeeded` takes it back.
+        """
         with self._lock:
-            self._failures[client] = [*self._recent(client), self._clock()]
+            recent = self._recent(client)
+            if len(recent) >= MAX_FAILURES:
+                return None
+            moment = self._clock()
+            self._attempts[client] = [*recent, moment]
+            return moment
+
+    def succeeded(self, client: str, moment: datetime) -> None:
+        """Take back the attempt reserved at ``moment``: it did not fail."""
+        with self._lock:
+            attempts = self._attempts.get(client, [])
+            if moment in attempts:
+                attempts.remove(moment)
+            if not attempts:
+                self._attempts.pop(client, None)
 
     def _recent(self, client: str) -> list[datetime]:
         start = self._clock() - WINDOW
-        recent = [moment for moment in self._failures.get(client, []) if moment > start]
-        if recent:
-            self._failures[client] = recent
-        else:
-            self._failures.pop(client, None)
-        return recent
+        return [moment for moment in self._attempts.get(client, []) if moment > start]

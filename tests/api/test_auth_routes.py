@@ -1,6 +1,7 @@
 """HTTP tests of setup, login, logout, password change and session overview (ADR-017)."""
 
 import logging
+from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 
 import pytest
@@ -83,6 +84,37 @@ def test_wrong_password_and_throttle_per_client(client: TestClient, clock: FakeC
     assert _login(client) == 429  # blocked even with the right password
     clock.advance(throttle_module.WINDOW)
     assert _login(client) == 204
+
+
+def test_parallel_wrong_logins_cannot_exceed_the_limit(client: TestClient) -> None:
+    set_up_password(client)
+    with ThreadPoolExecutor(max_workers=25) as pool:
+        codes = list(pool.map(lambda _: _login(client, "falsches Passwort!!"), range(25)))
+    assert codes.count(401) == throttle_module.MAX_FAILURES
+    assert codes.count(429) == 25 - throttle_module.MAX_FAILURES
+
+
+def test_successful_logins_do_not_count_as_failures(client: TestClient) -> None:
+    set_up_password(client)
+    for _ in range(throttle_module.MAX_FAILURES + 2):
+        assert _login(client) == 204
+
+
+def test_setup_code_used_by_parallel_request_is_refused(
+    client: TestClient, breached: FakeBreached, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    services = services_of(client)
+    code = services.credentials.create_setup_code()
+    original = breached.is_breached
+
+    def consume_code_meanwhile(password: str) -> bool:
+        services.credentials.set_password_with_code(code, NEW_PASSWORD)
+        return original(password)
+
+    monkeypatch.setattr(breached, "is_breached", consume_code_meanwhile)
+    response = client.post("/api/auth/setup", json={"code": code, "password": PASSWORD})
+    assert response.status_code == 403
+    assert services.credentials.verify_password(NEW_PASSWORD)
 
 
 def test_login_replaces_old_session_token(logged_in: TestClient) -> None:

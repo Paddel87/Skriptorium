@@ -1,6 +1,7 @@
 """Unit tests of the access protection: hashing, policy, Pwned Passwords, sessions, throttle."""
 
 import hashlib
+from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 from pathlib import Path
 
@@ -222,14 +223,28 @@ def test_session_renew_end_and_end_all(clock: FakeClock) -> None:
 
 def test_throttle_blocks_one_client_only_within_window(clock: FakeClock) -> None:
     throttle = FailureThrottle(clock)
-    for _ in range(throttle_module.MAX_FAILURES - 1):
-        throttle.record_failure("1.2.3.4")
-    assert not throttle.blocked("1.2.3.4")
-    throttle.record_failure("1.2.3.4")
-    assert throttle.blocked("1.2.3.4")
-    assert not throttle.blocked("5.6.7.8")
+    for _ in range(throttle_module.MAX_FAILURES):
+        assert throttle.begin("1.2.3.4") is not None  # reserved, never taken back
+    assert throttle.begin("1.2.3.4") is None
+    assert throttle.begin("5.6.7.8") is not None
     clock.advance(throttle_module.WINDOW)
-    assert not throttle.blocked("1.2.3.4")
+    assert throttle.begin("1.2.3.4") is not None
+
+
+def test_throttle_success_takes_attempt_back(clock: FakeClock) -> None:
+    throttle = FailureThrottle(clock)
+    for _ in range(throttle_module.MAX_FAILURES * 3):
+        attempt = throttle.begin("1.2.3.4")
+        assert attempt is not None
+        throttle.succeeded("1.2.3.4", attempt)
+    throttle.succeeded("unbekannt", clock.now)
+
+
+def test_throttle_counts_parallel_attempts_before_the_check(clock: FakeClock) -> None:
+    throttle = FailureThrottle(clock)
+    with ThreadPoolExecutor(max_workers=25) as pool:
+        results = list(pool.map(lambda _: throttle.begin("1.2.3.4"), range(25)))
+    assert sum(result is not None for result in results) == throttle_module.MAX_FAILURES
 
 
 # --- credentials ---------------------------------------------------------------------------
@@ -267,6 +282,24 @@ def test_setup_code_expires_after_24_hours(tmp_path: Path, clock: FakeClock) -> 
     code = credentials.create_setup_code()
     clock.advance(timedelta(hours=24))
     assert not credentials.setup_code_valid(code)
+
+
+def test_setup_code_is_used_only_once_under_parallel_use(tmp_path: Path, clock: FakeClock) -> None:
+    credentials = _credentials(tmp_path, clock)
+    code = credentials.create_setup_code()
+    passwords = [f"paralleles Passwort Nummer {n}" for n in range(8)]
+
+    def use(password: str) -> bool:
+        try:
+            credentials.set_password_with_code(code, password)
+        except SetupCodeInvalid:
+            return False
+        return True
+
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        results = list(pool.map(use, passwords))
+    assert results.count(True) == 1
+    assert credentials.verify_password(passwords[results.index(True)])
 
 
 def test_new_setup_code_keeps_password_and_change_keeps_code(
