@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 2 – Grundgerüst (Umsetzung); Schritte 2.1 (Projektgerüst), 2.2 (Dateiablage und Suchindex), 2.3 (Welten und Kanon-Einträge), 2.4 (Markdown-Import) und 2.5 (Geschichten und Kapitel) umgesetzt und 2.6 (HTTP-Schnittstelle mit Anmeldung) umgesetzt
+- **Projektphase:** Phase 2 – Grundgerüst (Umsetzung); Schritte 2.1 (Projektgerüst), 2.2 (Dateiablage und Suchindex), 2.3 (Welten und Kanon-Einträge), 2.4 (Markdown-Import) und 2.5 (Geschichten und Kapitel) umgesetzt, 2.6 (HTTP-Schnittstelle mit Anmeldung) und 2.7 (Oberfläche) umgesetzt; Phasenabschluss steht aus
 - **Version:** v0.0.0 – noch keine veröffentlichte Version
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-09-26
@@ -87,7 +87,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **2.7 ui:** Anmeldung, Editor und Kanon-Pflege in der Oberfläche.
+- **Phasenabschluss 2:** Vision-Abgleich und Entscheidung „weiterbauen, umbauen oder neu aufsetzen“.
 - **Phase 3:** Schreiben mit KI.
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – Startmodell grok-4.7, Zweitmodell grok-4.6.

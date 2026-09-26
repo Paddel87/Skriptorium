@@ -29,6 +29,19 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 20:48 – [SICHERHEITSPRÜFUNG] Getrennte Instanz zu 2.7
+
+- **Instanz:** Unteragent mit eigenem Kontext und anderem Modell (Claude Sonnet 5); nur Diff (Oberfläche, Tests, Konfiguration, CI), Bedrohungsmodell, ADR-017, ASVS-Originalkapitel. Führte Komponenten-, Build- und End-to-End-Tests selbst aus.
+- **Befund 1 (niedrig):** Endet die Sitzung während der Arbeit, schlug Speichern nur mit einer Fehlzeile fehl → behoben in `aad8728` (Anmeldung über der offenen Ansicht, ungespeicherter Text bleibt; Test).
+- **Hinweise 2–6:** 2 (erneute Anmeldung vor Sitzungsübersicht, ASVS 7.5.2) – Auslegungsfrage, ADR-017 behandelt die bestehende Sitzung als Faktor; keine Änderung. 3–5 über dem Niveau, vom Eigentümer als optional gewählt und umgesetzt: `base-uri 'none'`; ESLint-Regel auch für `innerHTML`, `outerHTML`, `insertAdjacentHTML` (mit Probedatei belegt, 2 Treffer); E2E-Testpasswort über die Umgebung. `frame-ancestors` nur per HTTP-Kopf → Notiz in 4.2. 6 (Chromium-Download im CI-Job) – zur Kenntnis, offizielle Quelle, keine neuen Rechte.
+- Keine Befunde zu XSS, Passwortfeldern (6.2.6, 6.2.7), Speicherung von Zugangsdaten im Browser, Cookie-Zugriff aus JavaScript, Abmelden auf jeder Seite (7.4.4), fremden Anfragen.
+
+### 2026-09-26 20:50 – [REIFEGRAD-WECHSEL] ui durch Umsetzung validiert
+
+- Schritt 2.7 erledigt; `ui` bleibt `[BELASTBAR]`, jetzt „durch Umsetzung validiert“. Kommunikation HTTP/JSON zwischen `ui` und `api` durch End-to-End-Tests belegt.
+- Alle Schritte von Phase 2 erledigt; der Phasenabschluss (Vision-Abgleich, Pflichtfrage mit getrennter Instanz, ADR, Archivierung, Logbuch-Verdichtung) folgt in einer neuen Session – bewusst nicht hier, weil die Session weit über der Kontextgrenze liegt und die Bewertung eine eigene Instanz verlangt.
+- **Klasse:** 2.7 empfiehlt Routine, lief auf Entscheidung (Hinweis an den Eigentümer vorab).
+
 ### 2026-09-26 20:42 – [PROBLEM-GELÖST] Reibungen in 2.7
 
 - **Bündelgröße:** Das erste Bündel war 706 kB (Vite-Warnung, Quelle ohne Schalter). Ursache: `@codemirror/lang-markdown` bringt HTML-, CSS- und JavaScript-Hervorhebung mit. Lösung: Editor per `lazy()` nachladen – Hauptbündel 213 kB, Editor 493 kB, keine Warnung.
