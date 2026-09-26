@@ -1,0 +1,206 @@
+{
+  "modell": "x-ai/grok-4.7",
+  "fall": "fr003-runenklinge",
+  "anweisung": "Am Eingang der Grotte steht ein gebundener Toter als Wache. Tomas zieht @Runenklinge, um ihn zu lösen. Schreib die Szene weiter (ca. 400 Wörter) und ende an einer Stelle, an der Ilka handeln muss.",
+  "geschaetzt": 18012,
+  "bausteine": [
+    [
+      "rahmen",
+      "Rahmen",
+      98
+    ],
+    [
+      "welt",
+      "Die Salzmark",
+      444
+    ],
+    [
+      "schreibweise",
+      "Figuren-Schreibweise",
+      65
+    ],
+    [
+      "regel",
+      "Monde",
+      139
+    ],
+    [
+      "regel",
+      "Salzbindung",
+      404
+    ],
+    [
+      "regel",
+      "Salzlicht",
+      111
+    ],
+    [
+      "zeitlinie",
+      "Zeitlinie der Salzmark",
+      232
+    ],
+    [
+      "verweis",
+      "Runenklinge",
+      197
+    ],
+    [
+      "gefuehrte-figur",
+      "Ilka Varn",
+      429
+    ],
+    [
+      "auffuellung",
+      "Anselm Drach",
+      260
+    ],
+    [
+      "auffuellung",
+      "Fenn Asch",
+      114
+    ],
+    [
+      "auffuellung",
+      "Gunda Hollt",
+      89
+    ],
+    [
+      "auffuellung",
+      "Hedda Varn",
+      156
+    ],
+    [
+      "auffuellung",
+      "Jorin Rehl",
+      120
+    ],
+    [
+      "auffuellung",
+      "Oskar Lund",
+      120
+    ],
+    [
+      "auffuellung",
+      "Pell Sund",
+      63
+    ],
+    [
+      "auffuellung",
+      "Schwester Mai",
+      112
+    ],
+    [
+      "auffuellung",
+      "Sera Kolb",
+      386
+    ],
+    [
+      "auffuellung",
+      "Tomas Rehl",
+      411
+    ],
+    [
+      "auffuellung",
+      "Ysolde Marr",
+      117
+    ],
+    [
+      "auffuellung",
+      "Aschturm",
+      325
+    ],
+    [
+      "auffuellung",
+      "Kerrow",
+      227
+    ],
+    [
+      "auffuellung",
+      "Salzbucht",
+      88
+    ],
+    [
+      "auffuellung",
+      "Tolm",
+      90
+    ],
+    [
+      "auffuellung",
+      "Vogtshaus",
+      97
+    ],
+    [
+      "auffuellung",
+      "Zum Nassen Grab",
+      92
+    ],
+    [
+      "auffuellung",
+      "Das schwarze Buch",
+      133
+    ],
+    [
+      "auffuellung",
+      "Grausalz",
+      76
+    ],
+    [
+      "auffuellung",
+      "Kerbe",
+      98
+    ],
+    [
+      "auffuellung",
+      "Siegelring des Vogts",
+      95
+    ],
+    [
+      "auffuellung",
+      "Salzeid",
+      174
+    ],
+    [
+      "auffuellung",
+      "Stille Schwestern",
+      161
+    ],
+    [
+      "auffuellung",
+      "Totensitte",
+      163
+    ],
+    [
+      "handlungsstand",
+      "Gesamtzusammenfassung",
+      240
+    ],
+    [
+      "seiten",
+      "Kapitel 1",
+      3178
+    ],
+    [
+      "seiten",
+      "Kapitel 2",
+      3134
+    ],
+    [
+      "seiten",
+      "Kapitel 3",
+      3273
+    ],
+    [
+      "seiten",
+      "Kapitel 4",
+      599
+    ],
+    [
+      "anweisung",
+      "Anweisung",
+      64
+    ]
+  ],
+  "token_ein": 16194,
+  "token_aus": 3595,
+  "kosten_usd": 0.04136616
+}

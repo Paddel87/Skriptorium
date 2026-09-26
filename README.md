@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 3 – Schreiben mit KI (Umsetzung); 3.1 (Anbieter-Schnittstelle mit OpenRouter) umgesetzt, nächster Schritt 3.2 (Kontext-Zusammenstellung); Phase 2 – Grundgerüst abgeschlossen am 2026-09-26 (ADR-020: weiterbauen)
+- **Projektphase:** Phase 3 – Schreiben mit KI (Umsetzung); 3.1 (Anbieter-Schnittstelle mit OpenRouter) und 3.2 (Kontext-Zusammenstellung) umgesetzt, nächster Schritt 3.3 (Weiterschreiben); Phase 2 – Grundgerüst abgeschlossen am 2026-09-26 (ADR-020: weiterbauen)
 - **Version:** v0.0.0 – noch keine veröffentlichte Version
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-09-26
@@ -87,9 +87,9 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **3.2:** Kontext-Zusammenstellung unter Token-Budget.
-- **3.3:** Weiterschreiben mit Streaming und Szenen-Einstieg – erster echter KI-Aufruf.
+- **3.3:** Weiterschreiben mit Streaming und Szenen-Einstieg – erste KI-Texte in der Oberfläche.
 - **3.4:** Figuren-Schreibweise.
+- **3.5:** `@`-Menü.
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – Startmodell grok-4.7, Zweitmodell grok-4.6.
 
