@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 20:05 – [SICHERHEITSPRÜFUNG] Getrennte Instanz zu 2.6
+
+- **Instanz:** Unteragent mit eigenem Kontext und anderem Modell (Claude Sonnet 5); erhielt nur Diff, Bedrohungsmodell, ADR-017/018 und die ASVS-Originalkapitel, nicht den Gesprächsverlauf. Prüfte mit eigenen Probeskripten gegen den echten Code.
+- **Befund 1 (hoch, belegt):** Sperre nach Fehlversuchen per Parallelität umgehbar (25 parallele Fehlversuche, keiner gesperrt) → behoben in `28783bd`, endgültig in `6b7044f`.
+- **Befund 2 (mittel, belegt):** Einrichtungscode bei gleichzeitiger Nutzung zweimal wirksam → behoben in `28783bd` (Sperre um Lesen-Ändern-Schreiben).
+- **Befund 3 (hoch, Konfiguration):** Proxy-Kopfzeilen. uvicorn 0.52 wertet sie standardmäßig nur von `127.0.0.1` aus; als Betriebsvorgabe festgehalten (project-context Abschnitt 8, Runbook, Notiz in 4.2).
+- **Befund 4 (niedrig, über dem Niveau):** keine Größengrenze für Anfragen – dem Eigentümer als optional vorgelegt; Entscheidung: nicht nötig (Verfügbarkeit nachrangig laut Bedrohungsmodell).
+- **Befunde 5, 7 (Hinweise):** genau ein Prozess; `Host`-Kopf unverändert durch den Proxy – festgehalten wie Befund 3. **Befund 6, 8:** kein Handlungsbedarf (8: `except A, B:` ist gültige Syntax ab Python 3.14, PEP 758).
+- **Nachprüfung 1:** Befunde 1 und 2 behoben (Probeskripte: 10 × 401, 15 × 429; ein Code wirkt einmal). Neuer **Befund 9 (mittel, belegt):** mehr als 10 gleichzeitige korrekte Anmeldungen eines Absenders bekamen 429 – Folge der Reservierung vor der Prüfung. Behoben in `6b7044f`: Versuche je Adresse laufen nacheinander, nur echte Fehlversuche zählen. Hinweis 10 (Zeitstempel als Kennung) entfällt damit.
+- **Reibung:** `ss` fehlt in der Umgebung; die Meldung „server beendet" im Probelauf 19:39 war deshalb falsch – zwei Testserver liefen weiter und wurden um 19:50 per `kill` beendet.
+
 ### 2026-09-26 19:45 – [PROBLEM-GELÖST] Reibungen in 2.6
 
 - **FastAPI 0.141 hält eingebundene Router als `_IncludedRouter`:** `app.routes` enthält nur noch die direkt angelegten Routen. Das Routenmuster für das Protokoll kommt deshalb aus `scope["route"]` nach der Verarbeitung; der Test „jeder Endpunkt verlangt eine Sitzung" zählt die Routen über `app.openapi()` (die Beschreibung wird trotzdem nicht veröffentlicht).
