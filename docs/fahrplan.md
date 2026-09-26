@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 1 „Erkundung: Modelle, Import, Laufzeit" (begonnen 2026-09-26)
 - **Phasentyp:** ERKUNDUNG
-- **Aktiver Schritt:** keiner (1.1 und 1.5 erledigt 2026-09-26)
-- **Nächster Schritt:** 1.3 (ohne Zutun des Eigentümers beginnbar); 1.2 wartet auf Exporte des Eigentümers; 1.4 nach 1.2 und 1.3
+- **Aktiver Schritt:** 1.3 (seit 2026-09-26; 1.1, 1.2 und 1.5 erledigt)
+- **Nächster Schritt:** 1.3 (in Arbeit ab 2026-09-26), danach 1.4 (Reifegrad-Beförderung)
 - **Offene STOPP-Situationen:** keine (STOPP vor 1.1 vom 2026-09-26 aufgelöst: Schlüssel liegt vor; Testdaten erfindet die KI, Festlegung des Eigentümers)
 
 <!-- ANCHOR:phasen-typen -->
@@ -128,7 +128,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 1.2: Import-Klärung an echten Exporten (TypingMind, Notion)
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-26) – Importformat festgelegt und freigegeben: zunächst Markdown (ADR-012). Die Klärung der TypingMind- und Notion-Exporte entfällt für die erste Ausbaustufe (echtes Material nicht verwendbar) und liegt in V.4 und V.5; der Zeitbedarf für den Import wird im 30-Minuten-Test 4.8 gemessen statt hier abgeschätzt.
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Schritt-Art (nur ERKUNDUNG):** Spike
 - **Zeitbox (nur ERKUNDUNG):** maximal 3 h Arbeit, dann Zwischenstand
@@ -146,7 +146,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 1.3: httpx 0.28.1 auf Python 3.14.7 prüfen
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT (seit 2026-09-26)
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Schritt-Art (nur ERKUNDUNG):** Spike
 - **Zeitbox (nur ERKUNDUNG):** maximal 1 h Arbeit
@@ -265,10 +265,10 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Abhängigkeiten:** 1.2, 2.3
 - **Freigabepflichtig:** nein (Format in 1.2 freigegeben)
 - **Empfohlene Klasse:** Routine – Umsetzung eines in 1.2 festgelegten Formats.
-- **Eingangskriterien:** Importformat per ADR aus 1.2 festgelegt
+- **Eingangskriterien:** Importformat per ADR aus 1.2 festgelegt (ADR-012: Markdown)
 - **Anforderungen (ab Klasse M):** FR-005
-- **Zu tun:** `canon.importers` mit je einem Importer für TypingMind (Agenten-JSON) und Notion (Markdown-Export); Zuordnung zu Kanon-Kategorien wie in 1.2 festgelegt.
-- **Akzeptanzkriterien:** Eine bestehende Welt des Eigentümers ist nach dem Import als Kanon nutzbar; Importzeit passt in den 30-Minuten-Rahmen (FR-022); Tests mit anonymisierten Beispieldaten.
+- **Zu tun:** `canon.importers` mit einem Markdown-Importer (ADR-012): Welt-Material als Markdown-Datei oder eingefügter Text; Aufteilung in Kanon-Einträge und Zuordnung zu Kategorien festlegen, dem Eigentümer zeigen, umsetzen. TypingMind- und Notion-Importer folgen in V.4 und V.5.
+- **Akzeptanzkriterien:** Eine Welt aus Markdown ist nach dem Import als Kanon nutzbar; Importzeit für Welt-Material mit zweistelliger Seitenzahl gemessen und gegen den 30-Minuten-Rahmen (FR-022) gestellt; Tests mit erfundenen Beispieldaten (z. B. Testwelt „Die Salzmark").
 - **Betroffene Module:** canon
 - **Reifegrad-Wirkung:** `canon.importers` → `[BELASTBAR]`
 - **Artefakte:** Code, Tests
@@ -857,6 +857,40 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Betroffene Module:** ai_gateway
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** –
+- **Notizen:** –
+
+#### V.4: Import aus TypingMind (Agenten-JSON)
+
+- **Status:** VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 – vorgezogen, falls der 30-Minuten-Test (4.8) am Import scheitert (ADR-012)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 2.4
+- **Freigabepflichtig:** ja – Eingangsformat ist Teil des Datenmodells (Kategorie 4)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell-Festlegung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** ein TypingMind-Agenten-Export liegt vor (z. B. Test-Agent mit erfundenem Inhalt)
+- **Anforderungen (ab Klasse M):** keine (FR-005 in 2.4 erfüllt)
+- **Zu tun:** Schema des Exports klären (Systemanweisung, Wissensdateien), Importer in `canon.importers` ergänzen.
+- **Akzeptanzkriterien:** Ein Agenten-Export wird ohne Handarbeit als Welt-Material übernommen.
+- **Betroffene Module:** canon
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR zum Format, Code, Tests
+- **Notizen:** –
+
+#### V.5: Import aus Notion (Markdown-Export mit Unterseiten)
+
+- **Status:** VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 – vorgezogen, falls der 30-Minuten-Test (4.8) am Import scheitert (ADR-012)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 2.4
+- **Freigabepflichtig:** ja – Eingangsformat ist Teil des Datenmodells (Kategorie 4)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell-Festlegung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** ein Notion-Markdown-Export mit Unterseiten liegt vor (z. B. Testseite mit erfundenem Inhalt)
+- **Anforderungen (ab Klasse M):** keine (FR-005 in 2.4 erfüllt)
+- **Zu tun:** Verhalten von Unterseiten und Dateistruktur des Exports klären, Importer auf dem Markdown-Importer aus 2.4 aufbauen.
+- **Akzeptanzkriterien:** Ein Notion-Export mit Unterseiten wird ohne Handarbeit als Welt-Material übernommen.
+- **Betroffene Module:** canon
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR zum Format, Code, Tests
 - **Notizen:** –
 
 ---

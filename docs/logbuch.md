@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 20:55 – [ADR-ANGELEGT] ADR-012 – Import zunächst Markdown; 1.2 erledigt, 1.3 begonnen
+
+- Eigentümer (Frage-System): „Wir beginnen erst mal mit Markdown-Import und nehmen TypingMind und Notion später dazu." Empfehlung der KI war Dummy-Exporte; Entscheidung B, neutral im ADR vermerkt.
+- ADR-012 [ERKENNTNIS] `[DATENMODELL]`; 1.2 `[ERLEDIGT]` mit geändertem Inhalt; 2.4 auf Markdown-Importer umgestellt; neue Schritte V.4 (TypingMind) und V.5 (Notion), `[VERSCHOBEN]`, Landeplatz 5.5, Vorziehen falls 4.8 am Import scheitert. Risiko FR-005/FR-022 (Handarbeit vs. 30 Minuten) im ADR benannt.
+- 1.3 `[IN ARBEIT]`: Empfohlene Klasse Routine, aktive Klasse Entscheidung – Arbeit oberhalb der Empfehlung, Hinweis an den Eigentümer vorab im Frage-System gegeben (Guthaben), Eigentümer wählte „Ja, jetzt"; keine Abgabe an einen Unteragenten, weil die Routine-Klasse ohne Probelauf ist.
+
 ### 2026-09-26 20:40 – [BEOBACHTUNG] Branch-Konvention (M.1), Antworten des Eigentümers
 
 - Antworten über das Frage-System (Wunsch des Eigentümers: Rückfragen künftig dort stellen): hier weiterarbeiten; Branch-Konvention erstellen; Exporte für 1.2 **nicht** nutzbar; eigene Lesung der Testtexte nicht nötig (in 1.4 vermerkt).

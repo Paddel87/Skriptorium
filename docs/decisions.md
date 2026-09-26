@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -31,12 +31,13 @@ Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 009 | 2026-09-26 | Aktiv | STRATEGISCH | METHODIK | Methodik (Descope) | FR-006 verworfen: keine Übernahme bestehender Geschichten |
 | 010 | 2026-09-26 | Aktiv (Zweitmodell ersetzt durch ADR-011) | ERKENNTNIS | PERFORMANCE | – (Ergebnis Schritt 1.1) | Startmodell grok-4.7, Ausweichmodell qwen3.8-max, Token-Budget 30.000 |
 | 011 | 2026-09-26 | Aktiv | ERKENNTNIS | PERFORMANCE | – (Ergebnis Schritt 1.5) | grok-4.6 Zweitmodell, qwen3.8-max nur Notfall-Reserve |
+| 012 | 2026-09-26 | Aktiv | ERKENNTNIS | DATENMODELL | Datenmodell | Import von Welt-Material zunächst nur als Markdown |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 0 / 10 (0 %) über ADR-002 bis ADR-011 – ADR-002 bis ADR-009 aus der Initialisierung (Modus 2), ADR-010 und ADR-011 Ergebnisse von Erkundungsschritten; keiner reaktiv.
+- **Aktueller Wert:** 0 / 10 (0 %) über ADR-003 bis ADR-012 – ADR-003 bis ADR-009 aus der Initialisierung (Modus 2), ADR-010 bis ADR-012 Ergebnisse von Erkundungsschritten; keiner reaktiv.
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -365,6 +366,31 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Konsequenzen:**
   - Reihenfolge der Modelle: grok-4.7 (Start) → grok-4.6 (Zweitmodell, auch schnelle Alternative, 5–8 s) → qwen3.8-max (Notfall-Reserve).
   - **Restrisiko:** Start- und Zweitmodell stammen von xAI. Verschärft xAI Filter oder Bedingungen, fallen beide zugleich aus; dann bleibt qwen3.8-max mit schwächerer Genre-Leistung. Deshalb bleibt der Modellwechsel über die Anbieter-Schnittstelle (FR-018, FR-025) Pflicht, und die Beobachtung von Filteränderungen (`docs/requirements.md`, Beteiligter KI-Anbieter) gilt besonders für xAI.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-012: Import von Welt-Material zunächst nur als Markdown
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[ERKENNTNIS]` `[DATENMODELL]`
+- **Phasentyp-Kontext:** ERKUNDUNG
+- **Reifegrad-Wirkung:** offene Frage im Modul `canon` (Inhalt des TypingMind-Exports) für die erste Ausbaustufe gegenstandslos; Untermodul `canon.importers` mit einem Markdown-Importer `[VORLÄUFIG]`
+- **Kategorie:** Datenmodelländerungen (`CLAUDE.md` Abschnitt 4, Kategorie 4) – Eingangsformat des Imports
+- **Kontext:** Schritt 1.2 sollte das Importformat an echten Exporten aus TypingMind (Agenten-JSON) und Notion (Markdown-Export) festlegen. Das Material des Eigentümers kann in der Arbeitsumgebung nicht verwendet werden (Angabe des Eigentümers, 2026-09-26); das Schema des TypingMind-Exports ist nicht öffentlich dokumentiert (`docs/research/bestandspruefung.md`).
+- **Optionen:**
+  - **A:** Dummy-Exporte mit erfundenem Inhalt anlegen und daran beide Importer festlegen.
+  - **B:** Zunächst nur Markdown-Import; der Autor kopiert sein Welt-Material als Text/Markdown ins Skriptorium und ordnet Kanon-Einträge dort zu. TypingMind- und Notion-Importer später.
+  - **C:** Notion nach öffentlicher Doku bauen, TypingMind später.
+- **Entscheidung:** B (Empfehlung der KI war A).
+- **Vision-Frage, die entschied:** „Deine echten Exporte kann ich nicht nutzen. Wie sollen wir den Import von Welt-Material klären?" → Antwort des Eigentümers: „Wir beginnen erst mal mit Markdown-Import und nehmen TypingMind und Notion später dazu."
+- **Konfidenz zum Zeitpunkt:** hoch, dass Markdown als Eingang trägt (offenes, dokumentiertes Format; Notion exportiert ohnehin Markdown); Umkehrbarkeit billig (weitere Importer sind Ergänzungen in `canon.importers`).
+- **Konsequenzen:**
+  - Schritt 2.4 baut einen Markdown-Importer; Einzelheiten der Zuordnung (z. B. Überschriften als Einträge, Kategorie-Wahl durch den Autor) werden in 2.4 festgelegt und dem Eigentümer gezeigt.
+  - TypingMind-Import → Schritt V.4, Notion-Import → Schritt V.5 (beide `[VERSCHOBEN]`, Landeplatz 5.5).
+  - **Risiko FR-005/FR-022:** Welt-Material mit zweistelliger Seitenzahl von Hand zu kopieren und zuzuordnen kann den 30-Minuten-Rahmen der Einrichtung sprengen. Gemessen wird das im 30-Minuten-Test (4.8); reicht die Zeit nicht, werden V.4/V.5 vorgezogen.
 - **Abgeleitete Regel:** keine
 
 ---

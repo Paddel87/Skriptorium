@@ -56,13 +56,13 @@ graph LR
 ### Modul: canon [VORLÄUFIG]
 
 - **Reifegrad:** `[VORLÄUFIG]`, seit 2026-09-26, Begründung: aus Vision und Anforderungen abgeleitet, nicht implementiert
-- **Verantwortung:** Welten und ihre Kanon-Einträge (Figur, Ort/Geografie, Gegenstand, Zeitlinie, Regel, Kultur) anlegen, ändern, löschen, finden; Aliasse für die Namenserkennung; einmaliger Import von Welt-Material aus TypingMind (JSON-Export) und Notion (Markdown-Export) (FR-001–FR-005, FR-023).
+- **Verantwortung:** Welten und ihre Kanon-Einträge (Figur, Ort/Geografie, Gegenstand, Zeitlinie, Regel, Kultur) anlegen, ändern, löschen, finden; Aliasse für die Namenserkennung; einmaliger Import von Welt-Material, zunächst als Markdown (ADR-012); Importer für TypingMind und Notion später (Schritte V.4, V.5) (FR-001–FR-005, FR-023).
 - **Nicht-Verantwortung:** keine Entscheidung, welche Einträge in eine KI-Anfrage gehören (→ `context`); keine geschichtenbezogenen Fakten (→ `manuscript`).
 - **Öffentliche Schnittstellen:** `CanonService` (Abschnitt 4)
 - **Interne Struktur:** Import als eigenes Untermodul `canon.importers` mit je einem Importer pro Quelle.
 - **Abhängigkeiten (andere Module):** `storage`
 - **Abhängigkeiten (extern):** keine
-- **Offene Fragen:** Inhalt des TypingMind-Agenten-Exports (enthält er Wissensdateien?) – Klärung an einem echten Export, Fahrplan-Schritt 1.2.
+- **Offene Fragen:** Inhalt des TypingMind-Agenten-Exports – für die erste Ausbaustufe gegenstandslos (ADR-012), Klärung in Schritt V.4.
 
 ### Modul: manuscript [VORLÄUFIG]
 
@@ -276,7 +276,7 @@ data/
 |---|---|---|---|
 | Architektur-Pattern Modularer Monolith | BELASTBAR | 2026-09-26 | ADR-003 |
 | Kommunikations-Grundmodus synchron + SSE | VORLÄUFIG | 2026-09-26 | Umsetzung |
-| Modul canon | VORLÄUFIG | 2026-09-26 | Beförderung 1.4; Klärung TypingMind-Export 1.2; Umsetzung 2.3, 2.4 |
+| Modul canon | VORLÄUFIG | 2026-09-26 | Beförderung 1.4; Import zunächst Markdown (ADR-012); Umsetzung 2.3, 2.4 |
 | Modul manuscript | VORLÄUFIG | 2026-09-26 | Umsetzung |
 | Modul context | VORLÄUFIG | 2026-09-26 | Erkundungsschritt 1.1; Beförderung 1.4; Umsetzung 3.2 |
 | Modul ai_gateway | VORLÄUFIG | 2026-09-26 | Erkundungsschritte 1.1 (Ablehnungen), 1.3 (httpx); Beförderung 1.4; Umsetzung 3.1 |
