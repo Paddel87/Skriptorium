@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 20:25 – [ADR-ANGELEGT] ADR-011 – grok-4.6 Zweitmodell
+
+- Eigentümer: grok-4.7 bei CNC-Inhalten sehr gut, grok-4.6 gut bei Charakter-Konsistenz und Figuren-Simulation; „Qwen ist wirklich nur eine Notfalllösung."
+- ADR-011 [ERKENNTNIS]: Reihenfolge grok-4.7 → grok-4.6 → qwen3.8-max (Notfall). ADR-010-Status vermerkt die Ersetzung. Restrisiko benannt: beide Hauptmodelle von xAI.
+- Reaktiv-Quote 0/10 (letzte 10 ADRs: 002–011).
+
 ### 2026-09-26 20:10 – [BEOBACHTUNG] Schritt 1.5 erledigt
 
 - Genre-Bewertung (4 Prüf-Instanzen, je Szene 8 Texte blind): grok-4.7 in allen vier Szenen Rang 1 und 2 (Punkte 22,5/25), grok-4.6 18,1, gemini-3.8-flash 16,6, qwen3.8-max 16,0. Keine Ablehnung, keine Moralisierung; Abschwächung selten (qwen 2, grok-4.6 1); Schreibweise-Verstöße vor allem bei qwen (5/8).

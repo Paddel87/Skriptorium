@@ -28,7 +28,7 @@
 - **Kosten:** alle Modelle weit im Kostenrahmen; grok-4.7 hochgerechnet 12–21 $ im Monat.
 - **Filter:** keine Ablehnung in 54 Läufen (harmlose Szene, daher ohne Aussagekraft); maßgeblich ist die Erfahrung des Eigentümers an echtem Material (Abschnitt „Filterverhalten").
 - **Genres (1.5):** grok-4.7 in Horror, Thriller, Action und düsterer Szene jeweils auf den Plätzen 1 und 2; keine Ablehnung, keine Moralisierung bei keinem Modell.
-- **Festlegung (ADR-010):** grok-4.7 Startmodell, qwen3.8-max Ausweichmodell, grok-4.6 schnelle Alternative; Token-Budget 30.000 als Obergrenze.
+- **Festlegung (ADR-010, ADR-011):** grok-4.7 Startmodell, grok-4.6 Zweitmodell (auch schnelle Alternative), qwen3.8-max nur Notfall-Reserve; Token-Budget 30.000 als Obergrenze. Der Eigentümer bestätigt aus eigener Nutzung: grok-4.7 sehr gut bei CNC-Inhalten, grok-4.6 gut bei Charakter-Konsistenz und Figuren-Simulation.
 
 <!-- ANCHOR:aufbau -->
 ## Aufbau des Tests
@@ -157,7 +157,7 @@ Auftrag des Eigentümers (2026-09-26): Leistung bei düsteren, Horror-, Thriller
 - **Abschwächung:** selten; qwen3.8-max und grok-4.6 entschärften je einmal den Thriller (Gitter schon offen, Flucht ohne Hindernis), qwen3.8-max einmal die Hinrichtung („Tod nur als Beben unter der Oberfläche").
 - **Figuren-Schreibweise unter Genre-Druck** ist die häufigste Schwäche: In Action- und Fluchtszenen lassen Modelle Ilka selbst laufen oder denken; qwen3.8-max in 5 von 8 Texten, grok-4.7 in 1 von 8.
 - **Typische Urteile:** grok-4.7 Action „präzise, karg und körperlich, die Stellung der Figuren stets klar"; grok-4.7 Hinrichtung „Grausamkeit ohne Trost … glänzend"; gemini-3.8-flash Horror „generischer Wasserleichen-Horror mit Klischees".
-- **Folge für ADR-010:** Das Startmodell grok-4.7 bestätigt sich auch in diesen Genres deutlich. Das Ausweichmodell qwen3.8-max ist hier schwächer als grok-4.6; qwen bleibt Ausweichmodell nur wegen des anderen Herstellers (Schutz gegen verschärfte Filter bei xAI) – Frage an den Eigentümer, ob grok-4.6 stattdessen das bevorzugte Zweitmodell sein soll.
+- **Folge für ADR-010:** Das Startmodell grok-4.7 bestätigt sich auch in diesen Genres deutlich. Das Ausweichmodell qwen3.8-max ist hier schwächer als grok-4.6; qwen bleibt Ausweichmodell nur wegen des anderen Herstellers (Schutz gegen verschärfte Filter bei xAI) – Entscheidung des Eigentümers: grok-4.6 wird Zweitmodell, qwen3.8-max nur Notfall-Reserve (ADR-011).
 
 <!-- ANCHOR:nutzungsbedingungen -->
 ## Nutzungsbedingungen der ausführenden Anbieter

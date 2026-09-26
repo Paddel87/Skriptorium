@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -29,13 +29,14 @@ Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 007 | 2026-09-26 | Aktiv | STRATEGISCH | SECURITY | Sicherheit und Datenschutz | Schutzbedarf normal |
 | 008 | 2026-09-26 | Aktiv | STRATEGISCH | SECURITY, DEPLOYMENT | Sicherheit und Datenschutz | Verzicht auf Vertretung (Gate-Punkt 7) |
 | 009 | 2026-09-26 | Aktiv | STRATEGISCH | METHODIK | Methodik (Descope) | FR-006 verworfen: keine Übernahme bestehender Geschichten |
-| 010 | 2026-09-26 | Aktiv | ERKENNTNIS | PERFORMANCE | – (Ergebnis Schritt 1.1) | Startmodell grok-4.7, Ausweichmodell qwen3.8-max, Token-Budget 30.000 |
+| 010 | 2026-09-26 | Aktiv (Zweitmodell ersetzt durch ADR-011) | ERKENNTNIS | PERFORMANCE | – (Ergebnis Schritt 1.1) | Startmodell grok-4.7, Ausweichmodell qwen3.8-max, Token-Budget 30.000 |
+| 011 | 2026-09-26 | Aktiv | ERKENNTNIS | PERFORMANCE | – (Ergebnis Schritt 1.5) | grok-4.6 Zweitmodell, qwen3.8-max nur Notfall-Reserve |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 0 / 10 (0 %) – ADR-001 bis ADR-009 aus der Initialisierung (Modus 2), ADR-010 Ergebnis eines Erkundungsschritts; keiner reaktiv.
+- **Aktueller Wert:** 0 / 10 (0 %) über ADR-002 bis ADR-011 – ADR-002 bis ADR-009 aus der Initialisierung (Modus 2), ADR-010 und ADR-011 Ergebnisse von Erkundungsschritten; keiner reaktiv.
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -317,7 +318,7 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 
 - **Datum:** 2026-09-26
 - **Entscheider:** Eigentümer (Wertung Wartezeit gegen Kanon-Treue); Festlegung der Werte durch die KI auf Grundlage des Tests
-- **Status:** Aktiv
+- **Status:** Aktiv – Festlegung des Ausweichmodells ersetzt durch ADR-011 (grok-4.6 Zweitmodell, qwen3.8-max Notfall-Reserve)
 - **Tags:** `[ERKENNTNIS]` `[PERFORMANCE]`
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Reifegrad-Wirkung:** NFR Token-Budget: Wert festgelegt, bleibt `[VORLÄUFIG]` bis zur Beförderung in Schritt 1.4; NFR Reaktionszeit: Ziel 5 s für das Startmodell nicht erreichbar, Anpassung in 1.4 vorzulegen; NFR Kanon-Treue bleibt `[OFFEN]` (Vorprüfung erfolgt)
@@ -341,6 +342,29 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
   - `context` (3.2): Feste Teile (Regeln, Kanon) an den Anfang der Anfrage – Zwischenspeicher der Anbieter senkten im Test die Kosten der Folgeanfrage deutlich.
   - Oberfläche (3.3, 3.9): „mit anderem Modell wiederholen" bei jedem KI-Text, weil textliche Weigerungen technisch nicht erkennbar sind.
   - Filterverhalten gegenüber den Inhalten des Eigentümers ist nur durch seine Erfahrung belegt; neuere Modellversionen können strenger werden (Befund Gemini) – Modellwechsel bleibt zentral.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-011: grok-4.6 als Zweitmodell, qwen3.8-max nur als Notfall-Reserve
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[ERKENNTNIS]` `[PERFORMANCE]`
+- **Phasentyp-Kontext:** ERKUNDUNG
+- **Reifegrad-Wirkung:** keine
+- **Kategorie:** keine aus `CLAUDE.md` Abschnitt 4 (Modellwahl ist Konfiguration); Ergebnis des Erkundungsschritts 1.5, ändert die Zweitmodell-Festlegung aus ADR-010
+- **Kontext:** ADR-010 legte qwen3.8-max als Ausweichmodell fest, vor allem wegen des anderen Herstellers. Der Genre-Test (Schritt 1.5, `docs/research/modell-eignungstest.md` Abschnitt „Genre-Test") zeigte qwen3.8-max in Horror, Thriller, Action und düsterer Szene schwächer als grok-4.6 (Punkte 16,0 zu 18,1 von 25; Schreibweise-Verstöße 5 zu 2 von 8 Texten).
+- **Optionen:**
+  - **A:** qwen3.8-max bleibt Ausweichmodell – Schutz durch zweiten Hersteller, schwächer in Genre-Szenen.
+  - **B:** grok-4.6 wird bevorzugtes Zweitmodell, qwen3.8-max bleibt Notfall-Reserve – bessere Texte, beide Hauptmodelle vom selben Hersteller.
+- **Entscheidung:** B.
+- **Vision-Frage, die entschied:** „qwen als Ausweichmodell wegen des zweiten Herstellers – oder grok-4.6, das in deinen Genres besser schreibt?" → Antwort des Eigentümers: grok-4.6 ist auch in seiner Nutzung gut bei Charakter-Konsistenz und Figuren-Simulation, grok-4.7 zudem sehr gut bei CNC-Inhalten; „Qwen ist wirklich nur eine Notfalllösung."
+- **Konfidenz zum Zeitpunkt:** hoch für die Rangfolge (Test und Erfahrung des Eigentümers stimmen überein); Umkehrbarkeit billig (Einstellung).
+- **Konsequenzen:**
+  - Reihenfolge der Modelle: grok-4.7 (Start) → grok-4.6 (Zweitmodell, auch schnelle Alternative, 5–8 s) → qwen3.8-max (Notfall-Reserve).
+  - **Restrisiko:** Start- und Zweitmodell stammen von xAI. Verschärft xAI Filter oder Bedingungen, fallen beide zugleich aus; dann bleibt qwen3.8-max mit schwächerer Genre-Leistung. Deshalb bleibt der Modellwechsel über die Anbieter-Schnittstelle (FR-018, FR-025) Pflicht, und die Beobachtung von Filteränderungen (`docs/requirements.md`, Beteiligter KI-Anbieter) gilt besonders für xAI.
 - **Abgeleitete Regel:** keine
 
 ---
