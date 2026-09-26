@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 2 „Grundgerüst" (bereit; Phase 1 abgeschlossen 2026-09-26, ADR-014: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner
-- **Nächster Schritt:** 2.1 (Projektgerüst und volle CI-Gates) – freigabepflichtig (Werkzeug-Pins, CI-Gates): beginnt mit einem `ENTSCHEIDUNG ERFORDERLICH`; Empfohlene Klasse Entscheidung
+- **Aktiver Schritt:** 2.1 `[WARTET-AUF-FREIGABE]` – `ENTSCHEIDUNG ERFORDERLICH` am 2026-09-26 vorgelegt (Werkzeug-Pins, Regel für Linien ohne Patch-Versionen, zwei Werkzeug-Lizenzen, Starlette-Abkündigung, CI-/Hook-Aufbau)
+- **Nächster Schritt:** nach Freigabe ADR-015 anlegen, dann 2.1 umsetzen
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -112,7 +112,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 2.1: Projektgerüst und volle CI-Gates
 
-- **Status:** OFFEN
+- **Status:** WARTET-AUF-FREIGABE (seit 2026-09-26; Vorschlag im Gespräch, Versionstabelle in `docs/research/versions-verifikation.md` Abschnitt „Entwicklungswerkzeuge")
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 1.4
 - **Freigabepflichtig:** ja – Pin der Entwicklungswerkzeuge (Kategorie 3) und Aktivierung der CI-Gates (Kategorie 7)

@@ -29,6 +29,24 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 17:35 – [BEOBACHTUNG] 2.1 vorbereitet – Probeaufbau und Abkündigung in Starlette
+
+- Werkzeug-Versionen gegen PyPI, npm-Registry und Git-Tags geprüft; Tabelle in `docs/research/versions-verifikation.md` („Entwicklungswerkzeuge").
+- Probeaufbau im Scratchpad (Python 3.14.7 über uv 0.12.19, Node 24.21.0 als Tarball von nodejs.org mit geprüfter SHA-256): alle Gates liefen.
+- **Befund:** Starlette 1.7.0 kündigt httpx im TestClient zugunsten von `httpx2` an; mit `filterwarnings = error` bricht jeder Test ab. httpx2 (Pydantic-Fortführung) ist erst ab 2026-11-12 mindestreif. Ein erster Filter mit Kategorie `DeprecationWarning` griff nicht – die Warnung ist eine eigene Klasse `starlette.exceptions.StarletteDeprecationWarning`; erst der volle Klassenpfad wirkte.
+- **Befund:** Die v7-Actions in `ci.yml` sind jünger als 6 Monate; mypy 2, vitest 5 ebenfalls. pytest-cov 7 und setup-python/setup-node v6 haben gar keine Patch-Versionen – Regel-001 greift dort nicht sauber (zur Entscheidung).
+- **Befund:** `UV_NATIVE_TLS`-Warnung verschwindet mit `UV_SYSTEM_CERTS=1` und entferntem `UV_NATIVE_TLS`; in CI ist die Variable nicht gesetzt.
+- **Reibung:** GitHub-API aus der Umgebung gesperrt (403); Action-Daten über `git ls-remote` und flache Tag-Abrufe ermittelt.
+- Zwei transitive Lizenzen außerhalb der Liste (CC-BY-4.0, BlueOak-1.0.0) im Build-Werkzeug.
+
+### 2026-09-26 17:00 – [SESSIONSTART] Schritt 2.1
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage `get_session`, 17:00 UTC) → Entscheidungs-Klasse; entspricht der Empfehlung für 2.1.
+- **Kontingent:** Wochenlimit Status `allowed_warning` (Warnschwelle erreicht), Zurücksetzung 2026-09-27 10:00 MESZ laut Sitzungsabfrage. Kontextgröße zu Beginn laut Abfrage 0 (Wert offenbar noch nicht befüllt).
+- **Mindest-Lektüre:** project-context vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan „Aktueller Stand" und Phase 2; Architektur 1, 2, 9; Decisions Teil A und C; Blocker aktiv (keine).
+- **Plan:** 2.1 mit `ENTSCHEIDUNG ERFORDERLICH` (Werkzeug-Pins Kategorie 3, CI-Gates Kategorie 7) beginnen.
+- **Beobachtung:** Der letzte `[SESSIONENDE]`-Eintrag trägt „22:00 UTC", die Systemuhr zeigt jetzt 17:00 UTC desselben Tages – die Zeitangaben der Vorsession waren vermutlich nicht UTC. Ab hier Zeiten in UTC laut Systemuhr.
+
 ### 2026-09-26 22:00 – [SESSIONENDE] Phase 1 abgeschlossen
 
 - **Dauer:** ca. 14:56–22:00 UTC (eine Session, fortgesetzt nach überschrittener Sessiongröße auf Anweisung des Eigentümers, 17:40).
