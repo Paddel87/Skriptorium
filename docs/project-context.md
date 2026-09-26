@@ -142,7 +142,7 @@ Modularer Monolith (ADR-003): ein Python-Server (FastAPI) liefert die React-Ober
 ### Compliance und Lizenz
 
 - **Projektlizenz:** AGPL-3.0 (Eigentümer, 2026-09-26, ADR-005; Vision-Frage: „Dürfen andere den Code in ein geschlossenes Produkt übernehmen?" → nein). `LICENSE` enthält den Lizenztext aus der SPDX-Lizenzliste (`AGPL-3.0-only.txt`, abgerufen 2026-09-26; gnu.org aus der Arbeitsumgebung nicht erreichbar).
-- **Erlaubte Abhängigkeitslizenzen:** MIT, BSD-2/3-Clause, Apache-2.0, ISC, PSF-2.0, MPL-2.0, LGPL (2.1 oder später, 3.0), GPL-3.0 (bzw. „2.0 oder später"), AGPL-3.0; Artistic-2.0, CC-BY-4.0 und BlueOak-1.0.0 nur für Werkzeuge (z. B. npm, caniuse-lite, minimatch; letztere ADR-015). Bestätigt vom Eigentümer 2026-09-26.
+- **Erlaubte Abhängigkeitslizenzen:** MIT, BSD-2/3-Clause, Apache-2.0, ISC, PSF-2.0, MPL-2.0, LGPL (2.1 oder später, 3.0), GPL-3.0 (bzw. „2.0 oder später"), AGPL-3.0; Artistic-2.0, CC-BY-4.0, BlueOak-1.0.0, MIT-0 und CC0-1.0 nur für Werkzeuge (z. B. npm, caniuse-lite, minimatch – ADR-015; `@csstools/*`, mdn-data über jsdom – ADR-019). Bestätigt vom Eigentümer 2026-09-26.
 - **Ausgeschlossene Lizenzen:** GPL-2.0-only (unvereinbar mit AGPL-3.0), proprietäre Lizenzen, Lizenzen mit Nutzungsbeschränkung (z. B. Commons Clause) – Abweichung nur per ADR.
 
 ### Anforderungen, Schutzbedarf, Kosten
@@ -265,6 +265,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 | TypeScript 7 – neue Linie, noch nicht reif | Nachprüfung 2027-01-08 | – | TypeScript-Devblog | D.2 |
 | Starlette-Abkündigung httpx im TestClient; httpx2 mindestreif | 2026-11-12 | – | Starlette 1.7.0, PyPI httpx2 (ADR-015) | D.5 – Wechsel auf httpx2 |
 | mypy 2 – neue Linie, noch nicht reif | Nachprüfung 2026-11-06 | – | PyPI (ADR-015) | D.5 (mit erledigen) |
+| jsdom 30 – neue Linie, noch nicht reif (ADR-019) | Nachprüfung 2027-01-27 | – | npm-Registry | D.2 (mit erledigen) |
 | vitest 5 – neue Linie, noch nicht reif | Nachprüfung 2027-03-03 | – | npm-Registry (ADR-015) | D.2 (mit erledigen) |
 | Guthaben des Coding-Agents (250 $, Stand 193 $) | 2026-11-05 08:59 MEZ | 2 Wochen | Angabe des Eigentümers 2026-09-26 | – (kontingentintensive Arbeit vor dem Ablauf einplanen; Schritt anlegen bei Erreichen des Vorlaufs) |
 | Wochenkontingent der KI | wöchentlich, So 10:00 (MESZ) | – | Sitzungsabfrage 2026-09-26 | – |

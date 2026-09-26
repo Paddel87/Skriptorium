@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 2 „Grundgerüst" – 2.1 bis 2.6 erledigt (2026-09-26), offen 2.7
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (2.6 `[ERLEDIGT]` 2026-09-26)
+- **Aktiver Schritt:** 2.7 `[IN ARBEIT]` (ADR-019)
 - **Nächster Schritt:** 2.7 (ui – Editor und Kanon-Pflege, inkl. Anmeldung, Einrichtung, Passwort, Sitzungsübersicht nach ADR-017)
 - **Offene STOPP-Situationen:** keine
 
@@ -208,7 +208,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 2.7: ui – Editor und Kanon-Pflege
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT (seit 2026-09-26; Test-Werkzeuge mit ADR-019)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.6
 - **Freigabepflichtig:** nein

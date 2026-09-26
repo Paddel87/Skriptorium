@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -38,12 +38,13 @@ Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 016 | 2026-09-26 | Aktiv | OPERATIV | STACK, DATENMODELL | Externe Abh. | YAML-Parser für den Dateikopf – PyYAML |
 | 017 | 2026-09-26 | Aktiv | OPERATIV | SECURITY, SCHNITTSTELLE, DATENMODELL | Sicherheit, Datenmodell, API, Externe Abh., Lizenz | Anmeldung und Sitzung – selbst gewähltes Passwort ohne zweiten Faktor |
 | 018 | 2026-09-26 | Aktiv | REAKTIV | MODUL, SECURITY | Architektur | Beziehungen api → storage (Zugangsdaten) und api → Pwned Passwords |
+| 019 | 2026-09-26 | Aktiv | OPERATIV | STACK, METHODIK | Externe Abh., Build-Pipeline | Test-Werkzeuge der Oberfläche – Testing Library, jsdom, Playwright |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 1 / 10 (10 %) über ADR-009 bis ADR-018 – ADR-009 aus der Initialisierung (Modus 2), ADR-010 bis ADR-014 aus Phase 1 (Erkundung), ADR-015 bis ADR-017 aus Phase 2 (operativ, geplant in 2.1, 2.2, 2.6); reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
+- **Aktueller Wert:** 1 / 10 (10 %) über ADR-010 bis ADR-019 – ADR-010 bis ADR-014 aus Phase 1 (Erkundung), ADR-015 bis ADR-017 und ADR-019 aus Phase 2 (operativ, geplant in 2.1, 2.2, 2.6, 2.7); reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -561,6 +562,32 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Konsequenzen:**
   - Modul-Karte: `API -.->|nur system/| STORE` und `API -.->|HTTPS| HIBP`. Leitregel ergänzt: `storage` bleibt die einzige Stelle, die Dateien berührt; `api` schreibt dort nur unter `system/`.
   - `api` hat damit Abhängigkeiten zu fünf Modulen; der Smell „Gott-Modul" (Heuristik 1.4) wird beim Phasenende 2 mitgeprüft.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-019: Test-Werkzeuge der Oberfläche – Testing Library, jsdom, Playwright
+
+- **Datum:** 2026-09-26
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[OPERATIV]` `[STACK]` `[METHODIK]`
+- **Phasentyp-Kontext:** UMSETZUNG (Schritt 2.7, Abnahme verlangt Komponenten- und End-to-End-Tests)
+- **Reifegrad-Wirkung:** keine
+- **Kategorie:** Externe Abhängigkeiten (3, nur Entwicklung), Build-Pipeline (7)
+- **Kontext:** Vitest prüfte bisher nur statisches HTML. Für 2.7 werden Klicks und Eingaben in Komponenten sowie der Ablauf im echten Browser (Cookie `__Host-sitzung`, Content-Security-Policy) gebraucht. Linien nach Regel-001 gegen die npm-Registry geprüft (2026-09-26): jsdom 30 erst 60 Tage alt → Linie 29.
+- **Optionen:**
+  - **A:** Komponenten-Tests mit jsdom 29.1.1, @testing-library/react 16.3.3, @testing-library/dom 10.4.2, @testing-library/user-event 14.6.7 (alle MIT) **und** End-to-End mit @playwright/test 1.62.1 (Apache-2.0) gegen echten Server mit gebauter Oberfläche in Chromium; eigener CI-Job.
+  - **B:** nur Komponenten-Tests gegen eine nachgebildete API; Abnahmekriterium „End-to-End“ per ADR abschwächen.
+- **Entscheidung:** A (Empfehlung der KI).
+- **Vision-Frage, die entschied:** „Reicht dir, dass die Einzelteile geprüft sind – oder soll vor jedem Merge automatisch einmal ‚wie du‘ im Browser angemeldet und geschrieben werden?“ → im Browser.
+- **Konfidenz zum Zeitpunkt:** hoch. Umkehrbarkeit: billig (nur Entwicklungswerkzeuge).
+- **Konsequenzen:**
+  - Neuer CI-Job „End-to-End“ installiert Chromium über Playwright und fährt die Abläufe gegen `uvicorn` mit gebauter Oberfläche.
+  - In der Cloud-Session ist ein älteres Chromium vorinstalliert (`/opt/pw-browsers`); lokal kann der Pfad über `PLAYWRIGHT_CHROMIUM_EXECUTABLE` gesetzt werden.
+  - Das Passwort für End-to-End-Tests wird ohne Pwned-Passwords-Abfrage direkt über `CredentialStore` gesetzt; die Einrichtungs-Maske ist über Komponenten-Tests abgedeckt – der Server erhält dafür keinen Testmodus.
+  - Nachprüf-Einträge im Ablaufdaten-Register: jsdom 30 (mindestreif ab 2027-01-27).
+  - Lizenzen (Kategorie 8, Nachtrag nach Freigabe des Eigentümers): MIT-0 (`@csstools/color-helpers`, `@csstools/css-syntax-patches-for-csstree`) und CC0-1.0 (`mdn-data`) kommen transitiv über jsdom; erlaubt nur für Werkzeuge.
 - **Abgeleitete Regel:** keine
 
 ---

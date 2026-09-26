@@ -29,6 +29,16 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 20:20 – [ADR-ANGELEGT] ADR-019
+
+- Test-Werkzeuge der Oberfläche: jsdom 29.1.1, Testing Library, Playwright 1.62.1; neuer CI-Job End-to-End. Freigabe des Eigentümers per Antwortsystem (Option A). `[OPERATIV]`; Reaktiv-Quote 1/10.
+
+### 2026-09-26 20:10 – [SESSIONSTART] Fortsetzung mit 2.7 auf Anweisung „weiter 2.7“
+
+- **Abweichung:** Sessiongröße 379.453 Token über der Grenze 200.000; der Eigentümer hat ausdrücklich „weiter 2.7“ angeordnet (`CLAUDE.md` Abschnitt 0, Ausnahme „weiter hier“).
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 20:04) → Entscheidungs-Klasse; 2.7 empfiehlt Routine – Hinweis an den Eigentümer vorab (Wochenkontingent im Warnbereich); keine Abgabe ohne Probelauf.
+- PR #6 gemergt (`a5e1f8f`); Branch `claude/neue-session-2-6-tt13wa` neu von `main` aufgesetzt.
+
 ### 2026-09-26 20:05 – [SESSIONENDE] Schritt 2.6 erledigt
 
 - **Dauer:** 19:20–20:05 UTC.
