@@ -29,6 +29,21 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-26 19:45 – [BEOBACHTUNG] 2.6 vorbereitet – ASVS 5.0.0 im Original geprüft
+
+- Quelle: OWASP/ASVS, Tag `v5.0.0`, Kapitel V6, V7, V11, V3, V16 und Anhang C (raw.githubusercontent.com, abgerufen 2026-09-26).
+- **Befund:** ASVS 6.3.3 (Stufe 2) verlangt Mehr-Faktor-Anmeldung oder eine vollständig begründete Abweichung mit ausgleichenden Maßnahmen. Fahrplan 2.6 und ADR-006 sahen nur „Passwort und Sitzungs-Cookie" vor – die Lücke war bisher nicht benannt.
+- **Befund:** Stufe 1 verlangt, dass der Nutzer sein Passwort ändern kann (6.2.2, 6.2.3); ein Passwort-Hash in einer Umgebungsvariablen (Architektur Abschnitt 6, project-context Abschnitt 6) lässt das aus der Oberfläche nicht zu. Ein Ablageort im Datenverzeichnis braucht eine Beziehung `api → storage`, die die Modul-Karte nicht enthält.
+- **Befund:** Stufe 2 verlangt Sitzungsübersicht mit Beenden (7.5.2), dokumentierte Inaktivitäts- und Höchstdauer (7.1.1, 7.3.1, 7.3.2) und eine Regel für parallele Sitzungen (7.1.2) – neue Endpunkt-Gruppen über den Grobvertrag der HTTP-API hinaus.
+- **Befund:** scrypt aus der Python-Standardbibliothek (N = 2^17, r = 8, p = 1) ist nach Anhang C zulässig – keine neue Abhängigkeit für das Passwort-Hashing nötig. OpenSSL 3.5.8 in der Laufzeit.
+
+### 2026-09-26 19:20 – [SESSIONSTART] Schritt 2.6
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage `get_session`, 19:20 UTC) → Entscheidungs-Klasse; entspricht der Empfehlung für 2.6.
+- **Kontingent:** Wochenlimit Status `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ laut Sitzungsabfrage. Kontextgröße laut Abfrage 0 (Wert zu Sessionbeginn noch nicht befüllt).
+- **Mindest-Lektüre:** project-context vollständig; Logbuch ab letztem `[SESSIONENDE]`; Fahrplan „Aktueller Stand" und Phase 2; Architektur 1, 2, 9; Decisions Teil A und C; Blocker aktiv (keine). Branch `claude/neue-session-2-6-tt13wa` von `main` (`70627fa`, PR #5 gemergt).
+- **Plan:** 2.6 mit `ENTSCHEIDUNG ERFORDERLICH` (Authentifizierung und Sitzung, Kategorie 6; Passwort-Hashing ggf. Kategorie 3) beginnen.
+
 ### 2026-09-26 20:15 – [SESSIONENDE] Schritte 2.2 bis 2.5 erledigt
 
 - **Dauer:** Fortsetzung 18:30–20:15 UTC (Gesamtsession ab 17:00).

@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 2 „Grundgerüst" – 2.1 bis 2.5 erledigt (2026-09-26), offen 2.6 und 2.7
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (2.5 `[ERLEDIGT]` 2026-09-26)
+- **Aktiver Schritt:** keiner – 2.6 `[WARTET-AUF-FREIGABE]` (Anmeldung und Sitzung, Kategorien 1, 4, 5, 6)
 - **Nächster Schritt:** 2.6 (api – HTTP-Schnittstelle mit Anmeldung) – beginnt mit `ENTSCHEIDUNG ERFORDERLICH` (Authentifizierung, Kategorie 6)
 - **Offene STOPP-Situationen:** keine
 
@@ -192,7 +192,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 2.6: api – HTTP-Schnittstelle mit Anmeldung
 
-- **Status:** OFFEN
+- **Status:** WARTET-AUF-FREIGABE (2026-09-26) – `ENTSCHEIDUNG ERFORDERLICH` zu zweitem Faktor, Passwort-Verwaltung, Sitzungsdauer und Anmelde-Protokoll vorgelegt
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.3, 2.5
 - **Freigabepflichtig:** ja – Authentifizierung und Sitzung (Kategorie 6); ggf. Bibliothek für Passwort-Hashing (Kategorie 3)
