@@ -10,6 +10,8 @@
 - **Schritt 1 (Klassifikation):** Hypothese **Klasse M**, vom Eigentümer nicht beanstandet; endgültige Bestätigung nach Schritt 4. Risiko Richtung G: Kontext-Zusammenstellung für lange Geschichten könnte einen zweiten Speicher (z. B. Suchindex) erfordern. ADR-001 wird in Schritt 5 geschrieben.
 - **Schritt 1a (Anforderungen):** abgeschlossen, `docs/requirements.md` vom Eigentümer bestätigt (18 Muss / 4 Soll / 1 Kann / 1 verworfen).
 - **Nächster Schritt:** Schritt 2 – `docs/project-context.md` vorbefüllen; Stack-Optionen vorlegen. Vorher Bestandsprüfung vorhandener Werkzeuge (Vision Abschnitt 9: „Eigenbau vs. Anpassung … vor der Entscheidung werden vorhandene Werkzeuge gezielt geprüft"). Dazu die Frage nach dem monatlichen Kostenrahmen.
+- **Kostenrahmen (Schritt 2):** bis 50 € monatlich für KI-Anfragen und Hosting zusammen (Angabe des Eigentümers, 2026-09-26) → `docs/project-context.md` Abschnitt 8.
+- **Bestandsprüfung:** läuft (2026-09-26), Ergebnis nach `docs/research/bestandspruefung.md`.
 - **Merkposten für spätere Schritte:**
   - ADR zum Verwerfen von FR-006 (Geschichten übernehmen) in Schritt 5.
   - Welt-Material liegt in TypingMind-Agenten und Notion – relevant für FR-005 und Schritt 2.
