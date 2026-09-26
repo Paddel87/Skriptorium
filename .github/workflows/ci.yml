@@ -91,3 +91,25 @@ jobs:
         run: npx vitest run --coverage
       - name: Build
         run: npx vite build
+
+  e2e:
+    name: End-to-End – Server und Oberfläche in Chromium (ADR-019)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6.0.3
+      - uses: actions/setup-python@v6.3.0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - uses: actions/setup-node@v6.5.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: pip install "uv==${UV_VERSION}"
+      - run: uv sync --frozen --python "${PYTHON_VERSION}"
+      - run: npm ci
+      - name: Chromium für Playwright installieren
+        run: npx playwright install --with-deps chromium
+      - name: Oberfläche bauen
+        run: npx vite build
+      - name: End-to-End-Tests
+        run: npx playwright test

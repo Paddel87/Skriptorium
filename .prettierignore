@@ -30,3 +30,7 @@ package-lock.json
 # Vorlagen des Methodik-Sets und Wegwerf-Code der Erkundung werden nicht formatiert.
 templates/
 spikes/
+
+# Ergebnisse der End-to-End-Tests (ADR-019).
+test-results/
+playwright-report/
