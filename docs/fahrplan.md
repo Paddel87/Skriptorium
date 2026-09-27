@@ -258,7 +258,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.9: Entwicklungsumgebung macOS einrichten
 
-- **Status:** IN ARBEIT (seit 2026-09-27) – Weg für Werkzeuge entschieden (ADR-026: Einrichtungsskript auch für macOS); VPS ist Host `nodica1` in `~/.ssh/config` des Eigentümers
+- **Status:** IN ARBEIT (seit 2026-09-27) – Weg für Werkzeuge entschieden (ADR-026: Einrichtungsskript auch für macOS); VPS ist Host `nodica1` in `~/.ssh/config` des Eigentümers. Stand 2026-09-27: Einrichtungsskript für macOS erweitert und im Haupt-Checkout erprobt (uv 0.12.19, Python 3.14.7, Node 24.21.0; pytest 381 grün 99,78 %, vitest 96 grün, E2E 8/8 zweimal grün nach Test-Fix `ControlOrMeta`, Pre-Commit grün; Commit `2f2fe82`); SSH per Schlüssel belegt. Offen: Validierung im frischen Klon (`[ONBOARDING-VALIDATION]`), Plattform-Matrix auf ✓, Tarif und Preis des VPS vom Eigentümer ins Kostenregister
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.1
 - **Freigabepflichtig:** nein – Plattformwechsel entschieden in ADR-025; neue Werkzeuge auf dem Mac (z. B. Homebrew) wären Kategorie 3 und werden vorgelegt
