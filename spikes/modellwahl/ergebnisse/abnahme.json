@@ -1,0 +1,38 @@
+{
+  "lauf_1": {
+    "modell": "x-ai/grok-4.7",
+    "text": "Ilka prüfte den ersten Balken mit der Stiefelspitze, bevor sie ihr Gewicht darauf verlagerte. Der Nebel schluckte das Knarren des schwarzen Holzes fast sofort. Sie ging nur so weit, wie sie den nächsten Pfosten noch ertasten konnte, und hielt die Hand am Seil."
+  },
+  "lauf_2": {
+    "modell": "x-ai/grok-4.6",
+    "text": "Ilka tastete den nächsten Pfosten, der kalt und glitschig unter ihren Fingern lag. Der Nebel hüllte alles ein, sodass selbst ihr eigener Atemlaut sofort verschwand. Sie setzte den nächsten vorsichtigen Schritt."
+  },
+  "pruefung": {
+    "lauf_2_mit_modell_der_geschichte": true,
+    "text_1_in_anfrage_2": true,
+    "text_1_im_kapitel": true,
+    "anfragen_gezaehlt": 2,
+    "kosten_usd": 0.0048,
+    "ohne_kosten": 0
+  },
+  "verbrauchsdatei": [
+    {
+      "zeit": "2026-09-27T05:35:52.259932+00:00",
+      "art": "schreiben",
+      "modell": "x-ai/grok-4.7",
+      "ergebnis": "ok",
+      "token_ein": 1408,
+      "token_aus": 225,
+      "kosten_usd": 0.001930896
+    },
+    {
+      "zeit": "2026-09-27T05:35:59.098106+00:00",
+      "art": "schreiben",
+      "modell": "x-ai/grok-4.6",
+      "ergebnis": "ok",
+      "token_ein": 441,
+      "token_aus": 368,
+      "kosten_usd": 0.00286902
+    }
+  ]
+}
