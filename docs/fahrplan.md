@@ -493,8 +493,8 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich, nicht bloß Status-Update.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 5
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Die verschobenen Schritte V.1, V.2, V.3 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen.
-- **Akzeptanzkriterien:** Jeder Schritt V.1–V.3 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
+- **Zu tun:** Die verschobenen Schritte V.1 bis V.5 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5).
+- **Akzeptanzkriterien:** Jeder Schritt V.1–V.5 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Fahrplan, ggf. ADRs
