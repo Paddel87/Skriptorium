@@ -7,6 +7,10 @@ entries of the world until the budget is used (precision before step 3.2,
 docs/architecture.md section 3). If (1)-(3) and the instruction do not fit, the request is
 refused - nothing the author named is left out silently.
 
+If the author leads characters (FR-012), a short reminder of that rule follows the instruction:
+the rule in the fixed part alone was often broken (step 3.3), and the end of a request weighs
+more for the model.
+
 Fixed parts (frame, world, canon) come first, changing parts last, so provider caches apply.
 Only entries of the story's own world are read (FR-001).
 """
@@ -177,7 +181,11 @@ class ContextBuilder:
 
         state = _story_state(story, chapters, chapter_number)
         instruction_part = _Part("anweisung", "Anweisung", f"# Anweisung\n\n{instruction.strip()}")
-        required = [*fixed, *state, instruction_part]
+        closing = [instruction_part]
+        led = _led_names(story, by_id)
+        if led:
+            closing.append(_Part("schreibweise", "Erinnerung Figuren-Schreibweise", _reminder(led)))
+        required = [*fixed, *state, *closing]
         capacity = math.floor(budget / SAFETY_MARGIN)
         needed = sum(part.block.tokens for part in required)
         if needed > capacity:
@@ -196,7 +204,7 @@ class ContextBuilder:
                 remaining -= part.block.tokens
 
         system_parts = [*fixed, *filler]
-        user_parts = [*state, *pages, instruction_part]
+        user_parts = [*state, *pages, *closing]
         system = "\n\n".join(part.text for part in system_parts)
         user = "\n\n".join(part.text for part in user_parts)
         blocks = tuple(part.block for part in [*system_parts, *user_parts])
@@ -218,18 +226,42 @@ def _frame(world_name: str) -> str:
     )
 
 
+def _led_names(story: Story, by_id: dict[str, CanonEntry]) -> str:
+    """Names of the characters the author leads, joined for the rule text."""
+    return ", ".join(by_id[c].name if c in by_id else c for c in story.controlled_characters)
+
+
 def _writing_mode(story: Story, by_id: dict[str, CanonEntry]) -> str:
-    """Perspective and characters led by the author (FR-012; wording refined in step 3.4)."""
+    """Perspective and characters led by the author (FR-012, wording of step 3.4)."""
     lines = [f"# Geschichte: {story.title}"]
     if story.perspective:
         lines.append(f"Erzählperspektive: {story.perspective}")
-    if story.controlled_characters:
-        names = ", ".join(by_id[c].name if c in by_id else c for c in story.controlled_characters)
+    names = _led_names(story, by_id)
+    if names:
         lines.append(
-            f"Der Autor führt selbst: {names}. Schreibe Handlung, Rede und Gedanken dieser "
-            "Figuren nur auf ausdrückliche Anweisung."
+            f"## Figuren-Schreibweise\n\n"
+            f"Der Autor führt selbst: {names}. Du führst die Welt und alle übrigen Figuren. "
+            f"Für {names} gilt, solange die Anweisung nichts anderes ausdrücklich verlangt:\n\n"
+            "- keine Handlung und keine Bewegung, auch keine kleine (nicht aufstehen, nicht "
+            "greifen, nicht nicken, nicht weitergehen);\n"
+            "- keine wörtliche oder indirekte Rede, keine Antwort, keinen Entschluss;\n"
+            "- keine Gedanken, Erinnerungen, Gefühle oder Absichten;\n"
+            "- erlaubt ist nur, was die Figur unmittelbar wahrnimmt: sehen, hören, riechen, "
+            "spüren; bei Ich-Erzählung in der ersten Person.\n\n"
+            "Beschreibe, was die übrigen Figuren und die Welt tun. Sobald die geführte Figur "
+            "handeln, sprechen oder sich entscheiden müsste, beende deinen Text an genau dieser "
+            "Stelle. Dort schreibt der Autor weiter."
         )
     return "\n\n".join(lines)
+
+
+def _reminder(names: str) -> str:
+    """Short repetition of the rule after the instruction (step 3.4)."""
+    return (
+        f"Erinnerung: {names} führt der Autor. Schreibe für {names} keine Handlung, keine Rede, "
+        "keinen Entschluss und keine Gedanken, nur Wahrnehmung. Ende, sobald die Figur handeln "
+        "oder antworten müsste."
+    )
 
 
 def _render(entry: CanonEntry) -> str:
