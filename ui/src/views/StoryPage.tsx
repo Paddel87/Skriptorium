@@ -8,9 +8,11 @@ import {
 import {
   api,
   describeError,
+  describeSummaryFailure,
   type CanonEntry,
   type Chapter,
   type Story,
+  type SummaryStatus,
 } from "../api";
 import { useLoad } from "../useLoad";
 import { ErrorText, Field } from "./Common";
@@ -66,6 +68,7 @@ export function StoryPage({ story: initial }: { story: Story }) {
           <p className="note">Perspektive: {story.perspective}</p>
         )}
         <WritingMode story={story} onSaved={setStory} />
+        <StorySummary key={story.summary} story={story} onSaved={setStory} />
         <ErrorText message={error} />
         {chapters.length > 1 && (
           <nav className="row" aria-label="Kapitel">
@@ -104,6 +107,7 @@ export function StoryPage({ story: initial }: { story: Story }) {
           key={current.number}
           chapter={current}
           onSaved={reload}
+          onStory={setStory}
         />
       )}
     </div>
@@ -203,17 +207,152 @@ function WritingMode({
   );
 }
 
-function ChapterEditor({
+/**
+ * Gesamtzusammenfassung (FR-010): continued by the AI whenever a chapter summary is created;
+ * the author can read and change it.
+ */
+function StorySummary({
+  story,
+  onSaved,
+}: {
+  story: Story;
+  onSaved: (story: Story) => void;
+}) {
+  const [summary, setSummary] = useState(story.summary);
+  const [error, setError] = useState<string | null>(null);
+
+  async function save(event: SyntheticEvent) {
+    event.preventDefault();
+    setError(null);
+    try {
+      onSaved(await api.setStorySummary(story.world, story.id, summary));
+    } catch (reason: unknown) {
+      setError(describeError(reason));
+    }
+  }
+
+  return (
+    <details>
+      <summary>Gesamtzusammenfassung</summary>
+      <form className="stack" onSubmit={(event) => void save(event)}>
+        {story.summary === "" && (
+          <p className="note">
+            Entsteht, sobald das erste Kapitel abgeschlossen ist.
+          </p>
+        )}
+        <Field label="Gesamtzusammenfassung">
+          <textarea
+            rows={8}
+            value={summary}
+            onChange={(event) => {
+              setSummary(event.target.value);
+            }}
+          />
+        </Field>
+        <ErrorText message={error} />
+        <div className="row">
+          <button type="submit" disabled={summary === story.summary}>
+            Gesamtzusammenfassung speichern
+          </button>
+        </div>
+      </form>
+    </details>
+  );
+}
+
+const SUMMARY_STATUS_TEXT: Record<SummaryStatus, string> = {
+  fehlt: "fehlt – die KI nutzt den Kapitelanfang",
+  erzeugt: "von der KI erstellt, noch nicht geprüft",
+  geprüft: "geprüft",
+};
+
+/**
+ * Kurzfassung of a chapter (FR-010): shown once the chapter is completed or has one; saving
+ * marks it as checked; a missing or unwanted one can be created again.
+ */
+function ChapterSummary({
   chapter,
+  busy,
+  onSummarize,
   onSaved,
 }: {
   chapter: Chapter;
+  busy: boolean;
+  onSummarize: () => void;
   onSaved: () => void;
+}) {
+  const [summary, setSummary] = useState(chapter.summary);
+  const [error, setError] = useState<string | null>(null);
+
+  async function save(event: SyntheticEvent) {
+    event.preventDefault();
+    setError(null);
+    try {
+      await api.setChapterSummary(
+        chapter.world,
+        chapter.story,
+        chapter.number,
+        summary,
+        summary.trim() === "" ? "fehlt" : "geprüft",
+      );
+      onSaved();
+    } catch (reason: unknown) {
+      setError(describeError(reason));
+    }
+  }
+
+  return (
+    <form className="stack" onSubmit={(event) => void save(event)}>
+      <Field label="Kurzfassung des Kapitels">
+        <textarea
+          rows={5}
+          value={summary}
+          onChange={(event) => {
+            setSummary(event.target.value);
+          }}
+        />
+      </Field>
+      <p className="note">
+        Status: {SUMMARY_STATUS_TEXT[chapter.summary_status]}
+      </p>
+      <ErrorText message={error} />
+      <div className="row">
+        <button
+          type="submit"
+          disabled={
+            busy ||
+            (summary === chapter.summary &&
+              chapter.summary_status !== "erzeugt")
+          }
+        >
+          Kurzfassung speichern (geprüft)
+        </button>
+        <button type="button" disabled={busy} onClick={onSummarize}>
+          {chapter.summary_status === "fehlt"
+            ? "Kurzfassung nachholen"
+            : "Kurzfassung neu erstellen"}
+        </button>
+      </div>
+    </form>
+  );
+}
+
+function ChapterEditor({
+  chapter,
+  onSaved,
+  onStory,
+}: {
+  chapter: Chapter;
+  onSaved: () => void;
+  /** The story after its overall summary changed. */
+  onStory: (story: Story) => void;
 }) {
   const [title, setTitle] = useState(chapter.title);
   const [text, setText] = useState(chapter.text);
   const [state, setState] = useState<"clean" | "dirty" | "saved">("clean");
   const [error, setError] = useState<string | null>(null);
+  const [summarizing, setSummarizing] = useState(false);
+  const [summaryNote, setSummaryNote] = useState<string | null>(null);
 
   async function save(): Promise<boolean> {
     setError(null);
@@ -244,14 +383,42 @@ function ChapterEditor({
     onSaved();
   }
 
-  async function complete() {
+  /** Create the chapter summary and continue the overall summary (step 3.6). */
+  async function summarize() {
+    setSummarizing(true);
+    setSummaryNote(null);
     setError(null);
     try {
-      await api.completeChapter(chapter.world, chapter.story, chapter.number);
-      onSaved();
+      const result = await api.summarizeChapter(
+        chapter.world,
+        chapter.story,
+        chapter.number,
+      );
+      onStory(result.story);
+      if (result.failure !== null) {
+        setSummaryNote(describeSummaryFailure(result.failure));
+      }
     } catch (reason: unknown) {
       setError(describeError(reason));
+    } finally {
+      setSummarizing(false);
+      onSaved();
     }
+  }
+
+  /** Own unsaved text is saved first; the summary follows right after. */
+  async function complete() {
+    setError(null);
+    if (state === "dirty" && !(await save())) {
+      return;
+    }
+    try {
+      await api.completeChapter(chapter.world, chapter.story, chapter.number);
+    } catch (reason: unknown) {
+      setError(describeError(reason));
+      return;
+    }
+    await summarize();
   }
 
   return (
@@ -288,11 +455,34 @@ function ChapterEditor({
         {chapter.status === "abgeschlossen" ? (
           <span className="note">Kapitel abgeschlossen</span>
         ) : (
-          <button type="button" onClick={() => void complete()}>
+          <button
+            type="button"
+            disabled={summarizing}
+            onClick={() => void complete()}
+          >
             Kapitel abschließen
           </button>
         )}
+        {summarizing && (
+          <span className="note" role="status">
+            Kurzfassung wird erstellt …
+          </span>
+        )}
       </div>
+      {summaryNote !== null && (
+        <p className="error" role="alert">
+          {summaryNote}
+        </p>
+      )}
+      {(chapter.status === "abgeschlossen" || chapter.summary !== "") && (
+        <ChapterSummary
+          key={`${chapter.summary_status}:${chapter.summary}`}
+          chapter={chapter}
+          busy={summarizing}
+          onSummarize={() => void summarize()}
+          onSaved={onSaved}
+        />
+      )}
       <WritingPanel
         world={chapter.world}
         story={chapter.story}

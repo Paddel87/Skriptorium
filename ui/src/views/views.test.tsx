@@ -334,6 +334,11 @@ describe("Stories and chapters", () => {
           ];
           return { status: 200, body: chapters[0] };
         },
+      "POST /api/worlds/salzmark/stories/ueberfahrt/chapters/1/summarize":
+        () => ({
+          status: 200,
+          body: { chapter: chapters[0], story: STORY, failure: null },
+        }),
     });
     const user = userEvent.setup();
     render(<StoryPage story={STORY} />);
@@ -394,10 +399,13 @@ describe("Stories and chapters", () => {
     await user.type(await screen.findByLabelText("Kapiteltitel"), "!");
     await user.click(screen.getByRole("button", { name: "Speichern" }));
     expect(await screen.findByText("Speichern fehlgeschlagen")).toBeDefined();
+    // Unsaved own text is saved first; if that fails, the chapter is not completed.
     await user.click(
       screen.getByRole("button", { name: "Kapitel abschließen" }),
     );
-    expect(await screen.findByText("weg")).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getAllByText("Speichern fehlgeschlagen")).toHaveLength(1);
+    });
     rerender(
       <StoryPage
         story={{ ...STORY, form: "kurzgeschichte", perspective: null }}
