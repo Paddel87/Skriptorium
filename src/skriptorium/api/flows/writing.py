@@ -8,10 +8,14 @@
 
 A new scene (FR-008) is a request like any other: place and characters become ``@``-references,
 the goal becomes part of the instruction.
+
+References, place and characters are entries of the story's world or guests the story binds in
+from other worlds (FR-017, step 3.7); a guest wins over an entry of the world with the same
+identifier, as in the checks of the story endpoints.
 """
 
 import json
-from collections.abc import AsyncIterator, Mapping, Sequence
+from collections.abc import AsyncIterator, Callable, Mapping, Sequence
 from dataclasses import dataclass
 from typing import Final
 
@@ -29,6 +33,7 @@ from skriptorium.ai_gateway import (
 )
 from skriptorium.canon import CanonEntry, CanonService, Category
 from skriptorium.context import ContextBuilder, ContextTooLarge
+from skriptorium.manuscript import ManuscriptService
 from skriptorium.storage import InvalidInput, NotFound
 
 # First model of the model order grok-4.7 → grok-4.6 → qwen3.8-max (ADR-010, ADR-011).
@@ -71,6 +76,7 @@ class PreparedRequest:
 
 def prepare_request(
     canon: CanonService,
+    manuscripts: ManuscriptService,
     builder: ContextBuilder,
     order: WriteOrder,
     models: Mapping[str, ModelConfig] = DEFAULT_MODELS,
@@ -85,10 +91,16 @@ def prepare_request(
     if order.model not in models:
         raise InvalidInput(f"Unbekanntes Modell: {order.model}")
     canon.get_world(order.world)
+    story = manuscripts.get_story(order.world, order.story)
+    homes = {link.entry: link.world for link in story.guest_links}
+
+    def entry(entry_id: str, category: Category | None = None) -> CanonEntry:
+        return _entry(canon, homes.get(entry_id, order.world), entry_id, category)
+
     instruction = order.instruction.strip()
-    references = [_entry(canon, order.world, reference).id for reference in order.references]
+    references = [entry(reference).id for reference in order.references]
     if order.scene is not None:
-        scene_refs, instruction = _scene(canon, order.world, order.scene, instruction)
+        scene_refs, instruction = _scene(entry, order.scene, instruction)
         references += scene_refs
     elif not instruction:
         instruction = CONTINUE
@@ -121,13 +133,15 @@ def _entry(
     return entry
 
 
-def _scene(canon: CanonService, world: str, scene: Scene, extra: str) -> tuple[list[str], str]:
+def _scene(
+    entry: Callable[[str, Category], CanonEntry], scene: Scene, extra: str
+) -> tuple[list[str], str]:
     """References and instruction for the first paragraph of a new scene (FR-008)."""
     goal = scene.goal.strip()
     if scene.place is None and not scene.characters and not goal:
         raise InvalidInput("Die Szene braucht einen Ort, Figuren oder ein Ziel")
-    place = _entry(canon, world, scene.place, "ort") if scene.place is not None else None
-    characters = [_entry(canon, world, c, "figur") for c in scene.characters]
+    place = entry(scene.place, "ort") if scene.place is not None else None
+    characters = [entry(c, "figur") for c in scene.characters]
     lines = ["Beginne hier eine neue Szene und schreibe ihren ersten Absatz."]
     if place is not None:
         lines.append(f"Ort: {place.name}")

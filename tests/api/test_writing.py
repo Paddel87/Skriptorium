@@ -196,6 +196,78 @@ def test_reference_to_an_entry_of_another_world_is_refused(
     assert provider.requests == []
 
 
+def _guest(writer: TestClient) -> None:
+    """Der Nebelkönig from Nebelreich as a guest of "Am Ufer" (step 3.7, FR-017)."""
+    writer.post("/api/worlds", json={"name": "Nebelreich", "description": "Nebel."})
+    for category, name, body in (
+        ("figur", "Nebelkönig", "Trägt eine Krone aus Reif."),
+        ("ort", "Reifpalast", "Palast aus Eis."),
+    ):
+        created = writer.post(
+            "/api/worlds/nebelreich/entries",
+            json={"category": category, "name": name, "body": body},
+        )
+        assert created.status_code == 201, created.text
+    for guest in ("nebelkoenig", "reifpalast"):
+        linked = writer.post(
+            "/api/worlds/die-salzmark/stories/am-ufer/guests",
+            json={"world": "nebelreich", "entry": guest},
+        )
+        assert linked.status_code == 201, linked.text
+
+
+def test_reference_to_a_guest_is_taken(writer: TestClient, provider: FakeProvider) -> None:
+    _guest(writer)
+
+    response = writer.post(WRITE, json={"references": ["nebelkoenig"]})
+
+    assert response.status_code == 200, response.text
+    system = provider.requests[0].messages[0].content
+    assert "## Nebelkönig (Figur, Gast aus der Welt „Nebelreich“)" in system
+    assert system.index("Krone aus Reif") < system.index("Zöllnerin")  # precedence 2 first
+
+
+def test_scene_with_guest_place_and_character(writer: TestClient, provider: FakeProvider) -> None:
+    _guest(writer)
+
+    response = writer.post(
+        WRITE, json={"scene": {"place": "reifpalast", "characters": ["nebelkoenig", "kael"]}}
+    )
+
+    assert response.status_code == 200, response.text
+    user = provider.requests[0].messages[1].content
+    assert "Ort: Reifpalast" in user
+    assert "Figuren: Nebelkönig, Kael" in user
+
+
+def test_guest_of_another_story_is_refused(writer: TestClient, provider: FakeProvider) -> None:
+    """The link holds only for its story (FR-017)."""
+    _guest(writer)
+    writer.post(
+        "/api/worlds/die-salzmark/stories", json={"title": "Ohne Gast", "form": "kurzgeschichte"}
+    )
+
+    response = writer.post(
+        "/api/worlds/die-salzmark/stories/ohne-gast/chapters/1/write",
+        json={"references": ["nebelkoenig"]},
+    )
+
+    assert response.status_code == 422
+    assert "Unbekannter Kanon-Eintrag nebelkoenig" in response.json()["detail"]
+    assert provider.requests == []
+
+
+def test_guest_of_the_wrong_category_is_refused_in_a_scene(
+    writer: TestClient, provider: FakeProvider
+) -> None:
+    _guest(writer)
+
+    response = writer.post(WRITE, json={"scene": {"place": "nebelkoenig"}})
+
+    assert response.status_code == 422
+    assert "Nebelkönig ist kein Eintrag der Kategorie ort" in response.json()["detail"]
+
+
 def test_missing_world_story_or_chapter(writer: TestClient) -> None:
     assert (
         writer.post("/api/worlds/nirgends/stories/am-ufer/chapters/1/write", json={}).status_code
@@ -317,20 +389,22 @@ def services_of_app(app: Any) -> Any:
 # The flow on its own: abort closes the provider stream.
 
 
-def _builder(tmp_path: Path) -> tuple[CanonService, ContextBuilder]:
+def _builder(tmp_path: Path) -> tuple[CanonService, ManuscriptService, ContextBuilder]:
     store = DocumentStore(tmp_path)
     canon = CanonService(store)
     manuscripts = ManuscriptService(store)
     canon.create_world("Die Salzmark")
     manuscripts.create_story("die-salzmark", "Am Ufer", "kurzgeschichte")
-    return canon, ContextBuilder(canon, manuscripts)
+    return canon, manuscripts, ContextBuilder(canon, manuscripts)
 
 
 def test_abort_closes_the_provider_stream(tmp_path: Path) -> None:
     """Closing the connection ends the request at the provider (step 3.3, ADR-013)."""
-    canon, builder = _builder(tmp_path)
+    canon, manuscripts, builder = _builder(tmp_path)
     provider = FakeProvider(chunks=("a", "b", "c"))
-    prepared = prepare_request(canon, builder, WriteOrder("die-salzmark", "am-ufer", 1))
+    prepared = prepare_request(
+        canon, manuscripts, builder, WriteOrder("die-salzmark", "am-ufer", 1)
+    )
 
     async def read_two_then_abort() -> list[str]:
         stream = stream_events(provider, prepared)
@@ -346,17 +420,18 @@ def test_abort_closes_the_provider_stream(tmp_path: Path) -> None:
 
 
 def test_prepare_request_missing_world(tmp_path: Path) -> None:
-    canon, builder = _builder(tmp_path)
+    canon, manuscripts, builder = _builder(tmp_path)
 
     with pytest.raises(NotFound):
-        prepare_request(canon, builder, WriteOrder("fehlt", "am-ufer", 1))
+        prepare_request(canon, manuscripts, builder, WriteOrder("fehlt", "am-ufer", 1))
 
 
 def test_prepare_request_scene_goal_only(tmp_path: Path) -> None:
-    canon, builder = _builder(tmp_path)
+    canon, manuscripts, builder = _builder(tmp_path)
 
     prepared = prepare_request(
         canon,
+        manuscripts,
         builder,
         WriteOrder("die-salzmark", "am-ufer", 1, scene=Scene(goal="Ein Fremder kommt.")),
     )
