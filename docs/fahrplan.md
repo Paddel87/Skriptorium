@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-09-27
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** keiner (4.1 erledigt 2026-09-27)
+- **Aktiver Schritt:** 4.2 wartet auf Freigabe des VPS-Anbieters (4.1 erledigt 2026-09-27)
 - **Nächster Schritt:** 4.2 Host bereitstellen und härten – beginnt mit `ENTSCHEIDUNG ERFORDERLICH` zum VPS-Anbieter (Entscheidungs-Klasse). Datiert: D.6 Reaktionszeit erkunden vor 4.8; D.5 ab 2026-11-12
 - **Offene STOPP-Situationen:** keine
 
@@ -138,7 +138,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.2: Host bereitstellen und härten
 
-- **Status:** OFFEN
+- **Status:** WARTET-AUF-FREIGABE (2026-09-27) – `ENTSCHEIDUNG ERFORDERLICH` zum VPS-Anbieter vorgelegt; Recherche `docs/research/hosting-anbieter.md`
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.1
 - **Freigabepflichtig:** ja – Anbieterwahl und Deployment-Ziel (Kategorien 3 und 7), SSH-Zugang (Kategorie 6)

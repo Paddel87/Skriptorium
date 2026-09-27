@@ -29,6 +29,19 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-27 22:40 – [BEOBACHTUNG] Anbieterlage und SSH aus der Cloud-Session
+
+- **SSH gesperrt:** Aus der Cloud-Session sind ausgehende Verbindungen auf Port 22 nicht möglich (Test gegen github.com:22). Die KI kann einen Server also nicht selbst per SSH einrichten; Einrichtung über Browser-Konsole des Anbieters, Cloud-Init oder GitHub Actions.
+- **Hetzner ausverkauft:** Alle günstigen Cloud-Tarife (CX, CAX) seit 2026-09-07 nicht bestellbar, Preise 2026 zweimal erhöht; verfügbar nur teurere Tarife ab ca. 14 € brutto. Übersicht aller geprüften Anbieter: `docs/research/hosting-anbieter.md`.
+
+### 2026-09-27 22:15 – [SESSIONSTART] Schritt 4.2
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 22:15) → Entscheidungs-Klasse. Empfohlene Klasse für 4.2 ist Entscheidung (Eskalations-Auslöser 1) – passt, kein Stopp, keine Warnung.
+- **Kontextgröße:** 0 Token laut Sitzungsabfrage (Wert zu Beginn nicht aktualisiert, wie in den Vorsessions). Kurzzeitlimit (5 Stunden) `allowed`.
+- PR #19 gemergt (`a528047`); Branch `scp/sharp-wright-4ofnvz` steht auf `main`.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2 (project-context, Logbuch ab letztem Sessionende, Fahrplan Stand und Phase 4, Architektur 1/2/9, Decisions A/C, aktive Blocker: keine).
+- **Vorhaben:** Schritt 4.2 Host bereitstellen und härten – zuerst `ENTSCHEIDUNG ERFORDERLICH` zum VPS-Anbieter (Kategorien 3, 6, 7).
+
 ### 2026-09-27 13:10 – [SESSIONENDE] Schritt 4.1
 
 - **Dauer:** 12:48–13:10 UTC.
