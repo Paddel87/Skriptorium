@@ -29,6 +29,7 @@ from skriptorium.api.access import (
 from skriptorium.api.access.pwned import BreachedPasswordCheck
 from skriptorium.api.context import Services
 from skriptorium.api.settings import Settings
+from skriptorium.api.usage import UsageLog
 from skriptorium.canon import CanonService
 from skriptorium.context import ContextBuilder
 from skriptorium.manuscript import ManuscriptService
@@ -100,6 +101,7 @@ def create_app(
         clock=now,
         context=ContextBuilder(canon, manuscript),
         provider=provider,
+        usage=UsageLog(store, now),
     )
 
     @app.get("/api/health")

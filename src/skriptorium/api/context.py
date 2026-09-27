@@ -15,6 +15,7 @@ from skriptorium.api.access import (
     Session,
     SessionStore,
 )
+from skriptorium.api.usage import UsageLog
 from skriptorium.canon import CanonService
 from skriptorium.context import ContextBuilder
 from skriptorium.manuscript import ManuscriptService
@@ -36,6 +37,7 @@ class Services:
     context: ContextBuilder
     # None if no provider is set up (no key); writing then answers 503.
     provider: ModelProvider | None
+    usage: UsageLog
 
 
 def services(request: Request) -> Services:

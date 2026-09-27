@@ -110,6 +110,20 @@ def test_story_settings(ms: ManuscriptService, root: Path) -> None:
     assert text.startswith("---\ntitel: Flucht bei Nacht\nform: roman\nperspektive: null\n")
 
 
+def test_story_model(ms: ManuscriptService, root: Path) -> None:
+    """Model chosen for the story (step 3.9, ADR-023); stored as given, blank clears it."""
+    story = ms.create_story(W, "Die Flucht", "fragment")
+    assert story.model is None
+    changed = ms.update_story(W, story.id, model=" x-ai/grok-4.6 ")
+    assert changed.model == "x-ai/grok-4.6"
+    assert ms.update_story(W, story.id, title="Flucht").model == "x-ai/grok-4.6"
+    text = (root / "worlds/salzmark/stories/die-flucht/story.md").read_text(encoding="utf-8")
+    assert "modell: x-ai/grok-4.6\n" in text
+    assert ms.update_story(W, story.id, model=" ").model is None
+    assert ms.update_story(W, story.id, model="x").model == "x"
+    assert ms.update_story(W, story.id, model=None).model is None
+
+
 def test_form_change_to_non_novel_needs_at_most_one_chapter(ms: ManuscriptService) -> None:
     ms.create_story(W, "Roman", "roman")
     ms.save_chapter(W, "roman", 1, title="Eins")
@@ -209,6 +223,7 @@ def test_story_update_keeps_guest_links_and_unknown_fields(
         "titel: T\nform: epos",
         "form: roman",
         "titel: T\nform: roman\nperspektive: 3",
+        "titel: T\nform: roman\nmodell: 4",
         "titel: T\nform: roman\ngefuehrte_figuren: ilka",
         "titel: T\nform: roman\ngast_verbindungen: [{welt: x}]",
         "titel: T\nform: roman\ngast_verbindungen: keine",
