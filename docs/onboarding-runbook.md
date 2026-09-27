@@ -23,7 +23,7 @@ Dieses Runbook führt vom frischen Klon bis zum laufenden Server mit Gesundheits
 
 **Voraussetzung an den Leser:** Grundkenntnisse in Bash; Lese-Zugriff auf das Repository.
 
-**Geprüft am:** 2026-09-26, Linux x86_64 (Cloud-Session des Coding-Agents), frischer `git worktree` von Commit `646ddfe` (Phasenabschluss 2).
+**Geprüft am:** 2026-09-27, Linux x86_64 (Cloud-Session des Coding-Agents), frischer `git worktree` von Commit `c0325f4` (Phasenabschluss 3).
 
 ## 2. Voraussetzungen pro Plattform
 

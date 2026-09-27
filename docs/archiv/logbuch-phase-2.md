@@ -1,11 +1,45 @@
 # Archiv – Logbuch Phase 2
 
 <!-- Quelle: docs/logbuch.md. Ausgelagert am 2026-09-26 bei der Logbuch-Verdichtung zum Phasen-Wechsel
-     (CLAUDE.md Abschnitt 14). Abgedeckter Zeitraum: 2026-09-26 17:00 bis 20:52 UTC (Phase 2, Schritte 2.1–2.7).
+     (CLAUDE.md Abschnitt 14). Abgedeckter Zeitraum: 2026-09-26 17:00 bis 20:52 UTC (Phase 2, Schritte 2.1–2.7);
+     nachgetragen am 2026-09-27: Einträge des Phasenabschlusses 2 (20:57–21:06 UTC).
      Hinweis: Die Session zu 2.2–2.5 trägt Zeitangaben bis 20:15, die mit der Session zu 2.6 (ab 19:20) überlappen;
      die Reihenfolge der Einträge folgt der Datei, nicht der Uhrzeit. -->
 
 ## Einträge (neueste oben)
+
+### 2026-09-26 21:06 – [SESSIONENDE] Phase 2 abgeschlossen
+
+- **Dauer:** 20:57–21:06 UTC.
+- **Bearbeitet:** Phasenabschluss 2 – Bewertung durch getrennte Instanz, Stellungnahme, `ENTSCHEIDUNG ERFORDERLICH`, ADR-020 (weiterbauen); Vision-Re-Derivations-Pass; Onboarding-Re-Validation; Archivierung Fahrplan Phase 2 und Logbuch-Verdichtung; `data/index.sqlite` aus dem Git-Index genommen; Pflichtnotiz `api.flows` an 3.3.
+- **Vision-Abgleich (Befund):** Jedes Vision-Element (Kernidee, Zielbild mit fünf Szenarien, sechs Erfolgskriterien, Abgrenzungen, harte Randbedingungen, weiche Präferenzen) hat eine Schritt-ID oder eine Descope-ADR; jede Muss-Anforderung hat einen existierenden Schritt (Phase 3, 4.8, D.4) oder ist erledigt (FR-002, 005, 007, 016) bzw. verworfen (FR-006, ADR-009). Keine `[VERSCHOBEN]`-Zeile mit erreichtem Ziel (V.1–V.5 → 5.5). Keine verwaisten Elemente, keine `TODO` im Code.
+- **Erreichter Stand:** Phase 3 „Schreiben mit KI“ bereit; kein aktiver Schritt.
+- **Offen:** Pull Request für diesen Branch (Merge nach grüner CI und Zustimmung des Eigentümers).
+- **Nächster Schritt:** neue Session – 3.1 `ai_gateway` (Anbieter-Schnittstelle, OpenRouter-Adapter).
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5, eingestellt und bedient laut Sitzungsabfrage 21:05). Schritte oberhalb der Empfehlung: 0 (Phasenabschluss verlangt Entscheidung). Abgegebene Teilarbeiten: Bewertung an Unteragenten mit Sonnet 5 (getrennte Instanz, keine Routine-Abgabe).
+- **Kontextgröße:** 190.131 Token laut Sitzungsabfrage – knapp unter der Grenze 200.000; kein neuer Schritt in dieser Session. Sitzungskosten laut Abfrage ca. 3,70 $. Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Nächste Schritte); project-context Status auf Phase 3. Drift-Prüfung: ADR-020 → 3.3 vorhanden, ADR-015 bis 019 → 2.1–2.7 im Archiv; Modul-Liste unverändert; Reifegrade unverändert und passend zu ADR-020 (keine Reifegrad-Wirkung); Reaktiv-Quote 1/10 über ADR-011..020; Phase 3 unverändert 9 Schritte; Blocker 0; Anforderungen unverändert. Ablaufdaten-Register: kein fälliger Vorlauf (Guthaben-Vorlauf ab 2026-10-22). Archivierung: Fahrplan Phase 2 → `docs/archiv/fahrplan-phase-2.md`, Logbuch Phase 2 → `docs/archiv/logbuch-phase-2.md` (Phase-1-Sessionende ins Phase-1-Archiv). project-context 338 Zeilen.
+
+### 2026-09-26 21:04 – [ADR-ANGELEGT] ADR-020
+
+- Pflichtfrage Phasenende 2: Eigentümer wählt Empfehlung A – weiterbauen, `data/index.sqlite` aus dem Git-Index nehmen, Pflichtnotiz „Abläufe in `api.flows`“ an 3.3. `[STRATEGISCH]`; Bewertung der getrennten Instanz und Stellungnahme im ADR nebeneinander. Die in ADR-018 angekündigte Prüfung „Gott-Modul“ ist damit erfolgt.
+
+### 2026-09-26 21:01 – [PROBLEM-GELÖST] Pre-Commit-Hook nach Worktree-Validierung
+
+- Erster Commit der Session scheiterte: `` `pre-commit` not found ``. Ursache: `pre-commit install` (Quick Start) und `scripts/session-start.sh` im Worktree haben `.git/hooks/pre-commit` auf die venv des Worktrees gesetzt; der Worktree war schon entfernt. Lösung: im Haupt-Checkout `uv run pre-commit install`. Zweites Auftreten nach 2.1 → Runbook-Eintrag um die Pflicht nach jeder Worktree-Validierung ergänzt.
+
+### 2026-09-26 21:00 – [ONBOARDING-VALIDATION] Phasenabschluss 2 (Trigger 3)
+
+- **Form (Klasse M):** frischer Worktree von `646ddfe` im Scratchpad, eigenes Datenverzeichnis; README-Quick-Start exakt wie dokumentiert: `uv python install 3.14.7`, `uv sync --frozen`, `npm ci` (0 Schwachstellen), `pre-commit install`, `skriptorium-einrichtung` (Exit 0; Ausgabe mit dem Einrichtungscode nicht angezeigt), `npx vite build`, uvicorn.
+- **Ergebnis:** `/api/health` → `{"status":"ok"}`; `/` → 200 (Oberfläche); `/api/worlds` ohne Sitzung → 401; Server-Log ohne Warnung. `pytest --cov`: 224 bestanden, 99,94 %; `vitest --coverage`: 32 bestanden, 99,02 % Zeilen. Smoke-Test `scripts/session-start.sh` im Worktree: Exit 0.
+- **Befund:** keiner im Onboarding-Pfad. End-to-End-Tests nicht im Worktree wiederholt (laufen im CI-Job End-to-End). Nebenbefund: `data/index.sqlite` liegt im Git-Index, obwohl `/data/` ignoriert ist (leerer Index, seit `53071f0`) – Behandlung nach der Bewertung der getrennten Instanz.
+
+### 2026-09-26 20:57 – [SESSIONSTART] Phasenabschluss 2
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 20:57) → Entscheidungs-Klasse. Der Phasenabschluss enthält einen `ENTSCHEIDUNG ERFORDERLICH`-Block (Eskalations-Auslöser 1) – Klasse passt, kein Stopp.
+- **Kontextgröße:** 0 Token laut Sitzungsabfrage (neue Session). Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+- PR #7 gemergt (`646ddfe`); Branch `scp/affectionate-euler-piciei` steht auf `main`.
+- **Vorhaben:** Pflichtfrage „Weiterbauen, umbauen oder neu aufsetzen“ mit getrennter Instanz; Vision-Re-Derivations-Pass gegen `docs/vision.md` und `docs/requirements.md`; Onboarding-Re-Validation (Trigger 3); nach der Entscheidung ADR, Archivierung von Phase 2, Logbuch-Verdichtung.
 
 ### 2026-09-26 20:52 – [SESSIONENDE] Schritt 2.7 erledigt, Phasenabschluss 2 offen
 

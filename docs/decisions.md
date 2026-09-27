@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-27 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-27 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -43,12 +43,13 @@ Stand 2026-09-27 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 021 | 2026-09-26 | Aktiv | OPERATIV | MODUL, DATENMODELL | Architektur (Reifegrad) | Observability: Log-Zeile je KI-Anfrage belastbar, Verbrauchsspeicherung in 3.9 |
 | 022 | 2026-09-26 | Aktiv | ERKENNTNIS | PERFORMANCE | Architektur (NFR) | Reaktionszeit verfehlt – Ziel bleibt, Ursache wird in D.6 erkundet |
 | 023 | 2026-09-27 | Aktiv | OPERATIV | DATENMODELL, MODUL | Datenmodell, Architektur | Verbrauchsdaten in Monatsdateien, Modell je Geschichte |
+| 024 | 2026-09-27 | Aktiv | STRATEGISCH | METHODIK | Pflichtfrage Phasenende | Phasenende 3 – weiterbauen, Geschichtenseite in 4.1 aufteilen, Kanon-Treue in 4.8 messen |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 1 / 10 (10 %) über ADR-014 bis ADR-023 – ADR-014 aus Phase 1 (Erkundung), ADR-015 bis ADR-017 und ADR-019 aus Phase 2 (operativ, geplant in 2.1, 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant); reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
+- **Aktueller Wert:** 1 / 10 (10 %) über ADR-015 bis ADR-024 – ADR-015 bis ADR-017 und ADR-019 aus Phase 2 (operativ, geplant in 2.1, 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3; reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -671,6 +672,27 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Vision-Frage, die entschied:** „Willst du die Monatskosten im Skriptorium selbst sehen, oder reicht dir der Blick ins OpenRouter-Konto?“ → Antwort des Eigentümers: A (im Skriptorium sehen).
 - **Konfidenz zum Zeitpunkt:** hoch – bestehendes Muster (Markdown mit YAML-Kopf über `storage`, wie `system/zugang.md`), Verbrauchsdaten seit 3.1 belegt; Heuristik 1.1 (Speicherung gehört zur Anzeige). Umkehrbarkeit billig.
 - **Konsequenzen:** Je KI-Anfrage (Schreiben, Kurzfassung, Gesamtzusammenfassung) eine Zeile ohne Text, Welt oder Geschichte. Abgebrochene Anfragen und Fehler werden mit Ergebnis und ohne Kosten gezählt; die Summe kann deshalb unter der Abrechnung des Anbieters liegen. Die Monatsdateien liegen im Datenverzeichnis und gehen mit in die Sicherung (4.3). Anfragen vor 3.9 fehlen (ADR-021). Die Modellwahl der Oberfläche wird je Geschichte gespeichert; neuer Endpunkt `GET /api/usage`, `PATCH …/stories/{id}` nimmt `model` an (rein additiv).
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-024: Phasenende 3 – weiterbauen, Geschichtenseite in 4.1 aufteilen, Kanon-Treue in 4.8 messen
+
+- **Datum:** 2026-09-27
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[STRATEGISCH]` `[METHODIK]`
+- **Phasentyp-Kontext:** UMSETZUNG (Phasenende)
+- **Reifegrad-Wirkung:** keine; NFR Kanon-Treue bleibt `[VORLÄUFIG]`, Landeplatz für die Beförderung ist jetzt 4.8
+- **Kategorie:** Pflichtfrage am Phasenende (`CLAUDE.md` Abschnitt 12, „Weiterbauen, umbauen oder neu aufsetzen")
+- **Kontext:** Abschluss von Phase 3 (UMSETZUNG, Schritte 3.1–3.9, alle erledigt). Bewertung durch eine getrennte Prüf-Instanz (Unteragent mit Claude Sonnet 5, anderes Modell als die bauende KI, ohne Gesprächsverlauf und ohne Logbuch; erhielt Code, Tests, Konfiguration, Architektur, ADRs, Fahrplan Phasen 3–5 und Querschnitt, Vision, Anforderungen, Heuristiken; führte Tests und Linter selbst aus), 2026-09-27. Onboarding-Re-Validation ohne Befund; Vision-Re-Derivations-Pass mit zwei Befunden (Logbuch 2026-09-27 12:21 und 12:24).
+- **Bewertung der Prüf-Instanz (zusammengefasst, unverändert in der Aussage):** Weiterbauen, Konfidenz hoch. Messwerte: 377 Python-Tests (99,78 %, `canon` und `context` 100 %), 96 Komponenten-Tests (98,17 % Zeilen, 96,01 % Zweige); ruff, mypy, eslint, tsc ohne Befund; 12 begründete `noqa` (N818), kein `TODO`. Befunde: (1) kein Gott-Modul in `api` – Routen 133–223 Zeilen mit 0–4 Verzweigungen, Abläufe in `api.flows.writing` (225) und `api.flows.summary` (157), `api.usage` (118) – niedrig; (2) Modulgrenzen an den Imports eingehalten – niedrig; (3) `ui/src/views/StoryPage.tsx` mit 757 Zeilen und 7 Komponenten, beginnendes Gott-Objekt auf Dateiebene, wächst in Phase 5 weiter – mittel; (4) Reaktiv-Quote 1/10 – als mittel eingestuft; (5) Reaktionszeit (ADR-022) und Länge der Kurzfassungen (3.6) verfehlt, mit Landeplatz D.6 und D.4, können in 4.8 durchschlagen – mittel; (6) Kontexttreue beim Referenzumfang unbelegt (D.4) – niedrig; (7) `spikes/` ca. 2 MB, wachsend – niedrig; (8) Datenmodell und Schnittstellen additiv gewachsen, tragen Phase 4 und 5 – niedrig. Umbau: `StoryPage.tsx` in Einzeldateien aufteilen, D.6 vor 4.1 ziehen; Kosten klein. Neu aufsetzen: kein Beleg.
+- **Stellungnahme der bauenden KI:** Zu (3) Zustimmung, geprüft (757 Zeilen, 7 Funktionen); zusätzlich hat `WritingPanel.tsx` 441 Zeilen. Korrektur: eigene Testdateien gibt es nur für einzelne Teile (`Guests`, `CanonFact`), nicht für alle. Umbau innerhalb des Moduls `ui`, kein ADR nötig. Zu (4) Widerspruch in der Einstufung: 1/10 ist ein gutes Zeichen, kein Risiko. Zu (5) teilweiser Widerspruch: D.6 vor 4.1 zu ziehen bringt nichts; entscheidend ist D.6 vor 4.8, so geplant. Zu (7) wie bei ADR-020: Rohdaten sind Beleg der ADRs und bleiben. Ergänzung aus dem Vision-Abgleich: Das Erfolgskriterium „höchstens ein Kanon-Widerspruch pro Kapitel, der beim Redigieren auffällt“ (Vision 4) ist nur im Probeschreiben der KI gemessen (3.3); die Beförderung von NFR Kanon-Treue hatte keinen Schritt. Zweite Drift behoben: 5.5 führte V.4 und V.5 nicht.
+- **Optionen:** A weiterbauen, Aufteilung der Geschichtenseite in 4.1 / B vorab eigene Umbau-Session für die Oberfläche / C neu aufsetzen. Zusatzfrage Kanon-Treue: in 4.8 mit erstem echten Kapitel des Eigentümers / eigener Schritt in Phase 5.
+- **Entscheidung:** A; Kanon-Treue in 4.8.
+- **Vision-Frage, die entschied:** „Soll es direkt mit Phase 4 weitergehen?“ → „Empfehlung A“; „Wo wird die Kanon-Treue beim echten Schreiben gemessen?“ → „In 4.8“ (Frage-System).
+- **Konfidenz zum Zeitpunkt:** hoch – Prüf-Instanz und bauende KI übereinstimmend, alle Messwerte grün. Umkehrbarkeit billig.
+- **Konsequenzen:** Phase 4 beginnt mit 4.1; 4.1 teilt `StoryPage.tsx` (und bei Bedarf `WritingPanel.tsx`) in Einzeldateien je Komponente auf; 4.8 misst zusätzlich Kanon-Widersprüche in einem ersten echten Kapitel des Eigentümers und befördert NFR Kanon-Treue bei Erfolg. Keine Umbau- oder Neuaufbau-Schritte, Schrittzahl der Phase 4 unverändert (8).
 - **Abgeleitete Regel:** keine
 
 ---

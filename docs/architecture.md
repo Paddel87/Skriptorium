@@ -317,7 +317,7 @@ data/
 - **Ganzen Verlauf bei jeder Anfrage mitschicken (Ist-Zustand TypingMind):** Kosten und Kontextgrenzen sind der Anlass des Projekts – siehe ADR-003
 
 <!-- ANCHOR:reifegrad-uebersicht -->
-## 9. Reifegrad-Übersicht (Stand vom 2026-09-27, nach Schritt 3.9)
+## 9. Reifegrad-Übersicht (Stand vom 2026-09-27, nach Phasenabschluss 3)
 
 | Bestandteil | Reifegrad | Seit | Validiert durch / wartet auf |
 |---|---|---|---|
@@ -337,7 +337,7 @@ data/
 | NFR Kontexttreue Referenzumfang | OFFEN | 2026-09-26 | Schritt D.4 (Geschichte ≥ 500.000 Token) |
 | Observability: Logging | BELASTBAR | 2026-09-26 | ADR-021 |
 | Observability: Metriken (Speicherung) | BELASTBAR | 2026-09-27 | ADR-023; durch Umsetzung validiert in 3.9 (Tests, echte Läufe `spikes/modellwahl/README.md`) |
-| NFR Kanon-Treue | VORLÄUFIG | 2026-09-26 | Vorprüfung 1.1 (ADR-010); erste Messung im Probeschreiben 3.3 (0 eindeutige Widersprüche je Kapitel); Schreibbetrieb des Eigentümers |
+| NFR Kanon-Treue | VORLÄUFIG | 2026-09-26 | Vorprüfung 1.1 (ADR-010); erste Messung im Probeschreiben 3.3 (0 eindeutige Widersprüche je Kapitel); Messung beim Schreiben des Eigentümers in 4.8 (ADR-024) |
 | Sicherheitsniveau ASVS 5.0.0 L1 / Auth L2 | BELASTBAR | 2026-09-26 | ADR-006 |
 | Bedrohungsmodell Gesamtsystem | VORLÄUFIG | 2026-09-26 | Prüfung 4.5, Gate-Schritt 4.6 |
 | Schutzbedarf normal | BELASTBAR | 2026-09-26 | ADR-007 |
