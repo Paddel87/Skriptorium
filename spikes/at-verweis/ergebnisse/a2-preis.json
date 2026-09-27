@@ -1,0 +1,14 @@
+{
+  "instruction": "Die Reisende fragt @Kael nach dem Preis der Überfahrt. Ca. 200 Wörter.",
+  "references": [
+    "kael"
+  ],
+  "kael_im_kontext": [
+    "verweis"
+  ],
+  "auffuellung": 613,
+  "estimated_tokens": 29982,
+  "input_tokens": 26622,
+  "output_tokens": 544,
+  "cost_usd": 0.04338576
+}

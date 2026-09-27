@@ -1,0 +1,14 @@
+{
+  "instruction": "@Kael legt am anderen Ufer an. Ca. 200 Wörter.",
+  "references": [
+    "kael"
+  ],
+  "kael_im_kontext": [
+    "verweis"
+  ],
+  "auffuellung": 614,
+  "estimated_tokens": 29993,
+  "input_tokens": 26635,
+  "output_tokens": 644,
+  "cost_usd": 0.043881552
+}

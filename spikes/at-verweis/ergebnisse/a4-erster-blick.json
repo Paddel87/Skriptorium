@@ -1,0 +1,14 @@
+{
+  "instruction": "Die Reisende sieht @Kael zum ersten Mal von Nahem. Ca. 200 Wörter.",
+  "references": [
+    "kael"
+  ],
+  "kael_im_kontext": [
+    "verweis"
+  ],
+  "auffuellung": 613,
+  "estimated_tokens": 29981,
+  "input_tokens": 26621,
+  "output_tokens": 545,
+  "cost_usd": 0.043388928
+}
