@@ -745,6 +745,10 @@ function ChapterEditor({
         chapter={chapter.number}
         guests={story.guest_links}
         canonRevision={canonRevision}
+        storyModel={story.model}
+        onModelChange={async (model) => {
+          onStory(await api.updateStory(story.world, story.id, { model }));
+        }}
         prepare={() => (state === "dirty" ? save() : Promise.resolve(true))}
         onAccept={append}
       />

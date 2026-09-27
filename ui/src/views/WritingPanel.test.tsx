@@ -206,7 +206,7 @@ describe("WritingPanel", () => {
     feed.send("error", { kind: "abgelehnt" });
     feed.close();
     expect((await screen.findByRole("alert")).textContent).toBe(
-      "Das Modell hat die Anfrage abgelehnt.",
+      "Das Modell hat die Anfrage abgelehnt. Wähle oben ein anderes Modell und schreibe neu.",
     );
     expect(screen.queryByRole("button", { name: "Übernehmen" })).toBeNull();
 

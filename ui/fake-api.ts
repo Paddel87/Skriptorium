@@ -138,6 +138,7 @@ export const STORY = {
   guest_links: [],
   facts: [],
   summary: "",
+  model: null as string | null,
 };
 export const CHAPTER = {
   world: "salzmark",

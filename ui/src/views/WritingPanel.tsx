@@ -11,10 +11,12 @@ import {
   api,
   describeError,
   describeWriteError,
+  formatCost,
   streamWrite,
   type CanonEntry,
   type GuestLink,
   type WriteErrorKind,
+  type WriteEvent,
   type WriteOrder,
 } from "../api";
 import { referencedEntries } from "../references";
@@ -47,6 +49,8 @@ export function WritingPanel({
   chapter,
   guests = NO_GUESTS,
   canonRevision = 0,
+  storyModel = null,
+  onModelChange,
   prepare,
   onAccept,
 }: {
@@ -57,6 +61,10 @@ export function WritingPanel({
   guests?: readonly GuestLink[];
   /** Changes when the canon changed on the page, so the `@` menu offers the new state. */
   canonRevision?: number;
+  /** Model chosen for the story; preselected while it is one of the offered models. */
+  storyModel?: string | null;
+  /** Keep a newly chosen model for the story (step 3.9). */
+  onModelChange?: (model: string) => Promise<void>;
   /** Save the author's own unsaved text first; false if that failed. */
   prepare: () => Promise<boolean>;
   /** Append the proposal to the end of the chapter and save it. */
@@ -90,10 +98,17 @@ export function WritingPanel({
   const [aborted, setAborted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastOrder, setLastOrder] = useState<WriteOrder | null>(null);
+  const [usage, setUsage] = useState<Usage | null>(null);
+  const [modelError, setModelError] = useState<string | null>(null);
   const controller = useRef<AbortController | null>(null);
   const instructionLabel = useId();
 
-  const chosenModel = model ?? models.data?.default ?? "";
+  const offered = models.data?.models ?? [];
+  const preset =
+    storyModel !== null && offered.includes(storyModel)
+      ? storyModel
+      : models.data?.default;
+  const chosenModel = model ?? preset ?? "";
   const busy = phase === "thinking" || phase === "writing";
 
   useEffect(() => {
@@ -123,6 +138,7 @@ export function WritingPanel({
     setFailure(null);
     setAborted(false);
     setError(null);
+    setUsage(null);
     setLastOrder(order);
     if (!(await prepare())) {
       setPhase("idle");
@@ -140,6 +156,8 @@ export function WritingPanel({
             setProposal((text) => text + event.text);
           } else if (event.type === "error") {
             setFailure(event.kind);
+          } else if (event.type === "done") {
+            setUsage(event);
           }
         },
         abort.signal,
@@ -202,22 +220,28 @@ export function WritingPanel({
 
   return (
     <section className="card" aria-label="Schreiben mit der KI">
-      <ErrorText message={models.error ?? entries.error} />
+      <ErrorText message={models.error ?? entries.error ?? modelError} />
       <div className="row">
         <Field label="Modell">
           <select
             value={chosenModel}
             onChange={(event) => {
-              setModel(event.target.value);
+              const next = event.target.value;
+              setModel(next);
+              setModelError(null);
+              onModelChange?.(next).catch((reason: unknown) => {
+                setModelError(describeError(reason));
+              });
             }}
           >
-            {(models.data?.models ?? []).map((id) => (
+            {offered.map((id) => (
               <option key={id} value={id}>
                 {id}
               </option>
             ))}
           </select>
         </Field>
+        <span className="note">Anbieter: OpenRouter</span>
         <label className="check">
           <input
             type="checkbox"
@@ -303,8 +327,11 @@ export function WritingPanel({
           {failure !== null && (
             <p className="error" role="alert">
               {describeWriteError(failure)}
+              {failure === "abgelehnt" &&
+                " Wähle oben ein anderes Modell und schreibe neu."}
             </p>
           )}
+          {usage !== null && <p className="note">{describeUsage(usage)}</p>}
           <ErrorText message={error} />
           <div className="row">
             {proposal.trim() !== "" && (
@@ -398,4 +425,17 @@ function SceneForm({
       </Field>
     </fieldset>
   );
+}
+
+type Usage = Extract<WriteEvent, { type: "done" }>;
+
+/** Tokens and cost of one proposal (step 3.9); the provider may leave out the cost. */
+export function describeUsage(usage: Usage): string {
+  const tokens = (count: number | null) =>
+    count === null ? "?" : count.toLocaleString("de-DE");
+  const cost =
+    usage.cost_usd === null
+      ? "Kosten nicht gemeldet"
+      : `Kosten ${formatCost(usage.cost_usd)}`;
+  return `Verbrauch: ${tokens(usage.input_tokens)} Token ein, ${tokens(usage.output_tokens)} aus · ${cost}`;
 }

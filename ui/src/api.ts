@@ -85,6 +85,8 @@ export interface Story {
   guest_links: GuestLink[];
   facts: StoryFact[];
   summary: string;
+  /** Model chosen for this story (step 3.9); `null` means the preset model. */
+  model: string | null;
 }
 
 export interface Chapter {
@@ -202,6 +204,22 @@ export function describeError(error: unknown): string {
     return "Die Passwortprüfung ist gerade nicht erreichbar. Bitte später erneut versuchen.";
   }
   return error.message;
+}
+
+/** Requests, tokens and cost of one month (step 3.9, ADR-023). */
+export interface MonthUsage {
+  month: string;
+  requests: number;
+  input_tokens: number;
+  output_tokens: number;
+  cost_usd: number;
+  /** Requests without a cost reported by the provider (aborted, failed). */
+  without_cost: number;
+}
+
+/** A cost in US dollars as shown to the author, e.g. "0,0021 $". */
+export function formatCost(cost: number): string {
+  return `${cost.toLocaleString("de-DE", { maximumFractionDigits: 4 })} $`;
 }
 
 /** Models of the model order and the preset one. */
@@ -436,7 +454,11 @@ export const api = {
   updateStory: (
     world: string,
     story: string,
-    change: { perspective?: string | null; controlled_characters?: string[] },
+    change: {
+      perspective?: string | null;
+      controlled_characters?: string[];
+      model?: string | null;
+    },
   ) => request("PATCH", storyPath(world, story), change) as Promise<Story>,
   addGuest: (world: string, story: string, guest: GuestLink) =>
     request(
@@ -471,6 +493,7 @@ export const api = {
       change,
     ) as Promise<Chapter>,
   models: () => request("GET", "/api/models") as Promise<ModelList>,
+  usage: () => request("GET", "/api/usage") as Promise<MonthUsage>,
   writePath: (world: string, story: string, number: number) =>
     `${storyPath(world, story)}/chapters/${String(number)}/write`,
   completeChapter: (world: string, story: string, number: number) =>

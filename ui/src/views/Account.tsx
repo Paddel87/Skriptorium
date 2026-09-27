@@ -1,13 +1,17 @@
 import { useCallback, useState, type SyntheticEvent } from "react";
-import { api, describeError } from "../api";
+import { api, describeError, formatCost } from "../api";
 import { useLoad } from "../useLoad";
 import { ErrorText, Field } from "./Common";
 import { PasswordNote } from "./PasswordNote";
 
-/** Change the password and see or end sessions (ASVS 6.2.3, 7.4.3, 7.5.2). */
+/**
+ * Costs of this month (step 3.9), change the password and see or end sessions
+ * (ASVS 6.2.3, 7.4.3, 7.5.2).
+ */
 export function Account() {
   return (
     <div className="stack">
+      <MonthCosts />
       <PasswordChange />
       <Sessions />
     </div>
@@ -143,6 +147,39 @@ function Sessions() {
       >
         Alle anderen Sitzungen beenden
       </button>
+    </section>
+  );
+}
+
+/**
+ * KI-Kosten des laufenden Monats (ADR-023): every AI request counted by the server. Aborted or
+ * failed requests have no reported cost, so the sum can stay below the provider's bill.
+ */
+function MonthCosts() {
+  const load = useCallback(() => api.usage(), []);
+  const { data, error } = useLoad(load);
+  return (
+    <section className="card" aria-label="KI-Kosten">
+      <h2>KI-Kosten diesen Monat</h2>
+      <ErrorText message={error} />
+      {data !== undefined && (
+        <>
+          <p>
+            {formatCost(data.cost_usd)} für{" "}
+            {data.requests.toLocaleString("de-DE")}{" "}
+            {data.requests === 1 ? "Anfrage" : "Anfragen"} (
+            {data.input_tokens.toLocaleString("de-DE")} Token ein,{" "}
+            {data.output_tokens.toLocaleString("de-DE")} aus)
+          </p>
+          {data.without_cost > 0 && (
+            <p className="note">
+              {data.without_cost} abgebrochene oder gescheiterte{" "}
+              {data.without_cost === 1 ? "Anfrage" : "Anfragen"} ohne gemeldete
+              Kosten – die Abrechnung bei OpenRouter kann etwas höher liegen.
+            </p>
+          )}
+        </>
+      )}
     </section>
   );
 }
