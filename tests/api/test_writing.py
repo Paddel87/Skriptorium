@@ -285,6 +285,23 @@ def test_missing_world_story_or_chapter(writer: TestClient) -> None:
     )
 
 
+def test_empty_canon_and_empty_chapter_are_written_on(
+    logged_in: TestClient, provider: FakeProvider
+) -> None:
+    """A new world without entries and a story without text (step 4.1)."""
+    logged_in.post("/api/worlds", json={"name": "Leere Welt", "description": ""})
+    logged_in.post("/api/worlds/leere-welt/stories", json={"title": "Anfang", "form": "fragment"})
+
+    response = logged_in.post("/api/worlds/leere-welt/stories/anfang/chapters/1/write", json={})
+
+    events = _events(response.text)
+    assert [name for name, _ in events] == ["start", "text", "text", "done"]
+    system, user = (message.content for message in provider.requests[0].messages)
+    assert "# Welt: Leere Welt" in system
+    assert "Letzte Manuskript-Seiten" not in user
+    assert user.endswith(CONTINUE)
+
+
 def test_context_too_large_is_refused_with_largest_blocks(
     writer: TestClient, provider: FakeProvider
 ) -> None:
