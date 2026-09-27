@@ -1,0 +1,14 @@
+{
+  "instruction": "Ilka geht zu dem Versteck, das sie in Kapitel 1 angelegt hat, und holt, was sie dort verborgen hat. Ca. 200 Wörter.",
+  "blocks": [
+    "anweisung: Anweisung",
+    "kapitelanfang: Kapitel 1 (Anfang)",
+    "kapitelanfang: Kapitel 2 (Anfang)",
+    "rahmen: Rahmen",
+    "schreibweise: Figuren-Schreibweise",
+    "seiten: Kapitel 3",
+    "welt: Die Salzmark"
+  ],
+  "estimated_tokens": 29715,
+  "cost_usd": 0.041309136
+}

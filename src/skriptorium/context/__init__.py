@@ -3,6 +3,7 @@
 from skriptorium.context.builder import (
     CHARS_PER_TOKEN,
     MAX_BUDGET,
+    OPENING_WORDS,
     SAFETY_MARGIN,
     BuiltContext,
     ContextBlock,
@@ -15,6 +16,7 @@ from skriptorium.context.builder import (
 __all__ = [
     "CHARS_PER_TOKEN",
     "MAX_BUDGET",
+    "OPENING_WORDS",
     "SAFETY_MARGIN",
     "BuiltContext",
     "ContextBlock",

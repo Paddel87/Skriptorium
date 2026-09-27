@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-27
 - **Laufende Phase:** Phase 3 „Schreiben mit KI" (Phase 2 abgeschlossen 2026-09-26, ADR-020: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (3.5 `[ERLEDIGT]` 2026-09-27)
-- **Nächster Schritt:** 3.6 Kapitel-Kurzfassungen und Gesamtzusammenfassung (neue Session); datiert: D.6 Reaktionszeit erkunden vor 4.8
+- **Aktiver Schritt:** keiner (3.6 `[ERLEDIGT]` 2026-09-27)
+- **Nächster Schritt:** 3.7 Gast-Figuren aus anderen Welten (neue Session); datiert: D.6 Reaktionszeit erkunden vor 4.8
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -196,7 +196,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 3.6: Kapitel-Kurzfassungen und Gesamtzusammenfassung
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-27) – `context` baut die Anfragen „Kurzfassung“ (150 bis höchstens 250 Wörter) und „Gesamtzusammenfassung fortschreiben“ (höchstens ca. 600 Wörter) und setzt für frühere Kapitel ohne Kurzfassung den Anfang wörtlich ein (ganze Absätze bis ca. 300 Wörter) – Werte vom Eigentümer; Ablauf `api.flows.summary` mit neuem Endpunkt `POST …/chapters/{n}/summarize` (rein additiv, Fehler je Stufe ohne HTTP-Fehler, Gespeichertes bleibt); Oberfläche: Abschließen erstellt die Kurzfassung, Kurzfassung und Gesamtzusammenfassung ansehen und ändern (Speichern = geprüft), nachholen oder neu erstellen. 342 Python-Tests (`context` 100 %, `api.flows.summary` 98 %), 57 Komponenten-, 5 End-to-End-Tests. Abnahme mit echten Läufen (grok-4.7, ca. 0,4 $, blind bewertet): mit Kurzfassungen 3 von 3 Fortsetzungen mit richtigem Handlungsstand aus Kapitel 1 und 2, ohne 0 von 3 und zwei erfundene Widersprüche (`spikes/kurzfassungen/README.md`). **Länge verfehlt:** 290 und 336 statt höchstens 250 Wörter bei kurzen Testkapiteln – Prüfung an echter Kapitellänge in D.4. Nebenbei behoben: 503 „KI-Anbieter nicht eingerichtet“ wurde in der Oberfläche als Passwortprüfung gemeldet (seit 3.3)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.3
 - **Freigabepflichtig:** nein
@@ -565,7 +565,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Empfohlene Klasse:** Entscheidung – der Nachweis kann die NFR Kontexttreue auf `[BELASTBAR]` befördern (Eskalations-Auslöser 4).
 - **Eingangskriterien:** Auslöser erreicht (Umfang anhand der Token-Zählung aus 1.1 festgestellt)
 - **Anforderungen (ab Klasse M):** keine (Nachweis der Akzeptanz von FR-010, umgesetzt in 3.6)
-- **Zu tun:** Erfolgskriterien „kein Kontextverlust" und „günstiger pro Anfrage" (Vision 4) an dieser Geschichte prüfen; Kosten je Anfrage mit der Referenz (125.000–140.000 Token) vergleichen.
+- **Zu tun:** Erfolgskriterien „kein Kontextverlust" und „günstiger pro Anfrage" (Vision 4) an dieser Geschichte prüfen; Kosten je Anfrage mit der Referenz (125.000–140.000 Token) vergleichen. Zusatz 2026-09-27 (aus 3.6): Länge der erzeugten Kurzfassungen (Vorgabe 150 bis höchstens 250 Wörter) und der Gesamtzusammenfassung (höchstens ca. 600) an Kapiteln echter Länge messen; in 3.6 bei kurzen Testkapiteln 290/336 bzw. 623 Wörter. Passt der Handlungsstand aller Kapitel ins Budget?
 - **Akzeptanzkriterien:** Beide Kriterien belegt oder widerlegt; bei Widerlegung neuer ERKUNDUNG-Schritt.
 - **Betroffene Module:** context
 - **Reifegrad-Wirkung:** NFR Kontexttreue Referenzumfang `[OFFEN]` → `[BELASTBAR]` oder begründeter Erkundungsbedarf

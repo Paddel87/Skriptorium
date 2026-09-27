@@ -180,6 +180,12 @@ export function describeError(error: unknown): string {
   if (error.status === 429) {
     return "Zu viele Fehlversuche. Bitte in 15 Minuten erneut versuchen.";
   }
+  if (
+    error.status === 503 &&
+    error.message === "KI-Anbieter nicht eingerichtet"
+  ) {
+    return "Kein KI-Anbieter eingerichtet (OPENROUTER_API_KEY fehlt auf dem Server).";
+  }
   if (error.status === 503) {
     return "Die Passwortprüfung ist gerade nicht erreichbar. Bitte später erneut versuchen.";
   }
@@ -232,6 +238,31 @@ export function describeWriteError(kind: WriteErrorKind): string {
     verbindung: "Die Verbindung ist abgebrochen.",
   };
   return texts[kind];
+}
+
+/** Result of creating the summaries (step 3.6); `failure` names the step that failed. */
+export interface SummaryResult {
+  chapter: Chapter;
+  story: Story;
+  failure: {
+    stage: "kapitel" | "gesamt";
+    kind: Exclude<WriteErrorKind, "verbindung"> | "leer" | "zu_gross";
+  } | null;
+}
+
+/** User-facing text for a failed summary step, in German. */
+export function describeSummaryFailure(
+  failure: NonNullable<SummaryResult["failure"]>,
+): string {
+  const reason =
+    failure.kind === "leer"
+      ? "Das Modell hat keinen Text geliefert."
+      : failure.kind === "zu_gross"
+        ? "Der Text ist zu lang für eine Anfrage."
+        : describeWriteError(failure.kind);
+  return failure.stage === "kapitel"
+    ? `Kurzfassung nicht erstellt. ${reason} Bis dahin nutzt die KI den Kapitelanfang.`
+    : `Kurzfassung erstellt, Gesamtzusammenfassung nicht fortgeschrieben. ${reason}`;
 }
 
 /**
@@ -411,4 +442,25 @@ export const api = {
       "POST",
       `${storyPath(world, story)}/chapters/${String(number)}/complete`,
     ) as Promise<Chapter>,
+  summarizeChapter: (world: string, story: string, number: number) =>
+    request(
+      "POST",
+      `${storyPath(world, story)}/chapters/${String(number)}/summarize`,
+    ) as Promise<SummaryResult>,
+  setChapterSummary: (
+    world: string,
+    story: string,
+    number: number,
+    summary: string,
+    status: SummaryStatus,
+  ) =>
+    request(
+      "PUT",
+      `${storyPath(world, story)}/chapters/${String(number)}/summary`,
+      { summary, status },
+    ) as Promise<Chapter>,
+  setStorySummary: (world: string, story: string, summary: string) =>
+    request("PUT", `${storyPath(world, story)}/summary`, {
+      summary,
+    }) as Promise<Story>,
 };
