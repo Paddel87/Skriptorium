@@ -385,6 +385,11 @@ export const api = {
       form,
       perspective,
     }) as Promise<Story>,
+  updateStory: (
+    world: string,
+    story: string,
+    change: { perspective?: string | null; controlled_characters?: string[] },
+  ) => request("PATCH", storyPath(world, story), change) as Promise<Story>,
   chapters: (world: string, story: string) =>
     request("GET", `${storyPath(world, story)}/chapters`) as Promise<Chapter[]>,
   saveChapter: (

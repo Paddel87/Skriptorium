@@ -1,0 +1,37 @@
+{
+  "name": "f2-lund",
+  "kapitel": 5,
+  "anfrage": {
+    "instruction": "Lund erzählt, was man in Tolm über Ysolde Marr sagt. Ca. 300 Wörter.",
+    "model": "x-ai/grok-4.7"
+  },
+  "autor_absatz": null,
+  "zeiten": {
+    "kopf_s": 0.02,
+    "start_s": 0.02,
+    "erstes_textstueck_s": 14.22,
+    "gesamt_s": 25.18
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 27494
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 24074,
+        "output_tokens": 1429,
+        "cost_usd": 0.043555248,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 397,
+  "aktion": "discard"
+}

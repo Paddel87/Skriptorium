@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 3 „Schreiben mit KI" (Phase 2 abgeschlossen 2026-09-26, ADR-020: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (3.3 `[ERLEDIGT]` 2026-09-26, ADR-022)
-- **Nächster Schritt:** 3.4 Figuren-Schreibweise (neue Session); datiert: D.6 Reaktionszeit erkunden vor 4.8
+- **Aktiver Schritt:** keiner (3.4 `[ERLEDIGT]` 2026-09-27)
+- **Nächster Schritt:** 3.5 `@`-Menü (neue Session); datiert: D.6 Reaktionszeit erkunden vor 4.8
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -164,7 +164,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 3.4: Figuren-Schreibweise
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-27) – Regel im Kontext geschärft (Verbotenes, Erlaubtes, Endpunkt) plus Erinnerung nach der Anweisung; Einstellung von Erzählperspektive und geführten Figuren auf der Geschichtenseite; 26 Kontext-Tests (`context` 100 %), 42 Komponenten-Tests; 10 echte Läufe grok-4.7 (0,413 $), blind bewertet: 0 eindeutige Verstöße, 2 fragliche, alle Texte enden an der Stelle des Autors (`spikes/figuren-schreibweise/README.md`; 3.3: 20 Verstöße in 15 Texten)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.3
 - **Freigabepflichtig:** nein

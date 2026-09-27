@@ -1,0 +1,44 @@
+{
+  "name": "s2-marr",
+  "kapitel": 5,
+  "anfrage": {
+    "instruction": "Ca. 250 Wörter.",
+    "model": "x-ai/grok-4.7",
+    "scene": {
+      "place": "tolm",
+      "characters": [
+        "ysolde-marr"
+      ],
+      "goal": "Marr empfängt Ilka allein und stellt Fragen zum schwarzen Buch."
+    }
+  },
+  "autor_absatz": null,
+  "zeiten": {
+    "kopf_s": 0.02,
+    "start_s": 0.02,
+    "erstes_textstueck_s": 26.17,
+    "gesamt_s": 30.45
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 27534
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 24104,
+        "output_tokens": 2156,
+        "cost_usd": 0.047057472,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 253,
+  "aktion": "discard"
+}

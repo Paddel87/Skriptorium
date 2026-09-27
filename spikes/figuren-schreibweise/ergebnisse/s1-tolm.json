@@ -1,0 +1,45 @@
+{
+  "name": "s1-tolm",
+  "kapitel": 5,
+  "anfrage": {
+    "instruction": "Ca. 250 Wörter.",
+    "model": "x-ai/grok-4.7",
+    "scene": {
+      "place": "tolm",
+      "characters": [
+        "ysolde-marr",
+        "oskar-lund"
+      ],
+      "goal": "Ankunft in Tolm; Lund bringt Ilka ins Weiße Haus zu Ysolde Marr."
+    }
+  },
+  "autor_absatz": null,
+  "zeiten": {
+    "kopf_s": 0.04,
+    "start_s": 0.04,
+    "erstes_textstueck_s": 24.36,
+    "gesamt_s": 28.76
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 27538
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 24114,
+        "output_tokens": 2083,
+        "cost_usd": 0.046726416,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 220,
+  "aktion": "discard"
+}

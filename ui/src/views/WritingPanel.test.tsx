@@ -308,3 +308,68 @@ describe("StoryPage with writing", () => {
     );
   });
 });
+
+describe("StoryPage writing mode", () => {
+  it("saves perspective and the characters the author leads", async () => {
+    const feed = sseFeed();
+    const { calls } = fakeApi({
+      ...routes(feed),
+      "GET /api/worlds/salzmark/stories/ueberfahrt/chapters": ok([CHAPTER]),
+      "PATCH /api/worlds/salzmark/stories/ueberfahrt": (body) => ({
+        status: 200,
+        body: { ...STORY, ...(body as object) },
+      }),
+    });
+    const user = userEvent.setup();
+    render(<StoryPage story={STORY} />);
+    await user.click(await screen.findByText("Figuren-Schreibweise"));
+    const group = await screen.findByRole("group", {
+      name: "Figuren, die du selbst führst",
+    });
+    await user.click(await within(group).findByLabelText("Kael"));
+    const perspective = screen.getByLabelText("Erzählperspektive");
+    await user.clear(perspective);
+    await user.type(perspective, "Ich-Erzähler, Präteritum");
+    await user.click(
+      screen.getByRole("button", { name: "Schreibweise speichern" }),
+    );
+
+    expect(
+      await screen.findByText("Perspektive: Ich-Erzähler, Präteritum"),
+    ).toBeDefined();
+    expect(calls.find((c) => c.method === "PATCH")?.body).toEqual({
+      perspective: "Ich-Erzähler, Präteritum",
+      controlled_characters: ["kael"],
+    });
+    expect(
+      screen.getByRole("button", { name: "Schreibweise speichern" }),
+    ).toHaveProperty("disabled", true);
+  });
+
+  it("clears the perspective and shows save errors", async () => {
+    const feed = sseFeed();
+    const { calls } = fakeApi({
+      ...routes(feed),
+      "GET /api/worlds/salzmark/stories/ueberfahrt/chapters": ok([CHAPTER]),
+      "PATCH /api/worlds/salzmark/stories/ueberfahrt": fail(
+        422,
+        "Unbekannter Kanon-Eintrag kael",
+      ),
+    });
+    const user = userEvent.setup();
+    render(<StoryPage story={STORY} />);
+    await user.click(await screen.findByText("Figuren-Schreibweise"));
+    await user.clear(screen.getByLabelText("Erzählperspektive"));
+    await user.click(
+      screen.getByRole("button", { name: "Schreibweise speichern" }),
+    );
+
+    expect(
+      await screen.findByText("Unbekannter Kanon-Eintrag kael"),
+    ).toBeDefined();
+    expect(calls.find((c) => c.method === "PATCH")?.body).toEqual({
+      perspective: null,
+      controlled_characters: [],
+    });
+  });
+});

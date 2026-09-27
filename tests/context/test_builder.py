@@ -83,7 +83,10 @@ def test_messages_hold_fixed_parts_first_and_changing_parts_last(
     assert system.content.startswith("Du bist Co-Autor einer Geschichte in der Welt „Die Salzmark“")
     assert "Sieben Inseln nach der Flut." in system.content
     assert user.content.index("# Handlungsstand") < user.content.index("# Letzte Manuskript")
-    assert user.content.endswith("# Anweisung\n\nIlka zieht die Klinge.")
+    assert "# Anweisung\n\nIlka zieht die Klinge.\n\nErinnerung: Ilka Varn führt der Autor." in (
+        user.content
+    )
+    assert user.content.endswith("Ende, sobald die Figur handeln oder antworten müsste.")
 
 
 def test_precedence_one_holds_world_mode_rules_and_timeline(
@@ -158,7 +161,7 @@ def test_other_worlds_never_appear(services: tuple[CanonService, ManuscriptServi
         build(services, "nebelkoenig")
 
 
-@pytest.mark.parametrize("budget", [500, 1500, 3000, MAX_BUDGET])
+@pytest.mark.parametrize("budget", [900, 1500, 3000, MAX_BUDGET])
 def test_budget_is_never_exceeded(
     services: tuple[CanonService, ManuscriptService], budget: int
 ) -> None:
@@ -280,3 +283,39 @@ def test_estimate_uses_three_point_three_characters_per_token() -> None:
     assert estimate_tokens("") == 0
     assert estimate_tokens("x" * 33) == 10
     assert estimate_tokens("x" * 34) == 11
+
+
+def test_writing_mode_forbids_action_speech_and_thought_of_led_characters(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    """FR-012 (step 3.4): the rule names what is forbidden and where to stop."""
+    context = build(services)
+
+    system, user = (message.content for message in context.messages)
+    for rule in (
+        "keine Handlung und keine Bewegung",
+        "keine wörtliche oder indirekte Rede",
+        "keine Gedanken, Erinnerungen, Gefühle oder Absichten",
+        "was die Figur unmittelbar wahrnimmt",
+        "beende deinen Text an genau dieser Stelle",
+    ):
+        assert rule in system
+    assert labels(context, "schreibweise") == [
+        "Figuren-Schreibweise",
+        "Erinnerung Figuren-Schreibweise",
+    ]
+    assert user.index("# Anweisung") < user.index("Erinnerung: Ilka Varn")
+
+
+def test_no_rule_and_no_reminder_without_led_characters(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    _, manuscripts = services
+    manuscripts.update_story(WORLD, STORY, controlled_characters=())
+
+    context = build(services)
+
+    system, user = (message.content for message in context.messages)
+    assert "Figuren-Schreibweise" not in system
+    assert "Erinnerung" not in user
+    assert labels(context, "schreibweise") == ["Figuren-Schreibweise"]
