@@ -47,7 +47,7 @@ Oder ohne eigenes Zutun: `CLAUDE_CODE_REMOTE=true CLAUDE_PROJECT_DIR=$PWD script
 
 ### macOS, Windows
 
-Nicht unterstützt – der Eigentümer entwickelt nicht lokal (`docs/project-context.md` Abschnitt 3).
+Windows: nicht unterstützt. macOS: vorgesehen als Entwicklungsumgebung des Coding-Agents ab 2026-09-27 (ADR-025), noch nicht validiert – Anleitung folgt in Schritt 4.9 (`docs/project-context.md` Abschnitt 3).
 
 ## 3. Setup (End-to-End)
 

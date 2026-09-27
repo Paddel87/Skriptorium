@@ -10,7 +10,7 @@
 
 - **Projektname:** Skriptorium
 - **Kurzbeschreibung:** Schreibwerkstatt für einen einzelnen Autor: Mehrere eigene Welten dienen als verbindlicher Kanon, Autor und KI schreiben im Wechsel Prosa darin, ohne der jeweiligen Welt zu widersprechen.
-- **Status:** In Entwicklung – Phase 4 „Stabilisierung und erstes öffentliches Deployment“, Schritt 4.1 erledigt 2026-09-27, nächster Schritt 4.2 (Phase 3 „Schreiben mit KI“ abgeschlossen 2026-09-27, ADR-024)
+- **Status:** In Entwicklung – Phase 4 „Stabilisierung und erstes öffentliches Deployment“, Schritt 4.1 erledigt 2026-09-27, VPS-Anbieter entschieden (ADR-025), nächster Schritt 4.9 (Entwicklung auf macOS), dann 4.2 (Phase 3 „Schreiben mit KI“ abgeschlossen 2026-09-27, ADR-024)
 - **Version (SemVer):** v0.0.0 – noch keine lauffähige Version
 - **Dokumentationssprache:** Deutsch
 - **Codesprache (Kommentare, Variablennamen):** Englisch (Eigentümer, 2026-09-26); Fachbegriffe einheitlich: world, canon, canon entry, story, manuscript, guest character
@@ -48,7 +48,7 @@ Auswahl nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15, „Versi
   - PyYAML 6.0 (6.0.3, gepinnt `<7`) — Verifiziert: 2026-09-26, Quelle: PyPI; Dateikopf in `storage` (ADR-016)
   - CodeMirror 6 (@codemirror/state 6.7.6, view 6.43.13, autocomplete 6.20.3, lang-markdown 6.5.2) — Verifiziert: 2026-09-26, Quelle: npm-Registry
 - **Datenbank / Speicher:** Markdown-Dateien mit YAML-Kopf als Quelle der Wahrheit; SQLite (in Python enthalten, Version folgt Python 3.14) als abgeleiteter, jederzeit neu aufbaubarer Suchindex – ADR-003
-- **Laufzeitumgebung:** Node.js 24 LTS (24.21.0) nur für Build und Entwicklung der Oberfläche — Verifiziert: 2026-09-26, Quelle: nodejs.org, Release-Plan `schedule.json`. Betrieb: Python 3.14 mit uvicorn auf einem VPS (ADR-006), Anbieter in Schritt 4.2
+- **Laufzeitumgebung:** Node.js 24 LTS (24.21.0) nur für Build und Entwicklung der Oberfläche — Verifiziert: 2026-09-26, Quelle: nodejs.org, Release-Plan `schedule.json`. Betrieb: Python 3.14 mit uvicorn auf einem VPS (ADR-006), vorhandener netcup-VPS (ADR-025)
 - **Package Manager:** uv 0.12 (0.12.19) für Python; npm 11 (11.19.0, mit Node 24 gebündelt) für die Oberfläche — Verifiziert: 2026-09-26, Quelle: PyPI, nodejs.org
 
 ### Empfohlen (freigabefrei nutzbar)
@@ -66,7 +66,7 @@ Auswahl nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15, „Versi
 
 ### Unterstützte Entwickler-Plattformen
 
-Entwicklung erfolgt durch den Coding-Agent; der Eigentümer entwickelt nicht selbst.
+Entwicklung erfolgt durch den Coding-Agent; der Eigentümer entwickelt nicht selbst. Ab 2026-09-27 läuft der Coding-Agent auf dem Mac des Eigentümers statt in der Cloud-Session (ADR-025: nur von dort ist SSH zum VPS möglich); macOS wird in Schritt 4.9 validiert, bis dahin bleibt die Spalte unten auf ✗.
 
 | Aspekt | Linux (Cloud-Session des Coding-Agents, Ubuntu) | macOS | Windows |
 |---|---|---|---|
@@ -243,7 +243,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 <!-- ANCHOR:betrieb-und-deployment -->
 ## 8. Betrieb und Deployment
 
-- **Deployment-Ziel:** kleiner gemieteter Server (VPS), öffentlich erreichbar mit Passwortschutz (Eigentümer, 2026-09-26); Anbieter [TBD in Schritt 4.2]
+- **Deployment-Ziel:** kleiner gemieteter Server (VPS), öffentlich erreichbar mit Passwortschutz (Eigentümer, 2026-09-26); vorhandener VPS des Eigentümers bei netcup (ADR-025, 2026-09-27); Tarif, Ausstattung und Betriebssystem [TBD in Schritt 4.9]
 - **CI/CD:** GitHub Actions, `.github/workflows/ci.yml`. Deployment-Workflow: [TBD in Schritt 4.7 – bis dahin kein Deployment]
 - **Umgebungen:** lokal (Cloud-Session des Coding-Agents) → Produktion (VPS)
 - **Monitoring:** Erreichbarkeits-Prüfung von außen [TBD in Schritt 4.2]; Kosten je Monat in der Oberfläche
@@ -252,7 +252,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 - **Vertretung:** Verzicht – niemand; Stillstand ist zulässig, Daten bleiben in den Sicherungen (Eigentümer, 2026-09-26; ADR-008 mit benanntem Restrisiko)
 - **Notfall-Handbuch:** `docs/onboarding-runbook.md` Abschnitt „Notfall" – [TBD, anzulegen in Schritt 4.4]
 - **KI im Betrieb:** Coding-Agent über Claude-Abo Max 5x des Eigentümers; Wochenlimit mit Zurücksetzung sonntags 10:00 (MESZ) plus 5-Stunden-Limit. Rückfallweg ohne KI: Das Skriptorium läuft ohne den Coding-Agent weiter; Neustart und Wiederherstellung nach Notfall-Handbuch. Die KI-Anbieter im Produkt (OpenRouter) sind davon getrennt und über den Kostenrahmen begrenzt.
-- **Zugriff der KI auf die Produktion:** vorerst keiner; Festlegung im Gate-Schritt
+- **Zugriff der KI auf die Produktion:** per SSH von der macOS-Umgebung aus (ADR-025), beschränkt auf das für die Einrichtung Nötige; Benutzerkonto, erlaubte Befehle und Ausschluss von Secret-Lesen werden in 4.2 festgelegt und im Gate-Schritt 4.6 belegt
 - **Unbeaufsichtigtes Handeln der KI:** nein
 
 ### Ablaufdaten-Register
@@ -278,7 +278,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 | Posten | Art (laufend / einmalig / KI-Verbrauch) | Betrag je Monat | Stand vom | Entscheidung nötig ab |
 |---|---|---|---|---|
 | KI-Anfragen über OpenRouter | KI-Verbrauch | Schätzung ca. 6–36 $ plus Ausgabe (400 Anfragen × 30.000 Token, 0,50–3 $ je 1 Mio. Token; `docs/architecture.md` Abschnitt 6) ; gemessen in 1.1 (Testwelt, bis 17.600 Token): Startmodell grok-4.7 ca. 12 $ je Monat, hochgerechnet auf die Obergrenze 30.000 Token ca. 21 $ (ADR-010, `docs/research/modell-eignungstest.md`) | 2026-09-26 | Summe über 50 € |
-| Hosting | laufend | Schätzung ca. 4–6 € (kleiner VPS) – Festlegung in Schritt 4.2 | 2026-09-26 | Summe über 50 € |
+| Hosting | laufend | vorhandener netcup-VPS (ADR-025); Betrag [TBD in Schritt 4.9], Vergleichswerte `docs/research/hosting-anbieter.md` | 2026-09-27 | Summe über 50 € |
 
 <!-- ANCHOR:entscheidungsbefugnisse -->
 ## 9. Entscheidungsbefugnisse
