@@ -175,14 +175,15 @@ async def stream_events(provider: ModelProvider, prepared: PreparedRequest) -> A
             elif event.text:
                 yield _event("text", {"text": event.text})
     except GatewayError as error:
-        yield _event("error", {"kind": _kind(error)})
+        yield _event("error", {"kind": error_kind(error)})
     finally:
         close = getattr(events, "aclose", None)
         if close is not None:
             await close()
 
 
-def _kind(error: GatewayError) -> str:
+def error_kind(error: GatewayError) -> str:
+    """Kind of a provider error as sent to the interface."""
     for error_type, kind in _ERROR_KINDS:
         if isinstance(error, error_type):
             return kind

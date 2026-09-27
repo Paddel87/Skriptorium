@@ -325,7 +325,7 @@ class ManuscriptService:
         )
 
     def complete_chapter(self, world_id: str, story_id: str, number: int) -> Chapter:
-        """Mark a chapter as completed; its summary is created in phase 3.
+        """Mark a chapter as completed; its summary is created by the flow in ``api`` (3.6).
 
         Raises:
             NotFound: The story or the chapter does not exist.

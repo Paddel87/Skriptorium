@@ -1,4 +1,4 @@
-"""Endpoints for writing with the AI and for the model list (roadmap step 3.3).
+"""Endpoints for writing with the AI, chapter summaries and the model list (steps 3.3, 3.6).
 
 The routes stay thin; the flow lives in :mod:`skriptorium.api.flows` (ADR-020).
 """
@@ -9,7 +9,16 @@ from pydantic import BaseModel
 
 from skriptorium.ai_gateway import DEFAULT_MODELS
 from skriptorium.api.context import ServicesDep, current_session
-from skriptorium.api.flows import DEFAULT_MODEL, Scene, WriteOrder, prepare_request, stream_events
+from skriptorium.api.flows import (
+    DEFAULT_MODEL,
+    Scene,
+    SummaryFailure,
+    WriteOrder,
+    prepare_request,
+    stream_events,
+    summarize_chapter,
+)
+from skriptorium.manuscript import Chapter, Story
 
 router = APIRouter(prefix="/api", dependencies=[Depends(current_session)])
 
@@ -38,6 +47,14 @@ class WriteIn(BaseModel):
     model: str = DEFAULT_MODEL
 
 
+class SummaryResult(BaseModel):
+    """Chapter and story after creating the summaries; ``failure`` names a failed step."""
+
+    chapter: Chapter
+    story: Story
+    failure: SummaryFailure | None
+
+
 @router.get("/models")
 def list_models() -> ModelList:
     """The selectable models; choosing one per story follows in step 3.9."""
@@ -63,3 +80,18 @@ def write(
         media_type="text/event-stream",
         headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"},
     )
+
+
+@router.post("/worlds/{world_id}/stories/{story_id}/chapters/{number}/summarize")
+async def summarize(world_id: str, story_id: str, number: int, found: ServicesDep) -> SummaryResult:
+    """Create the chapter's short summary and continue the overall summary (FR-010).
+
+    An AI failure is no HTTP error: what was saved stays saved and ``failure`` says which step
+    failed, so the interface can offer to repeat it.
+    """
+    if found.provider is None:
+        raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, "KI-Anbieter nicht eingerichtet")
+    outcome = await summarize_chapter(
+        found.manuscript, found.context, found.provider, world_id, story_id, number
+    )
+    return SummaryResult(chapter=outcome.chapter, story=outcome.story, failure=outcome.failure)

@@ -174,7 +174,7 @@ def save_chapter(
 
 @router.post("/{story_id}/chapters/{number}/complete")
 def complete_chapter(world_id: str, story_id: str, number: int, found: ServicesDep) -> Chapter:
-    """Mark a chapter as completed; the short summary follows in step 3.6."""
+    """Mark a chapter as completed; `…/summarize` then creates its summary (step 3.6)."""
     found.canon.get_world(world_id)
     return found.manuscript.complete_chapter(world_id, story_id, number)
 
