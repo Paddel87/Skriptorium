@@ -527,10 +527,33 @@ def _opening(text: str, words: int = OPENING_WORDS) -> str:
     return "\n\n".join(kept)
 
 
+def _tail(text: str, tokens: int) -> str:
+    """The longest end of ``text`` within ``tokens``, starting at a word and marked with "…"."""
+    if estimate_tokens(text) <= tokens:
+        return text
+    marker = "… "
+    size = math.floor(tokens * CHARS_PER_TOKEN) - len(marker)
+    if size <= 0:
+        return ""
+    end = text[-size:]
+    if not text[-size - 1].isspace():
+        # cut inside a word: start after its end
+        cut = next((i for i, char in enumerate(end) if char.isspace()), None)
+        if cut is None:
+            return ""
+        end = end[cut:]
+    end = end.lstrip()
+    return marker + end if end else ""
+
+
 def _last_pages(
     chapters: Sequence[Chapter], current: Chapter, remaining: int
 ) -> tuple[list[_Part], int]:
-    """Precedence 4: text up to the end of ``current``, from the back, whole paragraphs."""
+    """Precedence 4: text up to the end of ``current``, from the back, whole paragraphs.
+
+    If already the last paragraph does not fit - a long chapter with single line breaks only is
+    one paragraph - its end enters instead, starting at a word (step 4.1).
+    """
     heading = "# Letzte Manuskript-Seiten (wörtlich)"
     remaining -= estimate_tokens(heading) + 1
     if remaining <= 0:
@@ -542,6 +565,11 @@ def _last_pages(
         for paragraph in reversed(paragraphs):
             tokens = estimate_tokens(paragraph) + 1
             if tokens > remaining:
+                if not taken and not kept:
+                    end = _tail(paragraph, remaining - 1)
+                    if end:
+                        kept.insert(0, end)
+                        remaining -= estimate_tokens(end) + 1
                 break
             kept.insert(0, paragraph)
             remaining -= tokens
