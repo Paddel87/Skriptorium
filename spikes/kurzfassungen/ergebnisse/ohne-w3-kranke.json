@@ -1,0 +1,14 @@
+{
+  "instruction": "Ilka kehrt in ihre Kammer zurück und kümmert sich um die Kranke, die dort liegt. Ca. 200 Wörter.",
+  "blocks": [
+    "anweisung: Anweisung",
+    "kapitelanfang: Kapitel 1 (Anfang)",
+    "kapitelanfang: Kapitel 2 (Anfang)",
+    "rahmen: Rahmen",
+    "schreibweise: Figuren-Schreibweise",
+    "seiten: Kapitel 3",
+    "welt: Die Salzmark"
+  ],
+  "estimated_tokens": 29708,
+  "cost_usd": 0.040895712
+}

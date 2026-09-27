@@ -1,0 +1,15 @@
+{
+  "instruction": "Ilka denkt an die Verabredung, die sie getroffen hat, und daran, wann und wo sie gilt. Ca. 200 Wörter.",
+  "blocks": [
+    "anweisung: Anweisung",
+    "handlungsstand: Gesamtzusammenfassung",
+    "kurzfassung: Kapitel 1",
+    "kurzfassung: Kapitel 2",
+    "rahmen: Rahmen",
+    "schreibweise: Figuren-Schreibweise",
+    "seiten: Kapitel 3",
+    "welt: Die Salzmark"
+  ],
+  "estimated_tokens": 29743,
+  "cost_usd": 0.041393088
+}
