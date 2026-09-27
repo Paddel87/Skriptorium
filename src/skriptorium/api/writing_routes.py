@@ -74,7 +74,7 @@ def write(
     order = WriteOrder(
         world_id, story_id, number, body.instruction, tuple(body.references), scene, body.model
     )
-    prepared = prepare_request(found.canon, found.context, order)
+    prepared = prepare_request(found.canon, found.manuscript, found.context, order)
     return StreamingResponse(
         stream_events(found.provider, prepared),
         media_type="text/event-stream",

@@ -149,6 +149,7 @@ test("@ menu names an entry; taken-over AI text is appended and saved", async ({
   await page.getByLabel(/Anweisung an die KI/).click();
   await page.keyboard.type("@Mi");
   await expect(page.getByRole("option", { name: /Mira/ })).toBeVisible();
+  await waitForCompletionInteraction(page);
   await page.keyboard.press("Enter");
   await page.keyboard.type(" kommt.");
   await expect(page.getByText("Herangezogen: Mira")).toBeVisible();
@@ -173,3 +174,64 @@ test("@ menu names an entry; taken-over AI text is appended and saved", async ({
     "Das Boot lief auf Grund.Nebel lag über dem Wasser.",
   );
 });
+
+test("a guest from another world is bound in and named with @", async ({
+  page,
+}) => {
+  // Step 3.7 (FR-017): the provider stream is replaced; binding and menu run for real.
+  let sent: unknown = null;
+  await page.route("**/chapters/1/write", async (route) => {
+    sent = route.request().postDataJSON();
+    await route.fulfill({
+      status: 200,
+      contentType: "text/event-stream",
+      body: 'event: text\ndata: {"text": "Reif lag auf dem Steg."}\n\n',
+    });
+  });
+  await login(page);
+  await page.getByLabel("Name").fill("Das Frostreich");
+  await page.getByRole("button", { name: "Welt anlegen" }).click();
+  await page.getByRole("button", { name: "Kanon", exact: true }).click();
+  await page.getByRole("button", { name: "Neuer Eintrag" }).click();
+  await page.getByLabel("Name").fill("Eiskönigin");
+  await page.getByLabel("Text").fill("Herrscht über den Frost, trägt Reif.");
+  await page.getByRole("button", { name: "Speichern" }).click();
+  await expect(page.getByRole("button", { name: "Eiskönigin" })).toBeVisible();
+
+  await page.locator("button.brand").click();
+  await page.getByLabel("Name").fill("Die Salzbucht");
+  await page.getByRole("button", { name: "Welt anlegen" }).click();
+  await page.getByRole("button", { name: "Geschichten" }).click();
+  await page.getByLabel("Titel").fill("Gastspiel");
+  await page.getByRole("button", { name: "Geschichte anlegen" }).click();
+  await page.getByText(/Gäste aus anderen Welten/).click();
+  await page.getByLabel("Welt des Gastes").selectOption("das-frostreich");
+  await page.getByLabel("Gast-Eintrag").selectOption("eiskoenigin");
+  await page.getByRole("button", { name: "Als Gast einbinden" }).click();
+  await expect(page.getByText("Eiskönigin aus Das Frostreich")).toBeVisible();
+  await page.getByLabel("Titel des neuen Kapitels").fill("Ankunft");
+  await page.getByRole("button", { name: "Kapitel anlegen" }).click();
+
+  await page.getByLabel(/Anweisung an die KI/).click();
+  await page.keyboard.type("@Eis");
+  await expect(
+    page.getByRole("option", { name: /Eiskönigin.*Gast/ }),
+  ).toBeVisible();
+  await waitForCompletionInteraction(page);
+  await page.keyboard.press("Enter");
+  await expect(page.getByText("Herangezogen: Eiskönigin (Gast)")).toBeVisible();
+  await page.getByRole("button", { name: "Weiterschreiben" }).click();
+  await expect(page.getByLabel("Vorschlag der KI")).toHaveValue(
+    "Reif lag auf dem Steg.",
+  );
+  expect(sent).toMatchObject({ references: ["eiskoenigin"] });
+});
+
+/**
+ * The `@` menu ignores Enter for 75 ms after it opens (`interactionDelay` of
+ * @codemirror/autocomplete, against accidental choices); an Enter within that time
+ * is a line break. Wait past it before choosing, as a person would.
+ */
+async function waitForCompletionInteraction(page: Page): Promise<void> {
+  await page.waitForTimeout(150);
+}

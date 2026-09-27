@@ -1,0 +1,11 @@
+{
+  "instruction": "@Eiskönigin betritt den Hafen. Ca. 200 Wörter.",
+  "gast_im_kontext": [
+    "gast"
+  ],
+  "regel_der_heimatwelt_im_kontext": false,
+  "estimated_tokens": 366,
+  "input_tokens": 1549,
+  "output_tokens": 978,
+  "cost_usd": 0.005732496
+}

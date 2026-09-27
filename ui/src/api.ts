@@ -63,6 +63,12 @@ export interface ImportResult {
   skipped: string[];
 }
 
+/** A canon entry of another world, bound into one story only (FR-017). */
+export interface GuestLink {
+  world: string;
+  entry: string;
+}
+
 export interface Story {
   world: string;
   id: string;
@@ -70,7 +76,7 @@ export interface Story {
   form: Form;
   perspective: string | null;
   controlled_characters: string[];
-  guest_links: { world: string; entry: string }[];
+  guest_links: GuestLink[];
   facts: { entry: string; fact: string }[];
   summary: string;
 }
@@ -368,6 +374,11 @@ export const api = {
 
   entries: (world: string) =>
     request("GET", `${worldPath(world)}/entries`) as Promise<CanonEntry[]>,
+  entry: (world: string, id: string) =>
+    request(
+      "GET",
+      `${worldPath(world)}/entries/${enc(id)}`,
+    ) as Promise<CanonEntry>,
   createEntry: (world: string, entry: Omit<CanonEntry, "world" | "id">) =>
     request(
       "POST",
@@ -421,6 +432,17 @@ export const api = {
     story: string,
     change: { perspective?: string | null; controlled_characters?: string[] },
   ) => request("PATCH", storyPath(world, story), change) as Promise<Story>,
+  addGuest: (world: string, story: string, guest: GuestLink) =>
+    request(
+      "POST",
+      `${storyPath(world, story)}/guests`,
+      guest,
+    ) as Promise<Story>,
+  removeGuest: (world: string, story: string, guest: GuestLink) =>
+    request(
+      "DELETE",
+      `${storyPath(world, story)}/guests/${enc(guest.world)}/${enc(guest.entry)}`,
+    ) as Promise<Story>,
   chapters: (world: string, story: string) =>
     request("GET", `${storyPath(world, story)}/chapters`) as Promise<Chapter[]>,
   saveChapter: (

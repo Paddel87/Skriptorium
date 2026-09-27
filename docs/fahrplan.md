@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-27
 - **Laufende Phase:** Phase 3 „Schreiben mit KI" (Phase 2 abgeschlossen 2026-09-26, ADR-020: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (3.6 `[ERLEDIGT]` 2026-09-27)
-- **Nächster Schritt:** 3.7 Gast-Figuren aus anderen Welten (neue Session); datiert: D.6 Reaktionszeit erkunden vor 4.8
+- **Aktiver Schritt:** keiner (3.7 `[ERLEDIGT]` 2026-09-27)
+- **Nächster Schritt:** 3.8 Fakt aus dem Text in den Kanon (neue Session); datiert: D.6 Reaktionszeit erkunden vor 4.8
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -212,7 +212,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 3.7: Gast-Figuren aus anderen Welten
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-27) – `context` nimmt Gäste der Geschichte auf: genannt (`@`, Szene) oder geführt in Vorrang 2, sonst nur als Auffüllung nach den Einträgen der Welt; gekennzeichnet mit der Heimatwelt, deren Regeln nicht mitgehen (Entscheidungen des Eigentümers per Frage-System); Schreib-Ablauf nimmt Gäste in Verweisen und Szene an (rein additiv); Oberfläche: Abschnitt „Gäste aus anderen Welten“ (einbinden, entfernen), Gäste im `@`-Menü, in der Szene und in der Figuren-Schreibweise. Szenario 4 durch Tests belegt: andere Geschichte der Welt und Geschichte der Heimatwelt ohne Gast (`tests/context/test_guests.py`), Verweis ohne Verbindung → 422 (`tests/api/test_writing.py`), Menü nur mit den Gästen der Geschichte (`ui/src/views/Guests.test.tsx`, End-to-End-Test). 356 Python-Tests (`context` 100 %, `api.flows.writing` 99 %), 65 Komponenten- (98,2 % Zeilen, 94,6 % Zweige), 6 End-to-End-Tests. Abnahme mit 3 echten Läufen grok-4.7 (0,014 $, blind bewertet): 12 von 12 Einzelheiten des Gastes, Regel der Heimatwelt in keinem Text, 0 eindeutige Widersprüche (`spikes/gast-figuren/README.md`). Nebenbei: zeitabhängiger End-to-End-Test beim `@`-Menü behoben (Logbuch)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.2
 - **Freigabepflichtig:** nein
@@ -224,7 +224,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** manuscript, context, ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests
-- **Notizen:** –
+- **Notizen:** Tatsächlich berührt (2026-09-27): context, api (`api.flows.writing`), ui; `manuscript` unverändert – Gast-Verbindungen bestehen seit 2.5.
 
 #### 3.8: Fakt aus dem Text in den Kanon (inkl. Ziel bei Gast-Figuren)
 

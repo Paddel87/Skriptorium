@@ -6,6 +6,7 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt
 
+- Gast-Figuren aus anderen Welten (2026-09-27, Schritt 3.7): Eine Geschichte bindet Einträge anderer Welten ein, die nur in ihr gelten. Gäste stehen im `@`-Menü (als „Gast“ markiert), in der neuen Szene und in der Figuren-Schreibweise zur Wahl. Die KI erhält einen genannten oder selbst geführten Gast vollständig und mit seiner Herkunftswelt, einen nicht genannten nur, wenn nach dem Kanon der Welt noch Platz ist; die Regeln seiner Heimatwelt gehen nicht mit. Der Schreib-Endpunkt nimmt Gäste in `references` und in der Szene an.
 - Kapitel-Kurzfassungen (2026-09-27, Schritt 3.6): Beim Abschließen eines Kapitels erstellt die KI eine Kurzfassung und schreibt die Gesamtzusammenfassung der Geschichte fort; beides lässt sich ansehen und ändern, eine fehlende Kurzfassung nachholen. Beim Weiterschreiben kennt die KI so den Handlungsstand früherer Kapitel; fehlt eine Kurzfassung, nutzt sie den Kapitelanfang. Neuer Endpunkt `POST …/chapters/{n}/summarize`.
 
 - `@`-Menü (2026-09-27, Schritt 3.5): Im Anweisungsfeld bietet `@` die Kanon-Einträge der Welt (Namen und Aliasse) zur Auswahl an; jeder per `@` genannte Eintrag wird der KI vollständig mitgegeben, auch wenn die Welt sonst nicht ins Budget passt. Unter dem Feld steht, welche Einträge herangezogen werden.
