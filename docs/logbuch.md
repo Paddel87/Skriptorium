@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-27 05:22 – [SESSIONSTART] Fortsetzung mit 3.9 auf Anweisung „Weiter“
+
+- **Modell:** eingestellt `claude-opus-5-5`, bedient `claude-opus-5-5` (Sitzungsabfrage 05:07) → Entscheidungs-Klasse.
+- **Abweichung Sessiongröße:** Die Sitzungsabfrage meldet erstmals eine Kontextgröße: 299.221 Token, über der Grenze von 200.000 (`docs/project-context.md` Abschnitt 6). Hinweis mit Empfehlung „neue Session“ gegeben; der Eigentümer hat „Weiter“ geantwortet → Arbeit hier, Abweichung vermerkt (`CLAUDE.md` Abschnitt 0, „Sessiongröße“). Bisherige Kosten der Session laut Abfrage 6,63 $.
+- **Zwischenschritt:** PR #16 (3.8) nach grüner CI gemergt (`50a3585`); Branch auf `main` neu aufgesetzt.
+- **Pflichtlektüre:** in dieser Session um 04:15 gelesen; seither nur eigene Änderungen. Vertiefung für 3.9: ADR-021, `docs/architecture.md` Abschnitt 6, `templates/architektur-heuristiken.md`.
+- **Klassen-Hinweis:** 3.9 empfiehlt Routine, enthält aber eine freigabepflichtige Datenmodell-Entscheidung → Entscheidungs-Klasse Pflicht (Auslöser 1), aktiv.
+
 ### 2026-09-27 04:31 – [SESSIONENDE] Schritt 3.8 erledigt
 
 - **Dauer:** 04:15–04:31 UTC.

@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-09-27
 - **Laufende Phase:** Phase 3 „Schreiben mit KI" (Phase 2 abgeschlossen 2026-09-26, ADR-020: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (3.8 `[ERLEDIGT]` 2026-09-27)
+- **Aktiver Schritt:** 3.9 `[WARTET-AUF-FREIGABE]` (Datenmodell: Verbrauchsdaten, Modell je Geschichte)
 - **Nächster Schritt:** 3.9 Modell- und Anbieterwahl, Modellwechsel (neue Session; enthält eine Datenmodell-Entscheidung, Kategorie 4, ADR-021); danach Phasenabschluss 3; datiert: D.6 Reaktionszeit erkunden vor 4.8
 - **Offene STOPP-Situationen:** keine
 
@@ -244,7 +244,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 3.9: Modell- und Anbieterwahl, Modellwechsel
 
-- **Status:** OFFEN
+- **Status:** WARTET-AUF-FREIGABE (seit 2026-09-27) – Speicherung der Verbrauchsdaten und der Modellwahl je Geschichte (Datenmodell, Kategorie 4)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.3
 - **Freigabepflichtig:** nein
