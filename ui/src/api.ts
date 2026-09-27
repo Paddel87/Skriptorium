@@ -180,6 +180,12 @@ export function describeError(error: unknown): string {
   if (error.status === 429) {
     return "Zu viele Fehlversuche. Bitte in 15 Minuten erneut versuchen.";
   }
+  if (
+    error.status === 503 &&
+    error.message === "KI-Anbieter nicht eingerichtet"
+  ) {
+    return "Kein KI-Anbieter eingerichtet (OPENROUTER_API_KEY fehlt auf dem Server).";
+  }
   if (error.status === 503) {
     return "Die Passwortprüfung ist gerade nicht erreichbar. Bitte später erneut versuchen.";
   }

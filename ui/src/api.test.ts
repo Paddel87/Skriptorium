@@ -79,6 +79,11 @@ describe("describeError", () => {
     expect(describeError(new ApiError(422, "x", "unbekannt"))).toBe("x");
     expect(describeError(new ApiError(429, "x"))).toMatch(/15 Minuten/);
     expect(describeError(new ApiError(503, "x"))).toMatch(/nicht erreichbar/);
+    expect(
+      describeError(new ApiError(503, "KI-Anbieter nicht eingerichtet")),
+    ).toBe(
+      "Kein KI-Anbieter eingerichtet (OPENROUTER_API_KEY fehlt auf dem Server).",
+    );
     expect(describeError(new ApiError(409, "Existiert bereits"))).toBe(
       "Existiert bereits",
     );
