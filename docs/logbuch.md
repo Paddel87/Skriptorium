@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 00:10 – [BEOBACHTUNG] Kein Force-Push; `main` ohne Branch-Schutz
+
+- Eigentümer fragte nach Force-Push, um den Host-Namen aus der Historie zu entfernen. Vorher geprüft: Die betroffenen Commits (`2f2fe82`, `a392057`) bleiben über PR #21 auf GitHub sichtbar; entfernen kann nur der GitHub-Support. Die Subdomains sind ohnehin über Certificate Transparency öffentlich. Eigentümer entschied: kein Force-Push.
+- Dabei gefunden: `main` hat keinen Branch-Schutz – Widerspruch zu `docs/project-context.md` Abschnitt 7 und 10. Schritt 4.11 angelegt.
+
 ### 2026-09-28 00:00 – [SESSIONENDE] Erkundung VPS (4.10) nach „weiter hier“
 
 - **Dauer:** 23:35–00:00 UTC (Fortsetzung nach dem Sessionende um 22:58).

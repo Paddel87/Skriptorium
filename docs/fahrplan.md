@@ -114,7 +114,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Reifegrad-Erwartung am Phasenende:** Host, Netz, Secrets im Betrieb, Backups und Bedrohungsmodell `[BELASTBAR]` (Backups erst nach erprobter Wiederherstellung).
 
-**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-09-27: 10 Schritte (+4.9, ADR-025; +4.10, Auftrag des Eigentümers), Wucherungs-Schwelle (16 und mindestens +5) nicht berührt
+**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-09-28: 11 Schritte (+4.9, ADR-025; +4.10, Auftrag des Eigentümers; +4.11, Befund Branch-Schutz), Wucherungs-Schwelle (16 und mindestens +5) nicht berührt
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
@@ -287,6 +287,22 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine (Host bleibt `[OFFEN]` bis 4.2)
 - **Artefakte:** `docs/research/vps-bestand.md`, ADR-027
 - **Notizen:** Angelegt 2026-09-27 auf Auftrag des Eigentümers. Keine Änderung am VPS. Das Repo ist öffentlich – Server-Details bleiben außerhalb (Eigentümer, 2026-09-27).
+
+#### 4.11: Branch-Schutz für `main` einrichten
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – Repository- und Pipeline-Regeln (Kategorie 7)
+- **Empfohlene Klasse:** Entscheidung – `ENTSCHEIDUNG ERFORDERLICH` (Eskalations-Auslöser 1).
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Befund 2026-09-28: `main` hat auf GitHub keinen Branch-Schutz (API: „Branch not protected“), `docs/project-context.md` Abschnitt 7 und 10 behaupten Force-Push-Sperre und Merge nur bei grüner CI. Vorschlag vorlegen: Force-Push und Löschen sperren, Merge nur über Pull Request mit grünen Pflicht-Gates (Pre-Commit, Python, TypeScript, End-to-End).
+- **Akzeptanzkriterien:** Schutz aktiv und durch einen absichtlich abgewiesenen Versuch belegt (Force-Push auf `main` wird abgelehnt; CLAUDE.md Abschnitt 6); project-context stimmt mit dem Zustand überein.
+- **Betroffene Module:** keine (Repository)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR, `docs/project-context.md` Abschnitt 10
+- **Notizen:** Angelegt 2026-09-28 auf Wunsch des Eigentümers. Anlass: Frage nach Force-Push zum Entfernen des Host-Namens aus der Historie – verworfen, weil die Commits über PR #21 auf GitHub sichtbar bleiben.
 
 ### Phase 5: Soll-Anforderungen – Typ: UMSETZUNG
 
