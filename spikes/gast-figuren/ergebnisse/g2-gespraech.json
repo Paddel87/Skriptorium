@@ -1,0 +1,11 @@
+{
+  "instruction": "@Eiskönigin spricht mit dem Hafenmeister Oren über ein Schiff nach Süden. Ca. 200 Wörter.",
+  "gast_im_kontext": [
+    "gast"
+  ],
+  "regel_der_heimatwelt_im_kontext": false,
+  "estimated_tokens": 380,
+  "input_tokens": 1558,
+  "output_tokens": 648,
+  "cost_usd": 0.004178592
+}
