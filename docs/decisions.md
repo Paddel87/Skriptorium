@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-27 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-27 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -46,12 +46,13 @@ Stand 2026-09-27 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 024 | 2026-09-27 | Aktiv | STRATEGISCH | METHODIK | Pflichtfrage Phasenende | Phasenende 3 – weiterbauen, Geschichtenseite in 4.1 aufteilen, Kanon-Treue in 4.8 messen |
 | 025 | 2026-09-27 | Aktiv | OPERATIV | DEPLOYMENT, SECURITY, METHODIK | Externe Abh., Sicherheit, Deploy | Bestehender netcup-VPS, Entwicklung auf macOS, SSH-Zugang der KI |
 | 026 | 2026-09-27 | Aktiv | OPERATIV | STACK, METHODIK | Build-Pipeline, Externe Abh. | Einrichtungsskript auch für macOS |
+| 027 | 2026-09-27 | Aktiv | OPERATIV | DEPLOYMENT, SECURITY, STACK | Externe Abh., Sicherheit, Deploy | Skriptorium als Container hinter dem vorhandenen Reverse Proxy |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 1 / 10 (10 %) über ADR-017 bis ADR-026 – ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv); ADR-025 in 4.2 (geplante Anbieterwahl, Kategorien 3, 6, 7 – nicht reaktiv); ADR-017 und ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3; reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
+- **Aktueller Wert:** 0 / 10 (0 %) über ADR-018 bis ADR-027 – ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv); ADR-025 in 4.2 (geplante Anbieterwahl, Kategorien 3, 6, 7 – nicht reaktiv); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3; reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -736,6 +737,28 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Konsequenzen:**
   - Skript-Header (Plattformen, Voraussetzungen, Idempotenz) und Runbook im selben Commit nachziehen (`CLAUDE.md` Abschnitt 5); Plattform-Matrix nach der Validierung in 4.9.
   - System-Node unter `/usr/local` und Homebrew-uv bleiben unverändert.
+- **Abgeleitete Regel:** keine
+
+#### ADR-027: Skriptorium als Container hinter dem vorhandenen Reverse Proxy
+
+- **Datum:** 2026-09-27
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[OPERATIV]` `[DEPLOYMENT]` `[SECURITY]` `[STACK]`
+- **Phasentyp-Kontext:** STABILISIERUNG (Schritt 4.10)
+- **Reifegrad-Wirkung:** keine; Host bleibt `[OFFEN]`, Netz `[VORLÄUFIG]` bis zur Prüfung von außen in 4.2
+- **Kategorie:** Externe Abhängigkeit (Docker), Sicherheit (Proxy-Vertrauen), Deployment-Ziel (`CLAUDE.md` Abschnitt 4, Kategorien 3, 6 und 7)
+- **Kontext:** Erkundung 4.10 (`docs/research/vps-bestand.md`): Auf dem VPS laufen alle Anwendungen als Docker-Compose-Projekte hinter einem Reverse Proxy im Container mit automatischen Zertifikaten; Firewall, SSH-Härtung, Updates, Überwachung und Sicherung des Anwendungsverzeichnisses sind vorhanden. Geplant war ein uvicorn-Prozess mit Proxy auf `127.0.0.1` (ADR-017).
+- **Optionen:** A Container im Anwendungsverzeichnis, angebunden per Label an den vorhandenen Proxy, ohne veröffentlichten Port (Empfehlung der KI) / B uvicorn als Systemdienst auf dem Host, Proxy per Datei-Regel.
+- **Entscheidung:** A.
+- **Vision-Frage, die entschied:** „Soll sich das Skriptorium auf deinem Server genauso verhalten wie deine anderen Anwendungen?“ → ja.
+- **Konfidenz zum Zeitpunkt:** hoch – Muster an zwei vorhandenen eigenen Anwendungen des Eigentümers gesehen. Umkehrbarkeit billig.
+- **Konsequenzen:**
+  - Neu im Projekt: Dockerfile und Compose-Datei (in 4.2); Docker ist Werkzeug des Betriebs, nicht der Entwicklung.
+  - ADR-017 bleibt; nur die Proxy-Adresse ändert sich: `--forwarded-allow-ips` genau für die Adresse des Proxy-Containers, nicht für das ganze Proxy-Netz. Wirkung von außen prüfen wie in der Notiz an 4.2.
+  - Zugriffsprotokoll des Proxys für das Skriptorium abschalten (Log-Regel, project-context Abschnitt 6); `frame-ancestors` als Middleware.
+  - Daten im Anwendungsverzeichnis, damit die vorhandene Sicherung sie erfasst; Ziel und Wiederherstellung prüft 4.3.
+  - Server-Details (Namen, Ports, Adressen, Benutzer) stehen wegen des öffentlichen Repos nur lokal beim Eigentümer.
 - **Abgeleitete Regel:** keine
 
 ---

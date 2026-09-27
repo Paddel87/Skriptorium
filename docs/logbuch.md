@@ -29,6 +29,35 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 00:00 – [SESSIONENDE] Erkundung VPS (4.10) nach „weiter hier“
+
+- **Dauer:** 23:35–00:00 UTC (Fortsetzung nach dem Sessionende um 22:58).
+- **Bearbeitet:** 4.10 → `[ERLEDIGT]` mit ADR-027; Kostenregister und 4.9 nach Vorgabe des Eigentümers angepasst.
+- **Offen:** 4.9 Validierung im frischen Klon; Pull Request für diesen Branch.
+- **Nächster Schritt:** neue Session – 4.9 abschließen, dann 4.2 nach ADR-027.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5); oberhalb der Empfehlung: 4.9 (Routine). Abgegeben: nichts.
+- **Kontextgröße:** über 200.000 Token auf ausdrückliche Anweisung („weiter hier“).
+- **Sessionende-Prüfungen:** Drift: ADR-027 ↔ 4.10/4.2 vorhanden; Reaktiv-Quote 0/10 (ADR-018..027); Phase 4 10 Schritte (Schwelle 16); Modul-Liste und Reifegrade unverändert; README unverändert gültig (Nächste Schritte 4.9/4.2). Keine Server-Details im Repo (Suche nach Host-, Proxy- und Pfadnamen ohne Treffer).
+
+### 2026-09-27 23:55 – [ADR] ADR-027 Container hinter dem vorhandenen Reverse Proxy
+
+- Eigentümer wählt A: Das Skriptorium läuft wie die übrigen Anwendungen auf dem VPS als Container hinter dem vorhandenen Proxy. Konfidenz hoch, Umkehrbarkeit billig. 4.2 entsprechend ergänzt; 4.10 erledigt.
+
+### 2026-09-27 23:50 – [GELÖST] Server-Details beinahe im öffentlichen Repo
+
+- **Symptom:** Die erste Fassung der Erkundungs-Notiz enthielt Dienste, Ports, Subdomains und Benutzer des Servers; das Commit wurde vom Werkzeug blockiert. Das Repo ist öffentlich.
+- **Lösung:** Eigentümer entscheidet: Details nur lokal außerhalb des Repos; im Repo eine allgemeine Fassung. Der Host-Name aus früheren Commits wurde in den aktuellen Dateien ersetzt, bleibt aber in der Git-Historie.
+- **Lehre:** Vor jeder Notiz über Betriebsumgebungen prüfen, ob das Repo öffentlich ist.
+
+### 2026-09-27 23:45 – [BEOBACHTUNG] Bestand auf dem VPS erhoben (4.10)
+
+- Container-Muster mit Reverse Proxy, Überwachung, Sicherung und Runner vorhanden; Firewall, SSH-Härtung und Updates aktiv. Sechs Befunde für das Skriptorium, u. a. Proxy-Adresse im Docker-Netz statt `127.0.0.1` (ADR-017) und Zugriffsprotokoll des Proxys: `docs/research/vps-bestand.md`.
+
+### 2026-09-27 23:35 – [BEOBACHTUNG] „Weiter hier“ über der Kontextgrenze
+
+- Kontext 185.449 Token (Grenze 200.000). Eigentümer sagt ausdrücklich „weiter hier“ und beauftragt die Erkundung des VPS (Schritt 4.10). Abweichung nach `CLAUDE.md` Abschnitt 0 vermerkt.
+- Eigentümer: Tarif und Preis des VPS sind nicht Sache des Projekts – Kostenregister und Akzeptanzkriterium von 4.9 angepasst. PR #21 gemergt (`d8bc2bf`).
+
 ### 2026-09-27 22:58 – [SESSIONENDE] Schritt 4.9 teilweise
 
 - **Dauer:** 22:28–22:58 UTC.
@@ -40,7 +69,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - **Kontextgröße:** ca. 185.000 Token (`get_usage` 173.395 vor den letzten Schritten) – Grenze 200.000 fast erreicht, deshalb Abschluss vor Ende des Schritts.
 - **Sessionende-Prüfungen:** README (Voraussetzungen) im Skript-Commit nachgezogen; Phase und Nächste Schritte unverändert gültig. Drift: ADR-026 ↔ 4.9 vorhanden; Modul-Liste und Reifegrade unverändert; Reaktiv-Quote 1/10 (ADR-017..026); Phase 4 9 Schritte; Blocker 0. Ablaufdaten-Register: Guthaben-Vorlauf ab 2026-10-22, noch nicht erreicht (lokale Sessions laufen über das Abo). Archivierung: kein Trigger. Onboarding-Pfad: `scripts/` berührt – Validierung im frischen Klon steht aus (offen in 4.9, s. o.).
 
-### 2026-09-27 22:56 – [BEOBACHTUNG] VPS `nodica1` ist bereits in Benutzung; Grundlast des Kontexts
+### 2026-09-27 22:56 – [BEOBACHTUNG] VPS ist bereits in Benutzung; Grundlast des Kontexts
 
 - SSH per Schlüssel (`id_ed25519_ebvps`) als `root`: Ubuntu 24.04.5 LTS, Kernel 6.8, x86_64, 4 Kerne, 7,8 GB RAM (2,4 GB belegt), 251 GB Platte (39 GB belegt), seit 3 Wochen in Betrieb. Nur lesende Befehle. Folgen für 4.2: vorhandene Dienste vor jeder Firewall-Änderung erfassen; eigenes Benutzerkonto für die KI statt `root` (Gate-Punkt 4).
 - Lokale Desktop-Session: Werkzeuge, Speicherdateien und Skills belegen schon ca. 85.000 Token vor der ersten Nachricht, die Pflichtlektüre weitere ca. 58.000. Bei der Grenze 200.000 bleiben für die Arbeit nur ca. 57.000 Token – zu wenig für einen mittelgroßen Schritt. Kandidat für eine Anpassung der Grenze (Vorschlag an den Eigentümer).
@@ -55,7 +84,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 ### 2026-09-27 22:40 – [ADR] ADR-026 Einrichtungsskript auch für macOS
 
 - Bestandsaufnahme Mac: macOS 27.0 arm64, Homebrew 7.0.4, uv 0.11.7 (Homebrew), Node 24.15.0 / npm 11.12.1 (nodejs.org-Installer, root), Python 3.9.6, bash 3.2 – alles unter den Projektversionen. Eigentümer wählt Option A: `scripts/session-start.sh` auch für macOS arm64, Werkzeuge in `~/.cache/skriptorium-tools`. Konfidenz mittel (Hook-Umgebung der Desktop-App, bash 3.2), Umkehrbarkeit billig.
-- VPS für das Skriptorium ist laut Eigentümer der Host `nodica1` in seiner `~/.ssh/config`.
+- VPS für das Skriptorium ist laut Eigentümer ein bestimmter Host-Eintrag in seiner `~/.ssh/config` (Name nur lokal, Repo öffentlich).
 
 ### 2026-09-27 22:28 – [SESSIONSTART] Schritt 4.9 – erste Session auf dem Mac
 

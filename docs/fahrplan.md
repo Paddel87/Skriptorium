@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-27
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** 4.9 Entwicklungsumgebung macOS einrichten (ADR-026)
-- **Nächster Schritt:** 4.9 Entwicklungsumgebung macOS einrichten (erste Session auf dem Mac), danach 4.2 Host bereitstellen und härten auf dem vorhandenen netcup-VPS (ADR-025). Datiert: D.6 Reaktionszeit erkunden vor 4.8; D.5 ab 2026-11-12
+- **Aktiver Schritt:** 4.10 VPS-Bestand erkunden (Auftrag des Eigentümers 2026-09-27); 4.9 weiter `[IN ARBEIT]`, offen nur die Validierung im frischen Klon
+- **Nächster Schritt:** 4.9 abschließen (Validierung im frischen Klon), dann 4.2 nach ADR-027 (Container hinter dem vorhandenen Reverse Proxy). Datiert: D.6 Reaktionszeit erkunden vor 4.8; D.5 ab 2026-11-12
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -114,7 +114,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Reifegrad-Erwartung am Phasenende:** Host, Netz, Secrets im Betrieb, Backups und Bedrohungsmodell `[BELASTBAR]` (Backups erst nach erprobter Wiederherstellung).
 
-**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-09-27: 9 Schritte (+4.9, ADR-025), Wucherungs-Schwelle (16 und mindestens +5) nicht berührt
+**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-09-27: 10 Schritte (+4.9, ADR-025; +4.10, Auftrag des Eigentümers), Wucherungs-Schwelle (16 und mindestens +5) nicht berührt
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
@@ -145,7 +145,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – Anbieter- und Betriebsentscheidungen mit `ENTSCHEIDUNG ERFORDERLICH` (Eskalations-Auslöser 1).
 - **Eingangskriterien:** Kostenrahmen (BDR-001) und Kostenregister aus 1.1 aktuell
 - **Anforderungen (ab Klasse M):** keine (Gate-Prüfpunkt 3)
-- **Zu tun:** VPS-Anbieter vorschlagen und freigeben lassen; Firewall, SSH nur mit Schlüssel, automatische Sicherheitsupdates; von außen nur HTTPS (443) und Umleitung von HTTP (80); TLS mit automatischer Erneuerung; Erreichbarkeits-Prüfung von außen.
+- **Zu tun:** Zusatz 2026-09-27 (ADR-027): Firewall, SSH nur mit Schlüssel, automatische Updates, HTTPS-Umleitung und Zertifikate sind auf dem VPS schon vorhanden und werden von außen belegt, nicht neu gebaut; neu sind: Dockerfile und Compose-Projekt des Skriptoriums hinter dem vorhandenen Reverse Proxy (ohne veröffentlichten Port), `--forwarded-allow-ips` nur für die Adresse des Proxy-Containers, Zugriffsprotokoll des Proxys für das Skriptorium aus, Middleware für `frame-ancestors`, eingeschränktes Konto für die KI, Eintrag in der vorhandenen Überwachung (Befunde `docs/research/vps-bestand.md`). Ursprünglich: VPS-Anbieter vorschlagen und freigeben lassen; Firewall, SSH nur mit Schlüssel, automatische Sicherheitsupdates; von außen nur HTTPS (443) und Umleitung von HTTP (80); TLS mit automatischer Erneuerung; Erreichbarkeits-Prüfung von außen.
 - **Akzeptanzkriterien:** Prüfung von außen belegt: nur die vorgesehenen Ports offen, Passwort-Anmeldung per SSH abgelehnt; Erreichbarkeits-Prüfung meldet einen absichtlich herbeigeführten Ausfall.
 - **Betroffene Module:** keine (Betrieb)
 - **Reifegrad-Wirkung:** Host und Netz → `[BELASTBAR]`
@@ -258,7 +258,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.9: Entwicklungsumgebung macOS einrichten
 
-- **Status:** IN ARBEIT (seit 2026-09-27) – Weg für Werkzeuge entschieden (ADR-026: Einrichtungsskript auch für macOS); VPS ist Host `nodica1` in `~/.ssh/config` des Eigentümers. Stand 2026-09-27: Einrichtungsskript für macOS erweitert und im Haupt-Checkout erprobt (uv 0.12.19, Python 3.14.7, Node 24.21.0; pytest 381 grün 99,78 %, vitest 96 grün, E2E 8/8 zweimal grün nach Test-Fix `ControlOrMeta`, Pre-Commit grün; Commit `2f2fe82`); SSH per Schlüssel belegt. Offen: Validierung im frischen Klon (`[ONBOARDING-VALIDATION]`), Plattform-Matrix auf ✓, Tarif und Preis des VPS vom Eigentümer ins Kostenregister
+- **Status:** IN ARBEIT (seit 2026-09-27) – Weg für Werkzeuge entschieden (ADR-026: Einrichtungsskript auch für macOS); VPS ist ein Host-Eintrag in `~/.ssh/config` des Eigentümers. Stand 2026-09-27: Einrichtungsskript für macOS erweitert und im Haupt-Checkout erprobt (uv 0.12.19, Python 3.14.7, Node 24.21.0; pytest 381 grün 99,78 %, vitest 96 grün, E2E 8/8 zweimal grün nach Test-Fix `ControlOrMeta`, Pre-Commit grün; Commit `2f2fe82`); SSH per Schlüssel belegt. Offen: Validierung im frischen Klon (`[ONBOARDING-VALIDATION]`), Plattform-Matrix auf ✓. Tarif und Preis des VPS entfallen: laut Eigentümer nicht Sache des Projekts (2026-09-27)
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.1
 - **Freigabepflichtig:** nein – Plattformwechsel entschieden in ADR-025; neue Werkzeuge auf dem Mac (z. B. Homebrew) wären Kategorie 3 und werden vorgelegt
@@ -266,11 +266,27 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Eingangskriterien:** Claude Code auf dem Mac des Eigentümers, Repo geklont
 - **Anforderungen (ab Klasse M):** keine
 - **Zu tun:** Voraussetzungen auf macOS installieren (Python 3.14.7 über uv 0.12.19, Node.js 24.21.0 mit npm 11.19.0, Playwright-Browser); Quick Start und alle Prüfungen (Pre-Commit, pytest, vitest, End-to-End) im frischen Klon ausführen; `scripts/session-start.sh` auf macOS prüfen (Header nennt nur Linux); SSH-Verbindung zum netcup-VPS herstellen und Tarif, Ausstattung, Betriebssystem und Laufzeit erfassen; Plattform-Matrix (`docs/project-context.md` Abschnitt 3) und Runbook (Abschnitt 2 und 5) nachziehen.
-- **Akzeptanzkriterien:** Onboarding-Pfad auf macOS im frischen Klon validiert (`[ONBOARDING-VALIDATION]` im Logbuch); alle Tests grün; Plattform-Matrix zeigt macOS ✓; SSH-Anmeldung am VPS per Schlüssel belegt; VPS-Daten im Kostenregister.
+- **Akzeptanzkriterien:** Onboarding-Pfad auf macOS im frischen Klon validiert (`[ONBOARDING-VALIDATION]` im Logbuch); alle Tests grün; Plattform-Matrix zeigt macOS ✓; SSH-Anmeldung am VPS per Schlüssel belegt; Ausstattung des VPS in `docs/project-context.md` Abschnitt 8 (Preis entfällt, Eigentümer 2026-09-27).
 - **Betroffene Module:** keine (Werkzeuge und Betrieb)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** `docs/project-context.md` Abschnitt 3 und 8, `docs/onboarding-runbook.md`, Logbuch
 - **Notizen:** Angelegt 2026-09-27 (ADR-025). Nummer 4.9 aus Stabilität der bestehenden IDs; läuft vor der Fortsetzung von 4.2.
+
+#### 4.10: VPS-Bestand erkunden und Einpassung vorschlagen
+
+- **Status:** ERLEDIGT (2026-09-27) – Bestand erhoben (allgemeine Fassung `docs/research/vps-bestand.md`, Details nur lokal beim Eigentümer); Eigentümer entschied Einpassung als Container (ADR-027)
+- **Phasentyp-Kontext:** STABILISIERUNG (Erkundung; Host ist `[OFFEN]`, CLAUDE.md Abschnitt 6)
+- **Abhängigkeiten:** 4.9 (SSH-Zugang)
+- **Freigabepflichtig:** Erhebung nein (nur lesend); Einpassung ja (Kategorien 3, 6, 7) – ADR-027
+- **Empfohlene Klasse:** Entscheidung – mündet in `ENTSCHEIDUNG ERFORDERLICH` (Eskalations-Auslöser 1).
+- **Eingangskriterien:** SSH per Schlüssel zum VPS
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Nur lesend erheben, wie die vorhandenen Anwendungen installiert sind; Konflikte mit den Vorgaben des Skriptoriums benennen; Einpassung als Entscheidung vorlegen.
+- **Akzeptanzkriterien:** Bestand und Befunde dokumentiert; Entscheidung als ADR; 4.2 an die Entscheidung angepasst.
+- **Betroffene Module:** keine (Betrieb)
+- **Reifegrad-Wirkung:** keine (Host bleibt `[OFFEN]` bis 4.2)
+- **Artefakte:** `docs/research/vps-bestand.md`, ADR-027
+- **Notizen:** Angelegt 2026-09-27 auf Auftrag des Eigentümers. Keine Änderung am VPS. Das Repo ist öffentlich – Server-Details bleiben außerhalb (Eigentümer, 2026-09-27).
 
 ### Phase 5: Soll-Anforderungen – Typ: UMSETZUNG
 
