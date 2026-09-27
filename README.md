@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 3 – Schreiben mit KI (Umsetzung); 3.1 (Anbieter-Schnittstelle mit OpenRouter), 3.2 (Kontext-Zusammenstellung), 3.3 (Weiterschreiben mit KI), 3.4 (Figuren-Schreibweise), 3.5 (`@`-Menü), 3.6 (Kapitel-Kurzfassungen) und 3.7 (Gast-Figuren) umgesetzt, nächster Schritt 3.8 (Fakt in den Kanon); Phase 2 – Grundgerüst abgeschlossen am 2026-09-26 (ADR-020: weiterbauen)
+- **Projektphase:** Phase 3 – Schreiben mit KI (Umsetzung); 3.1 (Anbieter-Schnittstelle mit OpenRouter), 3.2 (Kontext-Zusammenstellung), 3.3 (Weiterschreiben mit KI), 3.4 (Figuren-Schreibweise), 3.5 (`@`-Menü), 3.6 (Kapitel-Kurzfassungen), 3.7 (Gast-Figuren) und 3.8 (Fakt in den Kanon) umgesetzt, nächster Schritt 3.9 (Modellwahl); Phase 2 – Grundgerüst abgeschlossen am 2026-09-26 (ADR-020: weiterbauen)
 - **Version:** v0.0.0 – noch keine veröffentlichte Version
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-09-27
@@ -32,7 +32,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 
 ## Quick Start
 
-Stand nach Schritt 3.7: Server mit Anmeldung und Oberfläche für Welten, Kanon, Import und Geschichten; Schreiben mit KI (Figuren-Schreibweise, `@`-Menü, Kapitel-Kurzfassungen, Gast-Figuren aus anderen Welten) mit `OPENROUTER_API_KEY`.
+Stand nach Schritt 3.8: Server mit Anmeldung und Oberfläche für Welten, Kanon, Import und Geschichten; Schreiben mit KI (Figuren-Schreibweise, `@`-Menü, Kapitel-Kurzfassungen, Gast-Figuren aus anderen Welten) mit `OPENROUTER_API_KEY`; markierte Textstellen in den Kanon übernehmen.
 
 ### Voraussetzungen
 
@@ -83,11 +83,10 @@ Browser (ui) ──HTTP/SSE──> api ──> canon ─────┐
 
 ## Verwendung
 
-Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:8000` im Browser öffnen (ohne TLS nur über `localhost`, weil das Sitzungs-Cookie `Secure` verlangt). Mit dem Einrichtungscode ein Passwort festlegen, anmelden, Welt anlegen. Verfügbar: Kanon-Einträge je Kategorie, Markdown-Import mit Vorschau, Geschichten und Kapitel mit Markdown-Editor, Passwort ändern und Sitzungen beenden unter „Konto“. Schreiben mit KI (mit `OPENROUTER_API_KEY`): unter dem Kapitel-Editor eine Anweisung geben oder eine neue Szene mit Ort, Figuren und Ziel beginnen; der Vorschlag erscheint fortlaufend und lässt sich übernehmen (ans Kapitelende), ändern, verwerfen, abbrechen oder mit einem anderen Modell neu schreiben. Unter „Figuren-Schreibweise“ je Geschichte Erzählperspektive und die selbst geführten Figuren festlegen; für sie schreibt die KI nur Wahrnehmung und hört auf, wo du weiterschreibst. In der Anweisung öffnet `@` eine Auswahl der Kanon-Einträge der Welt; per `@Name` genannte Einträge gibt das Skriptorium der KI vollständig mit. „Kapitel abschließen“ lässt die KI eine Kurzfassung erstellen und die Gesamtzusammenfassung fortschreiben; beide lassen sich ansehen und ändern. Unter „Gäste aus anderen Welten“ bindet eine Geschichte Einträge anderer Welten ein – nur für diese Geschichte; Gäste stehen im `@`-Menü, in der neuen Szene und in der Figuren-Schreibweise zur Wahl. Die KI kennt einen Gast mit seinem Eintrag und seiner Herkunft, wenn er genannt oder selbst geführt wird, sonst nur, wenn nach dem Kanon der Welt Platz ist; die Regeln seiner Heimatwelt gelten nicht.
+Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:8000` im Browser öffnen (ohne TLS nur über `localhost`, weil das Sitzungs-Cookie `Secure` verlangt). Mit dem Einrichtungscode ein Passwort festlegen, anmelden, Welt anlegen. Verfügbar: Kanon-Einträge je Kategorie, Markdown-Import mit Vorschau, Geschichten und Kapitel mit Markdown-Editor, Passwort ändern und Sitzungen beenden unter „Konto“. Schreiben mit KI (mit `OPENROUTER_API_KEY`): unter dem Kapitel-Editor eine Anweisung geben oder eine neue Szene mit Ort, Figuren und Ziel beginnen; der Vorschlag erscheint fortlaufend und lässt sich übernehmen (ans Kapitelende), ändern, verwerfen, abbrechen oder mit einem anderen Modell neu schreiben. Unter „Figuren-Schreibweise“ je Geschichte Erzählperspektive und die selbst geführten Figuren festlegen; für sie schreibt die KI nur Wahrnehmung und hört auf, wo du weiterschreibst. In der Anweisung öffnet `@` eine Auswahl der Kanon-Einträge der Welt; per `@Name` genannte Einträge gibt das Skriptorium der KI vollständig mit. „Kapitel abschließen“ lässt die KI eine Kurzfassung erstellen und die Gesamtzusammenfassung fortschreiben; beide lassen sich ansehen und ändern. Unter „Gäste aus anderen Welten“ bindet eine Geschichte Einträge anderer Welten ein – nur für diese Geschichte; Gäste stehen im `@`-Menü, in der neuen Szene und in der Figuren-Schreibweise zur Wahl. Die KI kennt einen Gast mit seinem Eintrag und seiner Herkunft, wenn er genannt oder selbst geführt wird, sonst nur, wenn nach dem Kanon der Welt Platz ist; die Regeln seiner Heimatwelt gelten nicht. Eine im Manuskript markierte Stelle übernimmt „In den Kanon“ als neuen Eintrag oder als Ergänzung eines Eintrags – in den Kanon oder nur für diese Geschichte (Liste unter „Fakten dieser Geschichte“).
 
 ## Nächste Schritte
 
-- **3.8:** Fakt aus dem Text in den Kanon.
 - **3.9:** Modell- und Anbieterwahl, Modellwechsel.
 - **D.6:** Wartezeit bis zum ersten KI-Satz erkunden (vor 4.8).
 
