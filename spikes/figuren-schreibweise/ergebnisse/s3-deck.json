@@ -1,0 +1,44 @@
+{
+  "name": "s3-deck",
+  "kapitel": 5,
+  "anfrage": {
+    "instruction": "Ca. 250 Wörter.",
+    "model": "x-ai/grok-4.7",
+    "scene": {
+      "place": null,
+      "characters": [
+        "oskar-lund"
+      ],
+      "goal": "Nacht an Deck, Wind frischt auf, Lund braucht Hilfe am Tau."
+    }
+  },
+  "autor_absatz": null,
+  "zeiten": {
+    "kopf_s": 0.02,
+    "start_s": 0.02,
+    "erstes_textstueck_s": 9.47,
+    "gesamt_s": 15.45
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 27529
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 24100,
+        "output_tokens": 917,
+        "cost_usd": 0.041163408,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 222,
+  "aktion": "discard"
+}

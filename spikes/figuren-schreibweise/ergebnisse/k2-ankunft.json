@@ -1,0 +1,37 @@
+{
+  "name": "k2-ankunft",
+  "kapitel": 5,
+  "anfrage": {
+    "instruction": "Ankunft im Hafen von Tolm am zweiten Tag; Schluss des Kapitels (ca. 250 Wörter).",
+    "model": "x-ai/grok-4.7"
+  },
+  "autor_absatz": null,
+  "zeiten": {
+    "kopf_s": 0.02,
+    "start_s": 0.02,
+    "erstes_textstueck_s": 22.31,
+    "gesamt_s": 26.25
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 27497
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 24076,
+        "output_tokens": 1660,
+        "cost_usd": 0.044656128,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 267,
+  "aktion": "discard"
+}

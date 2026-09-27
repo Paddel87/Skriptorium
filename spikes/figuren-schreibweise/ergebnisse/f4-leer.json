@@ -1,0 +1,37 @@
+{
+  "name": "f4-leer",
+  "kapitel": 5,
+  "anfrage": {
+    "instruction": "",
+    "model": "x-ai/grok-4.7"
+  },
+  "autor_absatz": null,
+  "zeiten": {
+    "kopf_s": 0.02,
+    "start_s": 0.02,
+    "erstes_textstueck_s": 26.71,
+    "gesamt_s": 34.46
+  },
+  "ereignisse": [
+    [
+      "start",
+      {
+        "model": "x-ai/grok-4.7",
+        "estimated_tokens": 27484
+      }
+    ],
+    [
+      "done",
+      {
+        "input_tokens": 24062,
+        "output_tokens": 2222,
+        "cost_usd": 0.020237184,
+        "finish_reason": "stop"
+      }
+    ]
+  ],
+  "abgebrochen": false,
+  "manuskript_unveraendert": true,
+  "woerter": 283,
+  "aktion": "discard"
+}
