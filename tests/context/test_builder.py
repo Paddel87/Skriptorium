@@ -333,3 +333,112 @@ def test_no_rule_and_no_reminder_without_led_characters(
     assert "Figuren-Schreibweise" not in system
     assert "Erinnerung" not in user
     assert labels(context, "schreibweise") == ["Figuren-Schreibweise"]
+
+
+# --- summaries (roadmap step 3.6) --------------------------------------------------------
+
+
+def test_chapter_summary_request_holds_state_text_and_instruction(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    context = ContextBuilder(*services).build_chapter_summary(WORLD, STORY, 2)
+
+    system, user = (message.content for message in context.messages)
+    assert "„Das Salz der Toten“ in der Welt „Die Salzmark“" in system
+    assert "Erfinde nichts hinzu" in system
+    assert user.index("Ilka sucht ihren Bruder.") < user.index("# Kapitel 2: Der Turm")
+    assert "Dritter.\n\nVierter Absatz." in user
+    assert "150 bis höchstens 250 Wörtern" in user
+    assert kinds(context) == ["rahmen", "handlungsstand", "kapiteltext", "anweisung"]
+
+
+def test_chapter_summary_without_overall_summary_or_text(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    canon, manuscripts = services
+    manuscripts.set_story_summary(WORLD, STORY, "")
+    builder = ContextBuilder(canon, manuscripts)
+
+    assert "handlungsstand" not in kinds(builder.build_chapter_summary(WORLD, STORY, 1))
+    manuscripts.save_chapter(WORLD, STORY, 3, title="Leer", text="  ")
+    with pytest.raises(InvalidInput, match="keinen Text"):
+        builder.build_chapter_summary(WORLD, STORY, 3)
+
+
+def test_chapter_summary_too_large_is_refused(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    canon, manuscripts = services
+    manuscripts.save_chapter(WORLD, STORY, 3, title="Lang", text="Wort. " * 20000)
+
+    with pytest.raises(ContextTooLarge) as refused:
+        ContextBuilder(canon, manuscripts).build_chapter_summary(WORLD, STORY, 3)
+
+    assert refused.value.largest[0].label == "Kapitel 3"
+    with pytest.raises(InvalidInput):
+        ContextBuilder(canon, manuscripts).build_chapter_summary(WORLD, STORY, 1, budget=0)
+
+
+def test_story_summary_request_continues_the_overall_summary(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    context = ContextBuilder(*services).build_story_summary(WORLD, STORY, 1)
+
+    user = context.messages[1].content
+    assert user.index("Ilka sucht ihren Bruder.") < user.index("Ilka findet die Klinge.")
+    assert "# Neues Kapitel 1: Die Flut" in user
+    assert "Höchstens ca. 600 Wörter" in user
+    assert context.estimated_tokens >= sum(block.tokens for block in context.blocks)
+
+
+def test_story_summary_needs_a_chapter_summary_and_starts_empty(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    canon, manuscripts = services
+    builder = ContextBuilder(canon, manuscripts)
+    with pytest.raises(InvalidInput, match="keine Kurzfassung"):
+        builder.build_story_summary(WORLD, STORY, 2)
+
+    manuscripts.set_story_summary(WORLD, STORY, "")
+    user = builder.build_story_summary(WORLD, STORY, 1).messages[1].content
+    assert "# Bisherige Gesamtzusammenfassung\n\n(noch keine)" in user
+
+
+def test_missing_summary_is_replaced_by_the_chapter_opening(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    canon, manuscripts = services
+    first = " ".join(["erste"] * 200)
+    second = " ".join(["zweite"] * 90)
+    third = " ".join(["dritte"] * 20)
+    manuscripts.save_chapter(WORLD, STORY, 1, text=f"{first}\n\n{second}\n\n{third}")
+    manuscripts.set_chapter_summary(WORLD, STORY, 1, "", "fehlt")
+
+    context = build((canon, manuscripts), budget=4000)
+
+    assert labels(context, "kapitelanfang") == ["Kapitel 1 (Anfang)"]
+    assert labels(context, "kurzfassung") == []
+    user = context.messages[1].content
+    heading = "## Kapitel 1: Die Flut (Kurzfassung fehlt, Anfang wörtlich)\n\n"
+    opening = user.split(heading)[1].split("\n\n#")[0]
+    assert opening == f"{first}\n\n{second}"
+
+
+def test_opening_cuts_a_long_first_paragraph() -> None:
+    from skriptorium.context.builder import _opening
+
+    assert _opening(" ".join(["wort"] * 400)) == " ".join(["wort"] * 300) + " …"
+    assert _opening("Kurz.\n\n\n\nNoch.", words=5) == "Kurz.\n\nNoch."
+
+
+def test_chapter_without_text_and_summary_adds_nothing(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    canon, manuscripts = services
+    manuscripts.save_chapter(WORLD, STORY, 1, text="")
+    manuscripts.set_chapter_summary(WORLD, STORY, 1, "", "fehlt")
+
+    context = build((canon, manuscripts))
+
+    assert labels(context, "kapitelanfang") == []
+    assert labels(context, "kurzfassung") == []

@@ -13,6 +13,11 @@ more for the model.
 
 Fixed parts (frame, world, canon) come first, changing parts last, so provider caches apply.
 Only entries of the story's own world are read (FR-001).
+
+Summaries (step 3.6, FR-010): ``build_chapter_summary`` asks for the short summary of a chapter
+(about 150-250 words), ``build_story_summary`` for the continued overall summary (at most about
+600 words); lengths chosen by the owner. An earlier chapter without a summary enters the story
+state with its opening verbatim instead - whole paragraphs up to about 300 words.
 """
 
 import math
@@ -28,6 +33,8 @@ CHARS_PER_TOKEN: Final = 3.3
 # Estimates differ from provider counts by -6 % to +8 % (step 1.1); 10 % margin keeps the
 # real count below the budget.
 SAFETY_MARGIN: Final = 1.1
+# Words of a chapter's opening that stand in for a missing summary (owner, step 3.6).
+OPENING_WORDS: Final = 300
 
 _CATEGORY_LABELS: Final[dict[Category, str]] = {
     "figur": "Figur",
@@ -50,6 +57,8 @@ BlockKind = Literal[
     "fakten",
     "handlungsstand",
     "kurzfassung",
+    "kapitelanfang",
+    "kapiteltext",
     "seiten",
     "anweisung",
     "auffuellung",
@@ -140,8 +149,7 @@ class ContextBuilder:
             NotFound: World, story, chapter or a referenced entry does not exist in the world.
             ContextTooLarge: Precedence 1-3 and the instruction do not fit the budget.
         """
-        if not 0 < budget <= MAX_BUDGET:
-            raise InvalidInput(f"Budget muss zwischen 1 und {MAX_BUDGET} Token liegen")
+        _check_budget(budget)
         if not instruction.strip():
             raise InvalidInput("Anweisung fehlt")
         world = self._canon.get_world(world_id)
@@ -215,6 +223,132 @@ class ContextBuilder:
             missing_characters=tuple(missing),
         )
 
+    def build_chapter_summary(
+        self, world_id: str, story_id: str, chapter_number: int, budget: int = MAX_BUDGET
+    ) -> BuiltContext:
+        """Build the request for the short summary of ``chapter_number`` (step 3.6).
+
+        The overall summary so far comes along so that names and threads stay consistent.
+
+        Raises:
+            InvalidInput: Budget outside 1-30,000 or the chapter has no text.
+            NotFound: World, story or chapter does not exist.
+            ContextTooLarge: The chapter does not fit the budget.
+        """
+        _check_budget(budget)
+        world = self._canon.get_world(world_id)
+        story = self._manuscripts.get_story(world_id, story_id)
+        chapter = self._manuscripts.get_chapter(world_id, story_id, chapter_number)
+        if not chapter.text.strip():
+            raise InvalidInput(f"Kapitel {chapter_number} hat noch keinen Text")
+        system = [_Part("rahmen", "Rahmen", _summary_frame(world.name, story.title))]
+        user: list[_Part] = []
+        if story.summary.strip():
+            user.append(
+                _Part(
+                    "handlungsstand",
+                    "Gesamtzusammenfassung",
+                    f"# Handlungsstand vor diesem Kapitel\n\n{story.summary.strip()}",
+                )
+            )
+        user.append(
+            _Part(
+                "kapiteltext",
+                f"Kapitel {chapter.number}",
+                f"# Kapitel {chapter.number}: {chapter.title}\n\n{chapter.text.strip()}",
+            )
+        )
+        user.append(_Part("anweisung", "Anweisung", _chapter_summary_instruction(chapter.number)))
+        return _fitted(system, user, budget)
+
+    def build_story_summary(
+        self, world_id: str, story_id: str, chapter_number: int, budget: int = MAX_BUDGET
+    ) -> BuiltContext:
+        """Build the request that continues the overall summary with ``chapter_number``.
+
+        Raises:
+            InvalidInput: Budget outside 1-30,000 or the chapter has no summary yet.
+            NotFound: World, story or chapter does not exist.
+            ContextTooLarge: Overall and chapter summary do not fit the budget.
+        """
+        _check_budget(budget)
+        world = self._canon.get_world(world_id)
+        story = self._manuscripts.get_story(world_id, story_id)
+        chapter = self._manuscripts.get_chapter(world_id, story_id, chapter_number)
+        if not chapter.summary.strip():
+            raise InvalidInput(f"Kapitel {chapter_number} hat noch keine Kurzfassung")
+        system = [_Part("rahmen", "Rahmen", _summary_frame(world.name, story.title))]
+        previous = story.summary.strip() or "(noch keine)"
+        user = [
+            _Part(
+                "handlungsstand",
+                "Gesamtzusammenfassung",
+                f"# Bisherige Gesamtzusammenfassung\n\n{previous}",
+            ),
+            _Part(
+                "kurzfassung",
+                f"Kapitel {chapter.number}",
+                f"# Neues Kapitel {chapter.number}: {chapter.title}\n\n{chapter.summary.strip()}",
+            ),
+            _Part("anweisung", "Anweisung", _story_summary_instruction(chapter.number)),
+        ]
+        return _fitted(system, user, budget)
+
+
+def _check_budget(budget: int) -> None:
+    if not 0 < budget <= MAX_BUDGET:
+        raise InvalidInput(f"Budget muss zwischen 1 und {MAX_BUDGET} Token liegen")
+
+
+def _fitted(system: Sequence[_Part], user: Sequence[_Part], budget: int) -> BuiltContext:
+    """A two-message request from parts that must all fit; otherwise ``ContextTooLarge``."""
+    parts = [*system, *user]
+    needed = sum(part.block.tokens for part in parts)
+    if needed > math.floor(budget / SAFETY_MARGIN):
+        largest = sorted((part.block for part in parts), key=lambda b: -b.tokens)[:3]
+        raise ContextTooLarge(budget, math.ceil(needed * SAFETY_MARGIN), largest)
+    return BuiltContext(
+        messages=(
+            PromptMessage("system", "\n\n".join(part.text for part in system)),
+            PromptMessage("user", "\n\n".join(part.text for part in user)),
+        ),
+        blocks=tuple(part.block for part in parts),
+        estimated_tokens=math.ceil(needed * SAFETY_MARGIN),
+        missing_characters=(),
+    )
+
+
+def _summary_frame(world_name: str, story_title: str) -> str:
+    """Frame of the summary requests (step 3.6)."""
+    return (
+        f"Du fasst Kapitel der Geschichte „{story_title}“ in der Welt „{world_name}“ zusammen. "
+        "Die Zusammenfassungen ersetzen beim Weiterschreiben den vollen Text früherer Kapitel; "
+        "sie müssen deshalb den Handlungsstand vollständig und genau tragen. Halte dich strikt "
+        "an den Text: Erfinde nichts hinzu, deute nichts, werte nicht."
+    )
+
+
+def _chapter_summary_instruction(number: int) -> str:
+    return (
+        f"# Anweisung\n\nFasse Kapitel {number} in 150 bis höchstens 250 Wörtern zusammen, "
+        "im Präteritum, als Fließtext ohne Überschrift. Die Grenze von 250 Wörtern gilt auch "
+        "für kurze Kapitel: Lass Nebensächliches weg. Halte fest, was geschieht und in welcher "
+        "Reihenfolge, wer beteiligt ist und wo es spielt, was sich für die Figuren ändert "
+        "(Wissen, Besitz, Verletzungen, Beziehungen, Aufenthaltsort) und welche Fragen am Ende "
+        "offen sind. Nenne Namen so, wie sie im Text stehen. Antworte nur mit der Kurzfassung."
+    )
+
+
+def _story_summary_instruction(number: int) -> str:
+    return (
+        "# Anweisung\n\nSchreibe die Gesamtzusammenfassung der Geschichte fort: Übernimm die "
+        f"bisherige Gesamtzusammenfassung und arbeite Kapitel {number} an seiner Stelle in "
+        "der Reihenfolge ein; steht es schon darin, ersetze diesen Teil. Höchstens ca. 600 "
+        "Wörter, im Präteritum, als Fließtext ohne Überschrift. Wird es mehr, verdichte ältere "
+        "Abschnitte und behalte, was für die weitere Handlung zählt: Stand der Figuren, "
+        "Besitz, Orte, offene Fragen. Antworte nur mit der Gesamtzusammenfassung."
+    )
+
 
 def _frame(world_name: str) -> str:
     """Frame of the request, as tested in steps 1.1 and 1.5."""
@@ -280,22 +414,51 @@ def _facts(story: Story, by_id: dict[str, CanonEntry]) -> str:
 
 
 def _story_state(story: Story, chapters: Sequence[Chapter], current: int) -> list[_Part]:
-    """Precedence 3: overall summary and summaries of the chapters before ``current``."""
+    """Precedence 3: overall summary and summaries of the chapters before ``current``.
+
+    A chapter without a summary contributes its opening verbatim until the summary is made.
+    """
     parts: list[_Part] = []
     if story.summary.strip():
         parts.append(
             _Part("handlungsstand", "Gesamtzusammenfassung", f"# Handlungsstand\n\n{story.summary}")
         )
     for chapter in chapters:
-        if chapter.number < current and chapter.summary.strip():
+        if chapter.number >= current:
+            continue
+        heading = f"## Kapitel {chapter.number}: {chapter.title}"
+        if chapter.summary.strip():
             parts.append(
                 _Part(
                     "kurzfassung",
                     f"Kapitel {chapter.number}",
-                    f"## Kapitel {chapter.number}: {chapter.title}\n\n{chapter.summary.strip()}",
+                    f"{heading}\n\n{chapter.summary.strip()}",
+                )
+            )
+        elif chapter.text.strip():
+            parts.append(
+                _Part(
+                    "kapitelanfang",
+                    f"Kapitel {chapter.number} (Anfang)",
+                    f"{heading} (Kurzfassung fehlt, Anfang wörtlich)\n\n{_opening(chapter.text)}",
                 )
             )
     return parts
+
+
+def _opening(text: str, words: int = OPENING_WORDS) -> str:
+    """Whole paragraphs from the start up to ``words`` words; a longer first one is cut."""
+    kept: list[str] = []
+    count = 0
+    for paragraph in (p.strip() for p in text.split("\n\n") if p.strip()):
+        size = len(paragraph.split())
+        if count + size > words:
+            if not kept:
+                kept.append(" ".join(paragraph.split()[:words]) + " …")
+            break
+        kept.append(paragraph)
+        count += size
+    return "\n\n".join(kept)
 
 
 def _last_pages(
