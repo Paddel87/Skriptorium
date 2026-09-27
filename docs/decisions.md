@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-27 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -42,12 +42,13 @@ Stand 2026-09-26 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 020 | 2026-09-26 | Aktiv | STRATEGISCH | METHODIK | Pflichtfrage Phasenende | Phasenende 2 – weiterbauen, Abläufe in 3.3 aus den Routen heraushalten |
 | 021 | 2026-09-26 | Aktiv | OPERATIV | MODUL, DATENMODELL | Architektur (Reifegrad) | Observability: Log-Zeile je KI-Anfrage belastbar, Verbrauchsspeicherung in 3.9 |
 | 022 | 2026-09-26 | Aktiv | ERKENNTNIS | PERFORMANCE | Architektur (NFR) | Reaktionszeit verfehlt – Ziel bleibt, Ursache wird in D.6 erkundet |
+| 023 | 2026-09-27 | Aktiv | OPERATIV | DATENMODELL, MODUL | Datenmodell, Architektur | Verbrauchsdaten in Monatsdateien, Modell je Geschichte |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 1 / 10 (10 %) über ADR-013 bis ADR-022 – ADR-013 und ADR-014 aus Phase 1 (Erkundung), ADR-015 bis ADR-017 und ADR-019 aus Phase 2 (operativ, geplant in 2.1, 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5); reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
+- **Aktueller Wert:** 1 / 10 (10 %) über ADR-014 bis ADR-023 – ADR-014 aus Phase 1 (Erkundung), ADR-015 bis ADR-017 und ADR-019 aus Phase 2 (operativ, geplant in 2.1, 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant); reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -651,6 +652,25 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Vision-Frage, die entschied:** „Ist eine gelegentliche Wartezeit von über einer Minute bis zum ersten Satz beim Schreiben hinnehmbar, oder stört sie den Schreibfluss so, dass es sich lohnt, das zu untersuchen?“ → Antwort des Eigentümers (Frage-System): untersuchen (B).
 - **Konfidenz zum Zeitpunkt:** mittel – 17 Messungen sind eine Stichprobe mit großer Streuung (7–77 s); die Ursache (Vorab-Denken, Auslastung beim Anbieter) ist vermutet, nicht belegt. Umkehrbarkeit billig (nur Zielwerte und ein Fahrplan-Schritt).
 - **Konsequenzen:** 3.3 `[ERLEDIGT]` mit dokumentiert verfehltem Teilkriterium; neuer Schritt D.6 (Frist: vor 4.8, Stoppuhr-Test); das Zielwert-Kriterium wird dort erneut gemessen oder per neuem ADR angepasst.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-023: Verbrauchsdaten in Monatsdateien, Modell je Geschichte
+
+- **Datum:** 2026-09-27
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[OPERATIV]` `[DATENMODELL]` `[MODUL]`
+- **Phasentyp-Kontext:** UMSETZUNG (Schritt 3.9; Entscheidung laut ADR-021 für 3.9 geplant, daher nicht reaktiv)
+- **Reifegrad-Wirkung:** Observability/Metriken bleibt `[VORLÄUFIG]` bis zur Umsetzung in 3.9, danach `[BELASTBAR]`; Datenmodell um zwei Bestandteile erweitert
+- **Kategorie:** Datenmodell (4); Architektur (1): Beziehung `api` → `storage` umfasst unter `system/` neben den Zugangsdaten jetzt die Verbrauchsdaten (Erweiterung von ADR-018)
+- **Kontext:** `ai_gateway` liefert seit 3.1 Token und Kosten je Anfrage zurück (ADR-021); die Monatssumme in der Oberfläche (`docs/project-context.md` Abschnitt 8, `docs/architecture.md` Abschnitt 6) brauchte einen Speicherort. Der Grobvertrag „Modell je Geschichte wählen“ brauchte ein Kopffeld der Geschichte.
+- **Optionen:** A Monatsdatei `system/verbrauch/JJJJ-MM.md` mit einer Zeile je KI-Anfrage (Zeit, Art, Modell, Token ein/aus, Kosten, Ergebnis), Monatssumme unter „Konto“, Kosten je Anfrage unter dem Vorschlag; Kopffeld `modell` in `story.md` / B nichts speichern, Monatssumme nur im OpenRouter-Konto, Modellwahl im Browser / C wie A mit Welt und Geschichte je Zeile.
+- **Entscheidung:** A.
+- **Vision-Frage, die entschied:** „Willst du die Monatskosten im Skriptorium selbst sehen, oder reicht dir der Blick ins OpenRouter-Konto?“ → Antwort des Eigentümers: A (im Skriptorium sehen).
+- **Konfidenz zum Zeitpunkt:** hoch – bestehendes Muster (Markdown mit YAML-Kopf über `storage`, wie `system/zugang.md`), Verbrauchsdaten seit 3.1 belegt; Heuristik 1.1 (Speicherung gehört zur Anzeige). Umkehrbarkeit billig.
+- **Konsequenzen:** Je KI-Anfrage (Schreiben, Kurzfassung, Gesamtzusammenfassung) eine Zeile ohne Text, Welt oder Geschichte. Abgebrochene Anfragen und Fehler werden mit Ergebnis und ohne Kosten gezählt; die Summe kann deshalb unter der Abrechnung des Anbieters liegen. Die Monatsdateien liegen im Datenverzeichnis und gehen mit in die Sicherung (4.3). Anfragen vor 3.9 fehlen (ADR-021). Die Modellwahl der Oberfläche wird je Geschichte gespeichert; neuer Endpunkt `GET /api/usage`, `PATCH …/stories/{id}` nimmt `model` an (rein additiv).
 - **Abgeleitete Regel:** keine
 
 ---

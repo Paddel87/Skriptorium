@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-27 05:30 – [ADR-ANGELEGT] ADR-023 Verbrauchsdaten in Monatsdateien, Modell je Geschichte
+
+- Eigentümer wählt A: Monatsdatei `system/verbrauch/JJJJ-MM.md` (eine Zeile je KI-Anfrage, ohne Text), Monatssumme unter „Konto“, Kosten je Anfrage im Schreib-Bereich; Kopffeld `modell` in `story.md`. Nicht reaktiv (laut ADR-021 für 3.9 geplant); Reaktiv-Quote 1/10.
+
 ### 2026-09-27 05:22 – [SESSIONSTART] Fortsetzung mit 3.9 auf Anweisung „Weiter“
 
 - **Modell:** eingestellt `claude-opus-5-5`, bedient `claude-opus-5-5` (Sitzungsabfrage 05:07) → Entscheidungs-Klasse.
