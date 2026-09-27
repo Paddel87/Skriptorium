@@ -23,11 +23,11 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 3 – Schreiben mit KI (Umsetzung); 3.1 (Anbieter-Schnittstelle mit OpenRouter), 3.2 (Kontext-Zusammenstellung), 3.3 (Weiterschreiben mit KI), 3.4 (Figuren-Schreibweise), 3.5 (`@`-Menü), 3.6 (Kapitel-Kurzfassungen), 3.7 (Gast-Figuren), 3.8 (Fakt in den Kanon) und 3.9 (Modellwahl, Kosten) umgesetzt, nächster Schritt Phasenabschluss 3; Phase 2 – Grundgerüst abgeschlossen am 2026-09-26 (ADR-020: weiterbauen)
+- **Projektphase:** Phase 4 – Stabilisierung und erstes öffentliches Deployment (Stabilisierung), noch kein Schritt begonnen; Phase 3 – Schreiben mit KI abgeschlossen am 2026-09-27 (ADR-024: weiterbauen)
 - **Version:** v0.0.0 – noch keine veröffentlichte Version
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-09-27
-- **Architektur-Reife:** Module, Schnittstellen, Datenmodell und Token-Budget BELASTBAR (ADR-013); Reaktionszeit VORLÄUFIG (in 3.3 verfehlt, Erkundung D.6, ADR-022); Kanon-Treue VORLÄUFIG (erste Messung in 3.3); Sicherheitsniveau und Schutzbedarf BELASTBAR (ADR-006, ADR-007); Observability BELASTBAR (Log-Zeile und Monatskosten, ADR-021, ADR-023); Bedrohungsmodell VORLÄUFIG; Host, Secrets im Betrieb und Backups OFFEN bis Phase 4
+- **Architektur-Reife:** Module, Schnittstellen, Datenmodell und Token-Budget BELASTBAR (ADR-013); Reaktionszeit VORLÄUFIG (in 3.3 verfehlt, Erkundung D.6, ADR-022); Kanon-Treue VORLÄUFIG (erste Messung in 3.3, Messung beim Schreiben des Eigentümers in 4.8); Sicherheitsniveau und Schutzbedarf BELASTBAR (ADR-006, ADR-007); Observability BELASTBAR (Log-Zeile und Monatskosten, ADR-021, ADR-023); Bedrohungsmodell VORLÄUFIG; Host, Secrets im Betrieb und Backups OFFEN bis Phase 4
 - **Aktive Blocker:** 0
 
 ## Quick Start
@@ -87,7 +87,8 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **Phasenabschluss 3:** Bewertung „weiterbauen, umbauen oder neu aufsetzen“ durch eine getrennte Instanz, Abgleich mit der Vision.
+- **4.1 Qualitäts-Härtung:** Randfälle, Tempo von `storage`, Aufteilung der Geschichtenseite der Oberfläche (ADR-024).
+- **4.2–4.7:** Server bereitstellen und härten, Backups, Notfall-Handbuch, Sicherheitsprüfung, Gate, erstes öffentliches Deployment.
 - **D.6:** Wartezeit bis zum ersten KI-Satz erkunden (vor 4.8).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – Startmodell grok-4.7, Zweitmodell grok-4.6.
