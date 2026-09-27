@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-26
 - **Laufende Phase:** Phase 3 „Schreiben mit KI" (Phase 2 abgeschlossen 2026-09-26, ADR-020: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (3.3 `[ERLEDIGT]` 2026-09-26, ADR-022)
-- **Nächster Schritt:** 3.4 Figuren-Schreibweise (neue Session); datiert: D.6 Reaktionszeit erkunden vor 4.8
+- **Aktiver Schritt:** 3.4 Figuren-Schreibweise `[IN ARBEIT]`
+- **Nächster Schritt:** nach 3.4: 3.5 `@`-Menü; datiert: D.6 Reaktionszeit erkunden vor 4.8
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -164,7 +164,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 3.4: Figuren-Schreibweise
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT (seit 2026-09-27)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.3
 - **Freigabepflichtig:** nein

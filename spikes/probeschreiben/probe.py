@@ -21,7 +21,9 @@ Der Schlüssel kommt aus OPENROUTER_API_KEY (nur im Server-Prozess).
 import argparse
 import importlib.util
 import json
+import os
 import sys
+import tempfile
 import time
 from datetime import UTC, datetime
 from pathlib import Path
@@ -33,11 +35,12 @@ from skriptorium.api.access import CredentialStore, PasswordHasher
 from skriptorium.storage import DocumentStore
 
 ROOT = Path(__file__).parent
-OUT = ROOT / "ergebnisse"
+OUT = Path(os.environ.get("PROBE_OUT", ROOT / "ergebnisse"))
 BASE = "http://localhost:8765"
 STORY = "/api/worlds/die-salzmark/stories/das-salz-der-toten"
 PASSWORD = "Salzwind über der Mark 7"  # noqa: S105 - Testdaten, kein Geheimnis
-COOKIE_FILE = OUT / ".sitzung"
+# Outside the repository: the session cookie must never be committed.
+COOKIE_FILE = Path(tempfile.gettempdir()) / "skriptorium-probe-sitzung"
 
 
 def setup(data: Path) -> None:
