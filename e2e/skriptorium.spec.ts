@@ -112,7 +112,7 @@ test("password change form reaches the server", async ({ page }) => {
   await expect(page.getByText("(diese Sitzung)")).toBeVisible();
 });
 
-test("taken-over AI text is appended to the chapter and saved", async ({
+test("@ menu names an entry; taken-over AI text is appended and saved", async ({
   page,
 }) => {
   // The provider stream is replaced in the browser; the server stays real (saving, reload).
@@ -132,6 +132,12 @@ test("taken-over AI text is appended to the chapter and saved", async ({
   await login(page);
   await page.getByLabel("Name").fill("Die Nebelküste");
   await page.getByRole("button", { name: "Welt anlegen" }).click();
+  await page.getByRole("button", { name: "Kanon", exact: true }).click();
+  await page.getByRole("button", { name: "Neuer Eintrag" }).click();
+  await page.getByLabel("Name").fill("Mira");
+  await page.getByLabel("Text").fill("Zöllnerin mit einer Narbe am Kinn.");
+  await page.getByRole("button", { name: "Speichern" }).click();
+  await expect(page.getByRole("button", { name: "Mira" })).toBeVisible();
   await page.getByRole("button", { name: "Geschichten" }).click();
   await page.getByLabel("Titel").fill("Am Ufer");
   await page.getByRole("button", { name: "Geschichte anlegen" }).click();
@@ -140,6 +146,13 @@ test("taken-over AI text is appended to the chapter and saved", async ({
   await page.getByLabel("Manuskript").click();
   await page.keyboard.type("Das Boot lief auf Grund.");
 
+  await page.getByLabel(/Anweisung an die KI/).click();
+  await page.keyboard.type("@Mi");
+  await expect(page.getByRole("option", { name: /Mira/ })).toBeVisible();
+  await page.keyboard.press("Enter");
+  await page.keyboard.type(" kommt.");
+  await expect(page.getByText("Herangezogen: Mira")).toBeVisible();
+
   await page.getByRole("button", { name: "Weiterschreiben" }).click();
   await expect(page.getByLabel("Vorschlag der KI")).toHaveValue(
     "Nebel lag über dem Wasser.",
@@ -147,7 +160,8 @@ test("taken-over AI text is appended to the chapter and saved", async ({
   await page.getByRole("button", { name: "Übernehmen" }).click();
   await expect(page.getByLabel("Vorschlag der KI")).toBeHidden();
   expect(sent).toEqual({
-    instruction: "",
+    instruction: "@Mira kommt.",
+    references: ["mira"],
     model: "x-ai/grok-4.7",
     scene: null,
   });

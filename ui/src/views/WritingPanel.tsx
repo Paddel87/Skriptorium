@@ -1,4 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
 import {
   api,
   describeError,
@@ -8,8 +16,16 @@ import {
   type WriteErrorKind,
   type WriteOrder,
 } from "../api";
+import { referencedEntries } from "../references";
 import { useLoad } from "../useLoad";
 import { ErrorText, Field } from "./Common";
+
+// CodeMirror is large; the instruction field is loaded with the chapter like the editor.
+const InstructionEditor = lazy(() =>
+  import("./InstructionEditor").then((module) => ({
+    default: module.InstructionEditor,
+  })),
+);
 
 type Phase = "idle" | "thinking" | "writing" | "review";
 
@@ -17,6 +33,7 @@ type Phase = "idle" | "thinking" | "writing" | "review";
  * Writing in turns with the AI (step 3.3, FR-008, FR-009): send an instruction or start a new
  * scene, watch the proposal arrive, then take it over, change it or discard it. Taken-over text
  * goes to the end of the chapter through `onAccept`; the server saves nothing on its own.
+ * Entries named with `@` in the instruction are sent as references (step 3.5, FR-013).
  */
 export function WritingPanel({
   world,
@@ -53,6 +70,7 @@ export function WritingPanel({
   const [error, setError] = useState<string | null>(null);
   const [lastOrder, setLastOrder] = useState<WriteOrder | null>(null);
   const controller = useRef<AbortController | null>(null);
+  const instructionLabel = useId();
 
   const chosenModel = model ?? models.data?.default ?? "";
   const busy = phase === "thinking" || phase === "writing";
@@ -118,6 +136,7 @@ export function WritingPanel({
   function newOrder(): WriteOrder {
     return {
       instruction,
+      references: referenced.map((entry) => entry.id),
       model: chosenModel,
       scene: sceneOpen
         ? { place: place === "" ? null : place, characters, goal }
@@ -153,8 +172,10 @@ export function WritingPanel({
     }
   }
 
-  const places = (entries.data ?? []).filter((e) => e.category === "ort");
-  const figures = (entries.data ?? []).filter((e) => e.category === "figur");
+  const worldEntries = entries.data ?? [];
+  const places = worldEntries.filter((e) => e.category === "ort");
+  const figures = worldEntries.filter((e) => e.category === "figur");
+  const referenced = referencedEntries(instruction, worldEntries);
 
   return (
     <section className="card" aria-label="Schreiben mit der KI">
@@ -198,15 +219,25 @@ export function WritingPanel({
           onGoal={setGoal}
         />
       )}
-      <Field label="Anweisung an die KI (leer: einfach weiterschreiben)">
-        <textarea
-          rows={2}
-          value={instruction}
-          onChange={(event) => {
-            setInstruction(event.target.value);
-          }}
-        />
-      </Field>
+      <div className="field">
+        <span id={instructionLabel}>
+          Anweisung an die KI (leer: einfach weiterschreiben; @ für Kanon)
+        </span>
+        <Suspense fallback={<p>Eingabe lädt …</p>}>
+          <InstructionEditor
+            value={instruction}
+            onChange={setInstruction}
+            entries={worldEntries}
+            labelledBy={instructionLabel}
+            disabled={busy}
+          />
+        </Suspense>
+      </div>
+      {referenced.length > 0 && (
+        <p className="note">
+          Herangezogen: {referenced.map((entry) => entry.name).join(", ")}
+        </p>
+      )}
       <div className="row">
         <button
           type="button"
