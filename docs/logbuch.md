@@ -29,6 +29,47 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-27 13:10 – [SESSIONENDE] Schritt 4.1
+
+- **Dauer:** 12:48–13:10 UTC.
+- **Bearbeitet:** 4.1 Qualitäts-Härtung → `[ERLEDIGT]`.
+- **Erreichter Stand:** Coverage nachgewiesen (Python 99,78 %, `canon`/`context` 100 %; Oberfläche 98,65 % Zeilen, 96,43 % Zweige); Fehler in der Seitenauswahl von `context` behoben; Tempo `storage` im Referenzumfang gemessen; Geschichtenseite aufgeteilt.
+- **Offen:** Pull Request für diesen Branch (Merge nach grüner CI und Zustimmung des Eigentümers).
+- **Nächster Schritt:** 4.2 Host bereitstellen und härten – `ENTSCHEIDUNG ERFORDERLICH` zum VPS-Anbieter (Kategorien 3, 6, 7), Entscheidungs-Klasse.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5, eingestellt und bedient laut Sitzungsabfrage 12:59). Schritte oberhalb der Empfehlung: 1 (4.1, Routine) – ohne Warnung, weil die Routine-Klasse mangels Probelauf inaktiv ist und ihre Arbeit eine Klasse höher läuft. Abgegeben: nichts.
+- **Kontextgröße:** nicht feststellbar – die Sitzungsabfrage meldet während der Session 0 Token; Regel „Sessiongröße“ entfällt für diese Session. Kurzzeitlimit `allowed`.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Nächste Schritte); project-context Status nachgezogen. Drift-Prüfung: 4.1 ↔ ADR-024 vorhanden; Modul-Liste unverändert (nur Dateien innerhalb von `ui`); Reifegrad `storage` um die Messung ergänzt, kein Wechsel; keine neuen ADRs, Reaktiv-Quote 1/10 unverändert; Phase 4 unverändert 8 Schritte; Blocker 0; Anforderungen unverändert. Ablaufdaten-Register: kein Vorlauf erreicht (Guthaben ab 2026-10-22). Archivierung: kein Trigger (Logbuch unter 1.600 Zeilen, Phase 4 offen). project-context 338 Zeilen. Onboarding-Pfad: nicht berührt (keine Änderung an README-Quick-Start, `scripts/`, `.env.example`, Abhängigkeiten).
+
+### 2026-09-27 13:05 – [ERLEDIGT] Schritt 4.1 Qualitäts-Härtung
+
+- **Coverage:** Python 381 Tests, 99,78 % (Zeilen und Zweige); `canon` 100 %, `context` 100 % (kritische Pfade ≥ 90 %). Oberfläche 96 Komponenten-Tests, 98,65 % Zeilen, 96,43 % Zweige; 8 End-to-End-Tests grün. Verbleibende Teilzweige in `ai_gateway`, `api` (6) sind Absicherungen ohne erreichbaren Normalfall (z. B. Anbieter ohne `aclose`) – bewusst nicht gezielt getestet.
+- **Randfälle:** Abbruch, Ablehnung, zu großer Kontext und zu großes Kapitel für die Kurzfassung waren schon abgedeckt; neu: Weiterschreiben mit leerem Kanon und leerem Kapitel, sehr langes Kapitel (siehe `[GELÖST]`).
+- **Aufteilung (ADR-024):** `StoryPage.tsx` 757 Zeilen → `StoryPage` 104, `Guests` 144, `WritingMode` 103, `Facts` 67, `StorySummary` 56, `ChapterSummary` 80, `ChapterEditor` 226; `SceneForm` (73) aus `WritingPanel.tsx` (jetzt 372) gelöst. Tests unverändert grün, Coverage gleich; danach Lücke „Figur abwählen“ in `SceneForm` (50 % Zweige) und `WritingMode` mit Tests geschlossen.
+- DoD: ruff, mypy, bandit, eslint, prettier, tsc grün; pip-audit und `npm audit` ohne Befund; Pre-Commit bei jedem Commit aktiv.
+
+### 2026-09-27 13:00 – [BEOBACHTUNG] Tempo von `storage` im Referenzumfang
+
+- 60 Kapitel × 40.000 Zeichen (ca. 727.000 Token) plus 500 Kanon-Einträge: Kapitel speichern 48 ms, alle Kapitel lesen 50 ms, Kontext bauen 161 ms, Volltextsuche 1,7 ms, Index neu aufbauen 257 ms (Median aus 7 Läufen). Alles weit unter dem Anzeige-Ziel 1 s; kein Handlungsbedarf. Protokoll: `spikes/storage-tempo/README.md`; auf dem VPS aus 4.2 wiederholbar.
+
+### 2026-09-27 12:58 – [GELÖST] Langes Kapitel ohne Leerzeilen – KI bekam kein Manuskript
+
+- **Symptom:** Probe mit 3.000 Zeilen (518.000 Zeichen), nur durch einfache Zeilenumbrüche getrennt: die Anfrage enthielt keine einzige Manuskriptseite, ohne Meldung. Mit Leerzeilen dazwischen gingen ca. 26.000 Token mit.
+- **Ursache:** `_last_pages` nimmt ganze Absätze von hinten (Trennung `\n\n`) und bricht ab, sobald einer nicht passt – ist schon der letzte Absatz zu groß, bleibt nichts.
+- **Lösung:** Passt schon der letzte Absatz nicht, geht sein Ende ab einer Wortgrenze mit vorangestelltem „…“ ein (Muster wie `_opening`); Zeilenumbrüche bleiben erhalten; ganze Absätze bleiben der Normalfall. Tests scheitern ohne die Korrektur (geprüft). Architektur Abschnitt 3 (`context`) ergänzt; keine Schnittstellenänderung.
+
+### 2026-09-27 12:57 – [BEOBACHTUNG] Playwright ohne passenden Browser (bekannt)
+
+- End-to-End-Tests zuerst rot („Executable doesn't exist … chromium_headless_shell-1234“); mit `PLAYWRIGHT_CHROMIUM_EXECUTABLE=/opt/pw-browsers/chromium` grün. Steht im Runbook (Troubleshooting); dritte Session in Folge – Kandidat für `scripts/session-start.sh`, aber das wäre eine neue ENV-Voraussetzung im Skript und damit nicht im Autonomiebereich. Nur beobachtet.
+
+### 2026-09-27 12:48 – [SESSIONSTART] Schritt 4.1
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 12:48) → Entscheidungs-Klasse. Empfohlene Klasse für 4.1 ist Routine; deren Probelauf ist offen, deshalb übernimmt die Entscheidungs-Klasse (`docs/project-context.md` Abschnitt 6) – keine Warnung nötig, keine Abgabe möglich.
+- **Kontextgröße:** 0 Token laut Sitzungsabfrage (neue Session; Wert zu Beginn nicht aktualisiert). Kurzzeitlimit (5 Stunden) `allowed`.
+- PR #18 gemergt (`fdd9822`); Branch `claude/neue-session-4-1-vydo3a` steht auf `main`.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2 (project-context, Logbuch ab letztem Sessionende, Fahrplan Stand und Phase 4, Architektur 1/2/9, Decisions A/C, aktive Blocker: keine).
+- **Verfeinerung Phase 4:** Schritte 4.1–4.8 sind mit Eingabe, Zu tun und Akzeptanzkriterien ausgearbeitet; keine Änderung am Schrittplan nötig.
+- **Vorhaben:** Schritt 4.1 Qualitäts-Härtung – Coverage-Nachweis, Randfall-Tests, Tempo-Messung `storage`, Aufteilung `StoryPage.tsx`.
+
 ### 2026-09-27 12:42 – [SESSIONENDE] Phase 3 abgeschlossen
 
 - **Dauer:** 12:18–12:42 UTC.

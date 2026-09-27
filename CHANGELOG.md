@@ -22,3 +22,4 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 ### Behoben
 
 - Ohne eingerichteten KI-Anbieter meldete die Oberfläche fälschlich „Die Passwortprüfung ist gerade nicht erreichbar“; jetzt „Kein KI-Anbieter eingerichtet“ (2026-09-27, Schritt 3.6).
+- Bei einem sehr langen Kapitel ohne Leerzeilen zwischen den Absätzen bekam die KI beim Weiterschreiben keinen Manuskripttext mit; jetzt geht das Ende des Kapitels ein (2026-09-27, Schritt 4.1).

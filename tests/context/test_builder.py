@@ -211,6 +211,48 @@ def test_pages_are_whole_paragraphs_from_the_end(
     assert labels(context, "seiten") == ["Kapitel 2"]
 
 
+def test_last_paragraph_larger_than_the_budget_enters_with_its_end(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    """A long chapter with single line breaks only is one paragraph (step 4.1)."""
+    _, manuscripts = services
+    lines = "\n".join(f"Zeile {n}: " + "Salz und Nebel. " * 10 for n in range(3000))
+    manuscripts.save_chapter(WORLD, STORY, 2, text=lines)
+
+    context = build(services)
+
+    pages = [block for block in context.blocks if block.kind == "seiten"]
+    user = context.messages[1].content
+    assert [block.label for block in pages] == ["Kapitel 2"]
+    assert "Zeile 2999: " in user
+    assert "Zeile 0: " not in user
+    assert "Letzte Manuskript-Seiten (wörtlich)\n\n… " in user
+    assert context.estimated_tokens <= MAX_BUDGET
+    assert pages[0].tokens > 20_000
+
+
+def test_last_paragraph_without_a_word_that_fits_leaves_the_pages_out(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    _, manuscripts = services
+    manuscripts.save_chapter(WORLD, STORY, 2, text="x" * 200_000)
+
+    context = build(services)
+
+    assert labels(context, "seiten") == []
+
+
+def test_end_of_a_paragraph_starts_at_a_word_and_keeps_line_breaks() -> None:
+    from skriptorium.context.builder import _tail
+
+    assert _tail("eins zwei drei vier", 2) == "… vier"
+    assert _tail("eins zwei drei vier", 4) == "… drei vier"
+    assert _tail("eins\nzwei drei\nvier", 4) == "… drei\nvier"
+    assert _tail("kurz", 4) == "kurz"
+    assert _tail("einwortohnepause", 2) == ""
+    assert _tail("eins", 0) == ""
+
+
 def test_no_room_for_pages_leaves_them_out(
     services: tuple[CanonService, ManuscriptService],
 ) -> None:
