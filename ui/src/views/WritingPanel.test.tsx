@@ -149,11 +149,13 @@ describe("WritingPanel", () => {
 
     await user.click(screen.getByLabelText("Neue Szene"));
     await user.selectOptions(await screen.findByLabelText("Ort"), "grauwasser");
-    await user.click(
-      within(screen.getByRole("group", { name: "Figuren" })).getByLabelText(
-        "Kael",
-      ),
-    );
+    const kael = within(
+      screen.getByRole("group", { name: "Figuren" }),
+    ).getByLabelText("Kael");
+    await user.click(kael);
+    await user.click(kael);
+    expect(kael).toHaveProperty("checked", false);
+    await user.click(kael);
     await user.type(screen.getByLabelText("Ziel der Szene"), "Zoll verlangen");
     await user.click(screen.getByRole("button", { name: "Szene beginnen" }));
 
@@ -401,7 +403,11 @@ describe("StoryPage writing mode", () => {
     const group = await screen.findByRole("group", {
       name: "Figuren, die du selbst führst",
     });
-    await user.click(await within(group).findByLabelText("Kael"));
+    const kael = await within(group).findByLabelText("Kael");
+    await user.click(kael);
+    await user.click(kael);
+    expect(kael).toHaveProperty("checked", false);
+    await user.click(kael);
     const perspective = screen.getByLabelText("Erzählperspektive");
     await user.clear(perspective);
     await user.type(perspective, "Ich-Erzähler, Präteritum");
