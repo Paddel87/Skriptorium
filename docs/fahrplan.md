@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-27
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** keiner (4.1 erledigt 2026-09-27)
-- **Nächster Schritt:** 4.2 Host bereitstellen und härten – beginnt mit `ENTSCHEIDUNG ERFORDERLICH` zum VPS-Anbieter (Entscheidungs-Klasse). Datiert: D.6 Reaktionszeit erkunden vor 4.8; D.5 ab 2026-11-12
+- **Aktiver Schritt:** keiner (4.1 erledigt 2026-09-27; Anbieter für 4.2 entschieden, ADR-025)
+- **Nächster Schritt:** 4.9 Entwicklungsumgebung macOS einrichten (erste Session auf dem Mac), danach 4.2 Host bereitstellen und härten auf dem vorhandenen netcup-VPS (ADR-025). Datiert: D.6 Reaktionszeit erkunden vor 4.8; D.5 ab 2026-11-12
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -114,7 +114,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Reifegrad-Erwartung am Phasenende:** Host, Netz, Secrets im Betrieb, Backups und Bedrohungsmodell `[BELASTBAR]` (Backups erst nach erprobter Wiederherstellung).
 
-**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9)
+**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-09-27: 9 Schritte (+4.9, ADR-025), Wucherungs-Schwelle (16 und mindestens +5) nicht berührt
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
@@ -138,9 +138,9 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.2: Host bereitstellen und härten
 
-- **Status:** OFFEN
+- **Status:** OFFEN – Anbieter entschieden 2026-09-27 (ADR-025: vorhandener netcup-VPS); Fortsetzung nach 4.9 in der macOS-Umgebung
 - **Phasentyp-Kontext:** STABILISIERUNG
-- **Abhängigkeiten:** 4.1
+- **Abhängigkeiten:** 4.1, 4.9
 - **Freigabepflichtig:** ja – Anbieterwahl und Deployment-Ziel (Kategorien 3 und 7), SSH-Zugang (Kategorie 6)
 - **Empfohlene Klasse:** Entscheidung – Anbieter- und Betriebsentscheidungen mit `ENTSCHEIDUNG ERFORDERLICH` (Eskalations-Auslöser 1).
 - **Eingangskriterien:** Kostenrahmen (BDR-001) und Kostenregister aus 1.1 aktuell
@@ -255,6 +255,22 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** NFR Kanon-Treue → `[BELASTBAR]` bei erfülltem Kriterium (ADR-024)
 - **Artefakte:** Logbuch-Eintrag mit Messung
 - **Notizen:** –
+
+#### 4.9: Entwicklungsumgebung macOS einrichten
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** 4.1
+- **Freigabepflichtig:** nein – Plattformwechsel entschieden in ADR-025; neue Werkzeuge auf dem Mac (z. B. Homebrew) wären Kategorie 3 und werden vorgelegt
+- **Empfohlene Klasse:** Routine – Einrichtung nach Runbook ohne Architekturwirkung; läuft mangels Probelauf auf der Entscheidungs-Klasse.
+- **Eingangskriterien:** Claude Code auf dem Mac des Eigentümers, Repo geklont
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Voraussetzungen auf macOS installieren (Python 3.14.7 über uv 0.12.19, Node.js 24.21.0 mit npm 11.19.0, Playwright-Browser); Quick Start und alle Prüfungen (Pre-Commit, pytest, vitest, End-to-End) im frischen Klon ausführen; `scripts/session-start.sh` auf macOS prüfen (Header nennt nur Linux); SSH-Verbindung zum netcup-VPS herstellen und Tarif, Ausstattung, Betriebssystem und Laufzeit erfassen; Plattform-Matrix (`docs/project-context.md` Abschnitt 3) und Runbook (Abschnitt 2 und 5) nachziehen.
+- **Akzeptanzkriterien:** Onboarding-Pfad auf macOS im frischen Klon validiert (`[ONBOARDING-VALIDATION]` im Logbuch); alle Tests grün; Plattform-Matrix zeigt macOS ✓; SSH-Anmeldung am VPS per Schlüssel belegt; VPS-Daten im Kostenregister.
+- **Betroffene Module:** keine (Werkzeuge und Betrieb)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** `docs/project-context.md` Abschnitt 3 und 8, `docs/onboarding-runbook.md`, Logbuch
+- **Notizen:** Angelegt 2026-09-27 (ADR-025). Nummer 4.9 aus Stabilität der bestehenden IDs; läuft vor der Fortsetzung von 4.2.
 
 ### Phase 5: Soll-Anforderungen – Typ: UMSETZUNG
 

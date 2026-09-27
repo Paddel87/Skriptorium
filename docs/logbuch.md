@@ -29,6 +29,34 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-27 22:22 – [SESSIONENDE] Anbieter für 4.2 entschieden, Wechsel auf macOS
+
+- **Dauer:** 22:15–22:22 UTC.
+- **Bearbeitet:** 4.2 – `ENTSCHEIDUNG ERFORDERLICH` zum VPS-Anbieter vorgelegt (Recherche `docs/research/hosting-anbieter.md`); Eigentümer entschied: vorhandener netcup-VPS, Entwicklung wechselt auf macOS, von dort SSH-Zugriff der KI (ADR-025). Neuer Schritt 4.9 „Entwicklungsumgebung macOS einrichten“ angelegt; 4.2 hängt davon ab.
+- **Erreichter Stand:** 4.2 `[OFFEN]` mit entschiedenem Anbieter; Phase 4 jetzt 9 Schritte (Wucherungs-Schwelle nicht berührt).
+- **Offen:** Tarif, Ausstattung, Betriebssystem und Laufzeit des netcup-VPS unbekannt (Erfassung in 4.9); Umfang des SSH-Zugriffs der KI (in 4.2, belegt in 4.6); Pull Request für diesen Branch.
+- **Nächster Schritt:** 4.9 in der ersten Session auf dem Mac – Onboarding-Pfad auf macOS validieren, SSH zum VPS herstellen, VPS-Daten erfassen.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5, eingestellt und bedient laut Sitzungsabfrage 22:21). Schritte oberhalb der Empfehlung: 0. Abgegeben: nichts.
+- **Kontextgröße:** 176.519 Token laut Sitzungsabfrage – unter der Grenze 200.000. Kurzzeitlimit `allowed`. Kosten der Session laut Abfrage 2,28 $ (Guthaben).
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Nächste Schritte). Drift-Prüfung: ADR-025 ↔ 4.2/4.9 vorhanden; Modul-Liste unverändert; Reifegrade unverändert (Host `[OFFEN]`, Netz `[VORLÄUFIG]`), Host-Zeile in Architektur Abschnitt 6 nachgezogen; Reaktiv-Quote 1/10 (ADR-016 bis ADR-025, ADR-025 nicht reaktiv: Kategorien 3, 6, 7); Plattform-Matrix und Runbook konsistent (macOS vorgesehen, nicht validiert); Blocker 0; Anforderungen unverändert. Ablaufdaten-Register: kein Vorlauf erreicht. Archivierung: kein Trigger. project-context 338 Zeilen. Onboarding-Pfad: nicht berührt (nur Dokumentation).
+
+### 2026-09-27 22:21 – [ADR] ADR-025 netcup-VPS, macOS, SSH-Zugang der KI
+
+- Eigentümer hat bereits einen netcup-VPS; kein Neukauf. Da die Cloud-Session kein SSH nach außen erlaubt, wechselt die Entwicklung auf seinen Mac. Konfidenz mittel (VPS-Daten unbekannt), Umkehrbarkeit billig.
+
+### 2026-09-27 22:18 – [BEOBACHTUNG] Anbieterlage und SSH aus der Cloud-Session
+
+- **SSH gesperrt:** Aus der Cloud-Session sind ausgehende Verbindungen auf Port 22 nicht möglich (Test gegen github.com:22). Die KI kann einen Server also nicht selbst per SSH einrichten; Einrichtung über Browser-Konsole des Anbieters, Cloud-Init oder GitHub Actions.
+- **Hetzner ausverkauft:** Alle günstigen Cloud-Tarife (CX, CAX) seit 2026-09-07 nicht bestellbar, Preise 2026 zweimal erhöht; verfügbar nur teurere Tarife ab ca. 14 € brutto. Übersicht aller geprüften Anbieter: `docs/research/hosting-anbieter.md`.
+
+### 2026-09-27 22:15 – [SESSIONSTART] Schritt 4.2
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 22:15) → Entscheidungs-Klasse. Empfohlene Klasse für 4.2 ist Entscheidung (Eskalations-Auslöser 1) – passt, kein Stopp, keine Warnung.
+- **Kontextgröße:** 0 Token laut Sitzungsabfrage (Wert zu Beginn nicht aktualisiert, wie in den Vorsessions). Kurzzeitlimit (5 Stunden) `allowed`.
+- PR #19 gemergt (`a528047`); Branch `scp/sharp-wright-4ofnvz` steht auf `main`.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2 (project-context, Logbuch ab letztem Sessionende, Fahrplan Stand und Phase 4, Architektur 1/2/9, Decisions A/C, aktive Blocker: keine).
+- **Vorhaben:** Schritt 4.2 Host bereitstellen und härten – zuerst `ENTSCHEIDUNG ERFORDERLICH` zum VPS-Anbieter (Kategorien 3, 6, 7).
+
 ### 2026-09-27 13:10 – [SESSIONENDE] Schritt 4.1
 
 - **Dauer:** 12:48–13:10 UTC.
