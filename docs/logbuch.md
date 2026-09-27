@@ -29,6 +29,30 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-27 05:40 – [SESSIONENDE] Schritte 3.8 und 3.9 erledigt, Phase 3 vollständig
+
+- **Dauer:** 04:15–05:40 UTC (3.8 bis 04:31, PR #16 gemergt 05:05, 3.9 ab 05:22).
+- **Bearbeitet:** 3.9 `[ERLEDIGT]` (ADR-023, Option A des Eigentümers): Modell je Geschichte, Token und Kosten je Vorschlag, Zählung jeder KI-Anfrage in `system/verbrauch/JJJJ-MM.md`, Monatskosten unter „Konto“, `GET /api/usage`. FR-018 erledigt. Abnahme mit 2 echten Läufen (0,0048 $, `spikes/modellwahl/README.md`).
+- **Erreichter Stand:** 377 Python-Tests (99,78 %), 96 Komponenten-Tests (98,2 % Zeilen, 96,0 % Zweige), 8 End-to-End-Tests (3 von 3 Gesamtläufen grün); alle Pre-Commit-Hooks grün. Alle Schritte der Phase 3 erledigt.
+- **Offen:** Pull Request für 3.9 und CI-Ergebnis. **Phasenabschluss 3** ist nicht begonnen: Pflichtfrage mit getrennter Instanz, Vision-Re-Derivations-Pass, Onboarding-Re-Validation (Abschnitt 16, Trigger 3), Archivierung der Phase nach `docs/archiv/fahrplan-phase-3.md` und Logbuch-Verdichtung – bewusst einer neuen Session überlassen (Sessiongröße, s. u.).
+- **Nächster Schritt:** neue Session – Phasenabschluss 3.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5 laut Sitzungsabfrage 05:37). Schritte oberhalb der Empfehlung: 1 (3.8; 3.9 lief wegen der Freigabe pflichtgemäß auf der Entscheidungs-Klasse). Abgegeben: nichts (Probelauf offen).
+- **Kontextgröße:** 330.382 Token laut Sitzungsabfrage 05:37 – über der Grenze von 200.000 seit dem Ende von 3.8; Fortsetzung auf ausdrückliche Anweisung („Weiter“), vermerkt 05:22. Kosten der Session laut Abfrage 8,00 $.
+- **Kontingent:** Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Architektur-Reife, Quick-Start-Stand, Verwendung, Nächste Schritte). Drift-Prüfung: ADR-023 → 3.9 vorhanden; Reifegrad Metriken ↔ ADR-023 stimmt; Modul-Liste unverändert (`api.usage` ist Untermodul von `api`, wie `api.access`); FR-018 → 3.9 erledigt; Reaktiv-Quote 1/10 (ADR-014 bis ADR-023); Phase 3 unverändert 9 Schritte; Blocker 0. Ablaufdaten-Register: kein Vorlauf erreicht (Guthaben-Vorlauf ab 2026-10-22). Archivierung: Trigger „Phase vollständig erledigt“ für Phase 3 erreicht – Auslagerung gehört zum Phasenabschluss (nächste Session), im Fahrplan als nächster Schritt geführt; Logbuch ca. 440 Zeilen. Onboarding: nicht Quick-Start-relevant (keine neue Abhängigkeit, Umgebungsvariable oder Skript; `system/verbrauch` entsteht von selbst).
+
+### 2026-09-27 05:38 – [REIFEGRAD-WECHSEL] Observability: Metriken BELASTBAR
+
+- `[VORLÄUFIG]` → `[BELASTBAR]` nach ADR-023 und Umsetzung in 3.9: Speicherung je Anfrage, Monatssumme in der Oberfläche, mit echten Läufen geprüft (`spikes/modellwahl/README.md`).
+
+### 2026-09-27 05:36 – [PROBLEM-GELÖST] Reibungen in 3.9
+
+- **Fehler der Modellwahl unsichtbar:** Das Speichern einer neuen Modellwahl meldete Fehler in den Zustand, der nur in der Vorschlagsansicht angezeigt wird. Der Komponenten-Test „reports a model that could not be kept“ fand das; eigener Fehlerzustand am Modell-Feld.
+- **Playwright `getByLabel("Modell", { exact: true })`** fand die Auswahl nicht – dieselbe Ursache wie in 3.8 (Label-Text enthält die Optionen). `getByRole("combobox", …)`; für künftige Tests die Regel: Auswahlfelder über ihre Rolle ansprechen.
+- **Routen-Zähltest** (`tests/api/test_security.py`) erwartet die genaue Zahl der Endpunkte; `/api/usage` erhöht sie auf 39 (36 geschützt) – bewusst angepasst, der Test belegt zugleich die 401 ohne Sitzung.
+- **ruff RUF002** meldet den Gedankenstrich „–“ in Docstrings; im Python-Code Doppelpunkt bzw. Semikolon statt Gedankenstrich.
+- **Spikes laufen ohne Pre-Commit-Prüfung** (Hooks melden „no files to check“); `ruff` für `spikes/modellwahl` von Hand aufgerufen.
+
 ### 2026-09-27 05:30 – [ADR-ANGELEGT] ADR-023 Verbrauchsdaten in Monatsdateien, Modell je Geschichte
 
 - Eigentümer wählt A: Monatsdatei `system/verbrauch/JJJJ-MM.md` (eine Zeile je KI-Anfrage, ohne Text), Monatssumme unter „Konto“, Kosten je Anfrage im Schreib-Bereich; Kopffeld `modell` in `story.md`. Nicht reaktiv (laut ADR-021 für 3.9 geplant); Reaktiv-Quote 1/10.
