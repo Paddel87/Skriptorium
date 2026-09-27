@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-27
 - **Laufende Phase:** Phase 3 „Schreiben mit KI" (Phase 2 abgeschlossen 2026-09-26, ADR-020: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (3.8 `[ERLEDIGT]` 2026-09-27)
-- **Nächster Schritt:** 3.9 Modell- und Anbieterwahl, Modellwechsel (neue Session; enthält eine Datenmodell-Entscheidung, Kategorie 4, ADR-021); danach Phasenabschluss 3; datiert: D.6 Reaktionszeit erkunden vor 4.8
+- **Aktiver Schritt:** keiner (3.9 `[ERLEDIGT]` 2026-09-27; alle Schritte der Phase 3 erledigt)
+- **Nächster Schritt:** Phasenabschluss 3 in einer neuen Session: Pflichtfrage „weiterbauen, umbauen oder neu aufsetzen“ mit Bewertung durch eine getrennte Instanz, Vision-Re-Derivations-Pass, Onboarding-Re-Validation, Archivierung der Phase und Logbuch-Verdichtung (`CLAUDE.md` Abschnitte 12, 14, 16); erst danach Phase 4. Datiert: D.6 Reaktionszeit erkunden vor 4.8
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -244,7 +244,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 3.9: Modell- und Anbieterwahl, Modellwechsel
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-27; ADR-023) – Modell je Geschichte (Kopffeld `modell`, im Schreib-Bereich vorgewählt und bei Änderung sofort gespeichert); Schreiben ohne Modellangabe nutzt das Modell der Geschichte; Token und Kosten unter jedem Vorschlag, Hinweis auf anderes Modell bei Ablehnung, Anbieter angezeigt (nur OpenRouter, weitere V.3); jede KI-Anfrage in `system/verbrauch/JJJJ-MM.md` gezählt (`api.usage`), Monatskosten unter „Konto“, `GET /api/usage`. 377 Python-Tests (99,78 %, `api.usage` 100 %), 96 Komponenten-Tests (98,2 % Zeilen, 96,0 % Zweige), 8 End-to-End-Tests (3 von 3 Gesamtläufen grün). Abnahme mit 2 echten Läufen (0,0048 $): Wechsel grok-4.7 → grok-4.6 wirkt, Text aus Lauf 1 bleibt Grundlage, beide Anfragen gezählt (`spikes/modellwahl/README.md`)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.3
 - **Freigabepflichtig:** nein
@@ -256,7 +256,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** ui, api, ai_gateway
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests
-- **Notizen:** Zusatz 2026-09-26 (ADR-021): Speicherung der Verbrauchsdaten je Anfrage für die Monatssumme hier entscheiden (Datenmodell, Kategorie 4); `ai_gateway` liefert sie seit 3.1 zurück.
+- **Notizen:** Zusatz 2026-09-26 (ADR-021): Speicherung der Verbrauchsdaten je Anfrage für die Monatssumme hier entscheiden (Datenmodell, Kategorie 4); `ai_gateway` liefert sie seit 3.1 zurück. Entschieden 2026-09-27: ADR-023 (Option A). Tatsächlich berührt: ui, api, manuscript (Kopffeld `modell`); `ai_gateway` unverändert.
 
 ### Phase 4: Stabilisierung und erstes öffentliches Deployment – Typ: STABILISIERUNG
 

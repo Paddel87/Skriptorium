@@ -308,6 +308,39 @@ test("a marked passage goes into the canon or into this story only", async ({
   await expect(page.getByLabel("Text")).toHaveValue("Herrscht über die Glut.");
 });
 
+test("the model of a story survives a reload; costs of the month are shown", async ({
+  page,
+}) => {
+  // Step 3.9 (FR-018, ADR-023): no provider in this run, so the month has no requests.
+  await login(page);
+  await page.getByLabel("Name").fill("Die Moorlande");
+  await page.getByRole("button", { name: "Welt anlegen" }).click();
+  await page.getByRole("button", { name: "Geschichten" }).click();
+  await page.getByLabel("Titel").fill("Nebelpfad");
+  await page.getByRole("button", { name: "Geschichte anlegen" }).click();
+  await page.getByLabel("Titel des neuen Kapitels").fill("Aufbruch");
+  await page.getByRole("button", { name: "Kapitel anlegen" }).click();
+  const model = page.getByRole("combobox", { name: "Modell", exact: true });
+  await expect(model).toHaveValue("x-ai/grok-4.7");
+  const saved = page.waitForResponse(
+    (response) =>
+      response.request().method() === "PATCH" &&
+      response.url().endsWith("/stories/nebelpfad"),
+  );
+  await model.selectOption("x-ai/grok-4.6");
+  expect((await saved).status()).toBe(200);
+
+  await page.reload();
+  await page.getByRole("button", { name: "Die Moorlande" }).click();
+  await page.getByRole("button", { name: "Nebelpfad" }).click();
+  await expect(
+    page.getByRole("combobox", { name: "Modell", exact: true }),
+  ).toHaveValue("x-ai/grok-4.6");
+
+  await page.getByRole("button", { name: "Konto" }).click();
+  await expect(page.getByText(/ für \d+ Anfrage/)).toBeVisible();
+});
+
 /**
  * The `@` menu ignores Enter for 75 ms after it opens (`interactionDelay` of
  * @codemirror/autocomplete, against accidental choices); an Enter within that time

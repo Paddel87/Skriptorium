@@ -8,6 +8,8 @@ Marking the chapter as completed stays a separate call (``manuscript.complete_ch
 interface calls both in turn and can repeat this flow later ("nachholen"). If a step fails,
 what was saved before stays saved: the chapter keeps its previous summary (``fehlt`` if there
 was none) and ``context`` uses the chapter's opening instead (step 3.6).
+
+Each request sent is counted through ``record`` (ADR-023, step 3.9).
 """
 
 from collections.abc import Callable, Mapping
@@ -16,14 +18,22 @@ from typing import Final, Literal
 
 from skriptorium.ai_gateway import (
     DEFAULT_MODELS,
+    Completed,
     CompletionRequest,
     GatewayError,
     Message,
     ModelConfig,
     ModelProvider,
     TextChunk,
+    Usage,
 )
-from skriptorium.api.flows.writing import DEFAULT_MODEL, MAX_OUTPUT_TOKENS, error_kind
+from skriptorium.api.flows.writing import (
+    DEFAULT_MODEL,
+    MAX_OUTPUT_TOKENS,
+    UsageRecorder,
+    error_kind,
+)
+from skriptorium.api.usage import Kind
 from skriptorium.context import BuiltContext, ContextBuilder, ContextTooLarge
 from skriptorium.manuscript import Chapter, ManuscriptService, Story
 from skriptorium.storage import InvalidInput
@@ -32,6 +42,7 @@ from skriptorium.storage import InvalidInput
 SUMMARY_TEMPERATURE: Final = 0.3
 
 Stage = Literal["kapitel", "gesamt"]
+_KINDS: Final[Mapping[Stage, Kind]] = {"kapitel": "kurzfassung", "gesamt": "gesamtzusammenfassung"}
 
 
 @dataclass(frozen=True)
@@ -60,6 +71,7 @@ async def summarize_chapter(
     number: int,
     model: str = DEFAULT_MODEL,
     models: Mapping[str, ModelConfig] = DEFAULT_MODELS,
+    record: UsageRecorder | None = None,
 ) -> SummaryOutcome:
     """Create the short summary of chapter ``number`` and continue the overall summary.
 
@@ -75,6 +87,7 @@ async def summarize_chapter(
         "kapitel",
         lambda: builder.build_chapter_summary(world, story, number),
         lambda text: manuscripts.set_chapter_summary(world, story, number, text, "erzeugt"),
+        record,
     )
     if failure is None:
         failure = await _step(
@@ -83,6 +96,7 @@ async def summarize_chapter(
             "gesamt",
             lambda: builder.build_story_summary(world, story, number),
             lambda text: manuscripts.set_story_summary(world, story, text),
+            record,
         )
     return SummaryOutcome(
         manuscripts.get_chapter(world, story, number),
@@ -97,16 +111,24 @@ async def _step(
     stage: Stage,
     build: Callable[[], BuiltContext],
     save: Callable[[str], object],
+    record: UsageRecorder | None,
 ) -> SummaryFailure | None:
     """Build one request, collect the answer and save it; the failure if that did not work."""
     try:
         built = build()
     except ContextTooLarge:
         return SummaryFailure(stage, "zu_gross")
+    usage: list[Usage] = []
+    outcome = "abgebrochen"
     try:
-        text = await _collect(provider, _request(built, model))
+        text = await _collect(provider, _request(built, model), usage)
+        outcome = "ok" if text else "leer"
     except GatewayError as error:
-        return SummaryFailure(stage, error_kind(error))
+        outcome = error_kind(error)
+        return SummaryFailure(stage, outcome)
+    finally:
+        if record is not None:
+            record(_KINDS[stage], model, usage[0] if usage else None, outcome)
     if not text:
         return SummaryFailure(stage, "leer")
     save(text)
@@ -118,13 +140,16 @@ def _request(built: BuiltContext, model: str) -> CompletionRequest:
     return CompletionRequest(model, messages, MAX_OUTPUT_TOKENS, SUMMARY_TEMPERATURE)
 
 
-async def _collect(provider: ModelProvider, request: CompletionRequest) -> str:
+async def _collect(provider: ModelProvider, request: CompletionRequest, usage: list[Usage]) -> str:
+    """The whole answer; the reported usage is appended to ``usage``."""
     parts: list[str] = []
     events = provider.stream(request)
     try:
         async for event in events:
             if isinstance(event, TextChunk):
                 parts.append(event.text)
+            elif isinstance(event, Completed):
+                usage.append(event.usage)
     finally:
         close = getattr(events, "aclose", None)
         if close is not None:

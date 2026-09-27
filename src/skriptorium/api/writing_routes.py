@@ -1,4 +1,4 @@
-"""Endpoints for writing with the AI, chapter summaries and the model list (steps 3.3, 3.6).
+"""Endpoints for writing with the AI, summaries, models and consumption (steps 3.3, 3.6, 3.9).
 
 The routes stay thin; the flow lives in :mod:`skriptorium.api.flows` (ADR-020).
 """
@@ -44,7 +44,19 @@ class WriteIn(BaseModel):
     instruction: str = ""
     references: list[str] = []
     scene: SceneIn | None = None
-    model: str = DEFAULT_MODEL
+    # Missing: the model chosen for the story, otherwise the preset one (step 3.9).
+    model: str | None = None
+
+
+class UsageOut(BaseModel):
+    """Consumption of one month (ADR-023); ``without_cost`` requests had no reported cost."""
+
+    month: str
+    requests: int
+    input_tokens: int
+    output_tokens: int
+    cost_usd: float
+    without_cost: int
 
 
 class SummaryResult(BaseModel):
@@ -57,7 +69,7 @@ class SummaryResult(BaseModel):
 
 @router.get("/models")
 def list_models() -> ModelList:
-    """The selectable models; choosing one per story follows in step 3.9."""
+    """The selectable models; the one chosen per story is the story's ``model`` (step 3.9)."""
     return ModelList(models=list(DEFAULT_MODELS), default=DEFAULT_MODEL)
 
 
@@ -71,12 +83,16 @@ def write(
     scene = None
     if body.scene is not None:
         scene = Scene(body.scene.place, tuple(body.scene.characters), body.scene.goal)
+    model = body.model
+    if model is None:
+        found.canon.get_world(world_id)
+        model = found.manuscript.get_story(world_id, story_id).model or DEFAULT_MODEL
     order = WriteOrder(
-        world_id, story_id, number, body.instruction, tuple(body.references), scene, body.model
+        world_id, story_id, number, body.instruction, tuple(body.references), scene, model
     )
     prepared = prepare_request(found.canon, found.manuscript, found.context, order)
     return StreamingResponse(
-        stream_events(found.provider, prepared),
+        stream_events(found.provider, prepared, found.usage.record),
         media_type="text/event-stream",
         headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"},
     )
@@ -92,6 +108,26 @@ async def summarize(world_id: str, story_id: str, number: int, found: ServicesDe
     if found.provider is None:
         raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, "KI-Anbieter nicht eingerichtet")
     outcome = await summarize_chapter(
-        found.manuscript, found.context, found.provider, world_id, story_id, number
+        found.manuscript,
+        found.context,
+        found.provider,
+        world_id,
+        story_id,
+        number,
+        record=found.usage.record,
     )
     return SummaryResult(chapter=outcome.chapter, story=outcome.story, failure=outcome.failure)
+
+
+@router.get("/usage")
+def usage(found: ServicesDep, month: str | None = None) -> UsageOut:
+    """Requests, tokens and cost of ``month`` (``JJJJ-MM``), by default the current month."""
+    summed = found.usage.month(month)
+    return UsageOut(
+        month=summed.month,
+        requests=summed.requests,
+        input_tokens=summed.input_tokens,
+        output_tokens=summed.output_tokens,
+        cost_usd=summed.cost_usd,
+        without_cost=summed.without_cost,
+    )

@@ -12,6 +12,9 @@ the goal becomes part of the instruction.
 References, place and characters are entries of the story's world or guests the story binds in
 from other worlds (FR-017, step 3.7); a guest wins over an entry of the world with the same
 identifier, as in the checks of the story endpoints.
+
+Every request is counted through ``record`` when the stream ends: finished, failed or aborted
+(ADR-023, step 3.9).
 """
 
 import json
@@ -30,7 +33,9 @@ from skriptorium.ai_gateway import (
     ModelProvider,
     ModelRefused,
     RateLimited,
+    Usage,
 )
+from skriptorium.api.usage import Kind
 from skriptorium.canon import CanonEntry, CanonService, Category
 from skriptorium.context import ContextBuilder, ContextTooLarge
 from skriptorium.manuscript import ManuscriptService
@@ -42,6 +47,9 @@ DEFAULT_MODEL: Final = next(iter(DEFAULT_MODELS))
 MAX_OUTPUT_TOKENS: Final = 8000
 TEMPERATURE: Final = 0.8
 CONTINUE: Final = "Setze das Manuskript an seinem Ende fort."
+
+# Counts one AI request: kind, model, usage reported by the provider, outcome (ADR-023).
+UsageRecorder = Callable[[Kind, str, Usage | None, str], None]
 
 
 @dataclass(frozen=True)
@@ -162,21 +170,27 @@ _ERROR_KINDS: Final[Sequence[tuple[type[GatewayError], str]]] = (
 )
 
 
-async def stream_events(provider: ModelProvider, prepared: PreparedRequest) -> AsyncIterator[str]:
+async def stream_events(
+    provider: ModelProvider, prepared: PreparedRequest, record: UsageRecorder | None = None
+) -> AsyncIterator[str]:
     """Stream the answer as Server-Sent Events.
 
     Events: ``start`` (model, estimated tokens), then ``text`` per chunk, then either ``done``
     (usage) or ``error`` (kind only; texts for the author live in the interface). Closing the
-    connection closes the provider stream, which ends the request at the provider.
+    connection closes the provider stream, which ends the request at the provider. At the end
+    the request is passed to ``record`` with outcome ``ok``, the error kind or ``abgebrochen``.
     """
     completion = prepared.completion
     yield _event(
         "start", {"model": completion.model, "estimated_tokens": prepared.estimated_tokens}
     )
+    usage: Usage | None = None
+    outcome = "abgebrochen"
     events = provider.stream(completion)
     try:
         async for event in events:
             if isinstance(event, Completed):
+                usage, outcome = event.usage, "ok"
                 yield _event(
                     "done",
                     {
@@ -189,11 +203,14 @@ async def stream_events(provider: ModelProvider, prepared: PreparedRequest) -> A
             elif event.text:
                 yield _event("text", {"text": event.text})
     except GatewayError as error:
-        yield _event("error", {"kind": error_kind(error)})
+        outcome = error_kind(error)
+        yield _event("error", {"kind": outcome})
     finally:
         close = getattr(events, "aclose", None)
         if close is not None:
             await close()
+        if record is not None:
+            record("schreiben", completion.model, usage, outcome)
 
 
 def error_kind(error: GatewayError) -> str:

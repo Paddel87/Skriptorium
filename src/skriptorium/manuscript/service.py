@@ -3,8 +3,8 @@
 Layout below the data directory (docs/architecture.md section 7)::
 
     worlds/<world>/stories/<story>/story.md              titel, form, perspektive,
-                                                         gefuehrte_figuren, gast_verbindungen;
-                                                         body: overall summary
+                                                         gefuehrte_figuren, gast_verbindungen,
+                                                         modell (ADR-023); body: overall summary
     worlds/<world>/stories/<story>/chapters/NN-<t>.md    kapitel, titel, status, kurzfassung,
                                                          kurzfassung_status; body: text
     worlds/<world>/stories/<story>/facts.md              fakten: list of eintrag and fakt
@@ -83,6 +83,8 @@ class Story:
     guest_links: tuple[GuestLink, ...]
     facts: tuple[StoryFact, ...]
     summary: str
+    # Model chosen for this story (step 3.9, ADR-023); ``None`` means the preset model.
+    model: str | None = None
 
 
 @dataclass(frozen=True)
@@ -157,6 +159,7 @@ class ManuscriptService:
             perspective,
             _clean_references(controlled_characters),
             (),
+            None,
         )
         document = self._store.write(_story_path(world_id, story_id), header, "", create=True)
         if form != "roman":
@@ -172,8 +175,12 @@ class ManuscriptService:
         form: Form | _Keep = KEEP,
         perspective: str | _Keep | None = KEEP,
         controlled_characters: Sequence[str] | _Keep = KEEP,
+        model: str | _Keep | None = KEEP,
     ) -> Story:
-        """Change title, form or the settings of the character mode (FR-012).
+        """Change title, form, the settings of the character mode (FR-012) or the model.
+
+        Which models exist is known to ``api``, not here; ``model`` is stored as given
+        (blank or ``None`` clears it).
 
         Raises:
             NotFound: The story does not exist.
@@ -194,6 +201,7 @@ class ManuscriptService:
             if isinstance(controlled_characters, _Keep)
             else _clean_references(controlled_characters),
             story.guest_links,
+            story.model if isinstance(model, _Keep) else model,
         )
         self._store.write(document.path, header, document.body)
         return self.get_story(world_id, story_id)
@@ -476,6 +484,7 @@ def _story_header(
     perspective: str | None,
     controlled: list[str],
     guest_links: tuple[GuestLink, ...],
+    model: str | None,
 ) -> dict[str, HeaderValue]:
     header: dict[str, HeaderValue] = {
         "titel": title,
@@ -483,6 +492,7 @@ def _story_header(
         "perspektive": perspective.strip() if perspective and perspective.strip() else None,
         "gefuehrte_figuren": list[HeaderValue](controlled),
         "gast_verbindungen": [{"welt": g.world, "eintrag": g.entry} for g in guest_links],
+        "modell": model.strip() if model and model.strip() else None,
     }
     header.update({k: v for k, v in previous.items() if k not in header})
     return header
@@ -522,6 +532,9 @@ def _story_from(document: Document, facts: tuple[StoryFact, ...]) -> Story:
     perspective = document.header.get("perspektive")
     if perspective is not None and not isinstance(perspective, str):
         raise InvalidInput(f"{document.path}: Feld 'perspektive' muss ein Text sein")
+    model = document.header.get("modell")
+    if model is not None and not isinstance(model, str):
+        raise InvalidInput(f"{document.path}: Feld 'modell' muss ein Text sein")
     return Story(
         world=PurePosixPath(document.path).parts[1],
         id=PurePosixPath(document.path).parts[3],
@@ -534,6 +547,7 @@ def _story_from(document: Document, facts: tuple[StoryFact, ...]) -> Story:
         ),
         facts=facts,
         summary=document.body,
+        model=model,
     )
 
 
