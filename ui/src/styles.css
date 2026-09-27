@@ -157,6 +157,11 @@ button.danger {
   font-size: 1.05rem;
 }
 
+.editor.instruction,
+.editor.instruction .cm-editor {
+  min-height: 3.5rem;
+}
+
 table {
   border-collapse: collapse;
   width: 100%;

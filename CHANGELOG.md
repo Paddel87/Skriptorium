@@ -6,6 +6,7 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt
 
+- `@`-Menü (2026-09-27, Schritt 3.5): Im Anweisungsfeld bietet `@` die Kanon-Einträge der Welt (Namen und Aliasse) zur Auswahl an; jeder per `@` genannte Eintrag wird der KI vollständig mitgegeben, auch wenn die Welt sonst nicht ins Budget passt. Unter dem Feld steht, welche Einträge herangezogen werden.
 - Figuren-Schreibweise (2026-09-27, Schritt 3.4): Erzählperspektive und selbst geführte Figuren je Geschichte einstellen; die KI schreibt für diese Figuren keine Handlung, Rede oder Gedanken mehr und endet dort, wo der Autor weiterschreibt.
 - Schreiben mit KI (2026-09-26, Schritt 3.3): Schreib-Bereich unter dem Kapitel-Editor – Anweisung oder neue Szene (Ort, Figuren, Ziel) senden, Vorschlag erscheint fortlaufend („denkt nach …“ mit laufender Zeit), übernehmen ans Kapitelende, ändern, verwerfen, abbrechen, mit anderem Modell neu schreiben. Endpunkte `POST …/chapters/{n}/write` (Server-Sent Events) und `GET /api/models`. Ohne `OPENROUTER_API_KEY` läuft der Server weiter, Schreiben antwortet 503.
 - Oberfläche (2026-09-26, Schritt 2.7): Anmeldung, Einrichtung, Passwortwechsel und Sitzungsübersicht; Welten, Kanon-Pflege, Markdown-Import mit Vorschau, Geschichten und Kapitel mit Markdown-Editor (CodeMirror 6); Content-Security-Policy.

@@ -1,0 +1,14 @@
+{
+  "instruction": "@Kael bringt die Reisende über den Grauen Fluss. Ca. 200 Wörter.",
+  "references": [
+    "kael"
+  ],
+  "kael_im_kontext": [
+    "verweis"
+  ],
+  "auffuellung": 614,
+  "estimated_tokens": 29999,
+  "input_tokens": 26639,
+  "output_tokens": 512,
+  "cost_usd": 0.043260624
+}

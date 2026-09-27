@@ -1,5 +1,11 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import {
+  acceptCompletion,
+  currentCompletions,
+  startCompletion,
+} from "@codemirror/autocomplete";
+import { EditorView } from "@codemirror/view";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   CHAPTER,
@@ -23,6 +29,7 @@ const PLACE = {
   id: "grauwasser",
   category: "ort" as const,
   name: "Grauwasser",
+  aliases: [],
 };
 
 afterEach(() => {
@@ -54,6 +61,28 @@ function panel(
   return { prepare, onAccept };
 }
 
+/** The CodeMirror view of the instruction field, once it is loaded. */
+async function instructionView(): Promise<EditorView> {
+  const content = await screen.findByLabelText(/Anweisung an die KI/);
+  const view = EditorView.findFromDOM(content);
+  if (view === null) {
+    throw new Error("instruction field without editor");
+  }
+  return view;
+}
+
+/** Type at the end of the instruction field. */
+async function typeInstruction(text: string): Promise<EditorView> {
+  const view = await instructionView();
+  const end = view.state.doc.length;
+  view.dispatch({
+    changes: { from: end, insert: text },
+    selection: { anchor: end + text.length },
+    userEvent: "input.type",
+  });
+  return view;
+}
+
 async function ready() {
   const select = await screen.findByLabelText("Modell");
   await waitFor(() => {
@@ -69,10 +98,7 @@ describe("WritingPanel", () => {
     const user = userEvent.setup();
     await ready();
 
-    await user.type(
-      screen.getByLabelText(/Anweisung an die KI/),
-      "Mira kommt.",
-    );
+    await typeInstruction("Mira kommt.");
     await user.click(screen.getByRole("button", { name: "Weiterschreiben" }));
 
     expect(screen.getByRole("status").textContent).toBe("denkt nach … 0 s");
@@ -82,6 +108,7 @@ describe("WritingPanel", () => {
     });
     expect(calls.find((c) => c.method === "POST")?.body).toEqual({
       instruction: "Mira kommt.",
+      references: [],
       model: "x-ai/grok-4.7",
       scene: null,
     });
@@ -110,10 +137,7 @@ describe("WritingPanel", () => {
     await waitFor(() => {
       expect(screen.queryByLabelText("Vorschlag der KI")).toBeNull();
     });
-    expect(screen.getByLabelText(/Anweisung an die KI/)).toHaveProperty(
-      "value",
-      "",
-    );
+    expect((await instructionView()).state.doc.toString()).toBe("");
   });
 
   it("starts a new scene with place, characters and goal", async () => {
@@ -136,6 +160,7 @@ describe("WritingPanel", () => {
     await waitFor(() => {
       expect(calls.find((c) => c.method === "POST")?.body).toEqual({
         instruction: "",
+        references: [],
         model: "x-ai/grok-4.7",
         scene: {
           place: "grauwasser",
@@ -176,7 +201,7 @@ describe("WritingPanel", () => {
     const user = userEvent.setup();
     await ready();
 
-    await user.type(screen.getByLabelText(/Anweisung an die KI/), "Kampf.");
+    await typeInstruction("Kampf.");
     await user.click(screen.getByRole("button", { name: "Weiterschreiben" }));
     feed.send("error", { kind: "abgelehnt" });
     feed.close();
@@ -196,6 +221,7 @@ describe("WritingPanel", () => {
     });
     expect(calls.filter((c) => c.method === "POST")[1]?.body).toEqual({
       instruction: "Kampf.",
+      references: [],
       model: "x-ai/grok-4.6",
       scene: null,
     });
@@ -244,6 +270,55 @@ describe("WritingPanel", () => {
       expect(screen.queryByRole("status")).toBeNull();
     });
     expect(calls.some((c) => c.method === "POST")).toBe(false);
+  });
+
+  it("offers the world's entries after @ and sends the chosen ones as references", async () => {
+    const feed = sseFeed();
+    const { calls } = fakeApi(routes(feed));
+    panel();
+    const user = userEvent.setup();
+    await ready();
+
+    const view = await typeInstruction("Mit @kael, dann @DER f");
+    expect(await screen.findByText("Herangezogen: Kael")).toBeDefined();
+    startCompletion(view);
+    await waitFor(() => {
+      expect(currentCompletions(view.state).map((c) => c.label)).toEqual([
+        "der Fährmann",
+      ]);
+    });
+
+    const at = view.state.doc.toString().lastIndexOf("@") + 1;
+    view.dispatch({
+      changes: { from: at, to: view.state.doc.length },
+      selection: { anchor: at },
+    });
+    startCompletion(view);
+    await waitFor(() => {
+      expect(currentCompletions(view.state).map((c) => c.label)).toEqual([
+        "Grauwasser",
+        "Kael",
+      ]);
+    });
+    // The menu takes choices only after a short delay (interactionDelay).
+    await waitFor(() => {
+      expect(acceptCompletion(view)).toBe(true);
+    });
+    expect(view.state.doc.toString()).toBe("Mit @kael, dann @Grauwasser");
+    expect(
+      await screen.findByText("Herangezogen: Kael, Grauwasser"),
+    ).toBeDefined();
+
+    await user.click(screen.getByRole("button", { name: "Weiterschreiben" }));
+    await waitFor(() => {
+      expect(calls.find((c) => c.method === "POST")?.body).toEqual({
+        instruction: "Mit @kael, dann @Grauwasser",
+        references: ["kael", "grauwasser"],
+        model: "x-ai/grok-4.7",
+        scene: null,
+      });
+    });
+    feed.close();
   });
 
   it("shows load errors of models and entries", async () => {

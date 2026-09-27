@@ -179,6 +179,23 @@ def test_invalid_orders_are_refused_before_streaming(
     assert provider.requests == []
 
 
+def test_reference_to_an_entry_of_another_world_is_refused(
+    writer: TestClient, provider: FakeProvider
+) -> None:
+    writer.post("/api/worlds", json={"name": "Nebelreich", "description": "Nebel."})
+    created = writer.post(
+        "/api/worlds/nebelreich/entries",
+        json={"category": "figur", "name": "Nebelkönig", "body": "Herrscht im Nebel."},
+    )
+    assert created.status_code == 201, created.text
+
+    response = writer.post(WRITE, json={"references": ["nebelkoenig"]})
+
+    assert response.status_code == 422
+    assert "Unbekannter Kanon-Eintrag nebelkoenig" in response.json()["detail"]
+    assert provider.requests == []
+
+
 def test_missing_world_story_or_chapter(writer: TestClient) -> None:
     assert (
         writer.post("/api/worlds/nirgends/stories/am-ufer/chapters/1/write", json={}).status_code

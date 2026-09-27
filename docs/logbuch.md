@@ -29,6 +29,38 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-27 01:10 – [SESSIONENDE] Schritt 3.5 erledigt
+
+- **Dauer:** 00:52–01:10 UTC.
+- **Bearbeitet:** 3.5 `[ERLEDIGT]`: Anweisungsfeld als CodeMirror-Editor mit `@`-Menü (`@codemirror/autocomplete` 6.20.3 als direkte Abhängigkeit, CodeMirror-Familie freigabefrei); Erkennung von `@Name`/`@Alias` beim Senden, Anzeige „Herangezogen: …“; Tests für Ablehnung von Verweisen in andere Welten (API) und für genannte Einträge bei knappem Budget (Kontext); Abnahme mit 5 echten Läufen (0,217 $), blind bewertet. FR-013 erledigt; Gast-Einträge im Menü als Zusatz an 3.7 (Landeplatz).
+- **Erreichter Stand:** 326 Python-Tests (99,84 %; `canon`, `context` 100 %), 52 Komponenten-, 5 End-to-End-Tests grün; alle Pre-Commit-Hooks, Audits ohne Befund. Hauptbündel +1,5 kB, CodeMirror bleibt nachgeladen. OpenRouter-Guthaben laut Rechnung ca. 2,03 $ (vorher ca. 2,25 $).
+- **Offen:** Pull Request für diesen Branch; CI-Lauf auf dem Push.
+- **Nächster Schritt:** neue Session – 3.6 Kapitel-Kurzfassungen und Gesamtzusammenfassung.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5 laut Sitzungsabfrage 01:05). Schritte oberhalb der Empfehlung: 1 (3.5 empfiehlt Routine; Abgabe nicht zulässig, Probelauf Routine offen). Abgegeben: blinde Bewertung an Unteragent mit Sonnet 5 (getrennte Instanz, nicht zur Kostenersparnis).
+- **Kontextgröße:** nicht feststellbar – die Sitzungsabfrage meldet während der Session 0 Token; die Regel „Sessiongröße“ entfällt für diese Session. Kein weiterer Schritt in dieser Session.
+- **Kontingent:** Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Quick-Start-Stand – Drift seit 3.3 „noch ohne KI“ behoben –, Verwendung, Nächste Schritte). Drift-Prüfung: keine neuen ADRs; FR-013 → 3.5 erledigt, Gast-Teil an 3.7; Modul-Liste unverändert; Reifegrade unverändert; Reaktiv-Quote 1/10; Phase 3 unverändert 9 Schritte; Blocker 0. Ablaufdaten-Register: Vorlauf des Guthabens (2 Wochen vor 2026-11-05) noch nicht erreicht. Archivierung: kein Trigger. Onboarding: Quick-Start-relevant (neue direkte Abhängigkeit in `package.json`) – im frischen Worktree validiert (`uv sync --frozen`, `npm ci`, `skriptorium-einrichtung`, `vite build`, `/api/health` → ok).
+
+### 2026-09-27 01:05 – [PROBLEM-GELÖST] Reibungen in 3.5
+
+- **Menü im Test leer:** Der Test tippte `@fä`, der Alias heißt aber „der Fährmann“ – gesucht wird am Namensanfang (wie die Index-Suche). Kein Fehler im Code; Test korrigiert.
+- **Doppelte Menüzeilen:** Das Test-Objekt `PLACE` erbte per Spread den Alias von `ENTRY`. Eigene leere Aliasse gesetzt.
+- **`acceptCompletion` liefert `false`:** CodeMirror nimmt eine Auswahl erst nach `interactionDelay` (75 ms) an; im Test in `waitFor` gelegt.
+- **`getClientRects is not a function`:** jsdom misst keine Text-Bereiche; das Menü-Tooltip von CodeMirror braucht das. Ersatz mit leeren Maßen in `ui/test-setup.ts`, nur wenn jsdom ihn nicht hat.
+- **Kontrolllauf ohne Wirkung:** Die Auffüllung überspringt große Einträge und nimmt danach kleinere – der kleine Kael-Eintrag passte ohne `@` immer noch hinein. Testwelt auf 700 kleine Einträge (je 44 Token, kleiner als Kael mit 94) umgestellt; Protokoll vor den bezahlten Läufen trocken geprüft.
+
+### 2026-09-27 01:02 – [BEOBACHTUNG] Abnahme 3.5 mit echten Läufen
+
+- 5 Läufe grok-4.7 (0,217 $, je ca. 26.600 Token Eingabe) über `api.flows.prepare_request`; Testwelt so gebaut, dass Kael nur mit `@` in den Kontext kommt. Blind bewertet durch Sonnet 5: alle 4 Texte mit `@Kael` nutzen Einzelheiten nur aus Kaels Eintrag (15 von 16), keine Widersprüche; Kontrolllauf ohne `@` ohne die drei körperlichen Einzelheiten, aber mit „Brot oder Salz“ statt Münzen – vermutlich aus dem Salzfisch-Handel der Testwelt (`spikes/at-verweis/README.md`).
+- **Entscheidung im Autonomiebereich:** Das Menü filtert die ohnehin geladene Eintragsliste im Browser statt `GET …/search` je Tastendruck aufzurufen – ein Aufruf weniger je Zeichen, und die Index-Suche beantwortet ein leeres Suchwort (bloßes `@`) nicht. Festgehalten in `docs/architecture.md` Abschnitt 3 (`ui`).
+
+### 2026-09-27 00:52 – [SESSIONSTART] Schritt 3.5 auf Anweisung „Neue Session: 3.5“
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 00:52) → Entscheidungs-Klasse. 3.5 empfiehlt Routine; Abgabe nicht möglich (Probelauf der Routine-Klasse offen) – Hinweis an den Eigentümer wegen des Wochenkontingents.
+- **Kontextgröße:** Sitzungsabfrage meldet 0 Token zu Beginn; Grenze 200.000.
+- **Kontingent:** Wochenlimit `allowed_warning`.
+- Branch `claude/session-3-5-4oddll` auf `main` (`27fa6c0`, PR #12 gemergt).
+
 ### 2026-09-27 00:40 – [SESSIONENDE] Schritt 3.4 erledigt
 
 - **Dauer:** Fortsetzung 00:11–00:40 UTC (Session seit 2026-09-26 22:06).

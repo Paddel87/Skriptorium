@@ -152,6 +152,20 @@ def test_remaining_budget_is_filled_with_further_canon(
     assert labels(context, "auffuellung") == ["Tomas Rehl", "Aschturm", "Runenklinge", "Totensitte"]
 
 
+def test_named_entry_stays_when_further_canon_does_not_fit(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    needed = build(services, "aschturm").blocks
+    fixed = sum(b.tokens for b in needed if b.kind not in ("seiten", "auffuellung"))
+
+    context = build(services, "aschturm", budget=int(fixed * SAFETY_MARGIN) + 2)
+
+    assert labels(context, "verweis") == ["Aschturm"]
+    assert labels(context, "auffuellung") == []
+    assert "Ruine im Norden." in context.messages[0].content
+    assert "Hafenmeister." not in context.messages[0].content
+
+
 def test_other_worlds_never_appear(services: tuple[CanonService, ManuscriptService]) -> None:
     context = build(services, "runenklinge")
 

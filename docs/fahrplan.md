@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-09-26
+- **Stand vom:** 2026-09-27
 - **Laufende Phase:** Phase 3 „Schreiben mit KI" (Phase 2 abgeschlossen 2026-09-26, ADR-020: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (3.4 `[ERLEDIGT]` 2026-09-27)
-- **Nächster Schritt:** 3.5 `@`-Menü (neue Session); datiert: D.6 Reaktionszeit erkunden vor 4.8
+- **Aktiver Schritt:** keiner (3.5 `[ERLEDIGT]` 2026-09-27)
+- **Nächster Schritt:** 3.6 Kapitel-Kurzfassungen und Gesamtzusammenfassung (neue Session); datiert: D.6 Reaktionszeit erkunden vor 4.8
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -180,7 +180,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 3.5: `@`-Menü
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-27) – Anweisungsfeld als kleiner CodeMirror-Editor mit `@`-Menü (`@codemirror/autocomplete` 6.20.3, jetzt direkte Abhängigkeit, CodeMirror-Familie freigabefrei): `@` bietet Namen und Aliasse der Einträge der Welt der Geschichte an; `@Name` bzw. `@Alias` in der Anweisung wird beim Senden als Verweis erkannt (Groß-/Kleinschreibung egal, längster Name gewinnt) und unter dem Feld als „Herangezogen: …“ angezeigt; Server lehnt Verweise auf Einträge anderer Welten mit 422 ab (Test). 52 Komponenten- und 5 End-to-End-Tests (Menü im echten Chromium unter der CSP), 326 Python-Tests; Abnahme mit 5 echten Läufen grok-4.7 (0,217 $, blind bewertet): alle 4 Texte mit `@Kael` nutzen Einzelheiten nur aus Kaels Eintrag (15 von 16), der Kontrolllauf ohne `@` keine der körperlichen (`spikes/at-verweis/README.md`). Gast-Einträge im Menü mit 3.7
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.3
 - **Freigabepflichtig:** nein
@@ -219,7 +219,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Routine – Umsetzung der Gast-Verbindung aus dem Datenmodell.
 - **Eingangskriterien:** Datenmodell `GuestLink` `[BELASTBAR]`
 - **Anforderungen (ab Klasse M):** FR-017
-- **Zu tun:** Eine Geschichte bindet einen Eintrag einer anderen Welt ein; die Verbindung gilt nur für diese Geschichte.
+- **Zu tun:** Eine Geschichte bindet einen Eintrag einer anderen Welt ein; die Verbindung gilt nur für diese Geschichte. Zusatz 2026-09-27 (aus 3.5, FR-013 „ausdrücklich verbundene Einträge“): Gast-Einträge der Geschichte erscheinen im `@`-Menü und lassen sich per `@` als Verweis senden; der Schreib-Ablauf nimmt sie an (heute nur Einträge der eigenen Welt).
 - **Akzeptanzkriterien:** Szenario 4 der Vision: übrige Geschichten beider Welten zeigen den Gast-Eintrag weder in Vorschlägen noch im KI-Kontext (FR-017).
 - **Betroffene Module:** manuscript, context, ui
 - **Reifegrad-Wirkung:** keine
