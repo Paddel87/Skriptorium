@@ -29,6 +29,43 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-27 02:25 – [SESSIONENDE] Schritt 3.6 erledigt
+
+- **Dauer:** Fortsetzung 02:00–02:25 UTC (Session seit 00:52).
+- **Bearbeitet:** 3.6 `[ERLEDIGT]`: Anfragen „Kurzfassung“ und „Gesamtzusammenfassung fortschreiben“ in `context`, Ersatz durch den Kapitelanfang; Ablauf `api.flows.summary` mit Endpunkt `POST …/chapters/{n}/summarize`; Oberfläche zum Abschließen, Ansehen, Ändern und Nachholen. Abnahme mit echten Läufen (ca. 0,4 $), blind bewertet: mit Kurzfassungen 3/3 richtig, ohne 0/3 und 2 erfundene Widersprüche. FR-010 teilweise (Referenzumfang in D.4). Bugfix: 503-Meldung ohne KI-Anbieter.
+- **Erreichter Stand:** 342 Python-Tests (99,81 %; `canon`, `context` 100 %), 57 Komponenten-, 5 End-to-End-Tests; alle Pre-Commit-Hooks grün. OpenRouter-Guthaben laut Rechnung ca. 1,64 $ (vorher ca. 2,03 $).
+- **Offen:** Pull Request für diesen Branch. Länge der Kurzfassungen verfehlt (290/336 statt ≤ 250 Wörter bei kurzen Testkapiteln) – Zusatz an D.4.
+- **Nächster Schritt:** neue Session – 3.7 Gast-Figuren aus anderen Welten.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5 laut Sitzungsabfrage 02:16). Schritte oberhalb der Empfehlung in der ganzen Session: 2 (3.5 und 3.6 empfehlen Routine; Abgabe nicht zulässig, Probelauf offen). Abgegeben: zwei blinde Bewertungen an Unteragenten mit Sonnet 5 (getrennte Instanz).
+- **Kontextgröße:** 298.700 Token laut Sitzungsabfrage (der Wert wurde während der Arbeit nicht aktualisiert), über der Grenze 200.000 auf ausdrückliche Anweisung „3.6 hier“. Kein weiterer Schritt in dieser Session.
+- **Kontingent:** Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Quick-Start-Stand, Verwendung, Nächste Schritte). Drift-Prüfung: keine neuen ADRs; FR-010 → 3.6 teilweise, Rest D.4; Modul-Liste unverändert (3.6 berührt `api`, `context`, `manuscript` nur in Docstrings, `ui`); Reifegrade unverändert; Reaktiv-Quote 1/10; Phase 3 unverändert 9 Schritte; Blocker 0. Ablaufdaten-Register: kein Vorlauf erreicht. Archivierung: kein Trigger (Logbuch ca. 350 Zeilen). Onboarding: nicht Quick-Start-relevant (keine neue Abhängigkeit, kein Skript, keine Umgebungsvariable).
+
+### 2026-09-27 02:20 – [PROBLEM-GELÖST] Reibungen in 3.6
+
+- **503 als Passwortprüfung gemeldet:** `describeError` übersetzte jede 503-Antwort in „Die Passwortprüfung ist gerade nicht erreichbar“ – auch „KI-Anbieter nicht eingerichtet“ vom Schreiben (seit 3.3) und jetzt von den Kurzfassungen. Unterschieden über die Meldung des Servers; Test ergänzt.
+- **Sicherheitstest zählt Routen:** `tests/api/test_security.py` erwartet eine feste Zahl von Routen (bewusste Schranke); auf 38 bzw. 35 angehoben, die neue Route verlangt nachweislich eine Sitzung.
+- **Test-Fakes:** Ein Fake schrieb `status` statt `summary_status`; der eingebettete Schreib-Bereich lud Modelle und Einträge, die der Fake nicht kannte, und erzeugte zusätzliche Fehlermeldungen.
+- **Testgeschichte:** Zwei Anläufe, bis der Ersatz-Kapitelanfang keinen der Fakten mehr enthielt (Absätze vorgeschoben, Hinweis „Leuchtturm und Stufe“ in Kapitel 2 entfernt) und die letzten Seiten nur aus Kapitel 3 bestanden; jeweils trocken geprüft, bevor bezahlt wurde.
+
+### 2026-09-27 02:15 – [BEOBACHTUNG] Abnahme 3.6 mit echten Läufen
+
+- Erster Durchgang: Kurzfassung von Kapitel 2 scheiterte mit `nicht_erreichbar` – der Fehlerpfad griff wie vorgesehen (Gesamtzusammenfassung unverändert, Kapitelanfang im Kontext). Kapitel 1 bekam 334 Wörter statt 150–250.
+- Wortlaut geschärft („150 bis höchstens 250 Wörter … auch für kurze Kapitel“), Kurzfassungen wiederholt: 290 und 336 Wörter, Gesamtzusammenfassung 623 – die Länge bleibt über der Vorgabe, bei Testkapiteln von nur 440/375 Wörtern. Nicht weiter nachgeschärft, weil kurze Testkapitel das Verhalten bei echter Kapitellänge nicht zeigen; Prüfung in D.4 (Zusatz dort).
+- Fortsetzungen blind bewertet (Sonnet 5): mit Kurzfassungen 3/3 richtig (Versteck, Verabredung, kranke Schwester), ohne 0/3 und zwei erfundene Widersprüche (`spikes/kurzfassungen/README.md`).
+
+### 2026-09-27 02:05 – [BEOBACHTUNG] 3.6 vorbereitet – Lücken per Frage-System entschieden
+
+- **Eigentümer (Frage-System):** Kapitel-Kurzfassung ca. 150–250 Wörter, Gesamtzusammenfassung höchstens ca. 600 Wörter; Ersatz bei fehlender Kurzfassung: ganze Absätze vom Kapitelanfang bis ca. 300 Wörter; erzeugt mit dem voreingestellten Modell (grok-4.7, bis 3.9).
+- **Im Autonomiebereich entschieden:** Neuer, rein additiver Endpunkt `POST …/chapters/{n}/summarize` (Kurzfassung erzeugen, danach Gesamtzusammenfassung fortschreiben); `…/complete` bleibt unverändert. Die Oberfläche ruft beim Abschließen beide nacheinander auf und bietet „nachholen“ an. Zwei getrennte KI-Anfragen statt einer mit zwei Ausgaben – kein Zerlegen einer Antwort.
+
+### 2026-09-27 02:00 – [SESSIONSTART] Schritt 3.6 auf Anweisung „3.6 hier“
+
+- **Abweichung:** Sessiongröße 298.700 Token (Sitzungsabfrage 01:55) über der Grenze 200.000; der Eigentümer hat mit „3.6 hier“ ausdrücklich angeordnet, hier weiterzuarbeiten.
+- **Modell:** eingestellt und bedient `claude-opus-5-5` → Entscheidungs-Klasse. 3.6 empfiehlt Routine (Hinweis an den Eigentümer); Abgabe nicht zulässig (Probelauf offen).
+- **Kontingent:** Wochenlimit `allowed_warning`.
+- PR #13 gemergt (`c660df4`); Branch neu auf `main` gesetzt.
+
 ### 2026-09-27 01:10 – [SESSIONENDE] Schritt 3.5 erledigt
 
 - **Dauer:** 00:52–01:10 UTC.
