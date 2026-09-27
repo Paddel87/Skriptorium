@@ -29,6 +29,46 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-27 03:45 – [SESSIONENDE] Schritt 3.7 erledigt
+
+- **Dauer:** 02:47–03:45 UTC.
+- **Bearbeitet:** 3.7 `[ERLEDIGT]`: Gäste der Geschichte im KI-Kontext (genannt oder geführt in Vorrang 2, sonst Auffüllung nach den Einträgen der Welt, mit Herkunft, ohne Regeln der Heimatwelt – beides vom Eigentümer entschieden); Schreib-Ablauf nimmt Gäste in Verweisen und Szene an (rein additiv); Oberfläche „Gäste aus anderen Welten“, Gäste im `@`-Menü, in der Szene und in der Figuren-Schreibweise. FR-017 erledigt. Abnahme mit 3 echten Läufen (0,014 $, blind bewertet): 12/12 Einzelheiten, Regel der Heimatwelt 0/3. Zeitabhängigen End-to-End-Test beim `@`-Menü behoben.
+- **Erreichter Stand:** 356 Python-Tests (99 % gesamt; `context` 100 %, `api.flows.writing` 99 %), 65 Komponenten-Tests (98,2 % Zeilen, 94,6 % Zweige), 6 End-to-End-Tests (8 von 8 Gesamtläufen grün); alle Pre-Commit-Hooks grün.
+- **Offen:** Pull Request für diesen Branch; CI-Ergebnis nach dem Push.
+- **Nächster Schritt:** neue Session – 3.8 Fakt aus dem Text in den Kanon (inkl. Zielwahl bei Gast-Figuren, FR-024).
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5 laut Sitzungsabfrage 03:43). Schritte oberhalb der Empfehlung: 1 (3.7 empfiehlt Routine; Abgabe nicht zulässig, Probelauf offen). Abgegeben: blinde Bewertung an einen Unteragenten mit Sonnet 5 (getrennte Instanz).
+- **Kontextgröße:** nicht feststellbar – die Sitzungsabfrage meldet durchgehend 0 Token (`context_usage` wird nicht aktualisiert). Die Regel zur Sessiongröße entfällt damit für diese Session.
+- **Kontingent:** Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Letzte Änderung, Quick-Start-Stand, Verwendung, Nächste Schritte). Drift-Prüfung: keine neuen ADRs (Entscheidungen des Eigentümers als Präzisierung in `docs/architecture.md` Abschnitt 3, wie in 3.2 und 3.6); FR-017 → 3.7 erledigt, FR-001/FR-013 Vermerke nachgezogen; Modul-Liste unverändert, 3.7 berührte context, api, ui statt manuscript (am Schritt vermerkt); Reifegrade unverändert; Reaktiv-Quote 1/10; Phase 3 unverändert 9 Schritte; Blocker 0. Ablaufdaten-Register: kein Vorlauf erreicht (Guthaben-Vorlauf ab 2026-10-22). Archivierung: kein Trigger (Logbuch ca. 380 Zeilen). Onboarding: nicht Quick-Start-relevant (keine neue Abhängigkeit, kein Skript, keine Umgebungsvariable).
+
+### 2026-09-27 03:40 – [PROBLEM-GELÖST] Reibungen in 3.7
+
+- **End-to-End-Test „@ menu“ zeitabhängig:** Nach dem Einbau des Gäste-Abschnitts scheiterte der Gesamtlauf in etwa jedem zweiten Durchgang (3 von 6, auf `main` 0 von 6). Trace: Das Menü war sichtbar, Enter fügte einen Zeilenumbruch ein. Ursache: `@codemirror/autocomplete` ignoriert „Übernehmen“ 75 ms nach dem Öffnen des Menüs (`interactionDelay`, gewollt gegen versehentliches Übernehmen); der Test drückte Enter sofort nach dem Sichtbarwerden. Die zusätzliche Ladearbeit der Geschichtenseite verschiebt das Timing. Behebung nur im Test: `waitForCompletionInteraction` wartet 150 ms, bevor gewählt wird; danach 8 von 8 Gesamtläufen grün. Die Oberfläche bleibt unverändert.
+- **Playwright ohne passenden Browser:** alle End-to-End-Tests rot, bis `PLAYWRIGHT_CHROMIUM_EXECUTABLE=/opt/pw-browsers/chromium` gesetzt war – bekannt, steht im Runbook (Troubleshooting).
+- **`--repeat-each` taugt hier nicht:** Die Tests legen Welten mit festen Namen an; ab der zweiten Runde im selben Serverlauf scheitern sie an Namenskonflikten. Für Wiederholungen getrennte Gesamtläufe nutzen.
+- **mypy auf einem Teilverzeichnis** meldet `import-untyped` für die eigenen Pakete; `uv run mypy src tests` wie im Pre-Commit-Hook aufrufen.
+- **Spikes älterer Schritte** (`spikes/at-verweis`, `spikes/kontext-abnahme` usw.) rufen `prepare_request` noch mit drei Argumenten auf; seit 3.7 braucht der Ablauf den `ManuscriptService` für die Gäste. Die Spikes sind Aufzeichnungen ihres Stands und werden nicht mitgezogen; für einen erneuten Lauf das Argument ergänzen.
+- **Eigener Entwurf korrigiert:** Zunächst zog `context` auch Gäste mit geschichtenbezogenen Fakten fest in Vorrang 2. Das ging über die Antwort des Eigentümers hinaus, und eigene Einträge mit Fakten werden auch nicht hochgezogen – vor dem ersten Test wieder entfernt.
+
+### 2026-09-27 03:35 – [BEOBACHTUNG] Abnahme 3.7 mit echten Läufen
+
+- 3 Läufe grok-4.7 mit `@Eiskönigin` (Gast aus „Frostreich“ in „Salzküste“), 0,014 $. Blinde Bewertung durch eine getrennte Instanz (Sonnet 5): 12 von 12 Einzelheiten des Eintrags, die Regel der Heimatwelt („Worte gefrieren zu Reif“) in keinem Text, 0 eindeutige und 3 fragliche Widersprüche (Kälte als Ausstrahlung der Figur). Zitate stichprobenartig gegen die Texte geprüft. `spikes/gast-figuren/README.md`.
+- Nebenbefund: Bei sehr kleinem Kontext meldet der Anbieter ca. 1.550 Eingabe-Token bei ca. 370 geschätzten – ein fester Grundanteil von ca. 1.200 Token. Bei großen Anfragen lag die Schätzung bisher darüber (3.5: 30.000 geschätzt, 26.600 gemeldet); für die Budgetgrenze ohne Belang, keine Maßnahme.
+
+### 2026-09-27 02:58 – [BEOBACHTUNG] 3.7 vorbereitet – Lücken per Frage-System entschieden
+
+- **Befund:** Datenmodell, `ManuscriptService` und Endpunkte für Gast-Verbindungen bestehen seit 2.5; `api` erlaubt Gäste bereits als geführte Figuren und in Fakten. Es fehlten: Gäste im KI-Kontext (eine geführte Gast-Figur wäre als „fehlend“ gemeldet worden), Gast-Verweise beim Schreiben, `@`-Menü und Oberfläche.
+- **Eigentümer (Frage-System):** (1) Ein nicht genannter Gast geht nicht fest mit, sondern nur als Auffüllung nach den Einträgen der Welt; genannt (`@`, Szene) oder geführt steht er in Vorrang 2 (Empfehlung war „immer mitsenden“). (2) Von der Heimatwelt geht nur die Herkunftsangabe mit, keine Beschreibung und keine Regeln (Empfehlung).
+- **Eigene Festlegung (Implementierungsdetail, dokumentiert):** Kennungen lösen wie bisher bei geführten Figuren und Fakten zuerst den Gast auf, dann den Eintrag der Welt. Ein Gast, den der Autor führt, lässt sich erst nach dem Abwählen entfernen; so entsteht keine geführte Figur ohne Eintrag.
+
+### 2026-09-27 02:50 – [SESSIONSTART] Schritt 3.7 auf Anweisung „Neue Session: 3,7“
+
+- **Modell:** eingestellt `claude-opus-5-5`, bedient `claude-opus-5-5` (Sitzungsabfrage 02:47) → Entscheidungs-Klasse.
+- **Pflichtlektüre:** vollständig (project-context, Logbuch ab `[SESSIONENDE]` 02:25, Fahrplan Phase 3, Architektur 1/2/9, Decisions A/C, aktive Blocker). Vertiefung für 3.7: Architektur Abschnitte 3–4, FR-017 und FR-013 in `docs/requirements.md`.
+- **Klassen-Hinweis:** 3.7 empfiehlt Routine; Abgabe an Unteragenten nicht zulässig (Probelauf offen) → Schritt läuft oberhalb der Empfehlung.
+- **Kontextgröße:** Sitzungsabfrage meldet 0 Token (Wert zu Beginn nicht aktualisiert).
+- **Kontingent:** Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+
 ### 2026-09-27 02:25 – [SESSIONENDE] Schritt 3.6 erledigt
 
 - **Dauer:** Fortsetzung 02:00–02:25 UTC (Session seit 00:52).
