@@ -227,6 +227,87 @@ test("a guest from another world is bound in and named with @", async ({
   expect(sent).toMatchObject({ references: ["eiskoenigin"] });
 });
 
+test("a marked passage goes into the canon or into this story only", async ({
+  page,
+}) => {
+  // Step 3.8 (FR-015, FR-024): mark, suggest, choose the target, save – all real.
+  await login(page);
+  await page.getByLabel("Name").fill("Das Aschenland");
+  await page.getByRole("button", { name: "Welt anlegen" }).click();
+  await page.getByRole("button", { name: "Kanon", exact: true }).click();
+  await page.getByRole("button", { name: "Neuer Eintrag" }).click();
+  await page.getByLabel("Name").fill("Aschenfürst");
+  await page.getByLabel("Text").fill("Herrscht über die Glut.");
+  await page.getByRole("button", { name: "Speichern" }).click();
+  await expect(page.getByRole("button", { name: "Aschenfürst" })).toBeVisible();
+
+  await page.locator("button.brand").click();
+  await page.getByLabel("Name").fill("Die Kreideküste");
+  await page.getByRole("button", { name: "Welt anlegen" }).click();
+  await page.getByRole("button", { name: "Kanon", exact: true }).click();
+  await page.getByRole("button", { name: "Neuer Eintrag" }).click();
+  await page.getByLabel("Name").fill("Tamsin");
+  await page.getByLabel("Text").fill("Lotsin an der Kreideküste.");
+  await page.getByRole("button", { name: "Speichern" }).click();
+  await expect(page.getByRole("button", { name: "Tamsin" })).toBeVisible();
+  await page.getByRole("button", { name: "Geschichten" }).click();
+  await page.getByLabel("Titel").fill("Kreidefelsen");
+  await page.getByRole("button", { name: "Geschichte anlegen" }).click();
+  await page.getByText(/Gäste aus anderen Welten/).click();
+  await page.getByLabel("Welt des Gastes").selectOption("das-aschenland");
+  await page.getByLabel("Gast-Eintrag").selectOption("aschenfuerst");
+  await page.getByRole("button", { name: "Als Gast einbinden" }).click();
+  await expect(page.getByText("Aschenfürst aus Das Aschenland")).toBeVisible();
+  await page.getByLabel("Titel des neuen Kapitels").fill("Brandung");
+  await page.getByRole("button", { name: "Kapitel anlegen" }).click();
+  await page.getByLabel("Manuskript").click();
+  await page.keyboard.type("Tamsin fürchtet tiefes Wasser.");
+  await page.keyboard.press("Enter");
+  await page.keyboard.type("Der Aschenfürst lacht nie.");
+
+  // Into the canon of the world: mark the first line, two clicks.
+  await page.keyboard.press("Control+Home");
+  await page.keyboard.press("Shift+End");
+  let started = Date.now();
+  await page.getByRole("button", { name: "In den Kanon" }).click();
+  await expect(
+    page.getByRole("combobox", { name: "Eintrag", exact: true }),
+  ).toHaveValue("tamsin");
+  await page.getByRole("button", { name: "Eintragen" }).click();
+  await expect(page.getByText("Kanon-Eintrag „Tamsin“ ergänzt.")).toBeVisible();
+  expect(Date.now() - started).toBeLessThan(10_000);
+
+  // A fact about the guest: the story only is preset.
+  await page.getByLabel("Manuskript").click();
+  await page.keyboard.press("Control+End");
+  await page.keyboard.press("Shift+Home");
+  started = Date.now();
+  await page.getByRole("button", { name: "In den Kanon" }).click();
+  await expect(page.getByLabel("Nur diese Geschichte")).toBeChecked();
+  await page.getByRole("button", { name: "Eintragen" }).click();
+  await expect(
+    page.getByText("Fakt zu „Aschenfürst“ gilt nur in dieser Geschichte."),
+  ).toBeVisible();
+  expect(Date.now() - started).toBeLessThan(10_000);
+  await page.getByText("Fakten dieser Geschichte (1)").click();
+  await expect(
+    page.getByText("Aschenfürst: Der Aschenfürst lacht nie."),
+  ).toBeVisible();
+
+  await page.reload();
+  await page.getByRole("button", { name: "Die Kreideküste" }).click();
+  await page.getByRole("button", { name: "Kanon", exact: true }).click();
+  await page.getByRole("button", { name: "Tamsin" }).click();
+  await expect(page.getByLabel("Text")).toHaveValue(
+    "Lotsin an der Kreideküste.\n\nTamsin fürchtet tiefes Wasser.",
+  );
+  await page.locator("button.brand").click();
+  await page.getByRole("button", { name: "Das Aschenland" }).click();
+  await page.getByRole("button", { name: "Kanon", exact: true }).click();
+  await page.getByRole("button", { name: "Aschenfürst" }).click();
+  await expect(page.getByLabel("Text")).toHaveValue("Herrscht über die Glut.");
+});
+
 /**
  * The `@` menu ignores Enter for 75 ms after it opens (`interactionDelay` of
  * @codemirror/autocomplete, against accidental choices); an Enter within that time

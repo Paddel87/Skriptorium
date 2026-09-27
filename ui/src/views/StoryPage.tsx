@@ -13,10 +13,12 @@ import {
   type Chapter,
   type GuestLink,
   type Story,
+  type StoryFact,
   type SummaryStatus,
 } from "../api";
 import { loadGuest, loadStoryEntries } from "../storyEntries";
 import { useLoad } from "../useLoad";
+import { CanonFact } from "./CanonFact";
 import { ErrorText, Field } from "./Common";
 import { WritingPanel } from "./WritingPanel";
 
@@ -28,8 +30,8 @@ const ManuscriptEditor = lazy(() =>
 );
 
 /**
- * One story: guests from other worlds, writing mode, chapters, new chapter (novels), chapter
- * text in the editor.
+ * One story: guests from other worlds, writing mode, facts of this story, chapters, new chapter
+ * (novels), chapter text in the editor.
  */
 export function StoryPage({ story: initial }: { story: Story }) {
   // Settings saved on this page win over the story passed in until the page is left.
@@ -74,6 +76,7 @@ export function StoryPage({ story: initial }: { story: Story }) {
         )}
         <Guests story={story} onSaved={setStory} />
         <WritingMode story={story} onSaved={setStory} />
+        <Facts story={story} onSaved={setStory} />
         <StorySummary key={story.summary} story={story} onSaved={setStory} />
         <ErrorText message={error} />
         {chapters.length > 1 && (
@@ -112,7 +115,7 @@ export function StoryPage({ story: initial }: { story: Story }) {
         <ChapterEditor
           key={current.number}
           chapter={current}
-          guests={story.guest_links}
+          story={story}
           onSaved={reload}
           onStory={setStory}
         />
@@ -359,6 +362,68 @@ function WritingMode({
 }
 
 /**
+ * Fakten dieser Geschichte (FR-024, step 3.8): facts about canon entries that hold only in this
+ * story; the AI gets them with the entries the story names. A fact can be removed again.
+ */
+function Facts({
+  story,
+  onSaved,
+}: {
+  story: Story;
+  onSaved: (story: Story) => void;
+}) {
+  const load = useCallback(
+    () => loadStoryEntries(story.world, story.guest_links),
+    [story.world, story.guest_links],
+  );
+  const entries = useLoad(load);
+  const [error, setError] = useState<string | null>(null);
+  const facts = story.facts;
+  const name = (id: string) =>
+    (entries.data ?? []).find((entry) => entry.id === id)?.name ?? id;
+
+  async function remove(fact: StoryFact) {
+    setError(null);
+    try {
+      onSaved(await api.removeFact(story.world, story.id, fact));
+    } catch (reason: unknown) {
+      setError(describeError(reason));
+    }
+  }
+
+  return (
+    <details>
+      <summary>Fakten dieser Geschichte ({facts.length})</summary>
+      <div className="stack">
+        <p className="note">
+          Diese Fakten gelten nur hier, nicht im Kanon. Du legst sie an, indem
+          du im Manuskript eine Stelle markierst und „In den Kanon“ wählst.
+        </p>
+        {facts.length > 0 && (
+          <ul aria-label="Fakten">
+            {facts.map((fact, index) => (
+              <li key={`${fact.entry}:${fact.fact}`} className="row">
+                <span>
+                  {name(fact.entry)}: {fact.fact}
+                </span>
+                <button
+                  type="button"
+                  aria-label={`Fakt ${String(index + 1)} entfernen`}
+                  onClick={() => void remove(fact)}
+                >
+                  Entfernen
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        <ErrorText message={entries.error ?? error} />
+      </div>
+    </details>
+  );
+}
+
+/**
  * Gesamtzusammenfassung (FR-010): continued by the AI whenever a chapter summary is created;
  * the author can read and change it.
  */
@@ -490,13 +555,13 @@ function ChapterSummary({
 
 function ChapterEditor({
   chapter,
-  guests,
+  story,
   onSaved,
   onStory,
 }: {
   chapter: Chapter;
-  /** Guest links of the story, offered in the writing panel. */
-  guests: readonly GuestLink[];
+  /** The story; its guests are offered in the writing panel and in "In den Kanon". */
+  story: Story;
   onSaved: () => void;
   /** The story after its overall summary changed. */
   onStory: (story: Story) => void;
@@ -507,6 +572,12 @@ function ChapterEditor({
   const [error, setError] = useState<string | null>(null);
   const [summarizing, setSummarizing] = useState(false);
   const [summaryNote, setSummaryNote] = useState<string | null>(null);
+  // Marked text in the editor, and the passage being taken into the canon (step 3.8).
+  const [marked, setMarked] = useState("");
+  const [taking, setTaking] = useState<string | null>(null);
+  const [canonNote, setCanonNote] = useState<string | null>(null);
+  // Counts canon changes, so the writing panel offers new entries in its `@` menu.
+  const [canonRevision, setCanonRevision] = useState(0);
 
   async function save(): Promise<boolean> {
     setError(null);
@@ -594,6 +665,7 @@ function ChapterEditor({
             setText(value);
             setState("dirty");
           }}
+          onSelect={setMarked}
         />
       </Suspense>
       <ErrorText message={error} />
@@ -617,12 +689,42 @@ function ChapterEditor({
             Kapitel abschließen
           </button>
         )}
+        <button
+          type="button"
+          disabled={marked.trim() === "" || taking !== null}
+          onClick={() => {
+            setCanonNote(null);
+            setTaking(marked);
+          }}
+        >
+          In den Kanon
+        </button>
         {summarizing && (
           <span className="note" role="status">
             Kurzfassung wird erstellt …
           </span>
         )}
+        {canonNote !== null && (
+          <span className="ok" role="status">
+            {canonNote}
+          </span>
+        )}
       </div>
+      {taking !== null && (
+        <CanonFact
+          story={story}
+          marked={taking}
+          onStory={onStory}
+          onDone={(note) => {
+            setTaking(null);
+            setCanonNote(note);
+            setCanonRevision((value) => value + 1);
+          }}
+          onCancel={() => {
+            setTaking(null);
+          }}
+        />
+      )}
       {summaryNote !== null && (
         <p className="error" role="alert">
           {summaryNote}
@@ -641,7 +743,8 @@ function ChapterEditor({
         world={chapter.world}
         story={chapter.story}
         chapter={chapter.number}
-        guests={guests}
+        guests={story.guest_links}
+        canonRevision={canonRevision}
         prepare={() => (state === "dirty" ? save() : Promise.resolve(true))}
         onAccept={append}
       />

@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-27
 - **Laufende Phase:** Phase 3 „Schreiben mit KI" (Phase 2 abgeschlossen 2026-09-26, ADR-020: weiterbauen)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (3.7 `[ERLEDIGT]` 2026-09-27)
-- **Nächster Schritt:** 3.8 Fakt aus dem Text in den Kanon (neue Session); datiert: D.6 Reaktionszeit erkunden vor 4.8
+- **Aktiver Schritt:** keiner (3.8 `[ERLEDIGT]` 2026-09-27)
+- **Nächster Schritt:** 3.9 Modell- und Anbieterwahl, Modellwechsel (neue Session; enthält eine Datenmodell-Entscheidung, Kategorie 4, ADR-021); danach Phasenabschluss 3; datiert: D.6 Reaktionszeit erkunden vor 4.8
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -228,7 +228,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 3.8: Fakt aus dem Text in den Kanon (inkl. Ziel bei Gast-Figuren)
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-27) – „In den Kanon“ unter dem Kapitel-Editor: markierte Stelle als neuer Eintrag der Welt oder als Ergänzung (Absatz am Ende) eines Eintrags der Geschichte; Vorschlag von Eintrag, Name und Kategorie ohne KI (genannter Name oder Alias; kurze Stelle wird Name; zuletzt gewählte Kategorie); Zielwahl „Kanon“ oder „nur diese Geschichte“ bei allen Einträgen, beim Gast „Kanon der Figur“ in seiner Heimatwelt, vorbelegt „nur diese Geschichte“; Abschnitt „Fakten dieser Geschichte“ mit Entfernen (Entscheidungen des Eigentümers per Frage-System). Nur `ui` geändert, bestehende Endpunkte. FR-024 durch Tests belegt (`tests/api/test_canon_fact.py`: beide Ziele wirken wie gewählt bis in den KI-Kontext); FR-015: nach dem Markieren zwei Klicks, End-to-End-Test je Vorgang unter 10 s. 361 Python-Tests (99,85 %), 88 Komponenten-Tests (98,1 % Zeilen, 95,6 % Zweige), 7 End-to-End-Tests (3 von 3 Gesamtläufen grün). Keine echten KI-Läufe nötig (kein neuer Kontext-Baustein)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.7
 - **Freigabepflichtig:** nein
@@ -240,7 +240,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** ui, api, canon, manuscript
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests
-- **Notizen:** –
+- **Notizen:** Tatsächlich berührt (2026-09-27): nur ui (plus Tests über api); `api`, `canon` und `manuscript` boten die Operationen seit 2.3/2.5/2.6.
 
 #### 3.9: Modell- und Anbieterwahl, Modellwechsel
 

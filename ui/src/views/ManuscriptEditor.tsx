@@ -6,25 +6,30 @@ import { useEffect, useRef } from "react";
 
 /**
  * Markdown editor for the manuscript (CodeMirror 6). Shows the Markdown source only; it never
- * renders HTML from the text, so nothing in a manuscript can run as script.
+ * renders HTML from the text, so nothing in a manuscript can run as script. `onSelect` receives
+ * the marked text whenever the selection changes (empty without a selection, step 3.8).
  */
 export function ManuscriptEditor({
   value,
   onChange,
+  onSelect,
   label,
 }: {
   value: string;
   onChange: (text: string) => void;
+  onSelect?: (marked: string) => void;
   label: string;
 }) {
   const host = useRef<HTMLDivElement>(null);
   const view = useRef<EditorView | null>(null);
   const onChangeRef = useRef(onChange);
+  const onSelectRef = useRef(onSelect);
   const initialValue = useRef(value);
 
   useEffect(() => {
     onChangeRef.current = onChange;
-  }, [onChange]);
+    onSelectRef.current = onSelect;
+  }, [onChange, onSelect]);
 
   useEffect(() => {
     if (host.current === null) {
@@ -43,6 +48,10 @@ export function ManuscriptEditor({
           EditorView.updateListener.of((update) => {
             if (update.docChanged) {
               onChangeRef.current(update.state.doc.toString());
+            }
+            if (update.selectionSet || update.docChanged) {
+              const { from, to } = update.state.selection.main;
+              onSelectRef.current?.(update.state.sliceDoc(from, to));
             }
           }),
         ],

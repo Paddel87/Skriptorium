@@ -29,6 +29,39 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-27 04:31 – [SESSIONENDE] Schritt 3.8 erledigt
+
+- **Dauer:** 04:15–04:31 UTC.
+- **Bearbeitet:** 3.8 `[ERLEDIGT]`: „In den Kanon“ unter dem Kapitel-Editor – markierte Stelle als neuer Eintrag oder Ergänzung (Absatz am Ende), Vorschlag ohne KI, Zielwahl „Kanon“ / „nur diese Geschichte“ bei allen Einträgen (beim Gast vorbelegt „nur diese Geschichte“), Abschnitt „Fakten dieser Geschichte“ mit Entfernen. Nur `ui` geändert, bestehende Endpunkte. FR-015 und FR-024 erledigt.
+- **Erreichter Stand:** 361 Python-Tests (99,85 % gesamt), 88 Komponenten-Tests (98,1 % Zeilen, 95,6 % Zweige), 7 End-to-End-Tests (3 von 3 Gesamtläufen grün); alle Pre-Commit-Hooks grün. Keine echten KI-Läufe (kein neuer Kontext-Baustein; Wirkung der Ziele im Kontext durch Tests belegt).
+- **Offen:** Pull Request für diesen Branch; CI-Ergebnis nach dem Push. FR-015 ist nur im Browser-Test gemessen (zwei Klicks, je Vorgang unter 10 s), nicht beim Schreiben des Eigentümers.
+- **Nächster Schritt:** neue Session – 3.9 Modell- und Anbieterwahl (enthält die Entscheidung zur Speicherung der Verbrauchsdaten, Datenmodell Kategorie 4, ADR-021), danach Phasenabschluss 3 mit Pflichtfrage und Vision-Abgleich.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5 laut Sitzungsabfrage 04:29). Schritte oberhalb der Empfehlung: 1 (3.8 empfiehlt Routine; Abgabe nicht zulässig, Probelauf offen). Abgegeben: nichts.
+- **Kontextgröße:** nicht feststellbar – Sitzungsabfrage meldet 0 Token; Regel zur Sessiongröße entfällt.
+- **Kontingent:** Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+- **Sessionende-Prüfungen:** README synchronisiert (Phase, Quick-Start-Stand, Verwendung, Nächste Schritte). Drift-Prüfung: keine neuen ADRs (Entscheidungen des Eigentümers als Präzisierung in `docs/architecture.md` Abschnitt 5, wie in 3.2, 3.6, 3.7); FR-015/FR-024 → 3.8 erledigt; Modul-Liste unverändert, 3.8 berührte nur ui (am Schritt vermerkt); Reifegrade unverändert; Reaktiv-Quote 1/10; Phase 3 unverändert 9 Schritte; Blocker 0. Ablaufdaten-Register: kein Vorlauf erreicht (Guthaben-Vorlauf ab 2026-10-22). Archivierung: kein Trigger (Logbuch ca. 410 Zeilen). Onboarding: nicht Quick-Start-relevant (keine neue Abhängigkeit, kein Skript, keine Umgebungsvariable).
+
+### 2026-09-27 04:29 – [PROBLEM-GELÖST] Reibungen in 3.8
+
+- **`npx vite build` im Verzeichnis `ui/`** baute nach `ui/dist` statt nach `dist/ui` (die Konfiguration liegt im Wurzelverzeichnis, `root: "ui"`); die End-to-End-Tests hätten die alte Oberfläche geprüft. `ui/dist` gelöscht, vom Wurzelverzeichnis gebaut.
+- **Playwright `getByLabel("Eintrag", { exact: true })`** fand die Auswahl nicht: Das `<label>` umschließt das `<select>`, sein Text enthält die Optionen. `getByRole("combobox", { name: "Eintrag" })` greift auf den zugänglichen Namen zu.
+- **Komponenten-Test:** Während der Kanon lädt, trägt der Platzhalter dasselbe `aria-label` „In den Kanon“ wie das Formular – `findByRole("region")` fand den Platzhalter. Test wartet jetzt auf das Feld „Eintrag“.
+- **`tsc` im Test:** `renderForm(story = STORY)` leitete den Typ aus `STORY` ab (`guest_links: never[]`); ausdrücklich `Story`.
+- **Neuladen des `@`-Menüs:** Zuerst mit einer `eslint-disable`-Zeile für eine künstliche Abhängigkeit gelöst; ersetzt durch einen Effekt, der `reload` von `useLoad` aufruft – ohne Unterdrückung.
+
+### 2026-09-27 04:20 – [BEOBACHTUNG] 3.8 vorbereitet – Lücken per Frage-System entschieden
+
+- **Befund:** Der Server kann alles, was 3.8 braucht: Eintrag anlegen (`POST …/entries`), ändern (`PATCH …/entries/{id}`, auch in der Heimatwelt eines Gastes), geschichtenbezogenen Fakt hinzufügen und entfernen (`POST|DELETE …/facts`, Eintrag der Welt oder Gast); `context` nimmt Fakten seit 3.2 in Vorrang 2 auf. Es fehlt die Oberfläche: Markieren im Editor, Vorschlag, Zielwahl, Anzeige der Fakten.
+- **Eigentümer (Frage-System, jeweils Empfehlung):** (1) Ergänzung eines bestehenden Eintrags als Absatz am Ende. (2) Kategorie eines neuen Eintrags: die zuletzt gewählte, anfangs „Figur“; kein KI-Vorschlag. (3) Zielwahl „Kanon“ oder „nur diese Geschichte“ bei allen Einträgen, nicht nur bei Gästen. (4) Abschnitt „Fakten dieser Geschichte“ mit Entfernen.
+
+### 2026-09-27 04:17 – [SESSIONSTART] Schritt 3.8 auf Anweisung „Neue Session 3.8“
+
+- **Modell:** eingestellt `claude-opus-5-5`, bedient `claude-opus-5-5` (Sitzungsabfrage 04:16) → Entscheidungs-Klasse.
+- **Pflichtlektüre:** vollständig (project-context, Logbuch ab `[SESSIONENDE]` 03:45, Fahrplan Phase 3, Architektur 1/2/9, Decisions A/C, aktive Blocker). Vertiefung für 3.8: Architektur Abschnitte 3–5 und 7, FR-015 und FR-024 in `docs/requirements.md`.
+- **Klassen-Hinweis:** 3.8 empfiehlt Routine; Abgabe an Unteragenten nicht zulässig (Probelauf offen) → Schritt läuft oberhalb der Empfehlung (knapp: Wochenkontingent bzw. Guthaben).
+- **Kontextgröße:** Sitzungsabfrage meldet 0 Token (wie in den Vorsessions nicht aktualisiert) → Regel zur Sessiongröße entfällt.
+- **Kontingent:** Wochenlimit `allowed_warning`, Zurücksetzung 2026-09-27 10:00 MESZ.
+
 ### 2026-09-27 03:45 – [SESSIONENDE] Schritt 3.7 erledigt
 
 - **Dauer:** 02:47–03:45 UTC.
