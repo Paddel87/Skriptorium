@@ -14,6 +14,8 @@ const PANEL = {
     default: "x-ai/grok-4.7",
   }),
   "GET /api/worlds/salzmark/entries": ok([]),
+  // The guests section of the story page offers other worlds.
+  "GET /api/worlds": ok([]),
 };
 
 afterEach(() => {

@@ -13,10 +13,12 @@ import {
   describeWriteError,
   streamWrite,
   type CanonEntry,
+  type GuestLink,
   type WriteErrorKind,
   type WriteOrder,
 } from "../api";
 import { referencedEntries } from "../references";
+import { loadStoryEntries } from "../storyEntries";
 import { useLoad } from "../useLoad";
 import { ErrorText, Field } from "./Common";
 
@@ -29,22 +31,29 @@ const InstructionEditor = lazy(() =>
 
 type Phase = "idle" | "thinking" | "writing" | "review";
 
+const NO_GUESTS: readonly GuestLink[] = [];
+
 /**
  * Writing in turns with the AI (step 3.3, FR-008, FR-009): send an instruction or start a new
  * scene, watch the proposal arrive, then take it over, change it or discard it. Taken-over text
  * goes to the end of the chapter through `onAccept`; the server saves nothing on its own.
- * Entries named with `@` in the instruction are sent as references (step 3.5, FR-013).
+ * Entries named with `@` in the instruction are sent as references (step 3.5, FR-013); guests
+ * of the story from other worlds can be named and put into a new scene like entries of the
+ * world (step 3.7, FR-017).
  */
 export function WritingPanel({
   world,
   story,
   chapter,
+  guests = NO_GUESTS,
   prepare,
   onAccept,
 }: {
   world: string;
   story: string;
   chapter: number;
+  /** Guest links of the story; keep the same array while they do not change. */
+  guests?: readonly GuestLink[];
   /** Save the author's own unsaved text first; false if that failed. */
   prepare: () => Promise<boolean>;
   /** Append the proposal to the end of the chapter and save it. */
@@ -52,7 +61,10 @@ export function WritingPanel({
 }) {
   const loadModels = useCallback(() => api.models(), []);
   const models = useLoad(loadModels);
-  const loadEntries = useCallback(() => api.entries(world), [world]);
+  const loadEntries = useCallback(
+    () => loadStoryEntries(world, guests),
+    [world, guests],
+  );
   const entries = useLoad(loadEntries);
 
   const [model, setModel] = useState<string | null>(null);
@@ -172,10 +184,12 @@ export function WritingPanel({
     }
   }
 
-  const worldEntries = entries.data ?? [];
-  const places = worldEntries.filter((e) => e.category === "ort");
-  const figures = worldEntries.filter((e) => e.category === "figur");
-  const referenced = referencedEntries(instruction, worldEntries);
+  const storyEntries = entries.data ?? [];
+  const places = storyEntries.filter((e) => e.category === "ort");
+  const figures = storyEntries.filter((e) => e.category === "figur");
+  const referenced = referencedEntries(instruction, storyEntries);
+  const shown = (entry: CanonEntry) =>
+    entry.world === world ? entry.name : `${entry.name} (Gast)`;
 
   return (
     <section className="card" aria-label="Schreiben mit der KI">
@@ -211,6 +225,7 @@ export function WritingPanel({
         <SceneForm
           places={places}
           figures={figures}
+          shown={shown}
           place={place}
           characters={characters}
           goal={goal}
@@ -227,16 +242,15 @@ export function WritingPanel({
           <InstructionEditor
             value={instruction}
             onChange={setInstruction}
-            entries={worldEntries}
+            entries={storyEntries}
+            world={world}
             labelledBy={instructionLabel}
             disabled={busy}
           />
         </Suspense>
       </div>
       {referenced.length > 0 && (
-        <p className="note">
-          Herangezogen: {referenced.map((entry) => entry.name).join(", ")}
-        </p>
+        <p className="note">Herangezogen: {referenced.map(shown).join(", ")}</p>
       )}
       <div className="row">
         <button
@@ -310,6 +324,7 @@ export function WritingPanel({
 function SceneForm({
   places,
   figures,
+  shown,
   place,
   characters,
   goal,
@@ -319,6 +334,8 @@ function SceneForm({
 }: {
   places: CanonEntry[];
   figures: CanonEntry[];
+  /** Name of an entry, marked if it is a guest. */
+  shown: (entry: CanonEntry) => string;
   place: string;
   characters: string[];
   goal: string;
@@ -339,7 +356,7 @@ function SceneForm({
           <option value="">– kein Ort –</option>
           {places.map((entry) => (
             <option key={entry.id} value={entry.id}>
-              {entry.name}
+              {shown(entry)}
             </option>
           ))}
         </select>
@@ -358,7 +375,7 @@ function SceneForm({
                 );
               }}
             />
-            {entry.name}
+            {shown(entry)}
           </label>
         ))}
       </div>

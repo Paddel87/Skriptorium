@@ -12,20 +12,23 @@ import { menuItems } from "../references";
 
 /**
  * Instruction field with the `@` menu (step 3.5, FR-013): typing `@` offers the entries of the
- * story's world by name and alias; choosing one writes `@Name` into the instruction. Plain text,
- * nothing is rendered as HTML.
+ * story's world and its guests from other worlds (step 3.7, FR-017) by name and alias; choosing
+ * one writes `@Name` into the instruction. Plain text, nothing is rendered as HTML.
  */
 export function InstructionEditor({
   value,
   onChange,
   entries,
+  world,
   labelledBy,
   disabled,
 }: {
   value: string;
   onChange: (text: string) => void;
-  /** Canon entries of the story's world; only these are offered. */
+  /** Canon entries the story may use; only these are offered. */
   entries: readonly CanonEntry[];
+  /** The story's world; entries of other worlds are marked as guests. */
+  world?: string;
   labelledBy: string;
   disabled: boolean;
 }) {
@@ -33,6 +36,7 @@ export function InstructionEditor({
   const view = useRef<EditorView | null>(null);
   const onChangeRef = useRef(onChange);
   const entriesRef = useRef(entries);
+  const worldRef = useRef(world);
   const initialValue = useRef(value);
   const initialDisabled = useRef(disabled);
   const editable = useRef(new Compartment());
@@ -40,7 +44,8 @@ export function InstructionEditor({
   useEffect(() => {
     onChangeRef.current = onChange;
     entriesRef.current = entries;
-  }, [onChange, entries]);
+    worldRef.current = world;
+  }, [onChange, entries, world]);
 
   useEffect(() => {
     if (host.current === null) {
@@ -54,7 +59,10 @@ export function InstructionEditor({
           history(),
           keymap.of([...defaultKeymap, ...historyKeymap]),
           autocompletion({
-            override: [(context) => mentions(context, entriesRef.current)],
+            override: [
+              (context) =>
+                mentions(context, entriesRef.current, worldRef.current),
+            ],
             icons: false,
           }),
           EditorView.lineWrapping,
@@ -96,10 +104,14 @@ export function InstructionEditor({
   return <div className="editor instruction" ref={host} />;
 }
 
-/** Menu for the text after an `@` that does not stand inside a word. */
+/**
+ * Menu for the text after an `@` that does not stand inside a word. With `world`, entries of
+ * other worlds are marked as guests.
+ */
 export function mentions(
   context: CompletionContext,
   entries: readonly CanonEntry[],
+  world?: string,
 ): CompletionResult | null {
   const typed = context.matchBefore(/@[^@\n]*/u);
   if (typed === null) {
@@ -116,12 +128,13 @@ export function mentions(
   return {
     from: typed.from + 1,
     filter: false,
-    options: items.map((item) => ({
-      label: item.label,
-      detail:
+    options: items.map((item) => {
+      const detail =
         item.label === item.entry.name
-          ? CATEGORIES.find((c) => c.id === item.entry.category)?.label
-          : `→ ${item.entry.name}`,
-    })),
+          ? (CATEGORIES.find((c) => c.id === item.entry.category)?.label ?? "")
+          : `→ ${item.entry.name}`;
+      const guest = world !== undefined && item.entry.world !== world;
+      return { label: item.label, detail: guest ? `${detail} · Gast` : detail };
+    }),
   };
 }
