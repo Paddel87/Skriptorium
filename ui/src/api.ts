@@ -69,6 +69,12 @@ export interface GuestLink {
   entry: string;
 }
 
+/** A fact about a canon entry that holds only in one story (FR-024). */
+export interface StoryFact {
+  entry: string;
+  fact: string;
+}
+
 export interface Story {
   world: string;
   id: string;
@@ -77,7 +83,7 @@ export interface Story {
   perspective: string | null;
   controlled_characters: string[];
   guest_links: GuestLink[];
-  facts: { entry: string; fact: string }[];
+  facts: StoryFact[];
   summary: string;
 }
 
@@ -442,6 +448,14 @@ export const api = {
     request(
       "DELETE",
       `${storyPath(world, story)}/guests/${enc(guest.world)}/${enc(guest.entry)}`,
+    ) as Promise<Story>,
+  addFact: (world: string, story: string, fact: StoryFact) =>
+    request("POST", `${storyPath(world, story)}/facts`, fact) as Promise<Story>,
+  removeFact: (world: string, story: string, fact: StoryFact) =>
+    request(
+      "DELETE",
+      `${storyPath(world, story)}/facts`,
+      fact,
     ) as Promise<Story>,
   chapters: (world: string, story: string) =>
     request("GET", `${storyPath(world, story)}/chapters`) as Promise<Chapter[]>,

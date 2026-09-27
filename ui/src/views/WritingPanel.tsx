@@ -46,6 +46,7 @@ export function WritingPanel({
   story,
   chapter,
   guests = NO_GUESTS,
+  canonRevision = 0,
   prepare,
   onAccept,
 }: {
@@ -54,6 +55,8 @@ export function WritingPanel({
   chapter: number;
   /** Guest links of the story; keep the same array while they do not change. */
   guests?: readonly GuestLink[];
+  /** Changes when the canon changed on the page, so the `@` menu offers the new state. */
+  canonRevision?: number;
   /** Save the author's own unsaved text first; false if that failed. */
   prepare: () => Promise<boolean>;
   /** Append the proposal to the end of the chapter and save it. */
@@ -66,6 +69,12 @@ export function WritingPanel({
     [world, guests],
   );
   const entries = useLoad(loadEntries);
+  const reloadEntries = entries.reload;
+  useEffect(() => {
+    if (canonRevision > 0) {
+      reloadEntries();
+    }
+  }, [canonRevision, reloadEntries]);
 
   const [model, setModel] = useState<string | null>(null);
   const [instruction, setInstruction] = useState("");
