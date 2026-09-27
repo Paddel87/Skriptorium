@@ -266,7 +266,7 @@ test("a marked passage goes into the canon or into this story only", async ({
   await page.keyboard.type("Der Aschenfürst lacht nie.");
 
   // Into the canon of the world: mark the first line, two clicks.
-  await page.keyboard.press("Control+Home");
+  await page.keyboard.press("ControlOrMeta+Home");
   await page.keyboard.press("Shift+End");
   let started = Date.now();
   await page.getByRole("button", { name: "In den Kanon" }).click();
@@ -279,7 +279,7 @@ test("a marked passage goes into the canon or into this story only", async ({
 
   // A fact about the guest: the story only is preset.
   await page.getByLabel("Manuskript").click();
-  await page.keyboard.press("Control+End");
+  await page.keyboard.press("ControlOrMeta+End");
   await page.keyboard.press("Shift+Home");
   started = Date.now();
   await page.getByRole("button", { name: "In den Kanon" }).click();

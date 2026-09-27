@@ -29,6 +29,43 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-27 22:58 – [SESSIONENDE] Schritt 4.9 teilweise
+
+- **Dauer:** 22:28–22:58 UTC.
+- **Bearbeitet:** 4.9 – Bestandsaufnahme Mac, ADR-026, Einrichtungsskript für macOS arm64, alle Prüfungen im Haupt-Checkout, Test-Fix E2E, SSH-Abfrage VPS.
+- **Erreichter Stand:** 4.9 `[IN ARBEIT]`; Commit `2f2fe82` plus Sessionende-Commit auf `chore/4.9-entwicklung-macos`.
+- **Offen:** Validierung im frischen Klon; Plattform-Matrix `docs/project-context.md` Abschnitt 3 auf ✓ (erst danach); Tarif und Preis des VPS vom Eigentümer; Pull Request für diesen Branch.
+- **Nächster Schritt:** neue Session – 4.9 abschließen (frischer Klon, Matrix, Kostenregister), dann 4.2.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (Opus 5.5 laut `get_session`). Schritte oberhalb der Empfehlung: 1 (4.9, Routine; mangels Probelauf ohne Warnung). Abgegeben: nichts.
+- **Kontextgröße:** ca. 185.000 Token (`get_usage` 173.395 vor den letzten Schritten) – Grenze 200.000 fast erreicht, deshalb Abschluss vor Ende des Schritts.
+- **Sessionende-Prüfungen:** README (Voraussetzungen) im Skript-Commit nachgezogen; Phase und Nächste Schritte unverändert gültig. Drift: ADR-026 ↔ 4.9 vorhanden; Modul-Liste und Reifegrade unverändert; Reaktiv-Quote 1/10 (ADR-017..026); Phase 4 9 Schritte; Blocker 0. Ablaufdaten-Register: Guthaben-Vorlauf ab 2026-10-22, noch nicht erreicht (lokale Sessions laufen über das Abo). Archivierung: kein Trigger. Onboarding-Pfad: `scripts/` berührt – Validierung im frischen Klon steht aus (offen in 4.9, s. o.).
+
+### 2026-09-27 22:56 – [BEOBACHTUNG] VPS `nodica1` ist bereits in Benutzung; Grundlast des Kontexts
+
+- SSH per Schlüssel (`id_ed25519_ebvps`) als `root`: Ubuntu 24.04.5 LTS, Kernel 6.8, x86_64, 4 Kerne, 7,8 GB RAM (2,4 GB belegt), 251 GB Platte (39 GB belegt), seit 3 Wochen in Betrieb. Nur lesende Befehle. Folgen für 4.2: vorhandene Dienste vor jeder Firewall-Änderung erfassen; eigenes Benutzerkonto für die KI statt `root` (Gate-Punkt 4).
+- Lokale Desktop-Session: Werkzeuge, Speicherdateien und Skills belegen schon ca. 85.000 Token vor der ersten Nachricht, die Pflichtlektüre weitere ca. 58.000. Bei der Grenze 200.000 bleiben für die Arbeit nur ca. 57.000 Token – zu wenig für einen mittelgroßen Schritt. Kandidat für eine Anpassung der Grenze (Vorschlag an den Eigentümer).
+- `npm install` meldet auf macOS `fsevents` mit Installationsskripten (nicht freigegeben, optionale macOS-Abhängigkeit); ohne Wirkung auf die Tests. Warnungsquelle ohne Schalter.
+
+### 2026-09-27 22:50 – [GELÖST] End-to-End-Test „marked passage“ scheitert auf macOS
+
+- **Symptom:** Schaltfläche „In den Kanon“ bleibt gesperrt, Zeitüberschreitung. Zuvor alle 8 Tests mit „Not Found“ – nur weil die Oberfläche nicht gebaut war (`npx vite build` fehlte, im Runbook jetzt genannt).
+- **Ursache:** `Control+Home`/`Control+End` sind auf macOS in CodeMirror nicht Dokument-Anfang/-Ende (dort `Cmd`); es wird nichts markiert.
+- **Lösung:** `ControlOrMeta+Home`/`+End` in `e2e/skriptorium.spec.ts`; unter Linux unverändert `Control`. 8/8 in zwei Läufen grün.
+
+### 2026-09-27 22:40 – [ADR] ADR-026 Einrichtungsskript auch für macOS
+
+- Bestandsaufnahme Mac: macOS 27.0 arm64, Homebrew 7.0.4, uv 0.11.7 (Homebrew), Node 24.15.0 / npm 11.12.1 (nodejs.org-Installer, root), Python 3.9.6, bash 3.2 – alles unter den Projektversionen. Eigentümer wählt Option A: `scripts/session-start.sh` auch für macOS arm64, Werkzeuge in `~/.cache/skriptorium-tools`. Konfidenz mittel (Hook-Umgebung der Desktop-App, bash 3.2), Umkehrbarkeit billig.
+- VPS für das Skriptorium ist laut Eigentümer der Host `nodica1` in seiner `~/.ssh/config`.
+
+### 2026-09-27 22:28 – [SESSIONSTART] Schritt 4.9 – erste Session auf dem Mac
+
+- **Modell:** eingestellt `claude-opus-5-5` (Sitzungsabfrage `get_session` 22:28) → Entscheidungs-Klasse. Empfohlene Klasse für 4.9 ist Routine; deren Probelauf ist offen, deshalb übernimmt die Entscheidungs-Klasse – keine Warnung nötig, keine Abgabe möglich.
+- **Umgebung:** erste lokale Session in der Claude-Desktop-App auf dem Mac des Eigentümers (macOS, Darwin 27.0.0), nicht mehr Cloud-Session (ADR-025).
+- **Kontextgröße:** 142.965 Token nach der Pflichtlektüre laut Sitzungsabfrage (`get_usage`; Kontextfenster 1.000.000). Grenze 200.000 – Spielraum für diese Session ca. 57.000 Token. Erstmals zu Beginn ein echter Wert (in der Cloud-Session stand dort 0). Kurzzeitlimit 21 %, Wochenlimit 6 % (Zurücksetzung 2026-10-04 08:00 UTC).
+- PR #20 gemergt (`9cc0bd3`); Branch `chore/4.9-entwicklung-macos` von `main` angelegt (Namensform nach `docs/project-context.md` Abschnitt 10 – erstmals frei wählbar).
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2 (project-context, Logbuch ab letztem Sessionende, Fahrplan Stand und Phase 4, Architektur 1/2/9, Decisions A/C, aktive Blocker: keine).
+- **Vorhaben:** Schritt 4.9 Entwicklungsumgebung macOS einrichten.
+
 ### 2026-09-27 22:22 – [SESSIONENDE] Anbieter für 4.2 entschieden, Wechsel auf macOS
 
 - **Dauer:** 22:15–22:22 UTC.

@@ -243,7 +243,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 <!-- ANCHOR:betrieb-und-deployment -->
 ## 8. Betrieb und Deployment
 
-- **Deployment-Ziel:** kleiner gemieteter Server (VPS), öffentlich erreichbar mit Passwortschutz (Eigentümer, 2026-09-26); vorhandener VPS des Eigentümers bei netcup (ADR-025, 2026-09-27); Tarif, Ausstattung und Betriebssystem [TBD in Schritt 4.9]
+- **Deployment-Ziel:** kleiner gemieteter Server (VPS), öffentlich erreichbar mit Passwortschutz (Eigentümer, 2026-09-26); vorhandener VPS des Eigentümers bei netcup (ADR-025, 2026-09-27); Ubuntu 24.04.5 LTS, x86_64, 4 Kerne, 7,8 GB RAM, 251 GB Platte (SSH-Abfrage 2026-09-27); der VPS wird bereits für andere Dienste genutzt (2,4 GB RAM und 39 GB Platte belegt) – für die Härtung in 4.2 zu berücksichtigen; Tarif [TBD in Schritt 4.9]
 - **CI/CD:** GitHub Actions, `.github/workflows/ci.yml`. Deployment-Workflow: [TBD in Schritt 4.7 – bis dahin kein Deployment]
 - **Umgebungen:** lokal (Cloud-Session des Coding-Agents) → Produktion (VPS)
 - **Monitoring:** Erreichbarkeits-Prüfung von außen [TBD in Schritt 4.2]; Kosten je Monat in der Oberfläche

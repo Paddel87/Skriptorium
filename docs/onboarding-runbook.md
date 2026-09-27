@@ -31,7 +31,7 @@ Unterstützt ist nur Linux (`docs/project-context.md` Abschnitt 3, Plattform-Mat
 
 ### Linux (Cloud-Session des Coding-Agents)
 
-Nichts von Hand: Der SessionStart-Hook (`.claude/settings.json` → `scripts/session-start.sh`) installiert uv 0.12.19 in eine eigene venv unter `~/.cache/skriptorium-tools/`, lädt Node.js 24.21.0 von nodejs.org (SHA-256 geprüft), installiert Python 3.14.7 über uv, führt `uv sync` und `npm install` aus und aktiviert den Pre-Commit-Hook. Er ist nur aktiv, wenn `CLAUDE_CODE_REMOTE=true` gesetzt ist.
+Nichts von Hand: Der SessionStart-Hook (`.claude/settings.json` → `scripts/session-start.sh`) installiert uv 0.12.19 in eine eigene venv unter `~/.cache/skriptorium-tools/`, lädt Node.js 24.21.0 von nodejs.org (SHA-256 geprüft), installiert Python 3.14.7 über uv, führt `uv sync` und `npm install` aus und aktiviert den Pre-Commit-Hook. Er ist aktiv in der Cloud-Session (Linux x86_64 mit `CLAUDE_CODE_REMOTE=true`) und auf macOS arm64 (ADR-026); sonst ohne Wirkung.
 
 ### Linux (andere Rechner)
 
@@ -47,7 +47,7 @@ Oder ohne eigenes Zutun: `CLAUDE_CODE_REMOTE=true CLAUDE_PROJECT_DIR=$PWD script
 
 ### macOS, Windows
 
-Windows: nicht unterstützt. macOS: vorgesehen als Entwicklungsumgebung des Coding-Agents ab 2026-09-27 (ADR-025), noch nicht validiert – Anleitung folgt in Schritt 4.9 (`docs/project-context.md` Abschnitt 3).
+Windows: nicht unterstützt. macOS (arm64): Entwicklungsumgebung des Coding-Agents ab 2026-09-27 (ADR-025). Der SessionStart-Hook richtet dieselben Versionen ein wie in der Cloud-Session (ADR-026), ohne Administratorrechte und neben einem vorhandenen System-Node oder Homebrew-uv; läuft mit dem bash 3.2 von macOS. Danach einmalig `npx playwright install chromium` und vor den End-to-End-Tests `npx vite build`. Erprobt 2026-09-27 im Haupt-Checkout (alle Prüfungen grün); Validierung im frischen Klon und Plattform-Matrix folgen in Schritt 4.9.
 
 ## 3. Setup (End-to-End)
 

@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-27 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-27 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -45,12 +45,13 @@ Stand 2026-09-27 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 023 | 2026-09-27 | Aktiv | OPERATIV | DATENMODELL, MODUL | Datenmodell, Architektur | Verbrauchsdaten in Monatsdateien, Modell je Geschichte |
 | 024 | 2026-09-27 | Aktiv | STRATEGISCH | METHODIK | Pflichtfrage Phasenende | Phasenende 3 – weiterbauen, Geschichtenseite in 4.1 aufteilen, Kanon-Treue in 4.8 messen |
 | 025 | 2026-09-27 | Aktiv | OPERATIV | DEPLOYMENT, SECURITY, METHODIK | Externe Abh., Sicherheit, Deploy | Bestehender netcup-VPS, Entwicklung auf macOS, SSH-Zugang der KI |
+| 026 | 2026-09-27 | Aktiv | OPERATIV | STACK, METHODIK | Build-Pipeline, Externe Abh. | Einrichtungsskript auch für macOS |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 1 / 10 (10 %) über ADR-016 bis ADR-025 – ADR-025 in 4.2 (geplante Anbieterwahl, Kategorien 3, 6, 7 – nicht reaktiv); ADR-016, ADR-017 und ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3; reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
+- **Aktueller Wert:** 1 / 10 (10 %) über ADR-017 bis ADR-026 – ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv); ADR-025 in 4.2 (geplante Anbieterwahl, Kategorien 3, 6, 7 – nicht reaktiv); ADR-017 und ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3; reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -716,6 +717,25 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
   - Neuer Schritt 4.9 „Entwicklungsumgebung macOS einrichten“ vor der Fortsetzung von 4.2; Plattform-Matrix in `docs/project-context.md` Abschnitt 3 und Runbook folgen dort nach der Validierung.
   - Tarif, Ausstattung, Betriebssystem und Laufzeit des VPS werden in 4.2 erfasst und im Kostenregister nachgetragen.
   - Die KI erhält SSH-Zugriff auf die Produktion. Umfang (eigenes Benutzerkonto, erlaubte Befehle, kein Lesen von Secrets) ist Teil von 4.2 und Gate-Prüfpunkt 4 in 4.6; bis dahin gilt „Zugriff auf das für die Einrichtung Nötige“, kein unbeaufsichtigtes Handeln.
+- **Abgeleitete Regel:** keine
+
+#### ADR-026: Einrichtungsskript auch für macOS
+
+- **Datum:** 2026-09-27
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[OPERATIV]` `[STACK]` `[METHODIK]`
+- **Phasentyp-Kontext:** STABILISIERUNG (Schritt 4.9)
+- **Reifegrad-Wirkung:** keine
+- **Kategorie:** Build- und Entwicklungswerkzeuge, Werkzeuge auf dem Rechner des Eigentümers (`CLAUDE.md` Abschnitt 4, Kategorien 7 und 3)
+- **Kontext:** Erste Session auf dem Mac (macOS 27.0, arm64). Vorhanden: uv 0.11.7 (Homebrew), Node 24.15.0 und npm 11.12.1 (Installer von nodejs.org, `/usr/local`, gehört root), Python nur 3.9.6, bash 3.2. Das Projekt verlangt uv 0.12.19, Python 3.14.7, Node 24.21.0 (`package.json`: `>=24.21.0`). `scripts/session-start.sh` holt genau diese Versionen, läuft aber nur in der Cloud-Session (Linux x86_64, `CLAUDE_CODE_REMOTE=true`).
+- **Optionen:** A `scripts/session-start.sh` auf macOS arm64 erweitern – Werkzeuge in `~/.cache/skriptorium-tools`, ohne Administratorrechte, bei jedem Sessionstart (Empfehlung der KI) / B `brew upgrade uv` und Node-Installer mit Passwort des Eigentümers (uv dann nicht exakt gepinnt) / C einmalig von Hand in `~/.cache`, im Runbook beschrieben, Pfad je Session neu setzen.
+- **Entscheidung:** A.
+- **Vision-Frage, die entschied:** „Dürfen Projekt-Werkzeuge bei jedem Sessionstart automatisch in deinem Benutzerordner landen, oder willst du Installationen auf deinem Mac selbst in der Hand behalten?“ → automatisch im Benutzerordner.
+- **Konfidenz zum Zeitpunkt:** mittel – nicht geprüft, ob die Desktop-App `CLAUDE_ENV_FILE` für den SessionStart-Hook genauso setzt wie die Cloud-Session; bash 3.2 von macOS muss das Skript tragen oder es braucht bash aus Homebrew. Umkehrbarkeit billig.
+- **Konsequenzen:**
+  - Skript-Header (Plattformen, Voraussetzungen, Idempotenz) und Runbook im selben Commit nachziehen (`CLAUDE.md` Abschnitt 5); Plattform-Matrix nach der Validierung in 4.9.
+  - System-Node unter `/usr/local` und Homebrew-uv bleiben unverändert.
 - **Abgeleitete Regel:** keine
 
 ---
