@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-27
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** keiner
-- **Nächster Schritt:** Phase 4 zu Beginn verfeinern, dann 4.1 Qualitäts-Härtung (inkl. Aufteilung von `StoryPage.tsx`, ADR-024). Datiert: D.6 Reaktionszeit erkunden vor 4.8; D.5 ab 2026-11-12
+- **Aktiver Schritt:** keiner (4.1 erledigt 2026-09-27)
+- **Nächster Schritt:** 4.2 Host bereitstellen und härten – beginnt mit `ENTSCHEIDUNG ERFORDERLICH` zum VPS-Anbieter (Entscheidungs-Klasse). Datiert: D.6 Reaktionszeit erkunden vor 4.8; D.5 ab 2026-11-12
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -122,7 +122,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.1: Qualitäts-Härtung der Phasen 2 und 3
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-27) – Coverage Python 99,78 % (Zeilen und Zweige), `canon` und `context` je 100 %; Oberfläche 98,65 % Zeilen, 96,43 % Zweige. Randfälle: Abbruch, Ablehnung und zu großer Kontext waren abgedeckt; neu leerer Kanon mit leerem Kapitel und sehr langes Kapitel – dabei Fehler gefunden und behoben (langes Kapitel ohne Leerzeilen → KI bekam kein Manuskript). Tempo `storage` im Referenzumfang: alles unter 1 s (`spikes/storage-tempo/README.md`). `StoryPage.tsx` in sieben Dateien aufgeteilt, `SceneForm` aus `WritingPanel.tsx` gelöst; 96 Komponenten- und 8 End-to-End-Tests unverändert grün
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 3.9
 - **Freigabepflichtig:** nein
@@ -134,7 +134,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** canon, manuscript, context, ai_gateway, storage, api, ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Tests, Messprotokoll
-- **Notizen:** –
+- **Notizen:** Neue Tests: `tests/context/test_builder.py` (3), `tests/api/test_writing.py` (1), Abwählen von Figuren in `WritingPanel.test.tsx`. Die Aufteilung von `WritingPanel.tsx` (jetzt 372 Zeilen, nur noch eine Komponente) war darüber hinaus nicht nötig.
 
 #### 4.2: Host bereitstellen und härten
 
