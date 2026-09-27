@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-09-27
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** keiner (4.1 erledigt 2026-09-27; Anbieter für 4.2 entschieden, ADR-025)
+- **Aktiver Schritt:** 4.9 Entwicklungsumgebung macOS einrichten (ADR-026)
 - **Nächster Schritt:** 4.9 Entwicklungsumgebung macOS einrichten (erste Session auf dem Mac), danach 4.2 Host bereitstellen und härten auf dem vorhandenen netcup-VPS (ADR-025). Datiert: D.6 Reaktionszeit erkunden vor 4.8; D.5 ab 2026-11-12
 - **Offene STOPP-Situationen:** keine
 
@@ -258,7 +258,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.9: Entwicklungsumgebung macOS einrichten
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT (seit 2026-09-27) – Weg für Werkzeuge entschieden (ADR-026: Einrichtungsskript auch für macOS); VPS ist Host `nodica1` in `~/.ssh/config` des Eigentümers
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.1
 - **Freigabepflichtig:** nein – Plattformwechsel entschieden in ADR-025; neue Werkzeuge auf dem Mac (z. B. Homebrew) wären Kategorie 3 und werden vorgelegt

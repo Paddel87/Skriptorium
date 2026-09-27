@@ -29,6 +29,20 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-27 22:40 – [ADR] ADR-026 Einrichtungsskript auch für macOS
+
+- Bestandsaufnahme Mac: macOS 27.0 arm64, Homebrew 7.0.4, uv 0.11.7 (Homebrew), Node 24.15.0 / npm 11.12.1 (nodejs.org-Installer, root), Python 3.9.6, bash 3.2 – alles unter den Projektversionen. Eigentümer wählt Option A: `scripts/session-start.sh` auch für macOS arm64, Werkzeuge in `~/.cache/skriptorium-tools`. Konfidenz mittel (Hook-Umgebung der Desktop-App, bash 3.2), Umkehrbarkeit billig.
+- VPS für das Skriptorium ist laut Eigentümer der Host `nodica1` in seiner `~/.ssh/config`.
+
+### 2026-09-27 22:28 – [SESSIONSTART] Schritt 4.9 – erste Session auf dem Mac
+
+- **Modell:** eingestellt `claude-opus-5-5` (Sitzungsabfrage `get_session` 22:28) → Entscheidungs-Klasse. Empfohlene Klasse für 4.9 ist Routine; deren Probelauf ist offen, deshalb übernimmt die Entscheidungs-Klasse – keine Warnung nötig, keine Abgabe möglich.
+- **Umgebung:** erste lokale Session in der Claude-Desktop-App auf dem Mac des Eigentümers (macOS, Darwin 27.0.0), nicht mehr Cloud-Session (ADR-025).
+- **Kontextgröße:** 142.965 Token nach der Pflichtlektüre laut Sitzungsabfrage (`get_usage`; Kontextfenster 1.000.000). Grenze 200.000 – Spielraum für diese Session ca. 57.000 Token. Erstmals zu Beginn ein echter Wert (in der Cloud-Session stand dort 0). Kurzzeitlimit 21 %, Wochenlimit 6 % (Zurücksetzung 2026-10-04 08:00 UTC).
+- PR #20 gemergt (`9cc0bd3`); Branch `chore/4.9-entwicklung-macos` von `main` angelegt (Namensform nach `docs/project-context.md` Abschnitt 10 – erstmals frei wählbar).
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2 (project-context, Logbuch ab letztem Sessionende, Fahrplan Stand und Phase 4, Architektur 1/2/9, Decisions A/C, aktive Blocker: keine).
+- **Vorhaben:** Schritt 4.9 Entwicklungsumgebung macOS einrichten.
+
 ### 2026-09-27 22:22 – [SESSIONENDE] Anbieter für 4.2 entschieden, Wechsel auf macOS
 
 - **Dauer:** 22:15–22:22 UTC.

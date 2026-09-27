@@ -38,7 +38,7 @@ Stand nach Schritt 3.9: Server mit Anmeldung und Oberfläche für Welten, Kanon,
 
 - Python 3.14.7 mit uv 0.12.19
 - Node.js 24.21.0 LTS mit npm 11.19.0 (nur zum Bauen und Prüfen der Oberfläche)
-- git; für Cloud-Sessions des Coding-Agents richtet `scripts/session-start.sh` alles ein (SessionStart-Hook)
+- git; für Sessions des Coding-Agents (Cloud-Session unter Linux, lokal auf macOS arm64) richtet `scripts/session-start.sh` alles ein (SessionStart-Hook)
 - Internetzugang zu `api.pwnedpasswords.com` beim Festlegen oder Ändern des Passworts
 - ein OpenRouter-API-Schlüssel in `OPENROUTER_API_KEY` (siehe `.env.example`) – für KI-Anfragen ab Schritt 3.3; Tests laufen ohne Schlüssel
 
