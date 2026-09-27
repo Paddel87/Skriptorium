@@ -12,7 +12,12 @@ the rule in the fixed part alone was often broken (step 3.3), and the end of a r
 more for the model.
 
 Fixed parts (frame, world, canon) come first, changing parts last, so provider caches apply.
-Only entries of the story's own world are read (FR-001).
+Only entries of the story's own world are read (FR-001), plus the entries of other worlds the
+story binds in as guests (FR-017, step 3.7). A guest enters like an entry of the world when it
+is named with ``@`` (a new scene names its place and characters so) or led by the author;
+otherwise it only fills the budget after the world's own entries (owner, step 3.7). It is
+marked with its home world; that world's rules do not come along. Identifiers name a guest
+before an entry of the world with the same identifier, as in the checks of ``api``.
 
 Summaries (step 3.6, FR-010): ``build_chapter_summary`` asks for the short summary of a chapter
 (about 150-250 words), ``build_story_summary`` for the continued overall summary (at most about
@@ -25,7 +30,14 @@ from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
 from typing import Final, Literal
 
-from skriptorium.canon import CATEGORIES, CanonEntry, CanonService, Category, InvalidInput
+from skriptorium.canon import (
+    CATEGORIES,
+    CanonEntry,
+    CanonService,
+    Category,
+    InvalidInput,
+    NotFound,
+)
 from skriptorium.manuscript import Chapter, ManuscriptService, Story
 
 MAX_BUDGET: Final = 30_000
@@ -54,6 +66,7 @@ BlockKind = Literal[
     "zeitlinie",
     "verweis",
     "gefuehrte-figur",
+    "gast",
     "fakten",
     "handlungsstand",
     "kurzfassung",
@@ -106,6 +119,18 @@ class ContextTooLarge(Exception):  # noqa: N818 - named like the error kinds of 
         self.largest = tuple(largest)
 
 
+@dataclass(frozen=True)
+class _Known:
+    """An entry the story may use; ``home`` names the world of a guest, else ``None``."""
+
+    entry: CanonEntry
+    home: str | None = None
+
+    @property
+    def key(self) -> tuple[str, str]:
+        return (self.entry.world, self.entry.id)
+
+
 def estimate_tokens(text: str) -> int:
     """Estimated tokens of ``text`` (3.3 characters per token, step 1.1)."""
     return math.ceil(len(text) / CHARS_PER_TOKEN)
@@ -142,11 +167,13 @@ class ContextBuilder:
     ) -> BuiltContext:
         """Build the request for writing on in ``chapter_number``.
 
-        ``references`` are identifiers of canon entries named with ``@`` in the story's world.
+        ``references`` are identifiers of canon entries named with ``@``: entries of the story's
+        world or guests bound into the story.
 
         Raises:
             InvalidInput: Budget outside 1-30,000 or empty instruction.
-            NotFound: World, story, chapter or a referenced entry does not exist in the world.
+            NotFound: World, story, chapter or a referenced entry does not exist in the world
+                or among the story's guests.
             ContextTooLarge: Precedence 1-3 and the instruction do not fit the budget.
         """
         _check_budget(budget)
@@ -157,33 +184,37 @@ class ContextBuilder:
         chapters = self._manuscripts.list_chapters(world_id, story_id)
         current = self._manuscripts.get_chapter(world_id, story_id, chapter_number)
         entries = self._canon.list_entries(world_id)
-        by_id = {entry.id: entry for entry in entries}
-        named = [self._canon.get_entry(world_id, reference) for reference in references]
+        guests = self._guests(story)
+        by_id = {entry.id: _Known(entry) for entry in entries} | {g.entry.id: g for g in guests}
+        named = [_lookup(by_id, reference) for reference in references]
 
         fixed: list[_Part] = [
             _Part("rahmen", "Rahmen", _frame(world.name)),
             _Part("welt", world.name, f"# Welt: {world.name}\n\n{world.description}".strip()),
             _Part("schreibweise", "Figuren-Schreibweise", _writing_mode(story, by_id)),
         ]
-        included: set[str] = set()
+        included: set[tuple[str, str]] = set()
         for category in ("regel", "zeitlinie"):
             for entry in entries:
                 if entry.category == category:
                     fixed.append(_Part(category, entry.name, _render(entry)))
-                    included.add(entry.id)
-        for entry in named:
-            if entry.id not in included:
-                fixed.append(_Part("verweis", entry.name, _render(entry)))
-                included.add(entry.id)
+                    included.add((entry.world, entry.id))
+        for known in named:
+            if known.key not in included:
+                fixed.append(_Part(_kind(known, "verweis"), known.entry.name, _render_known(known)))
+                included.add(known.key)
         missing: list[str] = []
         for character in story.controlled_characters:
-            if character in included:
-                continue
             if character not in by_id:
                 missing.append(character)
                 continue
-            fixed.append(_Part("gefuehrte-figur", by_id[character].name, _render(by_id[character])))
-            included.add(character)
+            known = by_id[character]
+            if known.key in included:
+                continue
+            fixed.append(
+                _Part(_kind(known, "gefuehrte-figur"), known.entry.name, _render_known(known))
+            )
+            included.add(known.key)
         if story.facts:
             fixed.append(_Part("fakten", "Fakten dieser Geschichte", _facts(story, by_id)))
 
@@ -203,10 +234,12 @@ class ContextBuilder:
         remaining = capacity - needed
         pages, remaining = _last_pages(chapters, current, remaining)
         filler: list[_Part] = []
-        for entry in _in_category_order(entries):
-            if entry.id in included:
+        candidates = [_Known(entry) for entry in _in_category_order(entries)]
+        candidates += sorted(guests, key=lambda g: _category_rank(g.entry))
+        for known in candidates:
+            if known.key in included:
                 continue
-            part = _Part("auffuellung", entry.name, _render(entry))
+            part = _Part("auffuellung", known.entry.name, _render_known(known))
             if part.block.tokens <= remaining:
                 filler.append(part)
                 remaining -= part.block.tokens
@@ -222,6 +255,18 @@ class ContextBuilder:
             estimated_tokens=math.ceil(sum(block.tokens for block in blocks) * SAFETY_MARGIN),
             missing_characters=tuple(missing),
         )
+
+    def _guests(self, story: Story) -> list[_Known]:
+        """The guest entries of ``story``; a guest whose entry or world is gone is skipped."""
+        guests: list[_Known] = []
+        for link in story.guest_links:
+            try:
+                entry = self._canon.get_entry(link.world, link.entry)
+                home = self._canon.get_world(link.world).name
+            except NotFound:
+                continue
+            guests.append(_Known(entry, home))
+        return guests
 
     def build_chapter_summary(
         self, world_id: str, story_id: str, chapter_number: int, budget: int = MAX_BUDGET
@@ -360,12 +405,23 @@ def _frame(world_name: str) -> str:
     )
 
 
-def _led_names(story: Story, by_id: dict[str, CanonEntry]) -> str:
+def _lookup(by_id: dict[str, _Known], reference: str) -> _Known:
+    if reference not in by_id:
+        raise NotFound(reference)
+    return by_id[reference]
+
+
+def _kind(known: _Known, own: BlockKind) -> BlockKind:
+    """Block kind of an entry in precedence 2: guests are marked as such in the protocol."""
+    return "gast" if known.home is not None else own
+
+
+def _led_names(story: Story, by_id: dict[str, _Known]) -> str:
     """Names of the characters the author leads, joined for the rule text."""
-    return ", ".join(by_id[c].name if c in by_id else c for c in story.controlled_characters)
+    return ", ".join(by_id[c].entry.name if c in by_id else c for c in story.controlled_characters)
 
 
-def _writing_mode(story: Story, by_id: dict[str, CanonEntry]) -> str:
+def _writing_mode(story: Story, by_id: dict[str, _Known]) -> str:
     """Perspective and characters led by the author (FR-012, wording of step 3.4)."""
     lines = [f"# Geschichte: {story.title}"]
     if story.perspective:
@@ -398,17 +454,27 @@ def _reminder(names: str) -> str:
     )
 
 
-def _render(entry: CanonEntry) -> str:
-    """A canon entry as Markdown; item sections and timeline events are part of the body."""
-    heading = f"## {entry.name} ({_CATEGORY_LABELS[entry.category]})"
+def _render(entry: CanonEntry, home: str | None = None) -> str:
+    """A canon entry as Markdown; item sections and timeline events are part of the body.
+
+    A guest names its home world in the heading (step 3.7).
+    """
+    label = _CATEGORY_LABELS[entry.category]
+    if home is not None:
+        label = f"{label}, Gast aus der Welt „{home}“"
+    heading = f"## {entry.name} ({label})"
     aliases = f"\nAuch: {', '.join(entry.aliases)}" if entry.aliases else ""
     return f"{heading}{aliases}\n\n{entry.body.strip()}".strip()
 
 
-def _facts(story: Story, by_id: dict[str, CanonEntry]) -> str:
+def _render_known(known: _Known) -> str:
+    return _render(known.entry, known.home)
+
+
+def _facts(story: Story, by_id: dict[str, _Known]) -> str:
     lines = ["## Fakten dieser Geschichte"]
     for fact in story.facts:
-        name = by_id[fact.entry].name if fact.entry in by_id else fact.entry
+        name = by_id[fact.entry].entry.name if fact.entry in by_id else fact.entry
         lines.append(f"- {name}: {fact.fact}")
     return "\n".join(lines)
 
@@ -490,7 +556,10 @@ def _last_pages(
     return taken, remaining
 
 
-def _in_category_order(entries: Iterable[CanonEntry]) -> list[CanonEntry]:
+def _category_rank(entry: CanonEntry) -> tuple[int, str]:
     """Stable order for filling: category order of the data model, then name."""
-    rank = {category: index for index, category in enumerate(CATEGORIES)}
-    return sorted(entries, key=lambda entry: (rank[entry.category], entry.name.casefold()))
+    return (CATEGORIES.index(entry.category), entry.name.casefold())
+
+
+def _in_category_order(entries: Iterable[CanonEntry]) -> list[CanonEntry]:
+    return sorted(entries, key=_category_rank)
