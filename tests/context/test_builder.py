@@ -231,6 +231,17 @@ def test_last_paragraph_larger_than_the_budget_enters_with_its_end(
     assert pages[0].tokens > 20_000
 
 
+def test_last_paragraph_without_a_word_that_fits_leaves_the_pages_out(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    _, manuscripts = services
+    manuscripts.save_chapter(WORLD, STORY, 2, text="x" * 200_000)
+
+    context = build(services)
+
+    assert labels(context, "seiten") == []
+
+
 def test_end_of_a_paragraph_starts_at_a_word_and_keeps_line_breaks() -> None:
     from skriptorium.context.builder import _tail
 
