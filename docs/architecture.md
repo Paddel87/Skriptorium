@@ -317,7 +317,7 @@ data/
 - **Ganzen Verlauf bei jeder Anfrage mitschicken (Ist-Zustand TypingMind):** Kosten und Kontextgrenzen sind der Anlass des Projekts – siehe ADR-003
 
 <!-- ANCHOR:reifegrad-uebersicht -->
-## 9. Reifegrad-Übersicht (Stand vom 2026-09-27, nach Phasenabschluss 3)
+## 9. Reifegrad-Übersicht (Stand vom 2026-09-28, nach Schritt 4.2)
 
 | Bestandteil | Reifegrad | Seit | Validiert durch / wartet auf |
 |---|---|---|---|
@@ -341,8 +341,9 @@ data/
 | Sicherheitsniveau ASVS 5.0.0 L1 / Auth L2 | BELASTBAR | 2026-09-26 | ADR-006 |
 | Bedrohungsmodell Gesamtsystem | VORLÄUFIG | 2026-09-26 | Prüfung 4.5, Gate-Schritt 4.6 |
 | Schutzbedarf normal | BELASTBAR | 2026-09-26 | ADR-007 |
-| Host, Secrets im Betrieb, Backups | OFFEN | 2026-09-26 | Schritte 4.2, 4.3, Gate-Schritt 4.6 |
-| Netz (nur HTTPS von außen) | VORLÄUFIG | 2026-09-26 | Schritt 4.2, Gate-Schritt 4.6 |
+| Host | BELASTBAR | 2026-09-28 | Schritt 4.2: Prüfung von außen (alle TCP-Ports; SSH-Passwort-Anmeldung abgelehnt), Firewall und automatische Sicherheitsupdates aktiv, Proxy auf unterstützter Linie (ADR-033); keine eigene Überwachung (ADR-034) |
+| Secrets im Betrieb, Backups | OFFEN | 2026-09-26 | Schritt 4.3, Gate-Schritt 4.6 |
+| Netz (nur HTTPS von außen) | VORLÄUFIG | 2026-09-26 | Prüfungen von außen in Schritt 4.7 (Proxy-Anbindung, `X-Forwarded-For`, `frame-ancestors`) |
 
 <!-- ANCHOR:tooling-inventar -->
 ## 10. Tooling-Inventar

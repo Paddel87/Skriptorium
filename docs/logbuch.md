@@ -29,6 +29,24 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 16:25 – [ERLEDIGT] Schritt 4.2 Host bereitstellen und härten (ADR-034)
+
+- Überwachung auf dem VPS nur lesend geprüft: Uptime Kuma 2.4.0 hängt nur am Proxy-Netz, ohne Docker-Socket – erreicht das Skriptorium nicht (so gewollt, ADR-030). Erster Vorschlag (Kuma bei 4.7 / internes Netz / Push-Job) vom Eigentümer verworfen: „Kuma hat eine andere Aufgabe“. Zweiter Vorschlag: Verzicht per ADR oder GitHub-Actions-Prüfung ab 4.7 → Eigentümer wählt Verzicht (ADR-034, Restrisiko: Ausfall fällt erst beim Öffnen auf).
+- Nachgeholter Beleg: automatische Sicherheitsupdates aktiv (Dienst aktiv, Periodic-Einstellungen 1/1, letzter Lauf heute 06:31), Firewall aktiv.
+- Abnahme gegen die (geänderten) Akzeptanzkriterien: Ports von außen und SSH-Passwort-Ablehnung aus der vorigen Session belegt.
+
+### 2026-09-28 16:25 – [REIFEGRAD-WECHSEL] Host → BELASTBAR
+
+- Grundlage: Prüfung von außen mit erzwungenem Fehlerfall (Passwort-Anmeldung abgelehnt, geschlossene Ports), Firewall und Updates aktiv, Proxy auf unterstützter Linie (ADR-033). Netz bleibt `[VORLÄUFIG]`, Beförderung in 4.7 nach den Prüfungen durch den Proxy; Secrets und Backups bleiben `[OFFEN]` (4.3, 4.6). Eskalations-Auslöser 4 – auf der Entscheidungs-Klasse.
+
+### 2026-09-28 16:05 – [SESSIONSTART] Schritt 4.2 fortsetzen
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage `get_session`) → Entscheidungs-Klasse; entspricht der Empfehlung für 4.2.
+- **Kontingent:** Wochenlimit 15 % (Zurücksetzung So 04.10. 10:00 MESZ), 5-Stunden-Limit 1 % (`get_usage`).
+- **Kontext nach der Mindest-Lektüre:** 148.251 Token (Grenze 200.000).
+- **Wiedereinstieg:** letztes `[SESSIONENDE]` 2026-09-28 01:45, danach Beobachtung OpenRouter-Schlüssel; PR #25 gemergt (`bacac6d`), Arbeitsbaum sauber. Keine aktiven Blocker, keine offenen STOPP-Situationen.
+- **Vorhaben:** 4.2 abschließen – Eintrag in der vorhandenen Überwachung mit absichtlich herbeigeführtem Ausfall; offen D.8 (Rotation, Frist 2026-10-05).
+
 ### 2026-09-28 01:55 – [BEOBACHTUNG] OpenRouter-Schlüssel auf dem VPS (4.2, nach dem Sessionende)
 
 - Eigentümer trug den Schlüssel über ein Skript mit verdeckter Eingabe ein (Übertragung per SSH-Standardeingabe, vorher an einer Kopie erprobt). Ergebnis ohne Werte: im Container gesetzt, von OpenRouter erkannt, Ausgabengrenze am Schlüssel 50 $ (Kostenrahmen 50 € je Monat, Hosting ohne Betrag). `.env` mit Rechten 600, Eigentümer root; Container danach `healthy`. Hilfsskripte gelöscht. Beleg für Gate-Punkt 4 (Ausgabengrenze).
