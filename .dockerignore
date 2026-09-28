@@ -1,0 +1,13 @@
+# Build context of the container image (Dockerfile): only what the build stages copy.
+*
+!package.json
+!package-lock.json
+!tsconfig.json
+!vite.config.ts
+!ui/
+!pyproject.toml
+!uv.lock
+!README.md
+!LICENSE
+!src/
+**/__pycache__
