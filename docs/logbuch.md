@@ -29,6 +29,23 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 18:25 – [SESSIONENDE] Nachtrag nach D.10
+
+- **Dauer:** 16:04–18:25 UTC (Sessionende 17:40 plus D.10 auf Wunsch des Eigentümers).
+- **Bearbeitet seit 17:40:** D.10 → `[ERLEDIGT]`; PR #27 gemergt, PR #28 (D.10 und dieser Eintrag).
+- **Nächster Schritt:** unverändert – Sicherungsziel für 4.3 entscheiden; D.8 (Eigentümer, bis 2026-10-05).
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5); D.10 auf der empfohlenen Klasse. Unteragenten im Probelauf (Sonnet 5, Haiku 4.5, Opus 5.5) sind Prüflinge, keine Abgabe. Ab der nächsten Session: ausgabelastige Routine-Arbeit an Sonnet 5 abgeben.
+- **Kontextgröße:** ca. 275.000 Token (Grenze 200.000) – Dauerwunsch des Eigentümers.
+- **Sessionende-Prüfungen:** README ohne Änderungsbedarf (D.10 nicht nutzerrelevant, Stand-Zeilen weiter richtig); Drift: kein neuer ADR, Reifegrade unverändert; Reaktiv-Quote 0/10; keine aktiven Blocker; Logbuch ca. 445 Zeilen.
+
+### 2026-09-28 18:15 – [ERLEDIGT] D.10 Probelauf Routine- und Mechanik-Klasse
+
+- Auf Wunsch des Eigentümers nach dem Sessionende weitergearbeitet. Aufbau: Worktree von `main` mit 5 eingebauten Abweichungen (README Blocker-Zähler 1, D.6 noch unter „Nächste Schritte“, Host `[VORLÄUFIG]`, Reaktiv-Quote 2/10, ADR-036 in D.6), dort committet, damit kein Diff sie verrät; Soll-Werte für Zählen und Suchen per Skript. Vier frische Unteragenten, wörtlich gleiche Aufträge: Routine-Aufgaben an Sonnet 5 und Opus 5.5, Mechanik-Aufgaben an Haiku 4.5 und Opus 5.5.
+- **Routine (Sonnet 5):** 5/5 gefunden, keine falschen Befunde, Zeilenangaben stichprobenartig bestätigt; Logbuch-Entwurf ohne erfundene Fakten, Typ `[PROBLEM-GELÖST]` nach der Typen-Tabelle (begründet). Dauer 3,5 min. → bestanden.
+- **Mechanik (Haiku 4.5):** ADR-Zählung und Liste der offenen Schritte richtig; „Pwned Passwords“ in `decisions.md` 8 statt 9 – Zeilen statt Vorkommen gezählt (`grep -c`-Falle). → nicht bestanden, Klasse bleibt inaktiv.
+- **Referenz (Opus 5.5):** alles richtig; fand zusätzlich zwei echte Kleinigkeiten: Überschrift der Reifegrad-Übersicht nannte nur 4.2, Typen-Tabelle des Logbuchs nannte `[PROBLEM-GELÖST]`, die Praxis seit Phase 3 `[GELÖST]`. Beide behoben.
+- Kontext der Session bei ca. 270.000 Token (Grenze 200.000) – Dauerwunsch des Eigentümers.
+
 ### 2026-09-28 17:40 – [SESSIONENDE] 4.2, 4.5, D.6 erledigt; 4.3 zurückgestellt
 
 - **Dauer:** 16:04–17:40 UTC.
@@ -403,7 +420,7 @@ Verbindliche Typen, andere nur in Ausnahmefällen:
 |---|---|---|
 | `[SESSIONSTART]` | Zu Beginn jeder Session | Ja |
 | `[SESSIONENDE]` | Vor Sessionabschluss | Ja |
-| `[PROBLEM-GELÖST]` | Nach Behebung eines Problems, das Reibung war | Empfohlen, alle Mini-Probleme erfassen |
+| `[GELÖST]` (bis Phase 2: `[PROBLEM-GELÖST]`) | Nach Behebung eines Problems, das Reibung war | Empfohlen, alle Mini-Probleme erfassen |
 | `[PROBLEM-OFFEN → BLOCKER]` | Wenn ein Problem zum Blocker eskaliert | Ja, mit Verweis auf `blockers.md` |
 | `[BLOCKER-AUFGELÖST]` | Wenn ein Blocker gelöst wurde | Ja, mit Verweis auf den ursprünglichen Logbuch- und Blocker-Eintrag |
 | `[REIFEGRAD-WECHSEL]` | Bei jeder Reifegrad-Änderung in `architecture.md` | Ja |

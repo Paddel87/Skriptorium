@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-09-28
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** keiner – am 2026-09-28 erledigt: 4.2 (ADR-034), 4.5 (keine Befunde), D.6 (ADR-035)
+- **Aktiver Schritt:** keiner – am 2026-09-28 erledigt: 4.2 (ADR-034), 4.5 (keine Befunde), D.6 (ADR-035), D.10 (Probelauf: Routine-Klasse aktiv, Mechanik-Klasse nicht)
 - **Nächster Schritt:** 4.3 Backups – vom Eigentümer zurückgestellt (2026-09-28), Sicherungsziel offen (Optionen in der Notiz an 4.3); blockiert 4.4, Gate 4.6 und damit 4.7/4.8. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. In 4.7 zusätzlich die optionalen Kopfzeilen aus 4.5. Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
 - **Offene STOPP-Situationen:** keine
 
@@ -569,6 +569,22 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Ablaufdaten-Register
 - **Notizen:** Herkunft 4.12. Vorgänger 3.6 verlor die Sicherheitsunterstützung gut drei Monate nach Erscheinen von 3.7.
+
+#### D.10: Probelauf Routine- und Mechanik-Klasse
+
+- **Status:** ERLEDIGT (2026-09-28) – Kopie des Repos mit 5 eingebauten Abweichungen, Soll-Werte per Skript; je vier frische Unteragenten mit wörtlich gleichen Aufträgen. Routine (Sonnet 5): 5/5 gefunden, keine falschen Befunde, Logbuch-Entwurf korrekt → bestanden. Mechanik (Haiku 4.5): 2 von 3 Aufgaben richtig, beim Zählen Zeilen statt Vorkommen → nicht bestanden. Referenz Opus 5.5 fehlerfrei; fand zusätzlich zwei echte Kleinigkeiten im Repo (Überschrift der Reifegrad-Übersicht, Typname `[GELÖST]` in der Typen-Tabelle des Logbuchs) – behoben
+- **Phasentyp-Kontext:** STABILISIERUNG (Methodik)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** nein – Dokumentationspflege; die Aktivierung einer Klasse folgt aus dem Ergebnis nach `CLAUDE.md` Abschnitt 0, „Probelauf"
+- **Empfohlene Klasse:** Entscheidung – die Bewertung der Abweichungen verlangt die höhere Klasse als Maßstab.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Typische Aufgaben je Klasse (Routine: Drift-Prüfung mit README-Synchronisation, Logbuch-Eintrag; Mechanik: Zählen und Suchen) in einer Kopie des Repos mit absichtlich eingebauten Abweichungen und per Skript ermittelten Soll-Werten; dieselben Aufträge wörtlich an die Probe-Klasse und an die Entscheidungs-Klasse als frische Unteragenten; Abweichungen bewerten.
+- **Akzeptanzkriterien:** Ergebnis mit Datum je Klasse in `docs/project-context.md` Abschnitt 6 (bestanden oder nicht, mit Begründung); bei bestanden: für welche Aufgabenarten die Abgabe gilt.
+- **Betroffene Module:** keine (Methodik)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** `docs/project-context.md` Abschnitt 6, Logbuch
+- **Notizen:** Angelegt 2026-09-28 auf Wunsch des Eigentümers.
 
 #### M.1: Branch-Konvention festlegen
 
