@@ -317,7 +317,7 @@ data/
 - **Ganzen Verlauf bei jeder Anfrage mitschicken (Ist-Zustand TypingMind):** Kosten und Kontextgrenzen sind der Anlass des Projekts – siehe ADR-003
 
 <!-- ANCHOR:reifegrad-uebersicht -->
-## 9. Reifegrad-Übersicht (Stand vom 2026-09-28, nach Schritt 4.2)
+## 9. Reifegrad-Übersicht (Stand vom 2026-09-28, nach Schritten 4.2, 4.5 und D.6)
 
 | Bestandteil | Reifegrad | Seit | Validiert durch / wartet auf |
 |---|---|---|---|

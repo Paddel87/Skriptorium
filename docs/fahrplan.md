@@ -570,6 +570,22 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Artefakte:** Ablaufdaten-Register
 - **Notizen:** Herkunft 4.12. Vorgänger 3.6 verlor die Sicherheitsunterstützung gut drei Monate nach Erscheinen von 3.7.
 
+#### D.10: Probelauf Routine- und Mechanik-Klasse
+
+- **Status:** ERLEDIGT (2026-09-28) – Kopie des Repos mit 5 eingebauten Abweichungen, Soll-Werte per Skript; je vier frische Unteragenten mit wörtlich gleichen Aufträgen. Routine (Sonnet 5): 5/5 gefunden, keine falschen Befunde, Logbuch-Entwurf korrekt → bestanden. Mechanik (Haiku 4.5): 2 von 3 Aufgaben richtig, beim Zählen Zeilen statt Vorkommen → nicht bestanden. Referenz Opus 5.5 fehlerfrei; fand zusätzlich zwei echte Kleinigkeiten im Repo (Überschrift der Reifegrad-Übersicht, Typname `[GELÖST]` in der Typen-Tabelle des Logbuchs) – behoben
+- **Phasentyp-Kontext:** STABILISIERUNG (Methodik)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** nein – Dokumentationspflege; die Aktivierung einer Klasse folgt aus dem Ergebnis nach `CLAUDE.md` Abschnitt 0, „Probelauf"
+- **Empfohlene Klasse:** Entscheidung – die Bewertung der Abweichungen verlangt die höhere Klasse als Maßstab.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Typische Aufgaben je Klasse (Routine: Drift-Prüfung mit README-Synchronisation, Logbuch-Eintrag; Mechanik: Zählen und Suchen) in einer Kopie des Repos mit absichtlich eingebauten Abweichungen und per Skript ermittelten Soll-Werten; dieselben Aufträge wörtlich an die Probe-Klasse und an die Entscheidungs-Klasse als frische Unteragenten; Abweichungen bewerten.
+- **Akzeptanzkriterien:** Ergebnis mit Datum je Klasse in `docs/project-context.md` Abschnitt 6 (bestanden oder nicht, mit Begründung); bei bestanden: für welche Aufgabenarten die Abgabe gilt.
+- **Betroffene Module:** keine (Methodik)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** `docs/project-context.md` Abschnitt 6, Logbuch
+- **Notizen:** Angelegt 2026-09-28 auf Wunsch des Eigentümers.
+
 #### M.1: Branch-Konvention festlegen
 
 - **Status:** ERLEDIGT (2026-09-26)
