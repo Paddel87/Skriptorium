@@ -87,7 +87,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **4.2 abschließen:** Überwachung mit erprobtem Ausfall; OpenRouter-Schlüssel auf dem Server (Eigentümer).
+- **4.2 abschließen:** Überwachung mit erprobtem Ausfall.
 - **4.3–4.7:** Backups mit erprobter Wiederherstellung, Notfall-Handbuch, Sicherheitsprüfung, Gate, erstes öffentliches Deployment.
 - **D.8:** Zugangsdaten der Proxy-Verwaltung rotieren (bis 2026-10-05).
 - **D.6:** Wartezeit bis zum ersten KI-Satz erkunden (vor 4.8).

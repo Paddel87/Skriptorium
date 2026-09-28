@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 01:55 – [BEOBACHTUNG] OpenRouter-Schlüssel auf dem VPS (4.2, nach dem Sessionende)
+
+- Eigentümer trug den Schlüssel über ein Skript mit verdeckter Eingabe ein (Übertragung per SSH-Standardeingabe, vorher an einer Kopie erprobt). Ergebnis ohne Werte: im Container gesetzt, von OpenRouter erkannt, Ausgabengrenze am Schlüssel 50 $ (Kostenrahmen 50 € je Monat, Hosting ohne Betrag). `.env` mit Rechten 600, Eigentümer root; Container danach `healthy`. Hilfsskripte gelöscht. Beleg für Gate-Punkt 4 (Ausgabengrenze).
+
 ### 2026-09-28 01:45 – [SESSIONENDE] Schritt 4.2 (Installation), D.7, 4.12
 
 - **Dauer:** 00:27–01:45 UTC.
