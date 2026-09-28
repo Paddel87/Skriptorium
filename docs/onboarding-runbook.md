@@ -23,11 +23,11 @@ Dieses Runbook führt vom frischen Klon bis zum laufenden Server mit Gesundheits
 
 **Voraussetzung an den Leser:** Grundkenntnisse in Bash; Lese-Zugriff auf das Repository.
 
-**Geprüft am:** 2026-09-27, Linux x86_64 (Cloud-Session des Coding-Agents), frischer `git worktree` von Commit `c0325f4` (Phasenabschluss 3).
+**Geprüft am:** 2026-09-27, Linux x86_64 (Cloud-Session des Coding-Agents), frischer `git worktree` von Commit `c0325f4` (Phasenabschluss 3); 2026-09-28, macOS arm64, frischer `git clone` von Commit `f75be2d` (Schritt 4.9) – Werkzeug-Caches unter `~/.cache/skriptorium-tools/` und `~/Library/Caches/ms-playwright/` waren schon vorhanden.
 
 ## 2. Voraussetzungen pro Plattform
 
-Unterstützt ist nur Linux (`docs/project-context.md` Abschnitt 3, Plattform-Matrix). Versionen: Python 3.14.7, uv 0.12.19, Node.js 24.21.0 mit npm 11.19.0, git, curl.
+Unterstützt sind Linux und macOS arm64 (`docs/project-context.md` Abschnitt 3, Plattform-Matrix); Windows nicht. Versionen: Python 3.14.7, uv 0.12.19, Node.js 24.21.0 mit npm 11.19.0, git, curl.
 
 ### Linux (Cloud-Session des Coding-Agents)
 
@@ -47,7 +47,7 @@ Oder ohne eigenes Zutun: `CLAUDE_CODE_REMOTE=true CLAUDE_PROJECT_DIR=$PWD script
 
 ### macOS, Windows
 
-Windows: nicht unterstützt. macOS (arm64): Entwicklungsumgebung des Coding-Agents ab 2026-09-27 (ADR-025). Der SessionStart-Hook richtet dieselben Versionen ein wie in der Cloud-Session (ADR-026), ohne Administratorrechte und neben einem vorhandenen System-Node oder Homebrew-uv; läuft mit dem bash 3.2 von macOS. Danach einmalig `npx playwright install chromium` und vor den End-to-End-Tests `npx vite build`. Erprobt 2026-09-27 im Haupt-Checkout (alle Prüfungen grün); Validierung im frischen Klon und Plattform-Matrix folgen in Schritt 4.9.
+Windows: nicht unterstützt. macOS (arm64): Entwicklungsumgebung des Coding-Agents ab 2026-09-27 (ADR-025). Der SessionStart-Hook richtet dieselben Versionen ein wie in der Cloud-Session (ADR-026), ohne Administratorrechte und neben einem vorhandenen System-Node oder Homebrew-uv; läuft mit dem bash 3.2 von macOS. Danach einmalig `npx playwright install chromium` und vor den End-to-End-Tests `npx vite build`. Erprobt 2026-09-27 im Haupt-Checkout und 2026-09-28 im frischen Klon (Schritt 4.9, alle Prüfungen grün); Hinweise in Abschnitt 5.
 
 ## 3. Setup (End-to-End)
 
@@ -139,6 +139,13 @@ npx playwright test                            # End-to-End in Chromium (nach de
 
 - Der Pre-Commit-Hook ruft die Werkzeuge über `uv run --frozen` bzw. `npx --no-install` auf; ohne vorheriges `uv sync` und `npm ci` schlagen die Hooks fehl.
 - Das vorinstallierte uv (0.8.x) der Cloud-Umgebung kennt Python 3.14.7 nicht; deshalb installiert der SessionStart-Hook uv 0.12.19 getrennt.
+
+### macOS (arm64)
+
+- Der SessionStart-Hook setzt PATH nur für die Session des Coding-Agents. Wer außerhalb davon im Terminal arbeitet, nimmt die `bin`-Verzeichnisse von uv und Node unter `~/.cache/skriptorium-tools/` selbst in PATH auf (wie unter Linux in Abschnitt 2).
+- Der Hook führt `npm install` aus, der Quick Start `npm ci`; bei unveränderter `package-lock.json` ist das Ergebnis gleich.
+- `npm ci` und `npm install` melden, dass die Install-Skripte von `fsevents` (2.3.2, 2.3.3) nicht über `allowScripts` erlaubt sind. Harmlos: `fsevents` ist eine optionale Abhängigkeit der Datei-Überwachung; alle Prüfungen laufen grün (2026-09-28).
+- Vor dem ersten End-to-End-Lauf einmalig `npx playwright install chromium`.
 
 ## 6. Rollen-spezifische Varianten
 

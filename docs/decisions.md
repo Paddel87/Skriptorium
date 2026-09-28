@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-27 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-28 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -47,12 +47,13 @@ Stand 2026-09-27 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 025 | 2026-09-27 | Aktiv | OPERATIV | DEPLOYMENT, SECURITY, METHODIK | Externe Abh., Sicherheit, Deploy | Bestehender netcup-VPS, Entwicklung auf macOS, SSH-Zugang der KI |
 | 026 | 2026-09-27 | Aktiv | OPERATIV | STACK, METHODIK | Build-Pipeline, Externe Abh. | Einrichtungsskript auch für macOS |
 | 027 | 2026-09-27 | Aktiv | OPERATIV | DEPLOYMENT, SECURITY, STACK | Externe Abh., Sicherheit, Deploy | Skriptorium als Container hinter dem vorhandenen Reverse Proxy |
+| 028 | 2026-09-28 | Aktiv | OPERATIV | METHODIK | Build-Pipeline | Branch-Schutz für `main` |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 0 / 10 (0 %) über ADR-018 bis ADR-027 – ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv); ADR-025 in 4.2 (geplante Anbieterwahl, Kategorien 3, 6, 7 – nicht reaktiv); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3; reaktiv: ADR-018 (neue Beziehungen von `api`, in 2.6 ungeplant).
+- **Aktueller Wert:** 0 / 10 (0 %) über ADR-019 bis ADR-028 – ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv); ADR-025 in 4.2 (geplante Anbieterwahl, Kategorien 3, 6, 7 – nicht reaktiv); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3. ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -759,6 +760,28 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
   - Zugriffsprotokoll des Proxys für das Skriptorium abschalten (Log-Regel, project-context Abschnitt 6); `frame-ancestors` als Middleware.
   - Daten im Anwendungsverzeichnis, damit die vorhandene Sicherung sie erfasst; Ziel und Wiederherstellung prüft 4.3.
   - Server-Details (Namen, Ports, Adressen, Benutzer) stehen wegen des öffentlichen Repos nur lokal beim Eigentümer.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-028: Branch-Schutz für `main`
+
+- **Datum:** 2026-09-28
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[OPERATIV]` `[METHODIK]`
+- **Phasentyp-Kontext:** STABILISIERUNG (Schritt 4.11)
+- **Reifegrad-Wirkung:** keine
+- **Kategorie:** Build- und Deploy-Pipeline (`CLAUDE.md` Abschnitt 4, Kategorie 7)
+- **Kontext:** Befund 2026-09-28: `main` hatte auf GitHub keinen Branch-Schutz, obwohl `docs/project-context.md` Abschnitt 7 und 10 Force-Push-Sperre und Merge nur bei grüner CI nennen.
+- **Optionen:** A Force-Push und Löschen gesperrt, Merge nur per Pull Request mit grünen Pflicht-Gates, Admins ausgenommen (Empfehlung der KI) / B wie A, auch für Admins verbindlich / C nur Force-Push und Löschen gesperrt.
+- **Entscheidung:** A.
+- **Vision-Frage, die entschied:** „Willst du dir selbst erlauben, im Notfall an den Prüfungen vorbei zu mergen?“ → ja.
+- **Konfidenz zum Zeitpunkt:** hoch – Standardfunktion von GitHub, Zustand per API prüfbar. Umkehrbarkeit billig.
+- **Konsequenzen:**
+  - Klassischer Branch-Schutz auf `main`: Pflicht-Checks „Pre-Commit (alle Hooks)“, „Python – …“, „TypeScript – …“, „End-to-End – …“ (Namen der CI-Jobs; bei Umbenennung eines Jobs muss der Schutz mitgezogen werden, sonst blockiert er jeden Merge); Pull Request ohne Pflicht-Freigabe (0 Reviews, ein Beitragender); `strict` aus; Force-Push und Löschen gesperrt; `enforce_admins` aus.
+  - Beleg durch erzwungenen Fehler (2026-09-28) an einem Wegwerf-Branch mit identischer Einstellung, nicht an `main` selbst – ein Force-Push-Versuch auf `main` wäre bei Versagen des Schutzes ein destruktiver Eingriff (`CLAUDE.md` Abschnitt 8, Kriterium 6): Force-Push abgelehnt (GH006 „Cannot force-push to this branch“), Löschen abgelehnt, direkter Push ohne Pull Request als Admin durchgelassen mit „Bypassed rule violations“ (so gewollt). Einstellung an `main` danach per API ausgelesen und gleich.
+  - Die Admin-Ausnahme gilt auch für den Coding-Agent, weil er mit dem Konto des Eigentümers pusht. Er umgeht sie nie: Push-Regel „nie direkt auf `main`“ bleibt (project-context Abschnitt 10).
 - **Abgeleitete Regel:** keine
 
 ---
