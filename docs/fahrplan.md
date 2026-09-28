@@ -114,7 +114,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Reifegrad-Erwartung am Phasenende:** Host, Netz, Secrets im Betrieb, Backups und Bedrohungsmodell `[BELASTBAR]` (Backups erst nach erprobter Wiederherstellung).
 
-**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-09-28: 11 Schritte (+4.9, ADR-025; +4.10, Auftrag des Eigentümers; +4.11, Befund Branch-Schutz), Wucherungs-Schwelle (16 und mindestens +5) nicht berührt
+**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-09-28: 12 Schritte (+4.9, ADR-025; +4.10, Auftrag des Eigentümers; +4.11, Befund Branch-Schutz; +4.12, Befund D.7), Wucherungs-Schwelle (16 und mindestens +5) nicht berührt
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
@@ -303,6 +303,23 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** ADR, `docs/project-context.md` Abschnitt 10
 - **Notizen:** Angelegt 2026-09-28 auf Wunsch des Eigentümers. Anlass: Frage nach Force-Push zum Entfernen des Host-Namens aus der Historie – verworfen, weil die Commits über PR #21 auf GitHub sichtbar bleiben.
+
+#### 4.12: Reverse Proxy auf eine unterstützte Linie heben
+
+- **Status:** WARTET-AUF-FREIGABE (2026-09-28)
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** D.7
+- **Frist:** vor 4.6 (Gate-Punkt 3: Host erhält Sicherheitsupdates)
+- **Freigabepflichtig:** ja – Major-Update einer Abhängigkeit, die alle Dienste des Eigentümers trägt (Kategorien 3 und 7)
+- **Empfohlene Klasse:** Entscheidung – `ENTSCHEIDUNG ERFORDERLICH` (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Sicherungskopie der Proxy-Konfiguration
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Befund D.7: Linie 2.11 ohne Sicherheitsupdates seit 2026-09-07. Update auf die unterstützte Linie mit Übergangsschalter für die bisherige Regel-Syntax; Konfiguration und Labels aller angebundenen Dienste vorher gegen die Migrationshinweise des Herstellers prüfen; Rückweg über das bisherige Image-Tag.
+- **Akzeptanzkriterien:** Proxy läuft in einer Linie mit Sicherheitsunterstützung; alle vorher erreichbaren Dienste von außen wieder erreichbar (Liste vorher erhoben); Rückweg dokumentiert (nur lokal beim Eigentümer).
+- **Betroffene Module:** keine (Betrieb)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR
+- **Notizen:** Angelegt 2026-09-28 aus D.7. Server-Details nur lokal.
 
 ### Phase 5: Soll-Anforderungen – Typ: UMSETZUNG
 
@@ -504,7 +521,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.7: Unterstützungsstand des Reverse Proxys prüfen
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-28) – Proxy läuft in 2.11.42; Sicherheitsunterstützung der Linie 2.11 endete am 2026-09-07, unterstützt ist nur noch 3.7 (Hersteller: doc.traefik.io/traefik/deprecation/releases/, abgerufen 2026-09-28). Register-Eintrag angelegt; Update als Schritt 4.12 zur Entscheidung vorgelegt
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.2
 - **Frist:** vor 4.6 (Gate-Punkt 3)

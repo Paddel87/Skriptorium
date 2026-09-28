@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 01:00 – [ERLEDIGT] D.7 Unterstützungsstand des Proxys
+
+- Proxy 2.11.42; Sicherheitsunterstützung der Linie 2.11 endete 2026-09-07, nur 3.7 wird noch unterstützt (Hersteller-Tabelle). Register-Eintrag und Schritt 4.12 (Update, freigabepflichtig) angelegt.
+- Alle Routing-Regeln der angebundenen Dienste nutzen nur `Host`, `PathPrefix`, `&&`, `||` – in v3 unverändert gültig (nur lesend geprüft, Details lokal).
+- „Weiter hier“ vom Eigentümer als Dauerwunsch („verschone mich mit den Session Limits“); Kontext über der Grenze von 200.000 Token – Abweichung nach `CLAUDE.md` Abschnitt 0 vermerkt.
+
 ### 2026-09-28 00:45 – [BEOBACHTUNG] Prüfung von außen (4.2)
 
 - Alle 65.535 TCP-Ports von außen geprüft: offen SSH, HTTP, HTTPS und zwei Ports eines anderen Dienstes des Eigentümers – einer davon liefert eine Anwendung ohne TLS am Proxy vorbei aus (in der Firewall ausdrücklich freigegeben). Nicht Sache des Skriptoriums; Eigentümer im Chat informiert, Details nur dort. Für Gate-Punkt 3 relevant, weil der Host geteilt ist.
