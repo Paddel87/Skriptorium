@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-28 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-28 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11, ADR-029 bis ADR-032 aus Schritt 4.2). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -48,12 +48,16 @@ Stand 2026-09-28 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 026 | 2026-09-27 | Aktiv | OPERATIV | STACK, METHODIK | Build-Pipeline, Externe Abh. | Einrichtungsskript auch für macOS |
 | 027 | 2026-09-27 | Aktiv | OPERATIV | DEPLOYMENT, SECURITY, STACK | Externe Abh., Sicherheit, Deploy | Skriptorium als Container hinter dem vorhandenen Reverse Proxy |
 | 028 | 2026-09-28 | Aktiv | OPERATIV | METHODIK | Build-Pipeline | Branch-Schutz für `main` |
+| 029 | 2026-09-28 | Aktiv | OPERATIV | STACK, DEPLOYMENT | Externe Abh. | Container-Image aus offiziellen Images mit fester Version |
+| 030 | 2026-09-28 | Aktiv | OPERATIV | SECURITY, DEPLOYMENT | Sicherheit | Eigenes Netz zwischen Proxy und Skriptorium |
+| 031 | 2026-09-28 | Aktiv | OPERATIV | SECURITY | Datenschutz | Kurznamen im Zugriffsprotokoll des Proxys zulässig |
+| 032 | 2026-09-28 | Aktiv | OPERATIV | SECURITY, DEPLOYMENT | Sicherheit | Einrichtung auf dem VPS mit dem vorhandenen Administrator-Zugang |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 0 / 10 (0 %) über ADR-019 bis ADR-028 – ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv); ADR-025 in 4.2 (geplante Anbieterwahl, Kategorien 3, 6, 7 – nicht reaktiv); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3. ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
+- **Aktueller Wert:** 0 / 10 (0 %) über ADR-023 bis ADR-032 – ADR-029 bis ADR-032 in 4.2 (Kategorien 3 und 6 – nicht reaktiv); ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv); ADR-025 in 4.2 (geplante Anbieterwahl, Kategorien 3, 6, 7 – nicht reaktiv); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3. ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -782,6 +786,83 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
   - Klassischer Branch-Schutz auf `main`: Pflicht-Checks „Pre-Commit (alle Hooks)“, „Python – …“, „TypeScript – …“, „End-to-End – …“ (Namen der CI-Jobs; bei Umbenennung eines Jobs muss der Schutz mitgezogen werden, sonst blockiert er jeden Merge); Pull Request ohne Pflicht-Freigabe (0 Reviews, ein Beitragender); `strict` aus; Force-Push und Löschen gesperrt; `enforce_admins` aus.
   - Beleg durch erzwungenen Fehler (2026-09-28) an einem Wegwerf-Branch mit identischer Einstellung, nicht an `main` selbst – ein Force-Push-Versuch auf `main` wäre bei Versagen des Schutzes ein destruktiver Eingriff (`CLAUDE.md` Abschnitt 8, Kriterium 6): Force-Push abgelehnt (GH006 „Cannot force-push to this branch“), Löschen abgelehnt, direkter Push ohne Pull Request als Admin durchgelassen mit „Bypassed rule violations“ (so gewollt). Einstellung an `main` danach per API ausgelesen und gleich.
   - Die Admin-Ausnahme gilt auch für den Coding-Agent, weil er mit dem Konto des Eigentümers pusht. Er umgeht sie nie: Push-Regel „nie direkt auf `main`“ bleibt (project-context Abschnitt 10).
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-029: Container-Image aus offiziellen Images mit fester Version
+
+- **Datum:** 2026-09-28
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Phasentyp-Kontext:** STABILISIERUNG (Schritt 4.2)
+- **Tags:** `[OPERATIV]` `[STACK]` `[DEPLOYMENT]`
+- **Reifegrad-Wirkung:** keine
+- **Kategorie:** Externe Abhängigkeiten (`CLAUDE.md` Abschnitt 4, Kategorie 3)
+- **Kontext:** ADR-027 verlangt ein Container-Image für den Betrieb auf dem VPS.
+- **Optionen:** A offizielle Images mit den fixierten Versionen – `python:3.14.7-slim` zur Laufzeit, `node:24.21.0-slim` und uv 0.12.19 nur in der Bau-Stufe (Empfehlung der KI) / B fertiges Allzweck-Image eines Drittanbieters.
+- **Entscheidung:** A.
+- **Vision-Frage, die entschied:** „Soll im Container genau das laufen, was auch getestet wird?“ → ja.
+- **Konfidenz zum Zeitpunkt:** hoch – Versionen bereits verifiziert (project-context Abschnitt 3). Umkehrbarkeit billig.
+- **Konsequenzen:**
+  - `Dockerfile` und `.dockerignore` im Repo; mehrstufiger Bau: Oberfläche mit Node, Python-Abhängigkeiten mit uv (`uv sync --frozen --no-dev`), Laufzeit ohne Node und uv; Prozess ohne root-Rechte.
+  - Images werden mit Versions-Tag bezogen; Nachprüfung zusammen mit den Linien im Ablaufdaten-Register.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-030: Eigenes Netz zwischen Proxy und Skriptorium
+
+- **Datum:** 2026-09-28
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Phasentyp-Kontext:** STABILISIERUNG (Schritt 4.2)
+- **Tags:** `[OPERATIV]` `[SECURITY]` `[DEPLOYMENT]`
+- **Reifegrad-Wirkung:** keine (Netz bleibt `[VORLÄUFIG]` bis zur Prüfung von außen)
+- **Kategorie:** Sicherheit (`CLAUDE.md` Abschnitt 4, Kategorie 6)
+- **Kontext:** Die Sperre nach Fehlversuchen richtet sich nach der Adresse des Besuchers (ADR-017); uvicorn darf `X-Forwarded-For` nur vom Proxy annehmen. Befund 2026-09-28: Die Adresse des Proxy-Containers ist nicht fest, im gemeinsamen Proxy-Netz hängen weitere Anwendungen (`docs/research/vps-bestand.md`, Befund 1).
+- **Optionen:** A eigenes kleines Netz nur für Proxy und Skriptorium, uvicorn vertraut nur diesem Netz; dafür eine Ergänzung der Proxy-Konfiguration (Empfehlung der KI) / B feste Adresse des Proxys im vorhandenen Netz / C Adresse beim Start nachschlagen – nach einem Neustart des Proxys teilen sich alle Besucher eine Sperre.
+- **Entscheidung:** A.
+- **Vision-Frage, die entschied:** „Darf die Proxy-Konfiguration um das Netz ergänzt werden, obwohl der Proxy auch andere Dienste trägt?“ → ja (mit Sicherungskopie vorher).
+- **Konfidenz zum Zeitpunkt:** hoch – uvicorn 0.52 akzeptiert Netzbereiche in `--forwarded-allow-ips` (im Code geprüft). Umkehrbarkeit billig.
+- **Konsequenzen:** `--forwarded-allow-ips` enthält genau den Bereich dieses Netzes; das Skriptorium hängt nur an diesem Netz. Wirkung von außen prüfen wie in der Notiz an 4.2.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-031: Kurznamen im Zugriffsprotokoll des Proxys zulässig
+
+- **Datum:** 2026-09-28
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Phasentyp-Kontext:** STABILISIERUNG (Schritt 4.2)
+- **Tags:** `[OPERATIV]` `[SECURITY]`
+- **Reifegrad-Wirkung:** keine
+- **Kategorie:** Datenschutz (`CLAUDE.md` Abschnitt 4, Kategorie 6)
+- **Kontext:** Das Zugriffsprotokoll des Proxys schreibt für alle Anwendungen die Pfade mit, darin die Kurznamen von Welten und Geschichten; die Proxy-Version kann das Protokoll nicht je Anwendung abschalten (`docs/research/vps-bestand.md`, Befund 2).
+- **Optionen:** A Log-Regel auslegen: Kurznamen im Protokoll des Proxys zulässig, Inhalte bleiben verboten (Empfehlung der KI) / B Pfade für alle Anwendungen aus dem Protokoll entfernen / C Proxy auf eine neue Major-Version heben.
+- **Entscheidung:** A.
+- **Vision-Frage, die entschied:** „Stört es dich, wenn Titel deiner Welten und Geschichten in einem Protokoll auf deinem eigenen Server stehen?“ → nein.
+- **Konfidenz zum Zeitpunkt:** mittel – die fehlende Abschaltung je Anwendung stammt aus der Dokumentation des Proxys, nicht aus einem Versuch. Umkehrbarkeit billig.
+- **Konsequenzen:** Die Log-Regel (project-context Abschnitt 6) gilt für die Protokolle des Skriptoriums unverändert; im Protokoll des Proxys sind Pfade mit Kurznamen zulässig. Texte aus Welten und Manuskripten stehen nie in Pfaden.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-032: Einrichtung auf dem VPS mit dem vorhandenen Administrator-Zugang
+
+- **Datum:** 2026-09-28
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Phasentyp-Kontext:** STABILISIERUNG (Schritt 4.2)
+- **Tags:** `[OPERATIV]` `[SECURITY]` `[DEPLOYMENT]`
+- **Reifegrad-Wirkung:** keine
+- **Kategorie:** Sicherheit (`CLAUDE.md` Abschnitt 4, Kategorie 6)
+- **Kontext:** Die KI meldet sich am VPS als Administrator an (`docs/research/vps-bestand.md`, Befund 6). Vorgelegt: A eingeschränktes Konto nach der Einrichtung / B Konto in der Docker-Gruppe / C Administrator behalten mit Restrisiko.
+- **Entscheidung:** Die Einrichtung in 4.2 erfolgt mit dem vorhandenen Administrator-Zugang (Anweisung des Eigentümers). Server-Details stehen nicht im Repo (ADR-025, ADR-027). Das Skriptorium bleibt bis zum Gate (4.6) von außen nicht erreichbar.
+- **Vision-Frage, die entschied:** „Soll das Skriptorium schon vor dem Gate aus dem Internet erreichbar sein?“ → nein.
+- **Konfidenz zum Zeitpunkt:** hoch. Umkehrbarkeit billig.
+- **Konsequenzen:** Die Beschränkung des Zugriffs der KI nach der Einrichtung (Gate-Punkt 4) ist nicht entschieden und wird in Gate-Schritt 4.6 vorgelegt; bis dahin gilt der Zugriff als offen.
 - **Abgeleitete Regel:** keine
 
 ---
