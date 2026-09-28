@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-09-28
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** keiner (4.9, 4.10 und 4.11 erledigt)
+- **Aktiver Schritt:** 4.2 – Container auf dem VPS läuft (nicht erreichbar von außen); offen: Überwachung mit erzwungenem Ausfall
 - **Nächster Schritt:** 4.2 nach ADR-027 (Container hinter dem vorhandenen Reverse Proxy). Datiert: D.6 Reaktionszeit erkunden vor 4.8; D.5 ab 2026-11-12
 - **Offene STOPP-Situationen:** keine
 
@@ -138,7 +138,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.2: Host bereitstellen und härten
 
-- **Status:** OFFEN – Anbieter entschieden 2026-09-27 (ADR-025: vorhandener netcup-VPS); Fortsetzung nach 4.9 in der macOS-Umgebung
+- **Status:** IN ARBEIT (2026-09-28) – ADR-029 bis ADR-032 entschieden. Erledigt: Container-Image (`Dockerfile`, ADR-029), auf dem VPS als Compose-Projekt im Anwendungsverzeichnis gebaut und gestartet, Datenverzeichnis dort (von der vorhandenen Sicherung erfasst), eigenes Netz mit `FORWARDED_ALLOW_IPS` genau für dessen Bereich (ADR-030), kein veröffentlichter Port, Proxy noch nicht angebunden (ADR-032: nicht erreichbar bis Gate 4.6); Prozess ohne root, Dateisystem schreibgeschützt außer `/data`; auf dem Server: Gesundheitsprüfung ok, `/api/worlds` 401, Oberfläche 200, Pwned Passwords erreichbar, Container `healthy`. Prüfung von außen (alle TCP-Ports): offen nur SSH, HTTP, HTTPS und zwei Ports eines anderen Dienstes des Eigentümers (Eigentümer informiert); SSH lehnt Passwort-Anmeldung ab (nur `publickey`). Offen: Eintrag in der vorhandenen Überwachung mit absichtlich herbeigeführtem Ausfall; OpenRouter-Schlüssel trägt der Eigentümer ein (Gate-Punkt 4). Anbindung an den Proxy, `frame-ancestors` und die Prüfungen zu `X-Forwarded-For` von außen verschoben nach 4.7 (erst bei Freischaltung sinnvoll)
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.1, 4.9
 - **Freigabepflichtig:** ja – Anbieterwahl und Deployment-Ziel (Kategorien 3 und 7), SSH-Zugang (Kategorie 6)
@@ -233,7 +233,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – Änderung an Build- und Deploy-Pipeline (Eskalations-Auslöser 1).
 - **Eingangskriterien:** Gate 4.6 vollständig
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Deployment-Weg einrichten und ausführen; Gesundheitsprüfung und Anmeldung von außen prüfen.
+- **Zu tun:** Deployment-Weg einrichten und ausführen; Gesundheitsprüfung und Anmeldung von außen prüfen. Zusatz 2026-09-28 (aus 4.2, ADR-030, ADR-032): Proxy an das Netz `skriptorium-proxy` anbinden (Sicherungskopie der Proxy-Konfiguration vorher), Router mit HTTPS und Middleware `frame-ancestors 'none'`; von außen prüfen: Einbettung in fremden Rahmen verweigert, mitgeschicktes `X-Forwarded-For` ändert die gesehene Adresse nicht, Fehlversuche von einer Adresse sperren eine zweite nicht.
 - **Akzeptanzkriterien:** Das System ist unter HTTPS erreichbar; ohne Anmeldung ist außer Gesundheitsprüfung und Anmeldung nichts zugänglich; Version und Status in `docs/project-context.md` und README nachgezogen.
 - **Betroffene Module:** api, ui
 - **Reifegrad-Wirkung:** keine
@@ -501,6 +501,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** NFR Reaktionszeit `[VORLÄUFIG]` → `[BELASTBAR]`
 - **Artefakte:** Spike-Bericht, ADR
 - **Notizen:** Herkunft ADR-022 (Abnahme 3.3).
+
+#### D.7: Unterstützungsstand des Reverse Proxys prüfen
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** 4.2
+- **Frist:** vor 4.6 (Gate-Punkt 3)
+- **Freigabepflichtig:** Prüfung nein; ein Update des Proxys ja (Kategorie 3 und 7, betrifft alle Dienste des Eigentümers)
+- **Empfohlene Klasse:** Routine – Recherche gegen Hersteller-Quellen; ein Update-Vorschlag wäre Entscheidung.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Befund 2026-09-28: Der Proxy läuft in der Major-Linie 2. Prüfen, ob sie noch Sicherheitsupdates erhält (Hersteller-Quelle); bei Lebensende Eintrag ins Ablaufdaten-Register und Update als Entscheidung vorlegen.
+- **Akzeptanzkriterien:** Wissensbasiert: Unterstützungsende mit Quelle belegt; Register und ggf. Schritt angelegt.
+- **Betroffene Module:** keine (Betrieb)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Eintrag im Ablaufdaten-Register
+- **Notizen:** Herkunft 4.2.
 
 #### M.1: Branch-Konvention festlegen
 

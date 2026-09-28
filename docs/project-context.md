@@ -247,7 +247,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 - **CI/CD:** GitHub Actions, `.github/workflows/ci.yml`. Deployment-Workflow: [TBD in Schritt 4.7 – bis dahin kein Deployment]
 - **Umgebungen:** lokal (macOS des Eigentümers, Coding-Agent; zuvor Cloud-Session) → Produktion (VPS)
 - **Monitoring:** Erreichbarkeits-Prüfung von außen [TBD in Schritt 4.2]; Kosten je Monat in der Oberfläche
-- **Server-Prozess:** genau ein uvicorn-Prozess hinter einem Reverse Proxy auf demselben Host, `--no-access-log`, `--forwarded-allow-ips` nicht über `127.0.0.1` hinaus – Sitzungen und Sperre nach Fehlversuchen liegen im Speicher (ADR-017, Sicherheitsprüfung 2.6)
+- **Server-Prozess:** genau ein uvicorn-Prozess im Container (`Dockerfile`, ADR-029) hinter dem Reverse Proxy auf demselben Host, `--no-access-log`, `FORWARDED_ALLOW_IPS` nur für das eigene Netz zwischen Proxy und Skriptorium (ADR-030) – Sitzungen und Sperre nach Fehlversuchen liegen im Speicher (ADR-017, Sicherheitsprüfung 2.6). Installiert 2026-09-28, von außen noch nicht erreichbar (ADR-032)
 - **Logging-Level Default:** `INFO` im Betrieb, `DEBUG` nur lokal; keine Inhalte aus Welten oder Manuskripten (Abschnitt 6)
 - **Vertretung:** Verzicht – niemand; Stillstand ist zulässig, Daten bleiben in den Sicherungen (Eigentümer, 2026-09-26; ADR-008 mit benanntem Restrisiko)
 - **Notfall-Handbuch:** `docs/onboarding-runbook.md` Abschnitt „Notfall" – [TBD, anzulegen in Schritt 4.4]

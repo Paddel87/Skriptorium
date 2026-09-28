@@ -29,6 +29,31 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 00:45 – [BEOBACHTUNG] Prüfung von außen (4.2)
+
+- Alle 65.535 TCP-Ports von außen geprüft: offen SSH, HTTP, HTTPS und zwei Ports eines anderen Dienstes des Eigentümers – einer davon liefert eine Anwendung ohne TLS am Proxy vorbei aus (in der Firewall ausdrücklich freigegeben). Nicht Sache des Skriptoriums; Eigentümer im Chat informiert, Details nur dort. Für Gate-Punkt 3 relevant, weil der Host geteilt ist.
+- SSH mit Passwort: abgelehnt, angeboten wird nur `publickey`.
+- Proxy läuft in der Major-Linie 2; Unterstützungsstand ungeprüft → D.7.
+
+### 2026-09-28 00:40 – [BEOBACHTUNG] Skriptorium auf dem VPS installiert (4.2)
+
+- Image lokal (arm64) zur Probe gebaut, 236 MB; dann auf dem VPS aus dem Quellstand `f79e8af` gebaut (wie eine vorhandene Anwendung des Eigentümers). Compose-Projekt mit eigenem Netz, ohne Port, ohne Proxy-Router; Dateisystem schreibgeschützt, alle Capabilities entzogen, `no-new-privileges`, Speichergrenze 1 GB.
+- Auf dem Server: Gesundheitsprüfung ok, `/api/worlds` 401, Oberfläche 200, Pwned Passwords aus dem Container erreichbar, Container nach 60 s `healthy`. Von außen Port 8000 nicht erreichbar.
+- `.env` nur für root lesbar, ohne OpenRouter-Schlüssel – den trägt der Eigentümer selbst ein (die KI fasst keine Secrets an).
+- Compose-Datei und Einrichtung stehen nur auf dem Server (Eigentümer: keine Server-Details im Repo).
+
+### 2026-09-28 00:30 – [ADR] ADR-029 bis ADR-032
+
+- Eigentümer: Einrichtung mit root-Zugang, keine Server-Details im Repo, erst nach dem Gate öffentlich, sonst alle Empfehlungen (offizielle Images, eigenes Netz, Kurznamen im Proxy-Protokoll zulässig). Beschränkung des KI-Zugangs danach bleibt offen bis 4.6.
+
+### 2026-09-28 00:27 – [SESSIONSTART] Schritt 4.2
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage `get_session`) → Entscheidungs-Klasse; entspricht der Empfehlung für 4.2.
+- **Kontingent:** Wochenlimit 6 % (Zurücksetzung So 04.10. 10:00 MESZ), 5-Stunden-Limit 26 % (`get_usage`).
+- **Kontext nach der Mindest-Lektüre:** 142.380 Token (Grenze 200.000).
+- **Wiedereinstieg:** letztes `[SESSIONENDE]` 2026-09-28 00:20; PR #23 gemergt (`8338a59`), Arbeitsbaum sauber. Keine aktiven Blocker, keine offenen STOPP-Situationen.
+- **Vorhaben:** 4.2 nach ADR-027 – Entscheidungen zu Container-Image und KI-Konto vorlegen.
+
 ### 2026-09-28 00:20 – [SESSIONENDE] Schritte 4.9 und 4.11
 
 - **Dauer:** 00:05–00:20 UTC.
