@@ -10,7 +10,7 @@
 
 - **Projektname:** Skriptorium
 - **Kurzbeschreibung:** Schreibwerkstatt für einen einzelnen Autor: Mehrere eigene Welten dienen als verbindlicher Kanon, Autor und KI schreiben im Wechsel Prosa darin, ohne der jeweiligen Welt zu widersprechen.
-- **Status:** In Entwicklung – Phase 4 „Stabilisierung und erstes öffentliches Deployment“, Schritt 4.1 erledigt 2026-09-27, VPS-Anbieter entschieden (ADR-025), nächster Schritt 4.9 (Entwicklung auf macOS), dann 4.2 (Phase 3 „Schreiben mit KI“ abgeschlossen 2026-09-27, ADR-024)
+- **Status:** In Entwicklung – Phase 4 „Stabilisierung und erstes öffentliches Deployment“, Schritte 4.1, 4.9 und 4.10 erledigt, VPS-Einpassung entschieden (ADR-025, ADR-027), nächster Schritt 4.2 (Phase 3 „Schreiben mit KI“ abgeschlossen 2026-09-27, ADR-024)
 - **Version (SemVer):** v0.0.0 – noch keine lauffähige Version
 - **Dokumentationssprache:** Deutsch
 - **Codesprache (Kommentare, Variablennamen):** Englisch (Eigentümer, 2026-09-26); Fachbegriffe einheitlich: world, canon, canon entry, story, manuscript, guest character
@@ -66,13 +66,13 @@ Auswahl nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15, „Versi
 
 ### Unterstützte Entwickler-Plattformen
 
-Entwicklung erfolgt durch den Coding-Agent; der Eigentümer entwickelt nicht selbst. Ab 2026-09-27 läuft der Coding-Agent auf dem Mac des Eigentümers statt in der Cloud-Session (ADR-025: nur von dort ist SSH zum VPS möglich); macOS wird in Schritt 4.9 validiert, bis dahin bleibt die Spalte unten auf ✗.
+Entwicklung erfolgt durch den Coding-Agent; der Eigentümer entwickelt nicht selbst. Ab 2026-09-27 läuft der Coding-Agent auf dem Mac des Eigentümers statt in der Cloud-Session (ADR-025: nur von dort ist SSH zum VPS möglich); macOS arm64 validiert in Schritt 4.9 (frischer Klon, 2026-09-28).
 
-| Aspekt | Linux (Cloud-Session des Coding-Agents, Ubuntu) | macOS | Windows |
+| Aspekt | Linux (Cloud-Session des Coding-Agents, Ubuntu) | macOS arm64 (Mac des Eigentümers, Coding-Agent) | Windows |
 |---|---|---|---|
-| **Backend-Entwicklung** | ✓ | ✗ – nicht getestet, kein Bedarf (Eigentümer entwickelt nicht lokal) | ✗ – wie macOS |
-| **Frontend-Entwicklung** | ✓ | ✗ – wie oben | ✗ – wie oben |
-| **Hilfsskripte (`scripts/`)** | ✓ | ✗ – wie oben | ✗ – wie oben |
+| **Backend-Entwicklung** | ✓ | ✓ (Schritt 4.9) | ✗ – nicht getestet, kein Bedarf (Eigentümer entwickelt nicht lokal) |
+| **Frontend-Entwicklung** | ✓ | ✓ (Schritt 4.9) | ✗ – wie oben |
+| **Hilfsskripte (`scripts/`)** | ✓ | ✓ (`session-start.sh`, ADR-026) | ✗ – wie oben |
 | **CI-Pipeline** | ✓ (GitHub-Hosted-Runner `ubuntu-latest`) | — | — |
 
 **Nutzung (nicht Entwicklung):** aktuelle Browser auf Desktop und Smartphone; konkrete Matrix nach Modus 2 Schritt 4.
@@ -245,7 +245,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 
 - **Deployment-Ziel:** kleiner gemieteter Server (VPS), öffentlich erreichbar mit Passwortschutz (Eigentümer, 2026-09-26); vorhandener VPS des Eigentümers bei netcup (ADR-025, 2026-09-27); Ubuntu 24.04.5 LTS, x86_64, 4 Kerne, 7,8 GB RAM, 251 GB Platte (SSH-Abfrage 2026-09-27); der VPS wird bereits für andere Dienste genutzt (2,4 GB RAM und 39 GB Platte belegt) – für die Härtung in 4.2 zu berücksichtigen; Tarif und Preis nicht Sache des Projekts (Eigentümer, 2026-09-27); Einpassung als Container hinter dem vorhandenen Reverse Proxy (ADR-027, Bestand: `docs/research/vps-bestand.md`). Server-Details (Namen, Ports, Adressen) stehen wegen des öffentlichen Repos nur lokal beim Eigentümer
 - **CI/CD:** GitHub Actions, `.github/workflows/ci.yml`. Deployment-Workflow: [TBD in Schritt 4.7 – bis dahin kein Deployment]
-- **Umgebungen:** lokal (Cloud-Session des Coding-Agents) → Produktion (VPS)
+- **Umgebungen:** lokal (macOS des Eigentümers, Coding-Agent; zuvor Cloud-Session) → Produktion (VPS)
 - **Monitoring:** Erreichbarkeits-Prüfung von außen [TBD in Schritt 4.2]; Kosten je Monat in der Oberfläche
 - **Server-Prozess:** genau ein uvicorn-Prozess hinter einem Reverse Proxy auf demselben Host, `--no-access-log`, `--forwarded-allow-ips` nicht über `127.0.0.1` hinaus – Sitzungen und Sperre nach Fehlversuchen liegen im Speicher (ADR-017, Sicherheitsprüfung 2.6)
 - **Logging-Level Default:** `INFO` im Betrieb, `DEBUG` nur lokal; keine Inhalte aus Welten oder Manuskripten (Abschnitt 6)

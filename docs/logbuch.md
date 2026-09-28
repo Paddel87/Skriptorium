@@ -29,6 +29,24 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 00:15 – [ERLEDIGT] Schritt 4.9 Entwicklungsumgebung macOS
+
+- Plattform-Matrix macOS arm64 auf ✓; Runbook Abschnitt 1, 2 und 5 nachgezogen; README Status und Nächste Schritte.
+
+### 2026-09-28 00:12 – [ONBOARDING-VALIDATION] macOS arm64, frischer Klon (4.9)
+
+- **Durchführung:** Unteragent (Opus 5.5, abgegeben wegen Kontextgröße, nicht wegen Klasse), `git clone` des lokalen Repos von `f75be2d` ins Scratch-Verzeichnis; SessionStart-Hook, dann Quick Start aus der README exakt wie dokumentiert. Dauer ca. 2 Minuten.
+- **Ergebnis:** ohne Bruch. pytest 381/381 (Zeilen 100 %, Zweige 98,8 %, gesamt 99,78 %); vitest 96/96 (98,65 % Zeilen, 96,22 % Zweige); Playwright 8/8; Pre-Commit 17/17 Hooks; Server: `/api/health` ok, `/api/worlds` 401, `/` 200. Versionen uv 0.12.19, Python 3.14.7, Node 24.21.0, npm 11.19.0.
+- **Einschränkung:** nicht völlig frisch – Werkzeug-Cache `~/.cache/skriptorium-tools/`, Pre-Commit-Cache und Chromium waren vorhanden; die Download-Pfade des Hooks liefen nicht erneut. Geklont aus dem lokalen Repo statt von GitHub.
+- **Befunde (Doku, nichts blockierend):** Runbook nannte nur Linux als unterstützt und die Validierung als offen; kein macOS-Abschnitt in Runbook 5 (PATH außerhalb der Session, `fsevents`-Hinweis von npm zu `allowScripts`, `npm install` im Hook statt `npm ci`). Behoben im selben Commit.
+
+### 2026-09-28 00:05 – [SESSIONSTART] Schritt 4.9 abschließen
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage `get_session`) → Entscheidungs-Klasse. 4.9 ist Routine: läuft oberhalb der Empfehlung, weil kein Probelauf für die Routine-Klasse vorliegt (knappe Ressource: Wochenkontingent, Stand 6 %, Zurücksetzung So 10:00 MESZ).
+- **Kontext nach der Mindest-Lektüre:** 136.494 Token (Grenze 200.000); Grundlast bereits über der Hälfte der Grenze.
+- **Wiedereinstieg:** letztes `[SESSIONENDE]` 2026-09-28 00:00; PR #22 gemergt (`f75be2d`). Nachtrag aus der vorigen Session: Nach PR #22 wurden alle gemergten Remote-Branches gelöscht (13 alte Cloud-Session-Branches und die Branches aus 4.9/4.10) sowie der ungemergte, überholte Branch `claude/was-haben-wir-hier-nagbzp` (Löschung vom Eigentümer freigegeben). Auf GitHub existiert nur `main`.
+- **Vorhaben:** 4.9 abschließen – Validierung des Onboarding-Pfads im frischen Klon auf macOS, Plattform-Matrix auf ✓.
+
 ### 2026-09-28 00:10 – [BEOBACHTUNG] Kein Force-Push; `main` ohne Branch-Schutz
 
 - Eigentümer fragte nach Force-Push, um den Host-Namen aus der Historie zu entfernen. Vorher geprüft: Die betroffenen Commits (`2f2fe82`, `a392057`) bleiben über PR #21 auf GitHub sichtbar; entfernen kann nur der GitHub-Support. Die Subdomains sind ohnehin über Certificate Transparency öffentlich. Eigentümer entschied: kein Force-Push.

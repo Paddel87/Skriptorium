@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-09-27
+- **Stand vom:** 2026-09-28
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** 4.10 VPS-Bestand erkunden (Auftrag des Eigentümers 2026-09-27); 4.9 weiter `[IN ARBEIT]`, offen nur die Validierung im frischen Klon
-- **Nächster Schritt:** 4.9 abschließen (Validierung im frischen Klon), dann 4.2 nach ADR-027 (Container hinter dem vorhandenen Reverse Proxy). Datiert: D.6 Reaktionszeit erkunden vor 4.8; D.5 ab 2026-11-12
+- **Aktiver Schritt:** keiner (4.9 und 4.10 erledigt)
+- **Nächster Schritt:** 4.2 nach ADR-027 (Container hinter dem vorhandenen Reverse Proxy); 4.11 (Branch-Schutz) unabhängig davon vorlegbar. Datiert: D.6 Reaktionszeit erkunden vor 4.8; D.5 ab 2026-11-12
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -258,7 +258,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.9: Entwicklungsumgebung macOS einrichten
 
-- **Status:** IN ARBEIT (seit 2026-09-27) – Weg für Werkzeuge entschieden (ADR-026: Einrichtungsskript auch für macOS); VPS ist ein Host-Eintrag in `~/.ssh/config` des Eigentümers. Stand 2026-09-27: Einrichtungsskript für macOS erweitert und im Haupt-Checkout erprobt (uv 0.12.19, Python 3.14.7, Node 24.21.0; pytest 381 grün 99,78 %, vitest 96 grün, E2E 8/8 zweimal grün nach Test-Fix `ControlOrMeta`, Pre-Commit grün; Commit `2f2fe82`); SSH per Schlüssel belegt. Offen: Validierung im frischen Klon (`[ONBOARDING-VALIDATION]`), Plattform-Matrix auf ✓. Tarif und Preis des VPS entfallen: laut Eigentümer nicht Sache des Projekts (2026-09-27)
+- **Status:** ERLEDIGT (2026-09-28) – Einrichtungsskript auch für macOS (ADR-026); SSH per Schlüssel zum VPS belegt, Ausstattung in `docs/project-context.md` Abschnitt 8 (Preis entfällt, Eigentümer 2026-09-27). Frischer Klon von `f75be2d` auf macOS arm64: Hook und Quick Start ohne Bruch; pytest 381/381 (Coverage 99,78 %), vitest 96/96 (98,65 % Zeilen, 96,22 % Zweige), E2E 8/8, Pre-Commit 17/17 Hooks; Server: `/api/health` ok, `/api/worlds` 401. Einschränkung: Werkzeug- und Browser-Caches waren schon vorhanden (kein erneuter Download). Plattform-Matrix auf ✓, Runbook Abschnitt 1, 2 und 5 nachgezogen
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.1
 - **Freigabepflichtig:** nein – Plattformwechsel entschieden in ADR-025; neue Werkzeuge auf dem Mac (z. B. Homebrew) wären Kategorie 3 und werden vorgelegt
