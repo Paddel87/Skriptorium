@@ -27,7 +27,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 - **Version:** v0.0.0 – noch keine veröffentlichte Version
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-09-28
-- **Architektur-Reife:** Module, Schnittstellen, Datenmodell und Token-Budget BELASTBAR (ADR-013); Reaktionszeit VORLÄUFIG (in 3.3 verfehlt, Erkundung D.6, ADR-022); Kanon-Treue VORLÄUFIG (erste Messung in 3.3, Messung beim Schreiben des Eigentümers in 4.8); Sicherheitsniveau und Schutzbedarf BELASTBAR (ADR-006, ADR-007); Observability BELASTBAR (Log-Zeile und Monatskosten, ADR-021, ADR-023); Bedrohungsmodell BELASTBAR (Prüfung 4.5); Host BELASTBAR (4.2); Netz VORLÄUFIG bis 4.7; Secrets im Betrieb und Backups OFFEN
+- **Architektur-Reife:** Module, Schnittstellen, Datenmodell und Token-Budget BELASTBAR (ADR-013); Reaktionszeit BELASTBAR (Zielwerte nach Messung D.6 angepasst, ADR-035); Kanon-Treue VORLÄUFIG (erste Messung in 3.3, Messung beim Schreiben des Eigentümers in 4.8); Sicherheitsniveau und Schutzbedarf BELASTBAR (ADR-006, ADR-007); Observability BELASTBAR (Log-Zeile und Monatskosten, ADR-021, ADR-023); Bedrohungsmodell BELASTBAR (Prüfung 4.5); Host BELASTBAR (4.2); Netz VORLÄUFIG bis 4.7; Secrets im Betrieb und Backups OFFEN
 - **Aktive Blocker:** 0
 
 ## Quick Start
@@ -89,7 +89,6 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 - **4.3–4.7:** Backups (zurückgestellt, Sicherungsziel offen), Notfall-Handbuch, Gate, erstes öffentliches Deployment.
 - **D.8:** Zugangsdaten der Proxy-Verwaltung rotieren (bis 2026-10-05).
-- **D.6:** Wartezeit bis zum ersten KI-Satz erkunden (vor 4.8).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – Startmodell grok-4.7, Zweitmodell grok-4.6.
 

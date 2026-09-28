@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 17:30 – [ERLEDIGT] D.6 Reaktionszeit (ADR-035)
+
+- Messung zuerst lokal geplant (Schlüssel verdeckt eingeben); Eigentümer fragte, warum nicht per SSH im Container. Zwei Versuche (Prüfbefehl im Container, Paket bauen) von der Freigabe-Automatik der Sitzung blockiert („Production Reads“, „Remote Shell Writes“); nach ausdrücklicher Anweisung des Eigentümers („bau das Paket, du führst es aus“) lief die Ausführung: Skript samt Kontext per Standardeingabe in `docker exec -i skriptorium python -`, nichts im Container geschrieben, Schlüssel nicht gesehen.
+- 28 Läufe, 0,71 $. Ursache: Länge des Vorab-Denkens (ca. 16 ms je Denk-Token), stark streuend; `effort: low` minimal, Abschalten verweigert (HTTP 400), Denk-Obergrenze kontraproduktiv (54–149 s), nur Anbieter xAI. grok-4.7 Median 16 s (4–29), grok-4.6 Median 6 s (5–11).
+- Eigentümer wählt A: Zielwerte angepasst (ADR-035), NFR Reaktionszeit → `[BELASTBAR]` (Eskalations-Auslöser 4, Entscheidungs-Klasse). D.6 empfahl Routine – oberhalb der Empfehlung, Hinweis zu Beginn gegeben.
+
 ### 2026-09-28 17:05 – [ERLEDIGT] Schritt 4.5 Unabhängige Sicherheitsprüfung
 
 - **Getrennte Instanz:** Unteragent mit Claude Sonnet 5, ohne Gesprächsverlauf; Auftrag: Gesamtsystem auf `main` gegen Bedrohungsmodell (`docs/architecture.md` Abschnitt 6) und ASVS 5.0.0 L1 / Auth und Sitzung L2; nur lesend, ohne `.env` und `data/`. Dauer ca. 4 Minuten, 61 Werkzeugaufrufe.
