@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-28
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** 4.2 – Container auf dem VPS läuft (nicht erreichbar von außen); offen: Überwachung mit erzwungenem Ausfall
-- **Nächster Schritt:** 4.2 nach ADR-027 (Container hinter dem vorhandenen Reverse Proxy). Datiert: D.6 Reaktionszeit erkunden vor 4.8; D.5 ab 2026-11-12
+- **Aktiver Schritt:** 4.2 – Container auf dem VPS läuft (nicht erreichbar von außen); offen: Überwachung mit erzwungenem Ausfall. 4.12 und D.7 erledigt; D.8 Rotation bis 2026-10-05
+- **Nächster Schritt:** 4.2 abschließen (Überwachung mit erzwungenem Ausfall – Zugang zur Überwachung oder Anlage durch den Eigentümer), dann 4.3 Backups mit erprobter Wiederherstellung und 4.5 Sicherheitsprüfung in getrennter Session. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. Datiert: D.8 bis 2026-10-05; D.6 vor 4.8; D.5 ab 2026-11-12; D.9 2026-12-28
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -114,7 +114,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Reifegrad-Erwartung am Phasenende:** Host, Netz, Secrets im Betrieb, Backups und Bedrohungsmodell `[BELASTBAR]` (Backups erst nach erprobter Wiederherstellung).
 
-**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-09-28: 11 Schritte (+4.9, ADR-025; +4.10, Auftrag des Eigentümers; +4.11, Befund Branch-Schutz), Wucherungs-Schwelle (16 und mindestens +5) nicht berührt
+**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-09-28: 12 Schritte (+4.9, ADR-025; +4.10, Auftrag des Eigentümers; +4.11, Befund Branch-Schutz; +4.12, Befund D.7), Wucherungs-Schwelle (16 und mindestens +5) nicht berührt
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
@@ -138,7 +138,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.2: Host bereitstellen und härten
 
-- **Status:** IN ARBEIT (2026-09-28) – ADR-029 bis ADR-032 entschieden. Erledigt: Container-Image (`Dockerfile`, ADR-029), auf dem VPS als Compose-Projekt im Anwendungsverzeichnis gebaut und gestartet, Datenverzeichnis dort (von der vorhandenen Sicherung erfasst), eigenes Netz mit `FORWARDED_ALLOW_IPS` genau für dessen Bereich (ADR-030), kein veröffentlichter Port, Proxy noch nicht angebunden (ADR-032: nicht erreichbar bis Gate 4.6); Prozess ohne root, Dateisystem schreibgeschützt außer `/data`; auf dem Server: Gesundheitsprüfung ok, `/api/worlds` 401, Oberfläche 200, Pwned Passwords erreichbar, Container `healthy`. Prüfung von außen (alle TCP-Ports): offen nur SSH, HTTP, HTTPS und zwei Ports eines anderen Dienstes des Eigentümers (Eigentümer informiert); SSH lehnt Passwort-Anmeldung ab (nur `publickey`). Offen: Eintrag in der vorhandenen Überwachung mit absichtlich herbeigeführtem Ausfall; OpenRouter-Schlüssel trägt der Eigentümer ein (Gate-Punkt 4). Anbindung an den Proxy, `frame-ancestors` und die Prüfungen zu `X-Forwarded-For` von außen verschoben nach 4.7 (erst bei Freischaltung sinnvoll)
+- **Status:** IN ARBEIT (2026-09-28) – ADR-029 bis ADR-032 entschieden. Erledigt: Container-Image (`Dockerfile`, ADR-029), auf dem VPS als Compose-Projekt im Anwendungsverzeichnis gebaut und gestartet, Datenverzeichnis dort (von der vorhandenen Sicherung erfasst), eigenes Netz mit `FORWARDED_ALLOW_IPS` genau für dessen Bereich (ADR-030), kein veröffentlichter Port, Proxy noch nicht angebunden (ADR-032: nicht erreichbar bis Gate 4.6); Prozess ohne root, Dateisystem schreibgeschützt außer `/data`; auf dem Server: Gesundheitsprüfung ok, `/api/worlds` 401, Oberfläche 200, Pwned Passwords erreichbar, Container `healthy`. Prüfung von außen (alle TCP-Ports): offen nur SSH, HTTP, HTTPS und zwei Ports eines anderen Dienstes des Eigentümers (Eigentümer informiert); SSH lehnt Passwort-Anmeldung ab (nur `publickey`). OpenRouter-Schlüssel vom Eigentümer eingetragen (2026-09-28, verdeckte Eingabe, `.env` nur root lesbar; OpenRouter erkennt ihn, Ausgabengrenze am Schlüssel 50 $). Offen: Eintrag in der vorhandenen Überwachung mit absichtlich herbeigeführtem Ausfall. Anbindung an den Proxy, `frame-ancestors` und die Prüfungen zu `X-Forwarded-For` von außen verschoben nach 4.7 (erst bei Freischaltung sinnvoll)
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.1, 4.9
 - **Freigabepflichtig:** ja – Anbieterwahl und Deployment-Ziel (Kategorien 3 und 7), SSH-Zugang (Kategorie 6)
@@ -303,6 +303,23 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** ADR, `docs/project-context.md` Abschnitt 10
 - **Notizen:** Angelegt 2026-09-28 auf Wunsch des Eigentümers. Anlass: Frage nach Force-Push zum Entfernen des Host-Namens aus der Historie – verworfen, weil die Commits über PR #21 auf GitHub sichtbar bleiben.
+
+#### 4.12: Reverse Proxy auf eine unterstützte Linie heben
+
+- **Status:** ERLEDIGT (2026-09-28) – ADR-033: Proxy von 2.11.42 auf 3.7.13; Sicherungskopie des Proxy-Verzeichnisses samt Zertifikaten vorher (nur root lesbar); alle 9 angebundenen Hostnamen vorher und nachher mit identischer Antwort (lokal gegen den Proxy), drei davon zusätzlich von außen samt Zertifikat geprüft, HTTP→HTTPS-Umleitung wirkt. Ohne Übergangsschalter – alle Regeln waren schon v3-gültig. Rückweg: altes Image und Sicherungskopie (Details nur lokal). Neue Hinweise von 3.7 (Kopfzeilen-Aliase, kodierte Zeichen) dem Eigentümer als optional vorgelegt
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** D.7
+- **Frist:** vor 4.6 (Gate-Punkt 3: Host erhält Sicherheitsupdates)
+- **Freigabepflichtig:** ja – Major-Update einer Abhängigkeit, die alle Dienste des Eigentümers trägt (Kategorien 3 und 7)
+- **Empfohlene Klasse:** Entscheidung – `ENTSCHEIDUNG ERFORDERLICH` (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Sicherungskopie der Proxy-Konfiguration
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Befund D.7: Linie 2.11 ohne Sicherheitsupdates seit 2026-09-07. Update auf die unterstützte Linie mit Übergangsschalter für die bisherige Regel-Syntax; Konfiguration und Labels aller angebundenen Dienste vorher gegen die Migrationshinweise des Herstellers prüfen; Rückweg über das bisherige Image-Tag.
+- **Akzeptanzkriterien:** Proxy läuft in einer Linie mit Sicherheitsunterstützung; alle vorher erreichbaren Dienste von außen wieder erreichbar (Liste vorher erhoben); Rückweg dokumentiert (nur lokal beim Eigentümer).
+- **Betroffene Module:** keine (Betrieb)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR
+- **Notizen:** Angelegt 2026-09-28 aus D.7. Server-Details nur lokal.
 
 ### Phase 5: Soll-Anforderungen – Typ: UMSETZUNG
 
@@ -504,7 +521,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.7: Unterstützungsstand des Reverse Proxys prüfen
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-28) – Proxy läuft in 2.11.42; Sicherheitsunterstützung der Linie 2.11 endete am 2026-09-07, unterstützt ist nur noch 3.7 (Hersteller: doc.traefik.io/traefik/deprecation/releases/, abgerufen 2026-09-28). Register-Eintrag angelegt; Update als Schritt 4.12 zur Entscheidung vorgelegt
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.2
 - **Frist:** vor 4.6 (Gate-Punkt 3)
@@ -518,6 +535,40 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Eintrag im Ablaufdaten-Register
 - **Notizen:** Herkunft 4.2.
+
+#### D.8: Zugangsdaten der Proxy-Verwaltung rotieren
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** keine
+- **Frist:** 2026-10-05 (spätestens vor 4.6)
+- **Freigabepflichtig:** nein (Rotation bestehender Zugangsdaten); das neue Passwort wählt und setzt der Eigentümer selbst
+- **Empfohlene Klasse:** Routine – festgelegter Ablauf ohne Architekturwirkung.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Befund 2026-09-28: Beim Lesen der Proxy-Konfiguration (4.12) gelangte der Hash des Passworts der Proxy-Verwaltung ins Gesprächsprotokoll der KI (`CLAUDE.md` Abschnitt 6: gilt als kompromittiert). Neues Passwort durch den Eigentümer, neuer Hash in der Proxy-Konfiguration, altes Passwort nirgends weiterverwenden.
+- **Akzeptanzkriterien:** Anmeldung mit dem alten Passwort abgelehnt, mit dem neuen möglich (von außen geprüft); Ergebnis im Logbuch ohne Werte.
+- **Betroffene Module:** keine (Betrieb)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Logbuch-Eintrag
+- **Notizen:** Server-Details nur lokal.
+
+#### D.9: Nachprüfung Unterstützung des Reverse Proxys
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** 4.12
+- **Frist:** 2026-12-28
+- **Freigabepflichtig:** Prüfung nein; ein Update ja (Kategorien 3 und 7)
+- **Empfohlene Klasse:** Routine – Abgleich mit der Hersteller-Tabelle.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Hersteller-Tabelle prüfen: Wird 3.7 noch mit Sicherheitsupdates versorgt? Neue Patch-Version einspielen oder Update der Minor-Linie vorlegen; nächste Nachprüfung anlegen.
+- **Akzeptanzkriterien:** Stand mit Quelle im Ablaufdaten-Register; ggf. Folgeschritt angelegt.
+- **Betroffene Module:** keine (Betrieb)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Ablaufdaten-Register
+- **Notizen:** Herkunft 4.12. Vorgänger 3.6 verlor die Sicherheitsunterstützung gut drei Monate nach Erscheinen von 3.7.
 
 #### M.1: Branch-Konvention festlegen
 

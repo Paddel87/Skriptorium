@@ -10,7 +10,7 @@
 
 - **Projektname:** Skriptorium
 - **Kurzbeschreibung:** Schreibwerkstatt für einen einzelnen Autor: Mehrere eigene Welten dienen als verbindlicher Kanon, Autor und KI schreiben im Wechsel Prosa darin, ohne der jeweiligen Welt zu widersprechen.
-- **Status:** In Entwicklung – Phase 4 „Stabilisierung und erstes öffentliches Deployment“, Schritte 4.1, 4.9 und 4.10 erledigt, VPS-Einpassung entschieden (ADR-025, ADR-027), nächster Schritt 4.2 (Phase 3 „Schreiben mit KI“ abgeschlossen 2026-09-27, ADR-024)
+- **Status:** In Entwicklung – Phase 4 „Stabilisierung und erstes öffentliches Deployment“, Schritte 4.1, 4.9, 4.10, 4.11 und 4.12 erledigt, 4.2 in Arbeit (Container auf dem VPS installiert, von außen nicht erreichbar bis Gate 4.6) (Phase 3 „Schreiben mit KI“ abgeschlossen 2026-09-27, ADR-024)
 - **Version (SemVer):** v0.0.0 – noch keine lauffähige Version
 - **Dokumentationssprache:** Deutsch
 - **Codesprache (Kommentare, Variablennamen):** Englisch (Eigentümer, 2026-09-26); Fachbegriffe einheitlich: world, canon, canon entry, story, manuscript, guest character
@@ -268,6 +268,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 | jsdom 30 – neue Linie, noch nicht reif (ADR-019) | Nachprüfung 2027-01-27 | – | npm-Registry | D.2 (mit erledigen) |
 | vitest 5 – neue Linie, noch nicht reif | Nachprüfung 2027-03-03 | – | npm-Registry (ADR-015) | D.2 (mit erledigen) |
 | Guthaben des Coding-Agents (250 $, Stand 193 $) | 2026-11-05 08:59 MEZ | 2 Wochen | Angabe des Eigentümers 2026-09-26 | – (kontingentintensive Arbeit vor dem Ablauf einplanen; Schritt anlegen bei Erreichen des Vorlaufs) |
+| Reverse Proxy auf dem VPS, Linie 3.7 (seit 2026-09-28, ADR-033; 2.11 ohne Unterstützung seit 2026-09-07) | Nachprüfung 2026-12-28 | – | doc.traefik.io, Release-Tabelle (D.7, 2026-09-28) | D.9 |
 | Wochenkontingent der KI | wöchentlich, So 10:00 (MESZ) | – | Sitzungsabfrage 2026-09-26 | – |
 
 ### Kosten

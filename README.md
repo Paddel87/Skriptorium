@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 4 – Stabilisierung und erstes öffentliches Deployment (Stabilisierung), Schritte 4.1 (Qualitäts-Härtung), 4.9 (Entwicklung auf macOS), 4.10 (VPS-Bestand) und 4.11 (Branch-Schutz) erledigt, Einpassung als Container auf dem vorhandenen netcup-VPS entschieden (ADR-025, ADR-027); Phase 3 – Schreiben mit KI abgeschlossen am 2026-09-27 (ADR-024: weiterbauen)
+- **Projektphase:** Phase 4 – Stabilisierung und erstes öffentliches Deployment (Stabilisierung), Schritte 4.1, 4.9, 4.10, 4.11 und 4.12 (Proxy-Update, ADR-033) erledigt; 4.2 in Arbeit: Skriptorium läuft als Container auf dem vorhandenen netcup-VPS, von außen erst nach dem Gate (4.6) erreichbar (ADR-027, ADR-029 bis ADR-032); Phase 3 – Schreiben mit KI abgeschlossen am 2026-09-27 (ADR-024: weiterbauen)
 - **Version:** v0.0.0 – noch keine veröffentlichte Version
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-09-27
@@ -87,8 +87,9 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **4.2 Server bereitstellen und härten:** als Container hinter dem vorhandenen Reverse Proxy des netcup-VPS (ADR-027).
-- **4.3–4.7:** Backups, Notfall-Handbuch, Sicherheitsprüfung, Gate, erstes öffentliches Deployment.
+- **4.2 abschließen:** Überwachung mit erprobtem Ausfall.
+- **4.3–4.7:** Backups mit erprobter Wiederherstellung, Notfall-Handbuch, Sicherheitsprüfung, Gate, erstes öffentliches Deployment.
+- **D.8:** Zugangsdaten der Proxy-Verwaltung rotieren (bis 2026-10-05).
 - **D.6:** Wartezeit bis zum ersten KI-Satz erkunden (vor 4.8).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – Startmodell grok-4.7, Zweitmodell grok-4.6.
