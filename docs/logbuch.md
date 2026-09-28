@@ -31,7 +31,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 
 ### 2026-09-28 01:35 – [BEOBACHTUNG] Rotation D.8 abgebrochen
 
-- Eigentümer kennt das alte Passwort nicht mehr; gewählt: eigenes Passwort über ein Skript mit verdeckter Eingabe (bcrypt-Hash direkt auf den Server, KI sieht weder Passwort noch Hash), gegen eine Kopie der Konfiguration erprobt. Eigentümer brach vor der Eingabe ab. Konfiguration unverändert (Prüfsummen-Präfix gleich), Hilfsskripte entfernt. D.8 bleibt offen, Frist 2026-10-05.
+- Eigentümer meinte zunächst, das alte Passwort nicht mehr zu kennen (später korrigiert: bekannt); gewählt: eigenes Passwort über ein Skript mit verdeckter Eingabe (bcrypt-Hash direkt auf den Server, KI sieht weder Passwort noch Hash), gegen eine Kopie der Konfiguration erprobt. Eigentümer brach vor der Eingabe ab. Konfiguration unverändert (Prüfsummen-Präfix gleich), Hilfsskripte entfernt. D.8 bleibt offen, Frist 2026-10-05.
 
 ### 2026-09-28 01:20 – [ERLEDIGT] Schritt 4.12 Proxy-Update (ADR-033)
 
