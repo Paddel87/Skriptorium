@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
 - **Aktiver Schritt:** 4.2 – Container auf dem VPS läuft (nicht erreichbar von außen); offen: Überwachung mit erzwungenem Ausfall, OpenRouter-Schlüssel (Eigentümer). 4.12 und D.7 erledigt; D.8 Rotation bis 2026-10-05
-- **Nächster Schritt:** 4.2 nach ADR-027 (Container hinter dem vorhandenen Reverse Proxy). Datiert: D.6 Reaktionszeit erkunden vor 4.8; D.5 ab 2026-11-12
+- **Nächster Schritt:** 4.2 abschließen (Überwachung mit erzwungenem Ausfall – Zugang zur Überwachung oder Anlage durch den Eigentümer; OpenRouter-Schlüssel durch den Eigentümer), dann 4.3 Backups mit erprobter Wiederherstellung und 4.5 Sicherheitsprüfung in getrennter Session. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. Datiert: D.8 bis 2026-10-05; D.6 vor 4.8; D.5 ab 2026-11-12; D.9 2026-12-28
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->

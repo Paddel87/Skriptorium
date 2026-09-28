@@ -29,6 +29,16 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 01:45 – [SESSIONENDE] Schritt 4.2 (Installation), D.7, 4.12
+
+- **Dauer:** 00:27–01:45 UTC.
+- **Bearbeitet:** 4.2 → `[IN ARBEIT]` (Container installiert, ADR-029 bis ADR-032, PR #24 gemergt); D.7 → `[ERLEDIGT]`; 4.12 → `[ERLEDIGT]` (Proxy 3.7.13, ADR-033); D.8 (Rotation) und D.9 (Nachprüfung) angelegt. PR #25 offen.
+- **Offen:** 4.2: Überwachung mit erzwungenem Ausfall, OpenRouter-Schlüssel (Eigentümer); D.8 Rotation bis 2026-10-05; Merge von PR #25. Eigentümer fragte nach Freischaltung im Proxy – entschieden: nichts überspringen, erst nach Gate 4.6.
+- **Nächster Schritt:** 4.2 abschließen, dann 4.3 und 4.5.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session`); oberhalb der Empfehlung: D.7 (Routine). Abgegeben: nichts.
+- **Kontextgröße:** 242.067 Token am Ende (Grenze 200.000) – auf ausdrücklichen Wunsch des Eigentümers weitergearbeitet („verschone mich mit den Session Limits“).
+- **Sessionende-Prüfungen:** README synchron (Phase, Nächste Schritte); Drift: ADR-029..032 ↔ 4.2, ADR-033 ↔ 4.12 vorhanden; Reaktiv-Quote 0/10 (ADR-024..033); Phase 4 mit 12 Schritten unter der Wucherungs-Schwelle 16; Modul-Liste und Reifegrade unverändert (Host `[OFFEN]` bis 4.2 abgeschlossen); keine aktiven Blocker. Logbuch ca. 375 Zeilen, kein Archiv-Trigger. Ablaufdaten: Proxy-Linie im Register (D.9); Vorlauf Guthaben ab 2026-10-22 noch nicht erreicht. Keine Server-Details im Repo (Suche nach Host, Adresse, Hash ohne Treffer).
+
 ### 2026-09-28 01:35 – [BEOBACHTUNG] Rotation D.8 abgebrochen
 
 - Eigentümer meinte zunächst, das alte Passwort nicht mehr zu kennen (später korrigiert: bekannt); gewählt: eigenes Passwort über ein Skript mit verdeckter Eingabe (bcrypt-Hash direkt auf den Server, KI sieht weder Passwort noch Hash), gegen eine Kopie der Konfiguration erprobt. Eigentümer brach vor der Eingabe ab. Konfiguration unverändert (Prüfsummen-Präfix gleich), Hilfsskripte entfernt. D.8 bleibt offen, Frist 2026-10-05.
