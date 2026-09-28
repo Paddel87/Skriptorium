@@ -224,7 +224,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 - **Einrichtung der Cloud-Session:** SessionStart-Hook `.claude/settings.json` → `scripts/session-start.sh` (ADR-015)
 - **Trigger:** `push` auf alle Branches und `pull_request` auf `main`
 - **Verpflichtende CI-Gates (Merge-Block bei Rot):** Lint, Format-Check, Type-Check, Security-Scan, Dependency-Audit (Schwellenwert high), Tests inklusive Coverage-Mindestwert
-- **Branch-Protection auf Hauptbranch:** alle Pflicht-Gates müssen grün sein; Force-Push gesperrt; siehe Abschnitt 10
+- **Branch-Protection auf Hauptbranch:** aktiv seit 2026-09-28 (ADR-028) – die vier CI-Jobs sind Pflicht-Checks; Force-Push und Löschen gesperrt; siehe Abschnitt 10
 
 ### Coverage-Mindestwerte
 
@@ -292,7 +292,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 
 - **Hauptbranch:** `main`
 - **Push-Regel:** Änderungen laufen über Pull Requests; nie direkt auf `main`.
-- **Schutzregeln:** keine Force-Pushes auf `main`; Merge nur bei grüner CI.
+- **Schutzregeln:** auf GitHub durchgesetzt seit 2026-09-28 (ADR-028): Force-Push und Löschen von `main` gesperrt, auch für Admins; Merge nur per Pull Request mit grünen Pflicht-Checks (Pre-Commit, Python, TypeScript, End-to-End). Admins (Eigentümer und damit auch der Coding-Agent) können Pull Request und Checks im Notfall umgehen; der Coding-Agent tut das nie. Wer einen CI-Job umbenennt, zieht den Pflicht-Check im selben Pull Request nach.
 
 ### Branch-Konvention
 

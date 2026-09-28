@@ -29,6 +29,27 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 00:20 – [SESSIONENDE] Schritte 4.9 und 4.11
+
+- **Dauer:** 00:05–00:20 UTC.
+- **Bearbeitet:** 4.9 → `[ERLEDIGT]` (Validierung im frischen Klon); 4.11 → `[ERLEDIGT]` mit ADR-028. PR #23 (4.9 und 4.11 als Bündel).
+- **Offen:** Merge von PR #23 durch den Eigentümer.
+- **Nächster Schritt:** neue Session – 4.2 nach ADR-027 (Dockerfile und Compose, Entscheidungen zu Container-Image und KI-Konto vorlegen).
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session`); oberhalb der Empfehlung: 4.9 (Routine). Abgegeben: Klon-Validierung an einen Unteragenten gleicher Klasse – nicht aus Kostengründen, sondern um den Kontext dieser Session klein zu halten.
+- **Kontextgröße:** 178.530 Token am Ende (Grenze 200.000); 136.494 schon nach der Mindest-Lektüre.
+- **Sessionende-Prüfungen:** README synchron (Status, Nächste Schritte); Drift: ADR-028 ↔ 4.11 vorhanden; Reaktiv-Quote korrigiert (s. u.), jetzt 0/10 über ADR-019..028; Phase 4 mit 11 Schritten unter der Wucherungs-Schwelle 16; Modul-Liste und Reifegrade unverändert; keine aktiven Blocker. Archiv-Trigger nicht erreicht (Logbuch ca. 310 Zeilen). Ablaufdaten: Vorlauf des Guthabens (2026-11-05) beginnt 2026-10-22, noch nicht erreicht. Keine Server-Details im Repo.
+
+### 2026-09-28 00:19 – [GELÖST] Reaktiv-Quote falsch gezählt
+
+- **Symptom:** Teil A nannte 0/10 über ADR-018..027, obwohl ADR-018 `[REAKTIV]` ist – richtig wäre 1/10 gewesen (unter der Schwelle 30 %, also ohne Folgen).
+- **Lösung:** Mit ADR-028 fällt ADR-018 aus dem Fenster; Wert 0/10 über ADR-019..028, Korrektur in Teil A vermerkt.
+
+### 2026-09-28 00:18 – [ERLEDIGT] Schritt 4.11 Branch-Schutz (ADR-028)
+
+- Eigentümer wählt A. Schutz an `main`: vier Pflicht-Checks (Namen der CI-Jobs), Pull Request ohne Pflicht-Review, Force-Push und Löschen gesperrt, Admins ausgenommen.
+- **Erzwungener Fehler** an Wegwerf-Branch `test/4.11-schutzprobe` mit gleicher Einstellung: Force-Push abgelehnt (GH006), Löschen abgelehnt, direkter Push als Admin „Bypassed“. Probe-Branch danach entfernt. Nicht an `main` erprobt – wäre bei Versagen destruktiv (Stopp-Kriterium 6); Akzeptanzkriterium entsprechend erfüllt über identische, per API ausgelesene Einstellung.
+- **Beobachtung:** Admin-Ausnahme gilt auch für den Coding-Agent (pusht mit dem Konto des Eigentümers). Umbenennung eines CI-Jobs würde jeden Merge blockieren, bis der Pflicht-Check nachgezogen ist.
+
 ### 2026-09-28 00:15 – [ERLEDIGT] Schritt 4.9 Entwicklungsumgebung macOS
 
 - Plattform-Matrix macOS arm64 auf ✓; Runbook Abschnitt 1, 2 und 5 nachgezogen; README Status und Nächste Schritte.

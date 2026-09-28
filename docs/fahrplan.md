@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-28
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** keiner (4.9 und 4.10 erledigt)
-- **Nächster Schritt:** 4.2 nach ADR-027 (Container hinter dem vorhandenen Reverse Proxy); 4.11 (Branch-Schutz) unabhängig davon vorlegbar. Datiert: D.6 Reaktionszeit erkunden vor 4.8; D.5 ab 2026-11-12
+- **Aktiver Schritt:** keiner (4.9, 4.10 und 4.11 erledigt)
+- **Nächster Schritt:** 4.2 nach ADR-027 (Container hinter dem vorhandenen Reverse Proxy). Datiert: D.6 Reaktionszeit erkunden vor 4.8; D.5 ab 2026-11-12
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -290,7 +290,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.11: Branch-Schutz für `main` einrichten
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-28) – Option A (ADR-028): Force-Push und Löschen gesperrt, Merge nur per Pull Request mit den vier grünen Pflicht-Checks, Admins ausgenommen. Beleg durch erzwungenen Fehler an einem Wegwerf-Branch mit identischer Einstellung (Force-Push und Löschen abgelehnt), nicht an `main` selbst (destruktiver Eingriff bei Versagen, CLAUDE.md Abschnitt 8, Kriterium 6); Einstellung an `main` per API gleich. project-context Abschnitt 7 und 10 nachgezogen
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – Repository- und Pipeline-Regeln (Kategorie 7)
