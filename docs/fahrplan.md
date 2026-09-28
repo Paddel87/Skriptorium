@@ -536,6 +536,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Artefakte:** Eintrag im Ablaufdaten-Register
 - **Notizen:** Herkunft 4.2.
 
+#### D.8: Zugangsdaten der Proxy-Verwaltung rotieren
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** keine
+- **Frist:** 2026-10-05 (spätestens vor 4.6)
+- **Freigabepflichtig:** nein (Rotation bestehender Zugangsdaten); das neue Passwort wählt und setzt der Eigentümer selbst
+- **Empfohlene Klasse:** Routine – festgelegter Ablauf ohne Architekturwirkung.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Befund 2026-09-28: Beim Lesen der Proxy-Konfiguration (4.12) gelangte der Hash des Passworts der Proxy-Verwaltung ins Gesprächsprotokoll der KI (`CLAUDE.md` Abschnitt 6: gilt als kompromittiert). Neues Passwort durch den Eigentümer, neuer Hash in der Proxy-Konfiguration, altes Passwort nirgends weiterverwenden.
+- **Akzeptanzkriterien:** Anmeldung mit dem alten Passwort abgelehnt, mit dem neuen möglich (von außen geprüft); Ergebnis im Logbuch ohne Werte.
+- **Betroffene Module:** keine (Betrieb)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Logbuch-Eintrag
+- **Notizen:** Server-Details nur lokal.
+
 #### M.1: Branch-Konvention festlegen
 
 - **Status:** ERLEDIGT (2026-09-26)

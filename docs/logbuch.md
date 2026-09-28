@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 01:10 – [STOPP] Passwort-Hash der Proxy-Verwaltung in der Ausgabe (4.12)
+
+- Beim Lesen der dynamischen Proxy-Konfiguration wurden Hostnamen ausgeblendet, der Hash des Passworts für die Proxy-Verwaltung aber nicht. Gilt als kompromittiert (`CLAUDE.md` Abschnitt 6). Eigentümer sofort informiert; Rotation als D.8 mit Frist angelegt. Update 4.12 angehalten bis zur Antwort.
+- **Lehre:** Beim Lesen fremder Konfigurationen nicht nur Hostnamen, sondern alle Zeilen mit `users`, `password`, `key`, `secret`, `token` ausfiltern.
+
 ### 2026-09-28 01:00 – [ERLEDIGT] D.7 Unterstützungsstand des Proxys
 
 - Proxy 2.11.42; Sicherheitsunterstützung der Linie 2.11 endete 2026-09-07, nur 3.7 wird noch unterstützt (Hersteller-Tabelle). Register-Eintrag und Schritt 4.12 (Update, freigabepflichtig) angelegt.
