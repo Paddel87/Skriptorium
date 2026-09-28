@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 01:20 – [ERLEDIGT] Schritt 4.12 Proxy-Update (ADR-033)
+
+- Eigentümer gibt nach dem STOPP frei („ja“). Sicherungskopie (16 MB, mit Zertifikaten); dabei brach `tar` zuerst ab, weil sich das laufende Zugriffsprotokoll beim Lesen änderte – wiederholt mit Duldung genau dieser Warnung.
+- Umstellung 2.11.42 → 3.7.13 per Image-Tag, Unterbrechung ca. 15 s. 9 Hostnamen vorher/nachher identisch; von außen drei Hosts mit gültigem Zertifikat, Umleitung HTTP→HTTPS wirkt. Keine Fehler im Protokoll nach dem Start.
+- 3.7 meldet zwei neue Hinweise: `aliasHeadersStrategy` nicht gesetzt (Kopfzeilen wie `X_Auth_User` werden durchgereicht – relevant für PHP-Dienste) und Voreinstellungen für kodierte Zeichen im Pfad. Nicht Teil der Anforderungen des Skriptoriums (Obergrenze Schutzbedarf) – dem Eigentümer als optional vorgelegt.
+
 ### 2026-09-28 01:10 – [STOPP] Passwort-Hash der Proxy-Verwaltung in der Ausgabe (4.12)
 
 - Beim Lesen der dynamischen Proxy-Konfiguration wurden Hostnamen ausgeblendet, der Hash des Passworts für die Proxy-Verwaltung aber nicht. Gilt als kompromittiert (`CLAUDE.md` Abschnitt 6). Eigentümer sofort informiert; Rotation als D.8 mit Frist angelegt. Update 4.12 angehalten bis zur Antwort.

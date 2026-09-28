@@ -268,7 +268,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 | jsdom 30 – neue Linie, noch nicht reif (ADR-019) | Nachprüfung 2027-01-27 | – | npm-Registry | D.2 (mit erledigen) |
 | vitest 5 – neue Linie, noch nicht reif | Nachprüfung 2027-03-03 | – | npm-Registry (ADR-015) | D.2 (mit erledigen) |
 | Guthaben des Coding-Agents (250 $, Stand 193 $) | 2026-11-05 08:59 MEZ | 2 Wochen | Angabe des Eigentümers 2026-09-26 | – (kontingentintensive Arbeit vor dem Ablauf einplanen; Schritt anlegen bei Erreichen des Vorlaufs) |
-| Reverse Proxy auf dem VPS, Linie 2.11 – Sicherheitsunterstützung beendet | 2026-09-07 (abgelaufen) | – | doc.traefik.io, Release-Tabelle (D.7, 2026-09-28) | 4.12 – vor 4.6 |
+| Reverse Proxy auf dem VPS, Linie 3.7 (seit 2026-09-28, ADR-033; 2.11 ohne Unterstützung seit 2026-09-07) | Nachprüfung 2026-12-28 | – | doc.traefik.io, Release-Tabelle (D.7, 2026-09-28) | D.9 |
 | Wochenkontingent der KI | wöchentlich, So 10:00 (MESZ) | – | Sitzungsabfrage 2026-09-26 | – |
 
 ### Kosten

@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-09-28
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** 4.2 – Container auf dem VPS läuft (nicht erreichbar von außen); offen: Überwachung mit erzwungenem Ausfall
+- **Aktiver Schritt:** 4.2 – Container auf dem VPS läuft (nicht erreichbar von außen); offen: Überwachung mit erzwungenem Ausfall, OpenRouter-Schlüssel (Eigentümer). 4.12 und D.7 erledigt; D.8 Rotation bis 2026-10-05
 - **Nächster Schritt:** 4.2 nach ADR-027 (Container hinter dem vorhandenen Reverse Proxy). Datiert: D.6 Reaktionszeit erkunden vor 4.8; D.5 ab 2026-11-12
 - **Offene STOPP-Situationen:** keine
 
@@ -306,7 +306,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.12: Reverse Proxy auf eine unterstützte Linie heben
 
-- **Status:** WARTET-AUF-FREIGABE (2026-09-28)
+- **Status:** ERLEDIGT (2026-09-28) – ADR-033: Proxy von 2.11.42 auf 3.7.13; Sicherungskopie des Proxy-Verzeichnisses samt Zertifikaten vorher (nur root lesbar); alle 9 angebundenen Hostnamen vorher und nachher mit identischer Antwort (lokal gegen den Proxy), drei davon zusätzlich von außen samt Zertifikat geprüft, HTTP→HTTPS-Umleitung wirkt. Ohne Übergangsschalter – alle Regeln waren schon v3-gültig. Rückweg: altes Image und Sicherungskopie (Details nur lokal). Neue Hinweise von 3.7 (Kopfzeilen-Aliase, kodierte Zeichen) dem Eigentümer als optional vorgelegt
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** D.7
 - **Frist:** vor 4.6 (Gate-Punkt 3: Host erhält Sicherheitsupdates)
@@ -552,6 +552,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Logbuch-Eintrag
 - **Notizen:** Server-Details nur lokal.
+
+#### D.9: Nachprüfung Unterstützung des Reverse Proxys
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** 4.12
+- **Frist:** 2026-12-28
+- **Freigabepflichtig:** Prüfung nein; ein Update ja (Kategorien 3 und 7)
+- **Empfohlene Klasse:** Routine – Abgleich mit der Hersteller-Tabelle.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Hersteller-Tabelle prüfen: Wird 3.7 noch mit Sicherheitsupdates versorgt? Neue Patch-Version einspielen oder Update der Minor-Linie vorlegen; nächste Nachprüfung anlegen.
+- **Akzeptanzkriterien:** Stand mit Quelle im Ablaufdaten-Register; ggf. Folgeschritt angelegt.
+- **Betroffene Module:** keine (Betrieb)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Ablaufdaten-Register
+- **Notizen:** Herkunft 4.12. Vorgänger 3.6 verlor die Sicherheitsunterstützung gut drei Monate nach Erscheinen von 3.7.
 
 #### M.1: Branch-Konvention festlegen
 
