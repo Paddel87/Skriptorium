@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
 - **Aktiver Schritt:** keiner – 4.2 erledigt 2026-09-28 (ADR-034: keine eigene Überwachung)
-- **Nächster Schritt:** 4.3 Backups mit erprobter Wiederherstellung (Sicherungsziel außerhalb des Servers freigabepflichtig) und 4.5 Sicherheitsprüfung in getrennter Session. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. Datiert: D.8 bis 2026-10-05; D.6 vor 4.8; D.5 ab 2026-11-12; D.9 2026-12-28
+- **Nächster Schritt:** 4.5 Sicherheitsprüfung in getrennter Session. 4.3 Backups zurückgestellt vom Eigentümer (2026-09-28, Sicherungsziel nicht entschieden, Optionen in der Notiz an 4.3) – blockiert 4.4 und das Gate 4.6. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. Datiert: D.8 bis 2026-10-05; D.6 vor 4.8; D.5 ab 2026-11-12; D.9 2026-12-28
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -166,7 +166,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** storage
 - **Reifegrad-Wirkung:** Backups und Wiederherstellung → `[BELASTBAR]`
 - **Artefakte:** Sicherungs-Konfiguration, Protokoll des Wiederherstellungs-Laufs
-- **Notizen:** –
+- **Notizen:** 2026-09-28: Die vorhandene Sicherung auf dem VPS (Duplicati) hat kein Ziel außerhalb des Servers (Eigentümer). Vorgelegt: A Mac holt täglich per SSH (Empfehlung), B gemieteter Speicher mit restic, C Duplicati mit externem Ziel. Eigentümer stellt das Thema zurück – keine Entscheidung. Folge: Gate 4.6 und damit 4.7 warten auf 4.3 (kein Gate-Punkt wird übersprungen). Wiederherstellungs-Test auf dem Mac ist freigegeben.
 
 #### 4.4: Notfall-Handbuch
 

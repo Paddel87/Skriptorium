@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 16:35 – [BEOBACHTUNG] 4.3 zurückgestellt
+
+- Eigentümer: Duplicati auf dem VPS hat kein externes Sicherungsziel – auch die übrigen Dienste des Eigentümers sind damit nicht außerhalb des Servers gesichert (Hinweis gegeben). Vorschlag zum Sicherungsziel (A Mac holt per SSH, B gemieteter Speicher mit restic, C Duplicati extern) vorgelegt; Eigentümer: „auf später verlegen“. 4.3 bleibt `[OFFEN]` mit Notiz; Gate 4.6 wartet darauf. Wiederherstellungs-Test auf dem Mac freigegeben.
+
 ### 2026-09-28 16:25 – [ERLEDIGT] Schritt 4.2 Host bereitstellen und härten (ADR-034)
 
 - Überwachung auf dem VPS nur lesend geprüft: Uptime Kuma 2.4.0 hängt nur am Proxy-Netz, ohne Docker-Socket – erreicht das Skriptorium nicht (so gewollt, ADR-030). Erster Vorschlag (Kuma bei 4.7 / internes Netz / Push-Job) vom Eigentümer verworfen: „Kuma hat eine andere Aufgabe“. Zweiter Vorschlag: Verzicht per ADR oder GitHub-Actions-Prüfung ab 4.7 → Eigentümer wählt Verzicht (ADR-034, Restrisiko: Ausfall fällt erst beim Öffnen auf).
