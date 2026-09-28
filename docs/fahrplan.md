@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-28
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** keiner – 4.2 erledigt 2026-09-28 (ADR-034: keine eigene Überwachung)
-- **Nächster Schritt:** 4.5 erledigt 2026-09-28 (keine Befunde); optionale Kopfzeilen vom Eigentümer gewählt, Landeplatz 4.7. 4.3 Backups zurückgestellt vom Eigentümer (2026-09-28, Sicherungsziel nicht entschieden, Optionen in der Notiz an 4.3) – blockiert 4.4 und das Gate 4.6. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. Datiert: D.8 bis 2026-10-05; D.6 vor 4.8; D.5 ab 2026-11-12; D.9 2026-12-28
+- **Aktiver Schritt:** keiner – am 2026-09-28 erledigt: 4.2 (ADR-034), 4.5 (keine Befunde), D.6 (ADR-035)
+- **Nächster Schritt:** 4.3 Backups – vom Eigentümer zurückgestellt (2026-09-28), Sicherungsziel offen (Optionen in der Notiz an 4.3); blockiert 4.4, Gate 4.6 und damit 4.7/4.8. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. In 4.7 zusätzlich die optionalen Kopfzeilen aus 4.5. Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -504,7 +504,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.6: Reaktionszeit bis zum ersten Textstück erkunden
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-28) – 28 Läufe im Container auf dem VPS (0,71 $, `spikes/reaktionszeit/README.md`): Wartezeit wächst mit der Länge des Vorab-Denkens (ca. 16 ms je Denk-Token), die bei gleichem Kontext stark streut; `effort: low` ist schon die niedrigste Stufe, Abschalten lehnt der Anbieter ab, eine Denk-Obergrenze verlängert das Denken (54–149 s), ausführender Anbieter immer xAI. grok-4.7 4–29 s (Median 16), grok-4.6 5–11 s (Median 6); 90-s-Grenze reicht. Eigentümer wählt A: Zielwerte angepasst, Einstellungen bleiben (ADR-035); NFR Reaktionszeit → `[BELASTBAR]`. Tageszeit nicht geprüft
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Abhängigkeiten:** 3.3
 - **Frist:** vor 4.8 (Stoppuhr-Test FR-022)

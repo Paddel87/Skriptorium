@@ -29,6 +29,23 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 17:40 – [SESSIONENDE] 4.2, 4.5, D.6 erledigt; 4.3 zurückgestellt
+
+- **Dauer:** 16:04–17:40 UTC.
+- **Bearbeitet:** 4.2 → `[ERLEDIGT]` (ADR-034, Host → `[BELASTBAR]`); 4.3 zurückgestellt (Sicherungsziel offen); 4.5 → `[ERLEDIGT]` (getrennte Instanz, keine Befunde; Bedrohungsmodell → `[BELASTBAR]`); optionale Kopfzeilen nach 4.7; D.6 → `[ERLEDIGT]` (ADR-035, NFR Reaktionszeit → `[BELASTBAR]`). PR #26 gemergt, PR #27 (D.6 und dieser Eintrag).
+- **Offen:** 4.3 (Entscheidung Sicherungsziel), danach 4.4, 4.6, 4.7, 4.8; D.8 Rotation (Eigentümer, bis 2026-10-05).
+- **Nächster Schritt:** Sicherungsziel für 4.3 entscheiden (Vorschlag A: Mac holt täglich per SSH).
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session`); oberhalb der Empfehlung: D.6 (Routine, Hinweis zu Beginn). Abgegeben: Sicherheitsprüfung 4.5 an Unteragenten mit Sonnet 5 (getrennte Instanz, keine Routine-Abgabe).
+- **Kontextgröße:** 254.086 Token nach D.6 (Grenze 200.000) – nach dem Dauerwunsch des Eigentümers weitergearbeitet (Logbuch 2026-09-28 01:00).
+- **Kontingent:** Wochenlimit 17 %, 5-Stunden-Limit 15 %.
+- **Sessionende-Prüfungen:** README synchron (Phase, Architektur-Reife, Nächste Schritte); Drift: ADR-034 ↔ 4.2, ADR-035 ↔ D.6 vorhanden; Reaktiv-Quote 0/10 (ADR-026..035); Phase 4 mit 12 Schritten unter der Wucherungs-Schwelle 16; Modul-Liste unverändert; Reifegrade ↔ ADRs stimmig (Host, Bedrohungsmodell, Reaktionszeit); keine aktiven Blocker. Logbuch ca. 430 Zeilen, project-context 339 Zeilen – kein Trigger. Ablaufdaten: Vorlauf Guthaben ab 2026-10-22 noch nicht erreicht. Keine Server-Details im Repo (Suche nach Host und Adresse ohne Treffer).
+
+### 2026-09-28 17:30 – [ERLEDIGT] D.6 Reaktionszeit (ADR-035)
+
+- Messung zuerst lokal geplant (Schlüssel verdeckt eingeben); Eigentümer fragte, warum nicht per SSH im Container. Zwei Versuche (Prüfbefehl im Container, Paket bauen) von der Freigabe-Automatik der Sitzung blockiert („Production Reads“, „Remote Shell Writes“); nach ausdrücklicher Anweisung des Eigentümers („bau das Paket, du führst es aus“) lief die Ausführung: Skript samt Kontext per Standardeingabe in `docker exec -i skriptorium python -`, nichts im Container geschrieben, Schlüssel nicht gesehen.
+- 28 Läufe, 0,71 $. Ursache: Länge des Vorab-Denkens (ca. 16 ms je Denk-Token), stark streuend; `effort: low` minimal, Abschalten verweigert (HTTP 400), Denk-Obergrenze kontraproduktiv (54–149 s), nur Anbieter xAI. grok-4.7 Median 16 s (4–29), grok-4.6 Median 6 s (5–11).
+- Eigentümer wählt A: Zielwerte angepasst (ADR-035), NFR Reaktionszeit → `[BELASTBAR]` (Eskalations-Auslöser 4, Entscheidungs-Klasse). D.6 empfahl Routine – oberhalb der Empfehlung, Hinweis zu Beginn gegeben.
+
 ### 2026-09-28 17:05 – [ERLEDIGT] Schritt 4.5 Unabhängige Sicherheitsprüfung
 
 - **Getrennte Instanz:** Unteragent mit Claude Sonnet 5, ohne Gesprächsverlauf; Auftrag: Gesamtsystem auf `main` gegen Bedrohungsmodell (`docs/architecture.md` Abschnitt 6) und ASVS 5.0.0 L1 / Auth und Sitzung L2; nur lesend, ohne `.env` und `data/`. Dauer ca. 4 Minuten, 61 Werkzeugaufrufe.
