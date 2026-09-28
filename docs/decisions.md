@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-28 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11, ADR-029 bis ADR-032 aus Schritt 4.2, ADR-033 aus Schritt 4.12). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-28 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11, ADR-029 bis ADR-032 aus Schritt 4.2, ADR-033 aus Schritt 4.12, ADR-034 aus Schritt 4.2). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -53,12 +53,13 @@ Stand 2026-09-28 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 031 | 2026-09-28 | Aktiv | OPERATIV | SECURITY | Datenschutz | Kurznamen im Zugriffsprotokoll des Proxys zulässig |
 | 032 | 2026-09-28 | Aktiv | OPERATIV | SECURITY, DEPLOYMENT | Sicherheit | Einrichtung auf dem VPS mit dem vorhandenen Administrator-Zugang |
 | 033 | 2026-09-28 | Aktiv | OPERATIV | SECURITY, DEPLOYMENT | Externe Abh., Deploy | Reverse Proxy auf die unterstützte Linie 3.7 |
+| 034 | 2026-09-28 | Aktiv | OPERATIV | DEPLOYMENT | Deploy | Keine eigene Erreichbarkeits-Überwachung |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 0 / 10 (0 %) über ADR-024 bis ADR-033 – ADR-033 in 4.12 (Kategorien 3 und 7 – nicht reaktiv); ADR-029 bis ADR-032 in 4.2 (Kategorien 3 und 6 – nicht reaktiv); ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv); ADR-025 in 4.2 (geplante Anbieterwahl, Kategorien 3, 6, 7 – nicht reaktiv); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3. ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
+- **Aktueller Wert:** 0 / 10 (0 %) über ADR-025 bis ADR-034 – ADR-034 in 4.2 (Überwachung, Kategorie 7 – nicht reaktiv); ADR-033 in 4.12 (Kategorien 3 und 7 – nicht reaktiv); ADR-029 bis ADR-032 in 4.2 (Kategorien 3 und 6 – nicht reaktiv); ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv); ADR-025 in 4.2 (geplante Anbieterwahl, Kategorien 3, 6, 7 – nicht reaktiv); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3 (nicht mehr im Fenster). ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -883,6 +884,26 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Vision-Frage, die entschied:** „Darf ich deine Dienste für ein paar Minuten unterbrechen, um den Proxy zu aktualisieren?“ → ja, jetzt.
 - **Konfidenz zum Zeitpunkt:** mittel – Routing-Regeln geprüft, Grundkonfiguration erst beim Umsetzen. Umkehrbarkeit billig.
 - **Konsequenzen:** Proxy auf `v3.7.13`; Ablaufdaten-Register nachziehen. Mit v3 wird die Abschaltung des Zugriffsprotokolls je Anwendung möglich – ADR-031 kann in 4.7 überprüft werden.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-034: Keine eigene Erreichbarkeits-Überwachung
+
+- **Datum:** 2026-09-28
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[OPERATIV]` `[DEPLOYMENT]`
+- **Phasentyp-Kontext:** STABILISIERUNG (Schritt 4.2)
+- **Reifegrad-Wirkung:** keine unmittelbare; ermöglicht den Abschluss von 4.2 (Host → `[BELASTBAR]`)
+- **Kategorie:** Deploy (`CLAUDE.md` Abschnitt 4, Kategorie 7)
+- **Kontext:** Akzeptanzkriterium von 4.2: „Erreichbarkeits-Prüfung meldet einen absichtlich herbeigeführten Ausfall“. Die vorhandene Überwachung auf dem VPS (Uptime Kuma) erreicht das Skriptorium nicht (nur am Proxy-Netz, ADR-030) und hat laut Eigentümer eine andere Aufgabe. Keine ASVS-L1-Anforderung und kein Gate-Punkt verlangt eine Erreichbarkeits-Überwachung; ADR-008 lässt Stillstand zu.
+- **Optionen:** A keine eigene Überwachung, Restrisiko per ADR (Empfehlung der KI, Regel „Schutzbedarf ist Obergrenze“) / B geplanter GitHub-Actions-Lauf ruft ab 4.7 die öffentliche Gesundheitsprüfung auf, Fehler-Mail von GitHub. Vorher verworfen: Kuma an das Netz des Skriptoriums (weicht ADR-030 auf), Push-Job auf dem Server, Kuma nach 4.7 – alle drei, weil Kuma nicht dafür vorgesehen ist.
+- **Entscheidung:** A.
+- **Vision-Frage, die entschied:** „Willst du über einen Ausfall informiert werden, bevor du selbst schreiben willst, oder reicht es, ihn dann zu bemerken?“ → bemerken reicht.
+- **Konfidenz zum Zeitpunkt:** hoch – Netz und Mounts der Überwachung auf dem Server geprüft; Anforderungslage aus ADR-006, ADR-007, ADR-008. Umkehrbarkeit billig (B jederzeit nachrüstbar).
+- **Restrisiko:** Ein Ausfall fällt erst auf, wenn der Eigentümer schreiben will. Texte sind nicht betroffen (Dateien auf dem Server, Sicherungen aus 4.3). Ein stiller Ausfall der Sicherung ist davon nicht abgedeckt – das bleibt Aufgabe von 4.3.
+- **Konsequenzen:** Das Überwachungs-Kriterium entfällt aus 4.2; `docs/project-context.md` Abschnitt 8 „Monitoring“ nachgezogen. Neu vorlegen, falls ein zweiter Nutzer oder feste Schreibtermine hinzukommen.
 - **Abgeleitete Regel:** keine
 
 ---

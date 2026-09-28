@@ -233,7 +233,7 @@ Alle Verträge sind `[BELASTBAR]` seit 2026-09-26 (ADR-013). Die Umsetzung formu
 Angelegt im Sicherheitsgrundriss (Modus 2 Schritt 4a, 2026-09-26). Das System wird **öffentlich im Internet mit Passwortschutz** betrieben (Entscheidung des Eigentümers); das Gate vor dem ersten öffentlichen Deployment (CLAUDE.md Abschnitt 12) gilt vollständig.
 
 - **Sicherheitsniveau:** OWASP ASVS 5.0.0 Stufe 1 für die gesamte Anwendung; für Authentifizierung und Sitzungsverwaltung Stufe 2 – ADR-006 `[BELASTBAR]`. Obergrenze für allen Sicherheitsaufwand (CLAUDE.md Abschnitt 6).
-- **Bedrohungsmodell (Gesamtsystem):** `[VORLÄUFIG]`
+- **Bedrohungsmodell (Gesamtsystem):** `[BELASTBAR]` (unabhängige Prüfung 4.5, 2026-09-28)
   - **Schützenswerte Güter:** (1) API-Schlüssel der KI-Anbieter – höchster Wert, weil Missbrauch direkt Geld kostet; (2) Welten und Manuskripte – Schutzbedarf normal; (3) Verfügbarkeit – gering, Stillstand ist zulässig.
   - **Angreifer:** automatisierte Internet-Scanner und Bots; Passwort-Rater (Credential Stuffing); opportunistische Ausnutzung ungepatchter Software. Kein gezielter Angreifer mit großen Mitteln angenommen.
   - **Bedrohungen und Gegenmaßnahmen:**
@@ -247,8 +247,8 @@ Angelegt im Sicherheitsgrundriss (Modus 2 Schritt 4a, 2026-09-26). Das System wi
   - **Bewusst nicht abgedeckt:** gezielte Angriffe mit großen Mitteln; Zugriff durch den Hosting-Anbieter; Vertraulichkeit gegenüber dem KI-Anbieter (Übermittlung ist laut Vision zulässig).
 - **Schutzmaßnahmen:** siehe Bedrohungsmodell; Umsetzung im Modul `api` (Anmeldung, Sitzung, Herkunftsprüfung) und `ui` (Darstellung ohne ungefiltertes HTML).
 - **Sensitive Datenflüsse:** API-Schlüssel: Umgebungsvariable → `ai_gateway` → HTTPS zum Anbieter. Passwort: Browser (TLS) → `api` → scrypt-Hash in `system/zugang.md`; beim Festlegen gehen die ersten 5 Hex-Zeichen seines SHA-1-Hashes an Pwned Passwords (ADR-017). Texte: Browser ↔ Server (TLS) → Anbieter (HTTPS).
-- **Host:** vorhandener netcup-VPS (ADR-025); [TBD – Härtung in Schritt 4.2; Pflicht: Firewall, SSH nur mit Schlüssel, automatische Sicherheitsupdates, Prüfung von außen] `[OFFEN]`
-- **Netz:** von außen nur HTTPS (443) und die Umleitung von HTTP (80); SSH [TBD in Schritt 4.2]; TLS-Zertifikat automatisch erneuert `[VORLÄUFIG]`
+- **Host:** vorhandener netcup-VPS (ADR-025), mit anderen Diensten des Eigentümers geteilt; Firewall aktiv, SSH nur mit Schlüssel, automatische Sicherheitsupdates, Reverse Proxy auf unterstützter Linie (ADR-033); Skriptorium als Container ohne root, Dateisystem schreibgeschützt außer `/data`, alle Capabilities entzogen, `no-new-privileges`, Speichergrenze (ADR-027, ADR-029); keine eigene Erreichbarkeits-Überwachung (ADR-034). Belegt in 4.2 `[BELASTBAR]`
+- **Netz:** von außen nur HTTPS (443) und die Umleitung von HTTP (80) über den Reverse Proxy, SSH nur mit Schlüssel (belegt in 4.2); Skriptorium ohne veröffentlichten Port in einem eigenen Netz nur mit dem Proxy, `FORWARDED_ALLOW_IPS` genau für dieses Netz (ADR-030); bis Gate 4.6 nicht an den Proxy angebunden (ADR-032); TLS-Zertifikat automatisch erneuert. Prüfungen durch den Proxy (`X-Forwarded-For`, `frame-ancestors`) in 4.7 `[VORLÄUFIG]`
 - **Secrets im Betrieb:** API-Schlüssel als Umgebungsvariable auf dem Server; Passwort-Hash und Hash des Einrichtungscodes in `system/zugang.md` im Datenverzeichnis (ADR-017); Rotationsweg: neuen Schlüssel bei OpenRouter erzeugen, eintragen, alten widerrufen [TBD – Ablageort in Schritt 4.2]. Kein Zugriff der KI auf Produktions-Secrets. `[OFFEN]`
 - **Backups und Wiederherstellung:** Datenverzeichnis (Markdown-Dateien) täglich außerhalb des Servers sichern; Index wird nicht gesichert, sondern neu aufgebaut. Ziel und Verfahren [TBD in Schritt 4.3]; Beförderung erst nach erprobter Wiederherstellung. `[OFFEN]`
 
@@ -317,7 +317,7 @@ data/
 - **Ganzen Verlauf bei jeder Anfrage mitschicken (Ist-Zustand TypingMind):** Kosten und Kontextgrenzen sind der Anlass des Projekts – siehe ADR-003
 
 <!-- ANCHOR:reifegrad-uebersicht -->
-## 9. Reifegrad-Übersicht (Stand vom 2026-09-27, nach Phasenabschluss 3)
+## 9. Reifegrad-Übersicht (Stand vom 2026-09-28, nach Schritt 4.2)
 
 | Bestandteil | Reifegrad | Seit | Validiert durch / wartet auf |
 |---|---|---|---|
@@ -339,10 +339,11 @@ data/
 | Observability: Metriken (Speicherung) | BELASTBAR | 2026-09-27 | ADR-023; durch Umsetzung validiert in 3.9 (Tests, echte Läufe `spikes/modellwahl/README.md`) |
 | NFR Kanon-Treue | VORLÄUFIG | 2026-09-26 | Vorprüfung 1.1 (ADR-010); erste Messung im Probeschreiben 3.3 (0 eindeutige Widersprüche je Kapitel); Messung beim Schreiben des Eigentümers in 4.8 (ADR-024) |
 | Sicherheitsniveau ASVS 5.0.0 L1 / Auth L2 | BELASTBAR | 2026-09-26 | ADR-006 |
-| Bedrohungsmodell Gesamtsystem | VORLÄUFIG | 2026-09-26 | Prüfung 4.5, Gate-Schritt 4.6 |
+| Bedrohungsmodell Gesamtsystem | BELASTBAR | 2026-09-28 | Unabhängige Prüfung 4.5 (getrennte Instanz, Sonnet 5, keine Befunde); Netz-Teil bis 4.7 VORLÄUFIG |
 | Schutzbedarf normal | BELASTBAR | 2026-09-26 | ADR-007 |
-| Host, Secrets im Betrieb, Backups | OFFEN | 2026-09-26 | Schritte 4.2, 4.3, Gate-Schritt 4.6 |
-| Netz (nur HTTPS von außen) | VORLÄUFIG | 2026-09-26 | Schritt 4.2, Gate-Schritt 4.6 |
+| Host | BELASTBAR | 2026-09-28 | Schritt 4.2: Prüfung von außen (alle TCP-Ports; SSH-Passwort-Anmeldung abgelehnt), Firewall und automatische Sicherheitsupdates aktiv, Proxy auf unterstützter Linie (ADR-033); keine eigene Überwachung (ADR-034) |
+| Secrets im Betrieb, Backups | OFFEN | 2026-09-26 | Schritt 4.3, Gate-Schritt 4.6 |
+| Netz (nur HTTPS von außen) | VORLÄUFIG | 2026-09-26 | Prüfungen von außen in Schritt 4.7 (Proxy-Anbindung, `X-Forwarded-For`, `frame-ancestors`) |
 
 <!-- ANCHOR:tooling-inventar -->
 ## 10. Tooling-Inventar

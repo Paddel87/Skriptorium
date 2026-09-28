@@ -23,11 +23,11 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 4 – Stabilisierung und erstes öffentliches Deployment (Stabilisierung), Schritte 4.1, 4.9, 4.10, 4.11 und 4.12 (Proxy-Update, ADR-033) erledigt; 4.2 in Arbeit: Skriptorium läuft als Container auf dem vorhandenen netcup-VPS, von außen erst nach dem Gate (4.6) erreichbar (ADR-027, ADR-029 bis ADR-032); Phase 3 – Schreiben mit KI abgeschlossen am 2026-09-27 (ADR-024: weiterbauen)
+- **Projektphase:** Phase 4 – Stabilisierung und erstes öffentliches Deployment (Stabilisierung), Schritte 4.1, 4.2, 4.5 (Sicherheitsprüfung ohne Befunde), 4.9, 4.10, 4.11 und 4.12 (Proxy-Update, ADR-033) erledigt: Skriptorium läuft als Container auf dem vorhandenen netcup-VPS, von außen erst nach dem Gate (4.6) erreichbar (ADR-027, ADR-029 bis ADR-032), ohne eigene Erreichbarkeits-Überwachung (ADR-034); Phase 3 – Schreiben mit KI abgeschlossen am 2026-09-27 (ADR-024: weiterbauen)
 - **Version:** v0.0.0 – noch keine veröffentlichte Version
 - **Status:** In Entwicklung
-- **Letzte Änderung:** 2026-09-27
-- **Architektur-Reife:** Module, Schnittstellen, Datenmodell und Token-Budget BELASTBAR (ADR-013); Reaktionszeit VORLÄUFIG (in 3.3 verfehlt, Erkundung D.6, ADR-022); Kanon-Treue VORLÄUFIG (erste Messung in 3.3, Messung beim Schreiben des Eigentümers in 4.8); Sicherheitsniveau und Schutzbedarf BELASTBAR (ADR-006, ADR-007); Observability BELASTBAR (Log-Zeile und Monatskosten, ADR-021, ADR-023); Bedrohungsmodell VORLÄUFIG; Host, Secrets im Betrieb und Backups OFFEN bis Phase 4
+- **Letzte Änderung:** 2026-09-28
+- **Architektur-Reife:** Module, Schnittstellen, Datenmodell und Token-Budget BELASTBAR (ADR-013); Reaktionszeit VORLÄUFIG (in 3.3 verfehlt, Erkundung D.6, ADR-022); Kanon-Treue VORLÄUFIG (erste Messung in 3.3, Messung beim Schreiben des Eigentümers in 4.8); Sicherheitsniveau und Schutzbedarf BELASTBAR (ADR-006, ADR-007); Observability BELASTBAR (Log-Zeile und Monatskosten, ADR-021, ADR-023); Bedrohungsmodell BELASTBAR (Prüfung 4.5); Host BELASTBAR (4.2); Netz VORLÄUFIG bis 4.7; Secrets im Betrieb und Backups OFFEN
 - **Aktive Blocker:** 0
 
 ## Quick Start
@@ -87,8 +87,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **4.2 abschließen:** Überwachung mit erprobtem Ausfall.
-- **4.3–4.7:** Backups mit erprobter Wiederherstellung, Notfall-Handbuch, Sicherheitsprüfung, Gate, erstes öffentliches Deployment.
+- **4.3–4.7:** Backups (zurückgestellt, Sicherungsziel offen), Notfall-Handbuch, Gate, erstes öffentliches Deployment.
 - **D.8:** Zugangsdaten der Proxy-Verwaltung rotieren (bis 2026-10-05).
 - **D.6:** Wartezeit bis zum ersten KI-Satz erkunden (vor 4.8).
 

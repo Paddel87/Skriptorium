@@ -10,7 +10,7 @@
 
 - **Projektname:** Skriptorium
 - **Kurzbeschreibung:** Schreibwerkstatt für einen einzelnen Autor: Mehrere eigene Welten dienen als verbindlicher Kanon, Autor und KI schreiben im Wechsel Prosa darin, ohne der jeweiligen Welt zu widersprechen.
-- **Status:** In Entwicklung – Phase 4 „Stabilisierung und erstes öffentliches Deployment“, Schritte 4.1, 4.9, 4.10, 4.11 und 4.12 erledigt, 4.2 in Arbeit (Container auf dem VPS installiert, von außen nicht erreichbar bis Gate 4.6) (Phase 3 „Schreiben mit KI“ abgeschlossen 2026-09-27, ADR-024)
+- **Status:** In Entwicklung – Phase 4 „Stabilisierung und erstes öffentliches Deployment“, Schritte 4.1, 4.2, 4.5, 4.9, 4.10, 4.11 und 4.12 erledigt (Container auf dem VPS installiert, von außen nicht erreichbar bis Gate 4.6); 4.3 zurückgestellt (Phase 3 „Schreiben mit KI“ abgeschlossen 2026-09-27, ADR-024)
 - **Version (SemVer):** v0.0.0 – noch keine lauffähige Version
 - **Dokumentationssprache:** Deutsch
 - **Codesprache (Kommentare, Variablennamen):** Englisch (Eigentümer, 2026-09-26); Fachbegriffe einheitlich: world, canon, canon entry, story, manuscript, guest character
@@ -246,7 +246,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 - **Deployment-Ziel:** kleiner gemieteter Server (VPS), öffentlich erreichbar mit Passwortschutz (Eigentümer, 2026-09-26); vorhandener VPS des Eigentümers bei netcup (ADR-025, 2026-09-27); Ubuntu 24.04.5 LTS, x86_64, 4 Kerne, 7,8 GB RAM, 251 GB Platte (SSH-Abfrage 2026-09-27); der VPS wird bereits für andere Dienste genutzt (2,4 GB RAM und 39 GB Platte belegt) – für die Härtung in 4.2 zu berücksichtigen; Tarif und Preis nicht Sache des Projekts (Eigentümer, 2026-09-27); Einpassung als Container hinter dem vorhandenen Reverse Proxy (ADR-027, Bestand: `docs/research/vps-bestand.md`). Server-Details (Namen, Ports, Adressen) stehen wegen des öffentlichen Repos nur lokal beim Eigentümer
 - **CI/CD:** GitHub Actions, `.github/workflows/ci.yml`. Deployment-Workflow: [TBD in Schritt 4.7 – bis dahin kein Deployment]
 - **Umgebungen:** lokal (macOS des Eigentümers, Coding-Agent; zuvor Cloud-Session) → Produktion (VPS)
-- **Monitoring:** Erreichbarkeits-Prüfung von außen [TBD in Schritt 4.2]; Kosten je Monat in der Oberfläche
+- **Monitoring:** keine Erreichbarkeits-Überwachung (ADR-034; die vorhandene Überwachung auf dem VPS hat eine andere Aufgabe) – Ausfälle bemerkt der Eigentümer beim Öffnen; Gesundheitsprüfung des Containers (`healthy`); Kosten je Monat in der Oberfläche
 - **Server-Prozess:** genau ein uvicorn-Prozess im Container (`Dockerfile`, ADR-029) hinter dem Reverse Proxy auf demselben Host, `--no-access-log`, `FORWARDED_ALLOW_IPS` nur für das eigene Netz zwischen Proxy und Skriptorium (ADR-030) – Sitzungen und Sperre nach Fehlversuchen liegen im Speicher (ADR-017, Sicherheitsprüfung 2.6). Installiert 2026-09-28, von außen noch nicht erreichbar (ADR-032)
 - **Logging-Level Default:** `INFO` im Betrieb, `DEBUG` nur lokal; keine Inhalte aus Welten oder Manuskripten (Abschnitt 6)
 - **Vertretung:** Verzicht – niemand; Stillstand ist zulässig, Daten bleiben in den Sicherungen (Eigentümer, 2026-09-26; ADR-008 mit benanntem Restrisiko)
