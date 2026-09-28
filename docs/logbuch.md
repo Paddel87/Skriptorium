@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 18:25 – [SESSIONENDE] Nachtrag nach D.10
+
+- **Dauer:** 16:04–18:25 UTC (Sessionende 17:40 plus D.10 auf Wunsch des Eigentümers).
+- **Bearbeitet seit 17:40:** D.10 → `[ERLEDIGT]`; PR #27 gemergt, PR #28 (D.10 und dieser Eintrag).
+- **Nächster Schritt:** unverändert – Sicherungsziel für 4.3 entscheiden; D.8 (Eigentümer, bis 2026-10-05).
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5); D.10 auf der empfohlenen Klasse. Unteragenten im Probelauf (Sonnet 5, Haiku 4.5, Opus 5.5) sind Prüflinge, keine Abgabe. Ab der nächsten Session: ausgabelastige Routine-Arbeit an Sonnet 5 abgeben.
+- **Kontextgröße:** ca. 275.000 Token (Grenze 200.000) – Dauerwunsch des Eigentümers.
+- **Sessionende-Prüfungen:** README ohne Änderungsbedarf (D.10 nicht nutzerrelevant, Stand-Zeilen weiter richtig); Drift: kein neuer ADR, Reifegrade unverändert; Reaktiv-Quote 0/10; keine aktiven Blocker; Logbuch ca. 445 Zeilen.
+
 ### 2026-09-28 18:15 – [ERLEDIGT] D.10 Probelauf Routine- und Mechanik-Klasse
 
 - Auf Wunsch des Eigentümers nach dem Sessionende weitergearbeitet. Aufbau: Worktree von `main` mit 5 eingebauten Abweichungen (README Blocker-Zähler 1, D.6 noch unter „Nächste Schritte“, Host `[VORLÄUFIG]`, Reaktiv-Quote 2/10, ADR-036 in D.6), dort committet, damit kein Diff sie verrät; Soll-Werte für Zählen und Suchen per Skript. Vier frische Unteragenten, wörtlich gleiche Aufträge: Routine-Aufgaben an Sonnet 5 und Opus 5.5, Mechanik-Aufgaben an Haiku 4.5 und Opus 5.5.
