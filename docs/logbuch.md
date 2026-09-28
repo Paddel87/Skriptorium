@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-28 17:05 – [ERLEDIGT] Schritt 4.5 Unabhängige Sicherheitsprüfung
+
+- **Getrennte Instanz:** Unteragent mit Claude Sonnet 5, ohne Gesprächsverlauf; Auftrag: Gesamtsystem auf `main` gegen Bedrohungsmodell (`docs/architecture.md` Abschnitt 6) und ASVS 5.0.0 L1 / Auth und Sitzung L2; nur lesend, ohne `.env` und `data/`. Dauer ca. 4 Minuten, 61 Werkzeugaufrufe.
+- **Ergebnis:** keine Befunde hoch oder mittel. Ein niedriger Befund (fehlendes `X-Content-Type-Options: nosniff`, von der Instanz selbst als „unsicher“ markiert): am ASVS-5.0.0-Originaltext (GitHub OWASP/ASVS, Tag v5.0.0) geprüft – 3.4.4 ist Stufe 2, also über dem Niveau → optional. Ebenso optional: `Referrer-Policy` (3.4.5, Stufe 2), `Permissions-Policy`.
+- **Ohne Befund geprüft:** Anmeldung, Einrichtungscode, Sperre, Pwned Passwords, Sitzung, Schutz aller Routen, Herkunftsprüfung (auch Streaming), Schlüssel in Code/Image, Pfadsicherheit, SQL, XSS, Logging, Container.
+- Bedrohungsmodell vorher auf Stand gebracht (Host und Netz aus 4.2).
+
+### 2026-09-28 17:05 – [REIFEGRAD-WECHSEL] Bedrohungsmodell → BELASTBAR
+
+- Grundlage: Prüfung 4.5 ohne Befunde. Netz-Teil bleibt `[VORLÄUFIG]` bis 4.7. Eskalations-Auslöser 4 – auf der Entscheidungs-Klasse.
+
 ### 2026-09-28 16:35 – [BEOBACHTUNG] 4.3 zurückgestellt
 
 - Eigentümer: Duplicati auf dem VPS hat kein externes Sicherungsziel – auch die übrigen Dienste des Eigentümers sind damit nicht außerhalb des Servers gesichert (Hinweis gegeben). Vorschlag zum Sicherungsziel (A Mac holt per SSH, B gemieteter Speicher mit restic, C Duplicati extern) vorgelegt; Eigentümer: „auf später verlegen“. 4.3 bleibt `[OFFEN]` mit Notiz; Gate 4.6 wartet darauf. Wiederherstellungs-Test auf dem Mac freigegeben.

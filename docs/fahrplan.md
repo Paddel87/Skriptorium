@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
 - **Aktiver Schritt:** keiner – 4.2 erledigt 2026-09-28 (ADR-034: keine eigene Überwachung)
-- **Nächster Schritt:** 4.5 Sicherheitsprüfung in getrennter Session. 4.3 Backups zurückgestellt vom Eigentümer (2026-09-28, Sicherungsziel nicht entschieden, Optionen in der Notiz an 4.3) – blockiert 4.4 und das Gate 4.6. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. Datiert: D.8 bis 2026-10-05; D.6 vor 4.8; D.5 ab 2026-11-12; D.9 2026-12-28
+- **Nächster Schritt:** 4.5 erledigt 2026-09-28 (keine Befunde); offen: Wahl des Eigentümers zu optionalen Kopfzeilen. 4.3 Backups zurückgestellt vom Eigentümer (2026-09-28, Sicherungsziel nicht entschieden, Optionen in der Notiz an 4.3) – blockiert 4.4 und das Gate 4.6. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. Datiert: D.8 bis 2026-10-05; D.6 vor 4.8; D.5 ab 2026-11-12; D.9 2026-12-28
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -186,7 +186,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.5: Unabhängige Sicherheitsprüfung
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-28) – getrennte Instanz (Unteragent Claude Sonnet 5 ohne Gesprächsverlauf, nur Repo, Bedrohungsmodell und ADRs) prüfte das Gesamtsystem auf `main`: Authentifizierung, Sitzung, Autorisierung aller Routen, Herkunftsprüfung inkl. Streaming, Secrets (Code, `.dockerignore`, `Dockerfile`), Pfadsicherheit, SQL, XSS, Logging, Container. Keine Befunde hoch/mittel. Einziger Befund (fehlendes `X-Content-Type-Options: nosniff`) ist laut ASVS-5.0.0-Originaltext 3.4.4 Stufe 2 → über dem Niveau, als optional vorgelegt, ebenso `Referrer-Policy` (3.4.5, Stufe 2) und `Permissions-Policy`. Nicht geprüft (ohne Serverzugriff): Proxy-Vertrauen auf dem VPS – dafür 4.7
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.2
 - **Freigabepflichtig:** nein
