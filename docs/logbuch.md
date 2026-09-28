@@ -35,6 +35,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - **Ergebnis:** keine Befunde hoch oder mittel. Ein niedriger Befund (fehlendes `X-Content-Type-Options: nosniff`, von der Instanz selbst als „unsicher“ markiert): am ASVS-5.0.0-Originaltext (GitHub OWASP/ASVS, Tag v5.0.0) geprüft – 3.4.4 ist Stufe 2, also über dem Niveau → optional. Ebenso optional: `Referrer-Policy` (3.4.5, Stufe 2), `Permissions-Policy`.
 - **Ohne Befund geprüft:** Anmeldung, Einrichtungscode, Sperre, Pwned Passwords, Sitzung, Schutz aller Routen, Herkunftsprüfung (auch Streaming), Schlüssel in Code/Image, Pfadsicherheit, SQL, XSS, Logging, Container.
 - Bedrohungsmodell vorher auf Stand gebracht (Host und Netz aus 4.2).
+- Eigentümer wählt alle drei optionalen Kopfzeilen; umgesetzt in 4.7 (Zusatz dort).
 
 ### 2026-09-28 17:05 – [REIFEGRAD-WECHSEL] Bedrohungsmodell → BELASTBAR
 

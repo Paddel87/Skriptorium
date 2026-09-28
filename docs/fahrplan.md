@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
 - **Aktiver Schritt:** keiner – 4.2 erledigt 2026-09-28 (ADR-034: keine eigene Überwachung)
-- **Nächster Schritt:** 4.5 erledigt 2026-09-28 (keine Befunde); offen: Wahl des Eigentümers zu optionalen Kopfzeilen. 4.3 Backups zurückgestellt vom Eigentümer (2026-09-28, Sicherungsziel nicht entschieden, Optionen in der Notiz an 4.3) – blockiert 4.4 und das Gate 4.6. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. Datiert: D.8 bis 2026-10-05; D.6 vor 4.8; D.5 ab 2026-11-12; D.9 2026-12-28
+- **Nächster Schritt:** 4.5 erledigt 2026-09-28 (keine Befunde); optionale Kopfzeilen vom Eigentümer gewählt, Landeplatz 4.7. 4.3 Backups zurückgestellt vom Eigentümer (2026-09-28, Sicherungsziel nicht entschieden, Optionen in der Notiz an 4.3) – blockiert 4.4 und das Gate 4.6. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. Datiert: D.8 bis 2026-10-05; D.6 vor 4.8; D.5 ab 2026-11-12; D.9 2026-12-28
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -233,7 +233,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – Änderung an Build- und Deploy-Pipeline (Eskalations-Auslöser 1).
 - **Eingangskriterien:** Gate 4.6 vollständig
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Deployment-Weg einrichten und ausführen; Gesundheitsprüfung und Anmeldung von außen prüfen. Zusatz 2026-09-28 (aus 4.2, ADR-030, ADR-032): Proxy an das Netz `skriptorium-proxy` anbinden (Sicherungskopie der Proxy-Konfiguration vorher), Router mit HTTPS und Middleware `frame-ancestors 'none'`; von außen prüfen: Einbettung in fremden Rahmen verweigert, mitgeschicktes `X-Forwarded-For` ändert die gesehene Adresse nicht, Fehlversuche von einer Adresse sperren eine zweite nicht.
+- **Zu tun:** Deployment-Weg einrichten und ausführen; Gesundheitsprüfung und Anmeldung von außen prüfen. Zusatz 2026-09-28 (aus 4.2, ADR-030, ADR-032): Proxy an das Netz `skriptorium-proxy` anbinden (Sicherungskopie der Proxy-Konfiguration vorher), Router mit HTTPS und Middleware `frame-ancestors 'none'`; von außen prüfen: Einbettung in fremden Rahmen verweigert, mitgeschicktes `X-Forwarded-For` ändert die gesehene Adresse nicht, Fehlversuche von einer Adresse sperren eine zweite nicht. Zusatz 2026-09-28 (4.5, optional vom Eigentümer gewählt, jeweils über dem Niveau): in `api` (`_security_headers`) zusätzlich `X-Content-Type-Options: nosniff` (ASVS 3.4.4, Stufe 2), `Referrer-Policy: no-referrer` (3.4.5, Stufe 2) und `Permissions-Policy` mit gesperrter Kamera, Mikrofon und Standort setzen, mit Tests.
 - **Akzeptanzkriterien:** Das System ist unter HTTPS erreichbar; ohne Anmeldung ist außer Gesundheitsprüfung und Anmeldung nichts zugänglich; Version und Status in `docs/project-context.md` und README nachgezogen.
 - **Betroffene Module:** api, ui
 - **Reifegrad-Wirkung:** Netz (nur HTTPS von außen) → `[BELASTBAR]` nach den Prüfungen von außen (Zusatz 2026-09-28 aus 4.2)
