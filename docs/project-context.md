@@ -75,6 +75,8 @@ Entwicklung erfolgt durch den Coding-Agent; der Eigentümer entwickelt nicht sel
 | **Hilfsskripte (`scripts/`)** | ✓ | ✓ (`session-start.sh`, ADR-026) | ✗ – wie oben |
 | **CI-Pipeline** | ✓ (GitHub-Hosted-Runner `ubuntu-latest`) | — | — |
 
+**Windows lokal (nur Nutzung):** der direkte Start scheitert am Verzeichnis-`fsync` in `storage/store.py`; über Docker Desktop läuft das Image aus dem `Dockerfile` (erprobt 2026-09-30, `docs/onboarding-runbook.md` Abschnitt 5).
+
 **Nutzung (nicht Entwicklung):** aktuelle Browser auf Desktop und Smartphone; konkrete Matrix nach Modus 2 Schritt 4.
 
 **Pflege-Regel:** Diese Tabelle wird bei jedem Touch an `scripts/`, `pyproject.toml`/`package.json` (Top-Level-Dependencies) oder bei jeder neuen plattform-bezogenen Eskalation re-validiert. Verstöße sind im selben Commit zu korrigieren.
@@ -105,6 +107,7 @@ Modularer Monolith (ADR-003): ein Python-Server (FastAPI) liefert die React-Ober
 |---|---|---|---|
 | OpenRouter | Zugang zu KI-Modellen verschiedener Anbieter, freie Modellwahl (FR-018) | API-Schlüssel, nur serverseitig, nie im Browser | Text des Autors geht nie verloren; Fehlermeldung statt stillem Abbruch; Wiederholen mit anderem Modell (`docs/architecture.md` Abschnitt 5) |
 | weitere KI-Anbieter | künftig parallel zu OpenRouter (FR-025) | je Anbieter | wie OpenRouter |
+| MEGA S4 (Objektspeicher) | Ziel der täglichen Sicherung des Datenverzeichnisses per Duplicati (ADR-036) | Zugangsschlüssel eines eigenen IAM-Benutzers, per Bucket-Richtlinie nur auf den Sicherungs-Bucket; nur auf dem Server und beim Eigentümer; Inhalt vor dem Hochladen verschlüsselt | Sicherung schlägt fehl, Betrieb unberührt; Wiederherstellung nur mit Passphrase, die der Eigentümer auch außerhalb des Servers verwahrt |
 | Have I Been Pwned – Pwned Passwords | Prüfung neuer Passwörter gegen geleakte Passwörter (ADR-017); Daten CC BY 4.0, Namensnennung am Passwortfeld und in der README | keine; nur 5 Hex-Zeichen des SHA-1-Hashes verlassen den Server | Festlegen oder Ändern des Passworts wird abgelehnt, bis der Dienst erreichbar ist; Anmeldung unberührt |
 
 ### APIs
@@ -280,6 +283,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 |---|---|---|---|---|
 | KI-Anfragen über OpenRouter | KI-Verbrauch | Schätzung ca. 6–36 $ plus Ausgabe (400 Anfragen × 30.000 Token, 0,50–3 $ je 1 Mio. Token; `docs/architecture.md` Abschnitt 6) ; gemessen in 1.1 (Testwelt, bis 17.600 Token): Startmodell grok-4.7 ca. 12 $ je Monat, hochgerechnet auf die Obergrenze 30.000 Token ca. 21 $ (ADR-010, `docs/research/modell-eignungstest.md`) | 2026-09-26 | Summe über 50 € |
 | Hosting | laufend | vorhandener netcup-VPS (ADR-025), mitgenutzt; kein Betrag – laut Eigentümer nicht Sache des Projekts | 2026-09-27 | – |
+| Sicherungsziel MEGA S4 | laufend | vorhandener Mega-Tarif des Eigentümers mit S4 (ADR-036); kein zusätzlicher Betrag | 2026-09-30 | – |
 
 <!-- ANCHOR:entscheidungsbefugnisse -->
 ## 9. Entscheidungsbefugnisse

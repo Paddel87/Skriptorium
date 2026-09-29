@@ -29,6 +29,40 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-30 – [ADR-ANGELEGT] ADR-036 Sicherungsziel MEGA S4, 4.3 → IN ARBEIT
+
+- Tarif des Eigentümers enthält MEGA S4. Ob Schlüssel auf einen Bucket beschränkbar sind, war zunächst unklar; Recherche: WebFetch auf mega.io gesperrt, Websuche lieferte nur Anleitungen anderer Anbieter; S4-Spezifikation (github.com/meganz/s4-specs) zeigt IAM-Benutzer, verwaltete Richtlinien nur für alle Buckets und Bucket-Richtlinien mit Principal; Mega-Hilfe im eingebauten Browser (help.mega.io, „Bucket-Richtlinien“, „Policies hierarchy“) belegt: Bucket-Richtlinie für einen einzelnen IAM-Benutzer, Standard ist Verweigern.
+- Eigentümer legte Bucket, IAM-Benutzer, Bucket-Richtlinie (von der KI vorbereitet: ListBucket; Get/Put/DeleteObject) und Zugangsschlüssel an. ARN im Gespräch genannt (kein Secret), nicht ins Repo übernommen. Schlüsselwerte hat die KI nicht gesehen.
+- Entscheidungs-Klasse (Opus 5.5), Eskalations-Auslöser 1 erfüllt.
+
+### 2026-09-29 22:55 – [BEOBACHTUNG] Sicherungsziel 4.3: Mega.nz
+
+- Eigentümer wollte V.4 (TypingMind-Import) ausprobieren; Entscheidung vorgelegt, Antwort: nicht jetzt, V.4 bleibt `[VERSCHOBEN]` (5.5).
+- Für 4.3 fragte der Eigentümer nach Duplicati-Zielen (Liste aus docs.duplicati.com) und wählte Mega.nz. Die Duplicati-Doku rät vom Mega-Ziel ab (ungepflegte Bibliothek, Kontopasswort auf dem Server). Offen: ob der Tarif MEGA S4 (S3) enthält – Mega-Seiten waren für die KI nicht abrufbar, S4 daher unbelegt. Notiz an 4.3 ergänzt.
+
+### 2026-09-29 22:40 – [SESSIONENDE] Lokaler Start unter Windows
+
+- **Dauer:** 22:21–22:40 UTC.
+- **Bearbeitet:** kein Fahrplan-Schritt – Betriebswunsch des Eigentümers (Software lokal starten); Doku-Nachtrag in `docs/onboarding-runbook.md` (Abschnitte 2, 4, 5) und `docs/project-context.md` Abschnitt 3. Kein Code geändert.
+- **Nächster Schritt:** unverändert – Sicherungsziel für 4.3 entscheiden; D.8 (Eigentümer, bis 2026-10-05).
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session`); Doku-Nachtrag ist Routine-Arbeit, nicht abgegeben, weil der Kontext schon geladen war (Hinweis an den Eigentümer gegeben).
+- **Kontextgröße:** nicht feststellbar; Session kurz.
+- **Sessionende-Prüfungen:** README ohne Änderungsbedarf (Quick Start gilt für Linux/macOS, Windows im Runbook); kein neuer ADR, Reifegrade unverändert; keine aktiven Blocker; Logbuch ca. 475 Zeilen, project-context ca. 341 Zeilen – kein Trigger.
+
+### 2026-09-29 22:35 – [GELÖST] Lokaler Start unter Windows über Docker Desktop
+
+- **Anlass:** Eigentümer wollte die Software auf seinem Windows-11-Rechner lokal starten. Windows ist laut Plattform-Matrix nicht unterstützt.
+- **Direkter Start:** uv 0.11.32 kennt Python 3.14.7 nicht → vorhandenes 3.14.2 genommen (`requires-python ==3.14.*`); Node 24.14.0 statt 24.21.0. `uv sync`, `npm ci` und `vite build` liefen, der Server antwortete auf `/api/health`. `skriptorium-einrichtung` brach ab: `[Errno 13] Permission denied: 'data\\system'` – der Verzeichnis-`fsync` in `_write_atomically` (`os.open` auf ein Verzeichnis) geht unter Windows nicht. Die Datei war geschrieben, der Code wurde aber nie ausgegeben; jeder Schreibvorgang wäre gleich gescheitert.
+- **Lösung:** Docker Desktop (WSL2) war installiert. Image aus dem `Dockerfile` gebaut, Container mit `-p 127.0.0.1:8000:8000` und Volume `skriptorium-daten` gestartet. Health-Check, Einrichtungscode, Passwort festlegen und Anmelden liefen. Code und Passwort erzeugte ein Skript im Container, das Passwort ging direkt in eine Datei für den Eigentümer; die KI sah nur Status-Codes. Der Eigentümer hat das Passwort danach selbst geändert, die Datei ist gelöscht.
+- **Reibung:** Docker Desktop meldete beim Start einen Fehler zu `sailor-ingest.sock` (interner Dienst); die Engine lief trotzdem.
+- **Aufgeräumt:** `.venv`, `node_modules`, `dist/`, `data/` aus dem Windows-Versuch entfernt (alle in `.gitignore`).
+- **Nicht getan:** kein Fix für den `fsync` unter Windows – Windows bleibt ohne Bedarf (Plattform-Matrix); ein Fix wäre ein eigener Fahrplan-Schritt nach Entscheidung des Eigentümers.
+
+### 2026-09-29 22:21 – [SESSIONSTART] Software lokal starten
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, laut `get_session`), Entscheidungs-Klasse.
+- **Auftrag:** Software auf dem Windows-Rechner des Eigentümers lokal starten; kein Fahrplan-Schritt. Mindest-Lektüre verkürzt auf `docs/project-context.md` (Plattform-Matrix) und README-Quick-Start, der Eintrag wurde nachgetragen (22:35) – Abweichung von CLAUDE.md Abschnitt 2.
+
 ### 2026-09-28 18:25 – [SESSIONENDE] Nachtrag nach D.10
 
 - **Dauer:** 16:04–18:25 UTC (Sessionende 17:40 plus D.10 auf Wunsch des Eigentümers).

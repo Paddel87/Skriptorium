@@ -47,7 +47,7 @@ Oder ohne eigenes Zutun: `CLAUDE_CODE_REMOTE=true CLAUDE_PROJECT_DIR=$PWD script
 
 ### macOS, Windows
 
-Windows: nicht unterstützt. macOS (arm64): Entwicklungsumgebung des Coding-Agents ab 2026-09-27 (ADR-025). Der SessionStart-Hook richtet dieselben Versionen ein wie in der Cloud-Session (ADR-026), ohne Administratorrechte und neben einem vorhandenen System-Node oder Homebrew-uv; läuft mit dem bash 3.2 von macOS. Danach einmalig `npx playwright install chromium` und vor den End-to-End-Tests `npx vite build`. Erprobt 2026-09-27 im Haupt-Checkout und 2026-09-28 im frischen Klon (Schritt 4.9, alle Prüfungen grün); Hinweise in Abschnitt 5.
+Windows: für die Entwicklung nicht unterstützt; zum lokalen Nutzen den Container aus dem `Dockerfile` über Docker Desktop starten (Abschnitt 5, „Windows“). macOS (arm64): Entwicklungsumgebung des Coding-Agents ab 2026-09-27 (ADR-025). Der SessionStart-Hook richtet dieselben Versionen ein wie in der Cloud-Session (ADR-026), ohne Administratorrechte und neben einem vorhandenen System-Node oder Homebrew-uv; läuft mit dem bash 3.2 von macOS. Danach einmalig `npx playwright install chromium` und vor den End-to-End-Tests `npx vite build`. Erprobt 2026-09-27 im Haupt-Checkout und 2026-09-28 im frischen Klon (Schritt 4.9, alle Prüfungen grün); Hinweise in Abschnitt 5.
 
 ## 3. Setup (End-to-End)
 
@@ -133,6 +133,12 @@ npx playwright test                            # End-to-End in Chromium (nach de
 - **Ursache:** Playwright 1.62 erwartet Chromium-Revision 1234; die Cloud-Session hat ein älteres Chromium unter `/opt/pw-browsers` vorinstalliert, und Downloads sind dort gesperrt.
 - **Lösung:** `PLAYWRIGHT_CHROMIUM_EXECUTABLE=/opt/pw-browsers/chromium npx playwright test`. Auf anderen Rechnern und in der CI: `npx playwright install chromium`.
 
+### Symptom: `StorageError: system/zugang.md: [Errno 13] Permission denied: 'data\\system'` unter Windows
+
+- **Ursache:** `_write_atomically` in `src/skriptorium/storage/store.py` öffnet nach dem Schreiben das Verzeichnis mit `os.open(..., O_RDONLY)` für `fsync`; Windows verweigert das. Die Datei selbst ist geschrieben, der Befehl bricht aber ab – `skriptorium-einrichtung` gibt keinen Code aus, und jeder weitere Schreibvorgang scheitert ebenso.
+- **Lösung:** Windows ist für den direkten Start nicht unterstützt (`docs/project-context.md` Abschnitt 3); stattdessen Docker Desktop (Abschnitt 5, „Windows“).
+- **Auftreten:** 2026-09-30 (Windows 11, Python 3.14.2, uv 0.11.32).
+
 ## 5. Plattform-spezifische Hinweise
 
 ### Linux
@@ -146,6 +152,22 @@ npx playwright test                            # End-to-End in Chromium (nach de
 - Der Hook führt `npm install` aus, der Quick Start `npm ci`; bei unveränderter `package-lock.json` ist das Ergebnis gleich.
 - `npm ci` und `npm install` melden, dass die Install-Skripte von `fsevents` (2.3.2, 2.3.3) nicht über `allowScripts` erlaubt sind. Harmlos: `fsevents` ist eine optionale Abhängigkeit der Datei-Überwachung; alle Prüfungen laufen grün (2026-09-28).
 - Vor dem ersten End-to-End-Lauf einmalig `npx playwright install chromium`.
+
+### Windows
+
+Nur zum Nutzen, nicht zum Entwickeln: Der direkte Start scheitert beim ersten Schreibvorgang (Abschnitt 4). Mit Docker Desktop (WSL2-Backend) läuft dasselbe Image wie auf dem VPS, Daten im benannten Volume `skriptorium-daten`, erreichbar nur vom eigenen Rechner:
+
+```bash
+docker build -t skriptorium:lokal .
+docker run -d --name skriptorium -p 127.0.0.1:8000:8000 -v skriptorium-daten:/data skriptorium:lokal
+docker exec skriptorium skriptorium-einrichtung    # Einrichtungscode, dann http://localhost:8000
+```
+
+- Ohne `-e OPENROUTER_API_KEY` (Wert aus der Shell übernehmen) laufen keine KI-Anfragen.
+- Das Sitzungs-Cookie ist `Secure`; Browser nehmen es unter `http://localhost` trotzdem an.
+- Stoppen und wieder starten: `docker stop skriptorium`, `docker start skriptorium`.
+- Meldet Docker Desktop beim Start `initializing Ingest server … sailor-ingest.sock … Das System kann auf die Datei nicht zugreifen`, betrifft das einen internen Dienst, nicht die Engine; Bauen und Starten gingen trotzdem (2026-09-30).
+- Erprobt 2026-09-30 auf Windows 11 mit Docker 29.7.2: Health-Check, Einrichtungscode, Passwort festlegen und Anmelden.
 
 ## 6. Rollen-spezifische Varianten
 
