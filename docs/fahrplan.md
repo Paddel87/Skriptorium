@@ -166,7 +166,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** storage
 - **Reifegrad-Wirkung:** Backups und Wiederherstellung → `[BELASTBAR]`
 - **Artefakte:** Sicherungs-Konfiguration, Protokoll des Wiederherstellungs-Laufs
-- **Notizen:** 2026-09-28: Die vorhandene Sicherung auf dem VPS (Duplicati) hat kein Ziel außerhalb des Servers (Eigentümer). Vorgelegt: A Mac holt täglich per SSH (Empfehlung), B gemieteter Speicher mit restic, C Duplicati mit externem Ziel. Eigentümer stellt das Thema zurück – keine Entscheidung. Folge: Gate 4.6 und damit 4.7 warten auf 4.3 (kein Gate-Punkt wird übersprungen). Wiederherstellungs-Test auf dem Mac ist freigegeben.
+- **Notizen:** 2026-09-28: Die vorhandene Sicherung auf dem VPS (Duplicati) hat kein Ziel außerhalb des Servers (Eigentümer). Vorgelegt: A Mac holt täglich per SSH (Empfehlung), B gemieteter Speicher mit restic, C Duplicati mit externem Ziel. Eigentümer stellt das Thema zurück – keine Entscheidung. Folge: Gate 4.6 und damit 4.7 warten auf 4.3 (kein Gate-Punkt wird übersprungen). Wiederherstellungs-Test auf dem Mac ist freigegeben. 2026-09-30: Eigentümer neigt zu C mit Ziel Mega.nz. Laut Duplicati-Doku (abgerufen 2026-09-30) ist das Mega-Ziel nicht mehr empfohlen (MegaApiClient ungepflegt) und braucht Benutzername und Passwort des Kontos auf dem Server, 2FA für Automatik ungeeignet. Offen: Eigentümer prüft, ob sein Tarif MEGA S4 (S3-kompatibel, eigene Schlüssel) enthält – dann Duplicati über „S3-kompatibel“; sonst normales Mega-Ziel mit eigenem Sicherungskonto oder anderes Ziel. Entscheidung und ADR stehen noch aus.
 
 #### 4.4: Notfall-Handbuch
 

@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-29 22:55 – [BEOBACHTUNG] Sicherungsziel 4.3: Mega.nz
+
+- Eigentümer wollte V.4 (TypingMind-Import) ausprobieren; Entscheidung vorgelegt, Antwort: nicht jetzt, V.4 bleibt `[VERSCHOBEN]` (5.5).
+- Für 4.3 fragte der Eigentümer nach Duplicati-Zielen (Liste aus docs.duplicati.com) und wählte Mega.nz. Die Duplicati-Doku rät vom Mega-Ziel ab (ungepflegte Bibliothek, Kontopasswort auf dem Server). Offen: ob der Tarif MEGA S4 (S3) enthält – Mega-Seiten waren für die KI nicht abrufbar, S4 daher unbelegt. Notiz an 4.3 ergänzt.
+
 ### 2026-09-29 22:40 – [SESSIONENDE] Lokaler Start unter Windows
 
 - **Dauer:** 22:21–22:40 UTC.
