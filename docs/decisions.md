@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-28 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11, ADR-029 bis ADR-032 aus Schritt 4.2, ADR-033 aus Schritt 4.12, ADR-034 aus Schritt 4.2, ADR-035 aus D.6). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-30 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11, ADR-029 bis ADR-032 aus Schritt 4.2, ADR-033 aus Schritt 4.12, ADR-034 aus Schritt 4.2, ADR-035 aus D.6, ADR-036 aus Schritt 4.3). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -55,12 +55,13 @@ Stand 2026-09-28 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 033 | 2026-09-28 | Aktiv | OPERATIV | SECURITY, DEPLOYMENT | Externe Abh., Deploy | Reverse Proxy auf die unterstützte Linie 3.7 |
 | 034 | 2026-09-28 | Aktiv | OPERATIV | DEPLOYMENT | Deploy | Keine eigene Erreichbarkeits-Überwachung |
 | 035 | 2026-09-28 | Aktiv | ERKENNTNIS | PERFORMANCE | Architektur (NFR) | Reaktionszeit: Zielwerte an die Messung angepasst |
+| 036 | 2026-09-30 | Aktiv | OPERATIV | DEPLOYMENT, SECURITY | Externe Abh., Sicherheit, Deploy | Sicherungsziel: Duplicati nach MEGA S4 mit beschränktem Benutzer |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 0 / 10 (0 %) über ADR-026 bis ADR-035 – ADR-035 aus der Erkundung D.6 (Erkenntnis aus geplanter Messung, wie ADR-022 – nicht reaktiv); ADR-034 in 4.2 (Überwachung, Kategorie 7 – nicht reaktiv); ADR-033 in 4.12 (Kategorien 3 und 7 – nicht reaktiv); ADR-029 bis ADR-032 in 4.2 (Kategorien 3 und 6 – nicht reaktiv); ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv); ADR-025 in 4.2 (geplante Anbieterwahl, nicht mehr im Fenster); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3 (nicht mehr im Fenster). ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
+- **Aktueller Wert:** 0 / 10 (0 %) über ADR-027 bis ADR-036 – ADR-036 in 4.3 (Sicherungsziel, Kategorien 3, 6, 7 – nicht reaktiv, in 4.3 vorgesehen); ADR-035 aus der Erkundung D.6 (Erkenntnis aus geplanter Messung, wie ADR-022 – nicht reaktiv); ADR-034 in 4.2 (Überwachung, Kategorie 7 – nicht reaktiv); ADR-033 in 4.12 (Kategorien 3 und 7 – nicht reaktiv); ADR-029 bis ADR-032 in 4.2 (Kategorien 3 und 6 – nicht reaktiv); ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-025 in 4.2 (geplante Anbieterwahl, nicht mehr im Fenster); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3 (nicht mehr im Fenster). ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -924,6 +925,26 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Vision-Frage, die entschied:** „Stört dich eine typische Wartezeit von etwa 15–30 Sekunden bis zum ersten Satz, oder ist das hinnehmbar, wenn du bei Bedarf auf das schnellere Modell wechseln kannst?“ → hinnehmbar (A).
 - **Konfidenz zum Zeitpunkt:** hoch – klare Beziehung Denk-Token ↔ Wartezeit, alle Stellschrauben ausprobiert; Tageszeit nicht geprüft. Umkehrbarkeit billig.
 - **Konsequenzen:** Keine Code-Änderung; 90-s-Grenze bleibt. Die Beobachtung im 30-Minuten-Test 4.8 zeigt, ob die Wartezeit im echten Schreiben stört.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-036: Sicherungsziel – Duplicati nach MEGA S4 mit eigenem, auf einen Bucket beschränkten Benutzer
+
+- **Datum:** 2026-09-30
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[OPERATIV]` `[DEPLOYMENT]` `[SECURITY]`
+- **Phasentyp-Kontext:** STABILISIERUNG (Schritt 4.3)
+- **Reifegrad-Wirkung:** keine unmittelbare; Backups und Wiederherstellung → `[BELASTBAR]` erst nach erprobter Wiederherstellung (4.3)
+- **Kategorie:** Externe Abhängigkeiten, Sicherheit, Deploy (`CLAUDE.md` Abschnitt 4, Kategorien 3, 6 und 7)
+- **Kontext:** Gate-Punkt 5 verlangt eine Sicherung außerhalb des Servers. Die vorhandene Duplicati-Sicherung auf dem VPS hat kein externes Ziel (4.3, 2026-09-28). Vorgelegt am 2026-09-28: A Mac holt täglich per SSH, B Mietspeicher mit restic, C Duplicati mit externem Ziel. Am 2026-09-30 fragte der Eigentümer nach Duplicati-Zielen und wählte Mega.nz. Befunde: Das Mega-Ziel von Duplicati ist laut Hersteller nicht mehr empfohlen (Bibliothek MegaApiClient ungepflegt) und braucht Benutzername und Passwort des ganzen Kontos auf dem Server, Zwei-Faktor für Automatik ungeeignet (docs.duplicati.com, Mega.nz Destination, abgerufen 2026-09-30). Der Tarif des Eigentümers enthält MEGA S4 (S3-kompatibel). S4 verweigert standardmäßig alles; Bucket-Richtlinien erlauben einem einzelnen IAM-Benutzer Aktionen auf genau einem Bucket; Rollen gibt es nicht, die verwalteten Richtlinien gelten stets für alle Buckets (help.mega.io „Bucket-Richtlinien“ und „Policies hierarchy“, Stand 2026-05-04; github.com/meganz/s4-specs Abschnitt 3.2). Object Lock und Versionierung unterstützt S4 nicht (s4-specs).
+- **Optionen:** A Mac holt per SSH (Empfehlung der KI vom 2026-09-28) / B Mietspeicher mit restic / C1 Duplicati mit Mega-Ziel (Kontopasswort auf dem Server, vom Hersteller abgeraten) / C2 Duplicati über „S3-kompatibel“ nach MEGA S4 mit eigenem IAM-Benutzer ohne verwaltete Richtlinie und einer Bucket-Richtlinie nur für den Sicherungs-Bucket (Empfehlung der KI nach der Wahl von Mega).
+- **Entscheidung:** C2. Bucket und IAM-Benutzer hat der Eigentümer am 2026-09-30 angelegt; die Bucket-Richtlinie erlaubt dem Benutzer `s3:ListBucket` auf dem Bucket und `s3:GetObject`, `s3:PutObject`, `s3:DeleteObject` auf dessen Objekten, sonst nichts. Zugangsschlüssel für diesen Benutzer (nicht „Root user“) angelegt; Werte nur beim Eigentümer. ARN, Kontonummer und Endpunkt stehen wegen des öffentlichen Repos nur lokal.
+- **Vision-Frage, die entschied:** „Wohin sollen die täglichen Sicherungen gehen?“ → Mega; nach den Befunden: über S4 mit beschränktem Schlüssel.
+- **Konfidenz zum Zeitpunkt:** mittel – Beschränkung nur aus Megas Dokumentation belegt, noch nicht am Konto; Duplicati-Anbindung an S4 nicht erprobt. Umkehrbarkeit billig (Ziel in Duplicati austauschbar, keine Daten gebunden).
+- **Restrisiko:** Wer den VPS übernimmt, kann mit dem Schlüssel die Sicherungen im Bucket löschen (Duplicati braucht Löschen für das Aufräumen alter Stände; kein Löschschutz in S4), aber nicht lesen (Duplicati verschlüsselt vor dem Hochladen) und nichts sonst im Mega-Konto erreichen. Abhilfe bei Bedarf: gelegentliche zweite Kopie des Buckets auf den Mac (optional, vom Schutzbedarf normal nicht verlangt, ADR-007).
+- **Konsequenzen:** 4.3 in der Mac-Session (SSH nur von dort, ADR-025): Duplicati-Auftrag für das Datenverzeichnis ohne Index, Ziel S4, eigene Verschlüsselungs-Passphrase, die der Eigentümer zusätzlich außerhalb des Servers verwahrt (ohne sie keine Wiederherstellung nach Verlust des Servers). Beleg der Beschränkung durch erzwungenen Fehler: derselbe Schlüssel scheitert an einem anderen Bucket (CLAUDE.md Abschnitt 6). Zwei neue Secrets (S4-Schlüssel, Passphrase) mit Ablageort und Rotationsweg für Gate-Punkt 4. Keine zusätzlichen Projektkosten (vorhandener Mega-Tarif des Eigentümers).
 - **Abgeleitete Regel:** keine
 
 ---

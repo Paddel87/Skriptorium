@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-30 – [ADR-ANGELEGT] ADR-036 Sicherungsziel MEGA S4, 4.3 → IN ARBEIT
+
+- Tarif des Eigentümers enthält MEGA S4. Ob Schlüssel auf einen Bucket beschränkbar sind, war zunächst unklar; Recherche: WebFetch auf mega.io gesperrt, Websuche lieferte nur Anleitungen anderer Anbieter; S4-Spezifikation (github.com/meganz/s4-specs) zeigt IAM-Benutzer, verwaltete Richtlinien nur für alle Buckets und Bucket-Richtlinien mit Principal; Mega-Hilfe im eingebauten Browser (help.mega.io, „Bucket-Richtlinien“, „Policies hierarchy“) belegt: Bucket-Richtlinie für einen einzelnen IAM-Benutzer, Standard ist Verweigern.
+- Eigentümer legte Bucket, IAM-Benutzer, Bucket-Richtlinie (von der KI vorbereitet: ListBucket; Get/Put/DeleteObject) und Zugangsschlüssel an. ARN im Gespräch genannt (kein Secret), nicht ins Repo übernommen. Schlüsselwerte hat die KI nicht gesehen.
+- Entscheidungs-Klasse (Opus 5.5), Eskalations-Auslöser 1 erfüllt.
+
 ### 2026-09-29 22:55 – [BEOBACHTUNG] Sicherungsziel 4.3: Mega.nz
 
 - Eigentümer wollte V.4 (TypingMind-Import) ausprobieren; Entscheidung vorgelegt, Antwort: nicht jetzt, V.4 bleibt `[VERSCHOBEN]` (5.5).

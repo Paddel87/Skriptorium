@@ -87,7 +87,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **4.3–4.7:** Backups (zurückgestellt, Sicherungsziel offen), Notfall-Handbuch, Gate, erstes öffentliches Deployment.
+- **4.3–4.7:** Backups (in Arbeit, Ziel MEGA S4 nach ADR-036; Einrichtung und Wiederherstellungs-Test stehen aus), Notfall-Handbuch, Gate, erstes öffentliches Deployment.
 - **D.8:** Zugangsdaten der Proxy-Verwaltung rotieren (bis 2026-10-05).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – Startmodell grok-4.7, Zweitmodell grok-4.6.

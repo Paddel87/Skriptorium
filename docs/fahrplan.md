@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-09-28
+- **Stand vom:** 2026-09-30
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** keiner – am 2026-09-28 erledigt: 4.2 (ADR-034), 4.5 (keine Befunde), D.6 (ADR-035), D.10 (Probelauf: Routine-Klasse aktiv, Mechanik-Klasse nicht)
-- **Nächster Schritt:** 4.3 Backups – vom Eigentümer zurückgestellt (2026-09-28), Sicherungsziel offen (Optionen in der Notiz an 4.3); blockiert 4.4, Gate 4.6 und damit 4.7/4.8. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. In 4.7 zusätzlich die optionalen Kopfzeilen aus 4.5. Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
+- **Aktiver Schritt:** 4.3 Backups `[IN ARBEIT]` – Sicherungsziel entschieden (ADR-036, MEGA S4); Einrichtung auf dem VPS und Wiederherstellungs-Test stehen aus und laufen in einer Session auf dem Mac (SSH nur von dort, ADR-025)
+- **Nächster Schritt:** 4.3 fortsetzen (Mac-Session); danach 4.4, Gate 4.6, 4.7/4.8. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. In 4.7 zusätzlich die optionalen Kopfzeilen aus 4.5. Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -154,7 +154,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.3: Backups mit erprobter Wiederherstellung
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT (seit 2026-09-30) – Sicherungsziel entschieden (ADR-036: Duplicati → MEGA S4, eigener IAM-Benutzer nur für den Sicherungs-Bucket); Bucket, Benutzer, Bucket-Richtlinie und Zugangsschlüssel vom Eigentümer angelegt. Offen, nur von der Mac-Session aus (ADR-025): Duplicati-Auftrag auf dem VPS (Datenverzeichnis ohne Index, eigene Passphrase, Eigentümer verwahrt sie auch außerhalb), erste Sicherung, Beleg der Beschränkung (Schlüssel scheitert an anderem Bucket), Wiederherstellung auf dem Mac auf leerem System
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.2
 - **Freigabepflichtig:** ja – Sicherungsziel außerhalb des Servers (Kategorien 3 und 7)
@@ -166,7 +166,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** storage
 - **Reifegrad-Wirkung:** Backups und Wiederherstellung → `[BELASTBAR]`
 - **Artefakte:** Sicherungs-Konfiguration, Protokoll des Wiederherstellungs-Laufs
-- **Notizen:** 2026-09-28: Die vorhandene Sicherung auf dem VPS (Duplicati) hat kein Ziel außerhalb des Servers (Eigentümer). Vorgelegt: A Mac holt täglich per SSH (Empfehlung), B gemieteter Speicher mit restic, C Duplicati mit externem Ziel. Eigentümer stellt das Thema zurück – keine Entscheidung. Folge: Gate 4.6 und damit 4.7 warten auf 4.3 (kein Gate-Punkt wird übersprungen). Wiederherstellungs-Test auf dem Mac ist freigegeben. 2026-09-30: Eigentümer neigt zu C mit Ziel Mega.nz. Laut Duplicati-Doku (abgerufen 2026-09-30) ist das Mega-Ziel nicht mehr empfohlen (MegaApiClient ungepflegt) und braucht Benutzername und Passwort des Kontos auf dem Server, 2FA für Automatik ungeeignet. Offen: Eigentümer prüft, ob sein Tarif MEGA S4 (S3-kompatibel, eigene Schlüssel) enthält – dann Duplicati über „S3-kompatibel“; sonst normales Mega-Ziel mit eigenem Sicherungskonto oder anderes Ziel. Entscheidung und ADR stehen noch aus.
+- **Notizen:** 2026-09-28: Die vorhandene Sicherung auf dem VPS (Duplicati) hat kein Ziel außerhalb des Servers (Eigentümer). Vorgelegt: A Mac holt täglich per SSH (Empfehlung), B gemieteter Speicher mit restic, C Duplicati mit externem Ziel. Eigentümer stellt das Thema zurück – keine Entscheidung. Folge: Gate 4.6 und damit 4.7 warten auf 4.3 (kein Gate-Punkt wird übersprungen). Wiederherstellungs-Test auf dem Mac ist freigegeben. 2026-09-30: Eigentümer neigt zu C mit Ziel Mega.nz. Laut Duplicati-Doku (abgerufen 2026-09-30) ist das Mega-Ziel nicht mehr empfohlen (MegaApiClient ungepflegt) und braucht Benutzername und Passwort des Kontos auf dem Server, 2FA für Automatik ungeeignet. Offen: Eigentümer prüft, ob sein Tarif MEGA S4 (S3-kompatibel, eigene Schlüssel) enthält – dann Duplicati über „S3-kompatibel“; sonst normales Mega-Ziel mit eigenem Sicherungskonto oder anderes Ziel. Entscheidung und ADR stehen noch aus. 2026-09-30 später: Tarif enthält S4; Beschränkung auf einen Bucket per Bucket-Richtlinie laut Mega-Hilfe möglich → ADR-036 (C über S4).
 
 #### 4.4: Notfall-Handbuch
 
