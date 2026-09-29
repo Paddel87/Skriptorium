@@ -29,6 +29,29 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-29 22:40 – [SESSIONENDE] Lokaler Start unter Windows
+
+- **Dauer:** 22:21–22:40 UTC.
+- **Bearbeitet:** kein Fahrplan-Schritt – Betriebswunsch des Eigentümers (Software lokal starten); Doku-Nachtrag in `docs/onboarding-runbook.md` (Abschnitte 2, 4, 5) und `docs/project-context.md` Abschnitt 3. Kein Code geändert.
+- **Nächster Schritt:** unverändert – Sicherungsziel für 4.3 entscheiden; D.8 (Eigentümer, bis 2026-10-05).
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session`); Doku-Nachtrag ist Routine-Arbeit, nicht abgegeben, weil der Kontext schon geladen war (Hinweis an den Eigentümer gegeben).
+- **Kontextgröße:** nicht feststellbar; Session kurz.
+- **Sessionende-Prüfungen:** README ohne Änderungsbedarf (Quick Start gilt für Linux/macOS, Windows im Runbook); kein neuer ADR, Reifegrade unverändert; keine aktiven Blocker; Logbuch ca. 475 Zeilen, project-context ca. 341 Zeilen – kein Trigger.
+
+### 2026-09-29 22:35 – [GELÖST] Lokaler Start unter Windows über Docker Desktop
+
+- **Anlass:** Eigentümer wollte die Software auf seinem Windows-11-Rechner lokal starten. Windows ist laut Plattform-Matrix nicht unterstützt.
+- **Direkter Start:** uv 0.11.32 kennt Python 3.14.7 nicht → vorhandenes 3.14.2 genommen (`requires-python ==3.14.*`); Node 24.14.0 statt 24.21.0. `uv sync`, `npm ci` und `vite build` liefen, der Server antwortete auf `/api/health`. `skriptorium-einrichtung` brach ab: `[Errno 13] Permission denied: 'data\\system'` – der Verzeichnis-`fsync` in `_write_atomically` (`os.open` auf ein Verzeichnis) geht unter Windows nicht. Die Datei war geschrieben, der Code wurde aber nie ausgegeben; jeder Schreibvorgang wäre gleich gescheitert.
+- **Lösung:** Docker Desktop (WSL2) war installiert. Image aus dem `Dockerfile` gebaut, Container mit `-p 127.0.0.1:8000:8000` und Volume `skriptorium-daten` gestartet. Health-Check, Einrichtungscode, Passwort festlegen und Anmelden liefen. Code und Passwort erzeugte ein Skript im Container, das Passwort ging direkt in eine Datei für den Eigentümer; die KI sah nur Status-Codes. Der Eigentümer hat das Passwort danach selbst geändert, die Datei ist gelöscht.
+- **Reibung:** Docker Desktop meldete beim Start einen Fehler zu `sailor-ingest.sock` (interner Dienst); die Engine lief trotzdem.
+- **Aufgeräumt:** `.venv`, `node_modules`, `dist/`, `data/` aus dem Windows-Versuch entfernt (alle in `.gitignore`).
+- **Nicht getan:** kein Fix für den `fsync` unter Windows – Windows bleibt ohne Bedarf (Plattform-Matrix); ein Fix wäre ein eigener Fahrplan-Schritt nach Entscheidung des Eigentümers.
+
+### 2026-09-29 22:21 – [SESSIONSTART] Software lokal starten
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, laut `get_session`), Entscheidungs-Klasse.
+- **Auftrag:** Software auf dem Windows-Rechner des Eigentümers lokal starten; kein Fahrplan-Schritt. Mindest-Lektüre verkürzt auf `docs/project-context.md` (Plattform-Matrix) und README-Quick-Start, der Eintrag wurde nachgetragen (22:35) – Abweichung von CLAUDE.md Abschnitt 2.
+
 ### 2026-09-28 18:25 – [SESSIONENDE] Nachtrag nach D.10
 
 - **Dauer:** 16:04–18:25 UTC (Sessionende 17:40 plus D.10 auf Wunsch des Eigentümers).

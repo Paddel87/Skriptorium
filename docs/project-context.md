@@ -75,6 +75,8 @@ Entwicklung erfolgt durch den Coding-Agent; der Eigentümer entwickelt nicht sel
 | **Hilfsskripte (`scripts/`)** | ✓ | ✓ (`session-start.sh`, ADR-026) | ✗ – wie oben |
 | **CI-Pipeline** | ✓ (GitHub-Hosted-Runner `ubuntu-latest`) | — | — |
 
+**Windows lokal (nur Nutzung):** der direkte Start scheitert am Verzeichnis-`fsync` in `storage/store.py`; über Docker Desktop läuft das Image aus dem `Dockerfile` (erprobt 2026-09-30, `docs/onboarding-runbook.md` Abschnitt 5).
+
 **Nutzung (nicht Entwicklung):** aktuelle Browser auf Desktop und Smartphone; konkrete Matrix nach Modus 2 Schritt 4.
 
 **Pflege-Regel:** Diese Tabelle wird bei jedem Touch an `scripts/`, `pyproject.toml`/`package.json` (Top-Level-Dependencies) oder bei jeder neuen plattform-bezogenen Eskalation re-validiert. Verstöße sind im selben Commit zu korrigieren.
