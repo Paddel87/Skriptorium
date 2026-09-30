@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 4 – Stabilisierung und erstes öffentliches Deployment (Stabilisierung), Schritte 4.1, 4.2, 4.3 (tägliche Sicherung nach MEGA S4, Wiederherstellung erprobt, ADR-036), 4.5 (Sicherheitsprüfung ohne Befunde), 4.9, 4.10, 4.11 und 4.12 (Proxy-Update, ADR-033) erledigt: Skriptorium läuft als Container auf dem vorhandenen netcup-VPS, von außen erst nach dem Gate (4.6) erreichbar (ADR-027, ADR-029 bis ADR-032), ohne eigene Erreichbarkeits-Überwachung (ADR-034); Phase 3 – Schreiben mit KI abgeschlossen am 2026-09-27 (ADR-024: weiterbauen)
+- **Projektphase:** Phase 4 – Stabilisierung und erstes öffentliches Deployment (Stabilisierung), Schritte 4.1, 4.2, 4.3 (tägliche Sicherung nach MEGA S4, Wiederherstellung erprobt, ADR-036), 4.4 (Notfall-Handbuch), 4.5 (Sicherheitsprüfung ohne Befunde), 4.9, 4.10, 4.11 und 4.12 (Proxy-Update, ADR-033) erledigt: Skriptorium läuft als Container auf dem vorhandenen netcup-VPS, von außen erst nach dem Gate (4.6) erreichbar (ADR-027, ADR-029 bis ADR-032), ohne eigene Erreichbarkeits-Überwachung (ADR-034); Phase 3 – Schreiben mit KI abgeschlossen am 2026-09-27 (ADR-024: weiterbauen)
 - **Version:** v0.0.0 – noch keine veröffentlichte Version
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-09-28
@@ -87,7 +87,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **4.4–4.7:** Notfall-Handbuch, Gate, erstes öffentliches Deployment.
+- **4.6–4.7:** Gate, erstes öffentliches Deployment.
 - **D.8:** Zugangsdaten der Proxy-Verwaltung rotieren (bis 2026-10-05).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – Startmodell grok-4.7, Zweitmodell grok-4.6.

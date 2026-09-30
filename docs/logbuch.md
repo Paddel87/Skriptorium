@@ -29,6 +29,25 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-30 13:40 – [SESSIONENDE] Schritt 4.4 erledigt
+
+- **Dauer:** 13:17–13:40 UTC.
+- **Bearbeitet:** 4.4 `[OFFEN]` → `[ERLEDIGT]`.
+- **Offen / nächster Schritt:** Gate 4.6; dort neu 4a (Ablage der Sicherungs-Zugangsdaten außerhalb des Servers – Eigentümer wählt Passwort-Manager, dringend) und 4b (Schlüsseltausch OpenRouter). D.8 bis 2026-10-05.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session`); 1 Schritt oberhalb der Empfehlung (4.4: Routine); nichts abgegeben (Kontext geladen, Text kurz).
+- **Kontextgröße:** nicht feststellbar.
+- **Sessionende-Prüfungen:** README nachgezogen; kein neuer ADR, Reifegrade unverändert, Reaktiv-Quote 0/10, keine aktiven Blocker, Phase 4 weiter 12 Schritte; Ablaufdaten ohne erreichten Vorlauf; Logbuch ca. 540 Zeilen, project-context ca. 345 Zeilen – kein Trigger. Runbook-Änderung nur Notfall-Abschnitt – keine Klon-Validierung nötig.
+
+### 2026-09-30 13:35 – [ERLEDIGT] Schritt 4.4 Notfall-Handbuch
+
+- Eigentümer hat ohne KI nach dem Übungsblatt angehalten und gestartet: „hat alles geklappt“. Beleg der KI danach: Container „Up About a minute (healthy)“.
+- Sicherung von Hand in der Übung nicht ausgeführt (Duplicati-Datenbank: letzter Lauf 03:00 UTC); der Eigentümer lässt die Handläufe und die Wiederherstellung vom 2026-09-30 (4.3, unter Anleitung) gelten.
+- Verschoben nach 4.6 als Prüfpunkte 4a und 4b: Ablage von Passphrase und S4-Schlüsseln außerhalb des Servers; Erprobung des Schlüsseltauschs.
+
+### 2026-09-30 13:30 – [GELÖST] Uhrzeit der Sicherung falsch dokumentiert
+
+- Dokumentiert war 04:15 (Vorschlag der KI); der Auftrag läuft laut Duplicati-Datenbank (`Schedule`) täglich 03:00 UTC = 05:00 MESZ. Erster automatischer Lauf 2026-09-30 05:00. Runbook, Fahrplan 4.3 und project-context korrigiert.
+
 ### 2026-09-30 13:35 – [BEOBACHTUNG] 4.4: Notfall-Abschnitt geschrieben, Anhalten und Starten erprobt
 
 - `docker compose stop` / `start` im Anwendungsverzeichnis auf dem VPS: gestoppt (`Exited (0)`), gestartet, nach etwa einer Minute `healthy`, `/api/health` 200. Wegen `restart: unless-stopped` bleibt ein gestopptes Skriptorium auch nach Server-Neustart aus.
