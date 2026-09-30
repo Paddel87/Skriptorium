@@ -6,6 +6,8 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt
 
+- Öffentlicher Betrieb (2026-09-30, Schritt 4.7, ADR-039): Das Skriptorium läuft auf dem Server des Eigentümers unter HTTPS mit Passwortschutz. Zusätzliche Sicherheits-Kopfzeilen auf jeder Antwort: `X-Content-Type-Options: nosniff`, `Referrer-Policy: no-referrer`, `Permissions-Policy` ohne Kamera, Mikrofon und Standort; der Proxy verbietet das Einbetten in fremde Seiten.
+- Tägliche verschlüsselte Sicherung des Datenverzeichnisses außerhalb des Servers mit erprobter Wiederherstellung (2026-09-30, Schritt 4.3, ADR-036); Notfall-Anleitung im Runbook (Schritt 4.4).
 - Modellwahl je Geschichte und KI-Kosten (2026-09-27, Schritt 3.9, ADR-023): Die Geschichte merkt sich das im Schreib-Bereich gewählte Modell. Unter jedem Vorschlag stehen Token und Kosten, bei einer Ablehnung der Hinweis, ein anderes Modell zu wählen; der Anbieter wird angezeigt. Jede KI-Anfrage (Schreiben, Kurzfassungen) wird ohne Text in `system/verbrauch/JJJJ-MM.md` gezählt; „Konto“ zeigt die Kosten des laufenden Monats. Neuer Endpunkt `GET /api/usage`; `PATCH …/stories/{id}` nimmt `model` an.
 - Fakt aus dem Text in den Kanon (2026-09-27, Schritt 3.8): Eine im Manuskript markierte Stelle wird mit „In den Kanon“ zu einem neuen Eintrag der Welt oder ergänzt einen bestehenden Eintrag als Absatz am Ende. Vorgeschlagen werden der in der Stelle genannte Eintrag bzw. für einen neuen Eintrag die Stelle als Name und die zuletzt gewählte Kategorie. Beim Ergänzen wählt der Autor „Kanon“ (bei einem Gast: der Kanon der Figur in ihrer Heimatwelt) oder „nur diese Geschichte“; bei Gästen ist „nur diese Geschichte“ vorbelegt. Neuer Abschnitt „Fakten dieser Geschichte“ zeigt die nur hier geltenden Fakten und entfernt sie.
 - Gast-Figuren aus anderen Welten (2026-09-27, Schritt 3.7): Eine Geschichte bindet Einträge anderer Welten ein, die nur in ihr gelten. Gäste stehen im `@`-Menü (als „Gast“ markiert), in der neuen Szene und in der Figuren-Schreibweise zur Wahl. Die KI erhält einen genannten oder selbst geführten Gast vollständig und mit seiner Herkunftswelt, einen nicht genannten nur, wenn nach dem Kanon der Welt noch Platz ist; die Regeln seiner Heimatwelt gehen nicht mit. Der Schreib-Endpunkt nimmt Gäste in `references` und in der Szene an.
@@ -21,5 +23,6 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Behoben
 
+- Bei einem unerwarteten Serverfehler fehlten die Sicherheits-Kopfzeilen (auch HSTS); die Antwort ist jetzt `{"detail": "Interner Fehler"}` mit allen Kopfzeilen (2026-09-30, Schritt 4.7).
 - Ohne eingerichteten KI-Anbieter meldete die Oberfläche fälschlich „Die Passwortprüfung ist gerade nicht erreichbar“; jetzt „Kein KI-Anbieter eingerichtet“ (2026-09-27, Schritt 3.6).
 - Bei einem sehr langen Kapitel ohne Leerzeilen zwischen den Absätzen bekam die KI beim Weiterschreiben keinen Manuskripttext mit; jetzt geht das Ende des Kapitels ein (2026-09-27, Schritt 4.1).

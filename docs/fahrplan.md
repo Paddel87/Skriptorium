@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-30
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** 4.7 Erstes öffentliches Deployment `[IN ARBEIT]` – Code-Teil fertig, Entscheidung zu Deployment-Weg und Hostname vorgelegt
-- **Nächster Schritt:** 4.7 Erstes öffentliches Deployment (nur bei unter 70 % Wochenverbrauch, Gate-Punkt 8), danach 4.8. In 4.7 zusätzlich die optionalen Kopfzeilen aus 4.5. Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.11 Sicherungs-Zugangsdaten außerhalb des Servers vor dem ersten echten Kapitel, spätestens 2026-10-31 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
+- **Aktiver Schritt:** keiner – 4.7 erledigt 2026-09-30, das Skriptorium ist öffentlich erreichbar
+- **Nächster Schritt:** 4.8 30-Minuten-Test durch den Eigentümer (mit Stoppuhr; danach erstes echtes Kapitel, Versionsvergabe und Vision-Abgleich). Davor D.11 (Sicherungs-Zugangsdaten außerhalb des Servers, spätestens 2026-10-31). Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -229,7 +229,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.7: Erstes öffentliches Deployment
 
-- **Status:** IN ARBEIT (seit 2026-09-30) – Kopfzeilen `nosniff`, `Referrer-Policy`, `Permissions-Policy` in `api` mit Test (382 Tests grün), Prüfung durch getrennte Instanz läuft; Deployment-Weg und Hostname dem Eigentümer vorgelegt; Proxy-Anbindung steht aus
+- **Status:** ERLEDIGT (2026-09-30) – Deployment-Weg von Hand auf Anweisung (ADR-039). Proxy an das Netz `skriptorium-proxy` angebunden (Sicherungskopie vorher; alle 9 vorhandenen Adressen vorher/nachher identisch, 3 von außen mit gültigem Zertifikat). Stand `942bb40` eingespielt (vorheriges Image und Verzeichnis als Rückweg behalten), Router mit HTTPS und `frame-ancestors 'none'`. Von außen geprüft: `/api/health` 200 mit gültigem Zertifikat, `/api/worlds` 401, Oberfläche 200, HTTP → 301 auf HTTPS; Kopfzeilen HSTS, `nosniff`, `Referrer-Policy`, `Permissions-Policy`, `frame-ancestors 'none'` vorhanden; mitgeschicktes `X-Forwarded-For` ändert die gesehene Adresse nicht (Protokoll: echte Adresse); 10 Fehlversuche mit wechselndem gefälschtem `X-Forwarded-For` → der 11. wird gesperrt (429), eine zweite Adresse bleibt frei (403 statt 429); Oberfläche lädt in echtem Chromium (Anmeldeseite). Kein veröffentlichter Port. Code: drei zusätzliche Kopfzeilen, auch bei unerwartetem Serverfehler; unabhängige Prüfung ohne Befunde hoch/mittel, zwei niedrige behoben (PR #33, 384 Tests, Coverage 99 %). Version bleibt v0.0.0 bis zur Versionsvergabe nach 4.8
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.6
 - **Freigabepflichtig:** ja – Deployment-Workflow (Kategorie 7)
@@ -241,7 +241,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** api, ui
 - **Reifegrad-Wirkung:** Netz (nur HTTPS von außen) → `[BELASTBAR]` nach den Prüfungen von außen (Zusatz 2026-09-28 aus 4.2)
 - **Artefakte:** Deployment-Konfiguration, ADR, CHANGELOG
-- **Notizen:** Kontingent-intensive Vorbereitung ins vorige Kontingent-Fenster legen oder Kontingent für den Termin zurückhalten (Gate-Prüfpunkt 8).
+- **Notizen:** 2026-09-30: Optional, nicht umgesetzt: Kopfzeile `server: uvicorn` ließe sich abschalten (`--no-server-header`; nennt keine Version, über dem Niveau) – dem Eigentümer vorgelegt. Kontingent-intensive Vorbereitung ins vorige Kontingent-Fenster legen oder Kontingent für den Termin zurückhalten (Gate-Prüfpunkt 8).
 
 #### 4.8: 30-Minuten-Test
 
@@ -257,7 +257,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** ui
 - **Reifegrad-Wirkung:** NFR Kanon-Treue → `[BELASTBAR]` bei erfülltem Kriterium (ADR-024)
 - **Artefakte:** Logbuch-Eintrag mit Messung
-- **Notizen:** –
+- **Notizen:** 2026-09-30 (aus 4.7): Nach dem Test vergibt die KI im selben Schritt die erste Version (v0.1.0: `pyproject.toml`, `package.json`, CHANGELOG, README-Badge, project-context) – zusammen mit dem Vision-Abgleich vor Go-Live (CLAUDE.md Abschnitt 12). Vor dem ersten echten Kapitel: D.11. Einrichtungscode für den Test: `docker exec skriptorium skriptorium-einrichtung` (Runbook Abschnitt 7).
 
 #### 4.9: Entwicklungsumgebung macOS einrichten
 

@@ -29,6 +29,31 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-30 14:40 – [SESSIONENDE] Schritt 4.7 erledigt – Skriptorium öffentlich erreichbar
+
+- **Dauer:** 13:40–14:40 UTC (Uhrzeiten grob).
+- **Bearbeitet:** 4.7 `[OFFEN]` → `[ERLEDIGT]`; ADR-039; PR #33 (Code) gemergt, Stand `942bb40` eingespielt.
+- **Offen / nächster Schritt:** 4.8 30-Minuten-Test durch den Eigentümer; davor D.11. D.8 bis 2026-10-05. Auf dem VPS bleiben als Rückweg `app.vorher`, Image `skriptorium:vorher`, Sicherungskopien der Proxy- und Compose-Dateien vom 2026-09-30.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session`); 0 Schritte oberhalb der Empfehlung; abgegeben: unabhängige Sicherheitsprüfung an Sonnet 5 (getrennte Instanz, anderes Modell).
+- **Kontextgröße:** über 330.000 Token (`get_usage` zu Beginn 325.509) – über der Grenze, Weiterarbeit nach dauerhaftem „weiter hier“.
+- **Sessionende-Prüfungen:** README und CHANGELOG nachgezogen; Drift: ADR-039 → 4.7 vorhanden, Reifegrad Netz BELASTBAR passt zu 4.7, Reaktiv-Quote 0/10 über ADR-030 bis ADR-039, keine aktiven Blocker, Phase 4 weiter 12 Schritte; Ablaufdaten ohne erreichten Vorlauf; Logbuch ca. 620 Zeilen, project-context ca. 345 Zeilen – kein Trigger. Quick-Start-Pfad unberührt (Änderung nur an `api` und Notfall-Abschnitt) – keine Klon-Validierung nötig.
+
+### 2026-09-30 14:35 – [ERLEDIGT] Schritt 4.7 Erstes öffentliches Deployment
+
+- **Proxy:** Sicherungskopie des Proxy-Verzeichnisses (nur root lesbar) und der Compose-Datei; Netz `skriptorium-proxy` als externes Netz ergänzt, Container neu erstellt; 9 Adressen vorher/nachher identisch (lokal gegen den Proxy), 3 von außen mit gültigem Zertifikat, HTTP → 301.
+- **Einspielen:** `git archive main` (`942bb40`) auf den VPS, altes Verzeichnis und Image als Rückweg, Labels für Router (HTTPS, vorhandener Zertifikats-Resolver), Dienst-Port und Middleware `frame-ancestors 'none'`, `traefik.docker.network` auf das eigene Netz; Bau und Start, `healthy`. Das vorhandene Zertifikat der Domain deckt die Adresse ab.
+- **Von außen (Mac):** Gesundheitsprüfung 200 / TLS gültig; `/api/worlds` 401; Oberfläche 200; alle fünf Kopfzeilen; Anmeldung mit gefälschtem `X-Forwarded-For` → im Protokoll die echte Adresse; 10 falsche Einrichtungscodes mit wechselndem gefälschtem Absender → 403, der 11. → 429; vom VPS über die öffentliche Adresse (zweite Adresse) → 403, nicht gesperrt. Danach Container neu gestartet, damit die Sperre der Adresse des Eigentümers aufgehoben ist (Sperre liegt im Speicher); Kontrolle: 409 statt 429.
+- **Browser:** In echtem Chromium (Playwright) lädt die Anmeldeseite; einzige Konsolenmeldung ist die erwartete 401 der Sitzungsabfrage.
+
+### 2026-09-30 14:35 – [REIFEGRAD-WECHSEL] Netz (nur HTTPS von außen) → BELASTBAR
+
+- Von `[VORLÄUFIG]`; Beleg: Prüfungen von außen in 4.7 (oben), Datum am Bestandteil in `docs/architecture.md` Abschnitt 9.
+
+### 2026-09-30 14:30 – [GELÖST] Eingebauter Browser blockiert Skript und Stylesheet
+
+- Im Browser-Bereich der Desktop-App blieb die Seite leer: `net::ERR_BLOCKED_BY_CLIENT` für JS und CSS. Per `curl` kamen beide mit 200 und richtigem Typ; in Chromium über Playwright lädt die Seite. Ursache liegt im Browser-Bereich, nicht am Server. Für Sichtprüfungen der öffentlichen Seite künftig Playwright nehmen.
+- Beobachtung: Antworten tragen `server: uvicorn` (ohne Version) – optional abschaltbar, am Schritt 4.7 notiert.
+
 ### 2026-09-30 14:05 – [BEOBACHTUNG] Unabhängige Prüfung der Kopfzeilen-Änderung (4.7)
 
 - Getrennte Instanz (Unteragent Claude Sonnet 5, ohne Gesprächsverlauf; Diff, Bedrohungsmodell, Code): keine Befunde hoch/mittel. Bestätigt: Kopfzeilen auf 200/401/403/404/405/415 und auf der Streaming-Antwort, je genau einmal; `nosniff` bricht die Oberfläche nicht (JS `text/javascript`, CSS `text/css`); `Referrer-Policy` berührt die Herkunftsprüfung nicht (liest nur `Origin`).
