@@ -43,6 +43,12 @@ from skriptorium.storage import (
 
 _SAFE_METHODS: Final = frozenset({"GET", "HEAD", "OPTIONS"})
 _HSTS: Final = "max-age=31536000; includeSubDomains"
+_SECURITY_HEADERS: Final = {
+    "Strict-Transport-Security": _HSTS,
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "no-referrer",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+}
 _log = logging.getLogger("skriptorium.api")
 
 Clock = Callable[[], datetime]
@@ -164,9 +170,13 @@ async def _origin_check(request: Request, call_next: Next) -> Response:
 
 
 async def _security_headers(request: Request, call_next: Next) -> Response:
-    """HSTS on every response (ASVS 3.4.1); no CORS headers are ever sent (3.4.2)."""
+    """Security headers on every response; no CORS headers are ever sent (ASVS 3.4.2).
+
+    HSTS (ASVS 3.4.1); ``nosniff`` (3.4.4) and ``Referrer-Policy`` (3.4.5) are level 2 and,
+    like ``Permissions-Policy``, optional extras chosen by the owner (step 4.5).
+    """
     response = await call_next(request)
-    response.headers["Strict-Transport-Security"] = _HSTS
+    response.headers.update(_SECURITY_HEADERS)
     return response
 
 
@@ -210,7 +220,16 @@ def _add_error_handlers(app: FastAPI) -> None:
         _log.error("speicherfehler route=%s", _route_template(request))
         return _refuse(status.HTTP_500_INTERNAL_SERVER_ERROR, "Speichern fehlgeschlagen")
 
+    async def unexpected(request: Request, error: Exception) -> Response:
+        # Runs in Starlette's outermost error middleware, outside _security_headers.
+        return JSONResponse(
+            {"detail": "Interner Fehler"},
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            headers=_SECURITY_HEADERS,
+        )
+
     app.add_exception_handler(NotFound, not_found)
     app.add_exception_handler(AlreadyExists, already_exists)
     app.add_exception_handler(InvalidInput, invalid_input)
     app.add_exception_handler(StorageError, storage_error)
+    app.add_exception_handler(Exception, unexpected)
