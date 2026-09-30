@@ -253,7 +253,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 - **Server-Prozess:** genau ein uvicorn-Prozess im Container (`Dockerfile`, ADR-029) hinter dem Reverse Proxy auf demselben Host, `--no-access-log`, `FORWARDED_ALLOW_IPS` nur für das eigene Netz zwischen Proxy und Skriptorium (ADR-030) – Sitzungen und Sperre nach Fehlversuchen liegen im Speicher (ADR-017, Sicherheitsprüfung 2.6). Installiert 2026-09-28, von außen noch nicht erreichbar (ADR-032)
 - **Logging-Level Default:** `INFO` im Betrieb, `DEBUG` nur lokal; keine Inhalte aus Welten oder Manuskripten (Abschnitt 6)
 - **Vertretung:** Verzicht – niemand; Stillstand ist zulässig, Daten bleiben in den Sicherungen (Eigentümer, 2026-09-26; ADR-008 mit benanntem Restrisiko)
-- **Notfall-Handbuch:** `docs/onboarding-runbook.md` Abschnitt „Notfall" – [TBD, anzulegen in Schritt 4.4]
+- **Notfall-Handbuch:** `docs/onboarding-runbook.md` Abschnitt 7 „Notfall“ (geschrieben 2026-09-30, Schritt 4.4; Übung des Eigentümers ohne KI steht aus); konkrete Server-Werte in einer lokalen Notiz beim Eigentümer
 - **KI im Betrieb:** Coding-Agent über Claude-Abo Max 5x des Eigentümers; Wochenlimit mit Zurücksetzung sonntags 10:00 (MESZ) plus 5-Stunden-Limit. Rückfallweg ohne KI: Das Skriptorium läuft ohne den Coding-Agent weiter; Neustart und Wiederherstellung nach Notfall-Handbuch. Die KI-Anbieter im Produkt (OpenRouter) sind davon getrennt und über den Kostenrahmen begrenzt.
 - **Zugriff der KI auf die Produktion:** per SSH von der macOS-Umgebung aus (ADR-025), beschränkt auf das für die Einrichtung Nötige; Benutzerkonto, erlaubte Befehle und Ausschluss von Secret-Lesen werden in 4.2 festgelegt und im Gate-Schritt 4.6 belegt
 - **Unbeaufsichtigtes Handeln der KI:** nein

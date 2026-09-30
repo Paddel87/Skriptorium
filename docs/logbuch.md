@@ -29,6 +29,19 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-30 13:35 – [BEOBACHTUNG] 4.4: Notfall-Abschnitt geschrieben, Anhalten und Starten erprobt
+
+- `docker compose stop` / `start` im Anwendungsverzeichnis auf dem VPS: gestoppt (`Exited (0)`), gestartet, nach etwa einer Minute `healthy`, `/api/health` 200. Wegen `restart: unless-stopped` bleibt ein gestopptes Skriptorium auch nach Server-Neustart aus.
+- Runbook Abschnitt 7 mit Platzhaltern (`<vps>`, `<duplicati-adresse>`), echte Werte und Übungsblatt in der lokalen Notiz `notfall-lokal.md` beim Eigentümer (öffentliches Repo).
+- Nicht erprobt: Tausch des OpenRouter-Schlüssels (würde den laufenden Schlüssel ändern) – an 4.4/4.6 vermerkt. `skriptorium-einrichtung` ist im Container vorhanden, nicht ausgeführt (Einrichtung bleibt dem 30-Minuten-Test vorbehalten).
+
+### 2026-09-30 13:17 – [SESSIONSTART] Schritt 4.4
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, laut `get_session`), Entscheidungs-Klasse. 4.4 ist Routine-Arbeit – läuft oberhalb der Empfehlung; dem Eigentümer zu Beginn gesagt (Wochenkontingent). Nicht abgegeben: Fakten vom VPS schon geladen, Text kurz.
+- **Umgebung:** Mac, fortgesetzte Session; `main` unverändert auf `b71d931`, Branch `docs/4.4-notfall-handbuch`.
+- **Mindest-Lektüre:** Stand der Pflicht-Dokumente aus der Vor-Session im Kontext, seit dem Merge keine Änderung (`git pull`: aktuell); zusätzlich Runbook Abschnitt 7 und 4.4 im Fahrplan.
+- **Kontextgröße:** nicht feststellbar.
+
 ### 2026-09-30 00:35 – [BEOBACHTUNG] Sicherungs-Zugangsdaten nur auf dem VPS
 
 - Der Eigentümer hat keinen Passwort-Manager in Betrieb. Duplicati-Passphrase und S4-Schlüssel liegen damit nur im Duplicati-Auftrag auf dem VPS (Schlüssel zusätzlich bei Mega). Nach Verlust des Servers wäre die Sicherung nicht lesbar. Einträge in project-context, Fahrplan, Runbook und Logbuch, die einen Passwort-Manager voraussetzten, korrigiert. Landeplatz: Zusatz an 4.4; Gate 4.6 Punkte 4 und 5 hängen daran. Empfehlung an den Eigentümer: Apple „Passwörter“ oder Bitwarden, Passphrase zusätzlich auf Papier.

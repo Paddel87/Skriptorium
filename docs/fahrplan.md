@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-30
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** keiner – 4.3 erledigt 2026-09-30 (Backups `[BELASTBAR]`)
-- **Nächster Schritt:** 4.4 Notfall-Handbuch (Wiederherstellen schon in Runbook Abschnitt 7); danach Gate 4.6, 4.7/4.8. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. In 4.7 zusätzlich die optionalen Kopfzeilen aus 4.5. Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
+- **Aktiver Schritt:** 4.4 Notfall-Handbuch `[IN ARBEIT]` – geschrieben; wartet auf die Übung des Eigentümers ohne KI und die Ablage der Sicherungs-Zugangsdaten außerhalb des Servers
+- **Nächster Schritt:** 4.4 abschließen (Eigentümer: Übung nach lokaler Notiz, Passwort-Manager); danach Gate 4.6, 4.7/4.8. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. In 4.7 zusätzlich die optionalen Kopfzeilen aus 4.5. Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -170,7 +170,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.4: Notfall-Handbuch
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT (seit 2026-09-30) – Abschnitt „Notfall“ im Runbook geschrieben (Zugang, Anhalten/Starten, KI-Schlüssel widerrufen, Sicherung, Wiederherstellen, Benachrichtigen); Anhalten und Starten von der KI auf dem VPS erprobt; konkrete Werte in lokaler Notiz beim Eigentümer. Offen (Eigentümer): Übung ohne KI (Anhalten, Starten, Sicherung von Hand); Ablage von Passphrase und S4-Schlüsseln außerhalb des Servers; Tausch des KI-Schlüssels ist geschrieben, aber nicht erprobt
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.3
 - **Freigabepflichtig:** nein
@@ -182,7 +182,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** keine (Betrieb)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** `docs/onboarding-runbook.md`
-- **Notizen:** –
+- **Notizen:** 2026-09-30: Wiederherstellen hat der Eigentümer in 4.3 schon selbst durchgeführt (unter Anleitung). Der Tausch des OpenRouter-Schlüssels wird mit dem Rotationsweg für Gate-Punkt 4 in 4.6 erprobt oder dort als Restrisiko benannt.
 
 #### 4.5: Unabhängige Sicherheitsprüfung
 
