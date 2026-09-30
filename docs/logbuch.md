@@ -29,6 +29,29 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-30 14:05 – [BEOBACHTUNG] Unabhängige Prüfung der Kopfzeilen-Änderung (4.7)
+
+- Getrennte Instanz (Unteragent Claude Sonnet 5, ohne Gesprächsverlauf; Diff, Bedrohungsmodell, Code): keine Befunde hoch/mittel. Bestätigt: Kopfzeilen auf 200/401/403/404/405/415 und auf der Streaming-Antwort, je genau einmal; `nosniff` bricht die Oberfläche nicht (JS `text/javascript`, CSS `text/css`); `Referrer-Policy` berührt die Herkunftsprüfung nicht (liest nur `Origin`).
+- Behoben: (niedrig, Vorbestand) Antwort bei unerwartetem Serverfehler trug keine Kopfzeilen, auch kein HSTS – jetzt eigener Handler mit den Kopfzeilen und JSON `{"detail": "Interner Fehler"}`; (niedrig) Tests erweitert auf 403, 404, Oberflächen-Dateien mit Content-Type und 500; (Hinweis) Kopfzeilen in `docs/architecture.md` Abschnitt 6 aufgenommen.
+- Nicht geprüft von der Instanz: echter Browser, Verhalten hinter dem Proxy – folgt in der Prüfung von außen.
+- Stand: 384 Tests grün, Coverage gesamt 99 %, `api/app.py` 100 %; ruff, mypy strict, bandit ohne Befund.
+
+### 2026-09-30 13:55 – [ADR-ANGELEGT] ADR-039 Deployment von Hand, Adresse
+
+- Eigentümer: Option A (von Hand durch die KI auf Anweisung), Adresse gewählt (Wert nur lokal), Proxy-Eingriff „jetzt“ freigegeben (Neuerstellung des Proxy-Containers, kurze Unterbrechung aller Dienste; ADR-030).
+- Vorher-Stand der 9 angebundenen Adressen auf dem VPS erhoben (lokal gegen den Proxy), Liste und Statuscodes liegen auf dem Server.
+- Eine Nachricht des Eigentümers zu einem fremden API-Schlüssel und Endpunkt war nicht für diese Session bestimmt („war nicht für dich“) – nichts unternommen.
+
+### 2026-09-30 13:40 – [SESSIONSTART] Schritt 4.7 Erstes öffentliches Deployment
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, laut `get_session`), Entscheidungs-Klasse – wie für 4.7 verlangt (Eskalations-Auslöser 1).
+- **Umgebung:** Mac, fortgesetzte Session; PR #32 gemergt, `main` auf `b1d693a`, Branch `feat/4.7-deployment`.
+- **Gate-Punkt 8:** Wochenlimit 26 % verbraucht (`get_usage`), unter der Grenze von 70 % – 4.7 darf beginnen.
+- **Mindest-Lektüre:** Stand aus dieser Session; zusätzlich ADR-027, ADR-030, ADR-031 und Schritt 4.7.
+- **Kontextgröße:** 325.509 Token (`get_usage`) – über der Grenze, Weiterarbeit nach dauerhaftem „weiter hier“.
+- **Bestand (lesend):** Proxy 3.7.13 mit Docker- und Datei-Anbieter, Standardnetz `traefik`, Zertifikate über DNS-Challenge, Zugriffsprotokoll global an (ADR-031 lässt das zu); Proxy hängt noch nicht am Netz `skriptorium-proxy`. DNS: beliebige Subdomain der Domain des Eigentümers zeigt schon auf den VPS (Platzhalter-Eintrag) – kein DNS-Schritt nötig. Auf dem VPS liegt Stand `f79e8af` als Dateikopie mit `REVISION` (kein Git-Klon); seither keine Änderung an `src`, `ui`, `Dockerfile`, Abhängigkeiten.
+- **Hinweis:** Die Uhrzeiten der Einträge zu 4.6 (13:50 bis 14:10) waren geschätzt; der Merge von PR #32 lag bei 13:36 UTC.
+
 ### 2026-09-30 14:10 – [SESSIONENDE] Gate 4.6 geschlossen
 
 - **Dauer:** 13:30–14:10 UTC (Uhrzeiten grob).
