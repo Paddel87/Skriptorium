@@ -29,6 +29,60 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-30 00:35 – [BEOBACHTUNG] Sicherungs-Zugangsdaten nur auf dem VPS
+
+- Der Eigentümer hat keinen Passwort-Manager in Betrieb. Duplicati-Passphrase und S4-Schlüssel liegen damit nur im Duplicati-Auftrag auf dem VPS (Schlüssel zusätzlich bei Mega). Nach Verlust des Servers wäre die Sicherung nicht lesbar. Einträge in project-context, Fahrplan, Runbook und Logbuch, die einen Passwort-Manager voraussetzten, korrigiert. Landeplatz: Zusatz an 4.4; Gate 4.6 Punkte 4 und 5 hängen daran. Empfehlung an den Eigentümer: Apple „Passwörter“ oder Bitwarden, Passphrase zusätzlich auf Papier.
+
+### 2026-09-30 00:25 – [SESSIONENDE] Schritt 4.3 erledigt
+
+- **Dauer:** 23:09–00:45 UTC (Nachtrag 00:45: Korrektur zur Ablage der Zugangsdaten eingearbeitet, PR #30 gemergt).
+- **Bearbeitet:** 4.3 `[IN ARBEIT]` → `[ERLEDIGT]`; Backups und Wiederherstellung → `[BELASTBAR]`.
+- **Stand:** tägliche verschlüsselte Sicherung nach MEGA S4 aktiv; Wiederherstellung erprobt; Verfahren in Runbook Abschnitt 7 (Sicherung ziehen, Wiederherstellen). Der `docker run`-Befehl im Runbook ist die verallgemeinerte Form des erprobten Aufrufs (erprobt mit fester Image-Prüfsumme und zusätzlichem `/config`-Verzeichnis).
+- **Offen / nächster Schritt:** Dringend: Eigentümer legt Duplicati-Passphrase und S4-Schlüssel außerhalb des Servers ab (Wahl des Passwort-Managers vertagt, Zusatz an 4.4). Dann 4.4 Notfall-Handbuch (Zugang, Anhalten, Benachrichtigen fehlen noch; Übung ohne KI); D.8 bis 2026-10-05. Offen beim Eigentümer: Duplicati-Image auf dem Mac (ca. 650 MB) behalten oder löschen – bis zur Antwort behalten (nützlich für die Übung in 4.4).
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session`); 0 Schritte oberhalb der Empfehlung (4.3: Entscheidung); nichts abgegeben – Doku-Nachträge klein und mit geladenem Kontext erledigt.
+- **Kontextgröße:** nicht feststellbar (Sitzungsabfrage meldet sie nicht).
+- **Sessionende-Prüfungen:** README nachgezogen (Phase, Reife, nächste Schritte); Drift: ADR-036 → 4.3 vorhanden, Reifegrad Backups passt zu 4.3/ADR-036, Modul-Liste unverändert, keine aktiven Blocker, Reaktiv-Quote unverändert 0/10, Phase 4 weiter 12 Schritte; Ablaufdaten: Vorlauf Guthaben (2026-10-22) noch nicht erreicht; Logbuch ca. 510 Zeilen, project-context ca. 345 Zeilen – kein Trigger. Runbook-Änderung betrifft nur den Notfall-Abschnitt, nicht den Onboarding-Pfad – keine Klon-Validierung nötig.
+
+### 2026-09-30 00:20 – [ERLEDIGT] Schritt 4.3 Backups mit erprobter Wiederherstellung
+
+- Duplicati-Auftrag „Skriptorium“ vom Eigentümer in der Weboberfläche angelegt, geführt Abschnitt für Abschnitt; Schlüssel und Passphrase gab nur er ein, die KI sah keinen Wert (Befehle filterten `passw|key|secret|auth`).
+- **Erzwungener Fehler:** Schlüssel gegen zweiten, leeren Bucket → Lauf scheitert mit „AmazonS3Exception: Request not allowed by policy“; zweiter Bucket blieb leer.
+- **Wiederherstellung:** Probewelt (Welt + 2 Einträge) mit Freigabe des Eigentümers auf dem VPS angelegt, Prüfsummen notiert; Sicherung 02:16 MESZ (9 Einträge). Auf dem Mac Wegwerf-Container `lscr.io/linuxserver/duplicati@sha256:9272af85…` (gleicher Digest wie VPS, Download freigegeben), nur 127.0.0.1; Eigentümer stellte wieder her; die Werte kopierte er aus dem Export des VPS-Auftrags (kein Passwort-Manager vorhanden – siehe Beobachtung 00:35). Ergebnis: 3 Dateien, `shasum -c` OK, Index nicht dabei. Server (`main`-Stand) auf Kopie gestartet: `/api/health` 200, `/api/worlds` 401 ohne Anmeldung, Einrichtung 204, Anmeldung 204, Welt „Probe Sicherung“ gelistet. Index: `find_entries("Anna")` vor `rebuild_index()` leer, danach Treffer.
+- **Aufgeräumt:** Probewelt auf dem VPS über `DocumentStore.delete` entfernt (Index danach ohne Treffer, im Datenverzeichnis nur `index.sqlite`); Container und Testdaten auf dem Mac gelöscht. Die Probewelt bleibt in der Sicherung von 02:16, bis die Aufbewahrung sie entfernt (nur Testtext).
+
+### 2026-09-30 00:20 – [REIFEGRAD-WECHSEL] Backups und Wiederherstellung → BELASTBAR
+
+- Von `[OFFEN]`; Beleg: vollständige Wiederherstellung aus echter Sicherung (CLAUDE.md Abschnitt 6), Datum am Bestandteil in `docs/architecture.md` Abschnitt 6 und 9. „Secrets im Betrieb“ als eigene Zeile, bleibt `[OFFEN]` bis Gate 4.6.
+
+### 2026-09-30 00:15 – [GELÖST] Reibungen bei der Einrichtung von Duplicati nach S4
+
+- „Access Key is malformed“: Schlüssel beim Einfügen vertauscht bzw. unsauber; neu eingefügt.
+- „Root element is missing“: Server-URL enthielt den Bucket-Namen als Subdomain (virtuelle Adressierung, wie Mega die Objekt-URL zeigt); richtig ist nur der Endpunkt, Duplicati setzt den Bucket selbst.
+- Objekt-URL-Zugriff des Buckets bleibt „verweigert“ – Duplicati arbeitet signiert, öffentliche URLs braucht es nicht.
+- Erste Sicherungen (01:31, 01:36) enthielten nur den leeren Ordner: der Auftrag hatte einen in der Oberfläche nicht sichtbaren zweiten Filter `*` (Ausschluss). Gefunden über eine Kopie der Duplicati-Serverdatenbank (Tabellen `Filter`, `Fileset`, `FilesetEntry`, nur lesend im Container `skriptorium:local`); behoben, indem der sichtbare Filter auf `index.sqlite` neu gesetzt und gespeichert wurde – danach nur noch ein Filter.
+- Lokale Wiederherstellung: „is an unexpected token … Line 1, position 49“ = Tippfehler im Endpunkt, Antwort war eine Webseite.
+- Wiederhergestellte Ordner waren schreibgeschützt (`Permission denied` beim Löschen) – im Runbook `chmod -R u+w` ergänzt.
+- Duplicati-Anmeldepasswort vergessen: vom Eigentümer mit `duplicati-server-util change-password` im Container neu gesetzt.
+- Export „Als Befehlszeile“ zeigt `&` als `&`.
+
+### 2026-09-30 00:10 – [BEOBACHTUNG] Duplicati auf dem VPS hatte keinen Auftrag
+
+- Duplicati-Serverdatenbank: Tabelle `Backup` enthält nur ID 1 „Skriptorium“, `sqlite_sequence` für `Backup` = 1. Die Annahme aus 4.2 / `docs/research/vps-bestand.md`, das Datenverzeichnis sei von der vorhandenen Sicherung erfasst, war falsch; korrigiert an 4.2. Auch die übrigen Dienste des Eigentümers auf dem VPS werden damit von Duplicati nicht gesichert – nicht Teil des Projekts, Eigentümer informiert.
+
+### 2026-09-29 23:25 – [BEOBACHTUNG] Bestand für 4.3 auf dem VPS; Index-Neuaufbau ohne Aufrufer
+
+- **Duplicati auf dem VPS:** Container `lscr.io/linuxserver/duplicati:latest` (v2.2.0.3_stable, Build 2026-03-28), läuft als root, `/opt/docker` schreibgeschützt unter `/source`; Weboberfläche über den Proxy. Datenverzeichnis des Skriptoriums damit unter `/source/skriptorium/data/` erreichbar. Neuer Auftrag darf nur dieses Verzeichnis sichern – nicht `/source/skriptorium/.env` (OpenRouter-Schlüssel).
+- **Datenverzeichnis auf dem VPS:** enthält nur `index.sqlite` – die Einrichtung ist dort noch nicht gelaufen (bleibt dem Eigentümer für den 30-Minuten-Test 4.8 vorbehalten). Für einen aussagekräftigen Wiederherstellungs-Test fehlt echter Inhalt.
+- **Index:** `DocumentStore.rebuild_index()` hat im Produktcode keinen Aufrufer; nach einer Wiederherstellung ohne `index.sqlite` legt der Server einen leeren Index an. Wirkung gering: die Oberfläche nutzt den Index nicht (`@`-Menü filtert im Browser, Kontext-Zusammenstellung liest über `list_paths`), nur `GET …/search` (`CanonService.find_entries`) liefert dann nichts. Folge für 4.3: Neuaufbau als ausdrücklicher Schritt im Wiederherstellungs-Verfahren (Python-Aufruf im Container), keine Code-Änderung.
+
+### 2026-09-29 23:10 – [SESSIONSTART] Schritt 4.3 fortsetzen
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, laut `get_session`), Entscheidungs-Klasse. Empfohlene Klasse für 4.3: Entscheidung – passt.
+- **Umgebung:** Mac des Eigentümers (SSH zum VPS möglich, ADR-025); `main` auf `b3681eb` gezogen, Branch `chore/4.3-backups`.
+- **Mindest-Lektüre:** vollständig (project-context, Logbuch ab letztem `[SESSIONENDE]`, Fahrplan Stand und Phase 4, Architektur 1/2/9, Decisions Teil A/C, aktive Blocker); zusätzlich ADR-036 (Schritt verweist darauf).
+- **Kontextgröße:** über die Sitzungsabfrage nicht gemeldet – Regel zur Sessiongröße entfällt.
+- **Vorhaben:** Duplicati-Auftrag nach MEGA S4 auf dem VPS, erste Sicherung, Beleg der Bucket-Beschränkung, Wiederherstellung auf dem Mac.
+
 ### 2026-09-30 – [ADR-ANGELEGT] ADR-036 Sicherungsziel MEGA S4, 4.3 → IN ARBEIT
 
 - Tarif des Eigentümers enthält MEGA S4. Ob Schlüssel auf einen Bucket beschränkbar sind, war zunächst unklar; Recherche: WebFetch auf mega.io gesperrt, Websuche lieferte nur Anleitungen anderer Anbieter; S4-Spezifikation (github.com/meganz/s4-specs) zeigt IAM-Benutzer, verwaltete Richtlinien nur für alle Buckets und Bucket-Richtlinien mit Principal; Mega-Hilfe im eingebauten Browser (help.mega.io, „Bucket-Richtlinien“, „Policies hierarchy“) belegt: Bucket-Richtlinie für einen einzelnen IAM-Benutzer, Standard ist Verweigern.
