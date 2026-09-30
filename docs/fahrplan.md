@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-09-30
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** keiner – 4.6 Gate erledigt 2026-09-30 (ADR-037, ADR-038)
+- **Aktiver Schritt:** 4.7 Erstes öffentliches Deployment `[IN ARBEIT]` – Code-Teil fertig, Entscheidung zu Deployment-Weg und Hostname vorgelegt
 - **Nächster Schritt:** 4.7 Erstes öffentliches Deployment (nur bei unter 70 % Wochenverbrauch, Gate-Punkt 8), danach 4.8. In 4.7 zusätzlich die optionalen Kopfzeilen aus 4.5. Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.11 Sicherungs-Zugangsdaten außerhalb des Servers vor dem ersten echten Kapitel, spätestens 2026-10-31 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
 - **Offene STOPP-Situationen:** keine
 
@@ -229,7 +229,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.7: Erstes öffentliches Deployment
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT (seit 2026-09-30) – Kopfzeilen `nosniff`, `Referrer-Policy`, `Permissions-Policy` in `api` mit Test (382 Tests grün), Prüfung durch getrennte Instanz läuft; Deployment-Weg und Hostname dem Eigentümer vorgelegt; Proxy-Anbindung steht aus
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.6
 - **Freigabepflichtig:** ja – Deployment-Workflow (Kategorie 7)

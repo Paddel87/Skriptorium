@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
+from httpx import Response
 
 from skriptorium.api import create_app
 from skriptorium.api.settings import Settings
@@ -75,6 +76,70 @@ def test_hsts_and_no_cors_headers(client: TestClient) -> None:
     response = client.get("/api/health", headers={"Origin": "https://evil.example"})
     assert response.headers["strict-transport-security"] == "max-age=31536000; includeSubDomains"
     assert not any(h.lower().startswith("access-control-") for h in response.headers)
+
+
+_EXPECTED_HEADERS = {
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "no-referrer",
+    "permissions-policy": "camera=(), microphone=(), geolocation=()",
+}
+
+
+def _assert_security_headers(response: Response) -> None:
+    for name, value in _EXPECTED_HEADERS.items():
+        assert response.headers.get_list(name) == [value], name
+
+
+def test_security_headers_on_answered_and_refused_requests(client: TestClient) -> None:
+    _assert_security_headers(client.get("/api/health"))  # public
+    _assert_security_headers(client.get("/api/worlds"))  # no session: 401
+    refused = client.post("/api/worlds", json={"name": "Neu"}, headers={"Origin": "https://x.io"})
+    assert refused.status_code == 403
+    _assert_security_headers(refused)
+    _assert_security_headers(client.get("/api/unbekannt"))  # 404
+
+
+def test_security_headers_on_interface_files(tmp_path: Path) -> None:
+    ui = tmp_path / "ui"
+    (ui / "assets").mkdir(parents=True)
+    (ui / "index.html").write_text("<p>Skriptorium</p>", encoding="utf-8")
+    (ui / "assets" / "app.js").write_text("export {};", encoding="utf-8")
+    (ui / "assets" / "app.css").write_text("p{}", encoding="utf-8")
+    app = create_app(
+        Settings(data_dir=tmp_path / "data", ui_dir=ui),
+        hasher=cheap_hasher(),
+        breached=FakeBreached(),
+    )
+    client = TestClient(app, base_url=ORIGIN)
+    expected_types = {
+        "/": "text/html",
+        "/assets/app.js": "text/javascript",
+        "/assets/app.css": "text/css",
+    }
+    for path, content_type in expected_types.items():
+        response = client.get(path)
+        _assert_security_headers(response)
+        # nosniff makes browsers refuse scripts and styles with a wrong type
+        assert response.headers["content-type"].startswith(content_type), path
+
+
+def test_security_headers_on_unexpected_server_error(tmp_path: Path) -> None:
+    app = create_app(
+        Settings(data_dir=tmp_path / "data", ui_dir=tmp_path / "no-ui"),
+        hasher=cheap_hasher(),
+        breached=FakeBreached(),
+    )
+
+    @app.get("/api/kaputt")
+    def broken() -> None:
+        raise RuntimeError("geheimes Detail")
+
+    client = TestClient(app, base_url=ORIGIN, raise_server_exceptions=False)
+    response = client.get("/api/kaputt")
+    assert response.status_code == 500
+    assert response.json() == {"detail": "Interner Fehler"}
+    _assert_security_headers(response)
 
 
 def test_no_api_documentation_published(client: TestClient) -> None:

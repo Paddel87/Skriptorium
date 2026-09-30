@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-30 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11, ADR-029 bis ADR-032 aus Schritt 4.2, ADR-033 aus Schritt 4.12, ADR-034 aus Schritt 4.2, ADR-035 aus D.6, ADR-036 aus Schritt 4.3, ADR-037 und ADR-038 aus Schritt 4.6). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-30 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11, ADR-029 bis ADR-032 aus Schritt 4.2, ADR-033 aus Schritt 4.12, ADR-034 aus Schritt 4.2, ADR-035 aus D.6, ADR-036 aus Schritt 4.3, ADR-037 und ADR-038 aus Schritt 4.6, ADR-039 aus Schritt 4.7). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -58,12 +58,13 @@ Stand 2026-09-30 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 036 | 2026-09-30 | Aktiv | OPERATIV | DEPLOYMENT, SECURITY | Externe Abh., Sicherheit, Deploy | Sicherungsziel: Duplicati nach MEGA S4 mit beschränktem Benutzer |
 | 037 | 2026-09-30 | Aktiv | OPERATIV | SECURITY | Sicherheit | Zugriff der KI auf die Produktion unverändert; Schlüsseltausch nicht erprobt |
 | 038 | 2026-09-30 | Aktiv | OPERATIV | SECURITY, DEPLOYMENT | Sicherheit | Gate 4.6: Ablage der Sicherungs-Zugangsdaten nicht vor dem Deployment, nachgeholt in D.11 |
+| 039 | 2026-09-30 | Aktiv | OPERATIV | DEPLOYMENT | Deploy | Deployment von Hand durch die KI auf Anweisung; Adresse des Skriptoriums |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 0 / 10 (0 %) über ADR-029 bis ADR-038 – ADR-038 in 4.6 (Verzicht auf Gate-Punkt 4a, Kategorie 6 – nicht reaktiv); ADR-037 in 4.6 (Zugriff der KI, Kategorie 6 – nicht reaktiv, laut ADR-032 dort vorgesehen); ADR-036 in 4.3 (Sicherungsziel, Kategorien 3, 6, 7 – nicht reaktiv, in 4.3 vorgesehen); ADR-035 aus der Erkundung D.6 (Erkenntnis aus geplanter Messung, wie ADR-022 – nicht reaktiv); ADR-034 in 4.2 (Überwachung, Kategorie 7 – nicht reaktiv); ADR-033 in 4.12 (Kategorien 3 und 7 – nicht reaktiv); ADR-029 bis ADR-032 in 4.2 (Kategorien 3 und 6 – nicht reaktiv); ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv, nicht mehr im Fenster); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-025 in 4.2 (geplante Anbieterwahl, nicht mehr im Fenster); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3 (nicht mehr im Fenster). ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
+- **Aktueller Wert:** 0 / 10 (0 %) über ADR-030 bis ADR-039 – ADR-039 in 4.7 (Deployment-Weg, Kategorie 7 – nicht reaktiv, in 4.7 vorgesehen); ADR-038 in 4.6 (Verzicht auf Gate-Punkt 4a, Kategorie 6 – nicht reaktiv); ADR-037 in 4.6 (Zugriff der KI, Kategorie 6 – nicht reaktiv, laut ADR-032 dort vorgesehen); ADR-036 in 4.3 (Sicherungsziel, Kategorien 3, 6, 7 – nicht reaktiv, in 4.3 vorgesehen); ADR-035 aus der Erkundung D.6 (Erkenntnis aus geplanter Messung, wie ADR-022 – nicht reaktiv); ADR-034 in 4.2 (Überwachung, Kategorie 7 – nicht reaktiv); ADR-033 in 4.12 (Kategorien 3 und 7 – nicht reaktiv); ADR-029 bis ADR-032 in 4.2 (Kategorien 3 und 6 – nicht reaktiv); ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv, nicht mehr im Fenster); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-025 in 4.2 (geplante Anbieterwahl, nicht mehr im Fenster); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3 (nicht mehr im Fenster). ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -987,6 +988,25 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Konfidenz zum Zeitpunkt:** hoch, was die Folge angeht; die Abwägung ist Sache des Eigentümers. Umkehrbarkeit billig, solange der VPS läuft (Werte jederzeit aus dem Duplicati-Auftrag exportierbar); nach Verlust des VPS nicht mehr.
 - **Restrisiko:** Geht der VPS verloren, bevor D.11 erledigt ist, ist die Sicherung in MEGA S4 nicht lesbar – alle bis dahin geschriebenen Welten und Texte wären verloren. Bis zum ersten echten Inhalt (30-Minuten-Test 4.8) ist das Datenverzeichnis leer, der Schaden träte also erst danach ein.
 - **Konsequenzen:** 4.6 `[ERLEDIGT]`, 4.7 kann beginnen. D.11 mit Frist „vor dem ersten echten Kapitel in 4.8, spätestens 2026-10-31“. Runbook Abschnitt 7 nennt den Ablageort weiter als offen.
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-039: Deployment von Hand durch die KI auf Anweisung; Adresse des Skriptoriums
+
+- **Datum:** 2026-09-30
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[OPERATIV]` `[DEPLOYMENT]`
+- **Phasentyp-Kontext:** STABILISIERUNG (Schritt 4.7)
+- **Reifegrad-Wirkung:** keine unmittelbare; Netz → `[BELASTBAR]` nach den Prüfungen von außen in 4.7
+- **Kategorie:** Build- und Deploy-Pipeline (`CLAUDE.md` Abschnitt 4, Kategorie 7)
+- **Kontext:** Der Stand auf dem VPS wurde in 4.2 von Hand eingespielt (Dateikopie mit `REVISION`, Image-Bau auf dem Server). Für den Betrieb braucht es einen festgelegten Weg. Auf dem VPS existiert ein selbst gehosteter GitHub-Actions-Runner für andere Anwendungen des Eigentümers.
+- **Optionen:** A von Hand durch die KI per SSH, nur auf ausdrückliche Anweisung des Eigentümers (Empfehlung der KI) / B automatisch über den vorhandenen Runner bei jedem Merge auf `main` / C Image-Bau bei GitHub, der VPS holt das Image ab.
+- **Entscheidung:** A. Ablauf: Stand von `main` (nach grüner CI) als Archiv auf den VPS übertragen, Anwendungsverzeichnis ersetzen, `REVISION` schreiben, `docker compose build`, `docker compose up -d`, Gesundheitsprüfung; Rückweg über das vorherige Image. Adresse: eine Subdomain der Domain des Eigentümers (Wert nur lokal, öffentliches Repo); Zertifikat über den vorhandenen Resolver des Proxys.
+- **Vision-Frage, die entschied:** „Sollen neue Versionen nur dann auf den Server kommen, wenn du es ausdrücklich sagst – oder automatisch nach jeder Änderung?“ → nur auf Anweisung.
+- **Konfidenz zum Zeitpunkt:** hoch – derselbe Weg hat in 4.2 funktioniert. Umkehrbarkeit billig.
+- **Konsequenzen:** Kein Deployment-Workflow in `.github/workflows/`; `docs/project-context.md` Abschnitt 8 nennt den Weg; Ablauf im Runbook Abschnitt 7 („Neue Version einspielen“). Kein unbeaufsichtigtes Handeln der KI auf der Produktion (unverändert).
 - **Abgeleitete Regel:** keine
 
 ---
