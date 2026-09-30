@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-30 00:35 – [BEOBACHTUNG] Sicherungs-Zugangsdaten nur auf dem VPS
+
+- Der Eigentümer hat keinen Passwort-Manager in Betrieb. Duplicati-Passphrase und S4-Schlüssel liegen damit nur im Duplicati-Auftrag auf dem VPS (Schlüssel zusätzlich bei Mega). Nach Verlust des Servers wäre die Sicherung nicht lesbar. Einträge in project-context, Fahrplan, Runbook und Logbuch, die einen Passwort-Manager voraussetzten, korrigiert. Landeplatz: Zusatz an 4.4; Gate 4.6 Punkte 4 und 5 hängen daran. Empfehlung an den Eigentümer: Apple „Passwörter“ oder Bitwarden, Passphrase zusätzlich auf Papier.
+
 ### 2026-09-30 00:25 – [SESSIONENDE] Schritt 4.3 erledigt
 
 - **Dauer:** 23:09–00:25 UTC.
@@ -43,7 +47,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 
 - Duplicati-Auftrag „Skriptorium“ vom Eigentümer in der Weboberfläche angelegt, geführt Abschnitt für Abschnitt; Schlüssel und Passphrase gab nur er ein, die KI sah keinen Wert (Befehle filterten `passw|key|secret|auth`).
 - **Erzwungener Fehler:** Schlüssel gegen zweiten, leeren Bucket → Lauf scheitert mit „AmazonS3Exception: Request not allowed by policy“; zweiter Bucket blieb leer.
-- **Wiederherstellung:** Probewelt (Welt + 2 Einträge) mit Freigabe des Eigentümers auf dem VPS angelegt, Prüfsummen notiert; Sicherung 02:16 MESZ (9 Einträge). Auf dem Mac Wegwerf-Container `lscr.io/linuxserver/duplicati@sha256:9272af85…` (gleicher Digest wie VPS, Download freigegeben), nur 127.0.0.1; Eigentümer stellte mit Daten aus dem Passwort-Manager wieder her. Ergebnis: 3 Dateien, `shasum -c` OK, Index nicht dabei. Server (`main`-Stand) auf Kopie gestartet: `/api/health` 200, `/api/worlds` 401 ohne Anmeldung, Einrichtung 204, Anmeldung 204, Welt „Probe Sicherung“ gelistet. Index: `find_entries("Anna")` vor `rebuild_index()` leer, danach Treffer.
+- **Wiederherstellung:** Probewelt (Welt + 2 Einträge) mit Freigabe des Eigentümers auf dem VPS angelegt, Prüfsummen notiert; Sicherung 02:16 MESZ (9 Einträge). Auf dem Mac Wegwerf-Container `lscr.io/linuxserver/duplicati@sha256:9272af85…` (gleicher Digest wie VPS, Download freigegeben), nur 127.0.0.1; Eigentümer stellte wieder her; die Werte kopierte er aus dem Export des VPS-Auftrags (kein Passwort-Manager vorhanden – siehe Beobachtung 00:35). Ergebnis: 3 Dateien, `shasum -c` OK, Index nicht dabei. Server (`main`-Stand) auf Kopie gestartet: `/api/health` 200, `/api/worlds` 401 ohne Anmeldung, Einrichtung 204, Anmeldung 204, Welt „Probe Sicherung“ gelistet. Index: `find_entries("Anna")` vor `rebuild_index()` leer, danach Treffer.
 - **Aufgeräumt:** Probewelt auf dem VPS über `DocumentStore.delete` entfernt (Index danach ohne Treffer, im Datenverzeichnis nur `index.sqlite`); Container und Testdaten auf dem Mac gelöscht. Die Probewelt bleibt in der Sicherung von 02:16, bis die Aufbewahrung sie entfernt (nur Testtext).
 
 ### 2026-09-30 00:20 – [REIFEGRAD-WECHSEL] Backups und Wiederherstellung → BELASTBAR
