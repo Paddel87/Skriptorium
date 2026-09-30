@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-30
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** keiner – 4.3 erledigt 2026-09-30 (Backups `[BELASTBAR]`)
-- **Nächster Schritt:** 4.4 Notfall-Handbuch (Wiederherstellen schon in Runbook Abschnitt 7); danach Gate 4.6, 4.7/4.8. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. In 4.7 zusätzlich die optionalen Kopfzeilen aus 4.5. Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
+- **Aktiver Schritt:** keiner – 4.4 erledigt 2026-09-30
+- **Nächster Schritt:** Gate 4.6 (offen dort u. a. 4a Ablage der Sicherungs-Zugangsdaten außerhalb des Servers – Eigentümer wählt Passwort-Manager; 4b Schlüsseltausch; eingeschränkter Zugriff der KI), danach 4.7/4.8. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. In 4.7 zusätzlich die optionalen Kopfzeilen aus 4.5. Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -154,7 +154,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.3: Backups mit erprobter Wiederherstellung
 
-- **Status:** ERLEDIGT (2026-09-30) – Duplicati-Auftrag „Skriptorium“ auf dem VPS (vom Eigentümer in der Weboberfläche angelegt, Schlüssel und Passphrase nur bei ihm): Quelle nur `/source/skriptorium/data/`, Filter `index.sqlite`, Ziel MEGA S4 (ADR-036), AES-256 mit eigener Passphrase, täglich 04:15, intelligente Aufbewahrung. Beschränkung belegt durch erzwungenen Fehler: derselbe Schlüssel gegen einen zweiten Bucket → „Request not allowed by policy“, zweiter Bucket blieb leer. Wiederherstellung: Probewelt (3 Dateien, Freigabe des Eigentümers) auf dem VPS angelegt, gesichert (02:16), auf dem Mac in einem Wegwerf-Container mit demselben Duplicati-Image (Digest wie VPS) nur mit S4-Zugang und Passphrase wiederhergestellt (Werte aus dem Export des VPS-Auftrags kopiert – der Eigentümer hat noch keinen Passwort-Manager; Ablage außerhalb des Servers folgt in 4.4); Prüfsummen gleich; Server auf den Daten gestartet (Gesundheitsprüfung, 401 ohne Anmeldung, Einrichtung, Anmeldung, Welt sichtbar); Index neu aufgebaut (Suche vorher leer, danach Treffer). Probewelt danach vom VPS gelöscht, Testdaten auf dem Mac entfernt. Verfahren in `docs/onboarding-runbook.md` Abschnitt 7
+- **Status:** ERLEDIGT (2026-09-30) – Duplicati-Auftrag „Skriptorium“ auf dem VPS (vom Eigentümer in der Weboberfläche angelegt, Schlüssel und Passphrase nur bei ihm): Quelle nur `/source/skriptorium/data/`, Filter `index.sqlite`, Ziel MEGA S4 (ADR-036), AES-256 mit eigener Passphrase, täglich 05:00, intelligente Aufbewahrung. Beschränkung belegt durch erzwungenen Fehler: derselbe Schlüssel gegen einen zweiten Bucket → „Request not allowed by policy“, zweiter Bucket blieb leer. Wiederherstellung: Probewelt (3 Dateien, Freigabe des Eigentümers) auf dem VPS angelegt, gesichert (02:16), auf dem Mac in einem Wegwerf-Container mit demselben Duplicati-Image (Digest wie VPS) nur mit S4-Zugang und Passphrase wiederhergestellt (Werte aus dem Export des VPS-Auftrags kopiert – der Eigentümer hat noch keinen Passwort-Manager; Ablage außerhalb des Servers folgt in 4.4); Prüfsummen gleich; Server auf den Daten gestartet (Gesundheitsprüfung, 401 ohne Anmeldung, Einrichtung, Anmeldung, Welt sichtbar); Index neu aufgebaut (Suche vorher leer, danach Treffer). Probewelt danach vom VPS gelöscht, Testdaten auf dem Mac entfernt. Verfahren in `docs/onboarding-runbook.md` Abschnitt 7
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.2
 - **Freigabepflichtig:** ja – Sicherungsziel außerhalb des Servers (Kategorien 3 und 7)
@@ -170,7 +170,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.4: Notfall-Handbuch
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT (2026-09-30) – Abschnitt 7 „Notfall“ im Runbook: Zugang, Anhalten/Starten, KI-Schlüssel widerrufen, Sicherung, Wiederherstellen, Benachrichtigen. Eigentümer hat ohne KI angehalten und gestartet (2026-09-30, von der KI danach belegt: Container kurz zuvor neu gestartet, `healthy`); Sicherung von Hand und Wiederherstellung hat er am 2026-09-30 in 4.3 unter Anleitung selbst durchgeführt und lässt das gelten. Nach 4.6 verschoben (Prüfpunkt 4): Ablage von Passphrase und S4-Schlüsseln außerhalb des Servers; Erprobung des Schlüsseltauschs bei OpenRouter
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.3
 - **Freigabepflichtig:** nein
@@ -182,7 +182,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** keine (Betrieb)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** `docs/onboarding-runbook.md`
-- **Notizen:** –
+- **Notizen:** 2026-09-30: Wiederherstellen hat der Eigentümer in 4.3 schon selbst durchgeführt (unter Anleitung). Der Tausch des OpenRouter-Schlüssels wird mit dem Rotationsweg für Gate-Punkt 4 in 4.6 erprobt oder dort als Restrisiko benannt.
 
 #### 4.5: Unabhängige Sicherheitsprüfung
 
@@ -214,6 +214,8 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
   - [ ] 2. Sicherheitsniveau per ADR – ADR-006
   - [ ] 3. Grundhärtung des Host, belegt durch Prüfung von außen – Schritt 4.2
   - [ ] 4. Secrets im Betrieb (Ablageort, Rotationsweg) und Zugriff der KI auf die Produktion in `docs/project-context.md` Abschnitt 8; Ausgabengrenze am OpenRouter-Schlüssel belegt
+    - [ ] 4a. Duplicati-Passphrase und S4-Schlüssel liegen außerhalb des Servers (Passwort-Manager des Eigentümers, Passphrase zusätzlich auf Papier); Ort im Runbook Abschnitt 7 „Zugang“ eingetragen (aus 4.3/4.4, 2026-09-30)
+    - [ ] 4b. Tausch des OpenRouter-Schlüssels nach Runbook Abschnitt 7 einmal durchgeführt oder Verzicht als Restrisiko per ADR (aus 4.4, 2026-09-30)
   - [ ] 5. Backup mit erprobter Wiederherstellung – Schritt 4.3
   - [ ] 6. Unabhängige Prüfung – Schritt 4.5
   - [ ] 7. Vertretung: Verzicht per ADR-008; Notfall-Handbuch – Schritt 4.4

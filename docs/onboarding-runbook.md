@@ -1,6 +1,6 @@
 # Onboarding-Runbook – Skriptorium
 
-> **Stand 2026-09-26 (Schritt 2.1):** Entwicklung und Quick Start befüllt und gegen einen frischen Worktree geprüft. Abschnitt „Notfall" folgt mit Schritt 4.4.
+> **Stand 2026-09-30 (Schritt 4.4):** Entwicklung und Quick Start befüllt und gegen einen frischen Worktree geprüft (2.1). Abschnitt „Notfall“ befüllt und vom Eigentümer ohne KI geübt (Anhalten, Starten).
 
 <!-- Vollständige, getestete End-to-End-Anleitung vom Repo-Klon bis zum lauffähigen System.
      Ergänzt die README:
@@ -175,19 +175,24 @@ Entfällt (Klasse M, ein Beitragender); Operations folgt mit Phase 4.
 
 ## 7. Notfall
 
-[Pflicht ab dem ersten öffentlichen Deployment (CLAUDE.md Abschnitt 12, Prüfpunkt 7). Geschrieben für einen Menschen **ohne KI** und ohne Vorwissen über das Projekt. Jeder Ablauf ist mindestens einmal praktisch durchgespielt; Datum am Ablauf.]
+Für den Eigentümer **ohne KI**. Alles läuft im Programm „Terminal“ auf dem Mac und im Browser. Wegen des öffentlichen Repos stehen hier Platzhalter; die echten Werte stehen in der lokalen Notiz `~/Developer/skriptorium-betrieb-lokal/notfall-lokal.md` auf dem Mac (keine Secrets): `<vps>` = Name des Servers für `ssh`, `<duplicati-adresse>` = Weboberfläche der Sicherung.
 
-- **Zugang:** [wo liegen die Zugangsdaten für Server, Domain, Backups – Ort, nicht Wert]
-- **System anhalten:** [konkrete Befehle oder Klickpfad] – erprobt am [YYYY-MM-DD]
-- **Sicherung ziehen:** Läuft täglich 04:15 von selbst (Duplicati auf dem VPS, Auftrag „Skriptorium“, Ziel MEGA S4, ADR-036). Von Hand: Duplicati-Weboberfläche (Adresse lokal beim Eigentümer) → Auftrag „Skriptorium“ → „Jetzt ausführen“; Erfolg: oberster Eintrag unter „Protokoll anzeigen“ ohne Fehler. Gesichert wird nur `/source/skriptorium/data/` ohne `index.sqlite` – erprobt am 2026-09-30
+- **Zugang (Ort, nicht Wert):**
+  - Server: SSH-Schlüssel auf dem Mac des Eigentümers (`~/.ssh/`), Anmeldung mit `ssh <vps>`; Notweg ohne Mac: Kundenbereich des Hosters (netcup) mit Konsole und Neustart.
+  - Sicherung: MEGA-Konto des Eigentümers (Bucket, Schlüssel); Duplicati-Passphrase und S4-Schlüssel: noch nur im Duplicati-Auftrag auf dem VPS („Exportieren → Als Befehlszeile“); Ablage außerhalb des Servers folgt im Gate-Schritt 4.6, Punkt 4a.
+  - KI-Schlüssel: Konto des Eigentümers bei OpenRouter (openrouter.ai → „Keys“); auf dem Server in `/opt/docker/skriptorium/.env` (nur root lesbar).
+  - Anmeldepasswort des Skriptoriums: nur beim Eigentümer; vergessen → neuer Einrichtungscode: `ssh <vps> 'docker exec skriptorium skriptorium-einrichtung'`.
+- **System anhalten:** `ssh <vps> 'cd /opt/docker/skriptorium && docker compose stop'` – danach ist das Skriptorium aus und bleibt es auch nach einem Neustart des Servers; die Daten bleiben unberührt. **Wieder starten:** `ssh <vps> 'cd /opt/docker/skriptorium && docker compose start'`; Erfolg nach etwa einer Minute: `ssh <vps> 'docker ps --filter name=skriptorium'` zeigt `(healthy)` – erprobt am 2026-09-30 (KI und Eigentümer ohne KI)
+- **KI-Schlüssel widerrufen** (Verdacht auf Missbrauch oder unerwartete Kosten): bei OpenRouter unter „Keys“ den Schlüssel des Skriptoriums löschen – wirkt sofort; das Skriptorium läuft weiter, nur KI-Anfragen schlagen fehl. Neuen Schlüssel dort anlegen (Ausgabengrenze 50 $ setzen) und eintragen, Eingabe bleibt unsichtbar: `ssh -t <vps> 'read -rsp "Neuer Schluessel: " K && printf "# Secrets des Skriptoriums. Nur root lesbar.\nOPENROUTER_API_KEY=%s\n" "$K" > /opt/docker/skriptorium/.env && chmod 600 /opt/docker/skriptorium/.env && cd /opt/docker/skriptorium && docker compose up -d'` – noch nicht erprobt (Gate-Schritt 4.6, Punkt 4b)
+- **Sicherung ziehen:** Läuft täglich 05:00 von selbst (Duplicati auf dem VPS, Auftrag „Skriptorium“, Ziel MEGA S4, ADR-036). Von Hand: Duplicati-Weboberfläche (Adresse lokal beim Eigentümer) → Auftrag „Skriptorium“ → „Jetzt ausführen“; Erfolg: oberster Eintrag unter „Protokoll anzeigen“ ohne Fehler. Gesichert wird nur `/source/skriptorium/data/` ohne `index.sqlite` – erprobt am 2026-09-30
 - **Wiederherstellen** (auch ohne Server, z. B. auf einem Mac mit Docker Desktop) – erprobt am 2026-09-30, Dauer ca. 15 Minuten, davon das meiste Eintippen:
-  1. Benötigt (Ablage außerhalb des Servers wird in 4.4 eingerichtet; bis dahin nur im Duplicati-Auftrag auf dem VPS unter „Exportieren → Als Befehlszeile“): S4-Endpunkt, Bucket-Name, Access ID und geheimer Schlüssel des Sicherungs-Benutzers, Duplicati-Passphrase. Ohne die Passphrase ist die Sicherung nicht lesbar.
+  1. Benötigt (Ablage außerhalb des Servers folgt in 4.6, Punkt 4a; bis dahin nur im Duplicati-Auftrag auf dem VPS unter „Exportieren → Als Befehlszeile“): S4-Endpunkt, Bucket-Name, Access ID und geheimer Schlüssel des Sicherungs-Benutzers, Duplicati-Passphrase. Ohne die Passphrase ist die Sicherung nicht lesbar.
   2. Duplicati starten (auf dem Mac als Wegwerf-Container, nur lokal erreichbar): `docker run -d --name duplicati-restore -p 127.0.0.1:8210:8200 -e PUID=0 -e PGID=0 -e SETTINGS_ENCRYPTION_KEY=<beliebig> -e DUPLICATI__WEBSERVICE_PASSWORD=<beliebig> -v "$PWD/restore:/restore" lscr.io/linuxserver/duplicati`; im Browser `http://127.0.0.1:8210` öffnen.
   3. „Wiederherstellen“ → „Direkt aus Sicherungsdateien wiederherstellen“ → Speichertyp „S3 Compatible“, SSL an, Server „Custom server url“ mit dem Endpunkt **ohne** Bucket-Namen davor, Bucket-Name, Ordnerpfad `skriptorium`, beide Schlüssel → „Verbindung testen“ → Passphrase → neueste Version, alles anhaken → „An einem anderen Ort“ `/restore/`, Rechte nicht wiederherstellen → „Wiederherstellen“.
   4. Die wiederhergestellten Ordner sind schreibgeschützt: `chmod -R u+w restore`. Auf dem Server den Inhalt nach `/opt/docker/skriptorium/data/` legen und `chown -R 10001:10001 /opt/docker/skriptorium/data`.
   5. Skriptorium starten und den Suchindex neu aufbauen (er ist nicht in der Sicherung): `docker exec skriptorium python -c "from pathlib import Path; from skriptorium.storage.store import DocumentStore; DocumentStore(Path('/data')).rebuild_index()"`.
   6. Erfolg: Anmeldung mit dem bisherigen Passwort klappt (Zugangsdaten liegen in `system/` und sind mitgesichert), Welten und Einträge sind da.
-- **Wen benachrichtigen:** [Nutzer, Vertretung, ggf. Datenschutz-Meldepflicht mit Frist]
+- **Wen benachrichtigen:** niemanden – einziger Nutzer ist der Eigentümer, eine Vertretung gibt es nicht (ADR-008), Daten Dritter werden nicht verarbeitet (Schutzbedarf normal, ADR-007). Bei Verdacht auf Einbruch in den Server zusätzlich: KI-Schlüssel widerrufen (oben), Anmeldepasswort des Skriptoriums und die S4-Schlüssel der Sicherung erneuern.
 
 ## 8. Pflegehinweise
 
