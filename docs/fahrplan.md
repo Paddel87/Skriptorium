@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-09-30
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** keiner – 4.4 erledigt 2026-09-30
+- **Aktiver Schritt:** 4.6 Gate `[IN ARBEIT]` – sieben von acht Punkten belegt; Punkt 4 (Secrets, Zugriff der KI) wartet auf Entscheidungen und die Ablage der Sicherungs-Zugangsdaten durch den Eigentümer
 - **Nächster Schritt:** Gate 4.6 (offen dort u. a. 4a Ablage der Sicherungs-Zugangsdaten außerhalb des Servers – Eigentümer wählt Passwort-Manager; 4b Schlüsseltausch; eingeschränkter Zugriff der KI), danach 4.7/4.8. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. In 4.7 zusätzlich die optionalen Kopfzeilen aus 4.5. Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
 - **Offene STOPP-Situationen:** keine
 
@@ -202,7 +202,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.6: Gate vor dem ersten öffentlichen Deployment
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT (seit 2026-09-30) – Punkte 1, 2, 3, 5, 6, 7, 8 belegt; Punkt 4 offen: Zugriff der KI (Entscheidung vorgelegt), 4a (Eigentümer), 4b (Entscheidung vorgelegt)
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.2, 4.3, 4.4, 4.5
 - **Freigabepflichtig:** ja – Verzicht auf einen Prüfpunkt nur per ADR (Kategorie 6)
@@ -210,16 +210,16 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Eingangskriterien:** Schritte 4.2–4.5 erledigt
 - **Anforderungen (ab Klasse M):** keine
 - **Zu tun:** Checkliste der acht Prüfpunkte (CLAUDE.md Abschnitt 12) mit Belegen:
-  - [ ] 1. Bedrohungsmodell für das Gesamtsystem, mindestens `[VORLÄUFIG]` – `docs/architecture.md` Abschnitt 6
-  - [ ] 2. Sicherheitsniveau per ADR – ADR-006
-  - [ ] 3. Grundhärtung des Host, belegt durch Prüfung von außen – Schritt 4.2
+  - [x] 1. Bedrohungsmodell für das Gesamtsystem, mindestens `[VORLÄUFIG]` – `docs/architecture.md` Abschnitt 6: `[BELASTBAR]` seit 2026-09-28 (Prüfung 4.5)
+  - [x] 2. Sicherheitsniveau per ADR – ADR-006 (ASVS 5.0.0 Stufe 1, Authentifizierung und Sitzung Stufe 2)
+  - [x] 3. Grundhärtung des Host, belegt durch Prüfung von außen – Schritt 4.2 (2026-09-28: alle TCP-Ports, SSH nur Schlüssel, Firewall, automatische Updates; Proxy auf unterstützter Linie, ADR-033). Nachprüfung 2026-09-30 vom Mac: 22, 80, 443 offen; 8000, 8200, 9000, 9443, 8080, 3306, 5432, 6379, 2375, 2376 zu
   - [ ] 4. Secrets im Betrieb (Ablageort, Rotationsweg) und Zugriff der KI auf die Produktion in `docs/project-context.md` Abschnitt 8; Ausgabengrenze am OpenRouter-Schlüssel belegt
     - [ ] 4a. Duplicati-Passphrase und S4-Schlüssel liegen außerhalb des Servers (Passwort-Manager des Eigentümers, Passphrase zusätzlich auf Papier); Ort im Runbook Abschnitt 7 „Zugang“ eingetragen (aus 4.3/4.4, 2026-09-30)
     - [ ] 4b. Tausch des OpenRouter-Schlüssels nach Runbook Abschnitt 7 einmal durchgeführt oder Verzicht als Restrisiko per ADR (aus 4.4, 2026-09-30)
-  - [ ] 5. Backup mit erprobter Wiederherstellung – Schritt 4.3
-  - [ ] 6. Unabhängige Prüfung – Schritt 4.5
-  - [ ] 7. Vertretung: Verzicht per ADR-008; Notfall-Handbuch – Schritt 4.4
-  - [ ] 8. KI im Betrieb: Konto, Kontingent mit Zurücksetz-Zeitpunkt, Rückfallweg ohne KI in `docs/project-context.md` Abschnitt 8; Kontingent für den Deployment-Termin eingeplant
+  - [x] 5. Backup mit erprobter Wiederherstellung – Schritt 4.3 (2026-09-30: Wiederherstellung auf dem Mac, prüfsummengleich; erster automatischer Lauf 2026-09-30 05:00). Lesbarkeit nach Serververlust hängt an 4a
+  - [x] 6. Unabhängige Prüfung – Schritt 4.5 (2026-09-28, getrennte Instanz, keine Befunde hoch/mittel); seither keine Änderung der Kategorie 6 am Code (nur Dokumentation, PR #27 bis #31)
+  - [x] 7. Vertretung: Verzicht per ADR-008; Notfall-Handbuch – Schritt 4.4 (Runbook Abschnitt 7, vom Eigentümer ohne KI geübt 2026-09-30)
+  - [x] 8. KI im Betrieb: Konto, Kontingent mit Zurücksetz-Zeitpunkt, Rückfallweg ohne KI in `docs/project-context.md` Abschnitt 8; Kontingent für den Deployment-Termin: Stand 2026-09-30 Wochenlimit 26 % verbraucht, Zurücksetzung 2026-10-04 10:00 MESZ (Sitzungsabfrage) – 4.7 beginnt nur bei unter 70 % Wochenverbrauch, sonst nach der Zurücksetzung; kein unbeaufsichtigtes Handeln der KI
 - **Akzeptanzkriterien:** Alle acht Punkte mit Beleg abgehakt oder per ADR verzichtet.
 - **Betroffene Module:** keine (Betrieb)
 - **Reifegrad-Wirkung:** Secrets im Betrieb → `[BELASTBAR]`

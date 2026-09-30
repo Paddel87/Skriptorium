@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-30 13:30 – [SESSIONSTART] Schritt 4.6 Gate
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, laut `get_session`), Entscheidungs-Klasse – wie für 4.6 verlangt (Eskalations-Auslöser 1 und 4).
+- **Umgebung:** Mac, fortgesetzte Session; `main` auf `a44a789`, Branch `chore/4.6-gate`.
+- **Mindest-Lektüre:** Stand aus dieser Session, seit dem Merge unverändert; zusätzlich ADR-032, Architektur Abschnitt 6 (Secrets), `templates/architektur-heuristiken.md` Teil 3 und 4.
+- **Kontextgröße:** 296.523 Token (`get_usage`) – über der Grenze von 200.000; Weiterarbeit auf dauerhaftes „weiter hier“ des Eigentümers (2026-09-28), Abweichung hiermit vermerkt. Wochenlimit 26 % verbraucht, Zurücksetzung 2026-10-04 10:00 MESZ.
+- **Hinweis:** Die Uhrzeiten der Einträge 13:35 und 13:40 (4.4) waren geschätzt; tatsächlich lagen sie vor 13:27 UTC.
+
 ### 2026-09-30 13:40 – [SESSIONENDE] Schritt 4.4 erledigt
 
 - **Dauer:** 13:17–13:40 UTC.
