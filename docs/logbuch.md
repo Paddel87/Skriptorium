@@ -35,10 +35,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 
 ### 2026-09-30 00:25 – [SESSIONENDE] Schritt 4.3 erledigt
 
-- **Dauer:** 23:09–00:25 UTC.
+- **Dauer:** 23:09–00:45 UTC (Nachtrag 00:45: Korrektur zur Ablage der Zugangsdaten eingearbeitet, PR #30 gemergt).
 - **Bearbeitet:** 4.3 `[IN ARBEIT]` → `[ERLEDIGT]`; Backups und Wiederherstellung → `[BELASTBAR]`.
 - **Stand:** tägliche verschlüsselte Sicherung nach MEGA S4 aktiv; Wiederherstellung erprobt; Verfahren in Runbook Abschnitt 7 (Sicherung ziehen, Wiederherstellen). Der `docker run`-Befehl im Runbook ist die verallgemeinerte Form des erprobten Aufrufs (erprobt mit fester Image-Prüfsumme und zusätzlichem `/config`-Verzeichnis).
-- **Offen / nächster Schritt:** 4.4 Notfall-Handbuch (Zugang, Anhalten, Benachrichtigen fehlen noch; Übung durch den Eigentümer ohne KI); D.8 bis 2026-10-05. Duplicati-Image auf dem Mac behalten oder löschen – Frage an den Eigentümer.
+- **Offen / nächster Schritt:** Dringend: Eigentümer legt Duplicati-Passphrase und S4-Schlüssel außerhalb des Servers ab (Wahl des Passwort-Managers vertagt, Zusatz an 4.4). Dann 4.4 Notfall-Handbuch (Zugang, Anhalten, Benachrichtigen fehlen noch; Übung ohne KI); D.8 bis 2026-10-05. Offen beim Eigentümer: Duplicati-Image auf dem Mac (ca. 650 MB) behalten oder löschen – bis zur Antwort behalten (nützlich für die Übung in 4.4).
 - **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session`); 0 Schritte oberhalb der Empfehlung (4.3: Entscheidung); nichts abgegeben – Doku-Nachträge klein und mit geladenem Kontext erledigt.
 - **Kontextgröße:** nicht feststellbar (Sitzungsabfrage meldet sie nicht).
 - **Sessionende-Prüfungen:** README nachgezogen (Phase, Reife, nächste Schritte); Drift: ADR-036 → 4.3 vorhanden, Reifegrad Backups passt zu 4.3/ADR-036, Modul-Liste unverändert, keine aktiven Blocker, Reaktiv-Quote unverändert 0/10, Phase 4 weiter 12 Schritte; Ablaufdaten: Vorlauf Guthaben (2026-10-22) noch nicht erreicht; Logbuch ca. 510 Zeilen, project-context ca. 345 Zeilen – kein Trigger. Runbook-Änderung betrifft nur den Notfall-Abschnitt, nicht den Onboarding-Pfad – keine Klon-Validierung nötig.
