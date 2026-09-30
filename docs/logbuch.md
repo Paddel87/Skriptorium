@@ -29,6 +29,27 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-30 14:10 – [SESSIONENDE] Gate 4.6 geschlossen
+
+- **Dauer:** 13:30–14:10 UTC (Uhrzeiten grob).
+- **Bearbeitet:** 4.6 `[OFFEN]` → `[ERLEDIGT]`; ADR-037, ADR-038; D.11 angelegt.
+- **Offen / nächster Schritt:** 4.7 Erstes öffentliches Deployment (Entscheidungs-Klasse; Wochenverbrauch vorher prüfen, Grenze 70 %). Eigentümer: D.8 bis 2026-10-05, D.11 vor dem ersten echten Kapitel.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session`); 0 Schritte oberhalb der Empfehlung; nichts abgegeben.
+- **Kontextgröße:** rund 300.000 Token (`get_usage` zu Beginn 296.523) – über der Grenze, Weiterarbeit nach dauerhaftem „weiter hier“.
+- **Sessionende-Prüfungen:** README nachgezogen; Drift: ADR-037/038 → 4.6 und D.11 vorhanden, Reifegrad „Secrets im Betrieb“ VORLÄUFIG passt zu ADR-038, Reaktiv-Quote 0/10 über ADR-029 bis ADR-038, keine aktiven Blocker; Phase 4 weiter 12 Schritte (D.11 ist Querschnitt); Ablaufdaten ohne erreichten Vorlauf; Logbuch ca. 570 Zeilen, project-context ca. 345 Zeilen – kein Trigger. D.8 trug „spätestens vor 4.6“ – überholt, Datum 2026-10-05 gilt weiter (am Schritt vermerkt).
+
+### 2026-09-30 14:05 – [ERLEDIGT] Schritt 4.6 Gate vor dem ersten öffentlichen Deployment
+
+- Checkliste mit Belegen am Schritt. Sieben Punkte belegt; Punkt 4 über ADR-037 (Zugriff der KI unverändert, Schlüsseltausch unerprobt) und ADR-038 (4a aus dem Gate genommen) entschieden.
+
+### 2026-09-30 14:05 – [REIFEGRAD-WECHSEL] Secrets im Betrieb → VORLÄUFIG
+
+- Von `[OFFEN]`. Geplant war `[BELASTBAR]`; nicht befördert, weil der Rotationsweg unerprobt ist und die Sicherungs-Zugangsdaten nur auf dem VPS liegen (CLAUDE.md Abschnitt 6, „Schutzmechanismen durch erzwungenen Fehler belegen“). Beförderung mit D.11.
+
+### 2026-09-30 14:00 – [ADR-ANGELEGT] ADR-038 Verzicht auf Gate-Punkt 4a
+
+- Anweisung des Eigentümers: „4.6 überspringen.“ Da alle übrigen Punkte belegt oder entschieden waren, betrifft der Verzicht nur 4a. Restrisiko im ADR: nach Verlust des VPS wäre die Sicherung nicht lesbar; bis zum ersten echten Inhalt (4.8) ist das Datenverzeichnis leer. Landeplatz D.11 mit Frist. Hebt die Festlegung vom 2026-09-28 („kein Gate-Punkt wird übersprungen“) für diesen Punkt auf.
+
 ### 2026-09-30 13:50 – [ADR-ANGELEGT] ADR-037 Zugriff der KI bleibt unverändert
 
 - Vorgelegt: A eingeschränktes Konto / B Administrator-Zugang mit zusätzlichen Regeln (Empfehlung) / C kein Zugriff; dazu die Frage nach der Erprobung des Schlüsseltauschs. Antwort des Eigentümers: „Es bleibt so, wie es ist.“ Die KI las das zunächst als B und begann einen ADR mit neuer Regel; der Eigentümer unterbrach und wiederholte: „Es bleibt so, wie es jetzt gerade ist.“ Festgehalten deshalb ohne neue Regeln und ohne Schlüsseltausch, Restrisiko im ADR. Gate: nur noch 4a offen.

@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-09-30
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** 4.6 Gate `[IN ARBEIT]` – alles belegt oder entschieden (ADR-037) bis auf 4a: Der Eigentümer legt Duplicati-Passphrase und S4-Schlüssel außerhalb des Servers ab
-- **Nächster Schritt:** 4a durch den Eigentümer, dann 4.6 schließen (Secrets im Betrieb → `[BELASTBAR]`), danach 4.7/4.8. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. In 4.7 zusätzlich die optionalen Kopfzeilen aus 4.5. Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
+- **Aktiver Schritt:** keiner – 4.6 Gate erledigt 2026-09-30 (ADR-037, ADR-038)
+- **Nächster Schritt:** 4.7 Erstes öffentliches Deployment (nur bei unter 70 % Wochenverbrauch, Gate-Punkt 8), danach 4.8. In 4.7 zusätzlich die optionalen Kopfzeilen aus 4.5. Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.11 Sicherungs-Zugangsdaten außerhalb des Servers vor dem ersten echten Kapitel, spätestens 2026-10-31 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -202,7 +202,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.6: Gate vor dem ersten öffentlichen Deployment
 
-- **Status:** IN ARBEIT (seit 2026-09-30) – Punkte 1, 2, 3, 5, 6, 7, 8 belegt; Punkt 4: Zugriff der KI und 4b entschieden (ADR-037: bleibt unverändert, Schlüsseltausch nicht erprobt, Restrisiko benannt); offen nur noch 4a (Eigentümer: Sicherungs-Zugangsdaten außerhalb des Servers ablegen)
+- **Status:** ERLEDIGT (2026-09-30) – Punkte 1, 2, 3, 5, 6, 7, 8 belegt; Punkt 4: Zugriff der KI und Schlüsseltausch per ADR-037 entschieden, Ablage der Sicherungs-Zugangsdaten (4a) auf Anweisung des Eigentümers aus dem Gate genommen (ADR-038, Restrisiko benannt) und als D.11 mit Frist geführt. Secrets im Betrieb → `[VORLÄUFIG]` (nicht `[BELASTBAR]`: Rotation unerprobt, Ablage offen)
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.2, 4.3, 4.4, 4.5
 - **Freigabepflichtig:** ja – Verzicht auf einen Prüfpunkt nur per ADR (Kategorie 6)
@@ -213,8 +213,8 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
   - [x] 1. Bedrohungsmodell für das Gesamtsystem, mindestens `[VORLÄUFIG]` – `docs/architecture.md` Abschnitt 6: `[BELASTBAR]` seit 2026-09-28 (Prüfung 4.5)
   - [x] 2. Sicherheitsniveau per ADR – ADR-006 (ASVS 5.0.0 Stufe 1, Authentifizierung und Sitzung Stufe 2)
   - [x] 3. Grundhärtung des Host, belegt durch Prüfung von außen – Schritt 4.2 (2026-09-28: alle TCP-Ports, SSH nur Schlüssel, Firewall, automatische Updates; Proxy auf unterstützter Linie, ADR-033). Nachprüfung 2026-09-30 vom Mac: 22, 80, 443 offen; 8000, 8200, 9000, 9443, 8080, 3306, 5432, 6379, 2375, 2376 zu
-  - [ ] 4. Secrets im Betrieb (Ablageort, Rotationsweg) und Zugriff der KI auf die Produktion in `docs/project-context.md` Abschnitt 8; Ausgabengrenze am OpenRouter-Schlüssel belegt
-    - [ ] 4a. Duplicati-Passphrase und S4-Schlüssel liegen außerhalb des Servers (Passwort-Manager des Eigentümers, Passphrase zusätzlich auf Papier); Ort im Runbook Abschnitt 7 „Zugang“ eingetragen (aus 4.3/4.4, 2026-09-30)
+  - [x] 4. Secrets im Betrieb (Ablageort, Rotationsweg) und Zugriff der KI auf die Produktion in `docs/project-context.md` Abschnitt 8; Ausgabengrenze am OpenRouter-Schlüssel belegt – Secrets, Ablageorte und Rotationswege in `docs/project-context.md` Abschnitt 8 und `docs/architecture.md` Abschnitt 6
+    - [ ] 4a. Duplicati-Passphrase und S4-Schlüssel außerhalb des Servers – **Verzicht im Gate per ADR-038**, `[VERSCHOBEN]` nach D.11 (Frist: vor dem ersten echten Kapitel in 4.8, spätestens 2026-10-31)
     - [x] 4b. Tausch des OpenRouter-Schlüssels: Verzicht, Restrisiko in ADR-037 (2026-09-30)
     - [x] 4c. Zugriff der KI auf die Produktion festgelegt: unverändert Administrator-Zugang, Restrisiko in ADR-037; `docs/project-context.md` Abschnitt 8 nachgezogen. Ausgabengrenze am OpenRouter-Schlüssel 50 $ (4.2, 2026-09-28)
   - [x] 5. Backup mit erprobter Wiederherstellung – Schritt 4.3 (2026-09-30: Wiederherstellung auf dem Mac, prüfsummengleich; erster automatischer Lauf 2026-09-30 05:00). Lesbarkeit nach Serververlust hängt an 4a
@@ -223,7 +223,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
   - [x] 8. KI im Betrieb: Konto, Kontingent mit Zurücksetz-Zeitpunkt, Rückfallweg ohne KI in `docs/project-context.md` Abschnitt 8; Kontingent für den Deployment-Termin: Stand 2026-09-30 Wochenlimit 26 % verbraucht, Zurücksetzung 2026-10-04 10:00 MESZ (Sitzungsabfrage) – 4.7 beginnt nur bei unter 70 % Wochenverbrauch, sonst nach der Zurücksetzung; kein unbeaufsichtigtes Handeln der KI
 - **Akzeptanzkriterien:** Alle acht Punkte mit Beleg abgehakt oder per ADR verzichtet.
 - **Betroffene Module:** keine (Betrieb)
-- **Reifegrad-Wirkung:** Secrets im Betrieb → `[BELASTBAR]`
+- **Reifegrad-Wirkung:** Secrets im Betrieb → `[VORLÄUFIG]` (geplant war `[BELASTBAR]`; Beförderung mit D.11, ADR-038)
 - **Artefakte:** ausgefüllte Checkliste in diesem Schritt; `docs/project-context.md` Abschnitt 8
 - **Notizen:** Deployment-Schritt 4.7 kann nicht beginnen, solange ein Punkt offen ist.
 
@@ -544,7 +544,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Status:** OFFEN
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** keine
-- **Frist:** 2026-10-05 (spätestens vor 4.6)
+- **Frist:** 2026-10-05 (ursprünglich „spätestens vor 4.6“; 4.6 wurde am 2026-09-30 vor der Rotation geschlossen – das Datum gilt weiter)
 - **Freigabepflichtig:** nein (Rotation bestehender Zugangsdaten); das neue Passwort wählt und setzt der Eigentümer selbst
 - **Empfohlene Klasse:** Routine – festgelegter Ablauf ohne Architekturwirkung.
 - **Eingangskriterien:** keine
@@ -588,6 +588,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** `docs/project-context.md` Abschnitt 6, Logbuch
 - **Notizen:** Angelegt 2026-09-28 auf Wunsch des Eigentümers.
+
+#### D.11: Sicherungs-Zugangsdaten außerhalb des Servers ablegen
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** keine
+- **Frist:** vor dem ersten echten Kapitel in 4.8, spätestens 2026-10-31
+- **Freigabepflichtig:** nein – die Wahl des Passwort-Managers ist Sache des Eigentümers
+- **Empfohlene Klasse:** Entscheidung – Beförderung von „Secrets im Betrieb“ auf `[BELASTBAR]` (Eskalations-Auslöser 4); die Eintragung selbst ist Routine.
+- **Eingangskriterien:** Eigentümer hat einen Passwort-Manager gewählt
+- **Anforderungen (ab Klasse M):** keine (Gate-Prüfpunkte 4 und 5, ADR-038)
+- **Zu tun:** Der Eigentümer legt Duplicati-Passphrase, Access ID und geheimen Schlüssel des Sicherungs-Benutzers samt Endpunkt und Bucket in einem Passwort-Manager ab (Werte aus dem Duplicati-Auftrag, „Exportieren → Als Befehlszeile“), die Passphrase zusätzlich auf Papier. Die KI trägt den Ort (nicht die Werte) in Runbook Abschnitt 7 und `docs/project-context.md` Abschnitt 8 ein.
+- **Akzeptanzkriterien:** Der Eigentümer bestätigt die Ablage; eine Wiederherstellung (oder mindestens „Verbindung testen“ plus Entschlüsseln der Versionsliste) gelingt nur mit den Werten aus dem Passwort-Manager, ohne Zugriff auf den VPS; Ergebnis im Logbuch ohne Werte.
+- **Betroffene Module:** keine (Betrieb)
+- **Reifegrad-Wirkung:** Secrets im Betrieb → `[BELASTBAR]`
+- **Artefakte:** Runbook Abschnitt 7, `docs/project-context.md` Abschnitt 8, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-09-30 aus Gate 4.6 (ADR-038). Bis dahin ist die Sicherung nach einem Verlust des VPS nicht lesbar.
 
 #### M.1: Branch-Konvention festlegen
 

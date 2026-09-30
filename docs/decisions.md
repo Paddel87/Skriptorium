@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-30 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11, ADR-029 bis ADR-032 aus Schritt 4.2, ADR-033 aus Schritt 4.12, ADR-034 aus Schritt 4.2, ADR-035 aus D.6, ADR-036 aus Schritt 4.3, ADR-037 aus Schritt 4.6). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-09-30 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11, ADR-029 bis ADR-032 aus Schritt 4.2, ADR-033 aus Schritt 4.12, ADR-034 aus Schritt 4.2, ADR-035 aus D.6, ADR-036 aus Schritt 4.3, ADR-037 und ADR-038 aus Schritt 4.6). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -57,12 +57,13 @@ Stand 2026-09-30 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 035 | 2026-09-28 | Aktiv | ERKENNTNIS | PERFORMANCE | Architektur (NFR) | Reaktionszeit: Zielwerte an die Messung angepasst |
 | 036 | 2026-09-30 | Aktiv | OPERATIV | DEPLOYMENT, SECURITY | Externe Abh., Sicherheit, Deploy | Sicherungsziel: Duplicati nach MEGA S4 mit beschränktem Benutzer |
 | 037 | 2026-09-30 | Aktiv | OPERATIV | SECURITY | Sicherheit | Zugriff der KI auf die Produktion unverändert; Schlüsseltausch nicht erprobt |
+| 038 | 2026-09-30 | Aktiv | OPERATIV | SECURITY, DEPLOYMENT | Sicherheit | Gate 4.6: Ablage der Sicherungs-Zugangsdaten nicht vor dem Deployment, nachgeholt in D.11 |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 0 / 10 (0 %) über ADR-028 bis ADR-037 – ADR-037 in 4.6 (Zugriff der KI, Kategorie 6 – nicht reaktiv, laut ADR-032 dort vorgesehen); ADR-036 in 4.3 (Sicherungsziel, Kategorien 3, 6, 7 – nicht reaktiv, in 4.3 vorgesehen); ADR-035 aus der Erkundung D.6 (Erkenntnis aus geplanter Messung, wie ADR-022 – nicht reaktiv); ADR-034 in 4.2 (Überwachung, Kategorie 7 – nicht reaktiv); ADR-033 in 4.12 (Kategorien 3 und 7 – nicht reaktiv); ADR-029 bis ADR-032 in 4.2 (Kategorien 3 und 6 – nicht reaktiv); ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-025 in 4.2 (geplante Anbieterwahl, nicht mehr im Fenster); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3 (nicht mehr im Fenster). ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
+- **Aktueller Wert:** 0 / 10 (0 %) über ADR-029 bis ADR-038 – ADR-038 in 4.6 (Verzicht auf Gate-Punkt 4a, Kategorie 6 – nicht reaktiv); ADR-037 in 4.6 (Zugriff der KI, Kategorie 6 – nicht reaktiv, laut ADR-032 dort vorgesehen); ADR-036 in 4.3 (Sicherungsziel, Kategorien 3, 6, 7 – nicht reaktiv, in 4.3 vorgesehen); ADR-035 aus der Erkundung D.6 (Erkenntnis aus geplanter Messung, wie ADR-022 – nicht reaktiv); ADR-034 in 4.2 (Überwachung, Kategorie 7 – nicht reaktiv); ADR-033 in 4.12 (Kategorien 3 und 7 – nicht reaktiv); ADR-029 bis ADR-032 in 4.2 (Kategorien 3 und 6 – nicht reaktiv); ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv, nicht mehr im Fenster); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-025 in 4.2 (geplante Anbieterwahl, nicht mehr im Fenster); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3 (nicht mehr im Fenster). ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -966,6 +967,26 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Konfidenz zum Zeitpunkt:** mittel bis hoch (Schwäche von A belegt: Docker-Zugriff ist root-gleich, der Administrator-Schlüssel liegt auf demselben Mac). Umkehrbarkeit billig.
 - **Restrisiko:** Der Zugriff der KI ist technisch nicht beschränkt – ein Fehler der KI oder eine Übernahme des Macs trifft den ganzen Server samt der anderen Dienste des Eigentümers; Schutz nur durch Regeln und Aufsicht. Der Schlüsseltausch ist nie geübt: im Ernstfall kann der Befehl aus dem Runbook scheitern; Widerruf bei OpenRouter wirkt davon unabhängig sofort, das Skriptorium liefe dann bis zur Klärung ohne KI.
 - **Konsequenzen:** Gate-Punkt 4 zum Zugriff der KI und Punkt 4b sind damit entschieden (Verzicht mit benanntem Restrisiko). Offen bleibt 4a (Ablage der Sicherungs-Zugangsdaten außerhalb des Servers).
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-038: Gate 4.6 – Verzicht auf die Ablage der Sicherungs-Zugangsdaten außerhalb des Servers vor dem Deployment
+
+- **Datum:** 2026-09-30
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[OPERATIV]` `[SECURITY]` `[DEPLOYMENT]`
+- **Phasentyp-Kontext:** STABILISIERUNG (Gate-Schritt 4.6, Prüfpunkt 4a)
+- **Reifegrad-Wirkung:** „Secrets im Betrieb“ → `[VORLÄUFIG]` statt `[BELASTBAR]`; Beförderung mit D.11
+- **Kategorie:** Sicherheit (`CLAUDE.md` Abschnitt 4, Kategorie 6; Verzicht auf einen Gate-Prüfpunkt nach Abschnitt 12)
+- **Kontext:** Im Gate waren alle Prüfpunkte belegt oder entschieden (ADR-037) außer 4a: Duplicati-Passphrase und S4-Schlüssel liegen nur im Duplicati-Auftrag auf dem VPS (Schlüssel zusätzlich bei Mega). Der Eigentümer hat keinen Passwort-Manager in Betrieb und hat die Wahl vertagt. Die KI hat mehrfach auf die Folge hingewiesen. Am 2026-09-28 hatte der Eigentümer festgelegt, dass kein Gate-Punkt übersprungen wird.
+- **Optionen:** A Gate offen lassen, bis 4a erledigt ist (Stand der KI) / B 4a aus dem Gate nehmen und mit Frist nachholen.
+- **Entscheidung:** B – Anweisung des Eigentümers: „4.6 überspringen.“ Das Gate wird mit den belegten Punkten geschlossen; 4a wird als D.11 mit Frist geführt. Die Festlegung vom 2026-09-28 ist für diesen einen Punkt aufgehoben.
+- **Vision-Frage, die entschied:** „Soll das Deployment warten, bis die Zugangsdaten der Sicherung außerhalb des Servers liegen?“ → nein.
+- **Konfidenz zum Zeitpunkt:** hoch, was die Folge angeht; die Abwägung ist Sache des Eigentümers. Umkehrbarkeit billig, solange der VPS läuft (Werte jederzeit aus dem Duplicati-Auftrag exportierbar); nach Verlust des VPS nicht mehr.
+- **Restrisiko:** Geht der VPS verloren, bevor D.11 erledigt ist, ist die Sicherung in MEGA S4 nicht lesbar – alle bis dahin geschriebenen Welten und Texte wären verloren. Bis zum ersten echten Inhalt (30-Minuten-Test 4.8) ist das Datenverzeichnis leer, der Schaden träte also erst danach ein.
+- **Konsequenzen:** 4.6 `[ERLEDIGT]`, 4.7 kann beginnen. D.11 mit Frist „vor dem ersten echten Kapitel in 4.8, spätestens 2026-10-31“. Runbook Abschnitt 7 nennt den Ablageort weiter als offen.
 - **Abgeleitete Regel:** keine
 
 ---
