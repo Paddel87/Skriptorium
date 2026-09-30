@@ -10,8 +10,8 @@
 
 - **Projektname:** Skriptorium
 - **Kurzbeschreibung:** Schreibwerkstatt für einen einzelnen Autor: Mehrere eigene Welten dienen als verbindlicher Kanon, Autor und KI schreiben im Wechsel Prosa darin, ohne der jeweiligen Welt zu widersprechen.
-- **Status:** In Entwicklung – Phase 4 „Stabilisierung und erstes öffentliches Deployment“, Schritte 4.1 bis 4.6 und 4.9 bis 4.12 erledigt (Container auf dem VPS installiert, Gate geschlossen mit ADR-037 und ADR-038, von außen erreichbar erst mit 4.7; tägliche Sicherung nach MEGA S4 mit erprobter Wiederherstellung) (Phase 3 „Schreiben mit KI“ abgeschlossen 2026-09-27, ADR-024)
-- **Version (SemVer):** v0.0.0 – noch keine lauffähige Version
+- **Status:** In Entwicklung – Phase 4 „Stabilisierung und erstes öffentliches Deployment“; seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz erreichbar (Schritt 4.7, Stand `942bb40`); offen: 4.8 30-Minuten-Test (Phase 3 „Schreiben mit KI“ abgeschlossen 2026-09-27, ADR-024)
+- **Version (SemVer):** v0.0.0 – öffentlich erreichbar, noch ohne Versionsvergabe; v0.1.0 wird nach dem 30-Minuten-Test vergeben (Schritt 4.8)
 - **Dokumentationssprache:** Deutsch
 - **Codesprache (Kommentare, Variablennamen):** Englisch (Eigentümer, 2026-09-26); Fachbegriffe einheitlich: world, canon, canon entry, story, manuscript, guest character
 - **Projekttyp:** Full-Stack (Web-App: Python-Server, TypeScript-Oberfläche)
@@ -247,10 +247,10 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 ## 8. Betrieb und Deployment
 
 - **Deployment-Ziel:** kleiner gemieteter Server (VPS), öffentlich erreichbar mit Passwortschutz (Eigentümer, 2026-09-26); vorhandener VPS des Eigentümers bei netcup (ADR-025, 2026-09-27); Ubuntu 24.04.5 LTS, x86_64, 4 Kerne, 7,8 GB RAM, 251 GB Platte (SSH-Abfrage 2026-09-27); der VPS wird bereits für andere Dienste genutzt (2,4 GB RAM und 39 GB Platte belegt) – für die Härtung in 4.2 zu berücksichtigen; Tarif und Preis nicht Sache des Projekts (Eigentümer, 2026-09-27); Einpassung als Container hinter dem vorhandenen Reverse Proxy (ADR-027, Bestand: `docs/research/vps-bestand.md`). Server-Details (Namen, Ports, Adressen) stehen wegen des öffentlichen Repos nur lokal beim Eigentümer
-- **CI/CD:** GitHub Actions, `.github/workflows/ci.yml`. Deployment-Workflow: [TBD in Schritt 4.7 – bis dahin kein Deployment]
+- **CI/CD:** GitHub Actions, `.github/workflows/ci.yml`. Deployment: von Hand durch die KI per SSH, nur auf Anweisung des Eigentümers (ADR-039) – Stand von `main` nach grüner CI als Archiv übertragen, Image auf dem VPS bauen, starten, Gesundheitsprüfung; Ablauf und Rückweg in `docs/onboarding-runbook.md` Abschnitt 7. Kein Deployment-Workflow
 - **Umgebungen:** lokal (macOS des Eigentümers, Coding-Agent; zuvor Cloud-Session) → Produktion (VPS)
 - **Monitoring:** keine Erreichbarkeits-Überwachung (ADR-034; die vorhandene Überwachung auf dem VPS hat eine andere Aufgabe) – Ausfälle bemerkt der Eigentümer beim Öffnen; Gesundheitsprüfung des Containers (`healthy`); Kosten je Monat in der Oberfläche
-- **Server-Prozess:** genau ein uvicorn-Prozess im Container (`Dockerfile`, ADR-029) hinter dem Reverse Proxy auf demselben Host, `--no-access-log`, `FORWARDED_ALLOW_IPS` nur für das eigene Netz zwischen Proxy und Skriptorium (ADR-030) – Sitzungen und Sperre nach Fehlversuchen liegen im Speicher (ADR-017, Sicherheitsprüfung 2.6). Installiert 2026-09-28, von außen noch nicht erreichbar (ADR-032)
+- **Server-Prozess:** genau ein uvicorn-Prozess im Container (`Dockerfile`, ADR-029) hinter dem Reverse Proxy auf demselben Host, `--no-access-log`, `FORWARDED_ALLOW_IPS` nur für das eigene Netz zwischen Proxy und Skriptorium (ADR-030) – Sitzungen und Sperre nach Fehlversuchen liegen im Speicher (ADR-017, Sicherheitsprüfung 2.6). Installiert 2026-09-28, von außen erreichbar seit 2026-09-30 (4.7): Router am Proxy mit HTTPS und `frame-ancestors 'none'`, kein veröffentlichter Port
 - **Logging-Level Default:** `INFO` im Betrieb, `DEBUG` nur lokal; keine Inhalte aus Welten oder Manuskripten (Abschnitt 6)
 - **Vertretung:** Verzicht – niemand; Stillstand ist zulässig, Daten bleiben in den Sicherungen (Eigentümer, 2026-09-26; ADR-008 mit benanntem Restrisiko)
 - **Notfall-Handbuch:** `docs/onboarding-runbook.md` Abschnitt 7 „Notfall“ (Schritt 4.4, 2026-09-30; vom Eigentümer ohne KI geübt); konkrete Server-Werte in einer lokalen Notiz beim Eigentümer

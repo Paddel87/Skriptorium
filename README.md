@@ -23,11 +23,11 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 4 – Stabilisierung und erstes öffentliches Deployment (Stabilisierung), Schritte 4.1, 4.2, 4.3 (tägliche Sicherung nach MEGA S4, Wiederherstellung erprobt, ADR-036), 4.4 (Notfall-Handbuch), 4.5 (Sicherheitsprüfung ohne Befunde), 4.6 (Gate, ADR-037 und ADR-038), 4.9, 4.10, 4.11 und 4.12 (Proxy-Update, ADR-033) erledigt: Skriptorium läuft als Container auf dem vorhandenen netcup-VPS, von außen erst nach dem Gate (4.6) erreichbar (ADR-027, ADR-029 bis ADR-032), ohne eigene Erreichbarkeits-Überwachung (ADR-034); Phase 3 – Schreiben mit KI abgeschlossen am 2026-09-27 (ADR-024: weiterbauen)
-- **Version:** v0.0.0 – noch keine veröffentlichte Version
+- **Projektphase:** Phase 4 – Stabilisierung und erstes öffentliches Deployment (Stabilisierung), Schritte 4.1 bis 4.7 und 4.9 bis 4.12 erledigt: Das Skriptorium läuft seit 2026-09-30 als Container auf dem vorhandenen netcup-VPS öffentlich unter HTTPS mit Passwortschutz (ADR-027, ADR-029 bis ADR-032, ADR-039), mit täglicher Sicherung nach MEGA S4 und erprobter Wiederherstellung (ADR-036), ohne eigene Erreichbarkeits-Überwachung (ADR-034); offen: 4.8 30-Minuten-Test; Phase 3 – Schreiben mit KI abgeschlossen am 2026-09-27 (ADR-024: weiterbauen)
+- **Version:** v0.0.0 – öffentlich erreichbar, Versionsvergabe (v0.1.0) nach dem 30-Minuten-Test
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-09-28
-- **Architektur-Reife:** Module, Schnittstellen, Datenmodell und Token-Budget BELASTBAR (ADR-013); Reaktionszeit BELASTBAR (Zielwerte nach Messung D.6 angepasst, ADR-035); Kanon-Treue VORLÄUFIG (erste Messung in 3.3, Messung beim Schreiben des Eigentümers in 4.8); Sicherheitsniveau und Schutzbedarf BELASTBAR (ADR-006, ADR-007); Observability BELASTBAR (Log-Zeile und Monatskosten, ADR-021, ADR-023); Bedrohungsmodell BELASTBAR (Prüfung 4.5); Host BELASTBAR (4.2); Netz VORLÄUFIG bis 4.7; Backups BELASTBAR (4.3); Secrets im Betrieb VORLÄUFIG (Gate 4.6, BELASTBAR mit D.11)
+- **Architektur-Reife:** Module, Schnittstellen, Datenmodell und Token-Budget BELASTBAR (ADR-013); Reaktionszeit BELASTBAR (Zielwerte nach Messung D.6 angepasst, ADR-035); Kanon-Treue VORLÄUFIG (erste Messung in 3.3, Messung beim Schreiben des Eigentümers in 4.8); Sicherheitsniveau und Schutzbedarf BELASTBAR (ADR-006, ADR-007); Observability BELASTBAR (Log-Zeile und Monatskosten, ADR-021, ADR-023); Bedrohungsmodell BELASTBAR (Prüfung 4.5); Host BELASTBAR (4.2); Netz BELASTBAR (Prüfungen von außen, 4.7); Backups BELASTBAR (4.3); Secrets im Betrieb VORLÄUFIG (Gate 4.6, BELASTBAR mit D.11)
 - **Aktive Blocker:** 0
 
 ## Quick Start
@@ -87,7 +87,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **4.7:** Erstes öffentliches Deployment, danach 4.8 (30-Minuten-Test).
+- **4.8:** 30-Minuten-Test durch den Eigentümer, danach erstes echtes Kapitel und Versionsvergabe.
 - **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (vor dem ersten echten Kapitel, spätestens 2026-10-31).
 - **D.8:** Zugangsdaten der Proxy-Verwaltung rotieren (bis 2026-10-05).
 

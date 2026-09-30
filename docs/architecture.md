@@ -318,7 +318,7 @@ data/
 - **Eigenes eingeschränktes Serverkonto für die KI / kein Serverzugriff der KI:** Docker-Zugriff ist root-gleich und der Administrator-Schlüssel liegt auf demselben Mac; ohne Zugriff hinge jede Wartung am Eigentümer – siehe ADR-037
 
 <!-- ANCHOR:reifegrad-uebersicht -->
-## 9. Reifegrad-Übersicht (Stand vom 2026-09-30, nach Schritt 4.6)
+## 9. Reifegrad-Übersicht (Stand vom 2026-09-30, nach Schritt 4.7)
 
 | Bestandteil | Reifegrad | Seit | Validiert durch / wartet auf |
 |---|---|---|---|
@@ -340,12 +340,12 @@ data/
 | Observability: Metriken (Speicherung) | BELASTBAR | 2026-09-27 | ADR-023; durch Umsetzung validiert in 3.9 (Tests, echte Läufe `spikes/modellwahl/README.md`) |
 | NFR Kanon-Treue | VORLÄUFIG | 2026-09-26 | Vorprüfung 1.1 (ADR-010); erste Messung im Probeschreiben 3.3 (0 eindeutige Widersprüche je Kapitel); Messung beim Schreiben des Eigentümers in 4.8 (ADR-024) |
 | Sicherheitsniveau ASVS 5.0.0 L1 / Auth L2 | BELASTBAR | 2026-09-26 | ADR-006 |
-| Bedrohungsmodell Gesamtsystem | BELASTBAR | 2026-09-28 | Unabhängige Prüfung 4.5 (getrennte Instanz, Sonnet 5, keine Befunde); Netz-Teil bis 4.7 VORLÄUFIG |
+| Bedrohungsmodell Gesamtsystem | BELASTBAR | 2026-09-28 | Unabhängige Prüfung 4.5 (getrennte Instanz, Sonnet 5, keine Befunde); Netz-Teil von außen geprüft in 4.7 (2026-09-30) |
 | Schutzbedarf normal | BELASTBAR | 2026-09-26 | ADR-007 |
 | Host | BELASTBAR | 2026-09-28 | Schritt 4.2: Prüfung von außen (alle TCP-Ports; SSH-Passwort-Anmeldung abgelehnt), Firewall und automatische Sicherheitsupdates aktiv, Proxy auf unterstützter Linie (ADR-033); keine eigene Überwachung (ADR-034) |
 | Backups und Wiederherstellung | BELASTBAR | 2026-09-30 | Schritt 4.3: Wiederherstellung einer echten Sicherung (MEGA S4, ADR-036) auf dem Mac, 3 Dateien prüfsummengleich, Server darauf gestartet, Index neu aufgebaut; Schlüssel scheitert am fremden Bucket („Request not allowed by policy“) |
 | Secrets im Betrieb | VORLÄUFIG | 2026-09-30 | Gate 4.6: Ablageorte und Rotationswege festgehalten, Zugriff der KI entschieden (ADR-037); Schlüsseltausch unerprobt, Sicherungs-Zugangsdaten noch nur auf dem VPS (ADR-038) – Beförderung mit D.11 |
-| Netz (nur HTTPS von außen) | VORLÄUFIG | 2026-09-26 | Prüfungen von außen in Schritt 4.7 (Proxy-Anbindung, `X-Forwarded-For`, `frame-ancestors`) |
+| Netz (nur HTTPS von außen) | BELASTBAR | 2026-09-30 | Schritt 4.7: Prüfungen von außen – nur HTTPS (HTTP → 301), gültiges Zertifikat, kein veröffentlichter Port, `X-Forwarded-For` von außen ohne Wirkung, Sperre je echter Adresse, `frame-ancestors 'none'`; eigenes Netz Proxy–Skriptorium (ADR-030) |
 
 <!-- ANCHOR:tooling-inventar -->
 ## 10. Tooling-Inventar
