@@ -250,7 +250,7 @@ Angelegt im Sicherheitsgrundriss (Modus 2 Schritt 4a, 2026-09-26). Das System wi
 - **Host:** vorhandener netcup-VPS (ADR-025), mit anderen Diensten des Eigentümers geteilt; Firewall aktiv, SSH nur mit Schlüssel, automatische Sicherheitsupdates, Reverse Proxy auf unterstützter Linie (ADR-033); Skriptorium als Container ohne root, Dateisystem schreibgeschützt außer `/data`, alle Capabilities entzogen, `no-new-privileges`, Speichergrenze (ADR-027, ADR-029); keine eigene Erreichbarkeits-Überwachung (ADR-034). Belegt in 4.2 `[BELASTBAR]`
 - **Netz:** von außen nur HTTPS (443) und die Umleitung von HTTP (80) über den Reverse Proxy, SSH nur mit Schlüssel (belegt in 4.2); Skriptorium ohne veröffentlichten Port in einem eigenen Netz nur mit dem Proxy, `FORWARDED_ALLOW_IPS` genau für dieses Netz (ADR-030); bis Gate 4.6 nicht an den Proxy angebunden (ADR-032); TLS-Zertifikat automatisch erneuert. Prüfungen durch den Proxy (`X-Forwarded-For`, `frame-ancestors`) in 4.7 `[VORLÄUFIG]`
 - **Secrets im Betrieb:** API-Schlüssel als Umgebungsvariable auf dem Server; Passwort-Hash und Hash des Einrichtungscodes in `system/zugang.md` im Datenverzeichnis (ADR-017); Rotationsweg: neuen Schlüssel bei OpenRouter erzeugen, eintragen, alten widerrufen [TBD – Ablageort in Schritt 4.2]. Kein Zugriff der KI auf Produktions-Secrets. `[OFFEN]`
-- **Backups und Wiederherstellung:** Datenverzeichnis (Markdown-Dateien) täglich außerhalb des Servers sichern; Index wird nicht gesichert, sondern neu aufgebaut. Ziel und Verfahren [TBD in Schritt 4.3]; Beförderung erst nach erprobter Wiederherstellung. `[OFFEN]`
+- **Backups und Wiederherstellung:** Datenverzeichnis (Markdown-Dateien) täglich außerhalb des Servers sichern; Index wird nicht gesichert, sondern neu aufgebaut. Duplicati auf dem VPS sichert `data/` ohne `index.sqlite` täglich verschlüsselt nach MEGA S4, Schlüssel nur für diesen Bucket (ADR-036); Wiederherstellung und Index-Neuaufbau nach `docs/onboarding-runbook.md` Abschnitt 7. Erprobt 2026-09-30: echte Sicherung vom VPS auf dem Mac wiederhergestellt, Dateien prüfsummengleich, Server darauf gestartet, Index neu aufgebaut. `[BELASTBAR]`
 
 ### Observability
 
@@ -317,7 +317,7 @@ data/
 - **Ganzen Verlauf bei jeder Anfrage mitschicken (Ist-Zustand TypingMind):** Kosten und Kontextgrenzen sind der Anlass des Projekts – siehe ADR-003
 
 <!-- ANCHOR:reifegrad-uebersicht -->
-## 9. Reifegrad-Übersicht (Stand vom 2026-09-28, nach Schritten 4.2, 4.5 und D.6)
+## 9. Reifegrad-Übersicht (Stand vom 2026-09-30, nach Schritt 4.3)
 
 | Bestandteil | Reifegrad | Seit | Validiert durch / wartet auf |
 |---|---|---|---|
@@ -342,7 +342,8 @@ data/
 | Bedrohungsmodell Gesamtsystem | BELASTBAR | 2026-09-28 | Unabhängige Prüfung 4.5 (getrennte Instanz, Sonnet 5, keine Befunde); Netz-Teil bis 4.7 VORLÄUFIG |
 | Schutzbedarf normal | BELASTBAR | 2026-09-26 | ADR-007 |
 | Host | BELASTBAR | 2026-09-28 | Schritt 4.2: Prüfung von außen (alle TCP-Ports; SSH-Passwort-Anmeldung abgelehnt), Firewall und automatische Sicherheitsupdates aktiv, Proxy auf unterstützter Linie (ADR-033); keine eigene Überwachung (ADR-034) |
-| Secrets im Betrieb, Backups | OFFEN | 2026-09-26 | Schritt 4.3, Gate-Schritt 4.6 |
+| Backups und Wiederherstellung | BELASTBAR | 2026-09-30 | Schritt 4.3: Wiederherstellung einer echten Sicherung (MEGA S4, ADR-036) auf dem Mac, 3 Dateien prüfsummengleich, Server darauf gestartet, Index neu aufgebaut; Schlüssel scheitert am fremden Bucket („Request not allowed by policy“) |
+| Secrets im Betrieb | OFFEN | 2026-09-26 | Gate-Schritt 4.6 |
 | Netz (nur HTTPS von außen) | VORLÄUFIG | 2026-09-26 | Prüfungen von außen in Schritt 4.7 (Proxy-Anbindung, `X-Forwarded-For`, `frame-ancestors`) |
 
 <!-- ANCHOR:tooling-inventar -->

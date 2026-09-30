@@ -179,8 +179,14 @@ Entfällt (Klasse M, ein Beitragender); Operations folgt mit Phase 4.
 
 - **Zugang:** [wo liegen die Zugangsdaten für Server, Domain, Backups – Ort, nicht Wert]
 - **System anhalten:** [konkrete Befehle oder Klickpfad] – erprobt am [YYYY-MM-DD]
-- **Sicherung ziehen:** [konkrete Befehle] – erprobt am [YYYY-MM-DD]
-- **Wiederherstellen:** [konkrete Befehle, erwartete Dauer, woran man den Erfolg erkennt] – erprobt am [YYYY-MM-DD]
+- **Sicherung ziehen:** Läuft täglich 04:15 von selbst (Duplicati auf dem VPS, Auftrag „Skriptorium“, Ziel MEGA S4, ADR-036). Von Hand: Duplicati-Weboberfläche (Adresse lokal beim Eigentümer) → Auftrag „Skriptorium“ → „Jetzt ausführen“; Erfolg: oberster Eintrag unter „Protokoll anzeigen“ ohne Fehler. Gesichert wird nur `/source/skriptorium/data/` ohne `index.sqlite` – erprobt am 2026-09-30
+- **Wiederherstellen** (auch ohne Server, z. B. auf einem Mac mit Docker Desktop) – erprobt am 2026-09-30, Dauer ca. 15 Minuten, davon das meiste Eintippen:
+  1. Benötigt aus dem Passwort-Manager: S4-Endpunkt, Bucket-Name, Access ID und geheimer Schlüssel des Sicherungs-Benutzers, Duplicati-Passphrase. Ohne die Passphrase ist die Sicherung nicht lesbar.
+  2. Duplicati starten (auf dem Mac als Wegwerf-Container, nur lokal erreichbar): `docker run -d --name duplicati-restore -p 127.0.0.1:8210:8200 -e PUID=0 -e PGID=0 -e SETTINGS_ENCRYPTION_KEY=<beliebig> -e DUPLICATI__WEBSERVICE_PASSWORD=<beliebig> -v "$PWD/restore:/restore" lscr.io/linuxserver/duplicati`; im Browser `http://127.0.0.1:8210` öffnen.
+  3. „Wiederherstellen“ → „Direkt aus Sicherungsdateien wiederherstellen“ → Speichertyp „S3 Compatible“, SSL an, Server „Custom server url“ mit dem Endpunkt **ohne** Bucket-Namen davor, Bucket-Name, Ordnerpfad `skriptorium`, beide Schlüssel → „Verbindung testen“ → Passphrase → neueste Version, alles anhaken → „An einem anderen Ort“ `/restore/`, Rechte nicht wiederherstellen → „Wiederherstellen“.
+  4. Die wiederhergestellten Ordner sind schreibgeschützt: `chmod -R u+w restore`. Auf dem Server den Inhalt nach `/opt/docker/skriptorium/data/` legen und `chown -R 10001:10001 /opt/docker/skriptorium/data`.
+  5. Skriptorium starten und den Suchindex neu aufbauen (er ist nicht in der Sicherung): `docker exec skriptorium python -c "from pathlib import Path; from skriptorium.storage.store import DocumentStore; DocumentStore(Path('/data')).rebuild_index()"`.
+  6. Erfolg: Anmeldung mit dem bisherigen Passwort klappt (Zugangsdaten liegen in `system/` und sind mitgesichert), Welten und Einträge sind da.
 - **Wen benachrichtigen:** [Nutzer, Vertretung, ggf. Datenschutz-Meldepflicht mit Frist]
 
 ## 8. Pflegehinweise

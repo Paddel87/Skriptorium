@@ -10,7 +10,7 @@
 
 - **Projektname:** Skriptorium
 - **Kurzbeschreibung:** Schreibwerkstatt für einen einzelnen Autor: Mehrere eigene Welten dienen als verbindlicher Kanon, Autor und KI schreiben im Wechsel Prosa darin, ohne der jeweiligen Welt zu widersprechen.
-- **Status:** In Entwicklung – Phase 4 „Stabilisierung und erstes öffentliches Deployment“, Schritte 4.1, 4.2, 4.5, 4.9, 4.10, 4.11 und 4.12 erledigt (Container auf dem VPS installiert, von außen nicht erreichbar bis Gate 4.6); 4.3 zurückgestellt (Phase 3 „Schreiben mit KI“ abgeschlossen 2026-09-27, ADR-024)
+- **Status:** In Entwicklung – Phase 4 „Stabilisierung und erstes öffentliches Deployment“, Schritte 4.1, 4.2, 4.3, 4.5, 4.9, 4.10, 4.11 und 4.12 erledigt (Container auf dem VPS installiert, von außen nicht erreichbar bis Gate 4.6; tägliche Sicherung nach MEGA S4 mit erprobter Wiederherstellung) (Phase 3 „Schreiben mit KI“ abgeschlossen 2026-09-27, ADR-024)
 - **Version (SemVer):** v0.0.0 – noch keine lauffähige Version
 - **Dokumentationssprache:** Deutsch
 - **Codesprache (Kommentare, Variablennamen):** Englisch (Eigentümer, 2026-09-26); Fachbegriffe einheitlich: world, canon, canon entry, story, manuscript, guest character
@@ -257,6 +257,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 - **KI im Betrieb:** Coding-Agent über Claude-Abo Max 5x des Eigentümers; Wochenlimit mit Zurücksetzung sonntags 10:00 (MESZ) plus 5-Stunden-Limit. Rückfallweg ohne KI: Das Skriptorium läuft ohne den Coding-Agent weiter; Neustart und Wiederherstellung nach Notfall-Handbuch. Die KI-Anbieter im Produkt (OpenRouter) sind davon getrennt und über den Kostenrahmen begrenzt.
 - **Zugriff der KI auf die Produktion:** per SSH von der macOS-Umgebung aus (ADR-025), beschränkt auf das für die Einrichtung Nötige; Benutzerkonto, erlaubte Befehle und Ausschluss von Secret-Lesen werden in 4.2 festgelegt und im Gate-Schritt 4.6 belegt
 - **Unbeaufsichtigtes Handeln der KI:** nein
+- **Sicherung:** Duplicati auf dem VPS, täglich 04:15, Datenverzeichnis ohne Index nach MEGA S4 (ADR-036); Wiederherstellung erprobt 2026-09-30 (`docs/onboarding-runbook.md` Abschnitt 7). Secrets dazu: S4-Schlüssel des Sicherungs-Benutzers (Ablage: Passwort-Manager des Eigentümers und verschlüsselt in der Duplicati-Konfiguration auf dem VPS; Rotation: in Mega neuen Schlüssel für den Benutzer anlegen, im Duplicati-Auftrag eintragen, Verbindung testen, alten Schlüssel löschen) und Duplicati-Passphrase (Ablage: Passwort-Manager des Eigentümers und im Auftrag; Wechsel nur mit neuem Sicherungssatz). Die KI hat keinen der Werte gesehen
 
 ### Ablaufdaten-Register
 
