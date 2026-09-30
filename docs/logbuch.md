@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-09-30 13:50 – [ADR-ANGELEGT] ADR-037 Zugriff der KI bleibt unverändert
+
+- Vorgelegt: A eingeschränktes Konto / B Administrator-Zugang mit zusätzlichen Regeln (Empfehlung) / C kein Zugriff; dazu die Frage nach der Erprobung des Schlüsseltauschs. Antwort des Eigentümers: „Es bleibt so, wie es ist.“ Die KI las das zunächst als B und begann einen ADR mit neuer Regel; der Eigentümer unterbrach und wiederholte: „Es bleibt so, wie es jetzt gerade ist.“ Festgehalten deshalb ohne neue Regeln und ohne Schlüsseltausch, Restrisiko im ADR. Gate: nur noch 4a offen.
+- Nachprüfung von außen (Mac, `nc`): 22, 80, 443 offen; 8000, 8200, 9000, 9443, 8080, 3306, 5432, 6379, 2375, 2376 zu.
+
 ### 2026-09-30 13:30 – [SESSIONSTART] Schritt 4.6 Gate
 
 - **Modell:** Opus 5.5 (`claude-opus-5-5`, laut `get_session`), Entscheidungs-Klasse – wie für 4.6 verlangt (Eskalations-Auslöser 1 und 4).
