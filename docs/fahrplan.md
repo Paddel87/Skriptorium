@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-09-30
+- **Stand vom:** 2026-10-07
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
 - **Aktiver Schritt:** keiner – 4.7 erledigt 2026-09-30, das Skriptorium ist öffentlich erreichbar
-- **Nächster Schritt:** 4.8 30-Minuten-Test durch den Eigentümer (mit Stoppuhr; danach erstes echtes Kapitel, Versionsvergabe und Vision-Abgleich). Davor D.11 (Sicherungs-Zugangsdaten außerhalb des Servers, spätestens 2026-10-31). Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
+- **Nächster Schritt:** 4.8 30-Minuten-Test durch den Eigentümer (mit Stoppuhr; danach erstes echtes Kapitel, Versionsvergabe und Vision-Abgleich). Davor D.11 (Sicherungs-Zugangsdaten außerhalb des Servers, spätestens 2026-10-31). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. D.8 verworfen (ADR-040)
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -541,7 +541,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.8: Zugangsdaten der Proxy-Verwaltung rotieren
 
-- **Status:** OFFEN
+- **Status:** VERWORFEN (2026-10-07, ADR-040) – Eigentümer: Passwort ist stark; Rotation entfällt, Restrisiko im ADR
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** keine
 - **Frist:** 2026-10-05 (ursprünglich „spätestens vor 4.6“; 4.6 wurde am 2026-09-30 vor der Rotation geschlossen – das Datum gilt weiter)

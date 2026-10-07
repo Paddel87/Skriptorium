@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-09-30 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11, ADR-029 bis ADR-032 aus Schritt 4.2, ADR-033 aus Schritt 4.12, ADR-034 aus Schritt 4.2, ADR-035 aus D.6, ADR-036 aus Schritt 4.3, ADR-037 und ADR-038 aus Schritt 4.6, ADR-039 aus Schritt 4.7). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-10-07 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11, ADR-029 bis ADR-032 aus Schritt 4.2, ADR-033 aus Schritt 4.12, ADR-034 aus Schritt 4.2, ADR-035 aus D.6, ADR-036 aus Schritt 4.3, ADR-037 und ADR-038 aus Schritt 4.6, ADR-039 aus Schritt 4.7, ADR-040 aus D.8). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -59,12 +59,13 @@ Stand 2026-09-30 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 037 | 2026-09-30 | Aktiv | OPERATIV | SECURITY | Sicherheit | Zugriff der KI auf die Produktion unverändert; Schlüsseltausch nicht erprobt |
 | 038 | 2026-09-30 | Aktiv | OPERATIV | SECURITY, DEPLOYMENT | Sicherheit | Gate 4.6: Ablage der Sicherungs-Zugangsdaten nicht vor dem Deployment, nachgeholt in D.11 |
 | 039 | 2026-09-30 | Aktiv | OPERATIV | DEPLOYMENT | Deploy | Deployment von Hand durch die KI auf Anweisung; Adresse des Skriptoriums |
+| 040 | 2026-10-07 | Aktiv | OPERATIV | SECURITY | Sicherheit | D.8 verworfen: Passwort der Proxy-Verwaltung wird trotz offengelegtem Hash nicht rotiert |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 0 / 10 (0 %) über ADR-030 bis ADR-039 – ADR-039 in 4.7 (Deployment-Weg, Kategorie 7 – nicht reaktiv, in 4.7 vorgesehen); ADR-038 in 4.6 (Verzicht auf Gate-Punkt 4a, Kategorie 6 – nicht reaktiv); ADR-037 in 4.6 (Zugriff der KI, Kategorie 6 – nicht reaktiv, laut ADR-032 dort vorgesehen); ADR-036 in 4.3 (Sicherungsziel, Kategorien 3, 6, 7 – nicht reaktiv, in 4.3 vorgesehen); ADR-035 aus der Erkundung D.6 (Erkenntnis aus geplanter Messung, wie ADR-022 – nicht reaktiv); ADR-034 in 4.2 (Überwachung, Kategorie 7 – nicht reaktiv); ADR-033 in 4.12 (Kategorien 3 und 7 – nicht reaktiv); ADR-029 bis ADR-032 in 4.2 (Kategorien 3 und 6 – nicht reaktiv); ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv, nicht mehr im Fenster); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-025 in 4.2 (geplante Anbieterwahl, nicht mehr im Fenster); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3 (nicht mehr im Fenster). ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
+- **Aktueller Wert:** 0 / 10 (0 %) über ADR-031 bis ADR-040 – ADR-040 aus D.8 (Verzicht auf Rotation, Kategorie 6 – keine Architekturentscheidung, nicht reaktiv); ADR-039 in 4.7 (Deployment-Weg, Kategorie 7 – nicht reaktiv, in 4.7 vorgesehen); ADR-038 in 4.6 (Verzicht auf Gate-Punkt 4a, Kategorie 6 – nicht reaktiv); ADR-037 in 4.6 (Zugriff der KI, Kategorie 6 – nicht reaktiv, laut ADR-032 dort vorgesehen); ADR-036 in 4.3 (Sicherungsziel, Kategorien 3, 6, 7 – nicht reaktiv, in 4.3 vorgesehen); ADR-035 aus der Erkundung D.6 (Erkenntnis aus geplanter Messung, wie ADR-022 – nicht reaktiv); ADR-034 in 4.2 (Überwachung, Kategorie 7 – nicht reaktiv); ADR-033 in 4.12 (Kategorien 3 und 7 – nicht reaktiv); ADR-029 bis ADR-032 in 4.2 (Kategorien 3 und 6 – nicht reaktiv; ADR-029 und ADR-030 nicht mehr im Fenster); ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv, nicht mehr im Fenster); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-025 in 4.2 (geplante Anbieterwahl, nicht mehr im Fenster); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3 (nicht mehr im Fenster). ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -1007,6 +1008,26 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Vision-Frage, die entschied:** „Sollen neue Versionen nur dann auf den Server kommen, wenn du es ausdrücklich sagst – oder automatisch nach jeder Änderung?“ → nur auf Anweisung.
 - **Konfidenz zum Zeitpunkt:** hoch – derselbe Weg hat in 4.2 funktioniert. Umkehrbarkeit billig.
 - **Konsequenzen:** Kein Deployment-Workflow in `.github/workflows/`; `docs/project-context.md` Abschnitt 8 nennt den Weg; Ablauf im Runbook Abschnitt 7 („Neue Version einspielen“). Kein unbeaufsichtigtes Handeln der KI auf der Produktion (unverändert).
+- **Abgeleitete Regel:** keine
+
+---
+
+#### ADR-040: D.8 verworfen – Passwort der Proxy-Verwaltung wird nicht rotiert
+
+- **Datum:** 2026-10-07
+- **Entscheider:** Eigentümer
+- **Status:** Aktiv
+- **Tags:** `[OPERATIV]` `[SECURITY]`
+- **Phasentyp-Kontext:** STABILISIERUNG (Querschnitt-Schritt D.8)
+- **Reifegrad-Wirkung:** keine
+- **Kategorie:** Sicherheit (`CLAUDE.md` Abschnitt 4, Kategorie 6; Verzicht auf die Rotation eines als kompromittiert geltenden Secrets nach Abschnitt 6)
+- **Kontext:** Am 2026-09-28 gelangte beim Lesen der Proxy-Konfiguration (4.12) der bcrypt-Hash des Passworts der Proxy-Verwaltung ins Gesprächsprotokoll der KI. Nach `CLAUDE.md` Abschnitt 6 gilt das Secret damit als kompromittiert; D.8 sollte es bis 2026-10-05 rotieren. Ein Versuch am 2026-09-28 wurde vor der Eingabe abgebrochen; die Frist ist verstrichen.
+- **Optionen:** A D.8 verwerfen, Restrisiko per ADR / B D.8 mit neuer Frist behalten (Empfehlung der KI: ca. 5 Minuten Aufwand, Weg mit verdeckter Eingabe vorbereitet) / C Proxy-Verwaltung abschalten statt rotieren.
+- **Entscheidung:** A – Anweisung des Eigentümers: „D8 streichen“, Begründung: „Passwort stark“.
+- **Vision-Frage, die entschied:** „Ist das Passwort lang, zufällig und nirgends sonst verwendet?“ → stark (Angabe des Eigentümers, von der KI nicht prüfbar).
+- **Konfidenz zum Zeitpunkt:** mittel – offengelegt ist nur der Hash, nicht das Passwort; bcrypt macht das Erraten eines starken Passworts praktisch aussichtslos. Ob das Passwort stark und einmalig ist und ob die Verwaltung von außen erreichbar ist, kann die KI nicht prüfen. Umkehrbarkeit billig (Rotation jederzeit nachholbar).
+- **Restrisiko:** Wer das Gesprächsprotokoll erhält, kann offline versuchen, das Passwort aus dem Hash zu erraten. Gelingt das (schwaches oder anderswo verwendetes Passwort), hat er Zugriff auf die Proxy-Verwaltung, sofern sie für ihn erreichbar ist – betroffen wären alle Dienste hinter dem Proxy, nicht nur das Skriptorium. Bei einem starken, einmaligen Passwort ist das Risiko gering.
+- **Konsequenzen:** D.8 `[VERWORFEN]`; README „Nächste Schritte“ ohne D.8. Bei einem Verdacht auf Zugriff oder einer Änderung an der Proxy-Verwaltung wird die Rotation neu vorgelegt.
 - **Abgeleitete Regel:** keine
 
 ---
