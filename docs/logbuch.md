@@ -29,6 +29,31 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-07 20:15 – [GELÖST] CI rot: Sicherheitslücke in `source-map-js` (D.12)
+
+- PR #35 (D.8, nur Doku) rot im Job „TypeScript“, Schritt „Dependency-Audit“: GHSA-68fv-2mgg-jv7q (hoch) in `source-map-js` 1.2.1, transitiv über vite/postcss, jsdom und vitest-Coverage. Nicht durch den PR verursacht – neue Meldung seit dem letzten grünen Lauf auf `main` (2026-09-30).
+- Behoben mit `npm audit fix`: nur `package-lock.json`, 1.2.1 → 1.2.2. Lokal: `npm audit` 0 Befunde, vitest 96/96, Build grün. Als D.12 im Fahrplan, im selben PR.
+- Hinweis: Das Sessionende war schon geschrieben; die Prüfung des CI-Ergebnisses kam erst auf Nachfrage des Eigentümers. Künftig vor dem Sessionende das CI-Ergebnis des gepushten Stands abwarten.
+
+### 2026-10-07 19:55 – [SESSIONENDE] D.8 verworfen
+
+- **Dauer:** ca. 19:00–20:05 UTC (Uhrzeiten grob).
+- **Bearbeitet:** D.8 `[OFFEN]` → `[VERWORFEN]` (ADR-040). Keine Code-Änderung.
+- **Offen / nächster Schritt:** D.11 (spätestens 2026-10-31), dann 4.8 30-Minuten-Test – beide erledigt der Eigentümer laut eigener Aussage „nachher“; keine Verschiebung (eine zunächst gewünschte Verschiebung beider Schritte wurde nach Rückfrage nach Landeplatz und Folgen nicht weiterverfolgt, Fristen unverändert). Datiert: D.1 ab 2026-11-05, D.5 ab 2026-11-12, D.9 2026-12-28.
+- **Uncommitted / ungemergt:** Branch `docs/d8-verworfen` gepusht, noch nicht auf `main` (Merge nur per Pull Request, ADR-028); Pull Request auf Anweisung des Eigentümers.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session`: eingestellt und bedient `claude-opus-5-5`); 0 Schritte oberhalb der Empfehlung (D.8-Verwerfung ist Kategorie 6, Eskalations-Auslöser 1); nichts abgegeben (kleine Doku-Änderung im geladenen Kontext).
+- **Kontextgröße:** ca. 125.000 Token (`get_session`) – unter der Grenze.
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ ohne D.8; Drift: ADR-040 → D.8 vorhanden, Reaktiv-Quote 0/10 über ADR-031 bis ADR-040, keine aktiven Blocker, keine Reifegrad-Wirkung; Ablaufdaten ohne erreichten Vorlauf; Logbuch ca. 670 Zeilen – kein Trigger. Quick-Start-Pfad unberührt.
+
+### 2026-10-07 19:50 – [ADR-ANGELEGT] ADR-040 D.8 verworfen
+
+- Eigentümer: „D8 streichen“; auf die Rückfrage nach Erreichbarkeit und Stärke: „Passwort stark“. Vorgelegt waren A verwerfen / B neue Frist (Empfehlung der KI) / C Verwaltung abschalten. Restrisiko im ADR benannt.
+
+### 2026-10-07 19:00 – [SESSIONSTART] Überblick, D.8
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Quelle: `get_session`) – Entscheidungs-Klasse.
+- **Kontext:** Frage des Eigentümers nach offenen Schritten und letztem Stand. Befund: D.8 (Frist 2026-10-05) überschritten, ohne Vermerk. Eintrag nachträglich angelegt – die erste Antwort war reine Lektüre ohne Änderung.
+
 ### 2026-09-30 14:40 – [SESSIONENDE] Schritt 4.7 erledigt – Skriptorium öffentlich erreichbar
 
 - **Dauer:** 13:40–14:40 UTC (Uhrzeiten grob).

@@ -89,7 +89,6 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 - **4.8:** 30-Minuten-Test durch den Eigentümer, danach erstes echtes Kapitel und Versionsvergabe.
 - **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (vor dem ersten echten Kapitel, spätestens 2026-10-31).
-- **D.8:** Zugangsdaten der Proxy-Verwaltung rotieren (bis 2026-10-05).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – Startmodell grok-4.7, Zweitmodell grok-4.6.
 
