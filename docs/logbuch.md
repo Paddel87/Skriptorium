@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-07 20:15 – [GELÖST] CI rot: Sicherheitslücke in `source-map-js` (D.12)
+
+- PR #35 (D.8, nur Doku) rot im Job „TypeScript“, Schritt „Dependency-Audit“: GHSA-68fv-2mgg-jv7q (hoch) in `source-map-js` 1.2.1, transitiv über vite/postcss, jsdom und vitest-Coverage. Nicht durch den PR verursacht – neue Meldung seit dem letzten grünen Lauf auf `main` (2026-09-30).
+- Behoben mit `npm audit fix`: nur `package-lock.json`, 1.2.1 → 1.2.2. Lokal: `npm audit` 0 Befunde, vitest 96/96, Build grün. Als D.12 im Fahrplan, im selben PR.
+- Hinweis: Das Sessionende war schon geschrieben; die Prüfung des CI-Ergebnisses kam erst auf Nachfrage des Eigentümers. Künftig vor dem Sessionende das CI-Ergebnis des gepushten Stands abwarten.
+
 ### 2026-10-07 19:55 – [SESSIONENDE] D.8 verworfen
 
 - **Dauer:** ca. 19:00–20:05 UTC (Uhrzeiten grob).

@@ -606,6 +606,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Artefakte:** Runbook Abschnitt 7, `docs/project-context.md` Abschnitt 8, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-09-30 aus Gate 4.6 (ADR-038). Bis dahin ist die Sicherung nach einem Verlust des VPS nicht lesbar.
 
+#### D.12: Sicherheitslücke in `source-map-js` beheben
+
+- **Status:** ERLEDIGT (2026-10-07) – `source-map-js` 1.2.1 → 1.2.2 (nur `package-lock.json`, per `npm audit fix`); `npm audit` ohne Befund, vitest 96/96 (98,65 % Zeilen, 96,43 % Zweige), Build grün
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** keine
+- **Frist:** sofort (CI-Gate „Dependency-Audit“ rot)
+- **Freigabepflichtig:** nein – Patch-Update einer bestehenden, transitiven Abhängigkeit (`CLAUDE.md` Abschnitt 4, Kategorie 3)
+- **Empfohlene Klasse:** Routine – festgelegter Ablauf ohne Architekturwirkung.
+- **Eingangskriterien:** `npm audit --audit-level=high` meldet GHSA-68fv-2mgg-jv7q (hoch, Denial of Service über Source-Map-Offsets) in `source-map-js` 1.0.0–1.2.1
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Lockfile auf die behobene Version heben; Tests und Build prüfen.
+- **Akzeptanzkriterien:** `npm audit --audit-level=high` ohne Befund; CI grün.
+- **Betroffene Module:** ui (nur Entwicklungs- und Bauwerkzeuge: vite/postcss, jsdom, vitest-Coverage)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** `package-lock.json`, Logbuch-Eintrag
+- **Notizen:** Aufgefallen an PR #35 (D.8, reine Dokumentation); `main` war zuletzt am 2026-09-30 grün, die Meldung ist neuer. Die Abhängigkeit läuft nur beim Bauen und Testen, nicht im ausgelieferten Server.
+
 #### M.1: Branch-Konvention festlegen
 
 - **Status:** ERLEDIGT (2026-09-26)
