@@ -31,9 +31,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 
 ### 2026-10-07 19:55 – [SESSIONENDE] D.8 verworfen
 
-- **Dauer:** ca. 19:00–19:55 UTC (Uhrzeiten grob).
+- **Dauer:** ca. 19:00–20:05 UTC (Uhrzeiten grob).
 - **Bearbeitet:** D.8 `[OFFEN]` → `[VERWORFEN]` (ADR-040). Keine Code-Änderung.
-- **Offen / nächster Schritt:** D.11 (spätestens 2026-10-31), dann 4.8 30-Minuten-Test. Datiert: D.1 ab 2026-11-05, D.5 ab 2026-11-12, D.9 2026-12-28.
+- **Offen / nächster Schritt:** D.11 (spätestens 2026-10-31), dann 4.8 30-Minuten-Test – beide erledigt der Eigentümer laut eigener Aussage „nachher“; keine Verschiebung (eine zunächst gewünschte Verschiebung beider Schritte wurde nach Rückfrage nach Landeplatz und Folgen nicht weiterverfolgt, Fristen unverändert). Datiert: D.1 ab 2026-11-05, D.5 ab 2026-11-12, D.9 2026-12-28.
+- **Uncommitted / ungemergt:** Branch `docs/d8-verworfen` gepusht, noch nicht auf `main` (Merge nur per Pull Request, ADR-028); Pull Request auf Anweisung des Eigentümers.
 - **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session`: eingestellt und bedient `claude-opus-5-5`); 0 Schritte oberhalb der Empfehlung (D.8-Verwerfung ist Kategorie 6, Eskalations-Auslöser 1); nichts abgegeben (kleine Doku-Änderung im geladenen Kontext).
 - **Kontextgröße:** ca. 125.000 Token (`get_session`) – unter der Grenze.
 - **Sessionende-Prüfungen:** README „Nächste Schritte“ ohne D.8; Drift: ADR-040 → D.8 vorhanden, Reaktiv-Quote 0/10 über ADR-031 bis ADR-040, keine aktiven Blocker, keine Reifegrad-Wirkung; Ablaufdaten ohne erreichten Vorlauf; Logbuch ca. 670 Zeilen – kein Trigger. Quick-Start-Pfad unberührt.
