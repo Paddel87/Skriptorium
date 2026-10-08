@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 23:55 UTC – [BEOBACHTUNG] Ampel im Fahrplan, README überarbeitet (nach dem Sessionende)
+
+- Auf Bitte des Eigentümers nach dem Sessionende 23:40 UTC: README aktualisieren und im Fahrplan ein Ampelsystem einführen („oder vielleicht fällt dir was Besseres ein“).
+- **Fahrplan:** neuer Abschnitt „Übersicht“ (Anker `uebersicht`) mit Ampel-Tabelle für Phase 5 und offene Querschnitts-Schritte, Zeile mit Fortschritt (7 von 20 erledigt) und Spalte „Nächster Zug“ (du / KI / Datum); Symbol vor jedem Status (45 Zeilen). Abweichung vom Vorschlag: Rot nur für „blockiert“, „noch nicht angefangen“ ist Weiß – sonst wäre die halbe Liste rot und ein echtes Problem fiele nicht auf. Die Tabelle ist abgeleitet; Pflege bei jeder Statusänderung und in der Drift-Prüfung zu Sessionende.
+- **README:** Fortschritt mit Ampel und Link zur Übersicht; Quick-Start-Stand von „nach Schritt 3.9“ auf Phase 5; „Verwendung“ als Liste nach dem neuen Aufbau (Leiste, Schreibweise-Kurzzeile, Länge, hervorgehobene `@`-Begriffe, Darstellung); „Nächste Schritte“ mit Ampel.
+
 ### 2026-10-08 23:40 UTC – [SESSIONENDE] Session auf dem Mac: 5.7–5.10, 5.15, 5.17, 5.18 erledigt; 5.11 Teil 1 und 5.19 eingespielt
 
 - **Dauer:** 21:10 – 23:40 UTC. Die Uhrzeiten der Einträge 23:30 und 23:55 UTC unten sind geschätzt und zu spät (Container-Uhr beim Abschluss 23:37 UTC); Reihenfolge und Inhalt gelten.
