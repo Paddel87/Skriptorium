@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 21:40 UTC – [BEOBACHTUNG] 5.9 umgesetzt – Kapitel öffnet am Textende
+
+- PR #62 nach grüner CI (8/8) gemergt (`0fb1fc5`) auf Anweisung „mergen und weiter mit 5.9“.
+- **Code:** `ManuscriptEditor.tsx` – Cursor beim Öffnen und nach Text von außen ans Ende, eigener Scrollbereich ans Ende (`scrollDOM.scrollTop`, nicht `EditorView.scrollIntoView`, weil das auch die Seite verschiebt); neue Rückmeldung `onReady`. `ChapterEditor.tsx` – liegt die Knopfzeile beim Öffnen unter dem Fensterrand, rückt die Seite an den Kapitelanfang. `styles.css` – `.editor.manuscript` höchstens 55vh.
+- **Reibung:** Der erste End-to-End-Lauf zeigte, dass der Editor zwar richtig ans Ende scrollte (scrollTop 13.698 von 14.094), aber bei 720 px Fensterhöhe unter den Einstellungen der Geschichte lag (Oberkante bei 492 px) – das Textende war nicht im Fenster. Deshalb das Nachrücken der Seite.
+- **Läufe:** `vitest` 104 bestanden, 98,59 % Zeilen / 96,16 % Zweige (`ManuscriptEditor.tsx` 96,87 %, `ChapterEditor.tsx` 98,5 %); Playwright 9 bestanden.
+- **Offen:** CI, Merge, Deployment, Bestätigung des Eigentümers auf Desktop und Smartphone.
+
 ### 2026-10-08 21:25 UTC – [ERLEDIGT] Abnahme 5.7, 5.8, 5.15
 
 - Eigentümer schrieb nach dem Deployment `18ee07d` in einer echten Welt und bestätigte: „passt alles“ (Startmodell grok-4.6 ohne Sperre, nahtloser Anschluss, nur das Verlangte in gewählter Länge, kein Vorgriff).

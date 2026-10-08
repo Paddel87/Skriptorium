@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-10-08 (Neuplanung nach ADR-042; 5.7, 5.8, 5.15 erledigt und eingespielt mit `18ee07d`)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner – 5.7, 5.8 und 5.15 am 2026-10-08 `[ERLEDIGT]` nach Deployment `18ee07d` und Bestätigung des Eigentümers in einer echten Welt
-- **Nächster Schritt:** 5.9 Kapitel öffnet am Textende; danach 5.10, 5.11, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** 5.9 Kapitel öffnet am Textende – umgesetzt, wartet auf Merge, Deployment und Bestätigung des Eigentümers (5.7, 5.8 und 5.15 am 2026-10-08 `[ERLEDIGT]`)
+- **Nächster Schritt:** 5.9 abnehmen; danach 5.10, 5.11, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -256,7 +256,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.9: Kapitel öffnet am Textende
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT (seit 2026-10-08) – umgesetzt auf Branch `feat/5.9-kapitel-am-textende`: Manuskript-Editor mit eigenem Scrollbereich (höchstens 55 % der Fensterhöhe), öffnet mit Cursor und Ansicht am Textende und kehrt nach übernommenem Vorschlag dorthin zurück; liegen die Knöpfe unter dem Kapitel beim Öffnen außerhalb des Fensters, rückt die Seite an den Kapitelanfang. Tests: `vitest` 104 bestanden, 98,59 % Zeilen; Playwright 9 bestanden (neu: langes Kapitel mit 300 Absätzen zeigt Absatz 300, „In den Kanon“ und das Anweisungsfeld im Fenster 1280 × 720). Offen: CI, Merge, Deployment, Bestätigung des Eigentümers auf Desktop und Smartphone
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 4.8 (Phasenbeginn)
 - **Freigabepflichtig:** nein

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useRef, useState } from "react";
 import {
   api,
   describeError,
@@ -47,6 +47,19 @@ export function ChapterEditor({
   const [canonNote, setCanonNote] = useState<string | null>(null);
   // Counts canon changes, so the writing panel offers new entries in its `@` menu.
   const [canonRevision, setCanonRevision] = useState(0);
+  const card = useRef<HTMLElement>(null);
+  const actions = useRef<HTMLDivElement>(null);
+
+  /**
+   * When the chapter opens and its buttons lie below the screen, the page moves to the chapter,
+   * so the end of the text, "In den Kanon" and the writing panel are in reach (step 5.9).
+   */
+  function arrange() {
+    const below = actions.current?.getBoundingClientRect().bottom ?? 0;
+    if (below > window.innerHeight) {
+      card.current?.scrollIntoView({ block: "start" });
+    }
+  }
 
   async function save(): Promise<boolean> {
     setError(null);
@@ -116,7 +129,7 @@ export function ChapterEditor({
   }
 
   return (
-    <section className="card">
+    <section className="card" ref={card}>
       <Field label="Kapiteltitel">
         <input
           value={title}
@@ -135,10 +148,11 @@ export function ChapterEditor({
             setState("dirty");
           }}
           onSelect={setMarked}
+          onReady={arrange}
         />
       </Suspense>
       <ErrorText message={error} />
-      <div className="row">
+      <div className="row" ref={actions}>
         <button
           type="button"
           onClick={() => void save()}

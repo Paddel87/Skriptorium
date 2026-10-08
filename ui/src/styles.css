@@ -157,6 +157,16 @@ button.danger {
   font-size: 1.05rem;
 }
 
+/* Long chapters scroll inside the editor, so the buttons and the writing panel below stay
+   close (step 5.9). */
+.editor.manuscript .cm-editor {
+  max-height: 55vh;
+}
+
+.editor.manuscript .cm-scroller {
+  overflow: auto;
+}
+
 .editor.instruction,
 .editor.instruction .cm-editor {
   min-height: 3.5rem;
