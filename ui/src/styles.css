@@ -1,13 +1,78 @@
 /* Simple, readable layout for desktop and smartphone (FR-019 follows in 5.2). */
+/* Colours in one place (step 5.19): light by default, dark when the device asks for it or the
+   author chooses it; the author's choice ("hell"/"dunkel") wins over the device. */
 :root {
+  --text: #1f2328;
+  --page: #f6f5f1;
+  --surface: #fff;
+  --line: #ddd8cc;
+  --field-line: #bbb4a4;
+  --accent: #8a6d3b;
+  --accent-text: #fff;
+  --button: #fbf3e4;
+  --link: #6b4f1d;
+  --muted: #5c5647;
+  --danger: #a33;
+  --good: #2d6a2d;
+  --mention: #efe1bd;
+  --mention-text: #3d2f0c;
+  --selection: #e5d7b3;
+  --veil: rgb(0 0 0 / 45%);
+  --shadow: rgb(0 0 0 / 15%);
+  color-scheme: light;
   font-family: system-ui, sans-serif;
   line-height: 1.5;
-  color: #1f2328;
-  background: #f6f5f1;
+  color: var(--text);
+  background: var(--page);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --text: #e6e1d6;
+    --page: #17150f;
+    --surface: #221f18;
+    --line: #3d382c;
+    --field-line: #5a5242;
+    --accent: #c9a464;
+    --accent-text: #17150f;
+    --button: #2e2a20;
+    --link: #d9b97a;
+    --muted: #b3ab9a;
+    --danger: #ef8a7f;
+    --good: #8fcf8f;
+    --mention: #5a4a22;
+    --mention-text: #f6e7bf;
+    --selection: #4e4430;
+    --veil: rgb(0 0 0 / 65%);
+    --shadow: rgb(0 0 0 / 50%);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --text: #e6e1d6;
+  --page: #17150f;
+  --surface: #221f18;
+  --line: #3d382c;
+  --field-line: #5a5242;
+  --accent: #c9a464;
+  --accent-text: #17150f;
+  --button: #2e2a20;
+  --link: #d9b97a;
+  --muted: #b3ab9a;
+  --danger: #ef8a7f;
+  --good: #8fcf8f;
+  --mention: #5a4a22;
+  --mention-text: #f6e7bf;
+  --selection: #4e4430;
+  --veil: rgb(0 0 0 / 65%);
+  --shadow: rgb(0 0 0 / 50%);
+  color-scheme: dark;
 }
 
 body {
   margin: 0;
+  background: var(--page);
 }
 
 main,
@@ -40,8 +105,8 @@ main.wide,
 }
 
 .card {
-  background: #fff;
-  border: 1px solid #ddd8cc;
+  background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: 6px;
   padding: 1rem;
   display: flex;
@@ -91,34 +156,37 @@ input,
 select,
 textarea {
   padding: 0.4rem;
-  border: 1px solid #bbb4a4;
+  border: 1px solid var(--field-line);
   border-radius: 4px;
+  background: var(--surface);
+  color: var(--text);
 }
 
 button {
   padding: 0.4rem 0.8rem;
-  border: 1px solid #8a6d3b;
+  border: 1px solid var(--accent);
   border-radius: 4px;
-  background: #fbf3e4;
+  background: var(--button);
+  color: var(--text);
   cursor: pointer;
 }
 
 button[aria-current="true"] {
-  background: #8a6d3b;
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-text);
 }
 
 button.link {
   border: none;
   background: none;
   padding: 0;
-  color: #6b4f1d;
+  color: var(--link);
   text-decoration: underline;
 }
 
 button.danger {
-  border-color: #a33;
-  color: #a33;
+  border-color: var(--danger);
+  color: var(--danger);
 }
 
 .list {
@@ -138,23 +206,23 @@ button.danger {
 }
 
 .error {
-  color: #a33;
+  color: var(--danger);
 }
 
 .ok {
-  color: #2d6a2d;
+  color: var(--good);
 }
 
 .note {
-  color: #5c5647;
+  color: var(--muted);
   font-size: 0.9rem;
 }
 
 .editor {
-  border: 1px solid #bbb4a4;
+  border: 1px solid var(--field-line);
   border-radius: 4px;
   min-height: 20rem;
-  background: #fff;
+  background: var(--surface);
 }
 
 .editor .cm-editor {
@@ -175,8 +243,8 @@ button.danger {
 
 /* Names the instruction counts as `@` mentions (step 5.18). */
 .editor.instruction .cm-mention {
-  background: #efe1bd;
-  color: #3d2f0c;
+  background: var(--mention);
+  color: var(--mention-text);
   border-radius: 3px;
   font-weight: 600;
 }
@@ -195,13 +263,13 @@ th,
 td {
   text-align: left;
   padding: 0.3rem;
-  border-bottom: 1px solid #ddd8cc;
+  border-bottom: 1px solid var(--line);
 }
 
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgb(0 0 0 / 45%);
+  background: var(--veil);
   overflow-y: auto;
   z-index: 10;
 }
@@ -268,6 +336,62 @@ td {
     max-height: none;
     border-radius: 0;
     z-index: 10;
-    box-shadow: -4px 0 12px rgb(0 0 0 / 15%);
+    box-shadow: -4px 0 12px var(--shadow);
   }
+}
+
+/* CodeMirror in the page colours (step 5.19): text, cursor, selection, placeholder and the
+   `@` menu; the selectors are stronger than the editor's own light theme. */
+.editor .cm-editor {
+  color: var(--text);
+  background: var(--surface);
+}
+
+.editor .cm-editor .cm-content {
+  caret-color: var(--text);
+}
+
+.editor .cm-editor .cm-cursor {
+  border-left-color: var(--text);
+}
+
+.editor
+  .cm-editor.cm-focused
+  > .cm-scroller
+  > .cm-selectionLayer
+  .cm-selectionBackground,
+.editor .cm-editor > .cm-scroller > .cm-selectionLayer .cm-selectionBackground {
+  background: var(--selection);
+}
+
+.editor .cm-editor .cm-placeholder {
+  color: var(--muted);
+}
+
+.editor .cm-editor .cm-tooltip {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--line);
+}
+
+.editor .cm-editor .cm-tooltip-autocomplete ul li[aria-selected] {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.editor .cm-editor .cm-completionDetail {
+  color: var(--muted);
+}
+
+.editor
+  .cm-editor
+  .cm-tooltip-autocomplete
+  ul
+  li[aria-selected]
+  .cm-completionDetail {
+  color: inherit;
+}
+
+.theme-choice select {
+  padding: 0.2rem;
 }

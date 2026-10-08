@@ -4,6 +4,7 @@ import { Account } from "./views/Account";
 import { Login } from "./views/Login";
 import { Setup } from "./views/Setup";
 import { StoryPage } from "./views/StoryPage";
+import { ThemeChoice } from "./views/ThemeChoice";
 import { WorldPage } from "./views/WorldPage";
 import { Worlds } from "./views/Worlds";
 
@@ -89,6 +90,7 @@ export function App() {
         </button>
         <Breadcrumb screen={screen} onScreen={setScreen} />
         <span className="spacer" />
+        <ThemeChoice />
         <button
           type="button"
           className="link"

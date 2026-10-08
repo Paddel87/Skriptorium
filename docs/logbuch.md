@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 23:55 UTC – [BEOBACHTUNG] Deployment `aedf68f` (5.11 Teil 1), 5.19 Dunkelmodus umgesetzt
+
+- **Wunsch des Eigentümers:** Dunkelmodus. Auswahlfragen: folgt dem Gerät plus Schalter; jetzt als eigener Schritt (5.19); #69 mergen und deployen; Nebenbefund Kapitel-Anlegen als eigener Schritt (5.20).
+- #69 nach grüner CI gemergt (`aedf68f`), CI auf `main` grün, Deployment nach Runbook (ADR-039): `(healthy)`, `/api/health` 200, `/` 200, `/api/worlds` 401; Rückweg `skriptorium:vorher` = `6e563e8`.
+- **5.19:** Farbwerte als CSS-Variablen in `styles.css`, dunkle Werte unter `prefers-color-scheme: dark` (außer bei Wahl „hell“) und bei `data-theme="dark"`; `color-scheme` für Formularfelder; CodeMirror (Text, Cursor, Auswahl, Platzhalter, `@`-Menü) über stärkere Selektoren als dessen helles Standard-Thema. `theme.ts` liest und schreibt die Wahl mit try/catch (privates Fenster), `main.tsx` setzt sie vor dem ersten Zeichnen.
+- **Reibung:** Wiederholte `vitest`-Läufe mit Coverage trieben die Last des Mac auf über 30; dann liefen 7–21 Tests in die 5-Sekunden-Grenze – auch auf dem Stand ohne die Änderung (gegengeprüft per `git stash`). Bei Last unter 8 lief derselbe Lauf grün (119/119). Kein Code-Fehler; Läufe nicht parallel stapeln. Kein Schritt angelegt.
+- **Läufe:** `vitest` 119 bestanden, 98,68 % Zeilen / 96,52 % Zweige; Playwright 9 bestanden; Bildschirm-Probelauf dunkel (Anmeldung, Schreibseite mit `@`-Menü) und hell.
+
 ### 2026-10-08 23:55 UTC – [BEOBACHTUNG] 5.11 Teil 1 Schreibseite umgesetzt
 
 - **Code:** neue Komponente `CanonLookup.tsx` (Kanon der Geschichte samt Gästen durchsuchen und lesen, nur lesend, Text als Klartext); `StoryPage.tsx` neu aufgebaut (Mitte Kapitel, Leiste rechts mit Kapitel/Kanon/Geschichte, schließbar, unter 56rem als Menü); `WritingMode.tsx` mit Kurzzeile im aufklappbaren Kopf, über `ChapterEditor` direkt vor dem Schreib-Bereich; `App.tsx` gibt der Schreibseite mehr Breite. Kein React Router in Teil 1.
