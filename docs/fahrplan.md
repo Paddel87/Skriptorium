@@ -17,6 +17,54 @@
 
 ---
 
+<!-- ANCHOR:uebersicht -->
+## Übersicht
+
+Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
+
+**Phase 5: 7 von 20 erledigt, 2 in Arbeit, 11 offen.**
+
+| | Schritt | Titel | Status | Nächster Zug |
+|---|---|---|---|---|
+| ⚪ | 5.1 | Kanon-Vorschläge ohne `@` | offen | KI |
+| ⚪ | 5.2 | Bedienung am Smartphone | offen | KI |
+| ⚪ | 5.3 | Lesbare Dateien – Nachweis | offen | KI |
+| ⚪ | 5.4 | Zeitlinie mit Datumsangaben im Kalender der Welt (Kann) | offen | du: umsetzen ja/nein |
+| ⚪ | 5.5 | Planung der nächsten Ausbaustufe | offen | KI – zuletzt |
+| ⚪ | 5.6 | Atmosphärische Schreibweise je Geschichte | offen | du: Werte der Listen |
+| ✅ | 5.7 | Startmodell grok-4.6 | erledigt | – |
+| ✅ | 5.8 | Nahtloser Anschluss ohne Einleitung und Schlusssatz | erledigt | – |
+| ✅ | 5.9 | Kapitel öffnet am Textende | erledigt | – |
+| ✅ | 5.10 | Kosten je Vorschlag sichtbar | erledigt | – |
+| 🟠 | 5.11 | Seitenaufbau und Abläufe der Oberfläche neu ordnen | in Arbeit | du: Teil 1 prüfen · KI: Teil 2, 3 |
+| ⚪ | 5.12 | Modell-Auswahl aktuell vom Anbieter | offen | KI |
+| ⚪ | 5.13 | Verlauf der Anweisungen als umschaltbare Ansicht | offen | KI |
+| ⚪ | 5.14 | Go-Live-Prüfung vor v1.0.0 | offen | KI – nach 5.1–5.13 |
+| ✅ | 5.15 | KI schreibt nur das Verlangte, nicht bis zum bekannten Ende | erledigt | – |
+| ⚪ | 5.16 | Herangezogene Kanon-Einträge anklickbar | offen | KI |
+| ✅ | 5.17 | Leerzeichen nach der Auswahl im `@`-Menü | erledigt | – |
+| ✅ | 5.18 | Herangezogene Begriffe im Anweisungsfeld hervorheben | erledigt | – |
+| 🟠 | 5.19 | Dunkelmodus | in Arbeit | du: prüfen |
+| ⚪ | 5.20 | Schnell nacheinander angelegte Kapitel | offen | KI |
+
+**Querschnitt (offen):**
+
+| | Schritt | Titel | Status | Nächster Zug |
+|---|---|---|---|---|
+| ⚪ | D.1 | Wechsel Node.js 24 → Node.js 26 LTS | offen | KI – ab 2026-11-05 |
+| ⚪ | D.2 | Nachprüfung TypeScript 7 | offen | KI – am 2027-01-08 |
+| ⚪ | D.3 | Nachprüfung httpx | offen | KI – am 2027-03-26 |
+| ⚪ | D.4 | Prüfung „kein Kontextverlust" beim Referenzumfang | offen | wartet, bis eine Geschichte den Referenzumfang erreicht |
+| ⚪ | D.5 | Wechsel auf httpx2 und Nachprüfung mypy 2 | offen | KI – ab 2026-11-12 |
+| ⚪ | D.9 | Nachprüfung Unterstützung des Reverse Proxys | offen | KI – am 2026-12-28 |
+| ⚪ | D.11 | Sicherungs-Zugangsdaten außerhalb des Servers ablegen | offen | du – bis 2026-10-31 |
+| ⚪ | D.13 | Weigerungen der KI im Text erkennen – Erkundung | offen | du: Beispiele echter Sperren |
+| ⚪ | D.15 | Wechsel React Router 7 → Linie 8 | offen | KI – ab 2026-12-17 |
+
+Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.9.
+
+---
+
 <!-- ANCHOR:phasen-typen -->
 ## Phasen-Typen
 
@@ -128,7 +176,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.1: Kanon-Vorschläge ohne `@`
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.5
 - **Freigabepflichtig:** nein
@@ -144,7 +192,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.2: Bedienung am Smartphone
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 4.7, 5.11 (neuer Seitenaufbau; ADR-042)
 - **Freigabepflichtig:** nein
@@ -160,7 +208,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.3: Lesbare Dateien – Nachweis
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.5
 - **Freigabepflichtig:** nein
@@ -176,7 +224,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.4: Zeitlinie mit Datumsangaben im Kalender der Welt (Kann)
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.3
 - **Freigabepflichtig:** ja, falls das Datenmodell erweitert wird (Kategorie 4)
@@ -192,7 +240,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.5: Planung der nächsten Ausbaustufe
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.1, 5.2, 5.3, 5.4
 - **Freigabepflichtig:** ja – neue Phasen sind Replanning (Fahrplan, Replanning-Historie)
@@ -208,7 +256,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.6: Atmosphärische Schreibweise je Geschichte
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 4.8, 5.11 (Platz in der neuen Oberfläche; ADR-042)
 - **Freigabepflichtig:** ja – neue Felder je Kapitel (ggf. auch je Geschichte) sind eine Datenmodelländerung (Kategorie 4); Form vor Beginn klären
@@ -224,7 +272,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.7: Startmodell grok-4.6
 
-- **Status:** ERLEDIGT 2026-10-08 – ADR-044, gemergt mit PR #55; eingespielt mit `18ee07d` (2026-10-08, ADR-039); Eigentümer schrieb in einer echten Welt ohne Sperre und bestätigte („passt alles“)
+- **Status:** ✅ ERLEDIGT 2026-10-08 – ADR-044, gemergt mit PR #55; eingespielt mit `18ee07d` (2026-10-08, ADR-039); Eigentümer schrieb in einer echten Welt ohne Sperre und bestätigte („passt alles“)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 4.8 (Phasenbeginn)
 - **Freigabepflichtig:** nein für den Wechsel des Startmodells (Teil von Option B, ADR-042). Stellung von grok-4.7 geklärt 2026-10-08: Eigentümer will die Modelle „live abrufen, wie bei OpenRouter geplant“ (5.12) statt die feste Liste umzusortieren; Reihenfolge der Schritte bleibt (5.12 nach 5.11). Bis dahin bleibt grok-4.7 wählbar, nur die Voreinstellung wechselt auf grok-4.6. Ergebnis als ADR `[ERKENNTNIS]` zu ADR-010/011
@@ -240,7 +288,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.8: Nahtloser Anschluss ohne Einleitung und Schlusssatz
 
-- **Status:** ERLEDIGT 2026-10-08 – Versuch 1 (PR #56/#57) und Versuch 2 gemeinsam mit 5.15 (PR #58): Vorgaben gegen Wiederholung und Schlusssatz nach der Anweisung, Zitat der letzten bis zu 30 Wörter; Kette verblindet bewertet (gleiche 6-Wort-Folgen 18–49 → 0, Einleitungen 18 → 9, Kanon eindeutig 1 → 0; `spikes/vorgriff-zeitlinie/README.md`, zweiter Lauf). Eingespielt mit `18ee07d`; Eigentümer bestätigte in einer echten Welt (2026-10-08, „passt alles“)
+- **Status:** ✅ ERLEDIGT 2026-10-08 – Versuch 1 (PR #56/#57) und Versuch 2 gemeinsam mit 5.15 (PR #58): Vorgaben gegen Wiederholung und Schlusssatz nach der Anweisung, Zitat der letzten bis zu 30 Wörter; Kette verblindet bewertet (gleiche 6-Wort-Folgen 18–49 → 0, Einleitungen 18 → 9, Kanon eindeutig 1 → 0; `spikes/vorgriff-zeitlinie/README.md`, zweiter Lauf). Eingespielt mit `18ee07d`; Eigentümer bestätigte in einer echten Welt (2026-10-08, „passt alles“)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.7
 - **Freigabepflichtig:** nein – Änderung des Rahmens innerhalb von `context`, Schnittstelle unverändert
@@ -256,7 +304,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.9: Kapitel öffnet am Textende
 
-- **Status:** ERLEDIGT 2026-10-08 – umgesetzt auf Branch `feat/5.9-kapitel-am-textende`: Manuskript-Editor mit eigenem Scrollbereich (höchstens 55 % der Fensterhöhe), öffnet mit Cursor und Ansicht am Textende und kehrt nach übernommenem Vorschlag dorthin zurück; liegen die Knöpfe unter dem Kapitel beim Öffnen außerhalb des Fensters, rückt die Seite an den Kapitelanfang. Tests: `vitest` 104 bestanden, 98,59 % Zeilen; Playwright 9 bestanden (neu: langes Kapitel mit 300 Absätzen zeigt Absatz 300, „In den Kanon“ und das Anweisungsfeld im Fenster 1280 × 720). Gemergt mit PR #63 (`32c027d`, CI 8/8 grün); Eingespielt mit `6e563e8` (2026-10-08). Eigentümer bestätigte nach dem Deployment (2026-10-08, „passt alles“; Gerät nicht genannt) – Smartphone prüft 5.2 auf dem neuen Aufbau.
+- **Status:** ✅ ERLEDIGT 2026-10-08 – umgesetzt auf Branch `feat/5.9-kapitel-am-textende`: Manuskript-Editor mit eigenem Scrollbereich (höchstens 55 % der Fensterhöhe), öffnet mit Cursor und Ansicht am Textende und kehrt nach übernommenem Vorschlag dorthin zurück; liegen die Knöpfe unter dem Kapitel beim Öffnen außerhalb des Fensters, rückt die Seite an den Kapitelanfang. Tests: `vitest` 104 bestanden, 98,59 % Zeilen; Playwright 9 bestanden (neu: langes Kapitel mit 300 Absätzen zeigt Absatz 300, „In den Kanon“ und das Anweisungsfeld im Fenster 1280 × 720). Gemergt mit PR #63 (`32c027d`, CI 8/8 grün); Eingespielt mit `6e563e8` (2026-10-08). Eigentümer bestätigte nach dem Deployment (2026-10-08, „passt alles“; Gerät nicht genannt) – Smartphone prüft 5.2 auf dem neuen Aufbau.
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 4.8 (Phasenbeginn)
 - **Freigabepflichtig:** nein
@@ -272,7 +320,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.10: Kosten je Vorschlag sichtbar
 
-- **Status:** ERLEDIGT 2026-10-08 – ohne Code-Änderung. Ursache belegt an den Verbrauchsdaten der Produktion (nur Metadaten, `data/system/verbrauch/2026-10.md`): 77 von 82 Anfragen im Oktober mit Kosten; die 5 ohne Kosten sind 2 abgebrochene und 3 gescheiterte (`nicht_erreichbar`) – dort meldet der Anbieter keine Kosten, die Oberfläche zeigt ausdrücklich „Kosten nicht gemeldet“. Log-Zeilen seit dem Deployment `18ee07d`: alle mit `kosten_usd`. Eigentümer bestätigt (Auswahlfrage 2026-10-08): unter einem fertigen Vorschlag steht ein Betrag. Der Befund vom 2026-10-08 stammte vermutlich von einem abgebrochenen oder gescheiterten Vorschlag
+- **Status:** ✅ ERLEDIGT 2026-10-08 – ohne Code-Änderung. Ursache belegt an den Verbrauchsdaten der Produktion (nur Metadaten, `data/system/verbrauch/2026-10.md`): 77 von 82 Anfragen im Oktober mit Kosten; die 5 ohne Kosten sind 2 abgebrochene und 3 gescheiterte (`nicht_erreichbar`) – dort meldet der Anbieter keine Kosten, die Oberfläche zeigt ausdrücklich „Kosten nicht gemeldet“. Log-Zeilen seit dem Deployment `18ee07d`: alle mit `kosten_usd`. Eigentümer bestätigt (Auswahlfrage 2026-10-08): unter einem fertigen Vorschlag steht ein Betrag. Der Befund vom 2026-10-08 stammte vermutlich von einem abgebrochenen oder gescheiterten Vorschlag
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 4.8 (Phasenbeginn)
 - **Freigabepflichtig:** nein (Fehlerbehebung)
@@ -288,7 +336,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.11: Seitenaufbau und Abläufe der Oberfläche neu ordnen
 
-- **Status:** IN ARBEIT (seit 2026-10-08) – Entwurf vom Eigentümer bestätigt (Auswahlfragen 2026-10-08); Umsetzung in drei Teilen, jeder einzeln eingespielt und geprüft. **Teil 1 Schreibseite** umgesetzt auf Branch `feat/5.11-oberflaeche`: Leiste rechts (Kapitel, Kanon nachschlagen mit Suche, Geschichte mit Gästen, Fakten, Gesamtzusammenfassung), schließbar, unter 56rem Breite als Menü über der Seite; Figuren-Schreibweise mit Kurzzeile direkt über dem Schreib-Bereich; Editorhöhe folgt dem Fenster, die Seite rückt beim Öffnen zum Kapitel, wenn es unter den Fensterrand reicht. Tests: `vitest` 115 bestanden, 98,65 % Zeilen / 96,29 % Zweige; Playwright 9 bestanden. Teil 1 gemergt (#69, `aedf68f`) und eingespielt 2026-10-08; offen: Prüfung von Teil 1 durch den Eigentümer; Teil 2 Navigation (React Router, ADR-046); Teil 3 Kanon-Seite
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-08) – Entwurf vom Eigentümer bestätigt (Auswahlfragen 2026-10-08); Umsetzung in drei Teilen, jeder einzeln eingespielt und geprüft. **Teil 1 Schreibseite** umgesetzt auf Branch `feat/5.11-oberflaeche`: Leiste rechts (Kapitel, Kanon nachschlagen mit Suche, Geschichte mit Gästen, Fakten, Gesamtzusammenfassung), schließbar, unter 56rem Breite als Menü über der Seite; Figuren-Schreibweise mit Kurzzeile direkt über dem Schreib-Bereich; Editorhöhe folgt dem Fenster, die Seite rückt beim Öffnen zum Kapitel, wenn es unter den Fensterrand reicht. Tests: `vitest` 115 bestanden, 98,65 % Zeilen / 96,29 % Zweige; Playwright 9 bestanden. Teil 1 gemergt (#69, `aedf68f`) und eingespielt 2026-10-08; offen: Prüfung von Teil 1 durch den Eigentümer; Teil 2 Navigation (React Router, ADR-046); Teil 3 Kanon-Seite
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.9
 - **Freigabepflichtig:** teilweise – der Umbau innerhalb von `ui` nicht; eine neue Bibliothek (z. B. Router) ist Kategorie 3 und wird vorab vorgelegt
@@ -305,7 +353,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.12: Modell-Auswahl aktuell vom Anbieter
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11
 - **Freigabepflichtig:** ja – Schnittstelle `GET /api/models` (Kategorie 5) und ggf. gespeicherte Favoriten (Kategorie 4); Form vorab mit dem Eigentümer klären
@@ -321,7 +369,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.13: Verlauf der Anweisungen als umschaltbare Ansicht
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11
 - **Freigabepflichtig:** ja – neue gespeicherte Daten (Anweisungen je Kapitel, Kategorie 4)
@@ -337,7 +385,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.14: Go-Live-Prüfung vor v1.0.0
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.1–5.13 (außer 5.5), D.4
 - **Freigabepflichtig:** ja – Release-Entscheidung nach `CLAUDE.md` Abschnitt 12 (Vision-Checkpoint vor Go-Live); Verzicht auf den externen Blick nur per ADR mit Restrisiko
@@ -353,7 +401,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.15: KI schreibt nur das Verlangte, nicht bis zum bekannten Ende
 
-- **Status:** ERLEDIGT 2026-10-08 – Abschnitt „Vorgaben für deinen Text“, Zukunft nach der Schreibstelle weder erzählen noch andeuten, geführte Figur „genau ausschreiben“, „Weiter“ nur nächster Moment, Länge kurz/mittel/lang (60–120 / 150–300 / 400–600 Wörter, Feld `length`); `pytest` 427, 99 % (`context/builder.py` 100 %), `vitest` 103, Playwright 8; gemergt mit PR #58 (`38f0d34`). Probeschreiben: Vorgriffe 6 → 4 – Rest-Vorgriff nach Entscheidung des Eigentümers im Alltag zu prüfen, weiterer Versuch nur bei Störung. Eingespielt mit `18ee07d`; Eigentümer bestätigte in einer echten Welt (2026-10-08, „passt alles“) – damit gilt das Akzeptanzkriterium als erfüllt
+- **Status:** ✅ ERLEDIGT 2026-10-08 – Abschnitt „Vorgaben für deinen Text“, Zukunft nach der Schreibstelle weder erzählen noch andeuten, geführte Figur „genau ausschreiben“, „Weiter“ nur nächster Moment, Länge kurz/mittel/lang (60–120 / 150–300 / 400–600 Wörter, Feld `length`); `pytest` 427, 99 % (`context/builder.py` 100 %), `vitest` 103, Playwright 8; gemergt mit PR #58 (`38f0d34`). Probeschreiben: Vorgriffe 6 → 4 – Rest-Vorgriff nach Entscheidung des Eigentümers im Alltag zu prüfen, weiterer Versuch nur bei Störung. Eingespielt mit `18ee07d`; Eigentümer bestätigte in einer echten Welt (2026-10-08, „passt alles“) – damit gilt das Akzeptanzkriterium als erfüllt
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.8 (gleicher Rahmen; gemeinsam am echten Material prüfen)
 - **Freigabepflichtig:** offen – nein, solange nur Wortlaut und Auswahl in `context` geändert werden; ja (Kategorie 4, Datenmodell), falls die Geschichte einen „Stand in der Zeitlinie“ als neues Feld bekommt
@@ -370,7 +418,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.16: Herangezogene Kanon-Einträge anklickbar
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11 (neuer Seitenaufbau; Platz für die Einblendung)
 - **Freigabepflichtig:** nein – nur `ui`, liest Einträge über die vorhandene Schnittstelle
@@ -386,7 +434,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.17: Leerzeichen nach der Auswahl im `@`-Menü
 
-- **Status:** ERLEDIGT 2026-10-08 – umgesetzt auf Branch `fix/5.17-leerzeichen-nach-at`: Die Auswahl schreibt `@Name` und ein Leerzeichen dahinter, außer es folgt schon ein Leerzeichen oder ein Satzzeichen (`withSpace` in `InstructionEditor.tsx`). Tests: `vitest` 106 bestanden, 98,59 % Zeilen; Playwright 9 bestanden (Test „@ menu …“ tippt jetzt direkt nach der Auswahl weiter). Gemergt (#66 `ed4bdb6`, #67 `6e563e8`), eingespielt mit `6e563e8` (2026-10-08). Eigentümer bestätigte nach dem Deployment (2026-10-08, „passt alles“).
+- **Status:** ✅ ERLEDIGT 2026-10-08 – umgesetzt auf Branch `fix/5.17-leerzeichen-nach-at`: Die Auswahl schreibt `@Name` und ein Leerzeichen dahinter, außer es folgt schon ein Leerzeichen oder ein Satzzeichen (`withSpace` in `InstructionEditor.tsx`). Tests: `vitest` 106 bestanden, 98,59 % Zeilen; Playwright 9 bestanden (Test „@ menu …“ tippt jetzt direkt nach der Auswahl weiter). Gemergt (#66 `ed4bdb6`, #67 `6e563e8`), eingespielt mit `6e563e8` (2026-10-08). Eigentümer bestätigte nach dem Deployment (2026-10-08, „passt alles“).
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.5
 - **Freigabepflichtig:** nein (Fehlerbehebung in `ui`)
@@ -402,7 +450,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.18: Herangezogene Begriffe im Anweisungsfeld hervorheben
 
-- **Status:** ERLEDIGT 2026-10-08 – umgesetzt auf Branch `feat/5.18-begriffe-hervorheben` (auf 5.17): Jede erkannte `@`-Nennung im Feld „Anweisung an die KI“ ist hinterlegt und fett (`mentionMarks` in `InstructionEditor.tsx`, Stellen aus `mentionRanges` in `references.ts` nach denselben Regeln wie „Herangezogen“); neue Einträge färben nach, Änderung am Namen hebt die Markierung auf. Tests: `vitest` 108 bestanden, 98,61 % Zeilen; Playwright 9 bestanden. Gemergt (#66 `ed4bdb6`, #67 `6e563e8`), eingespielt mit `6e563e8` (2026-10-08). Eigentümer bestätigte nach dem Deployment (2026-10-08, „passt alles“).
+- **Status:** ✅ ERLEDIGT 2026-10-08 – umgesetzt auf Branch `feat/5.18-begriffe-hervorheben` (auf 5.17): Jede erkannte `@`-Nennung im Feld „Anweisung an die KI“ ist hinterlegt und fett (`mentionMarks` in `InstructionEditor.tsx`, Stellen aus `mentionRanges` in `references.ts` nach denselben Regeln wie „Herangezogen“); neue Einträge färben nach, Änderung am Namen hebt die Markierung auf. Tests: `vitest` 108 bestanden, 98,61 % Zeilen; Playwright 9 bestanden. Gemergt (#66 `ed4bdb6`, #67 `6e563e8`), eingespielt mit `6e563e8` (2026-10-08). Eigentümer bestätigte nach dem Deployment (2026-10-08, „passt alles“).
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.17
 - **Freigabepflichtig:** nein – nur `ui`, keine neue Abhängigkeit (CodeMirror-Dekoration)
@@ -418,7 +466,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.19: Dunkelmodus
 
-- **Status:** IN ARBEIT (seit 2026-10-08) – umgesetzt auf Branch `feat/5.19-dunkelmodus`: alle Farben als Farbwerte an einer Stelle (`styles.css`), dunkle Farbgebung bei dunkel eingestelltem Gerät oder auf Wahl; Schalter „Darstellung“ (Automatisch/Hell/Dunkel) in der Kopfzeile, im Browser gemerkt (`theme.ts`, `ThemeChoice.tsx`), vor dem ersten Zeichnen gesetzt; Editor, Cursor, Auswahl und `@`-Menü in den Seitenfarben. Tests: `vitest` 119 bestanden, 98,68 % Zeilen / 96,52 % Zweige; Playwright 9 bestanden; Bildschirm-Probelauf hell und dunkel. Gemergt (#70, `ebc7bc5`) und eingespielt 2026-10-08. Offen: Prüfung durch den Eigentümer
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-08) – umgesetzt auf Branch `feat/5.19-dunkelmodus`: alle Farben als Farbwerte an einer Stelle (`styles.css`), dunkle Farbgebung bei dunkel eingestelltem Gerät oder auf Wahl; Schalter „Darstellung“ (Automatisch/Hell/Dunkel) in der Kopfzeile, im Browser gemerkt (`theme.ts`, `ThemeChoice.tsx`), vor dem ersten Zeichnen gesetzt; Editor, Cursor, Auswahl und `@`-Menü in den Seitenfarben. Tests: `vitest` 119 bestanden, 98,68 % Zeilen / 96,52 % Zweige; Playwright 9 bestanden; Bildschirm-Probelauf hell und dunkel. Gemergt (#70, `ebc7bc5`) und eingespielt 2026-10-08. Offen: Prüfung durch den Eigentümer
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11 Teil 1
 - **Freigabepflichtig:** nein – nur `ui`, keine neue Abhängigkeit; die Wahl liegt nur im Browser (`localStorage`), nicht auf dem Server
@@ -434,7 +482,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.20: Schnell nacheinander angelegte Kapitel
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11 Teil 1
 - **Freigabepflichtig:** nein (Fehlerbehebung)
@@ -454,7 +502,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.1: Wechsel Node.js 24 → Node.js 26 LTS
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 2.1
 - **Frist:** frühestens 2026-11-05 (Mindestreife), spätestens vor 2028-04-30 (Lebensende Node 24); Vorlauf 6 Monate laut Ablaufdaten-Register
@@ -471,7 +519,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.2: Nachprüfung TypeScript 7
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 2.1
 - **Frist:** fällig ab 2027-01-08 (Nachprüf-Datum aus dem Ablaufdaten-Register)
@@ -488,7 +536,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.3: Nachprüfung httpx
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 1.3
 - **Frist:** 2027-03-26
@@ -505,7 +553,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.4: Prüfung „kein Kontextverlust" beim Referenzumfang
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 3.6
 - **Frist:** kein Datum – Auslöser: eine Geschichte erreicht ≥ 500.000 Token (Entscheidung des Eigentümers, ADR-009)
@@ -522,7 +570,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.5: Wechsel auf httpx2 und Nachprüfung mypy 2
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 2.1
 - **Frist:** 2026-11-12 (Mindestreife httpx2; mypy 2 ab 2026-11-06)
@@ -539,7 +587,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.6: Reaktionszeit bis zum ersten Textstück erkunden
 
-- **Status:** ERLEDIGT (2026-09-28) – 28 Läufe im Container auf dem VPS (0,71 $, `spikes/reaktionszeit/README.md`): Wartezeit wächst mit der Länge des Vorab-Denkens (ca. 16 ms je Denk-Token), die bei gleichem Kontext stark streut; `effort: low` ist schon die niedrigste Stufe, Abschalten lehnt der Anbieter ab, eine Denk-Obergrenze verlängert das Denken (54–149 s), ausführender Anbieter immer xAI. grok-4.7 4–29 s (Median 16), grok-4.6 5–11 s (Median 6); 90-s-Grenze reicht. Eigentümer wählt A: Zielwerte angepasst, Einstellungen bleiben (ADR-035); NFR Reaktionszeit → `[BELASTBAR]`. Tageszeit nicht geprüft
+- **Status:** ✅ ERLEDIGT (2026-09-28) – 28 Läufe im Container auf dem VPS (0,71 $, `spikes/reaktionszeit/README.md`): Wartezeit wächst mit der Länge des Vorab-Denkens (ca. 16 ms je Denk-Token), die bei gleichem Kontext stark streut; `effort: low` ist schon die niedrigste Stufe, Abschalten lehnt der Anbieter ab, eine Denk-Obergrenze verlängert das Denken (54–149 s), ausführender Anbieter immer xAI. grok-4.7 4–29 s (Median 16), grok-4.6 5–11 s (Median 6); 90-s-Grenze reicht. Eigentümer wählt A: Zielwerte angepasst, Einstellungen bleiben (ADR-035); NFR Reaktionszeit → `[BELASTBAR]`. Tageszeit nicht geprüft
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Abhängigkeiten:** 3.3
 - **Frist:** vor 4.8 (Stoppuhr-Test FR-022)
@@ -556,7 +604,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.7: Unterstützungsstand des Reverse Proxys prüfen
 
-- **Status:** ERLEDIGT (2026-09-28) – Proxy läuft in 2.11.42; Sicherheitsunterstützung der Linie 2.11 endete am 2026-09-07, unterstützt ist nur noch 3.7 (Hersteller: doc.traefik.io/traefik/deprecation/releases/, abgerufen 2026-09-28). Register-Eintrag angelegt; Update als Schritt 4.12 zur Entscheidung vorgelegt
+- **Status:** ✅ ERLEDIGT (2026-09-28) – Proxy läuft in 2.11.42; Sicherheitsunterstützung der Linie 2.11 endete am 2026-09-07, unterstützt ist nur noch 3.7 (Hersteller: doc.traefik.io/traefik/deprecation/releases/, abgerufen 2026-09-28). Register-Eintrag angelegt; Update als Schritt 4.12 zur Entscheidung vorgelegt
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.2
 - **Frist:** vor 4.6 (Gate-Punkt 3)
@@ -573,7 +621,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.8: Zugangsdaten der Proxy-Verwaltung rotieren
 
-- **Status:** VERWORFEN (2026-10-07, ADR-040) – Eigentümer: Passwort ist stark; Rotation entfällt, Restrisiko im ADR
+- **Status:** ❌ VERWORFEN (2026-10-07, ADR-040) – Eigentümer: Passwort ist stark; Rotation entfällt, Restrisiko im ADR
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** keine
 - **Frist:** 2026-10-05 (ursprünglich „spätestens vor 4.6“; 4.6 wurde am 2026-09-30 vor der Rotation geschlossen – das Datum gilt weiter)
@@ -590,7 +638,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.9: Nachprüfung Unterstützung des Reverse Proxys
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.12
 - **Frist:** 2026-12-28
@@ -607,7 +655,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.10: Probelauf Routine- und Mechanik-Klasse
 
-- **Status:** ERLEDIGT (2026-09-28) – Kopie des Repos mit 5 eingebauten Abweichungen, Soll-Werte per Skript; je vier frische Unteragenten mit wörtlich gleichen Aufträgen. Routine (Sonnet 5): 5/5 gefunden, keine falschen Befunde, Logbuch-Entwurf korrekt → bestanden. Mechanik (Haiku 4.5): 2 von 3 Aufgaben richtig, beim Zählen Zeilen statt Vorkommen → nicht bestanden. Referenz Opus 5.5 fehlerfrei; fand zusätzlich zwei echte Kleinigkeiten im Repo (Überschrift der Reifegrad-Übersicht, Typname `[GELÖST]` in der Typen-Tabelle des Logbuchs) – behoben
+- **Status:** ✅ ERLEDIGT (2026-09-28) – Kopie des Repos mit 5 eingebauten Abweichungen, Soll-Werte per Skript; je vier frische Unteragenten mit wörtlich gleichen Aufträgen. Routine (Sonnet 5): 5/5 gefunden, keine falschen Befunde, Logbuch-Entwurf korrekt → bestanden. Mechanik (Haiku 4.5): 2 von 3 Aufgaben richtig, beim Zählen Zeilen statt Vorkommen → nicht bestanden. Referenz Opus 5.5 fehlerfrei; fand zusätzlich zwei echte Kleinigkeiten im Repo (Überschrift der Reifegrad-Übersicht, Typname `[GELÖST]` in der Typen-Tabelle des Logbuchs) – behoben
 - **Phasentyp-Kontext:** STABILISIERUNG (Methodik)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein – Dokumentationspflege; die Aktivierung einer Klasse folgt aus dem Ergebnis nach `CLAUDE.md` Abschnitt 0, „Probelauf"
@@ -623,7 +671,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.11: Sicherungs-Zugangsdaten außerhalb des Servers ablegen
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** keine
 - **Frist:** spätestens 2026-10-31 (ursprünglich zusätzlich „vor dem ersten echten Kapitel in 4.8“ – das Kapitel entstand am 2026-10-08 vorher; der Eigentümer schob D.11 am selben Tag auf, Frist unverändert)
@@ -640,7 +688,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.12: Sicherheitslücke in `source-map-js` beheben
 
-- **Status:** ERLEDIGT (2026-10-07) – `source-map-js` 1.2.1 → 1.2.2 (nur `package-lock.json`, per `npm audit fix`); `npm audit` ohne Befund, vitest 96/96 (98,65 % Zeilen, 96,43 % Zweige), Build grün
+- **Status:** ✅ ERLEDIGT (2026-10-07) – `source-map-js` 1.2.1 → 1.2.2 (nur `package-lock.json`, per `npm audit fix`); `npm audit` ohne Befund, vitest 96/96 (98,65 % Zeilen, 96,43 % Zweige), Build grün
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** keine
 - **Frist:** sofort (CI-Gate „Dependency-Audit“ rot)
@@ -657,7 +705,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.13: Weigerungen der KI im Text erkennen – Erkundung
 
-- **Status:** OFFEN
+- **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Abhängigkeiten:** 5.7
 - **Freigabepflichtig:** nein (Erkundung); eine spätere Umsetzung wird als eigener Schritt angelegt
@@ -673,7 +721,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.14: Zeitlimit für den End-to-End-Job
 
-- **Status:** ERLEDIGT 2026-10-08 – PR #60 gemergt (`2fe666d`), CI 8/8 grün mit dem Zeitlimit (End-to-End ca. 1 Minute) (ADR-045)
+- **Status:** ✅ ERLEDIGT 2026-10-08 – PR #60 gemergt (`2fe666d`), CI 8/8 grün mit dem Zeitlimit (End-to-End ca. 1 Minute) (ADR-045)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – Kategorie 7, freigegeben vom Eigentümer 2026-10-08 („a“, ADR-045)
@@ -689,7 +737,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.15: Wechsel React Router 7 → Linie 8
 
-- **Status:** OFFEN – frühestens 2026-12-17
+- **Status:** ⚪ OFFEN – frühestens 2026-12-17
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11
 - **Freigabepflichtig:** ja – Major-Update einer Abhängigkeit (Kategorie 3), Versionsprüfung nach `CLAUDE.md` Abschnitt 15
@@ -705,7 +753,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### M.1: Branch-Konvention festlegen
 
-- **Status:** ERLEDIGT (2026-09-26)
+- **Status:** ✅ ERLEDIGT (2026-09-26)
 - **Phasentyp-Kontext:** querschnittlich (Methodik)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein (Dokumentation der Repository-Regeln, `docs/project-context.md` Abschnitt 10; keine Umbenennung des Hauptbranches)
@@ -721,7 +769,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.1: Publizieren (Satz, Export, Veröffentlichung)
 
-- **Status:** VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN
 - **Landeplatz (nur VERSCHOBEN):** 5.5
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.5
@@ -738,7 +786,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.2: Bilder und Karten
 
-- **Status:** VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN
 - **Landeplatz (nur VERSCHOBEN):** 5.5
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.5
@@ -755,7 +803,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.3: Weitere KI-Anbieter neben OpenRouter
 
-- **Status:** VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN
 - **Landeplatz (nur VERSCHOBEN):** 5.5
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1, 5.5
@@ -772,7 +820,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.4: Import aus TypingMind (Agenten-JSON)
 
-- **Status:** VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN
 - **Landeplatz (nur VERSCHOBEN):** 5.5 – vorgezogen, falls der 30-Minuten-Test (4.8) am Import scheitert (ADR-012)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.4
@@ -789,7 +837,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.5: Import aus Notion (Markdown-Export mit Unterseiten)
 
-- **Status:** VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN
 - **Landeplatz (nur VERSCHOBEN):** 5.5 – vorgezogen, falls der 30-Minuten-Test (4.8) am Import scheitert (ADR-012)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.4
@@ -806,7 +854,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.6: Import aus SillyTavern (Character Cards und Lorebooks)
 
-- **Status:** VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN
 - **Landeplatz (nur VERSCHOBEN):** 5.5 – Reihenfolge und Phase legt die Neuplanung fest (Wünsche aus der Nutzung, Logbuch 2026-10-08 09:35 UTC)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.4
@@ -823,7 +871,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.7: Export in SillyTavern-Formate
 
-- **Status:** VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN
 - **Landeplatz (nur VERSCHOBEN):** 5.5 – nach V.6 (Eigentümer 2026-10-08: „Exportfunktion später“)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** V.6
@@ -840,7 +888,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.8: Gestaltung der Oberfläche (z. B. Material Design)
 
-- **Status:** VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN
 - **Landeplatz (nur VERSCHOBEN):** 5.5 – nach der Neuordnung von Seitenaufbau und Abläufen (5.11) (Eigentümer 2026-10-08: „Erstmal Aufbau neu, UI später“)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11
@@ -857,7 +905,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.9: KI-gestützter Weltenbauer
 
-- **Status:** VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN
 - **Landeplatz (nur VERSCHOBEN):** 5.5 (ADR-042: nach dem Umbau, nicht in Phase 5)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11, 5.12

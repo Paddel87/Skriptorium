@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 5 – Alltagstauglichkeit und Soll-Anforderungen (Umsetzung), begonnen 2026-10-08 nach Neuplanung (ADR-042: gezielt umbauen); Phase 4 – Stabilisierung und erstes öffentliches Deployment abgeschlossen am 2026-10-08: Das Skriptorium läuft seit 2026-09-30 als Container auf dem vorhandenen netcup-VPS öffentlich unter HTTPS mit Passwortschutz (ADR-027, ADR-029 bis ADR-032, ADR-039), mit täglicher Sicherung nach MEGA S4 und erprobter Wiederherstellung (ADR-036); offen: D.11
+- **Projektphase:** Phase 5 – Alltagstauglichkeit und Soll-Anforderungen (Umsetzung), begonnen 2026-10-08 (ADR-042: gezielt umbauen). Fortschritt: ✅ 7 von 20 Schritten erledigt, 🟠 2 in Arbeit, ⚪ 11 offen – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
 - **Version:** v0.1.0 – Vorabversion (ADR-043); Go-Live erst vor v1.0.0 (Schritt 5.14)
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-10-08
@@ -32,7 +32,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 
 ## Quick Start
 
-Stand nach Schritt 3.9: Server mit Anmeldung und Oberfläche für Welten, Kanon, Import und Geschichten; Schreiben mit KI (Figuren-Schreibweise, `@`-Menü, Kapitel-Kurzfassungen, Gast-Figuren aus anderen Welten) mit `OPENROUTER_API_KEY`; markierte Textstellen in den Kanon übernehmen; Modell je Geschichte, Kosten je Anfrage und Monat.
+Stand 2026-10-08 (Phase 5): Server mit Anmeldung und Oberfläche für Welten, Kanon, Import und Geschichten; Schreibseite mit Leiste für Kapitel, Kanon und Geschichte; Schreiben mit KI (Figuren-Schreibweise, `@`-Menü, wählbare Länge, Kapitel-Kurzfassungen, Gast-Figuren aus anderen Welten) mit `OPENROUTER_API_KEY`; markierte Textstellen in den Kanon übernehmen; Modell je Geschichte, Kosten je Anfrage und Monat; Hell- und Dunkelmodus.
 
 ### Voraussetzungen
 
@@ -83,13 +83,22 @@ Browser (ui) ──HTTP/SSE──> api ──> canon ─────┐
 
 ## Verwendung
 
-Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:8000` im Browser öffnen (ohne TLS nur über `localhost`, weil das Sitzungs-Cookie `Secure` verlangt). Mit dem Einrichtungscode ein Passwort festlegen, anmelden, Welt anlegen. Verfügbar: Kanon-Einträge je Kategorie, Markdown-Import mit Vorschau, Geschichten und Kapitel mit Markdown-Editor, Passwort ändern und Sitzungen beenden unter „Konto“. Schreiben mit KI (mit `OPENROUTER_API_KEY`): unter dem Kapitel-Editor eine Anweisung geben oder eine neue Szene mit Ort, Figuren und Ziel beginnen; der Vorschlag erscheint fortlaufend und lässt sich übernehmen (ans Kapitelende), ändern, verwerfen, abbrechen oder mit einem anderen Modell neu schreiben. Unter „Figuren-Schreibweise“ je Geschichte Erzählperspektive und die selbst geführten Figuren festlegen; für sie schreibt die KI nur Wahrnehmung und hört auf, wo du weiterschreibst. In der Anweisung öffnet `@` eine Auswahl der Kanon-Einträge der Welt; per `@Name` genannte Einträge gibt das Skriptorium der KI vollständig mit. „Kapitel abschließen“ lässt die KI eine Kurzfassung erstellen und die Gesamtzusammenfassung fortschreiben; beide lassen sich ansehen und ändern. Unter „Gäste aus anderen Welten“ bindet eine Geschichte Einträge anderer Welten ein – nur für diese Geschichte; Gäste stehen im `@`-Menü, in der neuen Szene und in der Figuren-Schreibweise zur Wahl. Die KI kennt einen Gast mit seinem Eintrag und seiner Herkunft, wenn er genannt oder selbst geführt wird, sonst nur, wenn nach dem Kanon der Welt Platz ist; die Regeln seiner Heimatwelt gelten nicht. Eine im Manuskript markierte Stelle übernimmt „In den Kanon“ als neuen Eintrag oder als Ergänzung eines Eintrags – in den Kanon oder nur für diese Geschichte (Liste unter „Fakten dieser Geschichte“). Kapitel, Kanon zum Nachschlagen und die Einstellungen der Geschichte stehen in der Leiste rechts (am Smartphone als Menü). Das Modell wählst du im Schreib-Bereich; die Geschichte merkt es sich. Unter jedem Vorschlag stehen Token und Kosten, unter „Konto“ die KI-Kosten des laufenden Monats.
+Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:8000` im Browser öffnen (ohne TLS nur über `localhost`, weil das Sitzungs-Cookie `Secure` verlangt). Mit dem Einrichtungscode ein Passwort festlegen, anmelden, Welt anlegen.
+
+- **Welt:** Reiter für Geschichten, Kanon-Einträge je Kategorie, Markdown-Import mit Vorschau und die Beschreibung der Welt. Passwort ändern und Sitzungen beenden unter „Konto“; hell, dunkel oder wie das Gerät unter „Darstellung“.
+- **Schreibseite einer Geschichte:** in der Mitte das Kapitel im Markdown-Editor; ein langes Kapitel öffnet am Textende. Rechts eine schließbare Leiste (am Smartphone als Menü) mit den Kapiteln, dem Kanon zum Nachschlagen (Suche über Name und Alias, Eintrag lesen, ohne das Kapitel zu verlassen) und den Einstellungen der Geschichte: Gäste aus anderen Welten (nur für diese Geschichte), Fakten dieser Geschichte, Gesamtzusammenfassung.
+- **Figuren-Schreibweise:** direkt über dem Schreib-Bereich, zugeklappt als Kurzzeile (Perspektive, selbst geführte Figuren). Für die selbst geführten Figuren schreibt die KI keine Handlung, Rede oder Gedanken; beschreibt die Anweisung, was sie tun oder sagen, schreibt die KI genau das aus.
+- **Schreiben mit KI** (mit `OPENROUTER_API_KEY`): eine Anweisung geben oder eine neue Szene mit Ort, Figuren und Ziel beginnen; Länge kurz, mittel oder lang. Der Vorschlag erscheint fortlaufend und lässt sich übernehmen (ans Kapitelende), ändern, verwerfen, abbrechen oder mit einem anderen Modell neu schreiben. Leer „Weiterschreiben“ schreibt nur den nächsten Moment.
+- **`@` in der Anweisung:** öffnet eine Auswahl der Kanon-Einträge; die gewählten Einträge sind im Feld hervorgehoben und gehen der KI vollständig mit, nach der Auswahl folgt von selbst ein Leerzeichen.
+- **Kapitel abschließen:** Die KI erstellt eine Kurzfassung und schreibt die Gesamtzusammenfassung fort; beide lassen sich ansehen und ändern.
+- **In den Kanon:** Eine markierte Stelle wird zum neuen Eintrag oder ergänzt einen Eintrag – im Kanon der Welt oder nur für diese Geschichte.
+- **Modell und Kosten:** Das Modell wählst du im Schreib-Bereich (voreingestellt grok-4.6), die Geschichte merkt es sich. Unter jedem Vorschlag stehen Token und Kosten, unter „Konto“ die KI-Kosten des laufenden Monats.
 
 ## Nächste Schritte
 
-- **5.11, 5.19:** neue Schreibseite und Dunkelmodus eingespielt, warten auf Prüfung; als Nächstes Navigation links mit Welten und Geschichten (Zurück-Knopf behält die Stelle) und Kanon-Seite mit Suche.
-- **5.20, 5.16:** schnell angelegte Kapitel; herangezogene Kanon-Einträge anklickbar.
-- **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
+- 🟠 **5.11, 5.19:** neue Schreibseite und Dunkelmodus eingespielt, warten auf Prüfung; als Nächstes Navigation links mit Welten und Geschichten (Zurück-Knopf behält die Stelle) und Kanon-Seite mit Suche.
+- ⚪ **5.20, 5.16:** schnell angelegte Kapitel; herangezogene Kanon-Einträge anklickbar.
+- ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).
 
