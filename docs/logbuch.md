@@ -29,6 +29,16 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 21:05 UTC – [SESSIONENDE] Merges #58–#60, Zeitlimit der CI – Deployment vom Mac offen
+
+- **Dauer:** 15:23 – 21:05 UTC (mit Pause 16:35 – 20:49 UTC; ersetzt das Sessionende 16:02 UTC als Wiedereinstieg).
+- **Bearbeitet nach 16:02:** PR #58 (5.15/5.8) und #59 (Entscheidungen zu 5.15) gemergt; hängenden CI-Lauf abgebrochen; D.14 Zeitlimit 20 Minuten für End-to-End (ADR-045, PR #60) → `[ERLEDIGT]`.
+- **Stand:** 5.7, 5.8, 5.15 `[IN ARBEIT]` – warten nur auf Deployment vom Mac und Abnahme in einer echten Welt. „deploy“ des Eigentümers aus dieser Cloud-Session nicht ausführbar (kein SSH, ADR-025/039) – an Session auf dem Mac verwiesen.
+- **Nächster Schritt:** Session auf dem Mac: `main` deployen (Runbook Abschnitt 7) → Probe-Szene → 5.7, 5.8, 5.15 abnehmen; danach 5.9. Offen: Kosten-Zeile (5.10), unübersichtliche Stellen (5.11), Werte der Listen (5.6); D.11 bis 2026-10-31.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`). Schritte oberhalb der Empfehlung: 1 (D.14, empfohlen Routine – kleine Änderung mit geladenem Kontext, Abgabe hätte nicht gespart). Abgegeben: verblindete Bewertung an Sonnet.
+- **Kontextgröße:** über 300.000 Token, Grenze 200.000 – Arbeit nach 16:02 nur auf ausdrückliche Anweisungen des Eigentümers.
+- **Sessionende-Prüfungen:** README unverändert gültig (Phase 5, v0.1.0, Blocker 0; Nächste Schritte nennen 5.15 „wartet auf Merge“ – jetzt nur noch Deployment und Abnahme, nachgezogen). Drift: ADR-045 → D.14 vorhanden; Reaktiv-Quote 0/10 (ADR-036..045); Modul-Liste und Reifegrade unverändert; Blocker 0. Ablaufdaten: kein Vorlauf erreicht. Alles committet.
+
 ### 2026-10-08 20:55 UTC – [ADR-ANGELEGT] ADR-045 Zeitlimit für den End-to-End-Job (D.14)
 
 - **Befund des Eigentümers:** „Vier Stunden End-to-End kann nicht sein.“ Der Push-Lauf zu `bb6cc03` hing seit 16:33 UTC im Schritt „Chromium für Playwright installieren“; der PR-Lauf auf demselben Commit war um 16:35 UTC grün (4/4).
