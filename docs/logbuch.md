@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 13:40 UTC – [BEOBACHTUNG] CI: kein Zwischenspeicher für Chromium
+
+- Auf das Angebot, Chromium und die Systempakete in der CI zwischenzuspeichern oder einen Playwright-Container zu nutzen (Ausreißer 2026-10-08: 32,5 MB in 8 min 23 s statt 3 s): Eigentümer „Kein Zwischenspeicher“. Pipeline bleibt unverändert; einzelne langsame Läufe werden hingenommen. Kein Schritt angelegt.
+
 ### 2026-10-08 13:35 UTC – [BEOBACHTUNG] 5.7: grok-4.7 bleibt wählbar, Modelle später live
 
 - Auf die Frage „grok-4.7 nach hinten oder ganz heraus?“: Eigentümer will die Modelle „live abrufen, wie bei OpenRouter geplant“. Nachfrage per Frage-System, ob 5.12 vor den Umbau rückt: „Reihenfolge lassen“. Folge für 5.7: nur die Voreinstellung wechselt auf grok-4.6, grok-4.7 bleibt in der festen Liste wählbar, bis 5.12 die Live-Liste bringt. In 5.7 eingetragen.
