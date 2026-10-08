@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 10:30 UTC – [BEOBACHTUNG] Schreibweise: Bedarf bekräftigt, Genres des Eigentümers
+
+- Eigentümer: braucht die Funktion „auf jeden Fall“. Listen sollen zu der Literatur passen, die er tatsächlich schreibt: Dark Romance, Thriller, düstere Geschichten, Dark Erotic, CNC. In 5.6 eingetragen.
+- Einordnung (KI): Das sind eher **Genres** (je Geschichte) als Tonalität/Atmosphäre (je Kapitel). Ob es zwei Ebenen gibt, ist in 5.6 als offene Frage ergänzt. Priorität von FR-026 (Soll oder Muss) bleibt bei 5.6 zu bestätigen.
+- Bezug zum Befund Modell-Sperren (STOPP Phase 4): Bei diesen Genres ist mit Ablehnungen durch Modelle mit Inhaltsfilter zu rechnen; eine ausdrückliche Genre-Angabe im Prompt kann das verstärken. Beim Probeschreiben für 5.6 je Modell prüfen (Vision 6: Modelle ohne restriktive Inhaltsfilter, Modellwechsel muss möglich bleiben).
+
 ### 2026-10-08 10:20 UTC – [BEOBACHTUNG] Schreibweise: je Kapitel, Auswahllisten plus freier Text
 
 - Eigentümer zu FR-026/5.6: Tonalität und Atmosphäre **je Kapitel** festlegen; Auswahllisten, auch mehrere kombiniert, weil er sich die passenden Angaben schlecht merken kann; freier Text bleibt zusätzlich. Seine Annahme, das gebe es heute als freien Text, trifft so nicht zu: Es gibt nur die Erzählperspektive je Geschichte. Tonalität kann er heute lediglich in die Anweisung an die KI schreiben, und die gilt nur für eine Anfrage.
