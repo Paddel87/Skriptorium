@@ -691,7 +691,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Status:** OFFEN
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** keine
-- **Frist:** vor dem ersten echten Kapitel in 4.8, spätestens 2026-10-31
+- **Frist:** spätestens 2026-10-31 (ursprünglich zusätzlich „vor dem ersten echten Kapitel in 4.8“ – das Kapitel entstand am 2026-10-08 vorher; der Eigentümer schob D.11 am selben Tag auf, Frist unverändert)
 - **Freigabepflichtig:** nein – die Wahl des Passwort-Managers ist Sache des Eigentümers
 - **Empfohlene Klasse:** Entscheidung – Beförderung von „Secrets im Betrieb“ auf `[BELASTBAR]` (Eskalations-Auslöser 4); die Eintragung selbst ist Routine.
 - **Eingangskriterien:** Eigentümer hat einen Passwort-Manager gewählt
