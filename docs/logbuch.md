@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 02:35 UTC – [BEOBACHTUNG] D.11 aufgeschoben, 4.13 ungetestet
+
+- Eigentümer: „D11 aufschieben.“ Die Bedingung „vor dem ersten echten Kapitel“ ist damit verfehlt (Kapitel schon geschrieben); die Frist 2026-10-31 aus ADR-038 bleibt. Eine Verschiebung darüber hinaus wäre ein Verzicht der Kategorie 6 mit neuem ADR. Restrisiko unverändert: Geht der VPS verloren, ist die Sicherung ohne Passphrase und Schlüssel nicht lesbar – jetzt mit echten Texten.
+- 4.13: Einrichtungscode noch nicht erzeugt; Schritt bleibt `[IN ARBEIT]` bis zum Nachweis.
+
 ### 2026-10-08 02:25 UTC – [REIFEGRAD-WECHSEL] NFR Kanon-Treue → BELASTBAR
 
 - 4.8 Teil 2: Eigentümer hat ein erstes echtes Kapitel in einer eigenen Welt geschrieben und redigiert – „Keine Widersprüche gefunden“, Modell qwen3.8-max-0902. Akzeptanzkriterium (höchstens ein Widerspruch) erfüllt; Beförderung nach ADR-024 (Eskalations-Auslöser 4 – Entscheidungs-Klasse aktiv, Opus 5.5).
