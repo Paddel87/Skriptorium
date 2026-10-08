@@ -29,6 +29,48 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 10:35 UTC – [SESSIONENDE] 5.7 umgesetzt und gemergt – Abnahme offen
+
+- **Dauer:** 10:22 – 10:35 UTC (Container-Uhr; die Einträge 10:35 und 10:50 UTC oben tragen geschätzte Zeiten und liegen tatsächlich zwischen 10:25 und 10:32 UTC).
+- **Bearbeitet:** 5.7 umgesetzt (ADR-044, PR #55, CI 8/8 grün); Merge auf Anweisung des Eigentümers („Merge, Session Ende“). Probe-Anfrage mit dem Schlüssel der Cloud-Umgebung: Voreinstellung grok-4.6 greift, Schlüssel abgelaufen (HTTP 401).
+- **Stand:** 5.7 `[IN ARBEIT]` – fehlt Deployment vom Mac und die Szene des Eigentümers in einer echten Welt ohne Sperre. Kein Deployment in dieser Session (kein SSH aus der Cloud).
+- **Offen:** neuer OpenRouter-Schlüssel für die Cloud-Umgebung (Eigentümer beschafft ihn); Fragen an den Eigentümer: Kosten-Zeile (5.10), unübersichtliche Stellen (5.11), Werte der Listen (5.6); Fehlerart bei abgelaufenem Schlüssel unterscheiden ja/nein (Nebenbefund); MD024 im Markdown-Linter auf Geschwister-Überschriften begrenzen ja/nein (Kategorie 7, sonst „Geändert (nach v0.1.0)“ im CHANGELOG). D.11 bis 2026-10-31.
+- **Nächster Schritt:** Session auf dem Mac: `main` deployen (Runbook Abschnitt 7), Eigentümer schreibt Probe-Szene → 5.7 `[ERLEDIGT]`; danach 5.8 (Probeschreiben mit neuem Schlüssel), 5.9.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 10:32). Schritte oberhalb der Empfehlung: 1 (5.7, empfohlen Routine; zu Beginn genannt). Abgegeben: nichts (kleiner Schritt mit geladenem Kontext; Abgabe hätte nicht gespart).
+- **Kontextgröße:** 233.739 Token (`get_session` 10:32) – über der Grenze 200.000; überschritten erst während des Sessionendes, kein neuer Schritt begonnen.
+- **Sessionende-Prüfungen:** README (Nächste Schritte, Erkundungs-Hinweis) nachgezogen, Status-Block unverändert gültig (Phase 5, v0.1.0, Blocker 0). Drift: ADR-044 → 5.7 vorhanden; Reaktiv-Quote 0/10 (ADR-035..044) stimmt mit Teil B; Modul-Liste und Reifegrade unverändert; Blocker 0, kein `[BLOCKIERT]`; Phase 5 14 Schritte (Schwelle 26). Ablaufdaten: kein Vorlauf erreicht (nächste Nachprüfung mypy 2 am 2026-11-06). Logbuch 230 Zeilen, project-context 343 Zeilen – keine Auslagerung. Keine uncommitteten Änderungen.
+
+### 2026-10-08 10:50 UTC – [BEOBACHTUNG] OpenRouter-Schlüssel der Cloud-Umgebung abgelaufen
+
+- Auf Hinweis des Eigentümers („Keys als Umgebungsvariable“): `OPENROUTER_API_KEY` ist gesetzt (73 Zeichen, Wert nicht angezeigt); ein SSH-Zugang zum VPS ist nicht dabei.
+- Probe-Anfrage über den Standardweg (`prepare_request` → `stream_events`, Testwelt, Skript im Scratchpad): `start` meldet `x-ai/grok-4.6` (Voreinstellung aus 5.7 greift), danach `error` `nicht_erreichbar`. Einzelanfrage direkt an OpenRouter: HTTP 401 „API key expired“. OpenRouter selbst ist erreichbar (curl 200), Proxy und Zertifikate in Ordnung.
+- Folge: Kein Probeschreiben aus der Cloud-Session möglich, bis ein gültiger Schlüssel in der Umgebung liegt (5.8 braucht Probeschreiben; 5.10 die Prüfung, ob Kosten gemeldet werden). Der Schlüssel des Produktivsystems ist davon getrennt und nicht geprüft.
+- Nebenbefund: Die Oberfläche zeigt bei 401/402 dieselbe Fehlerart `nicht_erreichbar` wie bei einem Ausfall; die genaue Ursache steht nur in der Ausnahme-Meldung. Kein Schritt angelegt – dem Eigentümer genannt.
+
+### 2026-10-08 10:35 UTC – [ADR-ANGELEGT] ADR-044 grok-4.6 als Voreinstellung
+
+- `[ERKENNTNIS]`, keine Kategorie aus Abschnitt 4 (Modellwahl ist Konfiguration). Ersetzt das Startmodell aus ADR-010 und die Reihenfolge aus ADR-011; Status beider ergänzt. Reaktiv-Quote 0/10 über ADR-035 bis ADR-044.
+
+### 2026-10-08 10:35 UTC – [BEOBACHTUNG] 5.7 umgesetzt – Abnahme offen
+
+- **Code:** `ai_gateway/models.py` – `DEFAULT_MODELS` in der Reihenfolge grok-4.6 → grok-4.7 → qwen3.8-max-0902; `DEFAULT_MODEL` folgt daraus (`api/flows/writing.py`, nur Kommentar geändert).
+- **Nebenwirkung, bewusst:** Auch die Kurzfassungen (3.6) laufen mit der Voreinstellung, also künftig grok-4.6; Geschichten ohne gespeichertes Modell wechseln mit. In ADR-044 und CHANGELOG genannt.
+- **Tests:** `test_model_list` erwartet die neue Reihenfolge; Verbrauchs-Tests nutzen `DEFAULT_MODEL` statt fest grok-4.7; `test_story_keeps_its_model_and_writing_uses_it` speichert jetzt grok-4.7 an der Geschichte und prüft nach dem Zurücksetzen grok-4.6. End-to-End: Voreinstellung im Modell-Feld grok-4.6, Wechsel auf grok-4.7 übersteht das Neuladen.
+- **Läufe:** `pytest --cov` 410 bestanden, 99,79 % (models.py 100 %); `vitest` 102 bestanden (unverändert); Playwright 8 bestanden (Chromium 1194 der Cloud-Session); `pre-commit run --all-files` grün.
+- **Offen für `[ERLEDIGT]`:** CI grün, Merge, Deployment vom Mac (ADR-039, nur auf Anweisung) und Szene des Eigentümers in einer echten Welt ohne Sperre.
+
+### 2026-10-08 10:24 UTC – [BEOBACHTUNG] Uhrzeiten der Vorsession zu spät
+
+- Die Einträge der Vorsession tragen Zeiten bis 13:50 UTC, der Sessionende-Commit `b608e5e` ist aber auf 10:19:09 UTC datiert und diese Session startete laut `get_session` um 10:22 UTC. Die dortigen Uhrzeiten sind also um gut 3,5 Stunden zu spät (geschätzt, nicht gemessen); Reihenfolge und Inhalt bleiben gültig. Nicht nachträglich geändert. Ab hier stammen die Zeiten aus `date -u` im Container.
+
+### 2026-10-08 10:24 UTC – [SESSIONSTART] Schritt 5.7
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (`get_session`: `configured_model`, `session_context.model`, `last_served_model`) → Entscheidungs-Klasse.
+- **Umgebung:** Cloud-Session (Ursprung iOS), nicht der Mac des Eigentümers – kein SSH zum VPS, also kein Deployment aus dieser Session (ADR-025, ADR-039).
+- **Kontextgröße:** `get_session` meldet `used_tokens` 0 (Wert beim Start offenbar nicht gefüllt); Fenster 1.000.000, Grenze laut project-context 200.000.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2. Keine aktiven Blocker, kein `[IN ARBEIT]`.
+- **Vorhaben:** 5.7 Startmodell grok-4.6 (empfohlen Routine; läuft auf Entscheidung, Abgabe lohnt nicht bei kleinem Schritt mit geladenem Kontext).
+
 ### 2026-10-08 13:50 UTC – [SESSIONENDE] Session 2026-10-08 abgeschlossen – Wiedereinstieg bei 5.7
 
 - **Dauer:** 08:23 – 13:50 UTC. Ersetzt als Wiedereinstiegspunkt das Sessionende 13:20 UTC; dazwischen nur die Einträge 13:35 und 13:40 UTC.

@@ -46,7 +46,7 @@ from skriptorium.context import CONFLICT_MARKER, ContextBuilder, ContextTooLarge
 from skriptorium.manuscript import ManuscriptService
 from skriptorium.storage import InvalidInput, NotFound
 
-# First model of the model order grok-4.7 → grok-4.6 → qwen3.8-max (ADR-010, ADR-011).
+# First model of the model order grok-4.6 → grok-4.7 → qwen3.8-max (ADR-011, ADR-044).
 DEFAULT_MODEL: Final = next(iter(DEFAULT_MODELS))
 # Values of the acceptance runs in steps 1.1 and 3.2.
 MAX_OUTPUT_TOKENS: Final = 8000

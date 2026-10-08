@@ -112,7 +112,7 @@ Modularer Monolith (ADR-003): ein Python-Server (FastAPI) liefert die React-Ober
 
 ### APIs
 
-- **OpenRouter:** OpenAI-kompatible Chat-Schnittstelle mit Streaming. Modell-Verfügbarkeit und Inhaltsfilter je Modell uneinheitlich; Befund der Bestandsprüfung: 324 von 458 Modellen ohne OpenRouter-eigene Moderation (`docs/research/bestandspruefung.md`). Startmodell grok-4.7, Zweitmodell grok-4.6, Notfall-Reserve qwen3.8-max (ADR-010, ADR-011); Preise, Nutzungsbedingungen der ausführenden Anbieter und Ablehnungssignale in `docs/research/modell-eignungstest.md`. Rate Limits: bei qwen3.8-flash HTTP 429 vom Anbieter beobachtet, sonst keine.
+- **OpenRouter:** OpenAI-kompatible Chat-Schnittstelle mit Streaming. Modell-Verfügbarkeit und Inhaltsfilter je Modell uneinheitlich; Befund der Bestandsprüfung: 324 von 458 Modellen ohne OpenRouter-eigene Moderation (`docs/research/bestandspruefung.md`). Voreinstellung grok-4.6, wählbar grok-4.7, Notfall-Reserve qwen3.8-max (ADR-010, ADR-011, ADR-044; bis 2026-10-08 grok-4.7 voreingestellt); Preise, Nutzungsbedingungen der ausführenden Anbieter und Ablehnungssignale in `docs/research/modell-eignungstest.md`. Rate Limits: bei qwen3.8-flash HTTP 429 vom Anbieter beobachtet, sonst keine.
 
 <!-- ANCHOR:constraints -->
 ## 6. Constraints (operationalisierbar)

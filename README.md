@@ -87,11 +87,11 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **5.7–5.9:** grok-4.6 als Startmodell, nahtloser Anschluss der KI ohne Einleitung und Schlusssatz, Kapitel öffnet am Textende.
+- **5.7–5.9:** grok-4.6 als Startmodell (umgesetzt, wartet auf Deployment), nahtloser Anschluss der KI ohne Einleitung und Schlusssatz, Kapitel öffnet am Textende.
 - **5.10–5.11:** Kosten je Vorschlag sichtbar; Seitenaufbau und Abläufe der Oberfläche neu ordnen.
 - **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
-Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – Startmodell grok-4.7, Zweitmodell grok-4.6.
+Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).
 
 → Vollständiger Fahrplan: [`docs/fahrplan.md`](docs/fahrplan.md)
 

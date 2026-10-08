@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-10-08 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11, ADR-029 bis ADR-032 aus Schritt 4.2, ADR-033 aus Schritt 4.12, ADR-034 aus Schritt 4.2, ADR-035 aus D.6, ADR-036 aus Schritt 4.3, ADR-037 und ADR-038 aus Schritt 4.6, ADR-039 aus Schritt 4.7, ADR-040 aus D.8, ADR-041 aus Schritt 4.13, ADR-042 aus der Neuplanung von Phase 4, ADR-043 aus Schritt 4.8). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-10-08 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11, ADR-029 bis ADR-032 aus Schritt 4.2, ADR-033 aus Schritt 4.12, ADR-034 aus Schritt 4.2, ADR-035 aus D.6, ADR-036 aus Schritt 4.3, ADR-037 und ADR-038 aus Schritt 4.6, ADR-039 aus Schritt 4.7, ADR-040 aus D.8, ADR-041 aus Schritt 4.13, ADR-042 aus der Neuplanung von Phase 4, ADR-043 aus Schritt 4.8, ADR-044 aus Schritt 5.7). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -29,7 +29,7 @@ Stand 2026-10-08 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 007 | 2026-09-26 | Aktiv | STRATEGISCH | SECURITY | Sicherheit und Datenschutz | Schutzbedarf normal |
 | 008 | 2026-09-26 | Aktiv | STRATEGISCH | SECURITY, DEPLOYMENT | Sicherheit und Datenschutz | Verzicht auf Vertretung (Gate-Punkt 7) |
 | 009 | 2026-09-26 | Aktiv | STRATEGISCH | METHODIK | Methodik (Descope) | FR-006 verworfen: keine Übernahme bestehender Geschichten |
-| 010 | 2026-09-26 | Aktiv (Zweitmodell ersetzt durch ADR-011) | ERKENNTNIS | PERFORMANCE | – (Ergebnis Schritt 1.1) | Startmodell grok-4.7, Ausweichmodell qwen3.8-max, Token-Budget 30.000 |
+| 010 | 2026-09-26 | Aktiv (Zweitmodell ersetzt durch ADR-011, Startmodell durch ADR-044) | ERKENNTNIS | PERFORMANCE | – (Ergebnis Schritt 1.1) | Startmodell grok-4.7, Ausweichmodell qwen3.8-max, Token-Budget 30.000 |
 | 011 | 2026-09-26 | Aktiv | ERKENNTNIS | PERFORMANCE | – (Ergebnis Schritt 1.5) | grok-4.6 Zweitmodell, qwen3.8-max nur Notfall-Reserve |
 | 012 | 2026-09-26 | Aktiv | ERKENNTNIS | DATENMODELL | Datenmodell | Import von Welt-Material zunächst nur als Markdown |
 | 013 | 2026-09-26 | Aktiv | ERKENNTNIS | MODUL, SCHNITTSTELLE, DATENMODELL, PERFORMANCE | Architektur | Reifegrad-Beförderung vor Phase 2, neues Reaktionszeit-Ziel |
@@ -63,12 +63,13 @@ Stand 2026-10-08 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 041 | 2026-10-07 | Aktiv | OPERATIV | SECURITY | Sicherheit | Kürzerer, lesbarer Einrichtungscode (12 Zeichen), Ablage mit scrypt |
 | 042 | 2026-10-08 | Aktiv | STRATEGISCH | METHODIK | Pflichtfrage Phasenende | Phasenende 4 / Wucherung – gezielt umbauen, Befunde in neue Phase 5 |
 | 043 | 2026-10-08 | Aktiv | OPERATIV | METHODIK | Release (Vision-Checkpoint) | v0.1.0 als Vorabversion – Go-Live vor v1.0.0 |
+| 044 | 2026-10-08 | Aktiv | ERKENNTNIS | PERFORMANCE | – (Ergebnis Schritt 5.7) | grok-4.6 als Voreinstellung, grok-4.7 bleibt wählbar |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 0 / 10 (0 %) über ADR-034 bis ADR-043 – ADR-043 in 4.8 (Release-Entscheidung, keine Architekturentscheidung – nicht reaktiv); ADR-033 nicht mehr im Fenster; ADR-042 Pflichtfrage nach Phasen-Wucherung (Methodik, keine Architekturentscheidung der Kategorien 1, 2, 4, 5 – nicht reaktiv; die Umbau-Entscheidungen fallen in den Schritten 5.11–5.13 als geplante ADRs der UMSETZUNG-Phase 5); ADR-032 nicht mehr im Fenster; ADR-041 in 4.13 (Einrichtungscode, Kategorie 6 – keine Architekturentscheidung, nicht reaktiv); ADR-040 aus D.8 (Verzicht auf Rotation, Kategorie 6 – keine Architekturentscheidung, nicht reaktiv); ADR-039 in 4.7 (Deployment-Weg, Kategorie 7 – nicht reaktiv, in 4.7 vorgesehen); ADR-038 in 4.6 (Verzicht auf Gate-Punkt 4a, Kategorie 6 – nicht reaktiv); ADR-037 in 4.6 (Zugriff der KI, Kategorie 6 – nicht reaktiv, laut ADR-032 dort vorgesehen); ADR-036 in 4.3 (Sicherungsziel, Kategorien 3, 6, 7 – nicht reaktiv, in 4.3 vorgesehen); ADR-035 aus der Erkundung D.6 (Erkenntnis aus geplanter Messung, wie ADR-022 – nicht reaktiv); ADR-034 in 4.2 (Überwachung, Kategorie 7 – nicht reaktiv); ADR-033 in 4.12 (Kategorien 3 und 7 – nicht reaktiv); ADR-029 bis ADR-032 in 4.2 (Kategorien 3 und 6 – nicht reaktiv; ADR-029 bis ADR-031 nicht mehr im Fenster); ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv, nicht mehr im Fenster); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-025 in 4.2 (geplante Anbieterwahl, nicht mehr im Fenster); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3 (nicht mehr im Fenster). ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
+- **Aktueller Wert:** 0 / 10 (0 %) über ADR-035 bis ADR-044 – ADR-044 in 5.7 (Modellwahl ist Konfiguration, Erkenntnis aus der Nutzung, in 5.7 vorgesehen – nicht reaktiv); ADR-034 nicht mehr im Fenster; ADR-043 in 4.8 (Release-Entscheidung, keine Architekturentscheidung – nicht reaktiv); ADR-033 nicht mehr im Fenster; ADR-042 Pflichtfrage nach Phasen-Wucherung (Methodik, keine Architekturentscheidung der Kategorien 1, 2, 4, 5 – nicht reaktiv; die Umbau-Entscheidungen fallen in den Schritten 5.11–5.13 als geplante ADRs der UMSETZUNG-Phase 5); ADR-032 nicht mehr im Fenster; ADR-041 in 4.13 (Einrichtungscode, Kategorie 6 – keine Architekturentscheidung, nicht reaktiv); ADR-040 aus D.8 (Verzicht auf Rotation, Kategorie 6 – keine Architekturentscheidung, nicht reaktiv); ADR-039 in 4.7 (Deployment-Weg, Kategorie 7 – nicht reaktiv, in 4.7 vorgesehen); ADR-038 in 4.6 (Verzicht auf Gate-Punkt 4a, Kategorie 6 – nicht reaktiv); ADR-037 in 4.6 (Zugriff der KI, Kategorie 6 – nicht reaktiv, laut ADR-032 dort vorgesehen); ADR-036 in 4.3 (Sicherungsziel, Kategorien 3, 6, 7 – nicht reaktiv, in 4.3 vorgesehen); ADR-035 aus der Erkundung D.6 (Erkenntnis aus geplanter Messung, wie ADR-022 – nicht reaktiv); ADR-034 in 4.2 (Überwachung, Kategorie 7 – nicht reaktiv); ADR-033 in 4.12 (Kategorien 3 und 7 – nicht reaktiv); ADR-029 bis ADR-032 in 4.2 (Kategorien 3 und 6 – nicht reaktiv; ADR-029 bis ADR-031 nicht mehr im Fenster); ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv, nicht mehr im Fenster); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-025 in 4.2 (geplante Anbieterwahl, nicht mehr im Fenster); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3 (nicht mehr im Fenster). ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -350,7 +351,7 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 
 - **Datum:** 2026-09-26
 - **Entscheider:** Eigentümer (Wertung Wartezeit gegen Kanon-Treue); Festlegung der Werte durch die KI auf Grundlage des Tests
-- **Status:** Aktiv – Festlegung des Ausweichmodells ersetzt durch ADR-011 (grok-4.6 Zweitmodell, qwen3.8-max Notfall-Reserve)
+- **Status:** Aktiv – Festlegung des Ausweichmodells ersetzt durch ADR-011 (grok-4.6 Zweitmodell, qwen3.8-max Notfall-Reserve); Startmodell ersetzt durch ADR-044 (grok-4.6 voreingestellt, 2026-10-08)
 - **Tags:** `[ERKENNTNIS]` `[PERFORMANCE]`
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Reifegrad-Wirkung:** NFR Token-Budget: Wert festgelegt, bleibt `[VORLÄUFIG]` bis zur Beförderung in Schritt 1.4; NFR Reaktionszeit: Ziel 5 s für das Startmodell nicht erreichbar, Anpassung in 1.4 vorzulegen; NFR Kanon-Treue bleibt `[OFFEN]` (Vorprüfung erfolgt)
@@ -382,7 +383,7 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 
 - **Datum:** 2026-09-26
 - **Entscheider:** Eigentümer
-- **Status:** Aktiv
+- **Status:** Aktiv – Reihenfolge grok-4.7 vor grok-4.6 ersetzt durch ADR-044 (2026-10-08)
 - **Tags:** `[ERKENNTNIS]` `[PERFORMANCE]`
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Reifegrad-Wirkung:** keine
@@ -1094,6 +1095,29 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Konfidenz zum Zeitpunkt:** hoch – offene Punkte im Fahrplan belegt; SemVer 0.x steht für den Entwicklungsstand. Umkehrbarkeit billig.
 - **Konsequenzen:** v0.1.0 in `pyproject.toml`, `package.json`, Sperrdateien, CHANGELOG, README-Badge, project-context. Schritt 5.14 „Go-Live-Prüfung vor v1.0.0“ (Vision-Checkpoint, externer Blick oder Restrisiko-ADR) am Ende von Phase 5. Der Betrieb bleibt unverändert öffentlich mit Passwortschutz (Gate 4.6 erfüllt).
 - **Abgeleitete Regel:** keine
+
+#### ADR-044: grok-4.6 als Voreinstellung, grok-4.7 bleibt wählbar
+
+- **Datum:** 2026-10-08
+- **Entscheider:** Eigentümer (Befund aus der Nutzung, Stellung von grok-4.7); Umsetzung durch die KI
+- **Status:** Aktiv
+- **Tags:** `[ERKENNTNIS]` `[PERFORMANCE]`
+- **Phasentyp-Kontext:** UMSETZUNG (Schritt 5.7)
+- **Reifegrad-Wirkung:** keine
+- **Kategorie:** keine aus `CLAUDE.md` Abschnitt 4 (Modellwahl ist Konfiguration, wie ADR-010/011); ändert die Reihenfolge aus ADR-010 und ADR-011
+- **Kontext:** ADR-010 wählte grok-4.7 als Startmodell wegen der besten Kanon-Treue an einer erfundenen Testwelt. In der echten Nutzung (Befund 2026-10-08) sperrt grok-4.7 die Inhalte des Eigentümers stark; grok-4.6 ist laut Eigentümer „gut machbar“. Gemessen wurde die Kanon-Treue am echten Kapitel deshalb mit qwen3.8-max (4.8). Der Eigentümer will die Modelle künftig „live abrufen“ (5.12) statt die feste Liste umzusortieren und lässt die Reihenfolge der Schritte unverändert (Logbuch 2026-10-08, Eintrag „5.7: grok-4.7 bleibt wählbar“).
+- **Optionen:** A grok-4.6 voreingestellt, grok-4.7 bleibt in der Liste / B grok-4.7 ganz aus der Liste nehmen / C Liste unverändert, nur 5.12 vorziehen.
+- **Entscheidung:** A. Reihenfolge `DEFAULT_MODELS` in `ai_gateway/models.py`: grok-4.6 → grok-4.7 → qwen3.8-max-0902 (Notfall-Reserve); Reasoning unverändert niedrigste Stufe.
+- **Vision-Frage, die entschied:** „grok-4.7 nach hinten oder ganz heraus?“ → Modelle sollen live abrufbar werden; bis dahin bleibt grok-4.7 wählbar, Reihenfolge der Schritte bleibt.
+- **Konfidenz zum Zeitpunkt:** hoch für die Voreinstellung (Erfahrung des Eigentümers mit echten Texten, Genre-Test 1.5 mit grok-4.6 Rang 1 vor qwen); Kanon-Treue von grok-4.6 an echten Texten noch nicht gemessen (Testwelt 1.1: 2,4 Widersprüche je 1.000 Wörter gegenüber 1,5 bei grok-4.7). Umkehrbarkeit billig (Einstellung).
+- **Konsequenzen:**
+  - Neue Geschichten und Geschichten ohne gespeichertes Modell schreiben mit grok-4.6; eine Geschichte mit gespeichertem Modell behält es (ADR-023). Auch Kurzfassungen und Gesamtzusammenfassung (3.6) laufen mit der Voreinstellung, also grok-4.6.
+  - Reaktionszeit: Für die Voreinstellung gilt das Ziel von grok-4.6 (meist unter 10 s, höchstens 20 s; ADR-035) – kürzere Wartezeit als bisher.
+  - Restrisiko aus ADR-011 bleibt: beide grok-Modelle von xAI; Notfall-Reserve qwen3.8-max, freie Modellwahl mit 5.12.
+  - Prüfung: Nach dem Deployment schreibt der Eigentümer eine Szene in einer echten Welt; Ergebnis im Logbuch (Abnahme 5.7).
+- **Abgeleitete Regel:** keine
+
+---
 
 ---
 

@@ -4,6 +4,10 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ## [Unreleased]
 
+### Geändert (nach v0.1.0)
+
+- Voreingestelltes Modell grok-4.6 statt grok-4.7 (2026-10-08, Schritt 5.7, ADR-044): grok-4.7 sperrte die echten Texte des Eigentümers häufig. Neue Geschichten und Geschichten ohne gewähltes Modell schreiben jetzt mit grok-4.6, ebenso die Kurzfassungen; eine Geschichte mit gewähltem Modell behält es. grok-4.7 bleibt wählbar, qwen3.8-max ist Notfall-Reserve. `GET /api/models` liefert die Reihenfolge grok-4.6, grok-4.7, qwen3.8-max.
+
 ## [0.1.0] – 2026-10-08
 
 Erste vergebene Version, als Vorabversion (ADR-043): Das Skriptorium läuft seit 2026-09-30 öffentlich mit Passwortschutz und wird vom Eigentümer für echte Texte genutzt. Go-Live erst vor v1.0.0.

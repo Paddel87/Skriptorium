@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-08 (Neuplanung nach ADR-042)
+- **Stand vom:** 2026-10-08 (Neuplanung nach ADR-042; 5.7 umgesetzt)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner
-- **Nächster Schritt:** 5.7 Startmodell grok-4.6 (grok-4.7 bleibt wählbar; Live-Liste in 5.12), dann 5.8, 5.9, 5.10, 5.11, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** 5.7 Startmodell grok-4.6 – umgesetzt (ADR-044), gemergt mit PR #55; wartet auf Deployment vom Mac (ADR-039, auf Anweisung) und Abnahme-Szene des Eigentümers. Probeschreiben aus der Cloud-Session (5.8, 5.10) erst mit neuem OpenRouter-Schlüssel – der bisherige ist abgelaufen, Eigentümer beschafft einen neuen (2026-10-08)
+- **Nächster Schritt:** nach Abnahme von 5.7: 5.8, 5.9, 5.10, 5.11, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -224,7 +224,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.7: Startmodell grok-4.6
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT – Code, Tests und ADR-044 fertig (2026-10-08, Branch `feat/5.7-startmodell-grok-4.6`); offen: Merge, Deployment (nur vom Mac, auf Anweisung, ADR-039) und Szene des Eigentümers in einer echten Welt ohne Sperre
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 4.8 (Phasenbeginn)
 - **Freigabepflichtig:** nein für den Wechsel des Startmodells (Teil von Option B, ADR-042). Stellung von grok-4.7 geklärt 2026-10-08: Eigentümer will die Modelle „live abrufen, wie bei OpenRouter geplant“ (5.12) statt die feste Liste umzusortieren; Reihenfolge der Schritte bleibt (5.12 nach 5.11). Bis dahin bleibt grok-4.7 wählbar, nur die Voreinstellung wechselt auf grok-4.6. Ergebnis als ADR `[ERKENNTNIS]` zu ADR-010/011
