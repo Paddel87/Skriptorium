@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 04:10 UTC – [BEOBACHTUNG] 4.8 Teil 1 (FR-022) nach Einschätzung erfüllt
+
+- Nach dem Sessionende. Eigentümer: „4.8 kann ich sagen, ist problemlos in unter 30 Minuten zu schaffen.“ Vorgelegt: A Einschätzung genügt / B neu messen mit Stoppuhr. Entscheidung: **A**. FR-022 als erfüllt eingetragen, ausdrücklich ohne Messung; im Funktionstest gab es Rückfragen (Feld, Import-Material), deren Ursachen mit 4.15, 4.16 und `docs/import-prompts.md` behoben sind.
+- Abweichung vom Akzeptanzkriterium (Stoppuhr) auf Entscheidung des Eigentümers; beim Vision-Abgleich vor Go-Live (`CLAUDE.md` Abschnitt 12) zu nennen.
+- Offen in 4.8: Teil 2 Kanon-Treue im ersten echten Kapitel (nach D.11), Versionsvergabe v0.1.0, Vision-Abgleich.
+
 ### 2026-10-08 04:00 UTC – [SESSIONENDE] Funktionstest auf der Produktion; 4.13 eingespielt, 4.14–4.16 erledigt
 
 - **Dauer:** 2026-10-07 23:14 – 2026-10-08 04:00 UTC (grob).
