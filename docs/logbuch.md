@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 09:20 UTC – [BEOBACHTUNG] Oberfläche schwer zu überblicken; Wunsch KI-gestützter Weltenbauer mit Internet-Wissen
+
+- Offene Fragen aus 09:05 UTC (Kosten-Zeile, Vision-Abgleich Chat-Ansicht) beantwortet der Eigentümer später; er ist unterwegs.
+- **Oberfläche insgesamt schwer zu überblicken:** Laut Eigentümer wird die Bedienung schon mit wenigen Welten unübersichtlich, nicht erst mit vielen. Noch ohne konkrete Stellen. Welche Seiten und Abläufe betroffen sind, wird bei der Neuplanung erfragt. Bezug: FR-022 (Einstieg ohne Hilfe), 4.15 (Bedienhinweise), Vision 8 („überladene Oberfläche bewusst nicht übernehmen“).
+- **Wunsch KI-gestützter Weltenbauer:** Figuren, Welten, Regeln, Gegenstände mit Verwendung und Auswirkung im Gespräch mit der KI definieren statt per Hand oder Import. Für Gegenstände (ggf. auch andere Kategorien) soll die KI tatsächliche Anwendung und Handhabung aus dem Internet einbeziehen, damit alltagsbekannte Gegenstände nicht jedes Mal von Hand erklärt werden müssen. Das würde die Import-Prompts (`docs/import-prompts.md`) weitgehend überflüssig machen. Ausdrücklich **nicht** gewünscht: den Import streichen.
+- Einordnung (KI, ohne Entscheidung): Die Vision schließt einen Weltenbauer nicht aus (Abschnitt 5). Er wäre ein neues Feature mit neuem Ablauf und wahrscheinlich neuem Modul oder neuer Verantwortung (`CLAUDE.md` Abschnitt 4 Kategorie 1/2). Internet-Wissen bedeutet eine neue externe Abhängigkeit (Suchdienst oder Websuche über den KI-Anbieter, Kategorie 3) mit eigenen Kosten (Kostenrahmen 50 €). Weil der Kanon verbindlich ist (FR-011), müssten KI-Vorschläge vor der Übernahme vom Autor bestätigt werden, wie bei der Import-Vorschau. Berührt 5.1 (Kanon-Vorschläge ohne `@`) und 5.5 (Planung der nächsten Ausbaustufe). Größe eher eine eigene Phase als ein Schritt in Phase 4.
+
+Landeplatz: beide als Eingaben der Neuplanung im STOPP-Block von Phase 4.
+
 ### 2026-10-08 09:05 UTC – [BEOBACHTUNG] Wunsch Eingabe-Verlauf als umschaltbare Ansicht; Kosten je Vorschlag fehlen
 
 - **Gesamturteil des Eigentümers:** Die Manuskript-Ansicht als reiner Fließtext ist „schon mal nicht schlecht“. Einleitungs- und Schlusssätze (Befund 08:35 UTC) sind ärgerlich, weil sie beim Redigieren geprüft werden müssen.

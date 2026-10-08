@@ -32,7 +32,12 @@ Kontext: Phase 4 hat 16 Schritte (ursprünglich 8). Befund 2026-10-08: grok-4.7 
   dem Manuskript, ohne erneutes Senden alter Anweisungen – neues Feature, braucht
   gespeicherte Anweisungen (Kategorie 4) und Vision-Abgleich (Vision 5/8, FR-012);
   (d) Kosten je Vorschlag beim Eigentümer nicht sichtbar, obwohl angefragt und
-  angezeigt, sofern gemeldet – Ursache offen (Logbuch 09:05 UTC).
+  angezeigt, sofern gemeldet – Ursache offen (Logbuch 09:05 UTC);
+  (e) Oberfläche insgesamt schwer zu überblicken, schon mit wenigen Welten –
+  konkrete Stellen erfragen; (f) Wunsch: KI-gestützter Weltenbauer (Figuren, Regeln,
+  Gegenstände mit Verwendung/Auswirkung im Gespräch definieren), bei Gegenständen
+  mit Wissen aus dem Internet; Import bleibt – neues Feature, Kategorien 1/2/3,
+  eher eigene Phase, Bezug 5.1 und 5.5 (Logbuch 09:20 UTC).
 Benötigt: Neuplanung von Phase 4, Vision-Abgleich, Pflichtfrage „Weiterbauen, umbauen
   oder neu aufsetzen?“ (CLAUDE.md Abschnitt 12)
 Vorgeschlagene Auflösung: Optionen – Sperre im Text erkennen (wie Hinweis 4.14) /
