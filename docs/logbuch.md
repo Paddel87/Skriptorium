@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 10:50 UTC – [BEOBACHTUNG] OpenRouter-Schlüssel der Cloud-Umgebung abgelaufen
+
+- Auf Hinweis des Eigentümers („Keys als Umgebungsvariable“): `OPENROUTER_API_KEY` ist gesetzt (73 Zeichen, Wert nicht angezeigt); ein SSH-Zugang zum VPS ist nicht dabei.
+- Probe-Anfrage über den Standardweg (`prepare_request` → `stream_events`, Testwelt, Skript im Scratchpad): `start` meldet `x-ai/grok-4.6` (Voreinstellung aus 5.7 greift), danach `error` `nicht_erreichbar`. Einzelanfrage direkt an OpenRouter: HTTP 401 „API key expired“. OpenRouter selbst ist erreichbar (curl 200), Proxy und Zertifikate in Ordnung.
+- Folge: Kein Probeschreiben aus der Cloud-Session möglich, bis ein gültiger Schlüssel in der Umgebung liegt (5.8 braucht Probeschreiben; 5.10 die Prüfung, ob Kosten gemeldet werden). Der Schlüssel des Produktivsystems ist davon getrennt und nicht geprüft.
+- Nebenbefund: Die Oberfläche zeigt bei 401/402 dieselbe Fehlerart `nicht_erreichbar` wie bei einem Ausfall; die genaue Ursache steht nur in der Ausnahme-Meldung. Kein Schritt angelegt – dem Eigentümer genannt.
+
 ### 2026-10-08 10:35 UTC – [ADR-ANGELEGT] ADR-044 grok-4.6 als Voreinstellung
 
 - `[ERKENNTNIS]`, keine Kategorie aus Abschnitt 4 (Modellwahl ist Konfiguration). Ersetzt das Startmodell aus ADR-010 und die Reihenfolge aus ADR-011; Status beider ergänzt. Reaktiv-Quote 0/10 über ADR-035 bis ADR-044.
