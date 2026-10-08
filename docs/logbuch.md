@@ -29,6 +29,16 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 04:00 UTC – [SESSIONENDE] Funktionstest auf der Produktion; 4.13 eingespielt, 4.14–4.16 erledigt
+
+- **Dauer:** 2026-10-07 23:14 – 2026-10-08 04:00 UTC (grob).
+- **Bearbeitet:** ADR-041 und 4.13 (kürzerer Einrichtungscode, scrypt; unabhängige Prüfung Sonnet 5 ohne Befunde hoch/mittel; eingespielt). Funktionstest des Eigentümers auf der Produktion (Welt „Glasküste“, Import, `@`, Schreiben, Kanon-Proben). Befunde → 4.14 (Hinweis der KI getrennt, erledigt), 4.15 (Bedienhinweise, erledigt), 4.16 (Import zerlegte Gegenstände, erledigt). Wunsch Schreibweise → FR-026 und 5.6. Import-Prompts erarbeitet, korrigiert und in `docs/import-prompts.md` abgelegt. PRs #36–#43 gemergt; vier Deployments (`04a0bde`, `c0fe7d5`, `b4f2225`, `edc24ad`), jeweils auf Anweisung, Rückweg `skriptorium:vorher`.
+- **Offen:** 4.13 letzter Nachweis (Code im neuen Format, Eigentümer); D.11 (Eigentümer, bis 2026-10-31); 4.8. Phase 4 bei 16 Schritten (Schwelle) – ein 17. Schritt erzwingt Stopp und Neuplanung.
+- **Nächster Schritt:** D.11, dann 4.8 durch den Eigentümer.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`get_session`: `claude-opus-5-5`, durchgehend). Schritte oberhalb der Empfehlung: 3 (4.14, 4.15, 4.16 – Routine empfohlen; im geladenen Kontext erledigt, Abgabe hätte Kontext neu laden müssen, keine Ersparnis bei gleichem Cache-Lesepreis). Abgegeben: unabhängige Sicherheitsprüfung 4.13 an Sonnet 5 (getrennte Instanz).
+- **Kontextgröße:** 398.436 Token (`get_usage`), über der Grenze 200.000 seit etwa 4.14; Weiterarbeit nach Vorgabe des Eigentümers. 5-Stunden-Limit 8 %, Wochenlimit 24 %.
+- **Sessionende-Prüfungen:** README (Phase, Letzte Änderung, Nächste Schritte, Dokumenten-Index) und project-context Status nachgezogen. Drift: ADR-041 → 4.13 vorhanden; Reaktiv-Quote 0/10 über ADR-032..041 (Teil A stimmt); FR-026 → 5.6 vorhanden; Modul-Liste unverändert; keine Reifegrad-Wechsel; Blocker 0, kein `[BLOCKIERT]`; Phase 4: 16 Schritte (Schwelle „mehr als 16“ nicht überschritten), Phase 5: 6. Ablaufdaten: kein Vorlauf erreicht (Guthaben-Vorlauf ab 2026-10-22). Größen: project-context 344 Zeilen; **Logbuch 810 Zeilen > 800 (Trigger)** – die Regel lagert die vorletzte Monats-Scheibe aus, hier August 2026: existiert nicht (nur September und Oktober aktiv, Phasen 1–3 schon verdichtet). Auslagerung daher nicht möglich; Verdichtung von Phase 4 beim Phasenwechsel nach 4.8. Quick-Start-Pfad unberührt (keine Änderung an Skripten, Abhängigkeiten, `.env.example`).
+
 ### 2026-10-08 03:45 UTC – [ERLEDIGT] Schritt 4.16 Import – Gegenstände ohne einleitenden Text
 
 - Auf Anweisung des Eigentümers: PR #42 nach grüner CI (8/8) gemergt, CI auf `main` grün, `edc24ad` eingespielt. Container `healthy`; von außen `/api/health` 200, `/api/worlds` 401, `/` 200; im Container: `## Runenklinge` + `### Zweck`/`### Verwendung` → ein Eintrag „Runenklinge“.
