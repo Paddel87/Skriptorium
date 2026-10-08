@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-08 (Neuplanung nach ADR-042; 5.7 umgesetzt; 5.8 und 5.15 umgesetzt auf Branch `feat/5.15-nur-das-verlangte`)
+- **Stand vom:** 2026-10-08 (Neuplanung nach ADR-042; 5.7, 5.8, 5.15 erledigt und eingespielt mit `18ee07d`)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 5.7 Startmodell grok-4.6 – umgesetzt (ADR-044), gemergt mit PR #55; wartet auf Deployment vom Mac (ADR-039, auf Anweisung) und Abnahme-Szene des Eigentümers. 5.8 und 5.15 in Arbeit: Versuch 1 von 5.8 ist mit PR #56/#57 in `main`; Vorgaben aus 5.15 samt Länge je Anfrage mit PR #58 in `main` (`38f0d34`, 2026-10-08), Probeschreiben mit der Kette: eigene Figur gelöst, Wiederholungen und Längen deutlich besser, Vorgriff verringert, nicht beseitigt (`spikes/vorgriff-zeitlinie/README.md`, zweiter Lauf). Wartet auf Deployment vom Mac und Bestätigung des Eigentümers in einer echten Welt; Rest-Vorgriff wird im Alltag geprüft, Längenstufen bestätigt (Eigentümer, 2026-10-08). Neuer OpenRouter-Schlüssel der Cloud-Umgebung gültig (2026-10-08, bis 2027-10-08)
-- **Nächster Schritt:** Session auf dem Mac: Deployment → 5.7, 5.8, 5.15 in einer echten Welt abnehmen; danach 5.9, 5.10, 5.11, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** keiner – 5.7, 5.8 und 5.15 am 2026-10-08 `[ERLEDIGT]` nach Deployment `18ee07d` und Bestätigung des Eigentümers in einer echten Welt
+- **Nächster Schritt:** 5.9 Kapitel öffnet am Textende; danach 5.10, 5.11, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -224,7 +224,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.7: Startmodell grok-4.6
 
-- **Status:** IN ARBEIT – Code, Tests und ADR-044 fertig (2026-10-08, Branch `feat/5.7-startmodell-grok-4.6`); offen: Merge, Deployment (nur vom Mac, auf Anweisung, ADR-039) und Szene des Eigentümers in einer echten Welt ohne Sperre
+- **Status:** ERLEDIGT 2026-10-08 – ADR-044, gemergt mit PR #55; eingespielt mit `18ee07d` (2026-10-08, ADR-039); Eigentümer schrieb in einer echten Welt ohne Sperre und bestätigte („passt alles“)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 4.8 (Phasenbeginn)
 - **Freigabepflichtig:** nein für den Wechsel des Startmodells (Teil von Option B, ADR-042). Stellung von grok-4.7 geklärt 2026-10-08: Eigentümer will die Modelle „live abrufen, wie bei OpenRouter geplant“ (5.12) statt die feste Liste umzusortieren; Reihenfolge der Schritte bleibt (5.12 nach 5.11). Bis dahin bleibt grok-4.7 wählbar, nur die Voreinstellung wechselt auf grok-4.6. Ergebnis als ADR `[ERKENNTNIS]` zu ADR-010/011
@@ -240,7 +240,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.8: Nahtloser Anschluss ohne Einleitung und Schlusssatz
 
-- **Status:** IN ARBEIT (seit 2026-10-08) – Versuch 2 gemeinsam mit 5.15 umgesetzt (Branch `feat/5.15-nur-das-verlangte`, 2026-10-08): Vorgabe „Wiederhole keine Sätze, Bilder, Gesten und Wendungen aus den letzten Manuskript-Seiten“ und Schlusssatz-Verbot im neuen Abschnitt „Vorgaben“ nach der Anweisung; Kette mit 7 übernommenen Vorschlägen je Modell, verblindet bewertet: gleiche 6-Wort-Folgen über die Kette 18–49 → 0, Wiederholungen stark → mittel, Einleitungen 18 → 9, Schlusssätze 9 → 10 (vor allem Warte- und Gestenschlüsse bei der Übergabe an die geführte Figur), Kanon eindeutig 1 → 0, fraglich 4 → 4. Gemergt mit PR #58. Offen für `[ERLEDIGT]`: Deployment, Bestätigung des Eigentümers. Bisher: Versuch 1 umgesetzt auf Branch `scp/nice-lamport-as724t` (mit PR #56/#57 in `main`, Berichtigung 2026-10-08): Satz im Rahmen und Abschnitt „Anschluss“ mit den letzten 30 Wörtern vor der Anweisung; Tests grün. Probeschreiben (`spikes/nahtloser-anschluss/README.md`, 24 Texte, verblindet bewertet): Wirkung **nicht belegt** – die Testwelt zeigt Einleitung und Schlusssatz schon vorher nur in 4 von 12 Läufen (fast nur an einer Dialogpause), nachher 3 bzw. 5; Kanon eindeutig 3 → 5 (Rauschen, überwiegend qwen). Wartet auf den Eigentümer: echtes Beispiel (Kapitelende und Fortsetzung mit Einleitung/Schlusssatz) oder Entscheidung, Versuch 1 trotzdem zu übernehmen und im Alltag zu prüfen. Parallel zu 5.7 (wartet auf Deployment und Abnahme)
+- **Status:** ERLEDIGT 2026-10-08 – Versuch 1 (PR #56/#57) und Versuch 2 gemeinsam mit 5.15 (PR #58): Vorgaben gegen Wiederholung und Schlusssatz nach der Anweisung, Zitat der letzten bis zu 30 Wörter; Kette verblindet bewertet (gleiche 6-Wort-Folgen 18–49 → 0, Einleitungen 18 → 9, Kanon eindeutig 1 → 0; `spikes/vorgriff-zeitlinie/README.md`, zweiter Lauf). Eingespielt mit `18ee07d`; Eigentümer bestätigte in einer echten Welt (2026-10-08, „passt alles“)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.7
 - **Freigabepflichtig:** nein – Änderung des Rahmens innerhalb von `context`, Schnittstelle unverändert
@@ -352,7 +352,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.15: KI schreibt nur das Verlangte, nicht bis zum bekannten Ende
 
-- **Status:** IN ARBEIT (seit 2026-10-08) – umgesetzt auf Branch `feat/5.15-nur-das-verlangte`: Abschnitt „Vorgaben für deinen Text“ nach der Anweisung (nur das Verlangte, Länge, Zukunft nach der Schreibstelle weder erzählen noch andeuten, keine Wiederholung, kein Schlusssatz), Satz zur Zukunft im Rahmen, Regel „genau ausschreiben“ für die geführte Figur in Schreibweise und Erinnerung, „Weiter“ nur der nächste Moment, Länge kurz/mittel/lang (etwa 60–120, 150–300, 400–600 Wörter, Voreinstellung mittel) als additives Feld `length` und Auswahl im Schreib-Bereich. Tests: `pytest` 427 bestanden, 99 % (`context/builder.py` 100 %), `vitest` 103 bestanden, Playwright 8 bestanden. Probeschreiben (zweiter Lauf, verblindet): Anweisung 2 zur eigenen Figur bei allen drei Modellen umgesetzt (vorher bei keinem), qwen ohne Zeitsprung bei „Weiter“ und 164–246 statt bis 815 Wörter; Vorgriffe 6 → 4, aber nicht null (qwen verknüpft in Schritt 7 Buch und Grotte) – Akzeptanzkriterium „kein Vorschlag erzählt Ereignisse nach der Schreibstelle“ damit **nicht ganz erfüllt**. Gemergt mit PR #58 (`38f0d34`). Entscheidungen des Eigentümers 2026-10-08 (Auswahlfragen): Rest-Vorgriff erst im Alltag prüfen – ein weiterer Versuch nur, wenn er dort stört; Längenstufen 60–120 / 150–300 / 400–600 Wörter, Voreinstellung mittel, bleiben. Offen: Deployment, Bestätigung des Eigentümers in einer echten Welt
+- **Status:** ERLEDIGT 2026-10-08 – Abschnitt „Vorgaben für deinen Text“, Zukunft nach der Schreibstelle weder erzählen noch andeuten, geführte Figur „genau ausschreiben“, „Weiter“ nur nächster Moment, Länge kurz/mittel/lang (60–120 / 150–300 / 400–600 Wörter, Feld `length`); `pytest` 427, 99 % (`context/builder.py` 100 %), `vitest` 103, Playwright 8; gemergt mit PR #58 (`38f0d34`). Probeschreiben: Vorgriffe 6 → 4 – Rest-Vorgriff nach Entscheidung des Eigentümers im Alltag zu prüfen, weiterer Versuch nur bei Störung. Eingespielt mit `18ee07d`; Eigentümer bestätigte in einer echten Welt (2026-10-08, „passt alles“) – damit gilt das Akzeptanzkriterium als erfüllt
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.8 (gleicher Rahmen; gemeinsam am echten Material prüfen)
 - **Freigabepflichtig:** offen – nein, solange nur Wortlaut und Auswahl in `context` geändert werden; ja (Kategorie 4, Datenmodell), falls die Geschichte einen „Stand in der Zeitlinie“ als neues Feld bekommt

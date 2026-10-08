@@ -29,6 +29,27 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 21:25 UTC – [ERLEDIGT] Abnahme 5.7, 5.8, 5.15
+
+- Eigentümer schrieb nach dem Deployment `18ee07d` in einer echten Welt und bestätigte: „passt alles“ (Startmodell grok-4.6 ohne Sperre, nahtloser Anschluss, nur das Verlangte in gewählter Länge, kein Vorgriff).
+- 5.7, 5.8, 5.15 → `[ERLEDIGT]` 2026-10-08; FR-012 um die Bestätigung ergänzt; README „Nächste Schritte“ auf 5.9; project-context auf eingespielt `18ee07d`. Kein `[IN ARBEIT]` mehr – die Abweichung von `CLAUDE.md` Abschnitt 7 (drei gleichzeitig) ist aufgelöst.
+- Rest-Vorgriff aus dem Probeschreiben (Vorgriffe 6 → 4) bleibt nach Entscheidung des Eigentümers eine Alltagsbeobachtung; ein weiterer Versuch nur, wenn er stört – kein Schritt angelegt.
+
+### 2026-10-08 21:16 UTC – [BEOBACHTUNG] Deployment `18ee07d` (5.7, 5.8, 5.15)
+
+- Auf Anweisung des Eigentümers („ja, deploy“, ADR-039) nach Runbook Abschnitt 7; CI auf `main` grün (Lauf zu PR #61). Vorher eingespielt: `edc24ad`.
+- Ablauf: `git archive main` → `app.neu`, `REVISION` = `18ee07d`; altes Image als `skriptorium:vorher` markiert, `app` → `app.vorher`; `docker compose build`, `up -d`; nach gut einer Minute `(healthy)`.
+- Von außen: `/api/health` 200, `/` 200, `/api/worlds` ohne Sitzung 401. Rückweg über `skriptorium:vorher` bereit.
+- Offen: Probe-Szene des Eigentümers in einer echten Welt → Abnahme 5.7, 5.8, 5.15.
+
+### 2026-10-08 21:10 UTC – [SESSIONSTART] Session auf dem Mac – Deployment und Abnahme 5.7, 5.8, 5.15
+
+- **Modell:** `claude-opus-5-5` (`get_session`: `model`) → Entscheidungs-Klasse.
+- **Umgebung:** Mac des Eigentümers (Desktop-App, lokale Session) – SSH zum VPS von hier möglich (ADR-025); Deployment nur auf Anweisung (ADR-039). `main` per Pull auf `18ee07d`.
+- **Kontextgröße:** `get_session` meldet keine Kontextgröße mehr – Regel „Sessiongröße“ ohne Messwert; Grenze 200.000.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2. Keine aktiven Blocker; `[IN ARBEIT]`: 5.7, 5.8, 5.15 – alle warten nur auf Deployment und Abnahme in einer echten Welt.
+- **Vorhaben:** laut letztem Sessionende: `main` deployen (Runbook Abschnitt 7) → Probe-Szene des Eigentümers → 5.7, 5.8, 5.15 abnehmen; danach 5.9.
+
 ### 2026-10-08 21:05 UTC – [SESSIONENDE] Merges #58–#60, Zeitlimit der CI – Deployment vom Mac offen
 
 - **Dauer:** 15:23 – 21:05 UTC (mit Pause 16:35 – 20:49 UTC; ersetzt das Sessionende 16:02 UTC als Wiedereinstieg).
