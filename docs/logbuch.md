@@ -29,6 +29,16 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 11:10 UTC – [SESSIONENDE] Befundaufnahme aus der Nutzung abgeschlossen
+
+- **Dauer:** 08:23 – 11:10 UTC (Eintrag 08:40 UTC war ein Zwischenstand; der Eigentümer hat danach weitere Befunde geliefert).
+- **Bearbeitet:** Befunde und Wünsche des Eigentümers aufgenommen, am Code nachvollzogen und eingeordnet. Eingaben der Neuplanung im STOPP-Block von Phase 4: Modell-Sperren mit Nachtrag (grok-4.6 gut, grok-4.7 schlecht, grok-4.5 aus TypingMind), (a) Scrollen beim Wiedereinstieg, (b) Einleitungs- und Schlusssätze (qwen und grok), (c) Anweisungs-Verlauf als Chat-Ansicht, (d) Kosten je Vorschlag nicht sichtbar, (e) Übersichtlichkeit, (f) KI-gestützter Weltenbauer, (h) aktuelle Modell-Auswahl. Entschieden: SillyTavern nur Import/Export (V.6, V.7 angelegt, Landeplatz 5.5). 5.6/FR-026 um Kapitel-Ebene, Auswahllisten und Genres ergänzt. Kanon-Übernahme aus markiertem Text ist seit 3.8 vorhanden – dem Eigentümer erklärt. Kein Code geändert.
+- **Offene Fragen an den Eigentümer:** Kosten-Zeile („Kosten nicht gemeldet“ oder fehlt ganz); Chat-Ansicht und Vision; konkrete unübersichtliche Stellen; Knopf „In den Kanon“ nie gesehen oder nicht verstanden; sperrt grok-4.6 gelegentlich doch; 5.6: Vorgabe je Geschichte, Werte der Listen, Priorität.
+- **Nächster Schritt:** Neuplanung Phase 4 mit dem Eigentümer (Vision-Abgleich, Pflichtfrage „Weiterbauen, umbauen oder neu aufsetzen?“ mit getrennter Instanz); danach 4.8 abschließen; D.11 bis 2026-10-31.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` zu Sessionbeginn). Schritte oberhalb der Empfehlung: 1 (Doku-Pflege, Routine). Abgegeben: nichts – kurze Einträge im geladenen Kontext.
+- **Kontextgröße:** nicht feststellbar (`used_tokens` 0).
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ nachgezogen. Drift: V.6/V.7 in 5.5 (V.1–V.7) aufgenommen; FR-026 ↔ 5.6 konsistent; keine neuen ADRs, Module, Reifegrade oder Blocker; Phase 4 weiter 16 Schritte (keine neuen), Phase 5 6. Ablaufdaten: kein Vorlauf erreicht (Guthaben ab 2026-10-22). Logbuch über 800 Zeilen – Auslagerung weiter nicht möglich, Verdichtung beim Phasenwechsel. Quick-Start unberührt. Alles auf Branch `docs/befunde-nutzung` gepusht; Pull Request noch nicht erstellt.
+
 ### 2026-10-08 11:00 UTC – [BEOBACHTUNG] Wunsch: Modell-Auswahl aktuell von OpenRouter statt fest im Code
 
 - Eigentümer: Die Modell-Auswahl ist fest im Code hinterlegt; sie sollte aktuell sein, mit Kontextgröße und Kosten.

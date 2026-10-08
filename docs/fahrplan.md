@@ -8,7 +8,7 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-08
+- **Stand vom:** 2026-10-08 (Befundaufnahme 08:23–11:10 UTC, Eingaben im STOPP-Block)
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
 - **Aktiver Schritt:** keiner – 4.13 bis 4.16 erledigt 2026-10-08; 4.8 Teil 1 und 2 erfüllt. Danach D.11, dann 4.8
