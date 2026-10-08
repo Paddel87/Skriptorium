@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 13:16 UTC – [SESSIONSTART] Neuer OpenRouter-Schlüssel, Schritt 5.8
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (`get_session`: `configured_model`, `session_context.model`, `last_served_model`) → Entscheidungs-Klasse.
+- **Umgebung:** Cloud-Session (Ursprung Desktop-App), kein SSH zum VPS – kein Deployment aus dieser Session (ADR-025, ADR-039). Branch `scp/nice-lamport-as724t` auf Stand `main` `be92228`.
+- **Kontextgröße:** `get_session` meldet `used_tokens` 0 (beim Start wieder nicht gefüllt); Fenster 1.000.000, Grenze 200.000.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2. Keine aktiven Blocker; `[IN ARBEIT]`: 5.7 (wartet auf Deployment vom Mac und Abnahme-Szene).
+- **Schlüssel:** Eigentümer meldet „openrouter key ist neu“. `OPENROUTER_API_KEY` gesetzt (73 Zeichen, SHA-256-Präfix `6d51b4c5`, Wert nicht angezeigt); `GET /api/v1/key` → HTTP 200, Ausgabengrenze 250 $, Verbrauch 0, gültig bis 2027-10-08.
+- **Vorhaben:** 5.8 Nahtloser Anschluss (empfohlen Entscheidung – passt zur aktiven Klasse). 5.7 bleibt `[IN ARBEIT]`, bis vom Mac deployt und abgenommen ist; 5.8 hängt laut Fahrplan an 5.7, der Code von 5.7 ist aber gemergt, und das Probeschreiben läuft lokal mit der neuen Voreinstellung – Abhängigkeit für die Umsetzung erfüllt, nur die Abnahme beim Eigentümer steht aus.
+
 ### 2026-10-08 10:35 UTC – [SESSIONENDE] 5.7 umgesetzt und gemergt – Abnahme offen
 
 - **Dauer:** 10:22 – 10:35 UTC (Container-Uhr; die Einträge 10:35 und 10:50 UTC oben tragen geschätzte Zeiten und liegen tatsächlich zwischen 10:25 und 10:32 UTC).

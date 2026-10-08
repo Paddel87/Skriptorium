@@ -240,7 +240,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.8: Nahtloser Anschluss ohne Einleitung und Schlusssatz
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT (seit 2026-10-08, Cloud-Session mit neuem OpenRouter-Schlüssel) – parallel zu 5.7, das nur noch auf Deployment und Abnahme des Eigentümers wartet
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.7
 - **Freigabepflichtig:** nein – Änderung des Rahmens innerhalb von `context`, Schnittstelle unverändert
