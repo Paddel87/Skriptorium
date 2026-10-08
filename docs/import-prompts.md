@@ -2,7 +2,7 @@
 
 Zwei Prompts, mit denen eine fremde KI (Claude, ChatGPT, Grok o. ä.) vorhandenes Welt-Wissen in das Import-Format des Skriptoriums bringt (Markdown-Import, Schritt 2.4, ADR-012). Entstanden im Funktionstest am 2026-10-08; Prompt B dort vom Eigentümer erfolgreich erprobt.
 
-**Warum die Regeln so streng sind:** Der Import erkennt Gruppen und Einträge an den Überschriften (`src/skriptorium/canon/importers/markdown.py`). Eine `##`-Überschrift ohne eigenen Text, auf die direkt `###` folgt, gilt als Gruppe – ihre Unterabschnitte werden dann zu eigenen Einträgen (Befund 2026-10-08, Behebung im Code vorgeschlagen als 4.16). Ein Eintrag, der wie eine Kategorie heißt („Magie“, „Religion“), gilt ebenfalls als Gruppe. Abschnitte außerhalb der sechs Gruppen werden zu Einträgen ohne Kategorie und lassen den Import abbrechen – deshalb stehen Notizen für den Autor nie im Import-Block.
+**Warum die Regeln so streng sind:** Der Import erkennt Gruppen und Einträge an den Überschriften (`src/skriptorium/canon/importers/markdown.py`). Eine `##`-Überschrift ohne eigenen Text, auf die direkt `###` folgt, gilt als Gruppe – ihre Unterabschnitte werden dann zu eigenen Einträgen (Befund 2026-10-08; seit 4.16 sind Gegenstände mit genau Zweck, Verwendung, Auswirkung davon ausgenommen – der Pflicht-Satz bleibt trotzdem sinnvoll für alle anderen Einträge). Ein Eintrag, der wie eine Kategorie heißt („Magie“, „Religion“), gilt ebenfalls als Gruppe. Abschnitte außerhalb der sechs Gruppen werden zu Einträgen ohne Kategorie und lassen den Import abbrechen – deshalb stehen Notizen für den Autor nie im Import-Block.
 
 ## Prompt A: aus vorhandenem Welt-Material
 

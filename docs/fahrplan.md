@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-10-08
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** 4.13 eingespielt, letzter Nachweis offen (Code im neuen Format auf dem VPS erzeugen, Eigentümer). 4.14 und 4.15 erledigt 2026-10-08. Danach D.11, dann 4.8
+- **Aktiver Schritt:** 4.13 eingespielt, letzter Nachweis offen (Code im neuen Format auf dem VPS erzeugen, Eigentümer). 4.14 und 4.15 erledigt 2026-10-08; 4.16 Import-Fehler in Arbeit. Danach D.11, dann 4.8
 - **Nächster Schritt:** 4.8 30-Minuten-Test durch den Eigentümer (mit Stoppuhr; danach erstes echtes Kapitel, Versionsvergabe und Vision-Abgleich). Davor D.11 (Sicherungs-Zugangsdaten außerhalb des Servers, spätestens 2026-10-31). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. D.8 verworfen (ADR-040)
 - **Offene STOPP-Situationen:** keine
 
@@ -114,7 +114,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Reifegrad-Erwartung am Phasenende:** Host, Netz, Secrets im Betrieb, Backups und Bedrohungsmodell `[BELASTBAR]` (Backups erst nach erprobter Wiederherstellung).
 
-**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-10-08: 15 Schritte (+4.9, ADR-025; +4.10, Auftrag des Eigentümers; +4.11, Befund Branch-Schutz; +4.12, Befund D.7; +4.13, Wunsch des Eigentümers, ADR-041; +4.14, +4.15, Befunde Funktionstest), Wucherungs-Schwelle (mehr als 16 und mindestens +5) noch nicht berührt – ab dem 17. Schritt Stopp mit Neuplanung
+**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-10-08: 16 Schritte (+4.9, ADR-025; +4.10, Auftrag des Eigentümers; +4.11, Befund Branch-Schutz; +4.12, Befund D.7; +4.13, Wunsch des Eigentümers, ADR-041; +4.14, +4.15, +4.16, Befunde Funktionstest), Wucherungs-Schwelle (mehr als 16 und mindestens +5) noch nicht berührt – ab dem 17. Schritt Stopp mit Neuplanung
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
@@ -374,6 +374,22 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-08. Phase 4 jetzt 15 Schritte – Wucherungs-Schwelle (mehr als 16 und mindestens +5) **fast erreicht**; ein 17. Schritt in Phase 4 erzwingt den Stopp mit Neuplanung (`CLAUDE.md` Abschnitt 8, Kriterium 9).
+
+#### 4.16: Import – Gegenstände ohne einleitenden Text
+
+- **Status:** IN ARBEIT (seit 2026-10-08) – Ausnahme in Regel 2 des Markdown-Imports: Eine Überschrift, deren Unterüberschriften nur Zweck, Verwendung, Auswirkung sind, ist ein Eintrag (`canon/importers/markdown.py`). pytest 410, `markdown.py` 100 %. Offen: Merge, Deployment
+- **Phasentyp-Kontext:** STABILISIERUNG (Fehlerbehebung aus dem Funktionstest 2026-10-08)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** nein – Fehlerbehebung innerhalb von `canon`, Schnittstelle unverändert; Regel-Ausnahme vom Eigentümer gewollt („4.16 bauen“)
+- **Empfohlene Klasse:** Routine – klar spezifizierte Fehlerbehebung.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-003, FR-005
+- **Zu tun:** Befund 2026-10-08: `## Runenklinge` ohne eigenen Text, direkt gefolgt von `### Zweck`/`### Verwendung`/`### Auswirkung`, galt als Gruppe; die Abschnitte wurden zu Einträgen „Zweck“ usw., der Gegenstand fehlte, jeder weitere Gegenstand erzeugte Konflikte. Gerade das von FR-003 vorgegebene Muster zerfiel.
+- **Akzeptanzkriterien:** Gegenstände mit nur diesen Abschnitten werden ein Eintrag; Untergruppen wie „Figuren → Hauptfiguren → Kael“ bleiben Gruppen; Tests grün.
+- **Betroffene Module:** canon
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-08. Phase 4 jetzt 16 Schritte (ursprünglich 8) – genau an der Wucherungs-Schwelle; ein 17. Schritt in Phase 4 erzwingt den Stopp mit Neuplanung (`CLAUDE.md` Abschnitt 8, Kriterium 9).
 
 ### Phase 5: Soll-Anforderungen – Typ: UMSETZUNG
 

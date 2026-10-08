@@ -106,3 +106,52 @@ def test_empty_material() -> None:
 )
 def test_category_words(word: str, expected: str | None) -> None:
     assert category_for(word) == expected
+
+
+# --- items without own text (step 4.16) ----------------------------------------------------
+
+ITEMS = """# Gegenstände
+
+## Runenklinge
+
+### Zweck
+
+Bannt Geister.
+
+### Verwendung
+
+Wird gezogen.
+
+### **Auswirkung:**
+
+Macht müde.
+
+## Glasauge
+### Zweck
+Sieht Vergangenes.
+"""
+
+
+def test_item_with_only_item_sections_is_one_entry() -> None:
+    entries = parse_markdown(ITEMS).entries
+    assert [(e.name, e.category) for e in entries] == [
+        ("Runenklinge", "gegenstand"),
+        ("Glasauge", "gegenstand"),
+    ]
+    assert entries[0].body == (
+        "### Zweck\n\nBannt Geister.\n\n### Verwendung\n\nWird gezogen.\n\n"
+        "### **Auswirkung:**\n\nMacht müde.\n"
+    )
+
+
+def test_heading_without_text_and_other_subheadings_stays_a_group() -> None:
+    material = (
+        "# Figuren\n\n## Hauptfiguren\n\n### Kael\nFährmann.\n\n### Zweck\nKein Gegenstand.\n"
+    )
+    entries = parse_markdown(material).entries
+    assert [e.name for e in entries] == ["Kael", "Zweck"]
+
+
+def test_category_heading_with_item_sections_stays_a_group() -> None:
+    entries = parse_markdown("# Gegenstände\n\n### Zweck\nText.\n").entries
+    assert [(e.name, e.category) for e in entries] == [("Zweck", "gegenstand")]

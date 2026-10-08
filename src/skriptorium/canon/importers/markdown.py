@@ -3,7 +3,9 @@
 1. Every heading that is not a group heading and has no entry heading above it starts an
    entry; its name is the heading text. Deeper headings stay in the entry's body.
 2. A group heading is a heading whose text names a category (e.g. "Figuren", "Orte"), or a
-   heading without own text that has subheadings (e.g. "Sonstiges"). Entries below a group
+   heading without own text that has subheadings (e.g. "Sonstiges"). Exception (step 4.16): a
+   heading whose subheadings are only the item sections Zweck, Verwendung and Auswirkung
+   (FR-003) is an entry, even without own text. Entries below a group
    heading that names a category get that category; a line ``Kategorie: …`` in the entry
    takes precedence. Entries without a recognised category get none.
 3. A line ``Aliasse: …`` or ``Auch genannt: …`` gives the aliases (separated by commas or
@@ -21,6 +23,8 @@ from typing import Final
 from skriptorium.canon.categories import Category, category_for
 
 _HEADING: Final = re.compile(r"^(#{1,6})[ \t]+(.+?)[ \t]*#*[ \t]*$")
+# Section titles of an item entry (FR-003); the canon module creates new items with them.
+_ITEM_SECTIONS: Final = frozenset({"zweck", "verwendung", "auswirkung"})
 _FENCE: Final = re.compile(r"^[ \t]*(```|~~~)")
 _FIELD: Final = re.compile(
     r"^[ \t]*(?:[-*][ \t]+)?(?:\*\*|__)?(aliasse|auch genannt|kategorie)[ \t]*:[ \t]*(?:\*\*|__)?"
@@ -94,6 +98,9 @@ def _collect(
 ) -> None:
     own_text = _trimmed(section.lines)
     named = category_for(section.title)
+    if named is None and _has_only_item_sections(section):
+        entries.append(_entry(section, group_category))
+        return
     if named is not None or (not own_text and section.children):
         if own_text:
             not_taken_over.append(f"{section.title}: {own_text}")
@@ -101,6 +108,12 @@ def _collect(
             _collect(child, named or group_category, entries, not_taken_over)
         return
     entries.append(_entry(section, group_category))
+
+
+def _has_only_item_sections(section: _Section) -> bool:
+    """Whether all subheadings are the sections of an item entry (FR-003, step 4.16)."""
+    titles = {child.title.strip("*_: ").casefold() for child in section.children}
+    return bool(titles) and titles <= _ITEM_SECTIONS
 
 
 def _entry(section: _Section, group_category: Category | None) -> ParsedEntry:
