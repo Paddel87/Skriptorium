@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 02:45 UTC – [ERLEDIGT] Schritt 4.13 Kürzerer, lesbarer Einrichtungscode
+
+- Eigentümer hat auf dem VPS einen Code erzeugt: „sieht aus wie ABC-DEF-GHJ-KMN“ – neues Format bestätigt, Wert nicht weitergegeben. Alle Akzeptanzkriterien erfüllt (Tests, unabhängige Prüfung, Deployment, Format auf dem VPS). Der Code verfällt nach 24 Stunden ungenutzt; das Passwort bleibt gültig.
+
 ### 2026-10-08 02:35 UTC – [BEOBACHTUNG] D.11 aufgeschoben, 4.13 ungetestet
 
 - Eigentümer: „D11 aufschieben.“ Die Bedingung „vor dem ersten echten Kapitel“ ist damit verfehlt (Kapitel schon geschrieben); die Frist 2026-10-31 aus ADR-038 bleibt. Eine Verschiebung darüber hinaus wäre ein Verzicht der Kategorie 6 mit neuem ADR. Restrisiko unverändert: Geht der VPS verloren, ist die Sicherung ohne Passphrase und Schlüssel nicht lesbar – jetzt mit echten Texten.
