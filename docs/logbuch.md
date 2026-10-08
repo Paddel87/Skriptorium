@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 10:35 UTC – [SESSIONENDE] 5.7 umgesetzt und gemergt – Abnahme offen
+
+- **Dauer:** 10:22 – 10:35 UTC (Container-Uhr; die Einträge 10:35 und 10:50 UTC oben tragen geschätzte Zeiten und liegen tatsächlich zwischen 10:25 und 10:32 UTC).
+- **Bearbeitet:** 5.7 umgesetzt (ADR-044, PR #55, CI 8/8 grün); Merge auf Anweisung des Eigentümers („Merge, Session Ende“). Probe-Anfrage mit dem Schlüssel der Cloud-Umgebung: Voreinstellung grok-4.6 greift, Schlüssel abgelaufen (HTTP 401).
+- **Stand:** 5.7 `[IN ARBEIT]` – fehlt Deployment vom Mac und die Szene des Eigentümers in einer echten Welt ohne Sperre. Kein Deployment in dieser Session (kein SSH aus der Cloud).
+- **Offen:** neuer OpenRouter-Schlüssel für die Cloud-Umgebung (Eigentümer beschafft ihn); Fragen an den Eigentümer: Kosten-Zeile (5.10), unübersichtliche Stellen (5.11), Werte der Listen (5.6); Fehlerart bei abgelaufenem Schlüssel unterscheiden ja/nein (Nebenbefund); MD024 im Markdown-Linter auf Geschwister-Überschriften begrenzen ja/nein (Kategorie 7, sonst „Geändert (nach v0.1.0)“ im CHANGELOG). D.11 bis 2026-10-31.
+- **Nächster Schritt:** Session auf dem Mac: `main` deployen (Runbook Abschnitt 7), Eigentümer schreibt Probe-Szene → 5.7 `[ERLEDIGT]`; danach 5.8 (Probeschreiben mit neuem Schlüssel), 5.9.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 10:32). Schritte oberhalb der Empfehlung: 1 (5.7, empfohlen Routine; zu Beginn genannt). Abgegeben: nichts (kleiner Schritt mit geladenem Kontext; Abgabe hätte nicht gespart).
+- **Kontextgröße:** 233.739 Token (`get_session` 10:32) – über der Grenze 200.000; überschritten erst während des Sessionendes, kein neuer Schritt begonnen.
+- **Sessionende-Prüfungen:** README (Nächste Schritte, Erkundungs-Hinweis) nachgezogen, Status-Block unverändert gültig (Phase 5, v0.1.0, Blocker 0). Drift: ADR-044 → 5.7 vorhanden; Reaktiv-Quote 0/10 (ADR-035..044) stimmt mit Teil B; Modul-Liste und Reifegrade unverändert; Blocker 0, kein `[BLOCKIERT]`; Phase 5 14 Schritte (Schwelle 26). Ablaufdaten: kein Vorlauf erreicht (nächste Nachprüfung mypy 2 am 2026-11-06). Logbuch 230 Zeilen, project-context 343 Zeilen – keine Auslagerung. Keine uncommitteten Änderungen.
+
 ### 2026-10-08 10:50 UTC – [BEOBACHTUNG] OpenRouter-Schlüssel der Cloud-Umgebung abgelaufen
 
 - Auf Hinweis des Eigentümers („Keys als Umgebungsvariable“): `OPENROUTER_API_KEY` ist gesetzt (73 Zeichen, Wert nicht angezeigt); ein SSH-Zugang zum VPS ist nicht dabei.
