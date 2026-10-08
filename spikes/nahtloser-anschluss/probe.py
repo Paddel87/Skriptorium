@@ -5,7 +5,8 @@ setzt Kapitel 4 („Die Grotte“) auf den Stand aus dem Probeschreiben 3.3
 (``spikes/probeschreiben/ergebnisse/kapitel-4.txt``), abgeschnitten an drei Stellen. An jeder
 Stelle fordert es über denselben Weg wie die Oberfläche (``prepare_request`` mit leerer
 Anweisung, also „Setze das Manuskript an seinem Ende fort.“) Fortsetzungen bei grok-4.6 und
-qwen3.8-max an. Läuft einmal mit dem alten Rahmen (VARIANTE=vorher) und einmal mit dem neuen
+qwen3.8-max an. Vorhandene Ergebnisse werden übersprungen, ein Anbieter-Fehler wird gemeldet und
+der Lauf beim nächsten Aufruf wiederholt. Läuft einmal mit dem alten Rahmen (VARIANTE=vorher) und einmal mit dem neuen
 (VARIANTE=nachher); der Rahmen kommt aus dem jeweils installierten Code.
 
 Aufruf: VARIANTE=vorher|nachher uv run python spikes/nahtloser-anschluss/probe.py [WIEDERHOLUNGEN]
@@ -21,7 +22,7 @@ import tempfile
 import time
 from pathlib import Path
 
-from skriptorium.ai_gateway import Completed, OpenRouterProvider
+from skriptorium.ai_gateway import Completed, GatewayError, OpenRouterProvider
 from skriptorium.api.flows.writing import WriteOrder, prepare_request
 from skriptorium.canon import CanonService
 from skriptorium.context import ContextBuilder
@@ -67,15 +68,22 @@ async def main() -> None:
                 for short, model in MODELS.items():
                     for rep in range(1, reps + 1):
                         name = f"{cut}-{short}-{rep}"
+                        if (out / f"{name}.txt").exists():
+                            continue
                         order = WriteOrder(WORLD, STORY, 4, model=model)
                         prepared = prepare_request(canon, manuscripts, builder, order)
                         started = time.monotonic()
                         answer, usage, finish = "", None, None
-                        async for event in provider.stream(prepared.completion):
-                            if isinstance(event, Completed):
-                                usage, finish = event.usage, event.finish_reason
-                            else:
-                                answer += event.text
+                        try:
+                            async for event in provider.stream(prepared.completion):
+                                if isinstance(event, Completed):
+                                    usage, finish = event.usage, event.finish_reason
+                                else:
+                                    answer += event.text
+                        except GatewayError as error:
+                            # Logged, not kept: the run is repeated on the next call.
+                            print(name, "Fehler:", error)
+                            continue
                         (out / f"{name}.txt").write_text(answer, encoding="utf-8")
                         meta = {
                             "variante": variant,

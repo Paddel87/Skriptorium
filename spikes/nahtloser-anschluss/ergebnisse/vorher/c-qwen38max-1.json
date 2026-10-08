@@ -1,0 +1,11 @@
+{
+  "variante": "vorher",
+  "stelle": "c",
+  "letzter_absatz": "Drach atmete einmal. „Dann nehmt Ihr es nicht. Meine Männer nehmen es. Die Listen des Rats kennen kein Gewölbe, das sich einem Vogt verschließt.“",
+  "modell": "qwen/qwen3.8-max-0902",
+  "sekunden": 121.9,
+  "token_ein": 20069,
+  "token_aus": 3543,
+  "kosten_usd": 0.0288486,
+  "finish_reason": "stop"
+}
