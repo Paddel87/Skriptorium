@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 10:00 UTC – [BEOBACHTUNG] Eigentümer: TypingMind passte, SillyTavern überforderte
+
+- Auf die Erklärung „SillyTavern = Chat-Rollenspiel mit der Figur im Mittelpunkt, Skriptorium = fortlaufende Prosa mit dem Kanon im Mittelpunkt“: Das erklärt laut Eigentümer, warum er mit TypingMind jahrelang zurechtkam, SillyTavern ihn aber „maßlos überfordert“ hat. Die Rollenspiel-Mechanik war ihm fremd, und ihm war nicht klar, dass dort die Figur im Mittelpunkt steht und nicht der Kanon.
+- Bestätigt Vision 8 („Chat- und Charakter-Rollenspiel-Fokus bewusst nicht übernehmen“) und ADR-004 (Eigenbau statt Anpassung von SillyTavern) aus Sicht des Nutzers. Für V.6: Beim Import gelten Character Cards als Lieferant von Kanon-Einträgen, nicht als Arbeitsmodell. Für die Chat-Ansicht (Befund 09:05 UTC) heißt das: Sie darf den Kanon nicht aus dem Mittelpunkt verdrängen.
+
 ### 2026-10-08 09:45 UTC – [BEOBACHTUNG] Entscheidung SillyTavern: nur Import und Export, kein Umbau
 
 - Eigentümer: „dann bleiben wir einfach nur bei der Importfunktion und Exportfunktion später, wir werden das Grundsystem nicht umbauen.“ Weg (a) aus 09:35 UTC gewählt, Weg (b) Angleichung des Datenmodells verworfen.
