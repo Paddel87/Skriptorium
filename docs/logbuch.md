@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 14:20 UTC – [BEOBACHTUNG] Probeschreiben an früher Stelle einer fertigen Geschichte (5.15, 5.8)
+
+- **Anlass:** Eigentümer bat ausdrücklich, den Test in dieser Session selbst durchzuführen – Arbeit über der Kontextgrenze (Sessionende 13:45 UTC bei 226.445 Token) auf seine Anweisung, als Abweichung nach `CLAUDE.md` Abschnitt 0 („Sessiongröße“) vermerkt. Kein Produktionscode geändert.
+- **Aufbau und Ergebnis:** `spikes/vorgriff-zeitlinie/README.md` – Testgeschichte mit erfundenem Ende in Zusammenfassung und Zeitlinie, Schreiben in der Mitte von Kapitel 1, Ketten zu 7 übernommenen Vorschlägen auf Stand `main` mit grok-4.6, grok-4.7, qwen3.8-max (Kosten 0,45 $).
+- **Befunde:** (1) Wiederholung über die Kette bestätigt, am stärksten bei grok-4.6 (wörtlich gleicher Einstiegssatz in Schritt 5 und 7, Gesten 3–4×). (2) Vorgriff als Andeutung aus der Zusammenfassung bei allen Modellen; bei leerem „Weiter“ treibt qwen die Handlung weit voran; kein Durchlauf bis zum Ende. (3) Neu: Anweisungen zu Ilkas eigenem Handeln und Sprechen setzt kein Modell um (Figuren-Schreibweise) – Entscheidung des Eigentümers nötig. (4) Modelle nehmen den nächsten geplanten Schritt des Autors vorweg; grok-4.7 widerspricht danach per Hinweis-Zeile der Anweisung.
+- **Reibung:** qwen-Kette brach an einer Zeitüberschreitung ab und wurde neu gestartet; Skript wiederholt Vorschläge nach Anbieter-Fehler jetzt bis zu zweimal.
+
 ### 2026-10-08 13:55 UTC – [BEOBACHTUNG] Befund des Eigentümers: KI läuft bis zum bekannten Ende, Einleitung und Atmosphäre schaukeln sich auf
 
 - Eigentümer schrieb in einer importierten Welt an einer Stelle weit vor dem bekannten Ende. Die KI formulierte nicht nur seine Eingabe aus, sondern erzählte stark verkürzt bis zum bekannten Ende weiter. Vermutete Ursachen (Code-Lesung): ganze Gesamtzusammenfassung und ganze Zeitlinie im Kontext, keine Längen- oder Grenzvorgabe → neuer Schritt 5.15.
