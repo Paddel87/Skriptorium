@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 15:23 UTC – [SESSIONSTART] Schritte 5.8 und 5.15 gemeinsam
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (`get_session`: `configured_model`, `session_context.model`, `last_served_model`) → Entscheidungs-Klasse.
+- **Umgebung:** Cloud-Session (Ursprung iOS), kein SSH zum VPS – kein Deployment aus dieser Session (ADR-025, ADR-039). `OPENROUTER_API_KEY` gesetzt (73 Zeichen, Wert nicht angezeigt). Branch `feat/5.15-nur-das-verlangte` von `main` `f1cd6e5`.
+- **Kontextgröße:** `get_session` meldet `used_tokens` 0 (beim Start nicht gefüllt); Fenster 1.000.000, Grenze 200.000.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2. Keine aktiven Blocker; `[IN ARBEIT]`: 5.7 (Deployment vom Mac, Abnahme-Szene), 5.8 (Versuch 1).
+- **Drift gefunden:** Fahrplan und Logbuch nennen Versuch 1 von 5.8 „nicht gemergt“; tatsächlich ist der Branch `scp/nice-lamport-as724t` mit PR #56/#57 vollständig in `main` (`builder.py`: Abschnitt „Anschluss“). Wird im Fahrplan berichtigt.
+- **Vorhaben:** 5.8 und 5.15 gemeinsam (empfohlen Entscheidung – passt zur aktiven Klasse); Prüfung mit der Kette aus `spikes/vorgriff-zeitlinie/`.
+
 ### 2026-10-08 15:17 UTC – [SESSIONENDE] Nachtrag: Probeschreiben zu 5.15 und Entscheidungen des Eigentümers
 
 - **Dauer:** 13:15 – 15:17 UTC (nach dem ersten Sessionende um 13:45 UTC auf ausdrückliche Bitte des Eigentümers weitergearbeitet – Abweichung von „Sessiongröße“, vermerkt).
