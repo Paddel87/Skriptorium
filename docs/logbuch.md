@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 23:55 UTC – [BEOBACHTUNG] 5.11 Teil 1 Schreibseite umgesetzt
+
+- **Code:** neue Komponente `CanonLookup.tsx` (Kanon der Geschichte samt Gästen durchsuchen und lesen, nur lesend, Text als Klartext); `StoryPage.tsx` neu aufgebaut (Mitte Kapitel, Leiste rechts mit Kapitel/Kanon/Geschichte, schließbar, unter 56rem als Menü); `WritingMode.tsx` mit Kurzzeile im aufklappbaren Kopf, über `ChapterEditor` direkt vor dem Schreib-Bereich; `App.tsx` gibt der Schreibseite mehr Breite. Kein React Router in Teil 1.
+- **Reibung:** Mit der neuen Kurzzeile und der Leiste lag das Anweisungsfeld bei 720 px Fensterhöhe wieder unter dem Rand (Test aus 5.9 schlug fehl). Editorhöhe jetzt `max(12rem, 100vh − 30rem)`, und die Seite rückt zum Kapitel, wenn die Kapitelkarte unter den Fensterrand reicht (vorher: wenn die Knopfzeile darunter lag).
+- **Bildschirm-Probelauf** (Desktop 1280 × 720, Smartphone 390 × 844, Bilder nur im Scratchpad): Aufbau wie im Entwurf. Nebenbefund, nicht untersucht: Zwei sehr schnell nacheinander angelegte Kapitel ergaben nur eines – `addChapter` nimmt `chapters.length + 1` aus der noch nicht neu geladenen Liste; bestand schon vor dem Umbau.
+- **Läufe:** `vitest` 115 bestanden, 98,65 % Zeilen / 96,29 % Zweige; Playwright 9 bestanden; `tsc`, `eslint` grün.
+
 ### 2026-10-08 23:30 UTC – [ADR-ANGELEGT] ADR-046 React Router 7.18; Entwurf 5.11 bestätigt
 
 - **Entwurf 5.11** per Auswahlfragen: Überblick fehlt an allen vier genannten Stellen; ständig griffbereit Modell/Länge und Figuren-Schreibweise; Schreibseite mit Seitenleiste rechts; Navigation als Leiste links mit Welten und Geschichten; Kanon-Seite mit Suche, Filter, Liste und Eintrag nebeneinander; Zurück-Knopf und Neuladen behalten die Stelle. Im Fahrplan bei 5.11 festgehalten, drei Teile.

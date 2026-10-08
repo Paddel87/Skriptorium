@@ -17,6 +17,12 @@ main,
   padding: 0.75rem;
 }
 
+/* The writing page uses more width for the side bar (step 5.11). */
+main.wide,
+.app > header.wide {
+  max-width: 84rem;
+}
+
 .top {
   display: flex;
   flex-wrap: wrap;
@@ -158,9 +164,9 @@ button.danger {
 }
 
 /* Long chapters scroll inside the editor, so the buttons and the writing panel below stay
-   close (step 5.9). */
+   close (step 5.9); the height leaves room for them in the window (step 5.11). */
 .editor.manuscript .cm-editor {
-  max-height: 55vh;
+  max-height: max(12rem, calc(100vh - 30rem));
 }
 
 .editor.manuscript .cm-scroller {
@@ -198,4 +204,70 @@ td {
   background: rgb(0 0 0 / 45%);
   overflow-y: auto;
   z-index: 10;
+}
+
+/* Writing page (step 5.11): chapter in the middle, bar with chapters, canon and story on the
+   side; on narrow screens the bar lies over the page like a menu. */
+.story {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.story.with-side {
+  grid-template-columns: minmax(0, 1fr) 20rem;
+}
+
+.story-side {
+  position: sticky;
+  top: 0.75rem;
+  max-height: calc(100vh - 1.5rem);
+  overflow: auto;
+}
+
+.story-side h3 {
+  margin: 0;
+}
+
+.story-main h2 {
+  margin: 0;
+}
+
+.mode summary .note {
+  margin-left: 0.25rem;
+}
+
+.lookup {
+  gap: 0.5rem;
+}
+
+.lookup h4,
+.lookup p {
+  margin: 0;
+}
+
+.story-side > button.link {
+  align-self: flex-start;
+}
+
+.entry-text {
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+@media (max-width: 56rem) {
+  .story.with-side {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .story-side {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(22rem, 92vw);
+    max-height: none;
+    border-radius: 0;
+    z-index: 10;
+    box-shadow: -4px 0 12px rgb(0 0 0 / 15%);
+  }
 }

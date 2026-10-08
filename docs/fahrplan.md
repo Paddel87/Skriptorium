@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-10-08 (Neuplanung nach ADR-042; 5.7, 5.8, 5.15 erledigt und eingespielt mit `18ee07d`)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 5.11 Seitenaufbau – Entwurf bestätigt, React Router entschieden (ADR-046); Teil 1 Schreibseite in Arbeit (5.7, 5.8 und 5.15 am 2026-10-08 `[ERLEDIGT]`)
+- **Aktiver Schritt:** 5.11 Seitenaufbau – Entwurf bestätigt, React Router entschieden (ADR-046); Teil 1 Schreibseite umgesetzt, wartet auf Merge, Deployment und Prüfung (5.7, 5.8 und 5.15 am 2026-10-08 `[ERLEDIGT]`)
 - **Nächster Schritt:** 5.11 Teile 1–3; danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
@@ -288,7 +288,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.11: Seitenaufbau und Abläufe der Oberfläche neu ordnen
 
-- **Status:** IN ARBEIT (seit 2026-10-08) – Entwurf vom Eigentümer bestätigt (Auswahlfragen 2026-10-08); Umsetzung in drei Teilen, jeder einzeln eingespielt und geprüft: Teil 1 Schreibseite, Teil 2 Navigation, Teil 3 Kanon-Seite
+- **Status:** IN ARBEIT (seit 2026-10-08) – Entwurf vom Eigentümer bestätigt (Auswahlfragen 2026-10-08); Umsetzung in drei Teilen, jeder einzeln eingespielt und geprüft. **Teil 1 Schreibseite** umgesetzt auf Branch `feat/5.11-oberflaeche`: Leiste rechts (Kapitel, Kanon nachschlagen mit Suche, Geschichte mit Gästen, Fakten, Gesamtzusammenfassung), schließbar, unter 56rem Breite als Menü über der Seite; Figuren-Schreibweise mit Kurzzeile direkt über dem Schreib-Bereich; Editorhöhe folgt dem Fenster, die Seite rückt beim Öffnen zum Kapitel, wenn es unter den Fensterrand reicht. Tests: `vitest` 115 bestanden, 98,65 % Zeilen / 96,29 % Zweige; Playwright 9 bestanden. Offen: Teil 1 CI, Merge, Deployment, Prüfung durch den Eigentümer; Teil 2 Navigation (React Router, ADR-046); Teil 3 Kanon-Seite
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.9
 - **Freigabepflichtig:** teilweise – der Umbau innerhalb von `ui` nicht; eine neue Bibliothek (z. B. Router) ist Kategorie 3 und wird vorab vorgelegt
