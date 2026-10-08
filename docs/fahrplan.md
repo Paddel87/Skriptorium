@@ -38,8 +38,8 @@ Kontext: Phase 4 hat 16 Schritte (ursprünglich 8). Befund 2026-10-08: grok-4.7 
   Gegenstände mit Verwendung/Auswirkung im Gespräch definieren), bei Gegenständen
   mit Wissen aus dem Internet; Import bleibt – neues Feature, Kategorien 1/2/3,
   eher eigene Phase, Bezug 5.1 und 5.5 (Logbuch 09:20 UTC); (g) Wunsch:
-  Austausch mit SillyTavern – Character Cards und Lorebooks importieren (wie V.4/V.5)
-  oder Datenmodell angleichen (Kategorien 1/4, ADR-003) (Logbuch 09:35 UTC).
+  Austausch mit SillyTavern – entschieden: nur Import (V.6) und später Export (V.7),
+  kein Umbau des Grundsystems (Logbuch 09:35 und 09:45 UTC).
 Benötigt: Neuplanung von Phase 4, Vision-Abgleich, Pflichtfrage „Weiterbauen, umbauen
   oder neu aufsetzen?“ (CLAUDE.md Abschnitt 12)
 Vorgeschlagene Auflösung: Optionen – Sperre im Text erkennen (wie Hinweis 4.14) /
@@ -508,8 +508,8 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich, nicht bloß Status-Update.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 5
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Die verschobenen Schritte V.1 bis V.5 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5).
-- **Akzeptanzkriterien:** Jeder Schritt V.1–V.5 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
+- **Zu tun:** Die verschobenen Schritte V.1 bis V.7 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5; V.6 und V.7 ergänzt 2026-10-08, Wunsch des Eigentümers).
+- **Akzeptanzkriterien:** Jeder Schritt V.1–V.7 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Fahrplan, ggf. ADRs
@@ -835,6 +835,40 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Zu tun:** Verhalten von Unterseiten und Dateistruktur des Exports klären, Importer auf dem Markdown-Importer aus 2.4 aufbauen.
 - **Akzeptanzkriterien:** Ein Notion-Export mit Unterseiten wird ohne Handarbeit als Welt-Material übernommen.
 - **Betroffene Module:** canon
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR zum Format, Code, Tests
+- **Notizen:** –
+
+#### V.6: Import aus SillyTavern (Character Cards und Lorebooks)
+
+- **Status:** VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 – Reihenfolge und Phase legt die Neuplanung fest (Wünsche aus der Nutzung, Logbuch 2026-10-08 09:35 UTC)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 2.4
+- **Freigabepflichtig:** ja – Eingangsformat ist Teil des Datenmodells (Kategorie 4); Einlesen fremder Dateien (PNG mit eingebettetem JSON) ist sicherheitsrelevant (Kategorie 6, Prüfung durch getrennte Instanz)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell-Festlegung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Spezifikation der Character Card (V2/V3) und des Lorebook-Formats gegen offizielle Quellen geprüft; Beispieldateien mit erfundenem Inhalt liegen vor
+- **Anforderungen (ab Klasse M):** keine (FR-005 in 2.4 erfüllt) – Wunsch des Eigentümers 2026-10-08
+- **Zu tun:** Character Cards (Figur, ggf. eingebettetes Lorebook) und Lorebooks (Welt-Material) als weiteres Eingangsformat in `canon.importers`, mit Vorschau wie beim Markdown-Import. Zuordnung der Felder zu Kanon-Kategorien klären; Felder für Chat-Rollenspiel (erste Nachricht, Beispieldialoge) gehen nicht in den Kanon. Entscheidung des Eigentümers 2026-10-08: nur Import (Export in V.7), **kein** Umbau des eigenen Datenmodells auf das SillyTavern-Format.
+- **Akzeptanzkriterien:** Eine Character Card und ein Lorebook werden ohne Handarbeit als Welt-Material übernommen; fehlerhafte oder bösartige Dateien werden abgelehnt, ohne den Server zu gefährden (Tests).
+- **Betroffene Module:** canon, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR zum Format, Code, Tests, Prüfbericht der getrennten Instanz
+- **Notizen:** –
+
+#### V.7: Export in SillyTavern-Formate
+
+- **Status:** VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 – nach V.6 (Eigentümer 2026-10-08: „Exportfunktion später“)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** V.6
+- **Freigabepflichtig:** ja – Ausgabeformat als Schnittstelle (Kategorie 5)
+- **Empfohlene Klasse:** Entscheidung – Schnittstellen-Festlegung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** V.6 erledigt
+- **Anforderungen (ab Klasse M):** keine – Wunsch des Eigentümers 2026-10-08
+- **Zu tun:** Figuren als Character Card und Welten als Lorebook ausgeben, sodass SillyTavern sie einlesen kann. Abgrenzung: V.1 (Publizieren) betrifft Manuskripte, nicht den Kanon.
+- **Akzeptanzkriterien:** Eine exportierte Figur und Welt lassen sich in SillyTavern öffnen; erneuter Import über V.6 ergibt denselben Kanon (Tests).
+- **Betroffene Module:** canon, api, ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** ADR zum Format, Code, Tests
 - **Notizen:** –

@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 09:45 UTC – [BEOBACHTUNG] Entscheidung SillyTavern: nur Import und Export, kein Umbau
+
+- Eigentümer: „dann bleiben wir einfach nur bei der Importfunktion und Exportfunktion später, wir werden das Grundsystem nicht umbauen.“ Weg (a) aus 09:35 UTC gewählt, Weg (b) Angleichung des Datenmodells verworfen.
+- Landeplatz nach `CLAUDE.md` Abschnitt 6: V.6 Import (Character Cards und Lorebooks) und V.7 Export, beide `[VERSCHOBEN]` mit Landeplatz 5.5, wie V.4/V.5. Querschnitt-Schritte, zählen nicht zu Phase 4. Das Format selbst (Kategorie 4/5) wird beim jeweiligen Schritt per ADR festgelegt. Weil Weg (b) nie geplant war, ist für die Ablehnung kein Descope-ADR nötig; sie steht in V.6.
+
 ### 2026-10-08 09:35 UTC – [BEOBACHTUNG] Wunsch Austausch mit SillyTavern: Character Cards und Welten
 
 - **Wunsch des Eigentümers:** Character Cards aus SillyTavern importieren können oder das System allgemein mit ihnen kompatibel machen; dann ließen sich Figuren und vielleicht auch ganze Welten aus dem Internet herunterladen. Ziel: Interoperabilität. Der Eigentümer kennt die Formate nach eigener Aussage nicht im Detail.
