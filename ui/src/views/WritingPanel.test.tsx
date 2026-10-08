@@ -198,6 +198,33 @@ describe("WritingPanel", () => {
     expect(screen.queryByRole("note")).toBeNull();
   });
 
+  it("explains how to start in an empty chapter and hides it while writing", async () => {
+    const feed = sseFeed();
+    fakeApi(routes(feed));
+    render(
+      <WritingPanel
+        world="salzmark"
+        story="ueberfahrt"
+        chapter={1}
+        chapterEmpty
+        prepare={vi.fn(() => Promise.resolve(true))}
+        onAccept={vi.fn(() => Promise.resolve())}
+      />,
+    );
+    const user = userEvent.setup();
+    await ready();
+    expect(screen.getByText(/So fängst du an/)).toBeTruthy();
+    await user.click(screen.getByRole("button", { name: "Weiterschreiben" }));
+    expect(screen.queryByText(/So fängst du an/)).toBeNull();
+  });
+
+  it("shows no start hint once the chapter has text", async () => {
+    fakeApi(routes(sseFeed()));
+    panel();
+    await ready();
+    expect(screen.queryByText(/So fängst du an/)).toBeNull();
+  });
+
   it("starts a new scene with place, characters and goal", async () => {
     const feed = sseFeed();
     const { calls } = fakeApi(routes(feed));

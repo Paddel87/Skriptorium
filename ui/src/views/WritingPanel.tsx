@@ -36,6 +36,10 @@ type Phase = "idle" | "thinking" | "writing" | "review";
 
 const NO_GUESTS: readonly GuestLink[] = [];
 
+/** Grey example in the empty instruction field (step 4.15); not tied to any world. */
+const EXAMPLE_INSTRUCTION =
+  "z. B. Eine Fremde betritt am Abend die Schänke und fragt nach dem Fährmann.";
+
 /**
  * Writing in turns with the AI (step 3.3, FR-008, FR-009): send an instruction or start a new
  * scene, watch the proposal arrive, then take it over, change it or discard it. Taken-over text
@@ -48,6 +52,7 @@ export function WritingPanel({
   world,
   story,
   chapter,
+  chapterEmpty = false,
   guests = NO_GUESTS,
   canonRevision = 0,
   storyModel = null,
@@ -58,6 +63,8 @@ export function WritingPanel({
   world: string;
   story: string;
   chapter: number;
+  /** The chapter has no text yet: the panel explains how to start (step 4.15). */
+  chapterEmpty?: boolean;
   /** Guest links of the story; keep the same array while they do not change. */
   guests?: readonly GuestLink[];
   /** Changes when the canon changed on the page, so the `@` menu offers the new state. */
@@ -227,6 +234,12 @@ export function WritingPanel({
   return (
     <section className="card" aria-label="Schreiben mit der KI">
       <ErrorText message={models.error ?? entries.error ?? modelError} />
+      {chapterEmpty && phase === "idle" && (
+        <p className="note">
+          So fängst du an: Schreib unten, was passieren soll, und klick auf
+          „Weiterschreiben“ – oder schreib selbst oben im Kapitel.
+        </p>
+      )}
       <div className="row">
         <Field label="Modell">
           <select
@@ -285,6 +298,7 @@ export function WritingPanel({
             world={world}
             labelledBy={instructionLabel}
             disabled={busy}
+            example={EXAMPLE_INSTRUCTION}
           />
         </Suspense>
       </div>

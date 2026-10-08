@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 01:50 UTC – [BEOBACHTUNG] 4.15 umgesetzt (vor Deployment)
+
+- Eigentümer wählte per Frage: Einstieg „Kurzanleitung + Beispiel“, `@` „Hinweis im Menü“ (beides Empfehlung).
+- `ui`: `ChapterEditor` gibt `chapterEmpty` an `WritingPanel`; Satz „So fängst du an …“ nur bei leerem Kapitel und ruhendem Schreib-Bereich; Beispieltext über `placeholder` von CodeMirror (weltneutral: Fremde in der Schänke). `mentions()` liefert bei keinem Treffer eine Hinweis-Zeile ohne Wirkung beim Auswählen – aber nur, solange nach dem `@` kein Leerzeichen steht, sonst würde der Hinweis beim Weiterschreiben hinter einem fertigen Namen stören (beim Entwurf aufgefallen, Test dazu).
+- vitest 102 (98,67 % / 96,53 %), Pre-Commit grün.
+
 ### 2026-10-08 01:30 UTC – [ERLEDIGT] Schritt 4.14 Hinweis der KI getrennt vom Text
 
 - Gegenprobe des Eigentümers ohne Konflikt („Am Morgen kommt Maren zurück und fragt, was er gebrannt hat.“): kein Hinweis, Vorschlag reine Prosa. Mit der Probe davor sind alle Akzeptanzkriterien erfüllt (Tests, CI, Probeschreiben mit echtem Modell in beide Richtungen).

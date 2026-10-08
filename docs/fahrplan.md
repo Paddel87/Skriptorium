@@ -360,7 +360,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.15: Bedienhinweise im Schreib-Bereich
 
-- **Status:** OFFEN
+- **Status:** IN ARBEIT (seit 2026-10-08) – Form vom Eigentümer gewählt: Kurzanleitung über dem Schreib-Bereich bei leerem Kapitel plus grauer Beispieltext im Anweisungsfeld; beim `@` ohne Treffer ein Hinweis im Menü. Umgesetzt (ui), vitest 102 grün (98,67 % Zeilen, 96,53 % Zweige). Offen: Merge, Deployment, Blick des Eigentümers
 - **Phasentyp-Kontext:** STABILISIERUNG (Befunde aus dem Funktionstest 2026-10-08)
 - **Abhängigkeiten:** 4.14
 - **Frist:** vor 4.8
