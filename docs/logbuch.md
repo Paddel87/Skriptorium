@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 22:15 UTC – [ERLEDIGT] 5.10 Kosten je Vorschlag – ohne Code-Änderung
+
+- PR #64 (Befunde zum Kanon) nach grüner CI gemergt (`ec0ed81`).
+- Eigentümer: „Kosten gemeldet steht da“. Prüfung auf der Produktion, nur Metadaten: Log-Zeilen `ki_anfrage` seit `18ee07d` alle mit `kosten_usd` (grok-4.6, 0,020–0,047 $ je Anfrage bei 7.900–20.800 Token ein); Monatsdatei Oktober: 82 Anfragen, 5 ohne Kosten (2 abgebrochen, 3 `nicht_erreichbar`; 3× qwen, 2× grok-4.6).
+- Auswahlfrage: unter einem fertigen Vorschlag steht ein Betrag → 5.10 `[ERLEDIGT]`. Akzeptanzkriterium „Kosten sichtbar oder ausdrücklich als nicht verfügbar gekennzeichnet“ war schon erfüllt.
+
 ### 2026-10-08 22:05 UTC – [BEOBACHTUNG] Befunde zum Kanon, 5.9 gemergt
 
 - PR #63 (5.9) nach grüner CI (8/8) gemergt (`32c027d`); Deployment auf Wunsch des Eigentümers später („nur mergen“).
