@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
 - **Aktiver Schritt:** 4.13 eingespielt, letzter Nachweis offen (Code im neuen Format auf dem VPS erzeugen, Eigentümer). 4.14, 4.15, 4.16 erledigt 2026-10-08. Danach D.11, dann 4.8
-- **Nächster Schritt:** Eigentümer: D.11, dann 4.8 30-Minuten-Test (mit Stoppuhr; Phase 4 steht bei 16 Schritten – ein weiterer Befund erzwingt Neuplanung; danach erstes echtes Kapitel, Versionsvergabe und Vision-Abgleich). Davor D.11 (Sicherungs-Zugangsdaten außerhalb des Servers, spätestens 2026-10-31). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. D.8 verworfen (ADR-040)
+- **Nächster Schritt:** Eigentümer: D.11, dann 4.8 Teil 2 – erstes echtes Kapitel mit Zählung der Kanon-Widersprüche (Teil 1, 30 Minuten, erfüllt 2026-10-08 nach Einschätzung; Phase 4 steht bei 16 Schritten – ein weiterer Befund erzwingt Neuplanung; danach erstes echtes Kapitel, Versionsvergabe und Vision-Abgleich). Davor D.11 (Sicherungs-Zugangsdaten außerhalb des Servers, spätestens 2026-10-31). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. D.8 verworfen (ADR-040)
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -245,7 +245,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.8: 30-Minuten-Test
 
-- **Status:** OFFEN
+- **Status:** OFFEN – Teil 1 (FR-022) erfüllt 2026-10-08 ohne Stoppuhr: Einschätzung des Eigentümers nach dem Funktionstest, vom Eigentümer als ausreichend erklärt (Option A; B „neu messen“ nicht gewählt). Offen: Teil 2 Kanon-Treue im ersten echten Kapitel (nach D.11), danach Versionsvergabe v0.1.0 und Vision-Abgleich vor Go-Live
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.7
 - **Freigabepflichtig:** nein
