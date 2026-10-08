@@ -590,6 +590,22 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Artefakte:** `spikes/`-Bericht, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-08 (Neuplanung, ADR-042). Entlastung zuerst über das Startmodell (5.7).
 
+#### D.14: Zeitlimit für den End-to-End-Job
+
+- **Status:** IN ARBEIT (seit 2026-10-08) – umgesetzt auf Branch `ci/d.14-e2e-zeitlimit` (ADR-045); `[ERLEDIGT]` mit grüner CI und Merge
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – Kategorie 7, freigegeben vom Eigentümer 2026-10-08 („a“, ADR-045)
+- **Empfohlene Klasse:** Routine – eine Zeile Konfiguration nach getroffener Entscheidung.
+- **Eingangskriterien:** Entscheidung des Eigentümers
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Befund 2026-10-08: End-to-End-Job hing über 4 Stunden beim Herunterladen von Chromium. `timeout-minutes: 20` am Job `e2e`.
+- **Akzeptanzkriterien:** CI grün mit dem Zeitlimit; ADR-045.
+- **Betroffene Module:** keine (CI)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** `.github/workflows/ci.yml`, ADR, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-08 auf Befund des Eigentümers. Querschnitt, nicht Teil des Schrittplans von Phase 5.
+
 #### M.1: Branch-Konvention festlegen
 
 - **Status:** ERLEDIGT (2026-09-26)

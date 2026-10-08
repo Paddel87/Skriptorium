@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 20:55 UTC – [ADR-ANGELEGT] ADR-045 Zeitlimit für den End-to-End-Job (D.14)
+
+- **Befund des Eigentümers:** „Vier Stunden End-to-End kann nicht sein.“ Der Push-Lauf zu `bb6cc03` hing seit 16:33 UTC im Schritt „Chromium für Playwright installieren“; der PR-Lauf auf demselben Commit war um 16:35 UTC grün (4/4).
+- **Reibung (Fehler der KI):** Die KI wartete auf die Meldung „alle Check-Suites fertig“, die wegen des hängenden Laufs nie kam, statt die Checks selbst zu prüfen; PR #59 blieb dadurch gut 4 Stunden ungemergt. Lehre: nach dem Öffnen eines PR den Stand der Checks selbst abfragen.
+- **Handlung:** hängenden Lauf abgebrochen (20:50 UTC), PR #59 auf den grünen PR-Lauf hin gemergt (`7b6b746`). `ENTSCHEIDUNG ERFORDERLICH` (Kategorie 7) vorgelegt; Eigentümer: „a“ → `timeout-minutes: 20` am Job `e2e` (ADR-045, D.14). Reaktiv-Quote 0/10 über ADR-036..045.
+- Weiter über der Kontextgrenze auf Anweisung des Eigentümers.
+
 ### 2026-10-08 16:35 UTC – [BEOBACHTUNG] PR #58 gemergt, Entscheidungen zu 5.15
 
 - PR #58 (`feat/5.15-nur-das-verlangte`) auf Anweisung „PR öffnen und nach grüner CI mergen“ geöffnet, CI 8/8 grün, gemergt als `38f0d34`.

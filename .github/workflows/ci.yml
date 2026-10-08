@@ -95,6 +95,9 @@ jobs:
   e2e:
     name: End-to-End – Server und Oberfläche in Chromium (ADR-019)
     runs-on: ubuntu-latest
+    # A stuck Chromium download held the job for over 4 hours (2026-10-08); normal runs take
+    # 1-2 minutes, the slowest seen about 10 (ADR-045).
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6.0.3
       - uses: actions/setup-python@v6.3.0

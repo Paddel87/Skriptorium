@@ -223,7 +223,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 - **Pre-Commit-Hook-Framework:** `pre-commit`
 - **Konfigurationsdatei:** `.pre-commit-config.yaml`
 - **CI-Plattform:** GitHub Actions
-- **Workflow-Dateien:** `.github/workflows/ci.yml` mit den Jobs Pre-Commit, Python, TypeScript (alle Pflicht-Gates, seit Schritt 2.1 scharf) und End-to-End (seit 2.7, ADR-019)
+- **Workflow-Dateien:** `.github/workflows/ci.yml` mit den Jobs Pre-Commit, Python, TypeScript (alle Pflicht-Gates, seit Schritt 2.1 scharf) und End-to-End (seit 2.7, ADR-019; Zeitlimit 20 Minuten seit 2026-10-08, ADR-045)
 - **Einrichtung der Cloud-Session:** SessionStart-Hook `.claude/settings.json` → `scripts/session-start.sh` (ADR-015)
 - **Trigger:** `push` auf alle Branches und `pull_request` auf `main`
 - **Verpflichtende CI-Gates (Merge-Block bei Rot):** Lint, Format-Check, Type-Check, Security-Scan, Dependency-Audit (Schwellenwert high), Tests inklusive Coverage-Mindestwert
