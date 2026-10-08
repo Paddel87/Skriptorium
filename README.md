@@ -87,7 +87,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **5.9:** Kapitel öffnet am Textende (5.7, 5.8, 5.15 erledigt 2026-10-08: grok-4.6 als Startmodell, KI schreibt nur das Verlangte in wählbarer Länge, ohne Vorgriff und Wiederholung).
+- **5.9:** Kapitel öffnet am Textende (umgesetzt, wartet auf Deployment und Abnahme; 5.7, 5.8, 5.15 erledigt 2026-10-08: grok-4.6 als Startmodell, KI schreibt nur das Verlangte in wählbarer Länge, ohne Vorgriff und Wiederholung).
 - **5.10–5.11:** Kosten je Vorschlag sichtbar; Seitenaufbau und Abläufe der Oberfläche neu ordnen.
 - **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 

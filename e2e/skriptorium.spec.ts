@@ -351,3 +351,47 @@ test("the model of a story survives a reload; costs of the month are shown", asy
 async function waitForCompletionInteraction(page: Page): Promise<void> {
   await page.waitForTimeout(150);
 }
+
+test("a long chapter opens at its end with the writing area close by", async ({
+  page,
+}) => {
+  // Step 5.9 (FR-022): the editor scrolls on its own and shows the end of the text.
+  await login(page);
+  await page.getByLabel("Name").fill("Die Lange Nacht");
+  await page.getByRole("button", { name: "Welt anlegen" }).click();
+  await page.getByRole("button", { name: "Geschichten" }).click();
+  await page.getByLabel("Titel").fill("Endlos");
+  await page.getByRole("button", { name: "Geschichte anlegen" }).click();
+  await page.getByLabel("Titel des neuen Kapitels").fill("Lang");
+  await page.getByRole("button", { name: "Kapitel anlegen" }).click();
+  await expect(page.getByLabel("Manuskript")).toBeVisible();
+  const text = Array.from(
+    { length: 300 },
+    (_, index) => `Absatz ${String(index + 1)}: Die Nacht wollte nicht enden.`,
+  ).join("\n\n");
+  const status = await page.evaluate(async (body) => {
+    const response = await fetch(
+      "/api/worlds/die-lange-nacht/stories/endlos/chapters/1",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: "Lang", text: body }),
+      },
+    );
+    return response.status;
+  }, text);
+  expect(status).toBe(200);
+
+  await page.reload();
+  await page.getByRole("button", { name: "Die Lange Nacht" }).click();
+  await page.getByRole("button", { name: "Endlos" }).click();
+  const last = page.getByText("Absatz 300: Die Nacht wollte nicht enden.");
+  await expect(last).toBeInViewport();
+  await expect(
+    page.getByText("Absatz 1: Die Nacht", { exact: false }),
+  ).not.toBeInViewport();
+  await expect(
+    page.getByRole("button", { name: "In den Kanon" }),
+  ).toBeInViewport();
+  await expect(page.getByText(/^Anweisung an die KI/)).toBeInViewport();
+});

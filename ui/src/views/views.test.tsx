@@ -442,6 +442,30 @@ describe("ManuscriptEditor", () => {
     view?.dispatch({ changes: { from: 0, insert: "A" } });
     expect(onChange).toHaveBeenCalledWith("ANeu <b>kein HTML</b>");
   });
+
+  it("opens at the end of the text and returns there for new text (step 5.9)", async () => {
+    const { rerender } = render(
+      <ManuscriptEditor
+        label="Manuskript"
+        value={"Erster Absatz.\n\nLetzter Satz."}
+        onChange={vi.fn()}
+      />,
+    );
+    const content = await screen.findByLabelText("Manuskript");
+    const view = (await import("@codemirror/view")).EditorView.findFromDOM(
+      content,
+    );
+    expect(view?.state.selection.main.head).toBe(29);
+    expect(content.parentElement?.closest(".editor.manuscript")).not.toBeNull();
+    rerender(
+      <ManuscriptEditor
+        label="Manuskript"
+        value={"Erster Absatz.\n\nLetzter Satz.\n\nÜbernommen."}
+        onChange={vi.fn()}
+      />,
+    );
+    expect(view?.state.selection.main.head).toBe(42);
+  });
 });
 
 describe("Account", () => {

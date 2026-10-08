@@ -1,6 +1,6 @@
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { markdown } from "@codemirror/lang-markdown";
-import { EditorState } from "@codemirror/state";
+import { EditorSelection, EditorState } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";
 import { useEffect, useRef } from "react";
 
@@ -8,28 +8,35 @@ import { useEffect, useRef } from "react";
  * Markdown editor for the manuscript (CodeMirror 6). Shows the Markdown source only; it never
  * renders HTML from the text, so nothing in a manuscript can run as script. `onSelect` receives
  * the marked text whenever the selection changes (empty without a selection, step 3.8).
+ * The editor has its own scroll area; it opens at the end of the text, where writing goes on,
+ * and returns there when new text arrives from outside, e.g. a taken-over proposal (step 5.9).
  */
 export function ManuscriptEditor({
   value,
   onChange,
   onSelect,
+  onReady,
   label,
 }: {
   value: string;
   onChange: (text: string) => void;
   onSelect?: (marked: string) => void;
+  /** Called once the editor is shown, so the page around it can be arranged (step 5.9). */
+  onReady?: () => void;
   label: string;
 }) {
   const host = useRef<HTMLDivElement>(null);
   const view = useRef<EditorView | null>(null);
   const onChangeRef = useRef(onChange);
   const onSelectRef = useRef(onSelect);
+  const onReadyRef = useRef(onReady);
   const initialValue = useRef(value);
 
   useEffect(() => {
     onChangeRef.current = onChange;
     onSelectRef.current = onSelect;
-  }, [onChange, onSelect]);
+    onReadyRef.current = onReady;
+  }, [onChange, onSelect, onReady]);
 
   useEffect(() => {
     if (host.current === null) {
@@ -39,6 +46,7 @@ export function ManuscriptEditor({
       parent: host.current,
       state: EditorState.create({
         doc: initialValue.current,
+        selection: EditorSelection.cursor(initialValue.current.length),
         extensions: [
           history(),
           keymap.of([...defaultKeymap, ...historyKeymap]),
@@ -58,6 +66,8 @@ export function ManuscriptEditor({
       }),
     });
     view.current = editor;
+    showEnd(editor);
+    onReadyRef.current?.();
     return () => {
       editor.destroy();
       view.current = null;
@@ -69,9 +79,19 @@ export function ManuscriptEditor({
     if (editor !== null && editor.state.doc.toString() !== value) {
       editor.dispatch({
         changes: { from: 0, to: editor.state.doc.length, insert: value },
+        selection: EditorSelection.cursor(value.length),
       });
+      showEnd(editor);
     }
   }, [value]);
 
-  return <div className="editor" ref={host} />;
+  return <div className="editor manuscript" ref={host} />;
+}
+
+/**
+ * Scroll the editor's own area to the end of the text. Unlike `EditorView.scrollIntoView`, this
+ * leaves the page where it is, so opening a chapter does not jump past the story settings.
+ */
+function showEnd(editor: EditorView) {
+  editor.scrollDOM.scrollTop = editor.scrollDOM.scrollHeight;
 }
