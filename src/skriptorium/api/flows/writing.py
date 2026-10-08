@@ -15,6 +15,11 @@ identifier, as in the checks of the story endpoints.
 
 Every request is counted through ``record`` when the stream ends: finished, failed or aborted
 (ADR-023, step 3.9).
+
+If the instruction contradicts the canon, the AI writes in line with the canon and starts its
+answer with one line beginning with ``CONFLICT_MARKER``. That line goes to the interface as a
+separate ``hinweis`` event, so taking over the proposal never puts it into the manuscript
+(step 4.14).
 """
 
 import json
@@ -37,7 +42,7 @@ from skriptorium.ai_gateway import (
 )
 from skriptorium.api.usage import Kind
 from skriptorium.canon import CanonEntry, CanonService, Category
-from skriptorium.context import ContextBuilder, ContextTooLarge
+from skriptorium.context import CONFLICT_MARKER, ContextBuilder, ContextTooLarge
 from skriptorium.manuscript import ManuscriptService
 from skriptorium.storage import InvalidInput, NotFound
 
@@ -175,7 +180,8 @@ async def stream_events(
 ) -> AsyncIterator[str]:
     """Stream the answer as Server-Sent Events.
 
-    Events: ``start`` (model, estimated tokens), then ``text`` per chunk, then either ``done``
+    Events: ``start`` (model, estimated tokens), then at most one ``hinweis`` (the AI's note on
+    a contradiction with the canon, step 4.14) and ``text`` per chunk, then either ``done``
     (usage) or ``error`` (kind only; texts for the author live in the interface). Closing the
     connection closes the provider stream, which ends the request at the provider. At the end
     the request is passed to ``record`` with outcome ``ok``, the error kind or ``abgebrochen``.
@@ -187,10 +193,13 @@ async def stream_events(
     usage: Usage | None = None
     outcome = "abgebrochen"
     events = provider.stream(completion)
+    split = NoteSplitter()
     try:
         async for event in events:
             if isinstance(event, Completed):
                 usage, outcome = event.usage, "ok"
+                for name, text in split.finish():
+                    yield _event(name, {"text": text})
                 yield _event(
                     "done",
                     {
@@ -201,9 +210,12 @@ async def stream_events(
                     },
                 )
             elif event.text:
-                yield _event("text", {"text": event.text})
+                for name, text in split.feed(event.text):
+                    yield _event(name, {"text": text})
     except GatewayError as error:
         outcome = error_kind(error)
+        for name, text in split.finish():
+            yield _event(name, {"text": text})
         yield _event("error", {"kind": outcome})
     finally:
         close = getattr(events, "aclose", None)
@@ -211,6 +223,57 @@ async def stream_events(
             await close()
         if record is not None:
             record("schreiben", completion.model, usage, outcome)
+
+
+class NoteSplitter:
+    """Separates the AI's conflict note from the text while the answer streams (step 4.14).
+
+    The note is the first line if it starts with ``CONFLICT_MARKER`` (ignoring case and leading
+    whitespace). Until that is decided, chunks are held back; afterwards they pass unchanged.
+    Each call returns ``(event, text)`` pairs with event ``hinweis`` or ``text``.
+    """
+
+    def __init__(self) -> None:
+        """Start undecided with nothing held back."""
+        self._held = ""
+        self._decided = False
+        # After a note, blank lines up to the first text are dropped, even in later chunks.
+        self._skip_blank = False
+
+    def feed(self, chunk: str) -> list[tuple[str, str]]:
+        """Pass on ``chunk`` or hold it back until the first line is decided."""
+        if self._decided:
+            if self._skip_blank:
+                chunk = chunk.lstrip("\r\n")
+                self._skip_blank = not chunk
+            return [("text", chunk)] if chunk else []
+        self._held += chunk
+        start = self._held.lstrip()
+        marker = CONFLICT_MARKER.casefold()
+        if len(start) < len(marker) and marker.startswith(start.casefold()):
+            return []
+        if not start.casefold().startswith(marker):
+            return self._release(self._held, "")
+        line_end = start.find("\n")
+        if line_end == -1:
+            return []
+        return self._release(start[line_end:].lstrip("\r\n"), start[len(marker) : line_end])
+
+    def finish(self) -> list[tuple[str, str]]:
+        """Pass on what is held back when the answer ends, completely or not."""
+        if self._decided:
+            return []
+        start = self._held.lstrip()
+        if start.casefold().startswith(CONFLICT_MARKER.casefold()):
+            return self._release("", start[len(CONFLICT_MARKER) :])
+        return self._release(self._held, "")
+
+    def _release(self, text: str, note: str) -> list[tuple[str, str]]:
+        self._decided = True
+        self._held = ""
+        self._skip_blank = bool(note.strip()) and not text
+        pairs = [("hinweis", note.strip())] if note.strip() else []
+        return pairs + ([("text", text)] if text else [])
 
 
 def error_kind(error: GatewayError) -> str:
