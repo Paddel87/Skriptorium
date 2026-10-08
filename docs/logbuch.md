@@ -29,6 +29,18 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 11:50 UTC – [BEOBACHTUNG] Pflichtfrage Phase 4: Bewertung der getrennten Instanz liegt vor, Entscheidung vorgelegt
+
+- Auf Zustimmung des Eigentümers („Ja“) gestartet: Unteragent ohne Gesprächsverlauf, Sonnet 5, nur lesend. Bewertung unverändert in `docs/research/bewertung-phase-4.md`. Empfehlung dort: Option 2, gezielt umbauen (Oberfläche: Seitenaufbau/Abläufe; Modell-Katalog), Kern behalten, Phase 4 schlank abschließen, neue Wünsche in eigene Phase. Konfidenz mittel bis hoch.
+- **Stellungnahme der bauenden KI (Opus 5.5), neben die Bewertung gestellt:**
+  - Zustimmung zu Option 2 und zum Kern-Befund; die Zahlen decken sich mit dem Sessionende 04:00 UTC (pytest 410, 99,78–99,79 %).
+  - Ergänzung, Erkennung von Weigerungen im Text: Bei den Genres des Eigentümers (Logbuch 10:30 UTC) weigern sich auch Figuren *in der Handlung*. Eine Erkennung „wie `NoteSplitter`“ würde dort falsch anschlagen. Sie ist deshalb nicht „klein“, sondern braucht ein Probeschreiben mit echten Texten. Der Wechsel des Startmodells auf grok-4.6 (Logbuch 10:40 UTC) bringt die schnellere Entlastung und gehört an den Anfang.
+  - Ergänzung, Reihenfolge: Die drei kleinen Abhilfen – Startmodell, Rahmen für nahtlosen Anschluss, Sprung ans Kapitelende – können vor dem großen Umbau der Oberfläche liegen. Der Sprung ans Ende wird im Umbau ohnehin neu gebaut, entlastet aber sofort.
+  - Ergänzung, Router oder Bibliothek: Ein Router wäre eine neue Abhängigkeit (Kategorie 3). Der bestehende Zustandsautomat in `App.tsx` reicht für eine Neuordnung möglicherweise aus; zu entscheiden im Umbau-Schritt, nicht vorab.
+  - Widerspruch, „die eine Frage“: Der Eigentümer hat sie im Kern schon beantwortet: Das Manuskript bleibt die Hauptansicht, die Anweisungen sind ein bei Bedarf umschaltbarer Verlauf, nicht im Manuskript (09:05 UTC). Nach den Erfahrungen mit SillyTavern soll die Chat-Ansicht den Kanon nicht aus dem Mittelpunkt verdrängen (10:00 UTC). Sie wird trotzdem zur Bestätigung vorgelegt, weil sie den Umbau prägt.
+  - Bestätigt, Doku-Drift: Die Überschrift von `docs/architecture.md` Abschnitt 9 sagt „nach Schritt 4.7“, enthält aber einen Eintrag vom 2026-10-08. Wird mit der Neuplanung korrigiert.
+- Kontextgröße laut `get_session`: 266.172 Token, über der Grenze 200.000. Dieser Schritt (Pflichtfrage) wird mit der Vorlage abgeschlossen. ADR und Neuplanung des Fahrplans gehören in eine neue Session, sofern der Eigentümer nicht „weiter hier“ sagt.
+
 ### 2026-10-08 11:25 UTC – [BEOBACHTUNG] Entscheidung: erst Seitenaufbau neu, Gestaltung später
 
 - Eigentümer: „Erstmal Aufbau neu, UI später.“ Folgt der vorgeschlagenen Reihenfolge aus 11:20 UTC.
