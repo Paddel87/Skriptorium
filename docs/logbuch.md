@@ -38,7 +38,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 15:17). Schritte oberhalb der Empfehlung: 0. Abgegeben: verblindete Bewertung (Sonnet) als getrennte Instanz.
 - **Kontextgröße:** 305.122 Token (`get_session` 15:17), Grenze 200.000 – überschritten auf Anweisung des Eigentümers.
 - **Kosten KI-Anbieter gesamt:** ca. 1,13 $ (5.8: 0,68 $; 5.15: 0,45 $).
-- **Sessionende-Prüfungen:** README „Nächste Schritte“ nennt 5.7–5.9 mit Stand von 5.8 – 5.15 gehört zu 5.8 und ist dort mit gemeint, Status-Block unverändert gültig (Phase 5, v0.1.0, Blocker 0). Drift: kein neuer ADR; Reaktiv-Quote 0/10; Modul-Liste und Reifegrade unverändert; Blocker 0, kein `[BLOCKIERT]`; Phase 5 15 Schritte (Schwelle 26). Ablaufdaten: kein Vorlauf erreicht. Logbuch ca. 290 Zeilen – keine Auslagerung. Alles committet und gepusht.
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ um 5.15 ergänzt, Status-Block unverändert gültig (Phase 5, v0.1.0, Blocker 0). Drift: kein neuer ADR; Reaktiv-Quote 0/10; Modul-Liste und Reifegrade unverändert; Blocker 0, kein `[BLOCKIERT]`; Phase 5 15 Schritte (Schwelle 26). Ablaufdaten: kein Vorlauf erreicht. Logbuch ca. 290 Zeilen – keine Auslagerung. Alles committet und gepusht.
 
 ### 2026-10-08 14:30 UTC – [BEOBACHTUNG] Entscheidungen des Eigentümers zu 5.15
 
