@@ -12,8 +12,22 @@
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
 - **Aktiver Schritt:** 4.13 eingespielt, letzter Nachweis offen (Code im neuen Format auf dem VPS erzeugen, Eigentümer). 4.14, 4.15, 4.16 erledigt 2026-10-08. Danach D.11, dann 4.8
-- **Nächster Schritt:** Eigentümer: D.11, dann 4.8 Teil 2 – erstes echtes Kapitel mit Zählung der Kanon-Widersprüche (Teil 1, 30 Minuten, erfüllt 2026-10-08 nach Einschätzung; Phase 4 steht bei 16 Schritten – ein weiterer Befund erzwingt Neuplanung; danach erstes echtes Kapitel, Versionsvergabe und Vision-Abgleich). Davor D.11 (Sicherungs-Zugangsdaten außerhalb des Servers, spätestens 2026-10-31). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. D.8 verworfen (ADR-040)
-- **Offene STOPP-Situationen:** keine
+- **Nächster Schritt:** neue Session: STOPP Phasen-Wucherung – Befund Modell-Sperren (grok-4.7/4.6 sperren echte Inhalte per Text; Sperre nicht erkannt) wäre der 17. Schritt → Neuplanung Phase 4 mit dem Eigentümer; danach 4.8 abschließen (v0.1.0, Vision-Abgleich). Eigentümer: D.11-Angaben (Teil 1 und 2 von 4.8 erfüllt 2026-10-08; Phase 4 steht bei 16 Schritten – ein weiterer Befund erzwingt Neuplanung; danach erstes echtes Kapitel, Versionsvergabe und Vision-Abgleich). Davor D.11 (Sicherungs-Zugangsdaten außerhalb des Servers, spätestens 2026-10-31). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. D.8 verworfen (ADR-040)
+- **Offene STOPP-Situationen:**
+
+```text
+STOPP
+Grund: Phasen-Wucherung (CLAUDE.md Abschnitt 8, Kriterium 9)
+Kontext: Phase 4 hat 16 Schritte (ursprünglich 8). Befund 2026-10-08: grok-4.7 und
+  grok-4.6 sperren die echten Inhalte des Eigentümers mit einer Weigerung als Text im
+  Vorschlag; das Skriptorium erkennt das nicht (Verbrauch „ok“), „Übernehmen“ würde
+  die Weigerung ins Kapitel schreiben. Ein Schritt dafür wäre der 17.
+Benötigt: Neuplanung von Phase 4, Vision-Abgleich, Pflichtfrage „Weiterbauen, umbauen
+  oder neu aufsetzen?“ (CLAUDE.md Abschnitt 12)
+Vorgeschlagene Auflösung: Optionen – Sperre im Text erkennen (wie Hinweis 4.14) /
+  Modell-Reihenfolge für echte Inhalte ändern (ADR zu ADR-010/011) / beides; dem
+  Eigentümer vorlegen
+```
 
 <!-- ANCHOR:phasen-typen -->
 ## Phasen-Typen
@@ -245,7 +259,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.8: 30-Minuten-Test
 
-- **Status:** OFFEN – Teil 1 (FR-022) erfüllt 2026-10-08 ohne Stoppuhr: Einschätzung des Eigentümers nach dem Funktionstest, vom Eigentümer als ausreichend erklärt (Option A; B „neu messen“ nicht gewählt). Offen: Teil 2 Kanon-Treue im ersten echten Kapitel (nach D.11), danach Versionsvergabe v0.1.0 und Vision-Abgleich vor Go-Live
+- **Status:** OFFEN – Teil 1 (FR-022) erfüllt 2026-10-08 ohne Stoppuhr: Einschätzung des Eigentümers nach dem Funktionstest, vom Eigentümer als ausreichend erklärt (Option A; B „neu messen“ nicht gewählt). Teil 2 erfüllt 2026-10-08: erstes echtes Kapitel in eigener Welt, 0 Kanon-Widersprüche beim Redigieren (Angabe des Eigentümers), Modell qwen3.8-max-0902 – grok-4.7 und grok-4.6 sperrten die Inhalte per Text im Vorschlag (Befund, Landeplatz in der Neuplanung von Phase 4); NFR Kanon-Treue → `[BELASTBAR]`. D.11 hätte vor dem Kapitel liegen sollen – Stand offen. Offen: Versionsvergabe v0.1.0 und Vision-Abgleich vor Go-Live (KI, nächste Session)
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.7
 - **Freigabepflichtig:** nein
