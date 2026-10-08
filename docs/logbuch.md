@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 22:05 UTC – [BEOBACHTUNG] Befunde zum Kanon, 5.9 gemergt
+
+- PR #63 (5.9) nach grüner CI (8/8) gemergt (`32c027d`); Deployment auf Wunsch des Eigentümers später („nur mergen“).
+- **Befund 1:** Kanon-Einträge sollen sich mit KI-Unterstützung besser ausformulieren lassen. Eigentümer (Auswahlfrage): **Teil des Weltenbauers V.9**, nicht eigener Schritt in Phase 5 → V.9 und FR-029 ergänzt.
+- **Befund 2:** Die unter „Herangezogen“ genannten Kanon-Begriffe sollen anklickbar sein. Eigentümer: **Eintrag über der Schreibseite einblenden, Kapitel bleibt offen** → neuer Schritt 5.16 (nach 5.11), FR-031 (Soll – vorläufig). Phase 5 jetzt 16 Schritte (ursprünglich 13, Schwelle 26) – keine Wucherung.
+
 ### 2026-10-08 21:50 UTC – [BEOBACHTUNG] Rückmeldung des Eigentümers nach dem Schreiben mit `18ee07d`
 
 - Texte gehen einfacher, weniger Ablehnungen (grok-4.6 als Voreinstellung, 5.7) – teilweise „schon grenzwertig“. Kein Schritt angelegt; Erkennen von Weigerungen im Text bleibt Erkundung D.13.
