@@ -6,6 +6,7 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v0.1.0)
 
+- Herangezogene Begriffe im Anweisungsfeld hervorgehoben (2026-10-08, Schritt 5.18): Jede erkannte `@`-Nennung eines Kanon-Eintrags ist im Feld „Anweisung an die KI“ farbig hinterlegt und fett; was nicht markiert ist, zählt nicht als genannt.
 - Länge je Vorschlag wählbar (2026-10-08, Schritt 5.15): Auswahl „Länge“ im Schreib-Bereich mit kurz (etwa 60–120 Wörter), mittel (150–300, voreingestellt) und lang (400–600). Neues optionales Feld `length` im Schreib-Endpunkt.
 
 ### Geändert (nach v0.1.0)

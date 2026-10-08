@@ -167,6 +167,14 @@ button.danger {
   overflow: auto;
 }
 
+/* Names the instruction counts as `@` mentions (step 5.18). */
+.editor.instruction .cm-mention {
+  background: #efe1bd;
+  color: #3d2f0c;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
 .editor.instruction,
 .editor.instruction .cm-editor {
   min-height: 3.5rem;

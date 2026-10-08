@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 5.9 Kapitel öffnet am Textende – gemergt mit PR #63 (`32c027d`), Deployment auf Wunsch des Eigentümers später; wartet auf Deployment und Bestätigung auf Desktop und Smartphone (5.7, 5.8 und 5.15 am 2026-10-08 `[ERLEDIGT]`)
-- **Nächster Schritt:** 5.9 und 5.17 deployen und abnehmen; 5.11 (Eingangskriterium: Angaben des Eigentümers, wo er den Überblick verliert); danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** 5.9, 5.17 und 5.18 deployen und abnehmen; 5.11 (Eingangskriterium: Angaben des Eigentümers, wo er den Überblick verliert); danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -116,11 +116,11 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Ziel:** Das Skriptorium ist für das tägliche Schreiben des Eigentümers alltagstauglich – Modelle sperren seine Texte nicht, die KI schreibt nahtlos weiter, die Oberfläche ist übersichtlich und intuitiv (gezielter Umbau nach ADR-042) –, die Soll-Anforderungen und die Kann-Anforderung sind umgesetzt oder begründet zurückgestellt, und die nächste Ausbaustufe ist geplant.
 
-**Abschlusskriterium:** Schritte 5.1–5.17 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
+**Abschlusskriterium:** Schritte 5.1–5.18 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
 
 **Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`. Der Umbau betrifft nur `ui` (Seitenaufbau, 5.11) und Randstellen in `ai_gateway`/`api` (Modell-Katalog, 5.12); neue gespeicherte Daten (5.6, 5.13) werden per ADR festgelegt.
 
-**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-08: 17 Schritte (+5.14, ADR-043; +5.15, +5.16 und +5.17 Befunde des Eigentümers).
+**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-08: 18 Schritte (+5.14, ADR-043; +5.15 bis +5.18 Befunde des Eigentümers).
 
 **Reihenfolge (ADR-042):** zuerst die kleinen Abhilfen 5.7, 5.8, 5.9, dann 5.10, der Umbau der Oberfläche 5.11, danach 5.16, 5.6, 5.12, 5.13; anschließend 5.2 (Smartphone, auf dem neuen Aufbau), 5.1, 5.3, 5.4, dann 5.14 (Go-Live-Prüfung) und 5.5.
 
@@ -398,6 +398,22 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-08 auf Befund des Eigentümers. Wucherungs-Prüfung: Phase 5 jetzt 17 Schritte (ursprünglich 13, Schwelle 26) – keine Wucherung.
+
+#### 5.18: Herangezogene Begriffe im Anweisungsfeld hervorheben
+
+- **Status:** IN ARBEIT (seit 2026-10-08) – umgesetzt auf Branch `feat/5.18-begriffe-hervorheben` (auf 5.17): Jede erkannte `@`-Nennung im Feld „Anweisung an die KI“ ist hinterlegt und fett (`mentionMarks` in `InstructionEditor.tsx`, Stellen aus `mentionRanges` in `references.ts` nach denselben Regeln wie „Herangezogen“); neue Einträge färben nach, Änderung am Namen hebt die Markierung auf. Tests: `vitest` 108 bestanden, 98,61 % Zeilen; Playwright 9 bestanden. Offen: CI, Merge, Deployment, Bestätigung des Eigentümers
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 5.17
+- **Freigabepflichtig:** nein – nur `ui`, keine neue Abhängigkeit (CodeMirror-Dekoration)
+- **Empfohlene Klasse:** Routine – kleine Oberflächen-Änderung mit Tests.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-013
+- **Zu tun:** Befund des Eigentümers 2026-10-08: Die ausgewählten Kanon-Begriffe sollen im Feld „Anweisung an die KI“ (nur dort, nicht im Manuskript) optisch hervorgehoben werden, damit er im Fließtext sieht, wo sie stehen. Hervorgehoben wird nur, was das Skriptorium als Nennung erkennt – die Markierung zeigt damit zugleich, ob ein Begriff zählt.
+- **Akzeptanzkriterien:** Test: erkannte Nennungen markiert, nicht erkannte (z. B. `@Kaelging`, unbekannter Name) nicht; Markierung folgt Text- und Kanon-Änderungen; Eigentümer bestätigt die Lesbarkeit.
+- **Betroffene Module:** ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-08 auf Befund des Eigentümers. Wucherungs-Prüfung: Phase 5 jetzt 18 Schritte (ursprünglich 13, Schwelle 26) – keine Wucherung.
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 

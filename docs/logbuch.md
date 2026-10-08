@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 22:45 UTC – [BEOBACHTUNG] 5.18 Begriffe im Anweisungsfeld hervorgehoben
+
+- **Befund des Eigentümers:** gewählte Kanon-Begriffe im Feld „Anweisung an die KI“ (nur dort) optisch hervorheben, damit er im Fließtext sieht, wo sie stehen.
+- **Umsetzung:** `referencedEntries` auf neue Funktion `mentionRanges` (alle erkannten Stellen mit Position) gestützt, Verhalten unverändert; Dekoration `cm-mention` über eine eigene Compartment, die bei neuen Einträgen nachgezogen wird. Markiert wird nur, was als Nennung zählt – zeigt zugleich Fehler wie `@Kaelging`.
+- **Läufe:** `vitest` 108 bestanden, 98,61 % Zeilen / 96,19 % Zweige; Playwright 9 bestanden (Prüfung der Markierung im Test „@ menu …“); Bildschirmfoto der Markierung angesehen (hell hinterlegt, fett).
+- Branch auf 5.17 aufgebaut; PR erst nach Merge von #66. Phase 5 jetzt 18 Schritte (Schwelle 26).
+
 ### 2026-10-08 22:30 UTC – [GELÖST] 5.17 Leerzeichen nach der Auswahl im `@`-Menü
 
 - **Befund des Eigentümers:** Nach der Auswahl eines Kanon-Begriffs und sofortigem Weiterschreiben klebt das nächste Wort am Namen, der Begriff wird nicht erkannt (`referencedEntries` verlangt nach dem Namen ein Nicht-Wortzeichen).

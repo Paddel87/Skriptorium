@@ -99,6 +99,33 @@ describe("InstructionEditor", () => {
     expect(props.onChange).toHaveBeenCalledWith("@");
   });
 
+  it("highlights recognised names and follows new entries (step 5.18)", () => {
+    const props = {
+      value: "Dann kommt @Kael zu @Mira.",
+      onChange: vi.fn(),
+      labelledBy: "anweisung",
+      disabled: false,
+    };
+    const { container, rerender } = render(
+      <InstructionEditor {...props} entries={[ENTRY]} />,
+    );
+    const marked = () =>
+      [...container.querySelectorAll(".cm-mention")].map((m) => m.textContent);
+    expect(marked()).toEqual(["@Kael"]);
+    rerender(
+      <InstructionEditor
+        {...props}
+        entries={[ENTRY, { ...ENTRY, id: "mira", name: "Mira", aliases: [] }]}
+      />,
+    );
+    expect(marked()).toEqual(["@Kael", "@Mira"]);
+    const view = EditorView.findFromDOM(
+      container.querySelector(".cm-content") as HTMLElement,
+    );
+    view?.dispatch({ changes: { from: 15, to: 16, insert: "x" } });
+    expect(marked()).toEqual(["@Mira"]);
+  });
+
   it("shows a grey example while the field is empty", () => {
     const { container } = render(
       <InstructionEditor

@@ -8,16 +8,18 @@ import {
 } from "@codemirror/autocomplete";
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { Compartment, EditorState } from "@codemirror/state";
-import { EditorView, keymap, placeholder } from "@codemirror/view";
+import { Decoration, EditorView, keymap, placeholder } from "@codemirror/view";
 import { useEffect, useRef } from "react";
 import { CATEGORIES, type CanonEntry } from "../api";
-import { menuItems } from "../references";
+import { mentionRanges, menuItems } from "../references";
 
 /**
  * Instruction field with the `@` menu (step 3.5, FR-013): typing `@` offers the entries of the
  * story's world and its guests from other worlds (step 3.7, FR-017) by name and alias; choosing
  * one writes `@Name` into the instruction, followed by a space so writing on does not glue the
- * next word to the name (step 5.17). Plain text, nothing is rendered as HTML.
+ * next word to the name (step 5.17). Recognised names are highlighted in the field, so the
+ * author sees in the running text which entries count as named (step 5.18). Plain text,
+ * nothing is rendered as HTML.
  */
 export function InstructionEditor({
   value,
@@ -48,6 +50,8 @@ export function InstructionEditor({
   const initialDisabled = useRef(disabled);
   const initialExample = useRef(example);
   const editable = useRef(new Compartment());
+  const marks = useRef(new Compartment());
+  const initialEntries = useRef(entries);
 
   useEffect(() => {
     onChangeRef.current = onChange;
@@ -76,6 +80,7 @@ export function InstructionEditor({
           EditorView.lineWrapping,
           placeholder(initialExample.current),
           editable.current.of(EditorView.editable.of(!initialDisabled.current)),
+          marks.current.of(mentionMarks(initialEntries.current)),
           EditorView.contentAttributes.of({
             "aria-labelledby": labelledBy,
             "aria-multiline": "true",
@@ -110,7 +115,26 @@ export function InstructionEditor({
     });
   }, [disabled]);
 
+  useEffect(() => {
+    view.current?.dispatch({
+      effects: marks.current.reconfigure(mentionMarks(entries)),
+    });
+  }, [entries]);
+
   return <div className="editor instruction" ref={host} />;
+}
+
+const MENTION = Decoration.mark({ class: "cm-mention" });
+
+/** Highlight every recognised `@` mention of these entries (step 5.18). */
+export function mentionMarks(entries: readonly CanonEntry[]) {
+  return EditorView.decorations.compute(["doc"], (state) =>
+    Decoration.set(
+      mentionRanges(state.doc.toString(), entries).map((mention) =>
+        MENTION.range(mention.from, mention.to),
+      ),
+    ),
+  );
 }
 
 /**
