@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
 - **Aktiver Schritt:** keiner – 4.13 bis 4.16 erledigt 2026-10-08; 4.8 Teil 1 und 2 erfüllt. Danach D.11, dann 4.8
-- **Nächster Schritt:** neue Session: STOPP Phasen-Wucherung – Befund Modell-Sperren (grok-4.7/4.6 sperren echte Inhalte per Text; Sperre nicht erkannt) wäre der 17. Schritt → Neuplanung Phase 4 mit dem Eigentümer; danach 4.8 abschließen (v0.1.0, Vision-Abgleich). Eigentümer: D.11-Angaben (Teil 1 und 2 von 4.8 erfüllt 2026-10-08; Phase 4 steht bei 16 Schritten – ein weiterer Befund erzwingt Neuplanung; danach erstes echtes Kapitel, Versionsvergabe und Vision-Abgleich). Davor D.11 (Sicherungs-Zugangsdaten außerhalb des Servers, spätestens 2026-10-31). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. D.8 verworfen (ADR-040)
+- **Nächster Schritt:** neue Session: Pflichtfrage Phase 4 ist entschieden – **B, gezielt umbauen** (Eigentümer 2026-10-08, Bewertung `docs/research/bewertung-phase-4.md`). Zuerst Vision-Frage ausdrücklich bestätigen lassen, dann ADR anlegen und Fahrplan neu planen (STOPP-Block auflösen, Phase 4 schlank abschließen: 4.8 mit v0.1.0 und Vision-Abgleich, D.11 bis 2026-10-31; neue Phase aus den Befunden (a)–(h) und Startmodell grok-4.6). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. D.8 verworfen (ADR-040)
 - **Offene STOPP-Situationen:**
 
 ```text
