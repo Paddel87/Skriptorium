@@ -8,10 +8,10 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-07
+- **Stand vom:** 2026-10-08
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** 4.14 Hinweis der KI getrennt vom Text (umgesetzt, wartet auf Deployment und Probeschreiben); 4.13 eingespielt, letzter Nachweis offen – vor 4.8
+- **Aktiver Schritt:** 4.13 eingespielt, letzter Nachweis offen (Code im neuen Format auf dem VPS erzeugen, Eigentümer). 4.14 erledigt 2026-10-08. Danach 4.15, dann 4.8
 - **Nächster Schritt:** 4.8 30-Minuten-Test durch den Eigentümer (mit Stoppuhr; danach erstes echtes Kapitel, Versionsvergabe und Vision-Abgleich). Davor D.11 (Sicherungs-Zugangsdaten außerhalb des Servers, spätestens 2026-10-31). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. D.8 verworfen (ADR-040)
 - **Offene STOPP-Situationen:** keine
 
@@ -343,7 +343,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.14: Hinweis der KI getrennt vom Text
 
-- **Status:** IN ARBEIT (seit 2026-10-08) – umgesetzt auf Branch `fix/4.14-hinweis-getrennt`: Rahmen mit Kennung `HINWEIS:` (`context`), `NoteSplitter` in `api.flows.writing` (auch über Textstücke verteilt, bei Abbruch und Fehler), Anzeige in `ui`; pytest 407, vitest 98 grün. Offen: Merge, Deployment, Probeschreiben mit echtem Modell durch den Eigentümer
+- **Status:** ERLEDIGT (2026-10-08) – umgesetzt: Rahmen mit Kennung `HINWEIS:` (`context`), `NoteSplitter` in `api.flows.writing` (auch über Textstücke verteilt, bei Abbruch und Fehler), Anzeige in `ui`; pytest 407, vitest 98 grün; PR #37 gemergt (`c0fe7d5`), eingespielt 2026-10-08 (healthy, von außen geprüft). Probeschreiben auf der Produktion durch den Eigentümer: Anweisung gegen den Kanon → Hinweis getrennt, Text ohne Hinweis; Anweisung ohne Konflikt → kein Hinweis
 - **Phasentyp-Kontext:** STABILISIERUNG (Fehlerbehebung aus dem Funktionstest 2026-10-08)
 - **Abhängigkeiten:** 4.13 (nur wegen „ein Schritt in Arbeit“)
 - **Frist:** vor 4.8
