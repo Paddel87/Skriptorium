@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 12:50 UTC – [BEOBACHTUNG] Guthaben des Coding-Agents irrelevant
+
+- Auf den Hinweis „Guthaben läuft 2026-11-05 ab“ antwortete der Eigentümer: „Was für ein Guthaben? Habe Max5“, dann „Guthaben irrelevant“. Die Angabe vom 2026-09-26 (250 $, gültig bis 2026-11-05, Cloud-Sessions laufen darüber) wird nicht mehr geführt: Zeile im Ablaufdaten-Register und Satz unter „Bezugsmodell“ in `docs/project-context.md` entfernt, Hinweis im Fahrplan ersetzt. Knappe Ressource bleibt das Wochenkontingent Max 5x.
+
 ### 2026-10-08 12:40 UTC – [SESSIONENDE] Neuplanung Phase 4 abgeschlossen (ADR-042)
 
 - **Abweichung Sessiongröße:** Eigentümer „Hier weiter“ (= „weiter hier“, `CLAUDE.md` Abschnitt 0) bei 266.172 Token. ADR und Neuplanung hier statt in neuer Session; Ende bei 309.609 Token (`get_session`).
@@ -36,7 +40,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - **Offen:** 4.8 (v0.1.0, Vision-Abgleich vor Go-Live) – schließt Phase 4; D.11 bis 2026-10-31 (Eigentümer); Antworten des Eigentümers: Kosten-Zeile (5.10), unübersichtliche Stellen (5.11), Knopf „In den Kanon“, Werte der Listen (5.6), Stellung von grok-4.7 (5.7).
 - **Nächster Schritt:** 4.8 abschließen, dann 5.7.
 - **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient). Schritte oberhalb der Empfehlung: 0 (Neuplanung mit strategischem ADR ist Entscheidungs-Klasse). Abgegeben: Bewertung an Sonnet 5 (getrennte Instanz).
-- **Sessionende-Prüfungen:** README (Phase, Nächste Schritte) nachgezogen. Drift: ADR-042 → 5.7–5.13, D.13, V.6–V.9 vorhanden; Anforderungen → Schritte: FR-026 → 5.6, FR-027 → 5.13, FR-028 → 5.12, FR-029 → V.9, FR-030 → V.6/V.7, alle im Fahrplan genannten IDs existieren; Reaktiv-Quote 0/10 über ADR-033..042 (Teil A angepasst); Modul-Liste unverändert; Reifegrade unverändert; Blocker 0, kein `[BLOCKIERT]`; Phasenumfang: Phase 4 16 (STOPP aufgelöst durch Neuplanung), Phase 5 13 von ursprünglich 13. Ablaufdaten: kein Vorlauf erreicht (Guthaben ab 2026-10-22, in „Nächster Schritt“ berücksichtigt). Quick-Start unberührt.
+- **Sessionende-Prüfungen:** README (Phase, Nächste Schritte) nachgezogen. Drift: ADR-042 → 5.7–5.13, D.13, V.6–V.9 vorhanden; Anforderungen → Schritte: FR-026 → 5.6, FR-027 → 5.13, FR-028 → 5.12, FR-029 → V.9, FR-030 → V.6/V.7, alle im Fahrplan genannten IDs existieren; Reaktiv-Quote 0/10 über ADR-033..042 (Teil A angepasst); Modul-Liste unverändert; Reifegrade unverändert; Blocker 0, kein `[BLOCKIERT]`; Phasenumfang: Phase 4 16 (STOPP aufgelöst durch Neuplanung), Phase 5 13 von ursprünglich 13. Ablaufdaten: kein Vorlauf erreicht (Guthaben-Zeile 12:50 UTC entfernt). Quick-Start unberührt.
 
 ### 2026-10-08 12:35 UTC – [ADR-ANGELEGT] ADR-042 Phasenende 4 / Wucherung – gezielt umbauen
 
