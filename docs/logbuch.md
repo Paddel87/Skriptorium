@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 03:45 UTC – [ERLEDIGT] Schritt 4.16 Import – Gegenstände ohne einleitenden Text
+
+- Auf Anweisung des Eigentümers: PR #42 nach grüner CI (8/8) gemergt, CI auf `main` grün, `edc24ad` eingespielt. Container `healthy`; von außen `/api/health` 200, `/api/worlds` 401, `/` 200; im Container: `## Runenklinge` + `### Zweck`/`### Verwendung` → ein Eintrag „Runenklinge“.
+
 ### 2026-10-08 03:30 UTC – [BEOBACHTUNG] 4.16 angelegt und umgesetzt (vor Deployment)
 
 - Eigentümer: „Ja, 4.16 bauen“. Ausnahme in Regel 2 des Imports: Überschrift mit ausschließlich den Unterabschnitten Zweck/Verwendung/Auswirkung (auch mit `**…:**`) ist ein Eintrag. Untergruppen mit anderen Unterüberschriften und Kategorie-Überschriften bleiben Gruppen (Tests). pytest 410 (Coverage 99,78 %, `markdown.py` 100 %).

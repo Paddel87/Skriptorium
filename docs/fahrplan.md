@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-10-08
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** 4.13 eingespielt, letzter Nachweis offen (Code im neuen Format auf dem VPS erzeugen, Eigentümer). 4.14 und 4.15 erledigt 2026-10-08; 4.16 Import-Fehler in Arbeit. Danach D.11, dann 4.8
+- **Aktiver Schritt:** 4.13 eingespielt, letzter Nachweis offen (Code im neuen Format auf dem VPS erzeugen, Eigentümer). 4.14, 4.15, 4.16 erledigt 2026-10-08. Danach D.11, dann 4.8
 - **Nächster Schritt:** 4.8 30-Minuten-Test durch den Eigentümer (mit Stoppuhr; danach erstes echtes Kapitel, Versionsvergabe und Vision-Abgleich). Davor D.11 (Sicherungs-Zugangsdaten außerhalb des Servers, spätestens 2026-10-31). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. D.8 verworfen (ADR-040)
 - **Offene STOPP-Situationen:** keine
 
@@ -377,7 +377,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.16: Import – Gegenstände ohne einleitenden Text
 
-- **Status:** IN ARBEIT (seit 2026-10-08) – Ausnahme in Regel 2 des Markdown-Imports: Eine Überschrift, deren Unterüberschriften nur Zweck, Verwendung, Auswirkung sind, ist ein Eintrag (`canon/importers/markdown.py`). pytest 410, `markdown.py` 100 %. Offen: Merge, Deployment
+- **Status:** ERLEDIGT (2026-10-08) – Ausnahme in Regel 2 des Markdown-Imports: Eine Überschrift, deren Unterüberschriften nur Zweck, Verwendung, Auswirkung sind, ist ein Eintrag (`canon/importers/markdown.py`). pytest 410, `markdown.py` 100 %. PR #42 gemergt (`edc24ad`), eingespielt 2026-10-08 (healthy, von außen geprüft; im Container zerlegt `parse_markdown` einen Gegenstand mit Zweck/Verwendung ohne Einleitung zu genau einem Eintrag)
 - **Phasentyp-Kontext:** STABILISIERUNG (Fehlerbehebung aus dem Funktionstest 2026-10-08)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein – Fehlerbehebung innerhalb von `canon`, Schnittstelle unverändert; Regel-Ausnahme vom Eigentümer gewollt („4.16 bauen“)
