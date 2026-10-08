@@ -29,6 +29,21 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 02:25 UTC – [REIFEGRAD-WECHSEL] NFR Kanon-Treue → BELASTBAR
+
+- 4.8 Teil 2: Eigentümer hat ein erstes echtes Kapitel in einer eigenen Welt geschrieben und redigiert – „Keine Widersprüche gefunden“, Modell qwen3.8-max-0902. Akzeptanzkriterium (höchstens ein Widerspruch) erfüllt; Beförderung nach ADR-024 (Eskalations-Auslöser 4 – Entscheidungs-Klasse aktiv, Opus 5.5).
+- Einschränkung festgehalten: Die Messung gilt für qwen3.8-max, nicht für das Startmodell grok-4.7, das die Inhalte sperrte.
+- STOPP Phasen-Wucherung im Fahrplan hinterlegt (Befund Modell-Sperren wäre 17. Schritt); Neuplanung in der nächsten Session. D.11-Angaben des Eigentümers stehen aus.
+
+### 2026-10-08 02:15 UTC – [BEOBACHTUNG] Echte Welten: grok-4.7 und grok-4.6 sperren, Schreiben mit qwen3.8-max
+
+- Eigentümer: musste wegen Schutzregeln der Modelle von grok-4.7 auf grok-4.6 und weiter auf qwen3.8-max-0902 (Notfall-Reserve nach ADR-011) wechseln; grok-4.7 „perspektivisch auch noch sinnvoll“.
+- Verbrauchsdaten Oktober (lesend, nur Metadaten): 10 Schreib-Anfragen, alle `ergebnis: ok` – grok-4.7 5, grok-4.6 3, qwen 2; 0,13 $. Kein `abgelehnt`: Die Sperren kamen offenbar als normaler Text zurück, nicht als Ablehnung des Anbieters – das Skriptorium erkennt sie daher nicht und bietet keinen Modellwechsel an. Wie die Sperre aussah, ist beim Eigentümer erfragt.
+- Nachfrage beantwortet: Die Sperre stand **als Text im Vorschlag** („wird nicht geschrieben“), kein roter Fehlerhinweis. Bestätigt die Vermutung: Ablehnung im Text wird nicht erkannt; mit „Übernehmen“ könnte sie sogar ins Manuskript geraten.
+- Auf dem Server zwei echte Welten importiert (je alle sechs Kategorien), eine Geschichte „test“.
+- Keine Sofortmaßnahme nötig: Das Modell wird je Geschichte gespeichert (3.9). Eine Änderung der Modell-Reihenfolge (ADR-010/011) oder eine Erkennung von Sperren im Text wäre ein neuer Schritt – in Phase 4 der 17. und damit Stopp mit Neuplanung (`CLAUDE.md` Abschnitt 8, Kriterium 9).
+- Korrektur: Die Uhrzeiten der Einträge seit „4.16 angelegt“ (03:30–04:10 UTC) waren geschätzt und zu spät; laut Server war es bei diesem Eintrag 02:13 UTC.
+
 ### 2026-10-08 04:10 UTC – [BEOBACHTUNG] 4.8 Teil 1 (FR-022) nach Einschätzung erfüllt
 
 - Nach dem Sessionende. Eigentümer: „4.8 kann ich sagen, ist problemlos in unter 30 Minuten zu schaffen.“ Vorgelegt: A Einschätzung genügt / B neu messen mit Stoppuhr. Entscheidung: **A**. FR-022 als erfüllt eingetragen, ausdrücklich ohne Messung; im Funktionstest gab es Rückfragen (Feld, Import-Material), deren Ursachen mit 4.15, 4.16 und `docs/import-prompts.md` behoben sind.
