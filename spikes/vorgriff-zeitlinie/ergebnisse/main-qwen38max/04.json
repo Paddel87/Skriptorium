@@ -1,0 +1,12 @@
+{
+  "variante": "main-qwen38max",
+  "schritt": 4,
+  "anweisung": "Gunda warnt mich vor Fenn Asch: Er stottert, wenn er lügt, und er stottert viel. Sie sagt, Asch habe gestern gefragt, ob die Varn wieder in der Stadt ist.",
+  "modell": "qwen/qwen3.8-max-0902",
+  "woerter": 356,
+  "sekunden": 59.3,
+  "token_ein": 9338,
+  "token_aus": 2111,
+  "kosten_usd": 0.01639242,
+  "finish_reason": "stop"
+}

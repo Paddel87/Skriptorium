@@ -1,0 +1,12 @@
+{
+  "variante": "main-qwen38max",
+  "schritt": 6,
+  "anweisung": "Nach der fünften Nacht kommt Pell mit seinem Bericht: vier Männer in der Wachstube, Wachwechsel zur zweiten Glocke nach Mitternacht, und einmal ist Asch nachts mit einem Bündel aus dem Haus gegangen.",
+  "modell": "qwen/qwen3.8-max-0902",
+  "woerter": 518,
+  "sekunden": 38.8,
+  "token_ein": 11091,
+  "token_aus": 1224,
+  "kosten_usd": 0.01326402,
+  "finish_reason": "stop"
+}
