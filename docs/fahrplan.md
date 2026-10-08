@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 5.9 Kapitel öffnet am Textende – gemergt mit PR #63 (`32c027d`), Deployment auf Wunsch des Eigentümers später; wartet auf Deployment und Bestätigung auf Desktop und Smartphone (5.7, 5.8 und 5.15 am 2026-10-08 `[ERLEDIGT]`)
-- **Nächster Schritt:** 5.9 deployen und abnehmen; 5.11 (Eingangskriterium: Angaben des Eigentümers, wo er den Überblick verliert); danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** 5.9 und 5.17 deployen und abnehmen; 5.11 (Eingangskriterium: Angaben des Eigentümers, wo er den Überblick verliert); danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -116,11 +116,11 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Ziel:** Das Skriptorium ist für das tägliche Schreiben des Eigentümers alltagstauglich – Modelle sperren seine Texte nicht, die KI schreibt nahtlos weiter, die Oberfläche ist übersichtlich und intuitiv (gezielter Umbau nach ADR-042) –, die Soll-Anforderungen und die Kann-Anforderung sind umgesetzt oder begründet zurückgestellt, und die nächste Ausbaustufe ist geplant.
 
-**Abschlusskriterium:** Schritte 5.1–5.16 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
+**Abschlusskriterium:** Schritte 5.1–5.17 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
 
 **Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`. Der Umbau betrifft nur `ui` (Seitenaufbau, 5.11) und Randstellen in `ai_gateway`/`api` (Modell-Katalog, 5.12); neue gespeicherte Daten (5.6, 5.13) werden per ADR festgelegt.
 
-**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-08: 16 Schritte (+5.14, ADR-043; +5.15 und +5.16 Befunde des Eigentümers).
+**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-08: 17 Schritte (+5.14, ADR-043; +5.15, +5.16 und +5.17 Befunde des Eigentümers).
 
 **Reihenfolge (ADR-042):** zuerst die kleinen Abhilfen 5.7, 5.8, 5.9, dann 5.10, der Umbau der Oberfläche 5.11, danach 5.16, 5.6, 5.12, 5.13; anschließend 5.2 (Smartphone, auf dem neuen Aufbau), 5.1, 5.3, 5.4, dann 5.14 (Go-Live-Prüfung) und 5.5.
 
@@ -382,6 +382,22 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-08 auf Befund des Eigentümers. Wucherungs-Prüfung: Phase 5 jetzt 16 Schritte (ursprünglich 13, Schwelle 26) – keine Wucherung.
+
+#### 5.17: Leerzeichen nach der Auswahl im `@`-Menü
+
+- **Status:** IN ARBEIT (seit 2026-10-08) – umgesetzt auf Branch `fix/5.17-leerzeichen-nach-at`: Die Auswahl schreibt `@Name` und ein Leerzeichen dahinter, außer es folgt schon ein Leerzeichen oder ein Satzzeichen (`withSpace` in `InstructionEditor.tsx`). Tests: `vitest` 106 bestanden, 98,59 % Zeilen; Playwright 9 bestanden (Test „@ menu …“ tippt jetzt direkt nach der Auswahl weiter). Offen: CI, Merge, Deployment, Bestätigung des Eigentümers
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 3.5
+- **Freigabepflichtig:** nein (Fehlerbehebung in `ui`)
+- **Empfohlene Klasse:** Routine – kleine Fehlerbehebung mit Tests.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-013
+- **Zu tun:** Befund des Eigentümers 2026-10-08: Wählt er einen Kanon-Begriff im `@`-Menü und schreibt sofort weiter, hängt das nächste Wort direkt am Namen (`@Kaelging`), und der Eintrag gilt nicht mehr als genannt. Nach der Auswahl automatisch ein Leerzeichen setzen.
+- **Akzeptanzkriterien:** Test: Auswahl und sofortiges Weiterschreiben ergibt `@Name wort`, der Eintrag wird herangezogen; kein doppeltes Leerzeichen, keins vor Satzzeichen.
+- **Betroffene Module:** ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-08 auf Befund des Eigentümers. Wucherungs-Prüfung: Phase 5 jetzt 17 Schritte (ursprünglich 13, Schwelle 26) – keine Wucherung.
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 

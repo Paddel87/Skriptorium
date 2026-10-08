@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 22:30 UTC – [GELÖST] 5.17 Leerzeichen nach der Auswahl im `@`-Menü
+
+- **Befund des Eigentümers:** Nach der Auswahl eines Kanon-Begriffs und sofortigem Weiterschreiben klebt das nächste Wort am Namen, der Begriff wird nicht erkannt (`referencedEntries` verlangt nach dem Namen ein Nicht-Wortzeichen).
+- **Behebung:** eigene `apply`-Funktion `withSpace` im `@`-Menü – Name plus Leerzeichen, außer es folgt schon Leerzeichen oder Satzzeichen; über `insertCompletionText` und `pickedCompletion` aus `@codemirror/autocomplete` (vorhandene Abhängigkeit).
+- **Reibung:** Drei Tests verglichen die Menü-Einträge mit `toEqual` und brachen am neuen Feld `apply` → `toMatchObject`; ein Komponententest und der End-to-End-Test tippten selbst ein Leerzeichen nach der Auswahl – angepasst, der End-to-End-Test prüft jetzt genau den gemeldeten Fall.
+- **Läufe:** `vitest` 106 bestanden, 98,59 % Zeilen / 96,19 % Zweige; Playwright 9 bestanden.
+- Neuer Schritt 5.17; Phase 5 jetzt 17 Schritte (Schwelle 26). PR #65 (5.10) gemergt (`cc70fdc`).
+
 ### 2026-10-08 22:15 UTC – [ERLEDIGT] 5.10 Kosten je Vorschlag – ohne Code-Änderung
 
 - PR #64 (Befunde zum Kanon) nach grüner CI gemergt (`ec0ed81`).

@@ -151,7 +151,8 @@ test("@ menu names an entry; taken-over AI text is appended and saved", async ({
   await expect(page.getByRole("option", { name: /Mira/ })).toBeVisible();
   await waitForCompletionInteraction(page);
   await page.keyboard.press("Enter");
-  await page.keyboard.type(" kommt.");
+  // The space behind the name comes with the choice (step 5.17).
+  await page.keyboard.type("kommt.");
   await expect(page.getByText("Herangezogen: Mira")).toBeVisible();
 
   await page.getByRole("button", { name: "Weiterschreiben" }).click();

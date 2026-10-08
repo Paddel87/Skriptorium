@@ -432,7 +432,7 @@ describe("WritingPanel", () => {
     await waitFor(() => {
       expect(acceptCompletion(view)).toBe(true);
     });
-    expect(view.state.doc.toString()).toBe("Mit @kael, dann @Grauwasser");
+    expect(view.state.doc.toString()).toBe("Mit @kael, dann @Grauwasser ");
     expect(
       await screen.findByText("Herangezogen: Kael, Grauwasser"),
     ).toBeDefined();
@@ -440,7 +440,7 @@ describe("WritingPanel", () => {
     await user.click(screen.getByRole("button", { name: "Weiterschreiben" }));
     await waitFor(() => {
       expect(calls.find((c) => c.method === "POST")?.body).toEqual({
-        instruction: "Mit @kael, dann @Grauwasser",
+        instruction: "Mit @kael, dann @Grauwasser ",
         references: ["kael", "grauwasser"],
         model: "x-ai/grok-4.7",
         length: "mittel",

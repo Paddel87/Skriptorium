@@ -241,7 +241,7 @@ describe("mentions and story entries with guests", () => {
       [ENTRY, KING],
       "salzmark",
     );
-    expect(result?.options).toEqual([
+    expect(result?.options).toMatchObject([
       { label: "Kael", detail: "Figur" },
       { label: "Nebelkönig", detail: "Figur · Gast" },
     ]);
