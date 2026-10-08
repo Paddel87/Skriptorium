@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 09:05 UTC – [BEOBACHTUNG] Wunsch Eingabe-Verlauf als umschaltbare Ansicht; Kosten je Vorschlag fehlen
+
+- **Gesamturteil des Eigentümers:** Die Manuskript-Ansicht als reiner Fließtext ist „schon mal nicht schlecht“. Einleitungs- und Schlusssätze (Befund 08:35 UTC) sind ärgerlich, weil sie beim Redigieren geprüft werden müssen.
+- **Wunsch Eingabe-Verlauf:** Ihm fehlt der Verlauf seiner Anweisungen, wie er ihn aus TypingMind kennt. Bekräftigt: Die Anweisungen gehören **nicht** ins Manuskript (FR-012: „Der Wechsel ist das Manuskript“). Gewünscht ist eine bei Bedarf umschaltbare Ansicht Chat (Autor ↔ KI) / Manuskript. Bedingung des Eigentümers: Alte Anweisungen werden beim Weiterschreiben **nicht** erneut an die KI geschickt (Token sparen, Vision 4). Befund im Code: Anweisungen werden heute nirgends gespeichert (nur in `api/writing_routes.py` und `api/flows/writing.py` durchgereicht); `manuscript` und `storage` kennen sie nicht. Ein Verlauf bräuchte also neue gespeicherte Daten (Datenmodell, `CLAUDE.md` Abschnitt 4 Kategorie 4) und eine neue Ansicht in `ui`. Abgleich nötig mit Vision Abschnitt 5/8 („Chat-Fokus bewusst nicht übernehmen“, „kein Chat getrennt vom Manuskript“, requirements Abschnitt „offene Fragen“ Nr. 2). Ein Verlauf nur zum Ansehen, der nicht in die Anfrage eingeht, widerspricht dem nach erstem Eindruck nicht, ist aber eine Entscheidung des Eigentümers. Neues Feature, freigabepflichtig.
+- **Kosten je Vorschlag fehlen:** Unter dem Vorschlag sieht der Eigentümer Eingabe- und Ausgabe-Token, aber keine Kosten. Befund im Code: Die Kosten werden bei OpenRouter angefragt (`"usage": {"include": True}` in `ai_gateway/openrouter.py`) und angezeigt, wenn sie gemeldet werden (`describeUsage` in `ui/src/views/WritingPanel.tsx`: „Kosten … $“, sonst „Kosten nicht gemeldet“). Die Verbrauchsdaten für Oktober enthalten eine Summe von 0,13 $, also kamen zumindest manche Kosten an. Ob die Zeile beim Eigentümer „Kosten nicht gemeldet“ zeigt oder ganz fehlt, ist erfragt; Ursache offen.
+
+Landeplatz: beide als Eingaben der Neuplanung im STOPP-Block von Phase 4.
+
 ### 2026-10-08 08:50 UTC – [BEOBACHTUNG] Einleitungs- und Schlusssätze bei qwen und grok
 
 - Nachtrag zu Befund 2 (08:35 UTC), Eigentümer: tritt „sowohl mit qwen als auch mit grok“ auf (welche grok-Version, ist nicht genannt). Damit liegt die Ursache eher nicht an einem Modell. Die Vermutung „Rahmen verlangt keinen nahtlosen Anschluss“ wird gestützt, ist aber weiter nicht belegt. Ein Probeschreiben mit Rahmen-Ergänzung sollte beide Modelle abdecken.

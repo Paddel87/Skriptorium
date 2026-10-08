@@ -27,7 +27,12 @@ Kontext: Phase 4 hat 16 Schritte (ursprünglich 8). Befund 2026-10-08: grok-4.7 
   ganzen Text – Editor ohne Höhenbegrenzung, Schreib-Bereich darunter (ui);
   (b) jede Fortschreibung der KI beginnt mit Einleitung (Ort, Lage) und endet mit
   ähnlichem Schlusssatz – Rahmen verlangt keinen nahtlosen Anschluss (context),
-  Ursache vermutet, tritt bei qwen und grok auf, Probeschreiben mit beiden nötig.
+  Ursache vermutet, tritt bei qwen und grok auf, Probeschreiben mit beiden nötig;
+  (c) Wunsch: Verlauf der eigenen Anweisungen als umschaltbare Chat-Ansicht neben
+  dem Manuskript, ohne erneutes Senden alter Anweisungen – neues Feature, braucht
+  gespeicherte Anweisungen (Kategorie 4) und Vision-Abgleich (Vision 5/8, FR-012);
+  (d) Kosten je Vorschlag beim Eigentümer nicht sichtbar, obwohl angefragt und
+  angezeigt, sofern gemeldet – Ursache offen (Logbuch 09:05 UTC).
 Benötigt: Neuplanung von Phase 4, Vision-Abgleich, Pflichtfrage „Weiterbauen, umbauen
   oder neu aufsetzen?“ (CLAUDE.md Abschnitt 12)
 Vorgeschlagene Auflösung: Optionen – Sperre im Text erkennen (wie Hinweis 4.14) /

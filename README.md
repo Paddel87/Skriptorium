@@ -87,7 +87,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **Neuplanung Phase 4:** Befunde aus der Nutzung (Modell-Sperren im Text, Scrollen beim Wiedereinstieg, Einleitungs- und Schlusssätze der KI) einplanen – Phase 4 hat die Wucherungs-Schwelle erreicht.
+- **Neuplanung Phase 4:** Befunde aus der Nutzung (Modell-Sperren im Text, Scrollen beim Wiedereinstieg, Einleitungs- und Schlusssätze der KI, Kosten je Vorschlag) und den Wunsch nach einem Anweisungs-Verlauf einplanen – Phase 4 hat die Wucherungs-Schwelle erreicht.
 - **4.8:** Versionsvergabe v0.1.0 und Vision-Abgleich (30-Minuten-Test und erstes echtes Kapitel erfüllt).
 - **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
