@@ -115,6 +115,7 @@ Privates Einzelprojekt; die Umsetzung erfolgt durch einen KI-Coding-Agent nach d
 | [`docs/blockers.md`](docs/blockers.md) | Aktive Blocker und gelöste Probleme |
 | [`docs/logbuch.md`](docs/logbuch.md) | Chronologisches Arbeitsprotokoll |
 | [`docs/research/`](docs/research/) | Bestandsprüfung, Versions-Verifikation, Modell-Eignungstest |
+| [`docs/import-prompts.md`](docs/import-prompts.md) | Prompts, mit denen eine KI vorhandenes Welt-Material oder einen bestehenden Chat ins Import-Format bringt |
 | [`CHANGELOG.md`](CHANGELOG.md) | Versionshistorie |
 
 ## Lizenz

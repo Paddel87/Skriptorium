@@ -29,6 +29,23 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 03:15 UTC – [GELÖST] Welt aus bestehendem Chat übernommen
+
+- Mit korrigiertem Prompt (Pflicht-Satz unter jeder `##`-Überschrift, keine Eintragsnamen gleich Kategoriewörtern, keine Abfrage der Agentenanweisung): Import beim Eigentümer gelungen – „Dieser Prompt ist sehr wertvoll.“ Beide Prompts (A: aus Welt-Material, B: am Ende eines Chats) dauerhaft in `docs/import-prompts.md` abgelegt.
+- Lehre: Prompts für den Import vor der Weitergabe mit `parse_markdown` gegen ein Beispiel prüfen – das hätte das Zerfallen der Gegenstände vorher gezeigt.
+
+### 2026-10-08 03:00 UTC – [BEOBACHTUNG] Fehler im Import: Gegenstände mit Zweck/Verwendung/Auswirkung zerfallen
+
+- Eigentümer: beim Import sehr oft Einträge „Zweck“, „Verwendung“, „Auswirkung“ als Gegenstand vorgeschlagen, ständig Konflikte und Überschreiben. Nachgestellt mit `parse_markdown`: `## Runenklinge` ohne eigenen Text, direkt gefolgt von `### Zweck` usw., gilt nach Regel 2 aus 2.4 („Überschrift ohne eigenen Text mit Unterüberschriften = Gruppe“) als Gruppe → die Unterabschnitte werden Einträge; der eigentliche Gegenstand fehlt. Ausgelöst durch den von der KI gelieferten Prompt, der genau dieses Muster verlangt (FR-003-Abschnitte).
+- Folge auf der Produktion (vermutet, nicht geprüft): Einträge „Zweck“, „Verwendung“, „Auswirkung“ mit dem Text des zuletzt importierten Gegenstands; Gegenstände selbst fehlen.
+- Sofort-Abhilfe an den Eigentümer: Prompt-Zeile mit Pflicht-Einleitungssatz unter jeder `##`-Überschrift. Dauerhafte Behebung als 4.16 vorgeschlagen (wartet auf Zustimmung).
+
+### 2026-10-08 02:40 UTC – [BEOBACHTUNG] Welt aus bestehender Geschichte per Prompt: unbrauchbar
+
+- Eigentümer wollte eine vorhandene Welt übernehmen. Geliefert: (1) Prompt zur Umwandlung von Welt-Material ins Import-Format, (2) Prompt zur Auswertung eines bestehenden Chats samt Agentenanweisung (am Ende des Chats einzufügen). Urteil des Eigentümers zu (2): „totaler Müll“ – Ursache noch nicht geklärt.
+- Korrektur einer eigenen Falschaussage: Ein Abschnitt „# Offene Punkte“ im Import-Material wird **nicht** ignoriert, sondern zu einem Eintrag ohne Kategorie, der `apply_import` mit `InvalidInput` abbrechen lässt (`canon/service.py`). Dem Eigentümer mitgeteilt.
+- Bezug: FR-005 (Welt-Material übernehmen), V.4 (Import aus TypingMind, verschoben, Landeplatz 5.5), ADR-009 (keine Übernahme von Geschichten).
+
 ### 2026-10-08 02:15 UTC – [ERLEDIGT] Schritt 4.15 Bedienhinweise im Schreib-Bereich
 
 - Eigentümer sah zunächst keinen Hinweis: Er war im vorhandenen Kapitel mit Text (seit dem Deployment kein neues Kapitel auf dem Server – lesend geprüft), dort ist der Satz absichtlich verborgen. In einem neuen, leeren Kapitel: „Jetzt sehe ich es, passt so“. Ob zusätzlich ein hartes Neuladen nötig war, ist unbekannt.
