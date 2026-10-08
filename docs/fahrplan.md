@@ -27,7 +27,7 @@ Kontext: Phase 4 hat 16 Schritte (ursprünglich 8). Befund 2026-10-08: grok-4.7 
   ganzen Text – Editor ohne Höhenbegrenzung, Schreib-Bereich darunter (ui);
   (b) jede Fortschreibung der KI beginnt mit Einleitung (Ort, Lage) und endet mit
   ähnlichem Schlusssatz – Rahmen verlangt keinen nahtlosen Anschluss (context),
-  Ursache vermutet, Probeschreiben nötig.
+  Ursache vermutet, tritt bei qwen und grok auf, Probeschreiben mit beiden nötig.
 Benötigt: Neuplanung von Phase 4, Vision-Abgleich, Pflichtfrage „Weiterbauen, umbauen
   oder neu aufsetzen?“ (CLAUDE.md Abschnitt 12)
 Vorgeschlagene Auflösung: Optionen – Sperre im Text erkennen (wie Hinweis 4.14) /

@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 08:50 UTC – [BEOBACHTUNG] Einleitungs- und Schlusssätze bei qwen und grok
+
+- Nachtrag zu Befund 2 (08:35 UTC), Eigentümer: tritt „sowohl mit qwen als auch mit grok“ auf (welche grok-Version, ist nicht genannt). Damit liegt die Ursache eher nicht an einem Modell. Die Vermutung „Rahmen verlangt keinen nahtlosen Anschluss“ wird gestützt, ist aber weiter nicht belegt. Ein Probeschreiben mit Rahmen-Ergänzung sollte beide Modelle abdecken.
+
 ### 2026-10-08 08:40 UTC – [SESSIONENDE] Befunde aus der Nutzung festgehalten
 
 - **Dauer:** 08:23 – 08:40 UTC.
