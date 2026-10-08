@@ -5,7 +5,7 @@ import {
 } from "@codemirror/autocomplete";
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { Compartment, EditorState } from "@codemirror/state";
-import { EditorView, keymap } from "@codemirror/view";
+import { EditorView, keymap, placeholder } from "@codemirror/view";
 import { useEffect, useRef } from "react";
 import { CATEGORIES, type CanonEntry } from "../api";
 import { menuItems } from "../references";
@@ -22,6 +22,7 @@ export function InstructionEditor({
   world,
   labelledBy,
   disabled,
+  example = "",
 }: {
   value: string;
   onChange: (text: string) => void;
@@ -31,6 +32,8 @@ export function InstructionEditor({
   world?: string;
   labelledBy: string;
   disabled: boolean;
+  /** Grey example shown while the field is empty (step 4.15). */
+  example?: string;
 }) {
   const host = useRef<HTMLDivElement>(null);
   const view = useRef<EditorView | null>(null);
@@ -39,6 +42,7 @@ export function InstructionEditor({
   const worldRef = useRef(world);
   const initialValue = useRef(value);
   const initialDisabled = useRef(disabled);
+  const initialExample = useRef(example);
   const editable = useRef(new Compartment());
 
   useEffect(() => {
@@ -66,6 +70,7 @@ export function InstructionEditor({
             icons: false,
           }),
           EditorView.lineWrapping,
+          placeholder(initialExample.current),
           editable.current.of(EditorView.editable.of(!initialDisabled.current)),
           EditorView.contentAttributes.of({
             "aria-labelledby": labelledBy,
@@ -121,9 +126,23 @@ export function mentions(
   if (/[\p{L}\p{N}]/u.test(before)) {
     return null;
   }
-  const items = menuItems(typed.text.slice(1), entries);
+  const typedName = typed.text.slice(1);
+  const items = menuItems(typedName, entries);
   if (items.length === 0) {
-    return null;
+    // After a space the author is most likely writing on behind a finished name: stay quiet.
+    if (/\s/u.test(typedName)) {
+      return null;
+    }
+    // Otherwise say why nothing is offered instead of staying silent (step 4.15).
+    const why =
+      entries.length === 0
+        ? "Diese Welt hat noch keine Kanon-Einträge – lege sie in der Welt an oder importiere sie."
+        : `Kein Eintrag beginnt mit „${typedName}“.`;
+    return {
+      from: typed.from + 1,
+      filter: false,
+      options: [{ label: why, type: "text", apply: () => undefined }],
+    };
   }
   return {
     from: typed.from + 1,

@@ -212,6 +212,7 @@ export function ChapterEditor({
         world={chapter.world}
         story={chapter.story}
         chapter={chapter.number}
+        chapterEmpty={text.trim() === ""}
         guests={story.guest_links}
         canonRevision={canonRevision}
         storyModel={story.model}
