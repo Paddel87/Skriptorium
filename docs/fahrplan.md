@@ -35,8 +35,9 @@ Kontext: Phase 4 hat 16 Schritte (ursprünglich 8). Befund 2026-10-08: grok-4.7 
   angezeigt, sofern gemeldet – Ursache offen (Logbuch 09:05 UTC);
   (e) Oberfläche insgesamt schwer zu überblicken, schon mit wenigen Welten –
   konkrete Stellen erfragen; Ziel des Eigentümers: intuitive Bedienung, Gestaltung
-  möglicherweise nach Material Design (Bibliothek = Kategorie 3, oder eigenes CSS)
-  (Logbuch 11:20 UTC); (f) Wunsch: KI-gestützter Weltenbauer (Figuren, Regeln,
+  möglicherweise nach Material Design – entschieden: erst Seitenaufbau und Abläufe
+  neu ordnen (Schritt aus der Neuplanung), Gestaltung später (V.8) (Logbuch 11:20,
+  11:25 UTC); (f) Wunsch: KI-gestützter Weltenbauer (Figuren, Regeln,
   Gegenstände mit Verwendung/Auswirkung im Gespräch definieren), bei Gegenständen
   mit Wissen aus dem Internet; Import bleibt – neues Feature, Kategorien 1/2/3,
   eher eigene Phase, Bezug 5.1 und 5.5 (Logbuch 09:20 UTC); (g) Wunsch:
@@ -516,8 +517,8 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich, nicht bloß Status-Update.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 5
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Die verschobenen Schritte V.1 bis V.7 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5; V.6 und V.7 ergänzt 2026-10-08, Wunsch des Eigentümers).
-- **Akzeptanzkriterien:** Jeder Schritt V.1–V.7 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
+- **Zu tun:** Die verschobenen Schritte V.1 bis V.8 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5; V.6 bis V.8 ergänzt 2026-10-08, Wünsche des Eigentümers).
+- **Akzeptanzkriterien:** Jeder Schritt V.1–V.8 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Fahrplan, ggf. ADRs
@@ -879,6 +880,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Betroffene Module:** canon, api, ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** ADR zum Format, Code, Tests
+- **Notizen:** –
+
+#### V.8: Gestaltung der Oberfläche (z. B. Material Design)
+
+- **Status:** VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 – nach der Neuordnung von Seitenaufbau und Abläufen, die die Neuplanung von Phase 4 als Schritt anlegt (Eigentümer 2026-10-08: „Erstmal Aufbau neu, UI später“)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** Schritt zur Neuordnung von Seitenaufbau und Abläufen (ID vergibt die Neuplanung von Phase 4)
+- **Freigabepflichtig:** ja, falls eine Komponenten-Bibliothek eingebunden wird (Kategorie 3, Lizenz Kategorie 8); sonst nein
+- **Empfohlene Klasse:** Entscheidung – Wahl zwischen Bibliothek und eigenem CSS (Eskalations-Auslöser 1 bei Bibliothek).
+- **Eingangskriterien:** neuer Seitenaufbau umgesetzt
+- **Anforderungen (ab Klasse M):** FR-019, FR-022 – Wunsch des Eigentümers 2026-10-08
+- **Zu tun:** Einheitliche Gestaltung, möglicherweise nach Material Design – über eine Komponenten-Bibliothek (Version und Lizenz nach Regel-001 und `CLAUDE.md` Abschnitt 15 prüfen) oder mit eigenem CSS nach den Material-Richtlinien.
+- **Akzeptanzkriterien:** Gestaltung auf allen Seiten einheitlich; Desktop und Smartphone bedienbar; Komponenten- und End-to-End-Tests grün.
+- **Betroffene Module:** ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ggf. ADR zur Bibliothek, Code, Tests
 - **Notizen:** –
 
 ---

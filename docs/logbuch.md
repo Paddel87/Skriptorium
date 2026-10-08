@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 11:25 UTC – [BEOBACHTUNG] Entscheidung: erst Seitenaufbau neu, Gestaltung später
+
+- Eigentümer: „Erstmal Aufbau neu, UI später.“ Folgt der vorgeschlagenen Reihenfolge aus 11:20 UTC.
+- Landeplatz: Die Neuordnung von Seitenaufbau und Abläufen legt die Neuplanung von Phase 4 als Schritt an (Eingabe (e) im STOPP-Block). Die Gestaltung (z. B. Material Design) ist V.8 `[VERSCHOBEN]`, Landeplatz 5.5, abhängig von diesem Schritt; 5.5 umfasst jetzt V.1–V.8.
+
 ### 2026-10-08 11:20 UTC – [BEOBACHTUNG] Ergänzung nach Sessionende: Bedienung muss intuitiv werden, Material Design als mögliche Gestaltung
 
 - Eigentümer: „UX muss intuitiv werden, UI könnte Material Design sein.“ Schärft Befund (e) Übersichtlichkeit (09:20 UTC) zu einem Ziel.
