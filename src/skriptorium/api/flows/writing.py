@@ -42,7 +42,13 @@ from skriptorium.ai_gateway import (
 )
 from skriptorium.api.usage import Kind
 from skriptorium.canon import CanonEntry, CanonService, Category
-from skriptorium.context import CONFLICT_MARKER, ContextBuilder, ContextTooLarge
+from skriptorium.context import (
+    CONFLICT_MARKER,
+    DEFAULT_LENGTH,
+    ContextBuilder,
+    ContextTooLarge,
+    Length,
+)
 from skriptorium.manuscript import ManuscriptService
 from skriptorium.storage import InvalidInput, NotFound
 
@@ -51,7 +57,11 @@ DEFAULT_MODEL: Final = next(iter(DEFAULT_MODELS))
 # Values of the acceptance runs in steps 1.1 and 3.2.
 MAX_OUTPUT_TOKENS: Final = 8000
 TEMPERATURE: Final = 0.8
-CONTINUE: Final = "Setze das Manuskript an seinem Ende fort."
+# "Weiter" without instruction: a small step, then the author's turn (owner, step 5.15).
+CONTINUE: Final = (
+    "Setze das Manuskript an seinem Ende fort: nur den unmittelbar nächsten Moment der Szene, "
+    "ohne Zeitsprung."
+)
 
 # Counts one AI request: kind, model, usage reported by the provider, outcome (ADR-023).
 UsageRecorder = Callable[[Kind, str, Usage | None, str], None]
@@ -68,7 +78,10 @@ class Scene:
 
 @dataclass(frozen=True)
 class WriteOrder:
-    """What the author asks for: an instruction, ``@``-references, optionally a new scene."""
+    """What the author asks for: an instruction, ``@``-references, optionally a new scene.
+
+    ``length`` is the length of the proposal the author chose (step 5.15).
+    """
 
     world: str
     story: str
@@ -77,6 +90,7 @@ class WriteOrder:
     references: tuple[str, ...] = ()
     scene: Scene | None = None
     model: str = DEFAULT_MODEL
+    length: Length = DEFAULT_LENGTH
 
 
 @dataclass(frozen=True)
@@ -124,6 +138,7 @@ def prepare_request(
             order.chapter,
             instruction,
             list(dict.fromkeys(references)),
+            length=order.length,
         )
     except ContextTooLarge as error:
         raise InvalidInput(str(error)) from error
