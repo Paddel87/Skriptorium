@@ -29,6 +29,16 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 02:15 UTC – [ERLEDIGT] Schritt 4.15 Bedienhinweise im Schreib-Bereich
+
+- Eigentümer sah zunächst keinen Hinweis: Er war im vorhandenen Kapitel mit Text (seit dem Deployment kein neues Kapitel auf dem Server – lesend geprüft), dort ist der Satz absichtlich verborgen. In einem neuen, leeren Kapitel: „Jetzt sehe ich es, passt so“. Ob zusätzlich ein hartes Neuladen nötig war, ist unbekannt.
+- Beobachtung ohne Befund: Die Startseite wird ohne `Cache-Control` ausgeliefert (nur `ETag`, `Last-Modified`); Browser dürfen sie heuristisch zwischenspeichern und nach einem Deployment kurz die alte Oberfläche zeigen. Kein belegter Fall – bei einem Auftreten als Schritt anlegen.
+- Einstieg ohne Hilfe (zweites Akzeptanzkriterium) wird in 4.8 mitbeobachtet; README nachgezogen.
+
+### 2026-10-08 02:05 UTC – [BEOBACHTUNG] 4.15 eingespielt
+
+- Eigentümer: „Ja, mergen“ auf die Frage „mergen und aufspielen?“ – als Zustimmung zu beidem gelesen. PR #39 nach grüner CI (8/8) gemergt, CI auf `main` grün, `b4f2225` nach Runbook eingespielt. Container `healthy`; von außen `/api/health` 200, `/api/worlds` 401, `/` 200; „So fängst du an“ im ausgelieferten JavaScript-Bündel vorhanden.
+
 ### 2026-10-08 01:50 UTC – [BEOBACHTUNG] 4.15 umgesetzt (vor Deployment)
 
 - Eigentümer wählte per Frage: Einstieg „Kurzanleitung + Beispiel“, `@` „Hinweis im Menü“ (beides Empfehlung).

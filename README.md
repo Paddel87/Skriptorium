@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 4 – Stabilisierung und erstes öffentliches Deployment (Stabilisierung), Schritte 4.1 bis 4.7, 4.9 bis 4.12 und 4.14 erledigt: Das Skriptorium läuft seit 2026-09-30 als Container auf dem vorhandenen netcup-VPS öffentlich unter HTTPS mit Passwortschutz (ADR-027, ADR-029 bis ADR-032, ADR-039), mit täglicher Sicherung nach MEGA S4 und erprobter Wiederherstellung (ADR-036), ohne eigene Erreichbarkeits-Überwachung (ADR-034); offen: 4.13 (letzter Nachweis), 4.15 Bedienhinweise, 4.8 30-Minuten-Test; Phase 3 – Schreiben mit KI abgeschlossen am 2026-09-27 (ADR-024: weiterbauen)
+- **Projektphase:** Phase 4 – Stabilisierung und erstes öffentliches Deployment (Stabilisierung), Schritte 4.1 bis 4.7, 4.9 bis 4.12, 4.14 und 4.15 erledigt: Das Skriptorium läuft seit 2026-09-30 als Container auf dem vorhandenen netcup-VPS öffentlich unter HTTPS mit Passwortschutz (ADR-027, ADR-029 bis ADR-032, ADR-039), mit täglicher Sicherung nach MEGA S4 und erprobter Wiederherstellung (ADR-036), ohne eigene Erreichbarkeits-Überwachung (ADR-034); offen: 4.13 (letzter Nachweis), 4.8 30-Minuten-Test; Phase 3 – Schreiben mit KI abgeschlossen am 2026-09-27 (ADR-024: weiterbauen)
 - **Version:** v0.0.0 – öffentlich erreichbar, Versionsvergabe (v0.1.0) nach dem 30-Minuten-Test
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-09-28
@@ -87,7 +87,6 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **4.15:** Bedienhinweise im Schreib-Bereich (Befunde aus dem Funktionstest).
 - **4.8:** 30-Minuten-Test durch den Eigentümer, danach erstes echtes Kapitel und Versionsvergabe.
 - **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (vor dem ersten echten Kapitel, spätestens 2026-10-31).
 
