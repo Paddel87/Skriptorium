@@ -26,7 +26,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 - **Projektphase:** Phase 4 – Stabilisierung und erstes öffentliches Deployment (Stabilisierung), Schritte 4.1 bis 4.7, 4.9 bis 4.12 und 4.14 bis 4.16 erledigt: Das Skriptorium läuft seit 2026-09-30 als Container auf dem vorhandenen netcup-VPS öffentlich unter HTTPS mit Passwortschutz (ADR-027, ADR-029 bis ADR-032, ADR-039), mit täglicher Sicherung nach MEGA S4 und erprobter Wiederherstellung (ADR-036), ohne eigene Erreichbarkeits-Überwachung (ADR-034); offen: 4.13 (letzter Nachweis), 4.8 30-Minuten-Test; Phase 3 – Schreiben mit KI abgeschlossen am 2026-09-27 (ADR-024: weiterbauen)
 - **Version:** v0.0.0 – öffentlich erreichbar, Versionsvergabe (v0.1.0) nach dem 30-Minuten-Test
 - **Status:** In Entwicklung
-- **Letzte Änderung:** 2026-09-28
+- **Letzte Änderung:** 2026-10-08
 - **Architektur-Reife:** Module, Schnittstellen, Datenmodell und Token-Budget BELASTBAR (ADR-013); Reaktionszeit BELASTBAR (Zielwerte nach Messung D.6 angepasst, ADR-035); Kanon-Treue VORLÄUFIG (erste Messung in 3.3, Messung beim Schreiben des Eigentümers in 4.8); Sicherheitsniveau und Schutzbedarf BELASTBAR (ADR-006, ADR-007); Observability BELASTBAR (Log-Zeile und Monatskosten, ADR-021, ADR-023); Bedrohungsmodell BELASTBAR (Prüfung 4.5); Host BELASTBAR (4.2); Netz BELASTBAR (Prüfungen von außen, 4.7); Backups BELASTBAR (4.3); Secrets im Betrieb VORLÄUFIG (Gate 4.6, BELASTBAR mit D.11)
 - **Aktive Blocker:** 0
 
