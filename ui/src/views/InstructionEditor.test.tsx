@@ -17,7 +17,7 @@ describe("mentions", () => {
       from: 6,
       options: [{ label: "Kael", detail: "Figur" }],
     });
-    expect(menu("@der F")?.options).toEqual([
+    expect(menu("@der F")?.options).toMatchObject([
       { label: "der Fährmann", detail: "→ Kael" },
     ]);
   });
@@ -44,6 +44,37 @@ describe("mentions", () => {
       hint.apply({ dispatch } as never, hint, 0, 0);
     }
     expect(dispatch).not.toHaveBeenCalled();
+  });
+});
+
+describe("withSpace", () => {
+  function choose(doc: string, cursor: number) {
+    const view = new EditorView({
+      state: EditorState.create({ doc, selection: { anchor: cursor } }),
+    });
+    const option = mentions(new CompletionContext(view.state, cursor, false), [
+      ENTRY,
+    ])?.options[0];
+    if (option === undefined || typeof option.apply !== "function") {
+      throw new Error("kein Eintrag angeboten");
+    }
+    option.apply(view, option, doc.lastIndexOf("@", cursor) + 1, cursor);
+    const result = {
+      text: view.state.doc.toString(),
+      head: view.state.selection.main.head,
+    };
+    view.destroy();
+    return result;
+  }
+
+  it("writes the name with a space behind it, so writing on stays apart (step 5.17)", () => {
+    expect(choose("Dann @Ka", 8)).toEqual({ text: "Dann @Kael ", head: 11 });
+    expect(choose("@Kging", 2)).toEqual({ text: "@Kael ging", head: 6 });
+  });
+
+  it("adds no second space and none before punctuation", () => {
+    expect(choose("@K ging", 2)).toEqual({ text: "@Kael ging", head: 5 });
+    expect(choose("@K, dann", 2)).toEqual({ text: "@Kael, dann", head: 5 });
   });
 });
 

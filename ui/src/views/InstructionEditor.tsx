@@ -1,5 +1,8 @@
 import {
   autocompletion,
+  insertCompletionText,
+  pickedCompletion,
+  type Completion,
   type CompletionContext,
   type CompletionResult,
 } from "@codemirror/autocomplete";
@@ -13,7 +16,8 @@ import { menuItems } from "../references";
 /**
  * Instruction field with the `@` menu (step 3.5, FR-013): typing `@` offers the entries of the
  * story's world and its guests from other worlds (step 3.7, FR-017) by name and alias; choosing
- * one writes `@Name` into the instruction. Plain text, nothing is rendered as HTML.
+ * one writes `@Name` into the instruction, followed by a space so writing on does not glue the
+ * next word to the name (step 5.17). Plain text, nothing is rendered as HTML.
  */
 export function InstructionEditor({
   value,
@@ -153,7 +157,30 @@ export function mentions(
           ? (CATEGORIES.find((c) => c.id === item.entry.category)?.label ?? "")
           : `→ ${item.entry.name}`;
       const guest = world !== undefined && item.entry.world !== world;
-      return { label: item.label, detail: guest ? `${detail} · Gast` : detail };
+      return {
+        label: item.label,
+        detail: guest ? `${detail} · Gast` : detail,
+        apply: withSpace,
+      };
     }),
   };
+}
+
+/**
+ * Write the chosen name and a space behind it, unless a space or a punctuation mark already
+ * follows; otherwise the next typed word would join the name and it would no longer count as
+ * named (step 5.17).
+ */
+function withSpace(
+  view: EditorView,
+  completion: Completion,
+  from: number,
+  to: number,
+): void {
+  const next = view.state.sliceDoc(to, to + 1);
+  const space = next === "" || /[\p{L}\p{N}]/u.test(next) ? " " : "";
+  view.dispatch({
+    ...insertCompletionText(view.state, completion.label + space, from, to),
+    annotations: pickedCompletion.of(completion),
+  });
 }
