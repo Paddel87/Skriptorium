@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 21:50 UTC – [BEOBACHTUNG] Rückmeldung des Eigentümers nach dem Schreiben mit `18ee07d`
+
+- Texte gehen einfacher, weniger Ablehnungen (grok-4.6 als Voreinstellung, 5.7) – teilweise „schon grenzwertig“. Kein Schritt angelegt; Erkennen von Weigerungen im Text bleibt Erkundung D.13.
+- Tokenverbrauch in der OpenRouter-Konsole „beeindruckend gering“ – bestätigt im Alltag das feste Budget der Kontext-Zusammenstellung (höchstens 30.000 Token statt 125.000–140.000 vorher, ADR-010, Vision 4).
+
 ### 2026-10-08 21:40 UTC – [BEOBACHTUNG] 5.9 umgesetzt – Kapitel öffnet am Textende
 
 - PR #62 nach grüner CI (8/8) gemergt (`0fb1fc5`) auf Anweisung „mergen und weiter mit 5.9“.
