@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** keiner
-- **Nächster Schritt:** 5.7 Startmodell grok-4.6 (Frage an den Eigentümer: grok-4.7 nachrangig oder aus der Reihenfolge), dann 5.8, 5.9, 5.10, 5.11, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** 5.7 Startmodell grok-4.6 (grok-4.7 bleibt wählbar; Live-Liste in 5.12), dann 5.8, 5.9, 5.10, 5.11, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -227,11 +227,11 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Status:** OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 4.8 (Phasenbeginn)
-- **Freigabepflichtig:** nein für den Wechsel des Startmodells (Teil von Option B, ADR-042); die Stellung von grok-4.7 (nachrangig oder aus der Reihenfolge) fragt der Schritt beim Eigentümer ab; Ergebnis als ADR `[ERKENNTNIS]` zu ADR-010/011
+- **Freigabepflichtig:** nein für den Wechsel des Startmodells (Teil von Option B, ADR-042). Stellung von grok-4.7 geklärt 2026-10-08: Eigentümer will die Modelle „live abrufen, wie bei OpenRouter geplant“ (5.12) statt die feste Liste umzusortieren; Reihenfolge der Schritte bleibt (5.12 nach 5.11). Bis dahin bleibt grok-4.7 wählbar, nur die Voreinstellung wechselt auf grok-4.6. Ergebnis als ADR `[ERKENNTNIS]` zu ADR-010/011
 - **Empfohlene Klasse:** Routine – kleine Konfigurationsänderung mit Tests; die Abfrage zu grok-4.7 ist eine einfache Wahl.
 - **Eingangskriterien:** keine
 - **Anforderungen (ab Klasse M):** FR-018 (Modelle ohne restriktive Inhaltsfilter), Vision 6
-- **Zu tun:** Befund 2026-10-08: grok-4.7 sperrt die echten Inhalte des Eigentümers stark, grok-4.6 ist „gut machbar“. Modell-Reihenfolge in `ai_gateway/models.py` auf grok-4.6 zuerst umstellen; Stellung von grok-4.7 nach Wahl des Eigentümers. Vorhandene Geschichten mit gespeichertem Modell bleiben unberührt (ADR-023).
+- **Zu tun:** Befund 2026-10-08: grok-4.7 sperrt die echten Inhalte des Eigentümers stark, grok-4.6 ist „gut machbar“. Modell-Reihenfolge in `ai_gateway/models.py` auf grok-4.6 zuerst umstellen; grok-4.7 bleibt in der Liste (danach grok-4.7, dann qwen3.8-max als Notfall-Reserve). Vorhandene Geschichten mit gespeichertem Modell bleiben unberührt (ADR-023).
 - **Akzeptanzkriterien:** neue Geschichten starten mit grok-4.6 (Test); ADR mit der neuen Reihenfolge; nach dem Deployment schreibt der Eigentümer eine Szene in einer echten Welt ohne Sperre.
 - **Betroffene Module:** ai_gateway, api
 - **Reifegrad-Wirkung:** keine
