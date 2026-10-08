@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 23:00 UTC – [BEOBACHTUNG] Merges #66, #67 und Deployment `6e563e8` (5.9, 5.17, 5.18)
+
+- Auf Anweisung „der Reihe nach mergen und deployen“. #66 und #67 hatten Konflikte in Fahrplan („Nächster Schritt“) und Logbuch mit dem 5.10-Abschluss aus #65 – `main` in den 5.17-Branch und diesen in den 5.18-Branch gemergt, beide Seiten behalten. #66 gemergt (`ed4bdb6`), #67 (`6e563e8`); CI auf `main` grün.
+- Deployment nach Runbook Abschnitt 7 (ADR-039): `REVISION` `6e563e8`, vorher `18ee07d` als `skriptorium:vorher`; nach gut einer Minute `(healthy)`; von außen `/api/health` 200, `/` 200, `/api/worlds` 401.
+- Offen: Bestätigung des Eigentümers für 5.9 (Desktop und Smartphone), 5.17, 5.18.
+
 ### 2026-10-08 22:45 UTC – [BEOBACHTUNG] 5.18 Begriffe im Anweisungsfeld hervorgehoben
 
 - **Befund des Eigentümers:** gewählte Kanon-Begriffe im Feld „Anweisung an die KI“ (nur dort) optisch hervorheben, damit er im Fließtext sieht, wo sie stehen.
