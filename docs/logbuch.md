@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 10:10 UTC – [BEOBACHTUNG] Kanon-Fortschreibung aus dem Text gilt dem Eigentümer als „für die Zukunft geplant“
+
+- Eigentümer fragte, ob „für die Zukunft“ eine Kanon-Fortschreibung geplant sei (Textstelle im Manuskript markieren, zum Kanon hinzufügen). Diese Funktion ist seit Schritt 3.8 (2026-09-27, FR-015) gebaut und eingespielt: Text im Editor markieren → Knopf „In den Kanon“ → „Bestehenden Eintrag ergänzen“ oder „Neuer Eintrag“.
+- Hinweis zur Auffindbarkeit (Bezug Befunde 08:35 und 09:20 UTC): Der Knopf liegt unter dem Editor; bei langem Kapitel also erst nach Scrollen durch den ganzen Text sichtbar und ohne Markierung ausgegraut. Dass der Eigentümer eine vorhandene Kernfunktion für geplant hält, ist ein Beleg für die Übersichtlichkeits-Probleme. Ob er den Knopf bisher nicht gefunden oder nur vergessen hat, ist erfragt.
+
 ### 2026-10-08 10:00 UTC – [BEOBACHTUNG] Eigentümer: TypingMind passte, SillyTavern überforderte
 
 - Auf die Erklärung „SillyTavern = Chat-Rollenspiel mit der Figur im Mittelpunkt, Skriptorium = fortlaufende Prosa mit dem Kanon im Mittelpunkt“: Das erklärt laut Eigentümer, warum er mit TypingMind jahrelang zurechtkam, SillyTavern ihn aber „maßlos überfordert“ hat. Die Rollenspiel-Mechanik war ihm fremd, und ihm war nicht klar, dass dort die Figur im Mittelpunkt steht und nicht der Kanon.
