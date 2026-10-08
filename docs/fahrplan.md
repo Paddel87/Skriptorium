@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 5.11 Seitenaufbau – Teil 1 Schreibseite eingespielt, wartet auf Prüfung des Eigentümers, Teile 2 und 3 offen; 5.19 Dunkelmodus eingespielt (`ebc7bc5`), wartet auf Prüfung (zwei Schritte gleichzeitig, weil beide nur auf die Prüfung warten) (5.7, 5.8 und 5.15 am 2026-10-08 `[ERLEDIGT]`)
-- **Nächster Schritt:** Prüfung 5.11 Teil 1 und 5.19 durch den Eigentümer; 5.11 Teil 2 Navigation (React Router 7.18.4, ADR-046), Teil 3 Kanon-Seite; 5.20; danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** Prüfung 5.11 Teil 1 und 5.19 durch den Eigentümer; 5.11 Teil 2 Chat-Aufbau mit Leiste links und Adressen je Ansicht (React Router 7.18.4, ADR-046); 5.2 Smartphone mit 5.21 PWA; 5.11 Teil 3 Kanon-Seite; 5.20; danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -22,12 +22,12 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 7 von 20 erledigt, 2 in Arbeit, 11 offen.**
+**Phase 5: 7 von 21 erledigt, 2 in Arbeit, 12 offen.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | ⚪ | 5.1 | Kanon-Vorschläge ohne `@` | offen | KI |
-| ⚪ | 5.2 | Bedienung am Smartphone | offen | KI |
+| ⚪ | 5.2 | Bedienung am Smartphone | offen | KI – nach 5.11 Teil 2, mit 5.21 |
 | ⚪ | 5.3 | Lesbare Dateien – Nachweis | offen | KI |
 | ⚪ | 5.4 | Zeitlinie mit Datumsangaben im Kalender der Welt (Kann) | offen | du: umsetzen ja/nein |
 | ⚪ | 5.5 | Planung der nächsten Ausbaustufe | offen | KI – zuletzt |
@@ -36,7 +36,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | 5.8 | Nahtloser Anschluss ohne Einleitung und Schlusssatz | erledigt | – |
 | ✅ | 5.9 | Kapitel öffnet am Textende | erledigt | – |
 | ✅ | 5.10 | Kosten je Vorschlag sichtbar | erledigt | – |
-| 🟠 | 5.11 | Seitenaufbau und Abläufe der Oberfläche neu ordnen | in Arbeit | du: Teil 1 prüfen · KI: Teil 2, 3 |
+| 🟠 | 5.11 | Seitenaufbau und Abläufe der Oberfläche neu ordnen | in Arbeit | du: Teil 1 prüfen · KI: Teil 2 Chat-Aufbau, Teil 3 |
 | ⚪ | 5.12 | Modell-Auswahl aktuell vom Anbieter | offen | KI |
 | ⚪ | 5.13 | Verlauf der Anweisungen als umschaltbare Ansicht | offen | KI |
 | ⚪ | 5.14 | Go-Live-Prüfung vor v1.0.0 | offen | KI – nach 5.1–5.13 |
@@ -46,6 +46,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | 5.18 | Herangezogene Begriffe im Anweisungsfeld hervorheben | erledigt | – |
 | 🟠 | 5.19 | Dunkelmodus | in Arbeit | du: prüfen |
 | ⚪ | 5.20 | Schnell nacheinander angelegte Kapitel | offen | KI |
+| ⚪ | 5.21 | Als App installierbar (PWA) | offen | KI – mit 5.2 |
 
 **Querschnitt (offen):**
 
@@ -164,11 +165,11 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Ziel:** Das Skriptorium ist für das tägliche Schreiben des Eigentümers alltagstauglich – Modelle sperren seine Texte nicht, die KI schreibt nahtlos weiter, die Oberfläche ist übersichtlich und intuitiv (gezielter Umbau nach ADR-042) –, die Soll-Anforderungen und die Kann-Anforderung sind umgesetzt oder begründet zurückgestellt, und die nächste Ausbaustufe ist geplant.
 
-**Abschlusskriterium:** Schritte 5.1–5.20 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
+**Abschlusskriterium:** Schritte 5.1–5.21 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
 
 **Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`. Der Umbau betrifft nur `ui` (Seitenaufbau, 5.11) und Randstellen in `ai_gateway`/`api` (Modell-Katalog, 5.12); neue gespeicherte Daten (5.6, 5.13) werden per ADR festgelegt.
 
-**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-08: 20 Schritte (+5.14, ADR-043; +5.15 bis +5.20 Befunde und Wünsche des Eigentümers).
+**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-08: 21 Schritte (+5.14, ADR-043; +5.15 bis +5.21 Befunde und Wünsche des Eigentümers).
 
 **Reihenfolge (ADR-042):** zuerst die kleinen Abhilfen 5.7, 5.8, 5.9, dann 5.10, der Umbau der Oberfläche 5.11, danach 5.16, 5.6, 5.12, 5.13; anschließend 5.2 (Smartphone, auf dem neuen Aufbau), 5.1, 5.3, 5.4, dann 5.14 (Go-Live-Prüfung) und 5.5.
 
@@ -204,7 +205,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests
-- **Notizen:** –
+- **Notizen:** Wunsch des Eigentümers 2026-10-08: prüfen, wie weit die Seite überhaupt für mobile Bedienung taugt; kommt nach 5.11 Teil 2 (Chat-Aufbau), zusammen mit 5.21 (PWA), vor 5.11 Teil 3.
 
 #### 5.3: Lesbare Dateien – Nachweis
 
@@ -350,6 +351,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Artefakte:** Entwurf (Skizze), Code, Tests, Logbuch-Eintrag; ggf. ADR zur Bibliothek
 - **Notizen:** Angelegt 2026-10-08 (Neuplanung, ADR-042). Größter Posten der Phase.
 - **Entwurf (Eigentümer, 2026-10-08, Auswahlfragen):** Überblick fehlt auf der Geschichtenseite, beim Finden von Welten und Geschichten, auf der Kanon-Seite und beim Wechsel Kanon ↔ Schreiben. Ständig griffbereit: Modell und Länge, Figuren-Schreibweise. **Teil 1 Schreibseite:** Mitte Kapitel, Editor, Knöpfe, darunter Schreibweise kurz („Ich-Perspektive · du führst … · ändern“), Anweisung, Modell, Länge; rechts eine einklappbare Leiste mit Kapiteln, Kanon zum Nachschlagen (Ziel des Klicks aus 5.16) und Geschichte (Gäste, Fakten, Zusammenfassung); am Smartphone als Menü. **Teil 2 Navigation:** Leiste links mit allen Welten, die geöffnete aufgeklappt mit ihren Geschichten und Kanon, „+ Geschichte“, „+ Welt“; eigene Adressen je Ansicht mit React Router (ADR-046), Zurück, Neuladen und Lesezeichen behalten die Stelle. **Teil 3 Kanon-Seite:** Suchfeld über Name und Alias, Kategorien als Filter, Liste links, Eintrag rechts zum Lesen und Bearbeiten.
+- **Entwurf geändert (Eigentümer, 2026-10-08, Auswahlfragen nach Teil 1):** Aufbau wie ein Chat (TypingMind/ChatGPT): Anweisungsfeld mit Modell und Länge fest am unteren Bildschirmrand, das Manuskript scrollt darüber; links eine einklappbare Leiste mit Welten, Geschichten und Kapiteln (ersetzt die Kapitel-Liste der rechten Leiste und die Navigation aus Teil 2); rechts bei Bedarf Kanon und Einstellungen der Geschichte; am Smartphone volle Breite für den Text, Leisten als Menüs. Wird in **Teil 2** eingearbeitet (baut Teil 1 um); danach 5.2 und 5.21, dann Teil 3 Kanon-Seite.
 
 #### 5.12: Modell-Auswahl aktuell vom Anbieter
 
@@ -495,6 +497,22 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-08 auf Wunsch des Eigentümers. Wucherungs-Prüfung: Phase 5 jetzt 20 Schritte (ursprünglich 13, Schwelle 26) – keine Wucherung.
+
+#### 5.21: Als App installierbar (PWA)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 5.11 Teil 2, 5.2
+- **Freigabepflichtig:** zu prüfen – ohne Service Worker nein (nur Manifest, Symbole, Kopfzeilen der Seite in `ui`; ggf. `manifest-src` in der Content-Security-Policy, `api`); falls ein Browser für die Installation einen Service Worker verlangt: Vorlage als Kategorie 6 (Zwischenspeicher im Gerät), mit der Vorgabe „nichts aus Welten und Texten zwischenspeichern“
+- **Empfohlene Klasse:** Routine – Manifest und Symbole nach Standard; die Prüfung der Installierbarkeit ist Handarbeit am Gerät.
+- **Eingangskriterien:** 5.11 Teil 2 eingespielt
+- **Anforderungen (ab Klasse M):** FR-032, FR-019
+- **Zu tun:** Wunsch des Eigentümers 2026-10-08: das Skriptorium als App auf dem Startbildschirm, die die ganze Bildschirmgröße nutzt. Entschieden (Auswahlfrage): **installierbar, volle Bildschirmgröße, nur online** – ohne Netz nur ein Hinweis, keine Texte im Zwischenspeicher des Geräts. Web-App-Manifest (`display: standalone`, Name, Farben passend zu Hell/Dunkel, Symbole), Meta-Angaben für iOS; Anmeldung und Sitzungs-Cookie in der installierten App prüfen.
+- **Akzeptanzkriterien:** nach FR-032; auf dem Smartphone des Eigentümers und am Mac als App installierbar, öffnet ohne Browserleiste; Anmeldung bleibt erhalten; ohne Netz Hinweis statt leerer Seite oder alter Texte; Tests grün.
+- **Betroffene Module:** ui, api (nur falls die Content-Security-Policy ergänzt werden muss)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-08 auf Wunsch des Eigentümers. Wucherungs-Prüfung: Phase 5 jetzt 21 Schritte (ursprünglich 13, Schwelle 26) – keine Wucherung.
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 
