@@ -8,10 +8,10 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-08 (Neuplanung nach ADR-042; 5.7 umgesetzt)
+- **Stand vom:** 2026-10-08 (Neuplanung nach ADR-042; 5.7 umgesetzt; 5.8 Versuch 1)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 5.7 Startmodell grok-4.6 – umgesetzt (ADR-044), gemergt mit PR #55; wartet auf Deployment vom Mac (ADR-039, auf Anweisung) und Abnahme-Szene des Eigentümers. Probeschreiben aus der Cloud-Session (5.8, 5.10) erst mit neuem OpenRouter-Schlüssel – der bisherige ist abgelaufen, Eigentümer beschafft einen neuen (2026-10-08)
+- **Aktiver Schritt:** 5.7 Startmodell grok-4.6 – umgesetzt (ADR-044), gemergt mit PR #55; wartet auf Deployment vom Mac (ADR-039, auf Anweisung) und Abnahme-Szene des Eigentümers. 5.8 in Arbeit: Versuch 1 auf Branch `scp/nice-lamport-as724t`, Wirkung im Probeschreiben nicht belegt – wartet auf echtes Beispiel oder Entscheidung des Eigentümers. Neuer OpenRouter-Schlüssel der Cloud-Umgebung gültig (2026-10-08, bis 2027-10-08)
 - **Nächster Schritt:** nach Abnahme von 5.7: 5.8, 5.9, 5.10, 5.11, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
@@ -240,7 +240,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.8: Nahtloser Anschluss ohne Einleitung und Schlusssatz
 
-- **Status:** IN ARBEIT (seit 2026-10-08, Cloud-Session mit neuem OpenRouter-Schlüssel) – parallel zu 5.7, das nur noch auf Deployment und Abnahme des Eigentümers wartet
+- **Status:** IN ARBEIT (seit 2026-10-08) – Versuch 1 umgesetzt auf Branch `scp/nice-lamport-as724t` (nicht gemergt): Satz im Rahmen und Abschnitt „Anschluss“ mit den letzten 30 Wörtern vor der Anweisung; Tests grün. Probeschreiben (`spikes/nahtloser-anschluss/README.md`, 24 Texte, verblindet bewertet): Wirkung **nicht belegt** – die Testwelt zeigt Einleitung und Schlusssatz schon vorher nur in 4 von 12 Läufen (fast nur an einer Dialogpause), nachher 3 bzw. 5; Kanon eindeutig 3 → 5 (Rauschen, überwiegend qwen). Wartet auf den Eigentümer: echtes Beispiel (Kapitelende und Fortsetzung mit Einleitung/Schlusssatz) oder Entscheidung, Versuch 1 trotzdem zu übernehmen und im Alltag zu prüfen. Parallel zu 5.7 (wartet auf Deployment und Abnahme)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.7
 - **Freigabepflichtig:** nein – Änderung des Rahmens innerhalb von `context`, Schnittstelle unverändert
