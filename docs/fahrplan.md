@@ -34,7 +34,9 @@ Kontext: Phase 4 hat 16 Schritte (ursprünglich 8). Befund 2026-10-08: grok-4.7 
   (d) Kosten je Vorschlag beim Eigentümer nicht sichtbar, obwohl angefragt und
   angezeigt, sofern gemeldet – Ursache offen (Logbuch 09:05 UTC);
   (e) Oberfläche insgesamt schwer zu überblicken, schon mit wenigen Welten –
-  konkrete Stellen erfragen; (f) Wunsch: KI-gestützter Weltenbauer (Figuren, Regeln,
+  konkrete Stellen erfragen; Ziel des Eigentümers: intuitive Bedienung, Gestaltung
+  möglicherweise nach Material Design (Bibliothek = Kategorie 3, oder eigenes CSS)
+  (Logbuch 11:20 UTC); (f) Wunsch: KI-gestützter Weltenbauer (Figuren, Regeln,
   Gegenstände mit Verwendung/Auswirkung im Gespräch definieren), bei Gegenständen
   mit Wissen aus dem Internet; Import bleibt – neues Feature, Kategorien 1/2/3,
   eher eigene Phase, Bezug 5.1 und 5.5 (Logbuch 09:20 UTC); (g) Wunsch:

@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 11:20 UTC – [BEOBACHTUNG] Ergänzung nach Sessionende: Bedienung muss intuitiv werden, Material Design als mögliche Gestaltung
+
+- Eigentümer: „UX muss intuitiv werden, UI könnte Material Design sein.“ Schärft Befund (e) Übersichtlichkeit (09:20 UTC) zu einem Ziel.
+- Befund im Code: Die Oberfläche nutzt keine Gestaltungsbibliothek. Abhängigkeiten sind nur React und CodeMirror; das Aussehen kommt aus `ui/src/styles.css` (183 Zeilen).
+- Einordnung (KI, ohne Entscheidung): Material Design lässt sich auf zwei Wegen erreichen. (1) Eine Komponenten-Bibliothek (z. B. MUI für React oder Googles Material Web Components) ist eine neue externe Abhängigkeit (`CLAUDE.md` Abschnitt 4 Kategorie 3) mit Versions- und Lizenzprüfung (Abschnitt 15, Regel-001) und Wirkung auf Bündelgröße und alle Oberflächen-Tests. (2) Material-Richtlinien (Abstände, Farben, Bedienelemente) mit eigenem CSS nachbilden – ohne neue Abhängigkeit, aber mehr Handarbeit. Intuitivität selbst entsteht vor allem durch Aufbau und Abläufe (Navigation, was wo steht, Befunde a, c, e, Knopf „In den Kanon“), nicht durch das Design-System allein. Sinnvolle Reihenfolge: erst Abläufe und Seitenaufbau neu ordnen, dann Gestaltung. Umfang eher eigene Phase; Bezug FR-019 (Smartphone, 5.2), FR-022.
+- Nachgetragen im STOPP-Block (e). Sessionende 11:10 UTC gilt weiter; dieser Eintrag ist der einzige Nachtrag.
+
 ### 2026-10-08 11:10 UTC – [SESSIONENDE] Befundaufnahme aus der Nutzung abgeschlossen
 
 - **Dauer:** 08:23 – 11:10 UTC (Eintrag 08:40 UTC war ein Zwischenstand; der Eigentümer hat danach weitere Befunde geliefert).
