@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 5.7 Startmodell grok-4.6 – umgesetzt (ADR-044), gemergt mit PR #55; wartet auf Deployment vom Mac (ADR-039, auf Anweisung) und Abnahme-Szene des Eigentümers. 5.8 in Arbeit: Versuch 1 auf Branch `scp/nice-lamport-as724t`, Wirkung im Probeschreiben nicht belegt – wartet auf echtes Beispiel oder Entscheidung des Eigentümers. Neuer OpenRouter-Schlüssel der Cloud-Umgebung gültig (2026-10-08, bis 2027-10-08)
-- **Nächster Schritt:** nach Abnahme von 5.7: 5.8, 5.9, 5.10, 5.11, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** nach Abnahme von 5.7: 5.8 mit 5.15 (gleicher Rahmen), 5.9, 5.10, 5.11, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -120,7 +120,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`. Der Umbau betrifft nur `ui` (Seitenaufbau, 5.11) und Randstellen in `ai_gateway`/`api` (Modell-Katalog, 5.12); neue gespeicherte Daten (5.6, 5.13) werden per ADR festgelegt.
 
-**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-08: 14 Schritte (+5.14, ADR-043).
+**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-08: 15 Schritte (+5.14, ADR-043; +5.15 Befund des Eigentümers).
 
 **Reihenfolge (ADR-042):** zuerst die kleinen Abhilfen 5.7, 5.8, 5.9, dann 5.10, der Umbau der Oberfläche 5.11, danach 5.6, 5.12, 5.13; anschließend 5.2 (Smartphone, auf dem neuen Aufbau), 5.1, 5.3, 5.4, dann 5.14 (Go-Live-Prüfung) und 5.5.
 
@@ -252,7 +252,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** context
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag mit Probeschreiben
-- **Notizen:** Angelegt 2026-10-08 (Neuplanung, ADR-042). Ursache vermutet, nicht belegt.
+- **Notizen:** Angelegt 2026-10-08 (Neuplanung, ADR-042). Ursache vermutet, nicht belegt. Ergänzender Befund des Eigentümers (2026-10-08, nach Versuch 1): Das Muster verstärkt sich – nach sechs, sieben übernommenen Vorschlägen beginnt jeder Abschnitt mit derselben Einleitung und endet mit derselben Atmosphäre. Folgerung: Die übernommenen KI-Texte in den „Letzten Manuskript-Seiten“ wirken als Vorbild, das die KI nachahmt; das Probeschreiben aus Versuch 1 (ein vom Coding-Agent redigiertes Kapitel, ein Schritt je Stelle) konnte das nicht zeigen. Versuch 2 muss eine Kette von 6–8 übernommenen Vorschlägen prüfen und Wiederholungen über die Kette zählen; Abhilfe ggf. „wiederhole keine Bilder und Wendungen der letzten Seiten“.
 
 #### 5.9: Kapitel öffnet am Textende
 
@@ -349,6 +349,22 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** ADR, Logbuch-Eintrag, CHANGELOG v1.0.0
 - **Notizen:** Angelegt 2026-10-08 (ADR-043). Phase 5 damit 14 Schritte (ursprünglich 13), Wucherungs-Schwelle nicht berührt.
+
+#### 5.15: KI schreibt nur das Verlangte, nicht bis zum bekannten Ende
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 5.8 (gleicher Rahmen; gemeinsam am echten Material prüfen)
+- **Freigabepflichtig:** offen – nein, solange nur Wortlaut und Auswahl in `context` geändert werden; ja (Kategorie 4, Datenmodell), falls die Geschichte einen „Stand in der Zeitlinie“ als neues Feld bekommt
+- **Empfohlene Klasse:** Entscheidung – Eingriff in die Kontext-Zusammenstellung mit Wirkung auf Kanon-Treue (NFR `[BELASTBAR]`), Ursache vermutet, nicht belegt.
+- **Eingangskriterien:** Angaben des Eigentümers: Enthielt die importierte Welt eine Gesamtzusammenfassung oder Zeitlinie mit Ereignissen nach der Schreibstelle? Wie lang soll ein Vorschlag höchstens sein?
+- **Anforderungen (ab Klasse M):** FR-009, FR-011, FR-012
+- **Zu tun:** Befund des Eigentümers 2026-10-08: Er schrieb in einer importierten Welt an einer Stelle, die in der Zeitlinie weit vor dem bekannten Ende liegt. Die KI formulierte nicht nur seine Eingabe aus, sondern führte die Geschichte stark verkürzt bis zum bereits bekannten Ende weiter. Vermutete Ursachen (Code-Lesung 2026-10-08): (1) Der Handlungsstand enthält immer die ganze Gesamtzusammenfassung (`_story_state`), die Zeitlinie wird vollständig mitgegeben – die KI sieht, wohin die Geschichte läuft; (2) der Rahmen nennt keine Länge und keine Grenze („nur bis zum nächsten Moment, in dem der Autor übernimmt“), Ausgabe bis 8.000 Token erlaubt. Abhilfe prüfen: Vorgabe „schreibe nur aus, was die Anweisung verlangt, und nimm keine späteren Ereignisse vorweg“; spätere Ereignisse der Zusammenfassung und Zeitlinie als „liegt noch in der Zukunft, nicht erzählen“ kennzeichnen oder weglassen; Längenvorgabe.
+- **Akzeptanzkriterien:** Probeschreiben an einer Stelle mit bekanntem späterem Verlauf: kein Vorschlag erzählt Ereignisse nach der Schreibstelle; Länge im vereinbarten Rahmen; Kanon-Treue nicht schlechter; Eigentümer bestätigt an einer echten Welt.
+- **Betroffene Module:** context (ggf. manuscript, api, ui bei neuem Feld)
+- **Reifegrad-Wirkung:** keine (bei neuem Feld: ADR und Datenmodell)
+- **Artefakte:** Code, Tests, Probeschreiben, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-08 auf Befund des Eigentümers. Wucherungs-Prüfung: Phase 5 jetzt 15 Schritte (ursprünglich 13, Schwelle 26) – keine Wucherung.
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 

@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 13:55 UTC – [BEOBACHTUNG] Befund des Eigentümers: KI läuft bis zum bekannten Ende, Einleitung und Atmosphäre schaukeln sich auf
+
+- Eigentümer schrieb in einer importierten Welt an einer Stelle weit vor dem bekannten Ende. Die KI formulierte nicht nur seine Eingabe aus, sondern erzählte stark verkürzt bis zum bekannten Ende weiter. Vermutete Ursachen (Code-Lesung): ganze Gesamtzusammenfassung und ganze Zeitlinie im Kontext, keine Längen- oder Grenzvorgabe → neuer Schritt 5.15.
+- Zweiter Befund: Nach sechs, sieben übernommenen Vorschlägen beginnt jeder Abschnitt mit derselben Einleitung und endet mit derselben Atmosphäre. Erklärt, warum Versuch 1 von 5.8 in der Testwelt kaum etwas zeigte (Einzelschritte statt Kette); Versuch 2 prüft eine Kette, in 5.8 notiert.
+- Kein Code geändert: Kontextgrenze der Session überschritten (Sessionende 13:45 UTC); nur Fahrplan und Logbuch nachgetragen. Phase 5 jetzt 15 Schritte (Schwelle 26).
+
 ### 2026-10-08 13:45 UTC – [SESSIONENDE] 5.8 Versuch 1 – Wirkung nicht belegt, Kontextgrenze erreicht
 
 - **Dauer:** 13:15 – 13:45 UTC.
