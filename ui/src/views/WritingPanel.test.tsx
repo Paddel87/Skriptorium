@@ -110,6 +110,7 @@ describe("WritingPanel", () => {
       instruction: "Mira kommt.",
       references: [],
       model: "x-ai/grok-4.7",
+      length: "mittel",
       scene: null,
     });
     feed.send("start", { model: "x-ai/grok-4.7", estimated_tokens: 900 });
@@ -249,6 +250,7 @@ describe("WritingPanel", () => {
         instruction: "",
         references: [],
         model: "x-ai/grok-4.7",
+        length: "mittel",
         scene: {
           place: "grauwasser",
           characters: ["kael"],
@@ -276,6 +278,44 @@ describe("WritingPanel", () => {
     await user.click(screen.getByRole("button", { name: "Verwerfen" }));
     expect(screen.queryByLabelText("Vorschlag der KI")).toBeNull();
     expect(onAccept).not.toHaveBeenCalled();
+  });
+
+  it("sends the chosen length and repeats with a newly chosen one", async () => {
+    let feed = sseFeed();
+    const { calls } = fakeApi({
+      ...routes(feed),
+      [WRITE]: () => ({ status: 200, stream: feed.stream }),
+    });
+    panel();
+    const user = userEvent.setup();
+    await ready();
+    const length = screen.getByLabelText("Länge");
+    expect(length).toHaveProperty("value", "mittel");
+
+    await user.selectOptions(length, "kurz");
+    await user.click(screen.getByRole("button", { name: "Weiterschreiben" }));
+    await waitFor(() => {
+      expect(calls.find((c) => c.method === "POST")?.body).toMatchObject({
+        length: "kurz",
+      });
+    });
+    expect(length).toHaveProperty("disabled", true);
+    feed.send("text", { text: "Kurz." });
+    feed.close();
+    await screen.findByRole("button", { name: "Verwerfen" });
+
+    feed = sseFeed();
+    await user.selectOptions(screen.getByLabelText("Länge"), "lang");
+    await user.click(
+      screen.getByRole("button", { name: "Neu schreiben mit x-ai/grok-4.7" }),
+    );
+    await waitFor(() => {
+      expect(calls.filter((c) => c.method === "POST")).toHaveLength(2);
+    });
+    expect(calls.filter((c) => c.method === "POST")[1]?.body).toMatchObject({
+      length: "lang",
+    });
+    feed.close();
   });
 
   it("names a refusal and repeats the request with another model", async () => {
@@ -310,6 +350,7 @@ describe("WritingPanel", () => {
       instruction: "Kampf.",
       references: [],
       model: "x-ai/grok-4.6",
+      length: "mittel",
       scene: null,
     });
     feed.close();
@@ -402,6 +443,7 @@ describe("WritingPanel", () => {
         instruction: "Mit @kael, dann @Grauwasser",
         references: ["kael", "grauwasser"],
         model: "x-ai/grok-4.7",
+        length: "mittel",
         scene: null,
       });
     });

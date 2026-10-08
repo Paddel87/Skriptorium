@@ -228,12 +228,17 @@ export interface ModelList {
   default: string;
 }
 
+/** Length of a proposal, chosen per request (step 5.15). */
+export type WriteLength = "kurz" | "mittel" | "lang";
+
 /** What the author asks the AI for (step 3.3); an empty instruction means "continue". */
 export interface WriteOrder {
   instruction: string;
   references?: string[];
   scene?: { place: string | null; characters: string[]; goal: string } | null;
   model: string;
+  /** Missing: the server's default "mittel". */
+  length?: WriteLength;
 }
 
 /** Why a proposal ended without `done`; "verbindung" means the stream broke off. */

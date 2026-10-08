@@ -3,7 +3,7 @@
 import asyncio
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import pytest
 from fastapi.testclient import TestClient
@@ -29,7 +29,7 @@ from skriptorium.api.flows import (
 from skriptorium.api.flows.writing import NoteSplitter
 from skriptorium.api.settings import Settings
 from skriptorium.canon import CanonService
-from skriptorium.context import CONFLICT_MARKER, ContextBuilder
+from skriptorium.context import CONFLICT_MARKER, LENGTHS, ContextBuilder
 from skriptorium.manuscript import ManuscriptService
 from skriptorium.storage import DocumentStore, NotFound
 from tests.api.conftest import ORIGIN, FakeProvider, services_of
@@ -43,6 +43,11 @@ def _events(body: str) -> list[tuple[str, dict[str, Any]]]:
         name_line, data_line = block.split("\n")
         events.append((name_line.removeprefix("event: "), json.loads(data_line[len("data: ") :])))
     return events
+
+
+def _instruction(user: str) -> str:
+    """The instruction of a request: between its heading and the requirements (step 5.15)."""
+    return user.split("# Anweisung\n\n")[1].split("\n\n# Vorgaben für deinen Text")[0]
 
 
 def _world(client: TestClient) -> None:
@@ -102,7 +107,8 @@ def test_write_streams_proposal_and_saves_nothing(
     assert [message.role for message in request.messages] == ["system", "user"]
     user = request.messages[1].content
     assert "Kael band das Boot fest." in user
-    assert user.endswith("Mira kommt dazu.")
+    assert _instruction(user) == "Mira kommt dazu."
+    assert f"- Länge: {LENGTHS['mittel']}." in user
     chapter = writer.get("/api/worlds/die-salzmark/stories/am-ufer/chapters/1").json()
     assert chapter["text"] == "Kael band das Boot fest."
 
@@ -119,7 +125,7 @@ def test_saved_text_is_the_basis_of_the_next_request(
     writer.post(WRITE, json={})
 
     first, second = (request.messages[1].content for request in provider.requests)
-    assert first.endswith(CONTINUE)
+    assert _instruction(first) == CONTINUE
     assert "geändert vom Autor" not in first
     assert "Der Nebel hob sich, geändert vom Autor." in second
 
@@ -143,7 +149,7 @@ def test_scene_names_place_characters_and_goal(writer: TestClient, provider: Fak
     assert "Ort: Hafen von Grauwasser" in user
     assert "Figuren: Kael, Mira" in user
     assert "Ziel der Szene: Mira verlangt Zoll." in user
-    assert user.endswith("Kurz halten.")
+    assert _instruction(user).endswith("Kurz halten.")
     assert system.index("Kalter Hafen") < system.index("Runenklinge")
     assert system.index("Zöllnerin") < system.index("Runenklinge")
 
@@ -178,6 +184,34 @@ def test_invalid_orders_are_refused_before_streaming(
     assert response.status_code == 422
     assert detail in response.json()["detail"]
     assert provider.requests == []
+
+
+@pytest.mark.parametrize("length", ["kurz", "lang"])
+def test_chosen_length_reaches_the_request(
+    writer: TestClient, provider: FakeProvider, length: Literal["kurz", "lang"]
+) -> None:
+    """Step 5.15: the author chooses the length per request; default is ``mittel``."""
+    response = writer.post(WRITE, json={"length": length})
+
+    assert response.status_code == 200, response.text
+    user = provider.requests[0].messages[1].content
+    assert f"- Länge: {LENGTHS[length]}." in user
+    assert LENGTHS["mittel"] not in user
+
+
+def test_unknown_length_is_refused_before_streaming(
+    writer: TestClient, provider: FakeProvider
+) -> None:
+    response = writer.post(WRITE, json={"length": "sehr lang"})
+
+    assert response.status_code == 422
+    assert provider.requests == []
+
+
+def test_continue_asks_for_the_next_moment_only() -> None:
+    """Owner, step 5.15: "Weiter" without instruction is a small step, then the author."""
+    assert "nur den unmittelbar nächsten Moment der Szene" in CONTINUE
+    assert "ohne Zeitsprung" in CONTINUE
 
 
 def test_reference_to_an_entry_of_another_world_is_refused(
@@ -300,7 +334,7 @@ def test_empty_canon_and_empty_chapter_are_written_on(
     system, user = (message.content for message in provider.requests[0].messages)
     assert "# Welt: Leere Welt" in system
     assert "Letzte Manuskript-Seiten" not in user
-    assert user.endswith(CONTINUE)
+    assert _instruction(user) == CONTINUE
 
 
 def test_context_too_large_is_refused_with_largest_blocks(

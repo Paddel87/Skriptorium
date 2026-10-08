@@ -1,0 +1,12 @@
+{
+  "variante": "neu-qwen38max",
+  "schritt": 1,
+  "anweisung": "Pell kommt am nächsten Morgen in Tomas' Kammer. Tomas erklärt ihm, dass er fünf Nächte die Wachen am Vogtshaus zählen soll. Pell fragt nach dem Lohn.",
+  "modell": "qwen/qwen3.8-max-0902",
+  "woerter": 189,
+  "sekunden": 22.5,
+  "token_ein": 8086,
+  "token_aus": 664,
+  "kosten_usd": 0.01995444,
+  "finish_reason": "stop"
+}

@@ -4,10 +4,15 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ## [Unreleased]
 
+### Hinzugefügt (nach v0.1.0)
+
+- Länge je Vorschlag wählbar (2026-10-08, Schritt 5.15): Auswahl „Länge“ im Schreib-Bereich mit kurz (etwa 60–120 Wörter), mittel (150–300, voreingestellt) und lang (400–600). Neues optionales Feld `length` im Schreib-Endpunkt.
+
 ### Geändert (nach v0.1.0)
 
 - Voreingestelltes Modell grok-4.6 statt grok-4.7 (2026-10-08, Schritt 5.7, ADR-044): grok-4.7 sperrte die echten Texte des Eigentümers häufig. Neue Geschichten und Geschichten ohne gewähltes Modell schreiben jetzt mit grok-4.6, ebenso die Kurzfassungen; eine Geschichte mit gewähltem Modell behält es. grok-4.7 bleibt wählbar, qwen3.8-max ist Notfall-Reserve. `GET /api/models` liefert die Reihenfolge grok-4.6, grok-4.7, qwen3.8-max.
 - Nahtloser Anschluss beim Weiterschreiben (2026-10-08, Schritt 5.8): Die KI bekommt das Ende des laufenden Kapitels (die letzten bis zu 30 Wörter) zitiert und die Vorgabe, unmittelbar danach in derselben Szene weiterzuschreiben – ohne Einleitung, die Ort, Lage und Figuren neu einführt, und ohne abschließenden oder zusammenfassenden Satz. Bei einem leeren Kapitel entfällt das Zitat.
+- Die KI schreibt nur, was verlangt ist (2026-10-08, Schritte 5.15 und 5.8): Nach der Anweisung stehen feste Vorgaben – nur ausschreiben, was die Anweisung verlangt, und nicht vorgreifen; was Gesamtzusammenfassung, Kurzfassungen oder Zeitlinie über spätere Ereignisse sagen, gilt als Zukunft und wird weder erzählt noch angedeutet; keine Sätze, Bilder und Gesten aus den letzten Seiten wiederholen; kein Schlusssatz. Beschreibt die Anweisung, was die selbst geführte Figur tut oder sagt, schreibt die KI genau das aus. „Weiterschreiben“ ohne Anweisung verlangt nur den nächsten Moment der Szene.
 
 ## [0.1.0] – 2026-10-08
 

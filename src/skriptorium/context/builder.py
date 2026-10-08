@@ -9,11 +9,18 @@ refused - nothing the author named is left out silently.
 
 A continuation goes on right after the chapter's last words (step 5.8): a short note before the
 instruction quotes the end of the current chapter and asks for no opening that re-introduces
-place and situation and no closing sentence.
+place and situation.
 
-If the author leads characters (FR-012), a short reminder of that rule follows the instruction:
-the rule in the fixed part alone was often broken (step 3.3), and the end of a request weighs
-more for the model.
+Requirements follow the instruction (steps 5.8, 5.15): write only what the instruction asks
+for, in the length the author chose; what summary or timeline tell about events after the
+writing point lies in the future and is neither told nor hinted at; no sentences, images or
+gestures repeated from the last pages; no closing sentence. A finished story's summary used to
+pull proposals towards its known end, and taken-over proposals were copied ever more closely.
+
+If the author leads characters (FR-012), a short reminder of that rule comes last: the rule in
+the fixed part alone was often broken (step 3.3), and the end of a request weighs more for the
+model. What the instruction says the led character does or says is written out exactly, nothing
+beyond it (owner, step 5.15).
 
 Fixed parts (frame, world, canon) come first, changing parts last, so provider caches apply.
 Only entries of the story's own world are read (FR-001), plus the entries of other worlds the
@@ -67,6 +74,15 @@ _CATEGORY_LABELS: Final[dict[Category, str]] = {
     "regel": "Regel",
     "kultur": "Kultur",
 }
+
+# Length of a proposal, chosen per request (owner, step 5.15).
+Length = Literal["kurz", "mittel", "lang"]
+LENGTHS: Final[dict[Length, str]] = {
+    "kurz": "etwa 60 bis 120 Wörter",
+    "mittel": "etwa 150 bis 300 Wörter",
+    "lang": "etwa 400 bis 600 Wörter",
+}
+DEFAULT_LENGTH: Final[Length] = "mittel"
 
 Role = Literal["system", "user"]
 BlockKind = Literal[
@@ -175,11 +191,13 @@ class ContextBuilder:
         instruction: str,
         references: Sequence[str] = (),
         budget: int = MAX_BUDGET,
+        length: Length = DEFAULT_LENGTH,
     ) -> BuiltContext:
         """Build the request for writing on in ``chapter_number``.
 
         ``references`` are identifiers of canon entries named with ``@``: entries of the story's
-        world or guests bound into the story.
+        world or guests bound into the story. ``length`` is the length the author chose for the
+        proposal (step 5.15).
 
         Raises:
             InvalidInput: Budget outside 1-30,000 or empty instruction.
@@ -231,7 +249,7 @@ class ContextBuilder:
 
         state = _story_state(story, chapters, chapter_number)
         instruction_part = _Part("anweisung", "Anweisung", f"# Anweisung\n\n{instruction.strip()}")
-        closing = [instruction_part]
+        closing = [instruction_part, _Part("anweisung", "Vorgaben", _requirements(length))]
         seam = _seam(current)
         if seam:
             closing.insert(0, _Part("anweisung", "Anschluss", seam))
@@ -412,7 +430,8 @@ def _story_summary_instruction(number: int) -> str:
 def _frame(world_name: str) -> str:
     """Frame of the request, as tested in steps 1.1 and 1.5.
 
-    Conflict note since step 4.14, seamless continuation since step 5.8.
+    Conflict note since step 4.14, seamless continuation since step 5.8, the future beyond the
+    writing point since step 5.15.
     """
     return (
         f"Du bist Co-Autor einer Geschichte in der Welt „{world_name}“. Der Kanon unten ist "
@@ -424,7 +443,9 @@ def _frame(world_name: str) -> str:
         "dem Autor in einem Satz sagt, was du abgewandelt hast und warum; danach folgt der "
         "Text. Ohne Widerspruch schreibst du keine solche Zeile. Der Text selbst enthält nie "
         "Hinweise an den Autor. Eine Fortsetzung schließt nahtlos an das Ende des Manuskripts "
-        "an: ohne Einleitung und ohne abschließenden Satz."
+        "an: ohne Einleitung und ohne abschließenden Satz. Handlungsstand und Zeitlinie können "
+        "über die Schreibstelle hinausreichen; was nach ihr geschieht, liegt in der Zukunft und "
+        "wird weder erzählt noch angedeutet."
     )
 
 
@@ -445,9 +466,28 @@ def _seam(current: Chapter) -> str:
         f"# Anschluss\n\nDas Manuskript endet mit: „{cut}{end}“\n\n"
         "Setzt du fort, beginnt dein Text mit dem nächsten Satz unmittelbar nach diesen Worten, "
         "in derselben Szene: Führe Ort, Lage und Figuren nicht neu ein und fasse nichts "
-        "zusammen. Verlangt die Anweisung eine neue Szene, beginnt sie dort. In jedem Fall "
-        "endet dein Text ohne abschließenden, zusammenfassenden oder ausblickenden Satz; er "
-        "hört mitten im Geschehen auf."
+        "zusammen. Verlangt die Anweisung eine neue Szene, beginnt sie dort."
+    )
+
+
+def _requirements(length: Length) -> str:
+    """Requirements after the instruction (steps 5.8, 5.15); they hold for every request.
+
+    Proposals ran ahead of the author up to events the summary names, and after a few
+    taken-over proposals each one opened and closed like the ones before (owner, 2026-10-08).
+    """
+    return (
+        "# Vorgaben für deinen Text\n\n"
+        "- Schreibe nur aus, was die Anweisung verlangt, und höre dann auf. Nimm nicht vorweg, "
+        "was der Autor als Nächstes schreiben könnte.\n"
+        f"- Länge: {LENGTHS[length]}.\n"
+        "- Die Schreibstelle ist das Ende des bisherigen Manuskripts. Was Handlungsstand, "
+        "Kurzfassungen oder Zeitlinie über spätere Ereignisse sagen, liegt in der Zukunft: "
+        "Erzähle es nicht und deute es nicht an.\n"
+        "- Wiederhole keine Sätze, Bilder, Gesten und Wendungen aus den letzten "
+        "Manuskript-Seiten; finde für Wiederkehrendes neue Worte oder lass es weg.\n"
+        "- Kein abschließender, zusammenfassender oder ausblickender Satz: Dein Text hört "
+        "mitten im Geschehen auf."
     )
 
 
@@ -477,7 +517,9 @@ def _writing_mode(story: Story, by_id: dict[str, _Known]) -> str:
         lines.append(
             f"## Figuren-Schreibweise\n\n"
             f"Der Autor führt selbst: {names}. Du führst die Welt und alle übrigen Figuren. "
-            f"Für {names} gilt, solange die Anweisung nichts anderes ausdrücklich verlangt:\n\n"
+            f"Beschreibt die Anweisung, was {names} tut oder sagt, schreibst du genau das aus, "
+            "Gesagtes als wörtliche Rede, und nichts darüber hinaus. Sonst gilt für "
+            f"{names}:\n\n"
             "- keine Handlung und keine Bewegung, auch keine kleine (nicht aufstehen, nicht "
             "greifen, nicht nicken, nicht weitergehen);\n"
             "- keine wörtliche oder indirekte Rede, keine Antwort, keinen Entschluss;\n"
@@ -492,11 +534,12 @@ def _writing_mode(story: Story, by_id: dict[str, _Known]) -> str:
 
 
 def _reminder(names: str) -> str:
-    """Short repetition of the rule after the instruction (step 3.4)."""
+    """Short repetition of the rule at the end of the request (steps 3.4, 5.15)."""
     return (
-        f"Erinnerung: {names} führt der Autor. Schreibe für {names} keine Handlung, keine Rede, "
-        "keinen Entschluss und keine Gedanken, nur Wahrnehmung. Ende, sobald die Figur handeln "
-        "oder antworten müsste."
+        f"Erinnerung: {names} führt der Autor. Was die Anweisung für {names} vorgibt, schreibst "
+        "du genau aus, nicht mehr. Darüber hinaus keine Handlung, keine Rede, keinen Entschluss "
+        "und keine Gedanken, nur Wahrnehmung. Ende, sobald die Figur handeln oder antworten "
+        "müsste."
     )
 
 

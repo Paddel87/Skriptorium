@@ -18,6 +18,7 @@ from skriptorium.api.flows import (
     stream_events,
     summarize_chapter,
 )
+from skriptorium.context import DEFAULT_LENGTH, Length
 from skriptorium.manuscript import Chapter, Story
 
 router = APIRouter(prefix="/api", dependencies=[Depends(current_session)])
@@ -46,6 +47,8 @@ class WriteIn(BaseModel):
     scene: SceneIn | None = None
     # Missing: the model chosen for the story, otherwise the preset one (step 3.9).
     model: str | None = None
+    # Length of the proposal: kurz, mittel or lang (step 5.15).
+    length: Length = DEFAULT_LENGTH
 
 
 class UsageOut(BaseModel):
@@ -88,7 +91,14 @@ def write(
         found.canon.get_world(world_id)
         model = found.manuscript.get_story(world_id, story_id).model or DEFAULT_MODEL
     order = WriteOrder(
-        world_id, story_id, number, body.instruction, tuple(body.references), scene, model
+        world_id,
+        story_id,
+        number,
+        body.instruction,
+        tuple(body.references),
+        scene,
+        model,
+        body.length,
     )
     prepared = prepare_request(found.canon, found.manuscript, found.context, order)
     return StreamingResponse(

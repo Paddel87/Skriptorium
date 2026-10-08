@@ -1,0 +1,12 @@
+{
+  "variante": "neu-grok47",
+  "schritt": 2,
+  "anweisung": "Ich biete Pell eine Silberschale pro Nacht. Pell fragt, was passiert, wenn sie ihn erwischen; ich sage ihm, dann sei er eben ein Junge, der hinter Fässern schläft.",
+  "modell": "x-ai/grok-4.7",
+  "woerter": 236,
+  "sekunden": 46.2,
+  "token_ein": 9235,
+  "token_aus": 2175,
+  "kosten_usd": 0.02949408,
+  "finish_reason": "stop"
+}
