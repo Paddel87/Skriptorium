@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 12:10 UTC – [BEOBACHTUNG] Antworten per Auswahl-Fragen: Vision-Frage bestätigt, 5.6 präzisiert
+
+- Eigentümer wünschte das Frage-Antwort-System; vier Fragen mit Auswahl, alle mit der empfohlenen Option beantwortet:
+  - **Hauptansicht:** Manuskript. Der Verlauf der Anweisungen ist eine Nachschlage-Ansicht zum Umschalten, nie im Manuskript, nie erneut an die KI. Damit ist die Vision-Frage der Pflichtfrage Phase 4 ausdrücklich bestätigt (für das ADR).
+  - **Pull Request:** öffnet die KI, der Eigentümer mergt.
+  - **5.6 Tonalität/Atmosphäre:** Vorgabe je Geschichte, die jedes neue Kapitel übernimmt und im Kapitel änderbar ist.
+  - **5.6 Genre:** eigene Auswahl je Geschichte, mehrfach wählbar, getrennt von Tonalität und Atmosphäre.
+- 5.6 und FR-026 nachgezogen; Nächster Schritt im Fahrplan angepasst.
+
 ### 2026-10-08 12:00 UTC – [SESSIONENDE] Pflichtfrage Phase 4 entschieden: B, gezielt umbauen
 
 - **Entscheidung des Eigentümers:** „B“ – gezielt umbauen. Das Fundament (`storage`, `canon`, `manuscript`, `context`, `api`) bleibt. Seitenaufbau und Abläufe der Oberfläche werden neu geordnet, die Modell-Auswahl kommt als Katalog von OpenRouter. Vorab sollen drei kleine Abhilfen kommen: grok-4.6 als Startmodell, nahtloser Anschluss im Rahmen, Kapitel öffnet am Textende. Phase 4 wird schlank abgeschlossen (4.8 mit v0.1.0 und Vision-Abgleich, D.11), die Befunde kommen in eine neue Phase, Weltenbauer und V.6–V.8 danach. Grundlage: `docs/research/bewertung-phase-4.md` und Stellungnahme 11:50 UTC.
