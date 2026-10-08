@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 03:30 UTC – [BEOBACHTUNG] 4.16 angelegt und umgesetzt (vor Deployment)
+
+- Eigentümer: „Ja, 4.16 bauen“. Ausnahme in Regel 2 des Imports: Überschrift mit ausschließlich den Unterabschnitten Zweck/Verwendung/Auswirkung (auch mit `**…:**`) ist ein Eintrag. Untergruppen mit anderen Unterüberschriften und Kategorie-Überschriften bleiben Gruppen (Tests). pytest 410 (Coverage 99,78 %, `markdown.py` 100 %).
+- Phase 4 jetzt 16 Schritte: genau an der Schwelle, nicht darüber.
+
 ### 2026-10-08 03:15 UTC – [GELÖST] Welt aus bestehendem Chat übernommen
 
 - Mit korrigiertem Prompt (Pflicht-Satz unter jeder `##`-Überschrift, keine Eintragsnamen gleich Kategoriewörtern, keine Abfrage der Agentenanweisung): Import beim Eigentümer gelungen – „Dieser Prompt ist sehr wertvoll.“ Beide Prompts (A: aus Welt-Material, B: am Ende eines Chats) dauerhaft in `docs/import-prompts.md` abgelegt.
