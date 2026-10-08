@@ -53,4 +53,3 @@ Gleiche Kette, gleiche Anweisungen, Stand mit Versuch 1 von 5.8 (in `main`) und 
 6. **Kanon-Treue nicht schlechter:** eindeutig 1 → 0, fraglich 4 → 4 über alle Ketten.
 
 grok-4.7 lief in 2 von 7 Schritten dreimal in die Zeitüberschreitung bis zum ersten Textstück (90 s), ohne Text. Das ist Anbieter-Latenz und keine Wirkung der Vorgaben, verfälscht aber die Kette: Gunda erscheint ohne Schritt 3. Grenzen wie oben: eine Kette je Modell, Testwelt statt echter Welt.
-

@@ -29,6 +29,24 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 16:02 UTC – [SESSIONENDE] 5.8 und 5.15 umgesetzt – Merge und Abnahme offen
+
+- **Dauer:** 15:23 – 16:02 UTC.
+- **Bearbeitet:** 5.15 mit 5.8 (Versuch 2) umgesetzt auf Branch `feat/5.15-nur-das-verlangte` (gepusht, kein Pull Request – nicht verlangt). Probeschreiben mit der Kette, verblindet bewertet. FR-012, Schnittstelle `…/write` (rein additiv `length`), CHANGELOG, README nachgezogen; Drift zu Versuch 1 im Fahrplan berichtigt.
+- **Stand:** 5.7, 5.8, 5.15 `[IN ARBEIT]` – mehr als ein Eintrag gleichzeitig, Abweichung von `CLAUDE.md` Abschnitt 7: alle drei warten nur noch auf Merge, Deployment vom Mac und Abnahme des Eigentümers.
+- **Offen / Fragen an den Eigentümer:** (1) Pull Request für `feat/5.15-nur-das-verlangte` öffnen und mergen? (2) Rest-Vorgriff (qwen verknüpft in Schritt 7 Buch und Grotte) hinnehmen oder weiterer Versuch? (3) Längenstufen 60–120 / 150–300 / 400–600 Wörter passend? Weiter offen: Kosten-Zeile (5.10), unübersichtliche Stellen (5.11), Werte der Listen (5.6); D.11 bis 2026-10-31.
+- **Nächster Schritt:** nach Antwort: Pull Request und Merge; Session auf dem Mac: Deployment → Abnahme 5.7, 5.8, 5.15 in einer echten Welt; danach 5.9.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 16:01). Schritte oberhalb der Empfehlung: 0 (5.8 und 5.15 empfohlen Entscheidung). Abgegeben: verblindete Bewertung der sechs Ketten an Sonnet – als getrennte Instanz, nicht aus Kostengründen. Sessionende-Einträge selbst geschrieben (kleiner Umfang, Kontext geladen).
+- **Kontextgröße:** 288.070 Token (`get_session` 16:01), Grenze 200.000 – überschritten während der Auswertung (268.216 um 15:56); laufender Schritt zu Ende geführt, kein neuer begonnen. Neue Session nötig.
+- **Kosten KI-Anbieter:** 0,41 $ (Ketten: grok-4.6 0,15 $, grok-4.7 0,17 $, qwen 0,08 $).
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ nachgezogen; Status-Block unverändert gültig (Phase 5, v0.1.0, Blocker 0). Drift: kein neuer ADR; Reaktiv-Quote 0/10; Modul-Liste und Reifegrade unverändert (keine Reifegrad-Wirkung); Blocker 0, kein `[BLOCKIERT]`; Phase 5 15 Schritte (Schwelle 26). Anforderung FR-012 nennt jetzt 3.4 und 5.15. Ablaufdaten: kein Vorlauf erreicht (nächste Nachprüfung mypy 2 am 2026-11-06). Logbuch ca. 320 Zeilen – keine Auslagerung. Nicht Quick-Start-relevant (keine neue Abhängigkeit, kein Skript). Alles committet und gepusht.
+
+### 2026-10-08 16:00 UTC – [BEOBACHTUNG] 5.15/5.8: Kette mit neuen Vorgaben, verblindet bewertet
+
+- **Umgesetzt:** Abschnitt „Vorgaben für deinen Text“ nach der Anweisung; Zukunfts-Satz im Rahmen; Regel „genau ausschreiben“ für die geführte Figur; „Weiter“ nur nächster Moment; Länge kurz/mittel/lang (`length`, Auswahl „Länge“). Läufe: `pytest` 427 bestanden, 99 % (`builder.py` 100 %); `vitest` 103, 98,68 % Zeilen; Playwright 8 (Chromium 1194 über `PLAYWRIGHT_CHROMIUM_EXECUTABLE`); pre-commit grün.
+- **Ergebnis** (`spikes/vorgriff-zeitlinie/README.md`, zweiter Lauf): Anweisung zur eigenen Figur bei allen drei Modellen umgesetzt (vorher keines); gleiche 6-Wort-Folgen über die Kette 18–49 → 0; qwen 164–246 statt bis 815 Wörter, kein Zeitsprung bei „Weiter“; Vorgriffe 6 → 4; Kanon eindeutig 1 → 0, fraglich 4 → 4; Schlusssätze 9 → 10 (Warte- und Gestenschlüsse).
+- **Reibungen:** Kleinstes Budget im Budget-Test von 1000 auf 1300 angehoben (Vorgaben ca. 200 Token). ruff RUF001 verbot Gedankenstriche im Prompt-Text – durch Kommas ersetzt statt Suppression. grok-4.7 lief in 2 von 7 Schritten dreimal in die Zeitüberschreitung (90 s bis zum ersten Textstück); Kette dadurch lückenhaft.
+
 ### 2026-10-08 15:23 UTC – [SESSIONSTART] Schritte 5.8 und 5.15 gemeinsam
 
 - **Modell:** eingestellt und bedient `claude-opus-5-5` (`get_session`: `configured_model`, `session_context.model`, `last_served_model`) → Entscheidungs-Klasse.
