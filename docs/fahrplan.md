@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 5.9 Kapitel öffnet am Textende – gemergt mit PR #63 (`32c027d`), Deployment auf Wunsch des Eigentümers später; wartet auf Deployment und Bestätigung auf Desktop und Smartphone (5.7, 5.8 und 5.15 am 2026-10-08 `[ERLEDIGT]`)
-- **Nächster Schritt:** 5.9 und 5.17 deployen und abnehmen; danach 5.10, 5.11, 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** 5.9 und 5.17 deployen und abnehmen; 5.11 (Eingangskriterium: Angaben des Eigentümers, wo er den Überblick verliert); danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -272,7 +272,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.10: Kosten je Vorschlag sichtbar
 
-- **Status:** OFFEN
+- **Status:** ERLEDIGT 2026-10-08 – ohne Code-Änderung. Ursache belegt an den Verbrauchsdaten der Produktion (nur Metadaten, `data/system/verbrauch/2026-10.md`): 77 von 82 Anfragen im Oktober mit Kosten; die 5 ohne Kosten sind 2 abgebrochene und 3 gescheiterte (`nicht_erreichbar`) – dort meldet der Anbieter keine Kosten, die Oberfläche zeigt ausdrücklich „Kosten nicht gemeldet“. Log-Zeilen seit dem Deployment `18ee07d`: alle mit `kosten_usd`. Eigentümer bestätigt (Auswahlfrage 2026-10-08): unter einem fertigen Vorschlag steht ein Betrag. Der Befund vom 2026-10-08 stammte vermutlich von einem abgebrochenen oder gescheiterten Vorschlag
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 4.8 (Phasenbeginn)
 - **Freigabepflichtig:** nein (Fehlerbehebung)
