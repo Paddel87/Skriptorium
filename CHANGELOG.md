@@ -6,6 +6,7 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Geändert
 
+- Hinweis der KI getrennt vom Text (2026-10-08, Schritt 4.14): Verlangt eine Anweisung etwas, das dem Kanon widerspricht, schreibt die KI kanontreu und erklärt die Abwandlung in einem Hinweis über dem Vorschlag; „Übernehmen“ übernimmt nur den Text. Neues Ereignis `hinweis` im Schreib-Stream.
 - Kürzerer Einrichtungscode (2026-10-07, Schritt 4.13, ADR-041): `skriptorium-einrichtung` zeigt 12 Zeichen in Dreiergruppen (z. B. `K7Q-M3X-RAP-H9D`) aus Großbuchstaben und Ziffern ohne Verwechsler; bei der Eingabe spielen Groß-/Kleinschreibung, Bindestriche und Leerzeichen keine Rolle. Der Code wird wie das Passwort mit scrypt gespeichert; ein vor dem Update erzeugter Code gilt nicht mehr.
 
 ### Hinzugefügt

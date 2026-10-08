@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-10-07
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** 4.13 Kürzerer, lesbarer Einrichtungscode (ADR-041) – vor 4.8
+- **Aktiver Schritt:** 4.14 Hinweis der KI getrennt vom Text (umgesetzt, wartet auf Deployment und Probeschreiben); 4.13 eingespielt, letzter Nachweis offen – vor 4.8
 - **Nächster Schritt:** 4.8 30-Minuten-Test durch den Eigentümer (mit Stoppuhr; danach erstes echtes Kapitel, Versionsvergabe und Vision-Abgleich). Davor D.11 (Sicherungs-Zugangsdaten außerhalb des Servers, spätestens 2026-10-31). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. D.8 verworfen (ADR-040)
 - **Offene STOPP-Situationen:** keine
 
@@ -114,7 +114,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Reifegrad-Erwartung am Phasenende:** Host, Netz, Secrets im Betrieb, Backups und Bedrohungsmodell `[BELASTBAR]` (Backups erst nach erprobter Wiederherstellung).
 
-**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-10-07: 13 Schritte (+4.9, ADR-025; +4.10, Auftrag des Eigentümers; +4.11, Befund Branch-Schutz; +4.12, Befund D.7; +4.13, Wunsch des Eigentümers, ADR-041), Wucherungs-Schwelle (16 und mindestens +5) nicht berührt
+**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-10-08: 15 Schritte (+4.9, ADR-025; +4.10, Auftrag des Eigentümers; +4.11, Befund Branch-Schutz; +4.12, Befund D.7; +4.13, Wunsch des Eigentümers, ADR-041; +4.14, +4.15, Befunde Funktionstest), Wucherungs-Schwelle (mehr als 16 und mindestens +5) noch nicht berührt – ab dem 17. Schritt Stopp mit Neuplanung
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
@@ -326,7 +326,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.13: Kürzerer, lesbarer Einrichtungscode
 
-- **Status:** IN ARBEIT (seit 2026-10-07)
+- **Status:** IN ARBEIT (seit 2026-10-07) – PR #36 gemergt (`04a0bde`), auf dem VPS eingespielt 2026-10-08 00:32 UTC (healthy; von außen `/api/health` 200, `/api/worlds` 401; im Container `SETUP_CODE_LENGTH` 12, Alphabet 31). Offen: ein auf dem VPS erzeugter Code im neuen Format (erzeugt der Eigentümer beim nächsten Bedarf)
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.7
 - **Frist:** vor 4.8
@@ -341,15 +341,49 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Artefakte:** ADR-041, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-07. Ursprünglicher Schrittplan Phase 4: 8; jetzt 13 – Wucherungs-Schwelle (16 und mindestens +5) nicht berührt.
 
+#### 4.14: Hinweis der KI getrennt vom Text
+
+- **Status:** IN ARBEIT (seit 2026-10-08) – umgesetzt auf Branch `fix/4.14-hinweis-getrennt`: Rahmen mit Kennung `HINWEIS:` (`context`), `NoteSplitter` in `api.flows.writing` (auch über Textstücke verteilt, bei Abbruch und Fehler), Anzeige in `ui`; pytest 407, vitest 98 grün. Offen: Merge, Deployment, Probeschreiben mit echtem Modell durch den Eigentümer
+- **Phasentyp-Kontext:** STABILISIERUNG (Fehlerbehebung aus dem Funktionstest 2026-10-08)
+- **Abhängigkeiten:** 4.13 (nur wegen „ein Schritt in Arbeit“)
+- **Frist:** vor 4.8
+- **Freigabepflichtig:** nein – Verhalten vom Eigentümer gewählt (Option A, 2026-10-08); das neue SSE-Ereignis ist rein additiv (Oberfläche und Server werden gemeinsam ausgeliefert, `docs/architecture.md` Abschnitt 4)
+- **Empfohlene Klasse:** Routine – klar spezifiziert, keine Architekturwirkung.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-011 (Kanon-Treue), FR-022
+- **Zu tun:** Befund der Kanon-Probe: Bei einer Anweisung gegen den Kanon schreibt die KI einen Hinweis an den Autor in den Prosatext; mit „Übernehmen“ landet er im Manuskript. Umsetzung: Rahmen in `context` (`_frame`) sagt, wie ein Konflikt zu melden ist (erste Zeile mit fester Kennung, dann der kanontreue Text); `api.flows` trennt diese Zeile beim Streamen ab und sendet sie als eigenes Ereignis `hinweis` `{text}`; `ui` zeigt den Hinweis über dem Vorschlag, „Übernehmen“ übernimmt nur den Text. Hinweistext nicht ins Log (Abschnitt 6, Datenschutz).
+- **Akzeptanzkriterien:** Tests für Abtrennung (mit Kennung, ohne Kennung, Kennung über mehrere Textstücke verteilt, Abbruch mitten im Hinweis) und Anzeige grün; Probeschreiben mit echtem Modell: Anweisung gegen den Kanon → Hinweis getrennt, Text ohne Hinweis; Anweisung ohne Konflikt → kein Hinweis.
+- **Betroffene Module:** context, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Logbuch-Eintrag mit Probeschreiben; Schnittstelle in `docs/architecture.md` Abschnitt 4 ergänzt
+- **Notizen:** Angelegt 2026-10-08. Entscheidung des Eigentümers: „A, Hinweis getrennt vom Text anzeigen“ (B still kanontreu, C vorher nachfragen verworfen).
+
+#### 4.15: Bedienhinweise im Schreib-Bereich
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** STABILISIERUNG (Befunde aus dem Funktionstest 2026-10-08)
+- **Abhängigkeiten:** 4.14
+- **Frist:** vor 4.8
+- **Freigabepflichtig:** nein
+- **Empfohlene Klasse:** Routine – Oberflächen-Texte und kleine Anzeigen.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-022
+- **Zu tun:** (1) `@` im Anweisungsfeld ohne Treffer bzw. bei leerem Kanon: Hinweis statt stummem Menü („Diese Welt hat noch keine Kanon-Einträge“ / „Kein Eintrag beginnt mit …“). (2) Einstieg ins Schreiben bei leerem Kapitel erklären: Der Eigentümer fand das Feld „Anweisung an die KI“ und den Knopf „Weiterschreiben“ nicht ohne Hilfe. Konkrete Form vor Beginn mit dem Eigentümer abstimmen.
+- **Akzeptanzkriterien:** Komponenten-Tests für beide Hinweise grün; Eigentümer findet den Einstieg beim 30-Minuten-Test (4.8) ohne Hilfe.
+- **Betroffene Module:** ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-08. Phase 4 jetzt 15 Schritte – Wucherungs-Schwelle (mehr als 16 und mindestens +5) **fast erreicht**; ein 17. Schritt in Phase 4 erzwingt den Stopp mit Neuplanung (`CLAUDE.md` Abschnitt 8, Kriterium 9).
+
 ### Phase 5: Soll-Anforderungen – Typ: UMSETZUNG
 
 **Ziel:** Die Soll-Anforderungen und die Kann-Anforderung sind umgesetzt oder begründet zurückgestellt; die nächste Ausbaustufe ist geplant.
 
-**Abschlusskriterium:** Schritte 5.1–5.5 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
+**Abschlusskriterium:** Schritte 5.1–5.6 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
 
 **Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`; keine neuen Architektur-Bestandteile erwartet.
 
-**Ursprünglicher Schrittplan:** 5 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9)
+**Ursprünglicher Schrittplan:** 5 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-10-08: 6 Schritte (+5.6, Wunsch des Eigentümers, FR-026), Wucherungs-Schwelle (10 und mindestens +5) nicht berührt
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
@@ -432,6 +466,22 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Fahrplan, ggf. ADRs
 - **Notizen:** –
+
+#### 5.6: Atmosphärische Schreibweise je Geschichte
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 4.8
+- **Freigabepflichtig:** voraussichtlich ja – ein neues Feld der Geschichte ist eine Datenmodelländerung (Kategorie 4); Form vor Beginn klären
+- **Empfohlene Klasse:** Entscheidung – Klärung der Form und Datenmodell-Vorschlag (Eskalations-Auslöser 1); die Umsetzung danach ist Routine.
+- **Eingangskriterien:** Form mit dem Eigentümer geklärt
+- **Anforderungen (ab Klasse M):** FR-026
+- **Zu tun:** Wunsch des Eigentümers beim Funktionstest 2026-10-08: neben der Erzählperspektive eine atmosphärische Schreibweise vorgeben. Offene Fragen vor Beginn: freier Text oder Auswahl von Bausteinen (Ton, Tempo, Satzbau) oder beides; eine Textprobe als Vorbild; je Geschichte, je Welt als Vorgabe oder je Anfrage; wo im Prompt und mit welchem Gewicht gegenüber Kanon und Figuren-Schreibweise.
+- **Akzeptanzkriterien:** nach FR-026; Schreibweise in der Oberfläche einstellbar und änderbar; Tests grün; Kanon-Treue im Probeschreiben nicht schlechter als vorher.
+- **Betroffene Module:** manuscript, context, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ggf. ADR, Logbuch-Eintrag mit Probeschreiben
+- **Notizen:** Angelegt 2026-10-08. Phase 5 jetzt 6 Schritte (ursprünglich 5) – Wucherungs-Schwelle nicht berührt.
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 

@@ -29,6 +29,64 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 00:55 UTC – [BEOBACHTUNG] 4.14 umgesetzt (vor Deployment)
+
+- `context`: Rahmen ergänzt – bei Konflikt mit dem Kanon kanontreu schreiben und mit genau einer Zeile `HINWEIS: …` beginnen; „Der Text selbst enthält nie Hinweise an den Autor.“ Kennung als `CONFLICT_MARKER` exportiert (rein additiv).
+- `api.flows.writing`: `NoteSplitter` hält Textstücke zurück, bis die erste Zeile entschieden ist; Hinweis als Ereignis `hinweis`, danach unveränderte Weitergabe; Leerzeilen nach dem Hinweis auch über Textstückgrenzen entfernt (erster Testlauf fand genau diesen Fall – Kennung und Zeilenende in getrennten Stücken). Hinweis bei Fehler oder Ende ohne Zeilenende trotzdem gesendet. Hinweistext nicht im Log.
+- `ui`: Hinweis über dem Vorschlag („wird nicht übernommen“), „Übernehmen“ übernimmt nur den Text, „Neu schreiben“ vergisst den Hinweis.
+- pytest 407 (Coverage 99 %, `flows/writing.py` 99 %), vitest 98 (98,66 % Zeilen, 96,47 % Zweige), Pre-Commit grün. Probeschreiben mit echtem Modell steht aus: OpenRouter-Schlüssel nur auf dem VPS, Ausführung im Container ist für die KI gesperrt – der Eigentümer prüft nach dem Deployment in der Oberfläche.
+
+### 2026-10-08 00:33 UTC – [BEOBACHTUNG] 4.13 eingespielt
+
+- Auf Anweisung des Eigentümers: PR #36 gemergt (`04a0bde`, CI auf `main` grün), nach Runbook Abschnitt 7 eingespielt (vorheriges Image `skriptorium:vorher` und `app.vorher` als Rückweg). Container `healthy`; von außen `/api/health` 200, `/api/worlds` 401, `/` 200; im Container Codelänge 12, Alphabet 31; Welt `glaskueste` unverändert vorhanden. Sitzungen durch den Neustart beendet (liegen im Speicher). Erzeugung eines Codes auf dem VPS durch den Eigentümer steht aus (letzter Nachweis für 4.13).
+
+### 2026-10-08 01:35 – [BEOBACHTUNG] Befunde des Funktionstests als Schritte 4.14 und 4.15
+
+- Eigentümer zu Befund „Hinweis im Text“: **A – Hinweis getrennt vom Text anzeigen** (B still kanontreu, C vorher nachfragen nicht gewählt). Landeplatz 4.14 (context, api, ui; neues SSE-Ereignis `hinweis`, rein additiv).
+- Befunde `@` stumm und Einstieg ins Schreiben → 4.15 (ui).
+- Phase 4 jetzt 15 Schritte (ursprünglich 8): Schwelle „mehr als 16 und mindestens +5“ nicht überschritten, aber knapp – ein 17. Schritt löst Stopp und Neuplanung aus.
+- Kontextgröße 269.347 Token (`get_usage`), über der Grenze 200.000; Weiterarbeit nach Vorgabe des Eigentümers, die Grenze nicht anzusprechen (Abweichung hiermit vermerkt).
+
+### 2026-10-08 01:25 – [BEOBACHTUNG] Funktionstest: Kanon-Probe gegen „Die Toten bleiben tot“
+
+- Anweisung „Seine tote Frau erscheint ihm und spricht zu ihm“ (widerspricht dem Kanon absichtlich). Ergebnis: Regel gehalten – keine Erscheinung, keine Stimme; stattdessen Suche nach der verlorenen Erinnerung. 0 Widersprüche zum Kanon.
+- **Befund 1 (Bedienung/Inhalt):** Der Vorschlag beginnt mit einem Hinweis an den Autor („Die Anweisung widerspricht dem Kanon. …“) **im Prosatext**. Mit „Übernehmen“ landet er im Manuskript. Ursache: Der Rahmen in `src/skriptorium/context/builder.py` (`_frame`) sagt nur „Widersprich ihm nie“, nicht, wie ein Konflikt mit der Anweisung zu melden ist. Offen: Hinweis getrennt vom Text ausgeben (z. B. eigenes Feld) oder still kanontreu schreiben – Entscheidung des Eigentümers.
+- **Befund 2 (Anschluss, kein Kanon-Widerspruch):** „der Abend, an dem das Boot nicht zurückgekommen war“ verknüpft den Tod der Frau mit dem Boot, das im ersten Text das Boot des Vaters war – mehrdeutig.
+
+### 2026-10-08 01:15 – [BEOBACHTUNG] Funktionstest: Kanon-Treue des ersten Textes
+
+- Erster Text (ca. 600 Wörter, Glasbrenner und Tochter) gegen die fünf Regeln der Glasküste gelesen: **0 Widersprüche**. Genutzt ohne `@`: „Spiegelglas erinnert sich“ (Bilder, nie Töne; Zerbrechen zeigt sie für einige Atemzüge), „Der Preis des Brennens“ (je reiner, desto mehr Verlust), Vell, Technikstand.
+- Grenzfälle, kein Widerspruch: Der Brenner weiß vorher, welche Erinnerung er verliert (Kanon sagt dazu nichts; von der Anweisung vorgegeben). „Das Wort lag irgendwo im Glas“ – poetisch, Kanon kennt keine Ablage von Erinnerungen im Glas.
+- Neu erfundene Fakten (Kandidaten für „In den Kanon“): Tochter Maren, Boot des Vaters, Lehrerin des Brenners.
+- Bewertung durch die KI selbst (Opus 5.5), nicht blind – keine Messung im Sinne von 4.8.
+
+### 2026-10-08 01:10 – [BEOBACHTUNG] Funktionstest: erster KI-Text auf der Produktion
+
+- Anweisung im Feld „Anweisung an die KI“ mit „Weiterschreiben“: Text erscheint, ca. 25 s bis zum letzten Wort (Angabe des Eigentümers, Modell vermutlich Vorgabe grok-4.7). Innerhalb der Zielwerte (ADR-035: erstes Textstück meist < 30 s). Erster echter Schreibvorgang mit OpenRouter auf dem VPS.
+
+### 2026-10-08 01:05 – [BEOBACHTUNG] Funktionstest: Einstieg ins Schreiben nicht selbsterklärend
+
+- Eigentümer findet nach der Anleitung „Szene eingeben“ das Feld nicht („In welches Feld denn? Puh“), obwohl er `@` im Feld „Anweisung an die KI“ kurz zuvor benutzt hat. Der Knopf „Weiterschreiben“ und der Haken „Neue Szene“ erklären den Einstieg in ein leeres Kapitel offenbar nicht. Befund zur Bedienung, wird mit den übrigen Befunden des Funktionstests als Schritt angelegt (Bezug FR-022).
+
+### 2026-10-08 01:00 – [BEOBACHTUNG] Funktionstest: Import und `@`-Menü funktionieren
+
+- Eigentümer hat den Text aus `glaskueste.md` in das Import-Feld kopiert und übernommen; im Feld „Anweisung an die KI“ bietet `@` die Regeln an. Vorherige Unklarheit „Was soll ich importieren?“: die als Datei geschickte Vorlage war nicht als Import-Material erkannt worden – Text im Gespräch zum Kopieren half.
+
+### 2026-10-08 00:50 – [BEOBACHTUNG] Funktionstest: `@`-Menü zeigt nichts
+
+- Eigentümer: „`@` – da taucht nichts auf.“ Ursache (lesend per SSH, nur Dateinamen): Welt `glaskueste` mit Geschichte und Kapitel angelegt, aber keine Kanon-Einträge – der Import war nicht gelaufen. `mentions()` in `ui/src/views/InstructionEditor.tsx` gibt bei leerer Trefferliste `null` zurück, das Menü bleibt stumm.
+- Kein Fehler, aber Befund zur Bedienung: Bei leerem Kanon (oder keinem Treffer) fehlt ein Hinweis. Wird mit den übrigen Befunden des Funktionstests als Schritt angelegt.
+
+### 2026-10-08 00:40 – [BEOBACHTUNG] Funktionstest: Anmeldung und Geschichte anlegen klappen; Wunsch Schreibweise
+
+- Eigentümer hat sich angemeldet (Einrichtung zwangsläufig mit dem bisherigen, langen Code – 4.13 ist noch nicht eingespielt) und legt eine Geschichte an: Titel, Form (Roman, Kurzgeschichte, Fragment), Erzählperspektive.
+- Wunsch: künftig neben der Erzählperspektive eine atmosphärische Schreibweise vorgeben. Landeplatz: FR-026 (Soll, vorläufig) und Schritt 5.6 `[OFFEN]` mit offenen Formfragen; Phase 5 jetzt 6 Schritte.
+
+### 2026-10-08 00:25 – [BEOBACHTUNG] Funktionstest durch den Eigentümer statt 4.8; Welt per Import
+
+- Eigentümer will die Funktion jetzt testen, ohne Stoppuhr – das ist **nicht** die Messung aus 4.8 (FR-022); 4.8 bleibt `[OFFEN]`.
+- Auftrag „Welt mit Name und Grundregeln erstellen“: Der direkte Weg (Python im Container per SSH) wurde vom Rechte-Filter der Arbeitsumgebung abgelehnt (Schreiben auf entferntem System). Stattdessen Welt „Glasküste“ als Markdown mit fünf Regeln für den Import über die Oberfläche bereitgestellt – lokal mit `parse_markdown` geprüft: Einleitung plus 5 Einträge der Kategorie `regel`. Der Import durch den Eigentümer testet zugleich den Import-Weg.
+
 ### 2026-10-08 00:10 – [BEOBACHTUNG] Unabhängige Prüfung des Einrichtungscodes (4.13)
 
 - Getrennte Instanz (Unteragent Claude Sonnet 5, ohne Gesprächsverlauf, nur Diff, Bedrohungsmodell, ADR-041). Ergebnis: keine Befunde hoch/mittel; ASVS 6.4.1 und 11.4.2 erfüllt. Entropie ≈ 59,45 Bit reicht auch mit vielen Adressen (bei IPv6 begrenzt zusätzlich die scrypt-Rate); Normalisierung macht keine falsche Eingabe richtig; Einmaligkeit unter Sperre korrekt; alte SHA-256-Hashes sicher ungültig; Code nicht in Logs.

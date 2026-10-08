@@ -248,6 +248,8 @@ export type WriteErrorKind =
 export type WriteEvent =
   | { type: "start"; model: string; estimated_tokens: number }
   | { type: "text"; text: string }
+  /** The AI's note that it changed an instruction contradicting the canon (step 4.14). */
+  | { type: "hinweis"; text: string }
   | {
       type: "done";
       input_tokens: number | null;
@@ -356,7 +358,7 @@ function parseEvent(block: string): WriteEvent | null {
       data += line.slice("data: ".length);
     }
   }
-  const types = ["start", "text", "done", "error"];
+  const types = ["start", "text", "hinweis", "done", "error"];
   if (!types.includes(name)) {
     return null;
   }

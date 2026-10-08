@@ -26,9 +26,10 @@ from skriptorium.api.flows import (
     prepare_request,
     stream_events,
 )
+from skriptorium.api.flows.writing import NoteSplitter
 from skriptorium.api.settings import Settings
 from skriptorium.canon import CanonService
-from skriptorium.context import ContextBuilder
+from skriptorium.context import CONFLICT_MARKER, ContextBuilder
 from skriptorium.manuscript import ManuscriptService
 from skriptorium.storage import DocumentStore, NotFound
 from tests.api.conftest import ORIGIN, FakeProvider, services_of
@@ -455,3 +456,114 @@ def test_prepare_request_scene_goal_only(tmp_path: Path) -> None:
 
     assert "Ziel der Szene: Ein Fremder kommt." in prepared.completion.messages[1].content
     assert "Ort:" not in prepared.completion.messages[1].content
+
+
+# --- conflict note (step 4.14) -------------------------------------------------------------
+
+
+def _split(chunks: list[str], *, complete: bool = True) -> list[tuple[str, str]]:
+    split = NoteSplitter()
+    pairs = [pair for chunk in chunks for pair in split.feed(chunk)]
+    return pairs + split.finish() if complete else pairs
+
+
+def _joined(pairs: list[tuple[str, str]]) -> tuple[list[str], str]:
+    notes = [text for name, text in pairs if name == "hinweis"]
+    return notes, "".join(text for name, text in pairs if name == "text")
+
+
+@pytest.mark.parametrize(
+    "chunks",
+    [
+        ["HINWEIS: Tote sprechen nicht.\n\nDer Nebel hob sich."],
+        ["HIN", "WEIS: Tote ", "sprechen nicht.", "\n", "\nDer Nebel", " hob sich."],
+        ["  hinweis:", " Tote sprechen nicht.\nDer Nebel hob sich."],
+        [
+            "H",
+            "I",
+            "N",
+            "W",
+            "E",
+            "I",
+            "S",
+            ":",
+            " Tote sprechen nicht.\n\n",
+            "Der Nebel hob sich.",
+        ],
+    ],
+)
+def test_note_is_split_from_the_text(chunks: list[str]) -> None:
+    assert _joined(_split(chunks)) == (["Tote sprechen nicht."], "Der Nebel hob sich.")
+
+
+@pytest.mark.parametrize(
+    "chunks",
+    [
+        ["Der Nebel hob sich."],
+        ["Hin", "ter dem Nebel."],
+        ["  Der Nebel"],
+        ["Er sagte: HINWEIS: nichts.\nDer Nebel."],
+    ],
+)
+def test_text_without_note_passes_unchanged(chunks: list[str]) -> None:
+    notes, text = _joined(_split(chunks))
+    assert notes == []
+    assert text == "".join(chunks)
+
+
+def test_text_after_the_decision_is_not_held_back() -> None:
+    split = NoteSplitter()
+    assert split.feed("Hi") == []
+    assert split.feed("nter") == [("text", "Hinter")]
+    assert split.feed(" dem Nebel") == [("text", " dem Nebel")]
+    assert split.finish() == []
+
+
+def test_note_without_line_end_is_sent_when_the_answer_ends() -> None:
+    assert _split(["HINWEIS: Tote ", "sprechen nicht."], complete=False) == []
+    assert _split(["HINWEIS: Tote ", "sprechen nicht."]) == [("hinweis", "Tote sprechen nicht.")]
+
+
+def test_short_answer_that_looks_like_the_marker_start_is_text() -> None:
+    assert _split(["HIN"]) == [("text", "HIN")]
+    assert _split([]) == []
+    assert _split(["HINWEIS:"]) == []
+
+
+def test_write_sends_the_note_as_its_own_event(writer: TestClient, provider: FakeProvider) -> None:
+    provider.chunks = ("HINWEIS: Die Toten bleiben tot.\n", "\nDer Nebel hob sich.")
+
+    events = _events(writer.post(WRITE, json={"instruction": "Ein Toter spricht."}).text)
+
+    assert [name for name, _ in events] == ["start", "hinweis", "text", "done"]
+    assert events[1][1] == {"text": "Die Toten bleiben tot."}
+    assert events[2][1] == {"text": "Der Nebel hob sich."}
+
+
+def test_note_held_back_is_sent_before_an_error(writer: TestClient, provider: FakeProvider) -> None:
+    provider.chunks = ("HINWEIS: Die Toten ", "bleiben tot.")
+    provider.error = ProviderUnavailable()
+
+    events = _events(writer.post(WRITE, json={}).text)
+
+    assert [name for name, _ in events] == ["start", "hinweis", "error"]
+    assert events[1][1] == {"text": "Die Toten bleiben tot."}
+
+
+def test_frame_tells_the_ai_how_to_report_a_conflict(
+    writer: TestClient, provider: FakeProvider
+) -> None:
+    writer.post(WRITE, json={"instruction": "Mira kommt dazu."})
+    system = provider.requests[0].messages[0].content
+    assert f"„{CONFLICT_MARKER} …“" in system
+    assert "Der Text selbst enthält nie Hinweise an den Autor." in system
+
+
+def test_answer_that_is_only_a_note_ends_with_done(
+    writer: TestClient, provider: FakeProvider
+) -> None:
+    provider.chunks = ("HINWEIS: Das widerspricht dem Kanon.",)
+
+    events = _events(writer.post(WRITE, json={"instruction": "Ein Toter spricht."}).text)
+
+    assert [name for name, _ in events] == ["start", "hinweis", "done"]

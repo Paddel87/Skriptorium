@@ -47,6 +47,9 @@ CHARS_PER_TOKEN: Final = 3.3
 SAFETY_MARGIN: Final = 1.1
 # Words of a chapter's opening that stand in for a missing summary (owner, step 3.6).
 OPENING_WORDS: Final = 300
+# Start of the one line in which the AI tells the author how it changed an instruction that
+# contradicts the canon; ``api`` shows that line apart from the text (step 4.14).
+CONFLICT_MARKER: Final = "HINWEIS:"
 
 _CATEGORY_LABELS: Final[dict[Category, str]] = {
     "figur": "Figur",
@@ -396,12 +399,17 @@ def _story_summary_instruction(number: int) -> str:
 
 
 def _frame(world_name: str) -> str:
-    """Frame of the request, as tested in steps 1.1 and 1.5."""
+    """Frame of the request, as tested in steps 1.1 and 1.5; conflict note since step 4.14."""
     return (
         f"Du bist Co-Autor einer Geschichte in der Welt „{world_name}“. Der Kanon unten ist "
         "verbindlich: Widersprich ihm nie. Erfinde nur, was der Kanon offen lässt. Die "
         "Zeitlinie ist verbindlich: Lass keine Handlung vor einem Ereignis geschehen, das laut "
-        "Zeitlinie später liegt, wenn die Anweisung es nicht ausdrücklich verlangt."
+        "Zeitlinie später liegt, wenn die Anweisung es nicht ausdrücklich verlangt. "
+        "Verlangt die Anweisung etwas, das dem Kanon widerspricht, schreibe trotzdem "
+        f"kanontreu und beginne deine Antwort mit genau einer Zeile „{CONFLICT_MARKER} …“, die "
+        "dem Autor in einem Satz sagt, was du abgewandelt hast und warum; danach folgt der "
+        "Text. Ohne Widerspruch schreibst du keine solche Zeile. Der Text selbst enthält nie "
+        "Hinweise an den Autor."
     )
 
 
