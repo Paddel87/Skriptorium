@@ -1,0 +1,390 @@
+[
+ {
+  "id": "T01",
+  "einleitung": "ja",
+  "einleitung_zitat": "Das Wasser hinter uns atmete ein und aus, ein und aus, und zwischen den Atemzügen war Stille, so dicht wie nasser Filz.",
+  "schlusssatz": "ja",
+  "schluss_zitat": "etwas, das ich nicht benennen konnte – nicht Angst, nicht Neugier, etwas dazwischen, etwas, das wartete.",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 1,
+  "kanon_belege": [
+   "fraglich: Tomas sagt \"Ich schwöre auch\", obwohl Ilka noch nicht geschworen hat"
+  ],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "Sera hat Ilka zum Eid aufgefordert; Text wartet mit Tomas' Eid weiter, zeitlich passend, aber mit Szenen-Neuausmalung davor"
+ },
+ {
+  "id": "T02",
+  "einleitung": "ja",
+  "einleitung_zitat": "Das Wasser hinter uns atmete. Ein und aus. Ein und aus. Die Salzlampe in der Hand der Novizin zitterte nicht",
+  "schlusssatz": "ja",
+  "schluss_zitat": "und das Boot schaukelte am Ring, und ich hörte das Tau knarren.",
+  "kanon_eindeutig": 1,
+  "kanon_fraglich": 0,
+  "kanon_belege": [
+   "eindeutig: \"weil die Flamme dahinter sich bewegte\" - Salzlicht ist kalt, ohne Flamme"
+  ],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "knüpft zeitlich an, bringt aber nichts Neues; kein Geschehen, kein Übergabepunkt an Ilka"
+ },
+ {
+  "id": "T03",
+  "einleitung": "nein",
+  "einleitung_zitat": "Der Dicke trat vor. Sein Knüppel hing an der Seite, aber seine freie Hand griff nach dem Buchrücken",
+  "schlusssatz": "ja",
+  "schluss_zitat": "Die Äbtissin wartete.",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 1,
+  "kanon_belege": [
+   "fraglich: Sera sagt, der Vogt sei \"nach Mitternacht\" eingedrungen; vorher: sie warte nicht bis zur Mitternachtsglocke (noch vor Mitternacht)"
+  ],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "Dicke trat vor wird wiederholt, setzt aber logisch an Drachs Ansage an; löst Konflikt weit über die Schnittstelle hinaus auf"
+ },
+ {
+  "id": "T04",
+  "einleitung": "nein",
+  "einleitung_zitat": "Es war nicht die Glocke. Es waren Schritte auf Stein, mehrere, nicht die leichten der Schwestern.",
+  "schlusssatz": "nein",
+  "schluss_zitat": "„Varn“, sagte Tomas, ohne mich anzusehen. „Er wartet auf dich.“",
+  "kanon_eindeutig": 1,
+  "kanon_fraglich": 0,
+  "kanon_belege": [
+   "eindeutig: Drach und Sera duzen sich (\"Du empfängst nach Sonnenuntergang\", \"Du nicht\"); im Kapitel siezen sie sich durchgehend (Ihr)"
+  ],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "Fortsetzung des \"Geräusch von oben\" (Schritte, Drach kommt)"
+ },
+ {
+  "id": "T05",
+  "einleitung": "ja",
+  "einleitung_zitat": "Die Novizin senkte die Lampe ein wenig. Das bläuliche Licht lag auf den nassen Stäben und auf den milchigen Augen der Äbtissin",
+  "schlusssatz": "nein",
+  "schluss_zitat": "„Und du, Kind.“",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 0,
+  "kanon_belege": [],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "Eid-Szene direkt nach Seras Aufforderung; Tomas übernimmt Eid statt Ilka, aber stimmig"
+ },
+ {
+  "id": "T06",
+  "einleitung": "nein",
+  "einleitung_zitat": "Der Dicke trat vor. Sein Schatten fiel über das Regal, über die offenen Seiten, über Matis Hände, die das Buch hielten.",
+  "schlusssatz": "ja",
+  "schluss_zitat": "Ich spürte den Eid auf meiner Zunge, der nach Blut schmeckte.",
+  "kanon_eindeutig": 2,
+  "kanon_fraglich": 1,
+  "kanon_belege": [
+   "eindeutig: \"die dritte nach Mitternacht\" Glocke - Kanon kennt nur vier Glocken (Sonnenaufgang, Mittag, Sonnenuntergang, Mitternacht); Kapitel liegt vor der Morgenglocke",
+   "eindeutig: Mai heißt zweimal \"Mati\" (\"Matis Hände\", \"Matis Finger\")",
+   "fraglich: Seras \"Halt\" stoppt den Dicken körperlich (Bindung an Lebende ist kanonisch unmöglich); Sera lässt Drach das Buch nehmen, entgegen ihrer Eid-Position"
+  ],
+  "schreibweise": 3,
+  "schreibweise_belege": [
+   "\"Ich zählte nicht mit. Ich zählte die Schritte zwischen mir und dem Regal...\" (Handlung/Gedanke)",
+   "\"Ich kannte den Namen des Gitters... der Lampe... des Steins\" / \"ich hatte ihn nie gesucht\" (Gedanken/Wissen)",
+   "\"ich wusste, dass ich den Handschuh nur auszuziehen brauchte... wusste nicht mehr, wie viele glatte Stellen ich noch hatte\" (Gedanken/Erinnerung)"
+  ],
+  "anschluss": "ja",
+  "anschluss_beleg": "Dicke trat vor ist Wiederholung, schließt aber an; Text überschreitet dann Ilkas Domäne stark"
+ },
+ {
+  "id": "T07",
+  "einleitung": "nein",
+  "einleitung_zitat": "Die Männer in den grauen Mänteln traten näher. Der Dicke hob den Knüppel nicht, er hielt ihn nur so",
+  "schlusssatz": "nein",
+  "schluss_zitat": "Sie sagte es in meine Richtung, dünn, ohne Hast.",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 0,
+  "kanon_belege": [],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "direkter Anschluss an Drachs Ansage; endet genau mit Seras \"Kind.\" an Ilka"
+ },
+ {
+  "id": "T08",
+  "einleitung": "nein",
+  "einleitung_zitat": "Der Dicke trat vor. Sein Knüppel hing an der Seite, aber seine andere Hand war offen, die Finger gespreizt",
+  "schlusssatz": "nein",
+  "schluss_zitat": "Tomas sah mich an.",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 1,
+  "kanon_belege": [
+   "fraglich: Sera sagt, der Vogt stehe \"nach Mitternacht\" im Archiv (Mitternachtsglocke noch nicht geschlagen)"
+  ],
+  "schreibweise": 1,
+  "schreibweise_belege": [
+   "\"ich wusste nicht, ob sie lauschte oder dachte oder beides\" (Ilkas Deutung/Gedanke, über Wahrnehmung hinaus)"
+  ],
+  "anschluss": "ja",
+  "anschluss_beleg": "knüpft an Drachs \"Meine Männer nehmen es\" an; löst die Szene weit auf (Drach zieht ab)"
+ },
+ {
+  "id": "T09",
+  "einleitung": "nein",
+  "einleitung_zitat": "Es war kein Schritt, den man zählen konnte, sondern ein Schleifen, dann ein dumpfes Klopfen",
+  "schlusssatz": "nein",
+  "schluss_zitat": "Sprich, oder ich lasse sprechen.",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 1,
+  "kanon_belege": [
+   "fraglich: Drach redet Ilka mit \"Kind\" an (Sera-Anrede; Drach sagt sonst \"die Varn\"); \"Salz an der Haut\" kann er nicht wissen"
+  ],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "direkt auf \"Von oben kam ein Geräusch\""
+ },
+ {
+  "id": "T10",
+  "einleitung": "nein",
+  "einleitung_zitat": "Der Dicke trat noch einen Schritt. Der Knüppel hob sich nicht, er hing nur tiefer, bereit.",
+  "schlusssatz": "nein",
+  "schluss_zitat": "Tomas trat nicht vor. Er blieb. Der Dicke zog.",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 0,
+  "kanon_belege": [],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "direkt an Drachs Ansage; endet mitten im Geschehen (Ilka-Übergabe nur implizit)"
+ },
+ {
+  "id": "T11",
+  "einleitung": "nein",
+  "einleitung_zitat": "Die Schritte kamen von oben, aus dem Gang, der zum Kapitelsaal führte.",
+  "schlusssatz": "nein",
+  "schluss_zitat": "Ich hörte das Holz oben splittern.",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 2,
+  "kanon_belege": [
+   "fraglich: erfundener zweiter Geheimgang vom dritten Gewölbe zur Grotte mit Wasser bis zur Brust (Kanon: nur Treppe und Grotte mit Gittertür)",
+   "fraglich: Sera räumt offen ein, Heddas Namen \"falsch geschrieben\" zu haben (Geheimnis der Fälschung gehört dem Autor)"
+  ],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "direkt auf das Geräusch von oben"
+ },
+ {
+  "id": "T12",
+  "einleitung": "nein",
+  "einleitung_zitat": "Tomas trat näher an die Stäbe, das Hinken dumpf auf dem nassen Stein.",
+  "schlusssatz": "ja",
+  "schluss_zitat": "Die Äbtissin wartete.",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 1,
+  "kanon_belege": [
+   "fraglich: Tomas spricht den Salzeid ohne Salz auf der Zunge, Sera lässt ihn als geschworen gelten"
+  ],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "direkt an Seras Aufforderung; Tomas schwört zuerst"
+ },
+ {
+  "id": "T13",
+  "einleitung": "ja",
+  "einleitung_zitat": "Das Wasser hinter uns lief ein und aus. Die Salzlampe in der Hand der Novizin zitterte nicht; sie hielt sie so still, als wäre sie aus Stein gehauen.",
+  "schlusssatz": "nein",
+  "schluss_zitat": "Tomas' Hand berührte meinen Ellbogen. Kurz. Ein Druck, kein Stoß. Dann ließ er los.",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 1,
+  "kanon_belege": [
+   "fraglich: \"Die Flamme der Salzlampe bewegte sich nicht\" (Salzlicht hat keine Flamme)"
+  ],
+  "schreibweise": 1,
+  "schreibweise_belege": [
+   "\"hatte ich das Gefühl, dass sie mich ansah... Etwas, das ich nicht zeigen wollte\" (Gefühl/Gedanke Ilkas)"
+  ],
+  "anschluss": "ja",
+  "anschluss_beleg": "Pause nach Seras Forderung, passt zeitlich"
+ },
+ {
+  "id": "T14",
+  "einleitung": "nein",
+  "einleitung_zitat": "Von oben kam ein Geräusch.",
+  "schlusssatz": "nein",
+  "schluss_zitat": "„Kind“, sagte sie... „Sprich, oder sie kommen die Stufen runter.“",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 0,
+  "kanon_belege": [],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "wiederholt den letzten Satz der Schnittstelle wörtlich, setzt dann logisch fort"
+ },
+ {
+  "id": "T15",
+  "einleitung": "nein",
+  "einleitung_zitat": "Von oben kam das Geräusch näher: Schritte auf Stein, nicht schlurfend, nicht leicht.",
+  "schlusssatz": "nein",
+  "schluss_zitat": "Oben setzte sich ein Schritt, dann noch einer, langsam, die Treppe herunter.",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 0,
+  "kanon_belege": [],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "direkt auf das Geräusch von oben"
+ },
+ {
+  "id": "T16",
+  "einleitung": "ja",
+  "einleitung_zitat": "Die Novizin hielt die Lampe still. Das bläuliche Licht lag auf den Eisenstäben und auf den milchigen Augen der Äbtissin, die nicht blinzelten.",
+  "schlusssatz": "ja",
+  "schluss_zitat": "Das Schloss klickte nicht. Das Gitter blieb zu.",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 1,
+  "kanon_belege": [
+   "fraglich: Seras freie Hand liegt auf Mais Schulter, im Kapitel hatte sie die Fingerspitzen am Schloss"
+  ],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "knüpft an Seras Eid-Forderung an"
+ },
+ {
+  "id": "T17",
+  "einleitung": "ja",
+  "einleitung_zitat": "Die Stille danach war nicht leer. Sie war voll von Wasser. Das Meer atmete hinter uns, ein und aus",
+  "schlusssatz": "ja",
+  "schluss_zitat": "ich spürte die Körner durch den Stoff, jedes einzelne, als zählten sie sich selbst.",
+  "kanon_eindeutig": 2,
+  "kanon_fraglich": 0,
+  "kanon_belege": [
+   "eindeutig: Grausalz in der \"Manteltasche\" (Kapitel: Beutel am Gürtel)",
+   "eindeutig: Wasser schlägt \"einen halben Fingerbreit unter meinen Knien\" gegen den Sims, aber das Gitter liegt zwanzig Stufen über dem Sims; Ilka kniet nicht"
+  ],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "zeitlich passend, aber lange Neuausmalung"
+ },
+ {
+  "id": "T18",
+  "einleitung": "nein",
+  "einleitung_zitat": "Es waren Schritte. Nicht das Schlurfen einer Schwester, nicht der Stock der Äbtissin.",
+  "schlusssatz": "nein",
+  "schluss_zitat": "Er öffnete den Mund.",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 1,
+  "kanon_belege": [
+   "fraglich: Asch berichtet, Drach wisse von \"jemand aus Tolm\"; Sera behauptet, Drach wisse seit zehn Jahren, was Asch getan hat (erfundene Hintergründe)"
+  ],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "direkt auf das Geräusch von oben; Fenn kommt allein mit Tranlaterne"
+ },
+ {
+  "id": "T19",
+  "einleitung": "ja",
+  "einleitung_zitat": "Die Äbtissin blieb hinter den Stäben. Der Stock senkte sich wieder auf den Stein. Die Salzlampe in der Hand der Novizin zitterte nicht",
+  "schlusssatz": "ja",
+  "schluss_zitat": "Das Meer atmete.",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 3,
+  "kanon_belege": [
+   "fraglich: Sera weiß als Blinde \"Drei Finger an der linken Hand\" (Handschuh)",
+   "fraglich: Tomas schwört ohne Salz",
+   "fraglich: \"Bug des Kahns\" (sie kamen im Ruderboot)"
+  ],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "Tomas schwört direkt nach Seras Forderung; vorher Neuausmalung"
+ },
+ {
+  "id": "T20",
+  "einleitung": "nein",
+  "einleitung_zitat": "Die Männer traten vor. Der Dicke hob den Knüppel, der andere ging an Asch vorbei auf das Regal zu",
+  "schlusssatz": "ja",
+  "schluss_zitat": "Die Äbtissin wandte das Gesicht zu mir, die milchigen Augen glänzend, und wartete.",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 0,
+  "kanon_belege": [],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "direkt an Drachs Ansage"
+ },
+ {
+  "id": "T21",
+  "einleitung": "nein",
+  "einleitung_zitat": "Der Dicke hob den Knüppel. Der zweite Wachmann trat an das Regal, grauer Mantel, weißer Kristall",
+  "schlusssatz": "nein",
+  "schluss_zitat": "„Kind“, sagte sie, dünn, ohne Hast, und das Wort traf den Raum, nicht Drach.",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 1,
+  "kanon_belege": [
+   "fraglich: Wachmann mit \"weißer Kristall\" (unklar; Salzsiegel tragen nur drei genehmigte Binderinnen in Tolm)"
+  ],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "direkt an Drachs Ansage"
+ },
+ {
+  "id": "T22",
+  "einleitung": "nein",
+  "einleitung_zitat": "Der Dicke trat vor, und sein Schatten fiel über das Regal, über die offenen Seiten, über Mias Hände",
+  "schlusssatz": "nein",
+  "schluss_zitat": "Sag mir einen Grund, warum ich nicht morgen Früh die Glocke läuten lasse und dich ins Hafenbecken werfe. Einen einzigen.",
+  "kanon_eindeutig": 1,
+  "kanon_fraglich": 2,
+  "kanon_belege": [
+   "eindeutig: Mai heißt \"Mia\" (\"Mias Hände\")",
+   "fraglich: Drach nennt Ilka \"Kind\"",
+   "fraglich: \"eine Mutter, die nicht schwimmen konnte\" (Hedda: nicht belegt; Eigenschaft ist Ilkas)"
+  ],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "Dicke trat vor wiederholt, setzt dann an; löst Buchraub weit über die Schnittstelle hinaus aus"
+ },
+ {
+  "id": "T23",
+  "einleitung": "nein",
+  "einleitung_zitat": "Die Stiefel kamen die Treppe herunter. Nicht die schmalen, leisen Schritte einer Schwester.",
+  "schlusssatz": "nein",
+  "schluss_zitat": "und ihre Schritte waren langsam und gleichmäßig, und der Stock tickte, und die Stiefel oben wurden lauter.",
+  "kanon_eindeutig": 0,
+  "kanon_fraglich": 0,
+  "kanon_belege": [],
+  "schreibweise": 1,
+  "schreibweise_belege": [
+   "\"Einer der Wachen, dachte ich, oder ein Bote.\" (Gedanke Ilkas)"
+  ],
+  "anschluss": "ja",
+  "anschluss_beleg": "direkt auf das Geräusch von oben; endet mit Sera, die Ilka allein lässt, ohne klaren Übergabepunkt"
+ },
+ {
+  "id": "T24",
+  "einleitung": "nein",
+  "einleitung_zitat": "Es waren Schritte. Mehr als ein Paar. Schwer, gleichmäßig, mit dem Klang von Sohlen auf Stein",
+  "schlusssatz": "nein",
+  "schluss_zitat": "Seine Hand fand meinen Ärmel im Dunkeln, nicht grob, aber bestimmt, und zog.",
+  "kanon_eindeutig": 1,
+  "kanon_fraglich": 0,
+  "kanon_belege": [
+   "eindeutig: Mai \"blies die Salzlampe aus\" (Salzlicht brennt nicht; Befehl-gebunden, keine Flamme)"
+  ],
+  "schreibweise": 0,
+  "schreibweise_belege": [],
+  "anschluss": "ja",
+  "anschluss_beleg": "direkt auf das Geräusch von oben"
+ }
+]
