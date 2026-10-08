@@ -1,11 +1,13 @@
 """ContextBuilder: precedence, budget, separation of worlds (roadmap step 3.2)."""
 
 from pathlib import Path
+from typing import Literal
 
 import pytest
 
 from skriptorium.canon import CanonService, InvalidInput, NotFound
 from skriptorium.context import (
+    LENGTHS,
     MAX_BUDGET,
     SAFETY_MARGIN,
     BuiltContext,
@@ -83,9 +85,8 @@ def test_messages_hold_fixed_parts_first_and_changing_parts_last(
     assert system.content.startswith("Du bist Co-Autor einer Geschichte in der Welt „Die Salzmark“")
     assert "Sieben Inseln nach der Flut." in system.content
     assert user.content.index("# Handlungsstand") < user.content.index("# Letzte Manuskript")
-    assert "# Anweisung\n\nIlka zieht die Klinge.\n\nErinnerung: Ilka Varn führt der Autor." in (
-        user.content
-    )
+    assert "# Anweisung\n\nIlka zieht die Klinge.\n\n# Vorgaben für deinen Text" in user.content
+    assert user.content.index("# Vorgaben") < user.content.index("Erinnerung: Ilka Varn")
     assert user.content.endswith("Ende, sobald die Figur handeln oder antworten müsste.")
 
 
@@ -175,7 +176,7 @@ def test_other_worlds_never_appear(services: tuple[CanonService, ManuscriptServi
         build(services, "nebelkoenig")
 
 
-@pytest.mark.parametrize("budget", [1000, 1500, 3000, MAX_BUDGET])
+@pytest.mark.parametrize("budget", [1300, 1500, 3000, MAX_BUDGET])
 def test_budget_is_never_exceeded(
     services: tuple[CanonService, ManuscriptService], budget: int
 ) -> None:
@@ -397,10 +398,9 @@ def test_seam_note_quotes_the_chapter_end_right_before_the_instruction(
     user = context.messages[1].content
     assert "# Anschluss\n\nDas Manuskript endet mit: „Vierter Absatz.“" in user
     assert "Führe Ort, Lage und Figuren nicht neu ein" in user
-    assert "ohne abschließenden, zusammenfassenden oder ausblickenden Satz" in user
     pages, seam = user.index("# Letzte Manuskript"), user.index("# Anschluss")
     assert pages < seam < user.index("# Anweisung") < user.index("Erinnerung: Ilka Varn")
-    assert labels(context, "anweisung") == ["Anschluss", "Anweisung"]
+    assert labels(context, "anweisung") == ["Anschluss", "Anweisung", "Vorgaben"]
 
 
 def test_seam_note_quotes_only_the_last_words_of_a_long_paragraph(
@@ -438,7 +438,77 @@ def test_no_seam_note_when_the_chapter_has_no_text_yet(
     context = ContextBuilder(*services).build(WORLD, STORY, 3, "Neue Szene am Kai.")
 
     assert "# Anschluss" not in context.messages[1].content
-    assert labels(context, "anweisung") == ["Anweisung"]
+    assert labels(context, "anweisung") == ["Anweisung", "Vorgaben"]
+
+
+# --- only what was asked for, not up to the known end (roadmap step 5.15) ----------------
+
+
+def test_requirements_follow_the_instruction_in_every_request(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    """Steps 5.8 and 5.15: no running ahead, no future events, no repetition, no closing."""
+    _, manuscripts = services
+    manuscripts.update_story(WORLD, STORY, controlled_characters=())
+
+    user = build(services).messages[1].content
+
+    requirements = user.split("# Vorgaben für deinen Text\n\n")[1]
+    assert user.index("# Anweisung") < user.index("# Vorgaben")
+    for rule in (
+        "Schreibe nur aus, was die Anweisung verlangt, und höre dann auf.",
+        "Nimm nicht vorweg, was der Autor als Nächstes schreiben könnte.",
+        f"Länge: {LENGTHS['mittel']}.",
+        "liegt in der Zukunft: Erzähle es nicht und deute es nicht an.",
+        "Wiederhole keine Sätze, Bilder, Gesten und Wendungen aus den letzten",
+        "Kein abschließender, zusammenfassender oder ausblickender Satz",
+    ):
+        assert rule in requirements
+    assert user.endswith("Dein Text hört mitten im Geschehen auf.")
+
+
+@pytest.mark.parametrize("length", ["kurz", "mittel", "lang"])
+def test_requirements_name_the_chosen_length(
+    services: tuple[CanonService, ManuscriptService], length: Literal["kurz", "mittel", "lang"]
+) -> None:
+    context = ContextBuilder(*services).build(WORLD, STORY, 2, "Weiter.", length=length)
+
+    user = context.messages[1].content
+    assert f"- Länge: {LENGTHS[length]}." in user
+    assert [text for name, text in LENGTHS.items() if name != length and text in user] == []
+
+
+def test_lengths_grow_from_short_to_long() -> None:
+    assert list(LENGTHS) == ["kurz", "mittel", "lang"]
+    assert LENGTHS["kurz"] == "etwa 60 bis 120 Wörter"
+    assert LENGTHS["mittel"] == "etwa 150 bis 300 Wörter"
+    assert LENGTHS["lang"] == "etwa 400 bis 600 Wörter"
+
+
+def test_frame_marks_what_lies_after_the_writing_point_as_future(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    system = build(services).messages[0].content
+
+    assert "Handlungsstand und Zeitlinie können über die Schreibstelle hinausreichen" in system
+    assert "liegt in der Zukunft und wird weder erzählt noch angedeutet" in system
+
+
+def test_instruction_for_the_led_character_is_written_out_exactly(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    """Owner, step 5.15: what the instruction gives the led character is written, no more."""
+    system, user = (message.content for message in build(services).messages)
+
+    assert (
+        "Beschreibt die Anweisung, was Ilka Varn tut oder sagt, schreibst du genau das aus, "
+        "Gesagtes als wörtliche Rede, und nichts darüber hinaus. Sonst gilt für Ilka Varn:"
+    ) in system
+    assert "solange die Anweisung nichts anderes ausdrücklich verlangt" not in system
+    reminder = user.split("Erinnerung: ")[1]
+    assert "Was die Anweisung für Ilka Varn vorgibt, schreibst du genau aus, nicht mehr." in (
+        reminder
+    )
 
 
 # --- summaries (roadmap step 3.6) --------------------------------------------------------
