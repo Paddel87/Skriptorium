@@ -94,6 +94,7 @@ export function WritingPanel({
 
   const [phase, setPhase] = useState<Phase>("idle");
   const [proposal, setProposal] = useState("");
+  const [note, setNote] = useState<string | null>(null);
   const [seconds, setSeconds] = useState(0);
   const [failure, setFailure] = useState<WriteErrorKind | null>(null);
   const [aborted, setAborted] = useState(false);
@@ -136,6 +137,7 @@ export function WritingPanel({
     setPhase("thinking");
     setSeconds(0);
     setProposal("");
+    setNote(null);
     setFailure(null);
     setAborted(false);
     setError(null);
@@ -155,6 +157,8 @@ export function WritingPanel({
           if (event.type === "text") {
             setPhase("writing");
             setProposal((text) => text + event.text);
+          } else if (event.type === "hinweis") {
+            setNote(event.text);
           } else if (event.type === "error") {
             setFailure(event.kind);
           } else if (event.type === "done") {
@@ -192,6 +196,7 @@ export function WritingPanel({
   function discard() {
     setPhase("idle");
     setProposal("");
+    setNote(null);
     setFailure(null);
     setAborted(false);
     setError(null);
@@ -310,6 +315,11 @@ export function WritingPanel({
           </span>
         )}
       </div>
+      {note !== null && phase !== "idle" && (
+        <p className="note" role="note">
+          Hinweis der KI (wird nicht übernommen): {note}
+        </p>
+      )}
       {(phase === "writing" || phase === "review") && (
         <Field label="Vorschlag der KI">
           <textarea

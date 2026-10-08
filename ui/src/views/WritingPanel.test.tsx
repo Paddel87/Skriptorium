@@ -140,6 +140,64 @@ describe("WritingPanel", () => {
     expect((await instructionView()).state.doc.toString()).toBe("");
   });
 
+  it("shows the AI's note on a canon conflict apart from the proposal", async () => {
+    const feed = sseFeed();
+    fakeApi(routes(feed));
+    const { onAccept } = panel();
+    const user = userEvent.setup();
+    await ready();
+
+    await typeInstruction("Ein Toter spricht.");
+    await user.click(screen.getByRole("button", { name: "Weiterschreiben" }));
+    feed.send("start", { model: "x-ai/grok-4.7", estimated_tokens: 900 });
+    feed.send("hinweis", { text: "Die Toten bleiben tot." });
+    const note = await screen.findByRole("note");
+    expect(note.textContent).toBe(
+      "Hinweis der KI (wird nicht übernommen): Die Toten bleiben tot.",
+    );
+    feed.send("text", { text: "Niemand sprach." });
+    feed.send("done", {
+      input_tokens: 900,
+      output_tokens: 5,
+      cost_usd: 0.001,
+      finish_reason: "stop",
+    });
+    feed.close();
+
+    await user.click(await screen.findByRole("button", { name: "Übernehmen" }));
+    expect(onAccept).toHaveBeenLastCalledWith("Niemand sprach.");
+    await waitFor(() => {
+      expect(screen.queryByRole("note")).toBeNull();
+    });
+  });
+
+  it("forgets the note when the proposal is written anew", async () => {
+    const first = sseFeed();
+    const second = sseFeed();
+    const feeds = [first, second];
+    fakeApi({
+      ...routes(first),
+      [WRITE]: () => ({ status: 200, stream: feeds.shift()?.stream }),
+    });
+    panel();
+    const user = userEvent.setup();
+    await ready();
+
+    await user.click(screen.getByRole("button", { name: "Weiterschreiben" }));
+    first.send("hinweis", { text: "Die Toten bleiben tot." });
+    first.send("text", { text: "Niemand sprach." });
+    first.close();
+    await screen.findByRole("note");
+    await user.click(
+      await screen.findByRole("button", { name: /Neu schreiben mit/ }),
+    );
+    expect(screen.queryByRole("note")).toBeNull();
+    second.send("text", { text: "Der Nebel." });
+    second.close();
+    await screen.findByRole("button", { name: "Übernehmen" });
+    expect(screen.queryByRole("note")).toBeNull();
+  });
+
   it("starts a new scene with place, characters and goal", async () => {
     const feed = sseFeed();
     const { calls } = fakeApi(routes(feed));
