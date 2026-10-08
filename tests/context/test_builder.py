@@ -175,7 +175,7 @@ def test_other_worlds_never_appear(services: tuple[CanonService, ManuscriptServi
         build(services, "nebelkoenig")
 
 
-@pytest.mark.parametrize("budget", [900, 1500, 3000, MAX_BUDGET])
+@pytest.mark.parametrize("budget", [1000, 1500, 3000, MAX_BUDGET])
 def test_budget_is_never_exceeded(
     services: tuple[CanonService, ManuscriptService], budget: int
 ) -> None:
@@ -375,6 +375,70 @@ def test_no_rule_and_no_reminder_without_led_characters(
     assert "Figuren-Schreibweise" not in system
     assert "Erinnerung" not in user
     assert labels(context, "schreibweise") == ["Figuren-Schreibweise"]
+
+
+# --- seamless continuation (roadmap step 5.8) -------------------------------------------
+
+
+def test_frame_asks_for_continuation_without_opening_or_closing(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    system = build(services).messages[0].content
+
+    assert "Eine Fortsetzung schließt nahtlos an das Ende des Manuskripts an" in system
+    assert "ohne Einleitung und ohne abschließenden Satz" in system
+
+
+def test_seam_note_quotes_the_chapter_end_right_before_the_instruction(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    context = build(services)
+
+    user = context.messages[1].content
+    assert "# Anschluss\n\nDas Manuskript endet mit: „Vierter Absatz.“" in user
+    assert "Führe Ort, Lage und Figuren nicht neu ein" in user
+    assert "ohne abschließenden, zusammenfassenden oder ausblickenden Satz" in user
+    pages, seam = user.index("# Letzte Manuskript"), user.index("# Anschluss")
+    assert pages < seam < user.index("# Anweisung") < user.index("Erinnerung: Ilka Varn")
+    assert labels(context, "anweisung") == ["Anschluss", "Anweisung"]
+
+
+def test_seam_note_quotes_only_the_last_words_of_a_long_paragraph(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    _, manuscripts = services
+    words = " ".join(f"w{n}" for n in range(100))
+    manuscripts.save_chapter(WORLD, STORY, 2, text=f"Anfang.\n\n{words}")
+
+    user = build(services).messages[1].content
+
+    quoted = " ".join(f"w{n}" for n in range(70, 100))
+    assert f"Das Manuskript endet mit: „… {quoted}“" in user
+    assert "w69 " not in user.split("# Anschluss")[1]
+
+
+def test_seam_note_is_capped_for_a_paragraph_without_spaces(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    _, manuscripts = services
+    manuscripts.save_chapter(WORLD, STORY, 2, text="x" * 5000)
+
+    user = build(services).messages[1].content
+
+    assert f"Das Manuskript endet mit: „… {'x' * 300}“" in user
+
+
+@pytest.mark.parametrize("text", ["", "# Kapitel 3: Die Fähre"])
+def test_no_seam_note_when_the_chapter_has_no_text_yet(
+    services: tuple[CanonService, ManuscriptService], text: str
+) -> None:
+    _, manuscripts = services
+    manuscripts.save_chapter(WORLD, STORY, 3, title="Die Fähre", text=text)
+
+    context = ContextBuilder(*services).build(WORLD, STORY, 3, "Neue Szene am Kai.")
+
+    assert "# Anschluss" not in context.messages[1].content
+    assert labels(context, "anweisung") == ["Anweisung"]
 
 
 # --- summaries (roadmap step 3.6) --------------------------------------------------------

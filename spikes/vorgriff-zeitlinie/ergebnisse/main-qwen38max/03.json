@@ -1,0 +1,12 @@
+{
+  "variante": "main-qwen38max",
+  "schritt": 3,
+  "anweisung": "Die nächsten Tage schleppe ich Salz für einen Händler aus der Oberstadt, um nicht aufzufallen. Am dritten Abend kommt Gunda zu mir in die Kammer herauf.",
+  "modell": "qwen/qwen3.8-max-0902",
+  "woerter": 513,
+  "sekunden": 58.3,
+  "token_ein": 8548,
+  "token_aus": 1856,
+  "kosten_usd": 0.01375704,
+  "finish_reason": "stop"
+}

@@ -1,0 +1,12 @@
+{
+  "variante": "main-qwen38max",
+  "schritt": 5,
+  "anweisung": "(leer: Weiter)",
+  "modell": "qwen/qwen3.8-max-0902",
+  "woerter": 815,
+  "sekunden": 67.5,
+  "token_ein": 9833,
+  "token_aus": 2163,
+  "kosten_usd": 0.01635084,
+  "finish_reason": "stop"
+}

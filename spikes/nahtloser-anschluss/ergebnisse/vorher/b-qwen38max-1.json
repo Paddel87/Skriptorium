@@ -1,0 +1,11 @@
+{
+  "variante": "vorher",
+  "stelle": "b",
+  "letzter_absatz": "Von oben kam ein Geräusch.",
+  "modell": "qwen/qwen3.8-max-0902",
+  "sekunden": 86.1,
+  "token_ein": 18803,
+  "token_aus": 2709,
+  "kosten_usd": 0.02316204,
+  "finish_reason": "stop"
+}

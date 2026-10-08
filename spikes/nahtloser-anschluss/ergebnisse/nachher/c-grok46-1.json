@@ -1,0 +1,11 @@
+{
+  "variante": "nachher",
+  "stelle": "c",
+  "letzter_absatz": "Drach atmete einmal. „Dann nehmt Ihr es nicht. Meine Männer nehmen es. Die Listen des Rats kennen kein Gewölbe, das sich einem Vogt verschließt.“",
+  "modell": "x-ai/grok-4.6",
+  "sekunden": 19.2,
+  "token_ein": 19995,
+  "token_aus": 693,
+  "kosten_usd": 0.04351644,
+  "finish_reason": "stop"
+}

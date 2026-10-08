@@ -1,0 +1,12 @@
+{
+  "variante": "main-qwen38max",
+  "schritt": 2,
+  "anweisung": "Ich biete Pell eine Silberschale pro Nacht. Pell fragt, was passiert, wenn sie ihn erwischen; ich sage ihm, dann sei er eben ein Junge, der hinter Fässern schläft.",
+  "modell": "qwen/qwen3.8-max-0902",
+  "woerter": 151,
+  "sekunden": 31.8,
+  "token_ein": 8322,
+  "token_aus": 1101,
+  "kosten_usd": 0.01059894,
+  "finish_reason": "stop"
+}

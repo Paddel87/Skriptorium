@@ -1,0 +1,12 @@
+{
+  "variante": "main-qwen38max",
+  "schritt": 7,
+  "anweisung": "Ich schlage vor, in zwei Nächten einzubrechen und die Riegel der Wachstube zu binden. Tomas will lieber Marr eine Nachricht schicken. Wir streiten.",
+  "modell": "qwen/qwen3.8-max-0902",
+  "woerter": 616,
+  "sekunden": 62.0,
+  "token_ein": 11877,
+  "token_aus": 1971,
+  "kosten_usd": 0.01703988,
+  "finish_reason": "stop"
+}

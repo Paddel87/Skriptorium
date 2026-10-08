@@ -7,6 +7,7 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 ### Geändert (nach v0.1.0)
 
 - Voreingestelltes Modell grok-4.6 statt grok-4.7 (2026-10-08, Schritt 5.7, ADR-044): grok-4.7 sperrte die echten Texte des Eigentümers häufig. Neue Geschichten und Geschichten ohne gewähltes Modell schreiben jetzt mit grok-4.6, ebenso die Kurzfassungen; eine Geschichte mit gewähltem Modell behält es. grok-4.7 bleibt wählbar, qwen3.8-max ist Notfall-Reserve. `GET /api/models` liefert die Reihenfolge grok-4.6, grok-4.7, qwen3.8-max.
+- Nahtloser Anschluss beim Weiterschreiben (2026-10-08, Schritt 5.8): Die KI bekommt das Ende des laufenden Kapitels (die letzten bis zu 30 Wörter) zitiert und die Vorgabe, unmittelbar danach in derselben Szene weiterzuschreiben – ohne Einleitung, die Ort, Lage und Figuren neu einführt, und ohne abschließenden oder zusammenfassenden Satz. Bei einem leeren Kapitel entfällt das Zitat.
 
 ## [0.1.0] – 2026-10-08
 

@@ -1,0 +1,11 @@
+{
+  "variante": "vorher",
+  "stelle": "b",
+  "letzter_absatz": "Von oben kam ein Geräusch.",
+  "modell": "x-ai/grok-4.6",
+  "sekunden": 23.2,
+  "token_ein": 18571,
+  "token_aus": 946,
+  "kosten_usd": 0.04219974,
+  "finish_reason": "stop"
+}

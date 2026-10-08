@@ -1,0 +1,11 @@
+{
+  "variante": "nachher",
+  "stelle": "a",
+  "letzter_absatz": "„Der Eid“, sagte sie. „Nicht auf eure Toten. Auf das Salz. Nichts entfernen. Nichts verändern. Wer ihn bricht, bleibt ungesalzen, und ich schreibe ihn in kein Buch.“ Sie hob den Stock einen Fingerbreit. „Und du, Kind, hast der Nacht einen Namen gesagt, den sie nicht hören soll. Das hole ich nicht zurück. Schwör trotzdem, oder das Gitter bleibt zu.“",
+  "modell": "x-ai/grok-4.6",
+  "sekunden": 9.4,
+  "token_ein": 17705,
+  "token_aus": 426,
+  "kosten_usd": 0.0113553,
+  "finish_reason": "stop"
+}

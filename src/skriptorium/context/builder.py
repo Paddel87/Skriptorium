@@ -7,6 +7,10 @@ entries of the world until the budget is used (precision before step 3.2,
 docs/architecture.md section 3). If (1)-(3) and the instruction do not fit, the request is
 refused - nothing the author named is left out silently.
 
+A continuation goes on right after the chapter's last words (step 5.8): a short note before the
+instruction quotes the end of the current chapter and asks for no opening that re-introduces
+place and situation and no closing sentence.
+
 If the author leads characters (FR-012), a short reminder of that rule follows the instruction:
 the rule in the fixed part alone was often broken (step 3.3), and the end of a request weighs
 more for the model.
@@ -50,6 +54,10 @@ OPENING_WORDS: Final = 300
 # Start of the one line in which the AI tells the author how it changed an instruction that
 # contradicts the canon; ``api`` shows that line apart from the text (step 4.14).
 CONFLICT_MARKER: Final = "HINWEIS:"
+# Words of the chapter's end quoted in the note on the seam (step 5.8).
+SEAM_WORDS: Final = 30
+# Upper bound for the quote, should a paragraph have no spaces.
+SEAM_CHARS: Final = 300
 
 _CATEGORY_LABELS: Final[dict[Category, str]] = {
     "figur": "Figur",
@@ -224,6 +232,9 @@ class ContextBuilder:
         state = _story_state(story, chapters, chapter_number)
         instruction_part = _Part("anweisung", "Anweisung", f"# Anweisung\n\n{instruction.strip()}")
         closing = [instruction_part]
+        seam = _seam(current)
+        if seam:
+            closing.insert(0, _Part("anweisung", "Anschluss", seam))
         led = _led_names(story, by_id)
         if led:
             closing.append(_Part("schreibweise", "Erinnerung Figuren-Schreibweise", _reminder(led)))
@@ -399,7 +410,10 @@ def _story_summary_instruction(number: int) -> str:
 
 
 def _frame(world_name: str) -> str:
-    """Frame of the request, as tested in steps 1.1 and 1.5; conflict note since step 4.14."""
+    """Frame of the request, as tested in steps 1.1 and 1.5.
+
+    Conflict note since step 4.14, seamless continuation since step 5.8.
+    """
     return (
         f"Du bist Co-Autor einer Geschichte in der Welt „{world_name}“. Der Kanon unten ist "
         "verbindlich: Widersprich ihm nie. Erfinde nur, was der Kanon offen lässt. Die "
@@ -409,7 +423,31 @@ def _frame(world_name: str) -> str:
         f"kanontreu und beginne deine Antwort mit genau einer Zeile „{CONFLICT_MARKER} …“, die "
         "dem Autor in einem Satz sagt, was du abgewandelt hast und warum; danach folgt der "
         "Text. Ohne Widerspruch schreibst du keine solche Zeile. Der Text selbst enthält nie "
-        "Hinweise an den Autor."
+        "Hinweise an den Autor. Eine Fortsetzung schließt nahtlos an das Ende des Manuskripts "
+        "an: ohne Einleitung und ohne abschließenden Satz."
+    )
+
+
+def _seam(current: Chapter) -> str:
+    """Note before the instruction: go on right after the chapter's last words (step 5.8).
+
+    Continuations used to open with place and situation and to close with a summing-up sentence
+    (owner, 2026-10-08). Quoting the end makes the seam concrete. An empty chapter, or one with
+    only its heading, starts fresh: no note.
+    """
+    paragraphs = [p for p in current.text.split("\n\n") if p.strip()]
+    if not paragraphs or paragraphs[-1].lstrip().startswith("#"):
+        return ""
+    words = paragraphs[-1].split()
+    end = " ".join(words[-SEAM_WORDS:])[-SEAM_CHARS:]
+    cut = "… " if end != " ".join(words) else ""
+    return (
+        f"# Anschluss\n\nDas Manuskript endet mit: „{cut}{end}“\n\n"
+        "Setzt du fort, beginnt dein Text mit dem nächsten Satz unmittelbar nach diesen Worten, "
+        "in derselben Szene: Führe Ort, Lage und Figuren nicht neu ein und fasse nichts "
+        "zusammen. Verlangt die Anweisung eine neue Szene, beginnt sie dort. In jedem Fall "
+        "endet dein Text ohne abschließenden, zusammenfassenden oder ausblickenden Satz; er "
+        "hört mitten im Geschehen auf."
     )
 
 

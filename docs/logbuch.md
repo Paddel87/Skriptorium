@@ -29,6 +29,52 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 14:30 UTC – [BEOBACHTUNG] Entscheidungen des Eigentümers zu 5.15
+
+- Per Auswahlfragen: eigene Figur – genau die Anweisung ausformulieren (Änderung an FR-012); Länge je Anfrage wählbar; „Weiter“ – kleiner Schritt, dann Übergabe; spätere Ereignisse als Zukunft kennzeichnen statt weglassen (kein neues Datenfeld). Eingetragen in 5.15; Umsetzung in neuer Session (Kontextgrenze).
+
+### 2026-10-08 14:20 UTC – [BEOBACHTUNG] Probeschreiben an früher Stelle einer fertigen Geschichte (5.15, 5.8)
+
+- **Anlass:** Eigentümer bat ausdrücklich, den Test in dieser Session selbst durchzuführen – Arbeit über der Kontextgrenze (Sessionende 13:45 UTC bei 226.445 Token) auf seine Anweisung, als Abweichung nach `CLAUDE.md` Abschnitt 0 („Sessiongröße“) vermerkt. Kein Produktionscode geändert.
+- **Aufbau und Ergebnis:** `spikes/vorgriff-zeitlinie/README.md` – Testgeschichte mit erfundenem Ende in Zusammenfassung und Zeitlinie, Schreiben in der Mitte von Kapitel 1, Ketten zu 7 übernommenen Vorschlägen auf Stand `main` mit grok-4.6, grok-4.7, qwen3.8-max (Kosten 0,45 $).
+- **Befunde:** (1) Wiederholung über die Kette bestätigt, am stärksten bei grok-4.6 (wörtlich gleicher Einstiegssatz in Schritt 5 und 7, Gesten 3–4×). (2) Vorgriff als Andeutung aus der Zusammenfassung bei allen Modellen; bei leerem „Weiter“ treibt qwen die Handlung weit voran; kein Durchlauf bis zum Ende. (3) Neu: Anweisungen zu Ilkas eigenem Handeln und Sprechen setzt kein Modell um (Figuren-Schreibweise) – Entscheidung des Eigentümers nötig. (4) Modelle nehmen den nächsten geplanten Schritt des Autors vorweg; grok-4.7 widerspricht danach per Hinweis-Zeile der Anweisung.
+- **Reibung:** qwen-Kette brach an einer Zeitüberschreitung ab und wurde neu gestartet; Skript wiederholt Vorschläge nach Anbieter-Fehler jetzt bis zu zweimal.
+
+### 2026-10-08 13:55 UTC – [BEOBACHTUNG] Befund des Eigentümers: KI läuft bis zum bekannten Ende, Einleitung und Atmosphäre schaukeln sich auf
+
+- Eigentümer schrieb in einer importierten Welt an einer Stelle weit vor dem bekannten Ende. Die KI formulierte nicht nur seine Eingabe aus, sondern erzählte stark verkürzt bis zum bekannten Ende weiter. Vermutete Ursachen (Code-Lesung): ganze Gesamtzusammenfassung und ganze Zeitlinie im Kontext, keine Längen- oder Grenzvorgabe → neuer Schritt 5.15.
+- Zweiter Befund: Nach sechs, sieben übernommenen Vorschlägen beginnt jeder Abschnitt mit derselben Einleitung und endet mit derselben Atmosphäre. Erklärt, warum Versuch 1 von 5.8 in der Testwelt kaum etwas zeigte (Einzelschritte statt Kette); Versuch 2 prüft eine Kette, in 5.8 notiert.
+- Kein Code geändert: Kontextgrenze der Session überschritten (Sessionende 13:45 UTC); nur Fahrplan und Logbuch nachgetragen. Phase 5 jetzt 15 Schritte (Schwelle 26).
+
+### 2026-10-08 13:45 UTC – [SESSIONENDE] 5.8 Versuch 1 – Wirkung nicht belegt, Kontextgrenze erreicht
+
+- **Dauer:** 13:15 – 13:45 UTC.
+- **Bearbeitet:** neuer OpenRouter-Schlüssel geprüft (gültig); 5.8 Versuch 1 umgesetzt (Rahmen, Abschnitt „Anschluss“, 6 neue Testfälle), Probeschreiben vorher/nachher mit 24 Texten, verblindete Bewertung durch getrennte Instanz.
+- **Stand:** 5.8 `[IN ARBEIT]`, Branch `scp/nice-lamport-as724t` gepusht, **kein Pull Request** (nicht verlangt; Wirkung nicht belegt). 5.7 `[IN ARBEIT]` unverändert (Deployment vom Mac, Abnahme-Szene). Zwei Schritte gleichzeitig `[IN ARBEIT]` – Abweichung von `CLAUDE.md` Abschnitt 7, weil 5.7 nur noch auf den Eigentümer wartet.
+- **Offen / Fragen an den Eigentümer:** (1) Ein echtes Beispiel für 5.8 – Ende eines Kapitels und eine Fortsetzung mit Einleitung/Schlusssatz (darf hier nicht ins öffentliche Repo, nur als Beschreibung oder lokal) – oder Entscheidung, Versuch 1 zu übernehmen und im Alltag zu prüfen. (2) Gilt ein Ende wie „Die Äbtissin wartete.“ (Übergabe an die geführte Figur) als unerwünschter Schlusssatz? Die Erinnerung zur Figuren-Schreibweise verlangt genau solche Enden. Weiter offen aus der Vorsession: Kosten-Zeile (5.10), unübersichtliche Stellen (5.11), Werte der Listen (5.6), Fehlerart bei abgelaufenem Schlüssel, MD024; D.11 bis 2026-10-31.
+- **Nächster Schritt:** nach Antwort des Eigentümers 5.8 abschließen (übernehmen oder Versuch 2 an echtem Material); Session auf dem Mac: Deployment von `main` → 5.7 abnehmen; danach 5.9.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 13:43). Schritte oberhalb der Empfehlung: 0 (5.8 empfohlen Entscheidung). Abgegeben: Bewertung der 24 Texte an eine getrennte Instanz (Sonnet) – als unabhängige Prüfung, nicht aus Kostengründen.
+- **Kontextgröße:** 226.445 Token (`get_session` 13:43) – über der Grenze 200.000; überschritten während der Auswertung von 5.8, kein neuer Schritt und kein Versuch 2 begonnen.
+- **Kosten der Probeläufe:** 0,68 $ (24 Läufe) plus Schlüssel-Abfrage.
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ um den Stand von 5.8 ergänzt; Status-Block unverändert (Phase 5, v0.1.0, Blocker 0). Drift: kein neuer ADR; Reaktiv-Quote 0/10 unverändert; Modul-Liste und Reifegrade unverändert (5.8 ohne Reifegrad-Wirkung); Blocker 0, kein `[BLOCKIERT]`; Phase 5 14 Schritte (Schwelle 26). Ablaufdaten: kein Vorlauf erreicht (nächste Nachprüfung mypy 2 am 2026-11-06). Logbuch ca. 260 Zeilen, project-context 343 Zeilen – keine Auslagerung. Alles committet und gepusht.
+
+### 2026-10-08 13:44 UTC – [BEOBACHTUNG] 5.8 Probeschreiben: Wirkung des neuen Rahmens nicht belegt
+
+- **Aufbau:** `spikes/nahtloser-anschluss/` – Testwelt Salzmark, Kapitel „Die Grotte“ an drei Stellen abgeschnitten, leere Anweisung, grok-4.6 und qwen3.8-max je 2 Läufe, alter und neuer Rahmen; Bewertung verblindet (T01–T24) durch Sonnet-Unteragent.
+- **Zahlen (vorher → nachher, je 12):** Einleitung 4 → 3, Schlusssatz 4 → 5, Kanon eindeutig 3 → 5 / fraglich 8 → 9, Figuren-Schreibweise 5 → 1. Einleitungen fast nur an Stelle a (Dialogpause ohne neues Ereignis): 4/4 → 3/4.
+- **Deutung:** Die Testwelt reproduziert den Befund des Eigentümers kaum; die Unterschiede liegen bei n = 12 im Rauschen. Akzeptanzkriterium „Mehrzahl ohne Einleitung und Schlusssatz“ war schon vorher erfüllt und taugt so nicht als Nachweis. „Kanon-Treue nicht schlechter“ ist nicht belegt (überwiegend qwen-Fehler, u. a. falsche Namen in beiden Varianten).
+- **Reibungen:** Anbieter-Fehler 502 mitten im Strom brach den ersten Nachher-Lauf ab – Skript überspringt seither fertige Läufe und meldet Fehler, statt abzubrechen; eine Zeitüberschreitung (90 s bis zum ersten Textstück) bei qwen, Wiederholung lief. Ein Testfall mit Absatz ohne Leerzeichen (60.730 Token Zitat) zeigte, dass das Zitat zusätzlich auf 300 Zeichen begrenzt werden muss – behoben vor dem Probeschreiben. Kleinstes Budget im Budget-Test von 900 auf 1000 angehoben (fester Teil ca. 170 Token größer).
+- **Läufe:** `pytest --cov` 416 bestanden, 99,79 %, `context/builder.py` 100 %; pre-commit grün.
+
+### 2026-10-08 13:16 UTC – [SESSIONSTART] Neuer OpenRouter-Schlüssel, Schritt 5.8
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (`get_session`: `configured_model`, `session_context.model`, `last_served_model`) → Entscheidungs-Klasse.
+- **Umgebung:** Cloud-Session (Ursprung Desktop-App), kein SSH zum VPS – kein Deployment aus dieser Session (ADR-025, ADR-039). Branch `scp/nice-lamport-as724t` auf Stand `main` `be92228`.
+- **Kontextgröße:** `get_session` meldet `used_tokens` 0 (beim Start wieder nicht gefüllt); Fenster 1.000.000, Grenze 200.000.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2. Keine aktiven Blocker; `[IN ARBEIT]`: 5.7 (wartet auf Deployment vom Mac und Abnahme-Szene).
+- **Schlüssel:** Eigentümer meldet „openrouter key ist neu“. `OPENROUTER_API_KEY` gesetzt (73 Zeichen, SHA-256-Präfix `6d51b4c5`, Wert nicht angezeigt); `GET /api/v1/key` → HTTP 200, Ausgabengrenze 250 $, Verbrauch 0, gültig bis 2027-10-08.
+- **Vorhaben:** 5.8 Nahtloser Anschluss (empfohlen Entscheidung – passt zur aktiven Klasse). 5.7 bleibt `[IN ARBEIT]`, bis vom Mac deployt und abgenommen ist; 5.8 hängt laut Fahrplan an 5.7, der Code von 5.7 ist aber gemergt, und das Probeschreiben läuft lokal mit der neuen Voreinstellung – Abhängigkeit für die Umsetzung erfüllt, nur die Abnahme beim Eigentümer steht aus.
+
 ### 2026-10-08 10:35 UTC – [SESSIONENDE] 5.7 umgesetzt und gemergt – Abnahme offen
 
 - **Dauer:** 10:22 – 10:35 UTC (Container-Uhr; die Einträge 10:35 und 10:50 UTC oben tragen geschätzte Zeiten und liegen tatsächlich zwischen 10:25 und 10:32 UTC).
