@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-10-08 (Neuplanung nach ADR-042; 5.7, 5.8, 5.15 erledigt und eingespielt mit `18ee07d`)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 5.9 Kapitel öffnet am Textende – umgesetzt, wartet auf Merge, Deployment und Bestätigung des Eigentümers (5.7, 5.8 und 5.15 am 2026-10-08 `[ERLEDIGT]`)
-- **Nächster Schritt:** 5.9 abnehmen; danach 5.10, 5.11, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** 5.9 Kapitel öffnet am Textende – gemergt mit PR #63 (`32c027d`), Deployment auf Wunsch des Eigentümers später; wartet auf Deployment und Bestätigung auf Desktop und Smartphone (5.7, 5.8 und 5.15 am 2026-10-08 `[ERLEDIGT]`)
+- **Nächster Schritt:** 5.9 deployen und abnehmen; danach 5.10, 5.11, 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -116,13 +116,13 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Ziel:** Das Skriptorium ist für das tägliche Schreiben des Eigentümers alltagstauglich – Modelle sperren seine Texte nicht, die KI schreibt nahtlos weiter, die Oberfläche ist übersichtlich und intuitiv (gezielter Umbau nach ADR-042) –, die Soll-Anforderungen und die Kann-Anforderung sind umgesetzt oder begründet zurückgestellt, und die nächste Ausbaustufe ist geplant.
 
-**Abschlusskriterium:** Schritte 5.1–5.14 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
+**Abschlusskriterium:** Schritte 5.1–5.16 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
 
 **Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`. Der Umbau betrifft nur `ui` (Seitenaufbau, 5.11) und Randstellen in `ai_gateway`/`api` (Modell-Katalog, 5.12); neue gespeicherte Daten (5.6, 5.13) werden per ADR festgelegt.
 
-**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-08: 15 Schritte (+5.14, ADR-043; +5.15 Befund des Eigentümers).
+**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-08: 16 Schritte (+5.14, ADR-043; +5.15 und +5.16 Befunde des Eigentümers).
 
-**Reihenfolge (ADR-042):** zuerst die kleinen Abhilfen 5.7, 5.8, 5.9, dann 5.10, der Umbau der Oberfläche 5.11, danach 5.6, 5.12, 5.13; anschließend 5.2 (Smartphone, auf dem neuen Aufbau), 5.1, 5.3, 5.4, dann 5.14 (Go-Live-Prüfung) und 5.5.
+**Reihenfolge (ADR-042):** zuerst die kleinen Abhilfen 5.7, 5.8, 5.9, dann 5.10, der Umbau der Oberfläche 5.11, danach 5.16, 5.6, 5.12, 5.13; anschließend 5.2 (Smartphone, auf dem neuen Aufbau), 5.1, 5.3, 5.4, dann 5.14 (Go-Live-Prüfung) und 5.5.
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
@@ -256,7 +256,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.9: Kapitel öffnet am Textende
 
-- **Status:** IN ARBEIT (seit 2026-10-08) – umgesetzt auf Branch `feat/5.9-kapitel-am-textende`: Manuskript-Editor mit eigenem Scrollbereich (höchstens 55 % der Fensterhöhe), öffnet mit Cursor und Ansicht am Textende und kehrt nach übernommenem Vorschlag dorthin zurück; liegen die Knöpfe unter dem Kapitel beim Öffnen außerhalb des Fensters, rückt die Seite an den Kapitelanfang. Tests: `vitest` 104 bestanden, 98,59 % Zeilen; Playwright 9 bestanden (neu: langes Kapitel mit 300 Absätzen zeigt Absatz 300, „In den Kanon“ und das Anweisungsfeld im Fenster 1280 × 720). Offen: CI, Merge, Deployment, Bestätigung des Eigentümers auf Desktop und Smartphone
+- **Status:** IN ARBEIT (seit 2026-10-08) – umgesetzt auf Branch `feat/5.9-kapitel-am-textende`: Manuskript-Editor mit eigenem Scrollbereich (höchstens 55 % der Fensterhöhe), öffnet mit Cursor und Ansicht am Textende und kehrt nach übernommenem Vorschlag dorthin zurück; liegen die Knöpfe unter dem Kapitel beim Öffnen außerhalb des Fensters, rückt die Seite an den Kapitelanfang. Tests: `vitest` 104 bestanden, 98,59 % Zeilen; Playwright 9 bestanden (neu: langes Kapitel mit 300 Absätzen zeigt Absatz 300, „In den Kanon“ und das Anweisungsfeld im Fenster 1280 × 720). Gemergt mit PR #63 (`32c027d`, CI 8/8 grün); Deployment auf Wunsch des Eigentümers später („nur mergen“). Offen: Deployment, Bestätigung des Eigentümers auf Desktop und Smartphone
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 4.8 (Phasenbeginn)
 - **Freigabepflichtig:** nein
@@ -366,6 +366,22 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Artefakte:** Code, Tests, Probeschreiben, Logbuch-Eintrag
 - **Entscheidungen des Eigentümers (2026-10-08, Auswahlfragen):** (1) **Eigene Figur:** Beschreibt die Anweisung Handlung oder Rede der vom Autor geführten Figur, formuliert die KI **genau das** aus – nichts darüber hinaus; danach führt sie Welt und übrige Figuren (Änderung an FR-012 → `docs/requirements.md` und Rahmen/Erinnerung in `context` anpassen). (2) **Länge je Anfrage wählbar** (kurz/mittel/lang im Schreib-Bereich) – additives optionales Feld im Schreib-Endpunkt, Oberfläche; Werte der Stufen beim Umsetzen vorschlagen. (3) **„Weiter“ ohne Anweisung:** nur der unmittelbar nächste Moment, Ende sobald die eigene Figur dran ist. (4) **Spätere Ereignisse als Zukunft kennzeichnen:** im Kontext lassen, mit Vorgabe „Schreibstelle ist das Ende der letzten Manuskript-Seiten; was Zusammenfassung oder Zeitlinie danach nennen, liegt in der Zukunft – nicht erzählen, nicht andeuten“; kein neues Datenfeld. Eingangskriterien damit erfüllt.
 - **Notizen:** Probeschreiben 2026-10-08 (`spikes/vorgriff-zeitlinie/README.md`, Ketten zu 7 Vorschlägen mit grok-4.6, grok-4.7, qwen3.8-max auf Stand `main`): Vorgriff als Andeutung bestätigt (Asch und der Aschturm aus der Zusammenfassung), bei leerem „Weiter“ treibt qwen die Handlung weit voran (815 Wörter, nimmt den nächsten Schritt des Autors vorweg); kein Durchlauf bis zum Ende. Neuer Befund: Anweisungen zur eigenen Figur des Autors („Ich biete …, ich sage …“) setzt keines der Modelle um – Konflikt mit FR-012, Entscheidung des Eigentümers nötig. Angelegt 2026-10-08 auf Befund des Eigentümers. Wucherungs-Prüfung: Phase 5 jetzt 15 Schritte (ursprünglich 13, Schwelle 26) – keine Wucherung.
+
+#### 5.16: Herangezogene Kanon-Einträge anklickbar
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 5.11 (neuer Seitenaufbau; Platz für die Einblendung)
+- **Freigabepflichtig:** nein – nur `ui`, liest Einträge über die vorhandene Schnittstelle
+- **Empfohlene Klasse:** Routine – Oberflächen-Änderung ohne Architekturwirkung mit Komponenten- und End-to-End-Test.
+- **Eingangskriterien:** 5.11 erledigt
+- **Anforderungen (ab Klasse M):** FR-031, FR-013
+- **Zu tun:** Befund des Eigentümers 2026-10-08: Die unter „Herangezogen“ (`WritingPanel.tsx`) genannten Kanon-Einträge sollen anklickbar sein, damit er sich gleich im Kanon zurechtfindet. Entschieden (Auswahlfrage): Der Eintrag wird **über der Schreibseite eingeblendet** (Fenster oder Seitenleiste), das Kapitel bleibt offen – kein Wechsel auf die Kanon-Seite. Gast-Einträge aus anderen Welten ebenso.
+- **Akzeptanzkriterien:** nach FR-031; Test: Klick zeigt Name und Text des Eintrags, nach dem Schließen sind Manuskript, Anweisung und Vorschlag unverändert.
+- **Betroffene Module:** ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-08 auf Befund des Eigentümers. Wucherungs-Prüfung: Phase 5 jetzt 16 Schritte (ursprünglich 13, Schwelle 26) – keine Wucherung.
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 
@@ -768,7 +784,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Empfohlene Klasse:** Entscheidung – Architektur- und Abhängigkeitsentscheidung (Eskalations-Auslöser 1).
 - **Eingangskriterien:** 5.5
 - **Anforderungen (ab Klasse M):** FR-029
-- **Zu tun:** Wunsch 2026-10-08: Figuren, Welten, Regeln, Gegenstände mit Verwendung und Auswirkung im Gespräch mit der KI entwerfen; bei alltagsbekannten Gegenständen tatsächliche Anwendung und Handhabung aus dem Internet einbeziehen. Übernahme in den Kanon erst nach Bestätigung (wie Import-Vorschau). Import bleibt bestehen.
+- **Zu tun:** Wunsch 2026-10-08: Figuren, Welten, Regeln, Gegenstände mit Verwendung und Auswirkung im Gespräch mit der KI entwerfen; vorhandene Kanon-Einträge mit KI-Unterstützung besser ausformulieren (Befund des Eigentümers 2026-10-08, ausdrücklich hier statt als eigener Schritt in Phase 5); bei alltagsbekannten Gegenständen tatsächliche Anwendung und Handhabung aus dem Internet einbeziehen. Übernahme in den Kanon erst nach Bestätigung (wie Import-Vorschau). Import bleibt bestehen.
 - **Akzeptanzkriterien:** nach FR-029
 - **Betroffene Module:** canon, api, ui, ai_gateway (offen)
 - **Reifegrad-Wirkung:** offen
