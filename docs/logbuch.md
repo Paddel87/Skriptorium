@@ -42,7 +42,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - **Behebung:** eigene `apply`-Funktion `withSpace` im `@`-Menü – Name plus Leerzeichen, außer es folgt schon Leerzeichen oder Satzzeichen; über `insertCompletionText` und `pickedCompletion` aus `@codemirror/autocomplete` (vorhandene Abhängigkeit).
 - **Reibung:** Drei Tests verglichen die Menü-Einträge mit `toEqual` und brachen am neuen Feld `apply` → `toMatchObject`; ein Komponententest und der End-to-End-Test tippten selbst ein Leerzeichen nach der Auswahl – angepasst, der End-to-End-Test prüft jetzt genau den gemeldeten Fall.
 - **Läufe:** `vitest` 106 bestanden, 98,59 % Zeilen / 96,19 % Zweige; Playwright 9 bestanden.
-- Neuer Schritt 5.17; Phase 5 jetzt 17 Schritte (Schwelle 26). PR #65 (5.10) wartet auf Merge.
+- Neuer Schritt 5.17; Phase 5 jetzt 17 Schritte (Schwelle 26). PR #65 (5.10) gemergt (`cc70fdc`).
+
+### 2026-10-08 22:15 UTC – [ERLEDIGT] 5.10 Kosten je Vorschlag – ohne Code-Änderung
+
+- PR #64 (Befunde zum Kanon) nach grüner CI gemergt (`ec0ed81`).
+- Eigentümer: „Kosten gemeldet steht da“. Prüfung auf der Produktion, nur Metadaten: Log-Zeilen `ki_anfrage` seit `18ee07d` alle mit `kosten_usd` (grok-4.6, 0,020–0,047 $ je Anfrage bei 7.900–20.800 Token ein); Monatsdatei Oktober: 82 Anfragen, 5 ohne Kosten (2 abgebrochen, 3 `nicht_erreichbar`; 3× qwen, 2× grok-4.6).
+- Auswahlfrage: unter einem fertigen Vorschlag steht ein Betrag → 5.10 `[ERLEDIGT]`. Akzeptanzkriterium „Kosten sichtbar oder ausdrücklich als nicht verfügbar gekennzeichnet“ war schon erfüllt.
 
 ### 2026-10-08 22:05 UTC – [BEOBACHTUNG] Befunde zum Kanon, 5.9 gemergt
 
