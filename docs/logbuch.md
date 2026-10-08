@@ -29,6 +29,16 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 13:50 UTC – [SESSIONENDE] Session 2026-10-08 abgeschlossen – Wiedereinstieg bei 5.7
+
+- **Dauer:** 08:23 – 13:50 UTC. Ersetzt als Wiedereinstiegspunkt das Sessionende 13:20 UTC; dazwischen nur die Einträge 13:35 und 13:40 UTC.
+- **Bearbeitet (Überblick):** Befunde aus der Nutzung aufgenommen; Pflichtfrage nach Phasen-Wucherung mit getrennter Instanz → B „gezielt umbauen“ (ADR-042); Neuplanung (Phase 5 mit 5.7–5.14, D.13, V.6–V.9, FR-027–FR-030); 4.8 erledigt, v0.1.0 als Vorabversion (ADR-043); Phase 4 abgeschlossen und archiviert; Antworten zu grok-4.7 (bleibt wählbar, Live-Liste in 5.12) und CI-Zwischenspeicher (nein). PRs #49–#53 gemergt. Kein Produktiv-Deployment in dieser Session (Server weiter auf `edc24ad`).
+- **Wiedereinstieg:** Pflichtlektüre nach `CLAUDE.md` Abschnitt 2; dann **5.7 Startmodell grok-4.6** (`ai_gateway/models.py`: grok-4.6 zuerst, grok-4.7 danach, qwen3.8-max als Notfall-Reserve; Tests; ADR `[ERKENNTNIS]` zu ADR-010/011; Deployment nur auf Anweisung, ADR-039). Danach 5.8, 5.9, 5.10, 5.11.
+- **Offene Fragen an den Eigentümer:** Kosten-Zeile (5.10), unübersichtliche Stellen (5.11), Knopf „In den Kanon“ nie gesehen oder unklar, Werte der Listen (5.6). Frist: D.11 bis 2026-10-31.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 13:45). Schritte oberhalb der Empfehlung: 1 (Doku-Pflege zu Beginn). Abgegeben: Bewertung Phase 4 und Auswertung der CI-Logs an Sonnet 5.
+- **Kontextgröße:** 464.445 Token (`get_session`), weit über der Grenze 200.000 – Abweichung auf ausdrückliche Anweisung („Hier weiter“, „Weiter“). Nächste Session neu beginnen.
+- **Sessionende-Prüfungen:** README, Fahrplan und project-context stehen auf Phase 5 und v0.1.0; Drift seit 13:20 UTC nur in 5.7 (Text nachgezogen, kein neuer Schritt). Ablaufdaten: kein Vorlauf erreicht. Logbuch 180 Zeilen. Keine uncommitteten Änderungen.
+
 ### 2026-10-08 13:40 UTC – [BEOBACHTUNG] CI: kein Zwischenspeicher für Chromium
 
 - Auf das Angebot, Chromium und die Systempakete in der CI zwischenzuspeichern oder einen Playwright-Container zu nutzen (Ausreißer 2026-10-08: 32,5 MB in 8 min 23 s statt 3 s): Eigentümer „Kein Zwischenspeicher“. Pipeline bleibt unverändert; einzelne langsame Läufe werden hingenommen. Kein Schritt angelegt.
