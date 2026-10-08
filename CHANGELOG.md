@@ -4,6 +4,10 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ## [Unreleased]
 
+### Geändert
+
+- Kürzerer Einrichtungscode (2026-10-07, Schritt 4.13, ADR-041): `skriptorium-einrichtung` zeigt 12 Zeichen in Dreiergruppen (z. B. `K7Q-M3X-RAP-H9D`) aus Großbuchstaben und Ziffern ohne Verwechsler; bei der Eingabe spielen Groß-/Kleinschreibung, Bindestriche und Leerzeichen keine Rolle. Der Code wird wie das Passwort mit scrypt gespeichert; ein vor dem Update erzeugter Code gilt nicht mehr.
+
 ### Hinzugefügt
 
 - Öffentlicher Betrieb (2026-09-30, Schritt 4.7, ADR-039): Das Skriptorium läuft auf dem Server des Eigentümers unter HTTPS mit Passwortschutz. Zusätzliche Sicherheits-Kopfzeilen auf jeder Antwort: `X-Content-Type-Options: nosniff`, `Referrer-Policy: no-referrer`, `Permissions-Policy` ohne Kamera, Mikrofon und Standort; der Proxy verbietet das Einbetten in fremde Seiten.

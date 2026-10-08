@@ -73,7 +73,7 @@ uv run pre-commit install
 
 Variablen, siehe `.env.example`: `SKRIPTORIUM_DATA_DIR` (Datenverzeichnis, Standard `./data`) und `OPENROUTER_API_KEY` (Schlüssel für OpenRouter, seit Schritt 3.1; gebraucht erst für KI-Anfragen ab Schritt 3.3 – Server und Tests laufen ohne). Den Schlüssel nur in der Umgebung setzen, beim Anbieter eine Ausgabengrenze einrichten.
 
-Passwort einrichten (ADR-017): Der Befehl erzeugt einen Einrichtungscode, der 24 Stunden und nur einmal gilt; gespeichert wird nur sein Hash in `system/zugang.md`. Mit dem Code wird das Passwort festgelegt (mindestens 15 Zeichen; geprüft gegen Pwned Passwords von Have I Been Pwned, Daten unter CC BY 4.0). Derselbe Weg hilft bei vergessenem Passwort.
+Passwort einrichten (ADR-017, ADR-041): Der Befehl erzeugt einen Einrichtungscode aus 12 Zeichen in Dreiergruppen (z. B. `K7Q-M3X-RAP-H9D`; Groß-/Kleinschreibung, Bindestriche und Leerzeichen egal), der 24 Stunden und nur einmal gilt; gespeichert wird nur sein scrypt-Hash in `system/zugang.md`. Mit dem Code wird das Passwort festgelegt (mindestens 15 Zeichen; geprüft gegen Pwned Passwords von Have I Been Pwned, Daten unter CC BY 4.0). Derselbe Weg hilft bei vergessenem Passwort.
 
 ```bash
 uv run skriptorium-einrichtung        # zeigt den Code einmal an
