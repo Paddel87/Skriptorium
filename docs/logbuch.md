@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 14:30 UTC – [BEOBACHTUNG] Entscheidungen des Eigentümers zu 5.15
+
+- Per Auswahlfragen: eigene Figur – genau die Anweisung ausformulieren (Änderung an FR-012); Länge je Anfrage wählbar; „Weiter“ – kleiner Schritt, dann Übergabe; spätere Ereignisse als Zukunft kennzeichnen statt weglassen (kein neues Datenfeld). Eingetragen in 5.15; Umsetzung in neuer Session (Kontextgrenze).
+
 ### 2026-10-08 14:20 UTC – [BEOBACHTUNG] Probeschreiben an früher Stelle einer fertigen Geschichte (5.15, 5.8)
 
 - **Anlass:** Eigentümer bat ausdrücklich, den Test in dieser Session selbst durchzuführen – Arbeit über der Kontextgrenze (Sessionende 13:45 UTC bei 226.445 Token) auf seine Anweisung, als Abweichung nach `CLAUDE.md` Abschnitt 0 („Sessiongröße“) vermerkt. Kein Produktionscode geändert.
