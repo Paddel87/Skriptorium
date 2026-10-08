@@ -164,6 +164,7 @@ test("@ menu names an entry; taken-over AI text is appended and saved", async ({
     instruction: "@Mira kommt.",
     references: ["mira"],
     model: "x-ai/grok-4.6",
+    length: "mittel",
     scene: null,
   });
 

@@ -17,6 +17,7 @@ import {
   type GuestLink,
   type WriteErrorKind,
   type WriteEvent,
+  type WriteLength,
   type WriteOrder,
 } from "../api";
 import { referencedEntries } from "../references";
@@ -36,6 +37,9 @@ type Phase = "idle" | "thinking" | "writing" | "review";
 
 const NO_GUESTS: readonly GuestLink[] = [];
 
+/** Lengths of a proposal as the server names them (step 5.15). */
+const LENGTHS: readonly WriteLength[] = ["kurz", "mittel", "lang"];
+
 /** Grey example in the empty instruction field (step 4.15); not tied to any world. */
 const EXAMPLE_INSTRUCTION =
   "z. B. Eine Fremde betritt am Abend die Schänke und fragt nach dem Fährmann.";
@@ -46,7 +50,7 @@ const EXAMPLE_INSTRUCTION =
  * goes to the end of the chapter through `onAccept`; the server saves nothing on its own.
  * Entries named with `@` in the instruction are sent as references (step 3.5, FR-013); guests
  * of the story from other worlds can be named and put into a new scene like entries of the
- * world (step 3.7, FR-017).
+ * world (step 3.7, FR-017). The length of a proposal is chosen per request (step 5.15).
  */
 export function WritingPanel({
   world,
@@ -93,6 +97,7 @@ export function WritingPanel({
   }, [canonRevision, reloadEntries]);
 
   const [model, setModel] = useState<string | null>(null);
+  const [length, setLength] = useState<WriteLength>("mittel");
   const [instruction, setInstruction] = useState("");
   const [sceneOpen, setSceneOpen] = useState(false);
   const [place, setPlace] = useState("");
@@ -189,6 +194,7 @@ export function WritingPanel({
       instruction,
       references: referenced.map((entry) => entry.id),
       model: chosenModel,
+      length,
       scene: sceneOpen
         ? { place: place === "" ? null : place, characters, goal }
         : null,
@@ -261,6 +267,21 @@ export function WritingPanel({
           </select>
         </Field>
         <span className="note">Anbieter: OpenRouter</span>
+        <Field label="Länge">
+          <select
+            value={length}
+            disabled={busy}
+            onChange={(event) => {
+              setLength(event.target.value as WriteLength);
+            }}
+          >
+            {LENGTHS.map((name) => (
+              <option key={name} value={name}>
+                {name}
+              </option>
+            ))}
+          </select>
+        </Field>
         <label className="check">
           <input
             type="checkbox"
@@ -370,7 +391,9 @@ export function WritingPanel({
             {lastOrder !== null && (
               <button
                 type="button"
-                onClick={() => void send({ ...lastOrder, model: chosenModel })}
+                onClick={() =>
+                  void send({ ...lastOrder, model: chosenModel, length })
+                }
               >
                 Neu schreiben mit {chosenModel}
               </button>
