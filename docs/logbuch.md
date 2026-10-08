@@ -29,6 +29,30 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 10:35 UTC – [ADR-ANGELEGT] ADR-044 grok-4.6 als Voreinstellung
+
+- `[ERKENNTNIS]`, keine Kategorie aus Abschnitt 4 (Modellwahl ist Konfiguration). Ersetzt das Startmodell aus ADR-010 und die Reihenfolge aus ADR-011; Status beider ergänzt. Reaktiv-Quote 0/10 über ADR-035 bis ADR-044.
+
+### 2026-10-08 10:35 UTC – [BEOBACHTUNG] 5.7 umgesetzt – Abnahme offen
+
+- **Code:** `ai_gateway/models.py` – `DEFAULT_MODELS` in der Reihenfolge grok-4.6 → grok-4.7 → qwen3.8-max-0902; `DEFAULT_MODEL` folgt daraus (`api/flows/writing.py`, nur Kommentar geändert).
+- **Nebenwirkung, bewusst:** Auch die Kurzfassungen (3.6) laufen mit der Voreinstellung, also künftig grok-4.6; Geschichten ohne gespeichertes Modell wechseln mit. In ADR-044 und CHANGELOG genannt.
+- **Tests:** `test_model_list` erwartet die neue Reihenfolge; Verbrauchs-Tests nutzen `DEFAULT_MODEL` statt fest grok-4.7; `test_story_keeps_its_model_and_writing_uses_it` speichert jetzt grok-4.7 an der Geschichte und prüft nach dem Zurücksetzen grok-4.6. End-to-End: Voreinstellung im Modell-Feld grok-4.6, Wechsel auf grok-4.7 übersteht das Neuladen.
+- **Läufe:** `pytest --cov` 410 bestanden, 99,79 % (models.py 100 %); `vitest` 102 bestanden (unverändert); Playwright 8 bestanden (Chromium 1194 der Cloud-Session); `pre-commit run --all-files` grün.
+- **Offen für `[ERLEDIGT]`:** CI grün, Merge, Deployment vom Mac (ADR-039, nur auf Anweisung) und Szene des Eigentümers in einer echten Welt ohne Sperre.
+
+### 2026-10-08 10:24 UTC – [BEOBACHTUNG] Uhrzeiten der Vorsession zu spät
+
+- Die Einträge der Vorsession tragen Zeiten bis 13:50 UTC, der Sessionende-Commit `b608e5e` ist aber auf 10:19:09 UTC datiert und diese Session startete laut `get_session` um 10:22 UTC. Die dortigen Uhrzeiten sind also um gut 3,5 Stunden zu spät (geschätzt, nicht gemessen); Reihenfolge und Inhalt bleiben gültig. Nicht nachträglich geändert. Ab hier stammen die Zeiten aus `date -u` im Container.
+
+### 2026-10-08 10:24 UTC – [SESSIONSTART] Schritt 5.7
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (`get_session`: `configured_model`, `session_context.model`, `last_served_model`) → Entscheidungs-Klasse.
+- **Umgebung:** Cloud-Session (Ursprung iOS), nicht der Mac des Eigentümers – kein SSH zum VPS, also kein Deployment aus dieser Session (ADR-025, ADR-039).
+- **Kontextgröße:** `get_session` meldet `used_tokens` 0 (Wert beim Start offenbar nicht gefüllt); Fenster 1.000.000, Grenze laut project-context 200.000.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2. Keine aktiven Blocker, kein `[IN ARBEIT]`.
+- **Vorhaben:** 5.7 Startmodell grok-4.6 (empfohlen Routine; läuft auf Entscheidung, Abgabe lohnt nicht bei kleinem Schritt mit geladenem Kontext).
+
 ### 2026-10-08 13:50 UTC – [SESSIONENDE] Session 2026-10-08 abgeschlossen – Wiedereinstieg bei 5.7
 
 - **Dauer:** 08:23 – 13:50 UTC. Ersetzt als Wiedereinstiegspunkt das Sessionende 13:20 UTC; dazwischen nur die Einträge 13:35 und 13:40 UTC.
