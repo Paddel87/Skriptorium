@@ -8,53 +8,14 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-08 (Befundaufnahme 08:23–11:10 UTC, Eingaben im STOPP-Block)
+- **Stand vom:** 2026-10-08 (Neuplanung nach ADR-042)
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** keiner – 4.13 bis 4.16 erledigt 2026-10-08; 4.8 Teil 1 und 2 erfüllt. Danach D.11, dann 4.8
-- **Nächster Schritt:** neue Session: Pflichtfrage Phase 4 ist entschieden – **B, gezielt umbauen** (Eigentümer 2026-10-08, Bewertung `docs/research/bewertung-phase-4.md`). Vision-Frage bestätigt 2026-10-08 (Manuskript Hauptansicht, Anweisungs-Verlauf nur umschaltbar); ADR anlegen und Fahrplan neu planen (STOPP-Block auflösen, Phase 4 schlank abschließen: 4.8 mit v0.1.0 und Vision-Abgleich, D.11 bis 2026-10-31; neue Phase aus den Befunden (a)–(h) und Startmodell grok-4.6). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. D.8 verworfen (ADR-040)
-- **Offene STOPP-Situationen:**
+- **Aktiver Schritt:** keiner – Neuplanung abgeschlossen 2026-10-08 (ADR-042)
+- **Nächster Schritt:** 4.8 abschließen (Versionsvergabe v0.1.0, Vision-Abgleich vor Go-Live) – damit endet Phase 4; ADR-042 gilt als Pflichtfrage am Phasenende 4, solange Phase 4 keine weiteren Schritte bekommt. Danach Phase 5 in der Reihenfolge 5.7, 5.8, 5.9, 5.10, 5.11, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
-```text
-STOPP
-Grund: Phasen-Wucherung (CLAUDE.md Abschnitt 8, Kriterium 9)
-Kontext: Phase 4 hat 16 Schritte (ursprünglich 8). Befund 2026-10-08: grok-4.7 und
-  grok-4.6 sperren die echten Inhalte des Eigentümers mit einer Weigerung als Text im
-  Vorschlag; das Skriptorium erkennt das nicht (Verbrauch „ok“), „Übernehmen“ würde
-  die Weigerung ins Kapitel schreiben. Ein Schritt dafür wäre der 17.
-  Weitere Befunde 2026-10-08 (Logbuch 08:35 UTC), ebenfalls ohne Schritt bis zur
-  Neuplanung: (a) Wiedereinstieg in ein langes Kapitel nur durch Scrollen durch den
-  ganzen Text – Editor ohne Höhenbegrenzung, Schreib-Bereich darunter (ui);
-  (b) jede Fortschreibung der KI beginnt mit Einleitung (Ort, Lage) und endet mit
-  ähnlichem Schlusssatz – Rahmen verlangt keinen nahtlosen Anschluss (context),
-  Ursache vermutet, tritt bei qwen und grok auf, Probeschreiben mit beiden nötig;
-  (c) Wunsch: Verlauf der eigenen Anweisungen als umschaltbare Chat-Ansicht neben
-  dem Manuskript, ohne erneutes Senden alter Anweisungen – neues Feature, braucht
-  gespeicherte Anweisungen (Kategorie 4) und Vision-Abgleich (Vision 5/8, FR-012);
-  (d) Kosten je Vorschlag beim Eigentümer nicht sichtbar, obwohl angefragt und
-  angezeigt, sofern gemeldet – Ursache offen (Logbuch 09:05 UTC);
-  (e) Oberfläche insgesamt schwer zu überblicken, schon mit wenigen Welten –
-  konkrete Stellen erfragen; Ziel des Eigentümers: intuitive Bedienung, Gestaltung
-  möglicherweise nach Material Design – entschieden: erst Seitenaufbau und Abläufe
-  neu ordnen (Schritt aus der Neuplanung), Gestaltung später (V.8) (Logbuch 11:20,
-  11:25 UTC); (f) Wunsch: KI-gestützter Weltenbauer (Figuren, Regeln,
-  Gegenstände mit Verwendung/Auswirkung im Gespräch definieren), bei Gegenständen
-  mit Wissen aus dem Internet; Import bleibt – neues Feature, Kategorien 1/2/3,
-  eher eigene Phase, Bezug 5.1 und 5.5 (Logbuch 09:20 UTC); (g) Wunsch:
-  Austausch mit SillyTavern – entschieden: nur Import (V.6) und später Export (V.7),
-  kein Umbau des Grundsystems (Logbuch 09:35 und 09:45 UTC).
-  Nachtrag Modell-Sperren (Logbuch 10:40 UTC): grok-4.6 laut Eigentümer gut
-  machbar, grok-4.7 blockiert stark, grok-4.5 (im Skriptorium nicht wählbar, nicht
-  geprüft) nie problematisch – Kandidaten für eine neue Modell-Reihenfolge.
-  (h) Wunsch: Modell-Auswahl aktuell von OpenRouter mit Kontextgröße und Preis statt
-  fester Liste im Code (ai_gateway, api, ui; Kategorie 5, ggf. 4 für Favoriten;
-  Reasoning je Modell) (Logbuch 11:00 UTC).
-Benötigt: Neuplanung von Phase 4, Vision-Abgleich, Pflichtfrage „Weiterbauen, umbauen
-  oder neu aufsetzen?“ (CLAUDE.md Abschnitt 12)
-Vorgeschlagene Auflösung: Optionen – Sperre im Text erkennen (wie Hinweis 4.14) /
-  Modell-Reihenfolge für echte Inhalte ändern (ADR zu ADR-010/011) / beides; dem
-  Eigentümer vorlegen
-```
+---
 
 <!-- ANCHOR:phasen-typen -->
 ## Phasen-Typen
@@ -155,7 +116,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Reifegrad-Erwartung am Phasenende:** Host, Netz, Secrets im Betrieb, Backups und Bedrohungsmodell `[BELASTBAR]` (Backups erst nach erprobter Wiederherstellung).
 
-**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-10-08: 16 Schritte (+4.9, ADR-025; +4.10, Auftrag des Eigentümers; +4.11, Befund Branch-Schutz; +4.12, Befund D.7; +4.13, Wunsch des Eigentümers, ADR-041; +4.14, +4.15, +4.16, Befunde Funktionstest), Wucherungs-Schwelle (mehr als 16 und mindestens +5) noch nicht berührt – ab dem 17. Schritt Stopp mit Neuplanung
+**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-10-08: 16 Schritte (+4.9, ADR-025; +4.10, Auftrag des Eigentümers; +4.11, Befund Branch-Schutz; +4.12, Befund D.7; +4.13, Wunsch des Eigentümers, ADR-041; +4.14, +4.15, +4.16, Befunde Funktionstest), Wucherungs-Schwelle (mehr als 16 und mindestens +5) erreicht; ein 17. Schritt (Modell-Sperren) löste am 2026-10-08 den STOPP aus. **Neuplanung 2026-10-08 (ADR-042):** Phase 4 bekommt keine weiteren Schritte; offen ist nur noch 4.8 (v0.1.0, Vision-Abgleich). Alle neuen Befunde gehen nach Phase 5 bzw. in den Querschnitt
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
@@ -432,15 +393,17 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Artefakte:** Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-08. Phase 4 jetzt 16 Schritte (ursprünglich 8) – genau an der Wucherungs-Schwelle; ein 17. Schritt in Phase 4 erzwingt den Stopp mit Neuplanung (`CLAUDE.md` Abschnitt 8, Kriterium 9).
 
-### Phase 5: Soll-Anforderungen – Typ: UMSETZUNG
+### Phase 5: Alltagstauglichkeit und Soll-Anforderungen – Typ: UMSETZUNG
 
-**Ziel:** Die Soll-Anforderungen und die Kann-Anforderung sind umgesetzt oder begründet zurückgestellt; die nächste Ausbaustufe ist geplant.
+**Ziel:** Das Skriptorium ist für das tägliche Schreiben des Eigentümers alltagstauglich – Modelle sperren seine Texte nicht, die KI schreibt nahtlos weiter, die Oberfläche ist übersichtlich und intuitiv (gezielter Umbau nach ADR-042) –, die Soll-Anforderungen und die Kann-Anforderung sind umgesetzt oder begründet zurückgestellt, und die nächste Ausbaustufe ist geplant.
 
-**Abschlusskriterium:** Schritte 5.1–5.6 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
+**Abschlusskriterium:** Schritte 5.1–5.13 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
 
-**Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`; keine neuen Architektur-Bestandteile erwartet.
+**Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`. Der Umbau betrifft nur `ui` (Seitenaufbau, 5.11) und Randstellen in `ai_gateway`/`api` (Modell-Katalog, 5.12); neue gespeicherte Daten (5.6, 5.13) werden per ADR festgelegt.
 
-**Ursprünglicher Schrittplan:** 5 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-10-08: 6 Schritte (+5.6, Wunsch des Eigentümers, FR-026), Wucherungs-Schwelle (10 und mindestens +5) nicht berührt
+**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5.
+
+**Reihenfolge (ADR-042):** zuerst die kleinen Abhilfen 5.7, 5.8, 5.9, dann 5.10, der Umbau der Oberfläche 5.11, danach 5.6, 5.12, 5.13; anschließend 5.2 (Smartphone, auf dem neuen Aufbau), 5.1, 5.3, 5.4 und zuletzt 5.5.
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
@@ -464,7 +427,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 - **Status:** OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG
-- **Abhängigkeiten:** 4.7
+- **Abhängigkeiten:** 4.7, 5.11 (neuer Seitenaufbau; ADR-042)
 - **Freigabepflichtig:** nein
 - **Empfohlene Klasse:** Routine – Anpassung der Oberfläche ohne Architekturwirkung.
 - **Eingangskriterien:** öffentliches System läuft
@@ -517,8 +480,8 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich, nicht bloß Status-Update.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 5
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Die verschobenen Schritte V.1 bis V.8 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5; V.6 bis V.8 ergänzt 2026-10-08, Wünsche des Eigentümers).
-- **Akzeptanzkriterien:** Jeder Schritt V.1–V.8 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
+- **Zu tun:** Die verschobenen Schritte V.1 bis V.9 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5; V.6 bis V.9 ergänzt 2026-10-08, Wünsche des Eigentümers).
+- **Akzeptanzkriterien:** Jeder Schritt V.1–V.9 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Fahrplan, ggf. ADRs
@@ -528,7 +491,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 - **Status:** OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG
-- **Abhängigkeiten:** 4.8
+- **Abhängigkeiten:** 4.8, 5.11 (Platz in der neuen Oberfläche; ADR-042)
 - **Freigabepflichtig:** ja – neue Felder je Kapitel (ggf. auch je Geschichte) sind eine Datenmodelländerung (Kategorie 4); Form vor Beginn klären
 - **Empfohlene Klasse:** Entscheidung – Klärung der Form und Datenmodell-Vorschlag (Eskalations-Auslöser 1); die Umsetzung danach ist Routine.
 - **Eingangskriterien:** Form mit dem Eigentümer geklärt
@@ -539,6 +502,118 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** ggf. ADR, Logbuch-Eintrag mit Probeschreiben
 - **Notizen:** Angelegt 2026-10-08. Phase 5 jetzt 6 Schritte (ursprünglich 5) – Wucherungs-Schwelle nicht berührt.
+
+#### 5.7: Startmodell grok-4.6
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 4.8 (Phasenbeginn)
+- **Freigabepflichtig:** nein für den Wechsel des Startmodells (Teil von Option B, ADR-042); die Stellung von grok-4.7 (nachrangig oder aus der Reihenfolge) fragt der Schritt beim Eigentümer ab; Ergebnis als ADR `[ERKENNTNIS]` zu ADR-010/011
+- **Empfohlene Klasse:** Routine – kleine Konfigurationsänderung mit Tests; die Abfrage zu grok-4.7 ist eine einfache Wahl.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-018 (Modelle ohne restriktive Inhaltsfilter), Vision 6
+- **Zu tun:** Befund 2026-10-08: grok-4.7 sperrt die echten Inhalte des Eigentümers stark, grok-4.6 ist „gut machbar“. Modell-Reihenfolge in `ai_gateway/models.py` auf grok-4.6 zuerst umstellen; Stellung von grok-4.7 nach Wahl des Eigentümers. Vorhandene Geschichten mit gespeichertem Modell bleiben unberührt (ADR-023).
+- **Akzeptanzkriterien:** neue Geschichten starten mit grok-4.6 (Test); ADR mit der neuen Reihenfolge; nach dem Deployment schreibt der Eigentümer eine Szene in einer echten Welt ohne Sperre.
+- **Betroffene Module:** ai_gateway, api
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR, Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-08 (Neuplanung, ADR-042).
+
+#### 5.8: Nahtloser Anschluss ohne Einleitung und Schlusssatz
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 5.7
+- **Freigabepflichtig:** nein – Änderung des Rahmens innerhalb von `context`, Schnittstelle unverändert
+- **Empfohlene Klasse:** Entscheidung – die Wirkung auf Kanon-Treue und Figuren-Schreibweise ist im Probeschreiben zu bewerten (Fehlschluss teuer: NFR Kanon-Treue ist `[BELASTBAR]`).
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-009 (Weiterschreiben), FR-011
+- **Zu tun:** Befund 2026-10-08: Jede Fortschreibung beginnt mit einer kleinen Einleitung (Ort, Lage) und endet mit einem ähnlichen Schlusssatz – bei qwen und grok. `_frame` in `context/builder.py` um die Vorgabe ergänzen, unmittelbar an den letzten Satz der „Letzten Manuskript-Seiten“ anzuschließen, Ort, Lage und Figuren nicht neu einzuführen und ohne abschließenden oder zusammenfassenden Satz zu enden; ggf. Hinweis direkt vor der Anweisung.
+- **Akzeptanzkriterien:** Tests des Rahmens grün; Probeschreiben mit grok-4.6 und qwen3.8-max an mindestens drei Stellen eines laufenden Kapitels: keine Einleitung, kein Schlusssatz in der Mehrzahl der Läufe; Kanon-Treue und Figuren-Schreibweise nicht schlechter als vorher.
+- **Betroffene Module:** context
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag mit Probeschreiben
+- **Notizen:** Angelegt 2026-10-08 (Neuplanung, ADR-042). Ursache vermutet, nicht belegt.
+
+#### 5.9: Kapitel öffnet am Textende
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 4.8 (Phasenbeginn)
+- **Freigabepflichtig:** nein
+- **Empfohlene Klasse:** Routine – kleine Änderung in `ui` mit Komponenten-Test.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-022, FR-019
+- **Zu tun:** Befund 2026-10-08: Beim Öffnen eines langen Kapitels muss durch den ganzen Text gescrollt werden, bis man weiterschreiben kann. Sofort-Abhilfe vor dem Umbau (5.11): Editor in der Höhe begrenzen (eigener Scrollbereich) und beim Öffnen ans Textende springen, sodass Anweisungsfeld und „In den Kanon“ ohne Scrollen der Seite erreichbar sind.
+- **Akzeptanzkriterien:** Komponenten- oder End-to-End-Test: geöffnetes langes Kapitel zeigt das Textende, Schreib-Bereich sichtbar; Eigentümer bestätigt auf Desktop und Smartphone.
+- **Betroffene Module:** ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-08 (Neuplanung, ADR-042). Wird in 5.11 ggf. neu gebaut.
+
+#### 5.10: Kosten je Vorschlag sichtbar
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 4.8 (Phasenbeginn)
+- **Freigabepflichtig:** nein (Fehlerbehebung)
+- **Empfohlene Klasse:** Routine – Ursachensuche und kleine Behebung.
+- **Eingangskriterien:** Angabe des Eigentümers, ob die Zeile „Kosten nicht gemeldet“ zeigt oder die Kosten ganz fehlen
+- **Anforderungen (ab Klasse M):** FR-018; Vision 4 (Kosten je Anfrage)
+- **Zu tun:** Befund 2026-10-08: Unter dem Vorschlag sieht der Eigentümer Token, aber keine Kosten. Angefragt sind sie (`"usage": {"include": True}`, `ai_gateway/openrouter.py`), angezeigt werden sie, wenn gemeldet (`describeUsage`). Ursache auf der Produktion klären (Verbrauchsdaten, nur Metadaten) und beheben – z. B. Kosten nachträglich beim Anbieter abfragen oder aus Preis und Token berechnen.
+- **Akzeptanzkriterien:** Ursache belegt; nach jedem Vorschlag Kosten in $ sichtbar oder ausdrücklich als nicht verfügbar gekennzeichnet; Tests grün.
+- **Betroffene Module:** ai_gateway, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-08 (Neuplanung, ADR-042).
+
+#### 5.11: Seitenaufbau und Abläufe der Oberfläche neu ordnen
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 5.9
+- **Freigabepflichtig:** teilweise – der Umbau innerhalb von `ui` nicht; eine neue Bibliothek (z. B. Router) ist Kategorie 3 und wird vorab vorgelegt
+- **Empfohlene Klasse:** Entscheidung – Entwurf des neuen Aufbaus mit dem Eigentümer und Abwägung Router ja/nein; die Umsetzung danach ist Routine.
+- **Eingangskriterien:** Angaben des Eigentümers, an welchen Stellen er den Überblick verliert; Entwurf des neuen Aufbaus vom Eigentümer bestätigt
+- **Anforderungen (ab Klasse M):** FR-022, FR-019; Vision 8 (keine überladene Oberfläche)
+- **Zu tun:** Befunde 2026-10-08: Oberfläche schon mit wenigen Welten schwer zu überblicken; Ziel „intuitiv“; Kernfunktion „In den Kanon“ (3.8) wird nicht gefunden. Laut Bewertung (`docs/research/bewertung-phase-4.md`) stapelt `StoryPage.tsx` Gäste, Schreibweise, Fakten, Zusammenfassung, Kapitel und Editor auf einer Seite; `App.tsx` hat keine Navigation über Welt/Geschichte/Kapitel hinaus. Schreiben in den Vordergrund (Manuskript ist Hauptansicht, ADR-042), Einstellungen in eigene Bereiche, klare Navigation, wichtige Funktionen sichtbar. Platz für Schreibweise (5.6) und Anweisungs-Verlauf (5.13) vorsehen. Gestaltung erst danach (V.8).
+- **Akzeptanzkriterien:** Komponenten- und End-to-End-Tests auf den neuen Aufbau umgestellt und grün; Eigentümer findet Schreiben, `@`, „In den Kanon“ und Kapitelwechsel ohne Hilfe; Coverage-Mindestwerte gehalten.
+- **Betroffene Module:** ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Entwurf (Skizze), Code, Tests, Logbuch-Eintrag; ggf. ADR zur Bibliothek
+- **Notizen:** Angelegt 2026-10-08 (Neuplanung, ADR-042). Größter Posten der Phase.
+
+#### 5.12: Modell-Auswahl aktuell vom Anbieter
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 5.11
+- **Freigabepflichtig:** ja – Schnittstelle `GET /api/models` (Kategorie 5) und ggf. gespeicherte Favoriten (Kategorie 4); Form vorab mit dem Eigentümer klären
+- **Empfohlene Klasse:** Entscheidung – Schnittstellen- und ggf. Datenmodell-Vorschlag (Eskalations-Auslöser 1); die Umsetzung danach ist Routine.
+- **Eingangskriterien:** Form geklärt: ganze Liste mit Suche und Filtern, Favoritenliste oder beides
+- **Anforderungen (ab Klasse M):** FR-028, FR-018; Vision 6, 7
+- **Zu tun:** Wunsch 2026-10-08: Modell-Auswahl nicht fest im Code (`DEFAULT_MODELS`, drei Modelle), sondern aktuell von OpenRouter mit Kontextgröße und Preis. Katalog in `ai_gateway` mit Zwischenspeicher; Reasoning je Modell aus den Angaben des Anbieters richtig setzen; geprüfte Modell-Reihenfolge bleibt Voreinstellung; Preis vor der Wahl sichtbar.
+- **Akzeptanzkriterien:** nach FR-028; Tests grün (auch: Anbieter nicht erreichbar → bisherige Liste); echte Anfrage mit einem nicht voreingestellten Modell (z. B. grok-4.5) gelingt.
+- **Betroffene Module:** ai_gateway, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR, Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-08 (Neuplanung, ADR-042). Ermöglicht die Prüfung von grok-4.5.
+
+#### 5.13: Verlauf der Anweisungen als umschaltbare Ansicht
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 5.11
+- **Freigabepflichtig:** ja – neue gespeicherte Daten (Anweisungen je Kapitel, Kategorie 4)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell-Vorschlag (Eskalations-Auslöser 1); die Umsetzung danach ist Routine.
+- **Eingangskriterien:** Datenmodell per ADR entschieden
+- **Anforderungen (ab Klasse M):** FR-027
+- **Zu tun:** Wunsch 2026-10-08 (Vision-Frage in ADR-042 bestätigt): Das Manuskript bleibt Hauptansicht; der Verlauf der eigenen Anweisungen ist eine Nachschlage-Ansicht zum Umschalten, nie im Manuskript, nie erneut an die KI. Anweisungen heute nirgends gespeichert (nur durchgereicht in `api/flows/writing.py`).
+- **Akzeptanzkriterien:** nach FR-027; Test: die Anfrage an die KI enthält keine früheren Anweisungen; Umschalten in der Oberfläche getestet.
+- **Betroffene Module:** manuscript, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR, Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-08 (Neuplanung, ADR-042).
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 
@@ -747,6 +822,22 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Artefakte:** `package-lock.json`, Logbuch-Eintrag
 - **Notizen:** Aufgefallen an PR #35 (D.8, reine Dokumentation); `main` war zuletzt am 2026-09-30 grün, die Meldung ist neuer. Die Abhängigkeit läuft nur beim Bauen und Testen, nicht im ausgelieferten Server.
 
+#### D.13: Weigerungen der KI im Text erkennen – Erkundung
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** ERKUNDUNG
+- **Abhängigkeiten:** 5.7
+- **Freigabepflichtig:** nein (Erkundung); eine spätere Umsetzung wird als eigener Schritt angelegt
+- **Empfohlene Klasse:** Entscheidung – Fehlschluss teuer: Bei den Genres des Eigentümers weigern sich auch Figuren in der Handlung; falsche Treffer würden echten Text verwerfen.
+- **Eingangskriterien:** Beispiele echter Sperren (Text des Vorschlags) und echter Weigerungen von Figuren, vom Eigentümer bereitgestellt oder aus Probeschreiben
+- **Anforderungen (ab Klasse M):** FR-018; Vision 6
+- **Zu tun:** Befund 2026-10-08: grok-4.7/4.6 lieferten Sperren als Text im Vorschlag; das Skriptorium zählt sie als `ok` und bietet keinen Modellwechsel an; „Übernehmen“ würde die Sperre ins Kapitel schreiben. Klären, ob sich Sperren zuverlässig von Handlung unterscheiden lassen (z. B. Kennung im Rahmen wie bei 4.14, Muster der Anbieter) und was die Oberfläche dann anbietet.
+- **Akzeptanzkriterien:** Bericht mit Trefferquote und Fehlalarmen an echten Beispielen; Empfehlung: umsetzen (neuer Schritt) oder verwerfen (ADR).
+- **Betroffene Module:** api, context (Erkundung)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** `spikes/`-Bericht, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-08 (Neuplanung, ADR-042). Entlastung zuerst über das Startmodell (5.7).
+
 #### M.1: Branch-Konvention festlegen
 
 - **Status:** ERLEDIGT (2026-09-26)
@@ -857,7 +948,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Freigabepflichtig:** ja – Eingangsformat ist Teil des Datenmodells (Kategorie 4); Einlesen fremder Dateien (PNG mit eingebettetem JSON) ist sicherheitsrelevant (Kategorie 6, Prüfung durch getrennte Instanz)
 - **Empfohlene Klasse:** Entscheidung – Datenmodell-Festlegung (Eskalations-Auslöser 1).
 - **Eingangskriterien:** Spezifikation der Character Card (V2/V3) und des Lorebook-Formats gegen offizielle Quellen geprüft; Beispieldateien mit erfundenem Inhalt liegen vor
-- **Anforderungen (ab Klasse M):** keine (FR-005 in 2.4 erfüllt) – Wunsch des Eigentümers 2026-10-08
+- **Anforderungen (ab Klasse M):** FR-030 (Wunsch des Eigentümers 2026-10-08); FR-005 in 2.4 erfüllt
 - **Zu tun:** Character Cards (Figur, ggf. eingebettetes Lorebook) und Lorebooks (Welt-Material) als weiteres Eingangsformat in `canon.importers`, mit Vorschau wie beim Markdown-Import. Zuordnung der Felder zu Kanon-Kategorien klären; Felder für Chat-Rollenspiel (erste Nachricht, Beispieldialoge) gehen nicht in den Kanon. Entscheidung des Eigentümers 2026-10-08: nur Import (Export in V.7), **kein** Umbau des eigenen Datenmodells auf das SillyTavern-Format.
 - **Akzeptanzkriterien:** Eine Character Card und ein Lorebook werden ohne Handarbeit als Welt-Material übernommen; fehlerhafte oder bösartige Dateien werden abgelehnt, ohne den Server zu gefährden (Tests).
 - **Betroffene Module:** canon, api, ui
@@ -874,7 +965,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Freigabepflichtig:** ja – Ausgabeformat als Schnittstelle (Kategorie 5)
 - **Empfohlene Klasse:** Entscheidung – Schnittstellen-Festlegung (Eskalations-Auslöser 1).
 - **Eingangskriterien:** V.6 erledigt
-- **Anforderungen (ab Klasse M):** keine – Wunsch des Eigentümers 2026-10-08
+- **Anforderungen (ab Klasse M):** FR-030 (Wunsch des Eigentümers 2026-10-08)
 - **Zu tun:** Figuren als Character Card und Welten als Lorebook ausgeben, sodass SillyTavern sie einlesen kann. Abgrenzung: V.1 (Publizieren) betrifft Manuskripte, nicht den Kanon.
 - **Akzeptanzkriterien:** Eine exportierte Figur und Welt lassen sich in SillyTavern öffnen; erneuter Import über V.6 ergibt denselben Kanon (Tests).
 - **Betroffene Module:** canon, api, ui
@@ -885,9 +976,9 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 #### V.8: Gestaltung der Oberfläche (z. B. Material Design)
 
 - **Status:** VERSCHOBEN
-- **Landeplatz (nur VERSCHOBEN):** 5.5 – nach der Neuordnung von Seitenaufbau und Abläufen, die die Neuplanung von Phase 4 als Schritt anlegt (Eigentümer 2026-10-08: „Erstmal Aufbau neu, UI später“)
+- **Landeplatz (nur VERSCHOBEN):** 5.5 – nach der Neuordnung von Seitenaufbau und Abläufen (5.11) (Eigentümer 2026-10-08: „Erstmal Aufbau neu, UI später“)
 - **Phasentyp-Kontext:** UMSETZUNG
-- **Abhängigkeiten:** Schritt zur Neuordnung von Seitenaufbau und Abläufen (ID vergibt die Neuplanung von Phase 4)
+- **Abhängigkeiten:** 5.11
 - **Freigabepflichtig:** ja, falls eine Komponenten-Bibliothek eingebunden wird (Kategorie 3, Lizenz Kategorie 8); sonst nein
 - **Empfohlene Klasse:** Entscheidung – Wahl zwischen Bibliothek und eigenem CSS (Eskalations-Auslöser 1 bei Bibliothek).
 - **Eingangskriterien:** neuer Seitenaufbau umgesetzt
@@ -898,6 +989,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** ggf. ADR zur Bibliothek, Code, Tests
 - **Notizen:** –
+
+#### V.9: KI-gestützter Weltenbauer
+
+- **Status:** VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 (ADR-042: nach dem Umbau, nicht in Phase 5)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 5.11, 5.12
+- **Freigabepflichtig:** ja – neuer Ablauf und ggf. neue Verantwortung (Kategorien 1/2); Wissen aus dem Internet ist eine neue externe Abhängigkeit mit Kosten (Kategorie 3)
+- **Empfohlene Klasse:** Entscheidung – Architektur- und Abhängigkeitsentscheidung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** 5.5
+- **Anforderungen (ab Klasse M):** FR-029
+- **Zu tun:** Wunsch 2026-10-08: Figuren, Welten, Regeln, Gegenstände mit Verwendung und Auswirkung im Gespräch mit der KI entwerfen; bei alltagsbekannten Gegenständen tatsächliche Anwendung und Handhabung aus dem Internet einbeziehen. Übernahme in den Kanon erst nach Bestätigung (wie Import-Vorschau). Import bleibt bestehen.
+- **Akzeptanzkriterien:** nach FR-029
+- **Betroffene Module:** canon, api, ui, ai_gateway (offen)
+- **Reifegrad-Wirkung:** offen
+- **Artefakte:** ADR, Code, Tests
+- **Notizen:** Mindert Vision-Risiko 9 „Manuelle Kanon-Pflege“.
 
 ---
 
@@ -918,6 +1026,7 @@ Nach Abschluss jeder Phase wird ein Reflexions-Eintrag `[PHASEN-WECHSEL]` im Log
 ## Replanning-Historie
 
 - 2026-09-26 – Erstplanung in Modus 2 Schritt 6 (fünf Phasen, Querschnitt D.1–D.4 und V.1–V.3); kein Replanning.
+- 2026-10-08 – Neuplanung nach STOPP Phasen-Wucherung in Phase 4 (16 Schritte, 17. ausgelöst durch Modell-Sperren) und Befunden aus der Nutzung; Pflichtfrage mit getrennter Instanz, Entscheidung B „gezielt umbauen“ (ADR-042). Phase 4 ohne weitere Schritte (offen: 4.8). Phase 5 umbenannt in „Alltagstauglichkeit und Soll-Anforderungen“, neuer ursprünglicher Schrittplan 13 (5.7–5.13 neu). Querschnitt: D.13 (Erkundung Sperren im Text), V.6–V.9.
 
 <!-- ANCHOR:archiv-abgeschlossene-phasen -->
 ## Archiv / abgeschlossene Phasen
