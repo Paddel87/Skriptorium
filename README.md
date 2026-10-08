@@ -87,7 +87,8 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **5.11, 5.16:** Seitenaufbau und Abläufe der Oberfläche neu ordnen; herangezogene Kanon-Einträge anklickbar.
+- **5.11, 5.19:** neue Schreibseite und Dunkelmodus eingespielt, warten auf Prüfung; als Nächstes Navigation links mit Welten und Geschichten (Zurück-Knopf behält die Stelle) und Kanon-Seite mit Suche.
+- **5.20, 5.16:** schnell angelegte Kapitel; herangezogene Kanon-Einträge anklickbar.
 - **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).
