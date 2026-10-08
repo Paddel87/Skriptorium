@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 10:50 UTC – [BEOBACHTUNG] grok-4.5 aus TypingMind; Kontextfenster für die Modellwahl kaum maßgeblich
+
+- Eigentümer bestätigt: grok-4.5 war in TypingMind „sehr erfolgreich“. Er fragte, wie Modelle mit 256.000 statt 1 Mio. Token Kontextfenster im Skriptorium funktionieren würden.
+- Antwort (aus dem Code): Jede Anfrage ist auf 30.000 Token Eingabe begrenzt (`MAX_BUDGET`, `context/builder.py`, ADR-010), dazu höchstens 8.000 Token Ausgabe (`MAX_OUTPUT_TOKENS`, `api/flows/writing.py`). Ein Modell braucht also rund 40.000 Token Fenster; 256.000 reichen weit. Das große Fenster war in TypingMind nötig, weil dort der ganze Verlauf mitging; im Skriptorium tragen Kurzfassungen und letzte Seiten den Handlungsstand. Für die neue Modell-Reihenfolge zählen deshalb Inhaltsfilter, Kanon-Treue, Kosten und Reaktionszeit, nicht die Fenstergröße. Einschränkung: Ob die Treue beim Umfang der Referenzgeschichte trägt, ist erst mit D.4 belegt.
+
 ### 2026-10-08 10:40 UTC – [BEOBACHTUNG] Modell-Sperren: grok-4.6 gut machbar, grok-4.7 „sehr übel“, grok-4.5 nie problematisch
 
 - Eigentümer hat geprüft: Mit grok-4.6 lassen sich seine Inhalte gut schreiben; grok-4.7 blockiert „sehr übel“; grok-4.5 war „immer nicht problematisch“.
