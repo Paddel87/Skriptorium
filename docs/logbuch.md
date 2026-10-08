@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 10:20 UTC – [BEOBACHTUNG] Schreibweise: je Kapitel, Auswahllisten plus freier Text
+
+- Eigentümer zu FR-026/5.6: Tonalität und Atmosphäre **je Kapitel** festlegen; Auswahllisten, auch mehrere kombiniert, weil er sich die passenden Angaben schlecht merken kann; freier Text bleibt zusätzlich. Seine Annahme, das gebe es heute als freien Text, trifft so nicht zu: Es gibt nur die Erzählperspektive je Geschichte. Tonalität kann er heute lediglich in die Anweisung an die KI schreiben, und die gilt nur für eine Anfrage.
+- In 5.6 (Zu tun, Freigabepflicht jetzt „ja“) und FR-026 eingetragen. Weiter offen: Vorgabe je Geschichte mit Änderung je Kapitel oder nur je Kapitel; Werte der Listen; Textprobe; Gewicht im Prompt. Bezug zur Übersichtlichkeit (09:20 UTC): Auswahllisten senken die Merklast, dürfen die Oberfläche aber nicht weiter überladen.
+
 ### 2026-10-08 10:10 UTC – [BEOBACHTUNG] Kanon-Fortschreibung aus dem Text gilt dem Eigentümer als „für die Zukunft geplant“
 
 - Eigentümer fragte, ob „für die Zukunft“ eine Kanon-Fortschreibung geplant sei (Textstelle im Manuskript markieren, zum Kanon hinzufügen). Diese Funktion ist seit Schritt 3.8 (2026-09-27, FR-015) gebaut und eingespielt: Text im Editor markieren → Knopf „In den Kanon“ → „Bestehenden Eintrag ergänzen“ oder „Neuer Eintrag“.
