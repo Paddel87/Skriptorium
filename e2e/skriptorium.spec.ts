@@ -154,6 +154,10 @@ test("@ menu names an entry; taken-over AI text is appended and saved", async ({
   // The space behind the name comes with the choice (step 5.17).
   await page.keyboard.type("kommt.");
   await expect(page.getByText("Herangezogen: Mira")).toBeVisible();
+  // The recognised name stands out in the instruction field (step 5.18).
+  await expect(page.locator(".editor.instruction .cm-mention")).toHaveText(
+    "@Mira",
+  );
 
   await page.getByRole("button", { name: "Weiterschreiben" }).click();
   await expect(page.getByLabel("Vorschlag der KI")).toHaveValue(

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { CanonEntry } from "./api";
-import { menuItems, referencedEntries } from "./references";
+import { mentionRanges, menuItems, referencedEntries } from "./references";
 
 function entry(id: string, name: string, aliases: string[] = []): CanonEntry {
   return {
@@ -47,6 +47,22 @@ describe("referencedEntries", () => {
     ]);
     expect(referencedEntries("@Kael", ENTRIES).map((e) => e.id)).toEqual([
       "kael",
+    ]);
+  });
+});
+
+describe("mentionRanges", () => {
+  it("gives every recognised mention with its place, repeats included (step 5.18)", () => {
+    const text = "@Kael der Alte ruft @kael; mail@Kael @Mira, wieder @Kael.";
+    expect(
+      mentionRanges(text, ENTRIES).map((m) => [
+        text.slice(m.from, m.to),
+        m.entry.id,
+      ]),
+    ).toEqual([
+      ["@Kael der Alte", "kael-der-alte"],
+      ["@kael", "kael"],
+      ["@Kael", "kael"],
     ]);
   });
 });
