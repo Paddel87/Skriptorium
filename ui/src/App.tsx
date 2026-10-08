@@ -77,7 +77,7 @@ export function App() {
 
   return (
     <div className="app">
-      <header className="top">
+      <header className={screen.kind === "story" ? "top wide" : "top"}>
         <button
           type="button"
           className="link brand"
@@ -122,7 +122,7 @@ export function App() {
           </p>
         </div>
       )}
-      <main>
+      <main className={screen.kind === "story" ? "wide" : undefined}>
         {screen.kind === "worlds" && (
           <Worlds
             onOpen={(world) => {

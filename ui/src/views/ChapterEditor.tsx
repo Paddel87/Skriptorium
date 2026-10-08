@@ -1,4 +1,4 @@
-import { lazy, Suspense, useRef, useState } from "react";
+import { lazy, Suspense, useRef, useState, type ReactNode } from "react";
 import {
   api,
   describeError,
@@ -27,6 +27,8 @@ export function ChapterEditor({
   story,
   onSaved,
   onStory,
+  mode,
+  onCanonChanged,
 }: {
   chapter: Chapter;
   /** The story; its guests are offered in the writing panel and in "In den Kanon". */
@@ -34,6 +36,10 @@ export function ChapterEditor({
   onSaved: () => void;
   /** The story after its overall summary changed. */
   onStory: (story: Story) => void;
+  /** Figuren-Schreibweise, shown right above the writing panel (step 5.11). */
+  mode?: ReactNode;
+  /** Called after a passage went into the canon, so canon views load again. */
+  onCanonChanged?: () => void;
 }) {
   const [title, setTitle] = useState(chapter.title);
   const [text, setText] = useState(chapter.text);
@@ -48,14 +54,13 @@ export function ChapterEditor({
   // Counts canon changes, so the writing panel offers new entries in its `@` menu.
   const [canonRevision, setCanonRevision] = useState(0);
   const card = useRef<HTMLElement>(null);
-  const actions = useRef<HTMLDivElement>(null);
 
   /**
-   * When the chapter opens and its buttons lie below the screen, the page moves to the chapter,
-   * so the end of the text, "In den Kanon" and the writing panel are in reach (step 5.9).
+   * When the chapter opens and its card reaches below the window, the page moves to the chapter,
+   * so the end of the text, "In den Kanon" and the writing panel are in reach (steps 5.9, 5.11).
    */
   function arrange() {
-    const below = actions.current?.getBoundingClientRect().bottom ?? 0;
+    const below = card.current?.getBoundingClientRect().bottom ?? 0;
     if (below > window.innerHeight) {
       card.current?.scrollIntoView({ block: "start" });
     }
@@ -152,7 +157,7 @@ export function ChapterEditor({
         />
       </Suspense>
       <ErrorText message={error} />
-      <div className="row" ref={actions}>
+      <div className="row">
         <button
           type="button"
           onClick={() => void save()}
@@ -202,6 +207,7 @@ export function ChapterEditor({
             setTaking(null);
             setCanonNote(note);
             setCanonRevision((value) => value + 1);
+            onCanonChanged?.();
           }}
           onCancel={() => {
             setTaking(null);
@@ -222,6 +228,7 @@ export function ChapterEditor({
           onSaved={onSaved}
         />
       )}
+      {mode}
       <WritingPanel
         world={chapter.world}
         story={chapter.story}

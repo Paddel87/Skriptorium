@@ -7,6 +7,8 @@ import { ErrorText, Field } from "./Common";
 /**
  * Figuren-Schreibweise (FR-012): perspective and the characters the author leads; the AI
  * writes no action, speech or thought for them. Guest characters of the story can be led too.
+ * Closed, the line shows the saved perspective and the led characters, so they stay in view
+ * while writing (step 5.11).
  */
 export function WritingMode({
   story,
@@ -46,9 +48,26 @@ export function WritingMode({
     }
   }
 
+  const ledNames = story.controlled_characters
+    .map((id) => figures.find((entry) => entry.id === id)?.name ?? id)
+    .join(", ");
+
   return (
-    <details>
-      <summary>Figuren-Schreibweise</summary>
+    <details className="mode">
+      <summary>
+        <span>Figuren-Schreibweise</span>{" "}
+        <span className="note">
+          {story.perspective === null
+            ? "keine Perspektive festgelegt"
+            : `Perspektive: ${story.perspective}`}
+        </span>
+        {ledNames !== "" && (
+          <>
+            {" · "}
+            <span className="note">du führst: {ledNames}</span>
+          </>
+        )}
+      </summary>
       <form className="stack" onSubmit={(event) => void save(event)}>
         <Field label="Erzählperspektive">
           <input
