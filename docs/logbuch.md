@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 23:10 UTC – [ERLEDIGT] Abnahme 5.9, 5.17, 5.18
+
+- Eigentümer nach dem Deployment `6e563e8`: „passt alles, trag ab“ → 5.9, 5.17, 5.18 `[ERLEDIGT]` 2026-10-08. Kein `[IN ARBEIT]` mehr.
+- 5.9 verlangte die Bestätigung auch auf dem Smartphone; die Antwort nennt das Gerät nicht. Als erledigt geführt, die Bedienung am Smartphone prüft 5.2 ohnehin auf dem neuen Aufbau.
+- README „Nächste Schritte“: Zeile zu 5.9/5.17/5.18 entfernt, 5.11 und 5.16 stehen vorn.
+
 ### 2026-10-08 23:00 UTC – [BEOBACHTUNG] Merges #66, #67 und Deployment `6e563e8` (5.9, 5.17, 5.18)
 
 - Auf Anweisung „der Reihe nach mergen und deployen“. #66 und #67 hatten Konflikte in Fahrplan („Nächster Schritt“) und Logbuch mit dem 5.10-Abschluss aus #65 – `main` in den 5.17-Branch und diesen in den 5.18-Branch gemergt, beide Seiten behalten. #66 gemergt (`ed4bdb6`), #67 (`6e563e8`); CI auf `main` grün.

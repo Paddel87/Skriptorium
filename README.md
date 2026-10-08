@@ -87,7 +87,6 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **5.9, 5.17, 5.18:** Kapitel öffnet am Textende, Leerzeichen nach `@`-Auswahl, erkannte Begriffe im Anweisungsfeld hervorgehoben (eingespielt, wartet auf Abnahme; 5.7, 5.8, 5.15 erledigt 2026-10-08: grok-4.6 als Startmodell, KI schreibt nur das Verlangte in wählbarer Länge, ohne Vorgriff und Wiederholung).
 - **5.11, 5.16:** Seitenaufbau und Abläufe der Oberfläche neu ordnen; herangezogene Kanon-Einträge anklickbar.
 - **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
