@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 15:17 UTC – [SESSIONENDE] Nachtrag: Probeschreiben zu 5.15 und Entscheidungen des Eigentümers
+
+- **Dauer:** 13:15 – 15:17 UTC (nach dem ersten Sessionende um 13:45 UTC auf ausdrückliche Bitte des Eigentümers weitergearbeitet – Abweichung von „Sessiongröße“, vermerkt).
+- **Bearbeitet nach 13:45:** Schritt 5.15 angelegt (Befund des Eigentümers), Probeschreiben `spikes/vorgriff-zeitlinie/` (3 Ketten à 7 Vorschläge, 0,45 $), Entscheidungen des Eigentümers zu 5.15 per Auswahlfragen eingetragen. Kein Produktionscode geändert.
+- **Stand:** 5.7 `[IN ARBEIT]` (Deployment vom Mac, Abnahme-Szene); 5.8 `[IN ARBEIT]` (Versuch 1 auf Branch `scp/nice-lamport-as724t`, nicht gemergt, kein Pull Request); 5.15 `[OFFEN]`, Eingangskriterien erfüllt.
+- **Nächster Schritt:** neue Session: 5.8 und 5.15 gemeinsam umsetzen (Branch `scp/nice-lamport-as724t` als Grundlage), Prüfung mit derselben Kette, Vergleich mit `spikes/vorgriff-zeitlinie/ergebnisse/main-*`; Session auf dem Mac: Deployment → 5.7 abnehmen.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 15:17). Schritte oberhalb der Empfehlung: 0. Abgegeben: verblindete Bewertung (Sonnet) als getrennte Instanz.
+- **Kontextgröße:** 305.122 Token (`get_session` 15:17), Grenze 200.000 – überschritten auf Anweisung des Eigentümers.
+- **Kosten KI-Anbieter gesamt:** ca. 1,13 $ (5.8: 0,68 $; 5.15: 0,45 $).
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ um 5.15 ergänzt, Status-Block unverändert gültig (Phase 5, v0.1.0, Blocker 0). Drift: kein neuer ADR; Reaktiv-Quote 0/10; Modul-Liste und Reifegrade unverändert; Blocker 0, kein `[BLOCKIERT]`; Phase 5 15 Schritte (Schwelle 26). Ablaufdaten: kein Vorlauf erreicht. Logbuch ca. 290 Zeilen – keine Auslagerung. Alles committet und gepusht.
+
 ### 2026-10-08 14:30 UTC – [BEOBACHTUNG] Entscheidungen des Eigentümers zu 5.15
 
 - Per Auswahlfragen: eigene Figur – genau die Anweisung ausformulieren (Änderung an FR-012); Länge je Anfrage wählbar; „Weiter“ – kleiner Schritt, dann Übergabe; spätere Ereignisse als Zukunft kennzeichnen statt weglassen (kein neues Datenfeld). Eingetragen in 5.15; Umsetzung in neuer Session (Kontextgrenze).
