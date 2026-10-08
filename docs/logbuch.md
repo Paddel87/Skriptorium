@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 09:35 UTC – [BEOBACHTUNG] Wunsch Austausch mit SillyTavern: Character Cards und Welten
+
+- **Wunsch des Eigentümers:** Character Cards aus SillyTavern importieren können oder das System allgemein mit ihnen kompatibel machen; dann ließen sich Figuren und vielleicht auch ganze Welten aus dem Internet herunterladen. Ziel: Interoperabilität. Der Eigentümer kennt die Formate nach eigener Aussage nicht im Detail.
+- **Einordnung (KI, ohne Entscheidung; Formatkenntnis aus dem Training, nicht gegen die Spezifikation geprüft):** Character Cards sind JSON-Daten, oft in ein PNG-Bild eingebettet (Spezifikation „Character Card V2“, neuer V3). Sie enthalten Felder wie Name, Beschreibung, Persönlichkeit, Szenario, erste Nachricht und Beispieldialoge und können ein eingebettetes Lorebook („character book“) tragen. Welten entsprechen in SillyTavern den Lorebooks/World Info, gespeichert als JSON (`docs/research/bestandspruefung.md`, Abschnitt SillyTavern). Ein Teil der Felder ist auf Chat-Rollenspiel zugeschnitten (erste Nachricht, Beispieldialoge, Szenario) und passt nicht zum Kanon. Die Vision lehnt den Chat-/Rollenspiel-Fokus ab (Vision 8), den Austausch von Daten aber nicht.
+- **Zwei Wege mit sehr verschiedener Tragweite:** (a) Import (ggf. später Export) als weiteres Eingangsformat in `canon.importers`, analog V.4 (TypingMind) und V.5 (Notion). Datenmodell bleibt, Kategorie 4 nur für das Eingangsformat (ADR-012). (b) „System auf Kompatibilität umschreiben“, also das eigene Datenmodell an Character Cards und Lorebooks angleichen. Das wäre eine Datenmodell- und Architekturänderung (Kategorien 1 und 4) am Kern (ADR-003, Markdown-Dateien als Quelle der Wahrheit). Erster Eindruck: (a) liefert die Interoperabilität mit Bruchteil des Aufwands.
+- **Zu beachten:** Heruntergeladene Karten sind Dateien aus fremder Quelle. Das Einlesen von PNG und JSON ist sicherheitsrelevant (Kategorie 6, Prüfung durch getrennte Instanz). Fremde Karten können eigene Nutzungsbedingungen tragen, die der Eigentümer selbst prüft. SillyTavern bleibt als Code-Basis ausgeschlossen (ADR-004); das betrifft das Datenformat nicht.
+
+Landeplatz: als Eingabe der Neuplanung im STOPP-Block von Phase 4; Bezug V.4/V.5 und 5.5.
+
 ### 2026-10-08 09:20 UTC – [BEOBACHTUNG] Oberfläche schwer zu überblicken; Wunsch KI-gestützter Weltenbauer mit Internet-Wissen
 
 - Offene Fragen aus 09:05 UTC (Kosten-Zeile, Vision-Abgleich Chat-Ansicht) beantwortet der Eigentümer später; er ist unterwegs.

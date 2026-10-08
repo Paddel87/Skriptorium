@@ -37,7 +37,9 @@ Kontext: Phase 4 hat 16 Schritte (ursprünglich 8). Befund 2026-10-08: grok-4.7 
   konkrete Stellen erfragen; (f) Wunsch: KI-gestützter Weltenbauer (Figuren, Regeln,
   Gegenstände mit Verwendung/Auswirkung im Gespräch definieren), bei Gegenständen
   mit Wissen aus dem Internet; Import bleibt – neues Feature, Kategorien 1/2/3,
-  eher eigene Phase, Bezug 5.1 und 5.5 (Logbuch 09:20 UTC).
+  eher eigene Phase, Bezug 5.1 und 5.5 (Logbuch 09:20 UTC); (g) Wunsch:
+  Austausch mit SillyTavern – Character Cards und Lorebooks importieren (wie V.4/V.5)
+  oder Datenmodell angleichen (Kategorien 1/4, ADR-003) (Logbuch 09:35 UTC).
 Benötigt: Neuplanung von Phase 4, Vision-Abgleich, Pflichtfrage „Weiterbauen, umbauen
   oder neu aufsetzen?“ (CLAUDE.md Abschnitt 12)
 Vorgeschlagene Auflösung: Optionen – Sperre im Text erkennen (wie Hinweis 4.14) /
