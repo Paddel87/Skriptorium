@@ -1,6 +1,7 @@
 """Unit tests of the access protection: hashing, policy, Pwned Passwords, sessions, throttle."""
 
 import hashlib
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 from pathlib import Path
@@ -21,6 +22,7 @@ from skriptorium.api.access import (
 )
 from skriptorium.api.access import sessions as sessions_module
 from skriptorium.api.access import throttle as throttle_module
+from skriptorium.api.access.credentials import SETUP_CODE_ALPHABET
 from skriptorium.api.access.throttle import Blocked
 from skriptorium.storage import DocumentStore
 from tests.api.conftest import PASSWORD, FakeBreached, FakeClock, cheap_hasher
@@ -291,7 +293,6 @@ def test_credentials_without_password(tmp_path: Path, clock: FakeClock) -> None:
 def test_setup_code_sets_password_once(tmp_path: Path, clock: FakeClock) -> None:
     credentials = _credentials(tmp_path, clock)
     code = credentials.create_setup_code()
-    assert len(code) >= 22  # 16 bytes: 128 bits
     stored = (tmp_path / "system" / "zugang.md").read_text(encoding="utf-8")
     assert code not in stored
     assert not credentials.setup_code_valid(code + "x")
@@ -300,6 +301,61 @@ def test_setup_code_sets_password_once(tmp_path: Path, clock: FakeClock) -> None
     assert PASSWORD not in (tmp_path / "system" / "zugang.md").read_text(encoding="utf-8")
     with pytest.raises(SetupCodeInvalid):
         credentials.set_password_with_code(code, "ein ganz anderes Passwort")
+
+
+def test_setup_code_is_short_and_readable(tmp_path: Path, clock: FakeClock) -> None:
+    credentials = _credentials(tmp_path, clock)
+    codes = [credentials.create_setup_code() for _ in range(20)]
+    for code in codes:
+        groups = code.split("-")
+        assert [len(group) for group in groups] == [3, 3, 3, 3]
+        assert set("".join(groups)) <= set(SETUP_CODE_ALPHABET)
+    assert len(set(codes)) == len(codes)
+    assert not set("01OIL") & set(SETUP_CODE_ALPHABET)
+    assert len(SETUP_CODE_ALPHABET) == len(set(SETUP_CODE_ALPHABET)) == 31
+
+
+@pytest.mark.parametrize(
+    "typed",
+    [
+        lambda code: code.lower(),
+        lambda code: code.replace("-", ""),
+        lambda code: " " + code.replace("-", " ") + " ",
+        lambda code: code.replace("-", "").lower(),
+    ],
+)
+def test_setup_code_ignores_case_hyphens_and_spaces(
+    tmp_path: Path, clock: FakeClock, typed: Callable[[str], str]
+) -> None:
+    credentials = _credentials(tmp_path, clock)
+    code = credentials.create_setup_code()
+    assert credentials.setup_code_valid(typed(code))
+    credentials.set_password_with_code(typed(code), PASSWORD)
+    assert credentials.verify_password(PASSWORD)
+
+
+def test_setup_code_is_stored_with_scrypt(tmp_path: Path, clock: FakeClock) -> None:
+    credentials = _credentials(tmp_path, clock)
+    code = credentials.create_setup_code()
+    stored = (tmp_path / "system" / "zugang.md").read_text(encoding="utf-8")
+    assert "einrichtungscode_hash: scrypt$" in stored
+    assert code not in stored
+    assert code.replace("-", "") not in stored
+
+
+def test_setup_code_with_old_sha256_hash_is_invalid(tmp_path: Path, clock: FakeClock) -> None:
+    credentials = _credentials(tmp_path, clock)
+    credentials.create_setup_code()
+    path = tmp_path / "system" / "zugang.md"
+    text = path.read_text(encoding="utf-8")
+    old_code = "abcdefghijklmnopqrstuv"
+    old_hash = hashlib.sha256(old_code.encode("utf-8")).hexdigest()
+    lines = [
+        f"einrichtungscode_hash: {old_hash}" if line.startswith("einrichtungscode_hash:") else line
+        for line in text.splitlines()
+    ]
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    assert not credentials.setup_code_valid(old_code)
 
 
 def test_setup_code_expires_after_24_hours(tmp_path: Path, clock: FakeClock) -> None:

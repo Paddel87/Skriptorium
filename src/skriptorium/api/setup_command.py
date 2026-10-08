@@ -23,6 +23,7 @@ def main() -> int:
     sys.stdout.write(
         "Einrichtungscode (einmal gültig, 24 Stunden; nicht weitergeben):\n"
         f"{code}\n"
+        "Groß- und Kleinschreibung, Bindestriche und Leerzeichen spielen keine Rolle.\n"
         "Das bisherige Passwort bleibt gültig, bis mit diesem Code ein neues festgelegt wird.\n"
     )
     return 0
