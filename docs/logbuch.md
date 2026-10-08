@@ -29,6 +29,22 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 01:30 UTC – [ERLEDIGT] Schritt 4.14 Hinweis der KI getrennt vom Text
+
+- Gegenprobe des Eigentümers ohne Konflikt („Am Morgen kommt Maren zurück und fragt, was er gebrannt hat.“): kein Hinweis, Vorschlag reine Prosa. Mit der Probe davor sind alle Akzeptanzkriterien erfüllt (Tests, CI, Probeschreiben mit echtem Modell in beide Richtungen).
+- Kanon-Treue der Gegenprobe (Bewertung der KI): 0 Widersprüche. Lücke im Kanon, die die KI in zwei Texten gleich füllt: Spiegelglas nimmt nur beim Brennen Bilder auf, kaltes Glas spiegelt bloß („Ihr Gesicht fiel nicht hinein; das Glas war längst kühl“). Kandidat für eine Ergänzung der Regel „Spiegelglas erinnert sich“ – Sache des Eigentümers.
+- README (Status, Nächste Schritte) nachgezogen. Unabhängige Prüfung nicht nötig (keine Kategorie 6; Hinweistext wird nicht protokolliert).
+
+### 2026-10-08 01:20 UTC – [BEOBACHTUNG] 4.14 Probeschreiben mit Konflikt (Produktion)
+
+- Eigentümer, Anweisung „Seine tote Frau erscheint ihm und spricht zu ihm.“: Hinweis getrennt über dem Vorschlag („Die tote Frau erscheint nicht und spricht nicht, weil die Toten tot bleiben; er sieht nur ihr stummes Bild im zerbrochenen Glas.“), Vorschlag ohne Hinweis an den Autor. Abtrennung wirkt mit echtem Modell.
+- Kanon-Treue des Textes (Bewertung der KI, nicht blind): 0 Widersprüche – Bild ohne Ton, Zerbrechen zeigt es für einige Atemzüge (acht), danach fort; Glassand der Gilde; keine Erscheinung. Neu erfunden: Scherben ohne Bild gehören niemandem.
+- Offen für 4.14: Gegenprobe ohne Konflikt (kein Hinweis erwartet).
+
+### 2026-10-08 01:10 UTC – [BEOBACHTUNG] 4.14 eingespielt
+
+- Auf Anweisung des Eigentümers: PR #37 nach grüner CI (8/8) gemergt, CI auf `main` grün, `c0fe7d5` nach Runbook eingespielt (Rückweg `skriptorium:vorher`, `app.vorher` = Stand 4.13). Container `healthy`; im Container `CONFLICT_MARKER` vorhanden; von außen `/api/health` 200, `/api/worlds` 401, `/` 200. Probeschreiben durch den Eigentümer steht aus.
+
 ### 2026-10-08 00:55 UTC – [BEOBACHTUNG] 4.14 umgesetzt (vor Deployment)
 
 - `context`: Rahmen ergänzt – bei Konflikt mit dem Kanon kanontreu schreiben und mit genau einer Zeile `HINWEIS: …` beginnen; „Der Text selbst enthält nie Hinweise an den Autor.“ Kennung als `CONFLICT_MARKER` exportiert (rein additiv).
