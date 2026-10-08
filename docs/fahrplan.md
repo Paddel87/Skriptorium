@@ -8,7 +8,7 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-08
+- **Stand vom:** 2026-10-08 (Befundaufnahme 08:23–11:10 UTC, Eingaben im STOPP-Block)
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
 - **Aktiver Schritt:** keiner – 4.13 bis 4.16 erledigt 2026-10-08; 4.8 Teil 1 und 2 erfüllt. Danach D.11, dann 4.8
@@ -22,6 +22,33 @@ Kontext: Phase 4 hat 16 Schritte (ursprünglich 8). Befund 2026-10-08: grok-4.7 
   grok-4.6 sperren die echten Inhalte des Eigentümers mit einer Weigerung als Text im
   Vorschlag; das Skriptorium erkennt das nicht (Verbrauch „ok“), „Übernehmen“ würde
   die Weigerung ins Kapitel schreiben. Ein Schritt dafür wäre der 17.
+  Weitere Befunde 2026-10-08 (Logbuch 08:35 UTC), ebenfalls ohne Schritt bis zur
+  Neuplanung: (a) Wiedereinstieg in ein langes Kapitel nur durch Scrollen durch den
+  ganzen Text – Editor ohne Höhenbegrenzung, Schreib-Bereich darunter (ui);
+  (b) jede Fortschreibung der KI beginnt mit Einleitung (Ort, Lage) und endet mit
+  ähnlichem Schlusssatz – Rahmen verlangt keinen nahtlosen Anschluss (context),
+  Ursache vermutet, tritt bei qwen und grok auf, Probeschreiben mit beiden nötig;
+  (c) Wunsch: Verlauf der eigenen Anweisungen als umschaltbare Chat-Ansicht neben
+  dem Manuskript, ohne erneutes Senden alter Anweisungen – neues Feature, braucht
+  gespeicherte Anweisungen (Kategorie 4) und Vision-Abgleich (Vision 5/8, FR-012);
+  (d) Kosten je Vorschlag beim Eigentümer nicht sichtbar, obwohl angefragt und
+  angezeigt, sofern gemeldet – Ursache offen (Logbuch 09:05 UTC);
+  (e) Oberfläche insgesamt schwer zu überblicken, schon mit wenigen Welten –
+  konkrete Stellen erfragen; Ziel des Eigentümers: intuitive Bedienung, Gestaltung
+  möglicherweise nach Material Design – entschieden: erst Seitenaufbau und Abläufe
+  neu ordnen (Schritt aus der Neuplanung), Gestaltung später (V.8) (Logbuch 11:20,
+  11:25 UTC); (f) Wunsch: KI-gestützter Weltenbauer (Figuren, Regeln,
+  Gegenstände mit Verwendung/Auswirkung im Gespräch definieren), bei Gegenständen
+  mit Wissen aus dem Internet; Import bleibt – neues Feature, Kategorien 1/2/3,
+  eher eigene Phase, Bezug 5.1 und 5.5 (Logbuch 09:20 UTC); (g) Wunsch:
+  Austausch mit SillyTavern – entschieden: nur Import (V.6) und später Export (V.7),
+  kein Umbau des Grundsystems (Logbuch 09:35 und 09:45 UTC).
+  Nachtrag Modell-Sperren (Logbuch 10:40 UTC): grok-4.6 laut Eigentümer gut
+  machbar, grok-4.7 blockiert stark, grok-4.5 (im Skriptorium nicht wählbar, nicht
+  geprüft) nie problematisch – Kandidaten für eine neue Modell-Reihenfolge.
+  (h) Wunsch: Modell-Auswahl aktuell von OpenRouter mit Kontextgröße und Preis statt
+  fester Liste im Code (ai_gateway, api, ui; Kategorie 5, ggf. 4 für Favoriten;
+  Reasoning je Modell) (Logbuch 11:00 UTC).
 Benötigt: Neuplanung von Phase 4, Vision-Abgleich, Pflichtfrage „Weiterbauen, umbauen
   oder neu aufsetzen?“ (CLAUDE.md Abschnitt 12)
 Vorgeschlagene Auflösung: Optionen – Sperre im Text erkennen (wie Hinweis 4.14) /
@@ -490,8 +517,8 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich, nicht bloß Status-Update.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 5
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Die verschobenen Schritte V.1 bis V.5 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5).
-- **Akzeptanzkriterien:** Jeder Schritt V.1–V.5 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
+- **Zu tun:** Die verschobenen Schritte V.1 bis V.8 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5; V.6 bis V.8 ergänzt 2026-10-08, Wünsche des Eigentümers).
+- **Akzeptanzkriterien:** Jeder Schritt V.1–V.8 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Fahrplan, ggf. ADRs
@@ -502,11 +529,11 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Status:** OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 4.8
-- **Freigabepflichtig:** voraussichtlich ja – ein neues Feld der Geschichte ist eine Datenmodelländerung (Kategorie 4); Form vor Beginn klären
+- **Freigabepflichtig:** ja – neue Felder je Kapitel (ggf. auch je Geschichte) sind eine Datenmodelländerung (Kategorie 4); Form vor Beginn klären
 - **Empfohlene Klasse:** Entscheidung – Klärung der Form und Datenmodell-Vorschlag (Eskalations-Auslöser 1); die Umsetzung danach ist Routine.
 - **Eingangskriterien:** Form mit dem Eigentümer geklärt
 - **Anforderungen (ab Klasse M):** FR-026
-- **Zu tun:** Wunsch des Eigentümers beim Funktionstest 2026-10-08: neben der Erzählperspektive eine atmosphärische Schreibweise vorgeben. Offene Fragen vor Beginn: freier Text oder Auswahl von Bausteinen (Ton, Tempo, Satzbau) oder beides; eine Textprobe als Vorbild; je Geschichte, je Welt als Vorgabe oder je Anfrage; wo im Prompt und mit welchem Gewicht gegenüber Kanon und Figuren-Schreibweise.
+- **Zu tun:** Wunsch des Eigentümers beim Funktionstest 2026-10-08: neben der Erzählperspektive eine atmosphärische Schreibweise vorgeben. Offene Fragen vor Beginn: freier Text oder Auswahl von Bausteinen (Ton, Tempo, Satzbau) oder beides; eine Textprobe als Vorbild; je Geschichte, je Welt als Vorgabe oder je Anfrage; wo im Prompt und mit welchem Gewicht gegenüber Kanon und Figuren-Schreibweise. Antworten des Eigentümers 2026-10-08 (Logbuch 10:20 UTC): **je Kapitel** Tonalität und Atmosphäre festlegen; **Auswahllisten**, mehrere kombinierbar, weil er sich die Angaben schlecht merken kann; **freier Text bleibt zusätzlich**. Bedarf vom Eigentümer bekräftigt („auf jeden Fall“). Genres, in denen er schreibt (Grundlage für die Listen): Dark Romance, Thriller, düstere Geschichten, Dark Erotic, CNC. Noch offen: Genre als eigene Liste je Geschichte neben Tonalität/Atmosphäre je Kapitel; Vorgabe je Geschichte, die ein Kapitel übernimmt und ändern kann, oder nur je Kapitel; konkrete Werte der Listen; Textprobe als Vorbild; Platz und Gewicht im Prompt; Priorität (Soll oder Muss).
 - **Akzeptanzkriterien:** nach FR-026; Schreibweise in der Oberfläche einstellbar und änderbar; Tests grün; Kanon-Treue im Probeschreiben nicht schlechter als vorher.
 - **Betroffene Module:** manuscript, context, api, ui
 - **Reifegrad-Wirkung:** keine
@@ -819,6 +846,57 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Betroffene Module:** canon
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** ADR zum Format, Code, Tests
+- **Notizen:** –
+
+#### V.6: Import aus SillyTavern (Character Cards und Lorebooks)
+
+- **Status:** VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 – Reihenfolge und Phase legt die Neuplanung fest (Wünsche aus der Nutzung, Logbuch 2026-10-08 09:35 UTC)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 2.4
+- **Freigabepflichtig:** ja – Eingangsformat ist Teil des Datenmodells (Kategorie 4); Einlesen fremder Dateien (PNG mit eingebettetem JSON) ist sicherheitsrelevant (Kategorie 6, Prüfung durch getrennte Instanz)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell-Festlegung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Spezifikation der Character Card (V2/V3) und des Lorebook-Formats gegen offizielle Quellen geprüft; Beispieldateien mit erfundenem Inhalt liegen vor
+- **Anforderungen (ab Klasse M):** keine (FR-005 in 2.4 erfüllt) – Wunsch des Eigentümers 2026-10-08
+- **Zu tun:** Character Cards (Figur, ggf. eingebettetes Lorebook) und Lorebooks (Welt-Material) als weiteres Eingangsformat in `canon.importers`, mit Vorschau wie beim Markdown-Import. Zuordnung der Felder zu Kanon-Kategorien klären; Felder für Chat-Rollenspiel (erste Nachricht, Beispieldialoge) gehen nicht in den Kanon. Entscheidung des Eigentümers 2026-10-08: nur Import (Export in V.7), **kein** Umbau des eigenen Datenmodells auf das SillyTavern-Format.
+- **Akzeptanzkriterien:** Eine Character Card und ein Lorebook werden ohne Handarbeit als Welt-Material übernommen; fehlerhafte oder bösartige Dateien werden abgelehnt, ohne den Server zu gefährden (Tests).
+- **Betroffene Module:** canon, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR zum Format, Code, Tests, Prüfbericht der getrennten Instanz
+- **Notizen:** –
+
+#### V.7: Export in SillyTavern-Formate
+
+- **Status:** VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 – nach V.6 (Eigentümer 2026-10-08: „Exportfunktion später“)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** V.6
+- **Freigabepflichtig:** ja – Ausgabeformat als Schnittstelle (Kategorie 5)
+- **Empfohlene Klasse:** Entscheidung – Schnittstellen-Festlegung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** V.6 erledigt
+- **Anforderungen (ab Klasse M):** keine – Wunsch des Eigentümers 2026-10-08
+- **Zu tun:** Figuren als Character Card und Welten als Lorebook ausgeben, sodass SillyTavern sie einlesen kann. Abgrenzung: V.1 (Publizieren) betrifft Manuskripte, nicht den Kanon.
+- **Akzeptanzkriterien:** Eine exportierte Figur und Welt lassen sich in SillyTavern öffnen; erneuter Import über V.6 ergibt denselben Kanon (Tests).
+- **Betroffene Module:** canon, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR zum Format, Code, Tests
+- **Notizen:** –
+
+#### V.8: Gestaltung der Oberfläche (z. B. Material Design)
+
+- **Status:** VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 – nach der Neuordnung von Seitenaufbau und Abläufen, die die Neuplanung von Phase 4 als Schritt anlegt (Eigentümer 2026-10-08: „Erstmal Aufbau neu, UI später“)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** Schritt zur Neuordnung von Seitenaufbau und Abläufen (ID vergibt die Neuplanung von Phase 4)
+- **Freigabepflichtig:** ja, falls eine Komponenten-Bibliothek eingebunden wird (Kategorie 3, Lizenz Kategorie 8); sonst nein
+- **Empfohlene Klasse:** Entscheidung – Wahl zwischen Bibliothek und eigenem CSS (Eskalations-Auslöser 1 bei Bibliothek).
+- **Eingangskriterien:** neuer Seitenaufbau umgesetzt
+- **Anforderungen (ab Klasse M):** FR-019, FR-022 – Wunsch des Eigentümers 2026-10-08
+- **Zu tun:** Einheitliche Gestaltung, möglicherweise nach Material Design – über eine Komponenten-Bibliothek (Version und Lizenz nach Regel-001 und `CLAUDE.md` Abschnitt 15 prüfen) oder mit eigenem CSS nach den Material-Richtlinien.
+- **Akzeptanzkriterien:** Gestaltung auf allen Seiten einheitlich; Desktop und Smartphone bedienbar; Komponenten- und End-to-End-Tests grün.
+- **Betroffene Module:** ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ggf. ADR zur Bibliothek, Code, Tests
 - **Notizen:** –
 
 ---

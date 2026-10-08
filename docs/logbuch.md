@@ -29,6 +29,128 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 11:25 UTC – [BEOBACHTUNG] Entscheidung: erst Seitenaufbau neu, Gestaltung später
+
+- Eigentümer: „Erstmal Aufbau neu, UI später.“ Folgt der vorgeschlagenen Reihenfolge aus 11:20 UTC.
+- Landeplatz: Die Neuordnung von Seitenaufbau und Abläufen legt die Neuplanung von Phase 4 als Schritt an (Eingabe (e) im STOPP-Block). Die Gestaltung (z. B. Material Design) ist V.8 `[VERSCHOBEN]`, Landeplatz 5.5, abhängig von diesem Schritt; 5.5 umfasst jetzt V.1–V.8.
+
+### 2026-10-08 11:20 UTC – [BEOBACHTUNG] Ergänzung nach Sessionende: Bedienung muss intuitiv werden, Material Design als mögliche Gestaltung
+
+- Eigentümer: „UX muss intuitiv werden, UI könnte Material Design sein.“ Schärft Befund (e) Übersichtlichkeit (09:20 UTC) zu einem Ziel.
+- Befund im Code: Die Oberfläche nutzt keine Gestaltungsbibliothek. Abhängigkeiten sind nur React und CodeMirror; das Aussehen kommt aus `ui/src/styles.css` (183 Zeilen).
+- Einordnung (KI, ohne Entscheidung): Material Design lässt sich auf zwei Wegen erreichen. (1) Eine Komponenten-Bibliothek (z. B. MUI für React oder Googles Material Web Components) ist eine neue externe Abhängigkeit (`CLAUDE.md` Abschnitt 4 Kategorie 3) mit Versions- und Lizenzprüfung (Abschnitt 15, Regel-001) und Wirkung auf Bündelgröße und alle Oberflächen-Tests. (2) Material-Richtlinien (Abstände, Farben, Bedienelemente) mit eigenem CSS nachbilden – ohne neue Abhängigkeit, aber mehr Handarbeit. Intuitivität selbst entsteht vor allem durch Aufbau und Abläufe (Navigation, was wo steht, Befunde a, c, e, Knopf „In den Kanon“), nicht durch das Design-System allein. Sinnvolle Reihenfolge: erst Abläufe und Seitenaufbau neu ordnen, dann Gestaltung. Umfang eher eigene Phase; Bezug FR-019 (Smartphone, 5.2), FR-022.
+- Nachgetragen im STOPP-Block (e). Sessionende 11:10 UTC gilt weiter; dieser Eintrag ist der einzige Nachtrag.
+
+### 2026-10-08 11:10 UTC – [SESSIONENDE] Befundaufnahme aus der Nutzung abgeschlossen
+
+- **Dauer:** 08:23 – 11:10 UTC (Eintrag 08:40 UTC war ein Zwischenstand; der Eigentümer hat danach weitere Befunde geliefert).
+- **Bearbeitet:** Befunde und Wünsche des Eigentümers aufgenommen, am Code nachvollzogen und eingeordnet. Eingaben der Neuplanung im STOPP-Block von Phase 4: Modell-Sperren mit Nachtrag (grok-4.6 gut, grok-4.7 schlecht, grok-4.5 aus TypingMind), (a) Scrollen beim Wiedereinstieg, (b) Einleitungs- und Schlusssätze (qwen und grok), (c) Anweisungs-Verlauf als Chat-Ansicht, (d) Kosten je Vorschlag nicht sichtbar, (e) Übersichtlichkeit, (f) KI-gestützter Weltenbauer, (h) aktuelle Modell-Auswahl. Entschieden: SillyTavern nur Import/Export (V.6, V.7 angelegt, Landeplatz 5.5). 5.6/FR-026 um Kapitel-Ebene, Auswahllisten und Genres ergänzt. Kanon-Übernahme aus markiertem Text ist seit 3.8 vorhanden – dem Eigentümer erklärt. Kein Code geändert.
+- **Offene Fragen an den Eigentümer:** Kosten-Zeile („Kosten nicht gemeldet“ oder fehlt ganz); Chat-Ansicht und Vision; konkrete unübersichtliche Stellen; Knopf „In den Kanon“ nie gesehen oder nicht verstanden; sperrt grok-4.6 gelegentlich doch; 5.6: Vorgabe je Geschichte, Werte der Listen, Priorität.
+- **Nächster Schritt:** Neuplanung Phase 4 mit dem Eigentümer (Vision-Abgleich, Pflichtfrage „Weiterbauen, umbauen oder neu aufsetzen?“ mit getrennter Instanz); danach 4.8 abschließen; D.11 bis 2026-10-31.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` zu Sessionbeginn). Schritte oberhalb der Empfehlung: 1 (Doku-Pflege, Routine). Abgegeben: nichts – kurze Einträge im geladenen Kontext.
+- **Kontextgröße:** nicht feststellbar (`used_tokens` 0).
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ nachgezogen. Drift: V.6/V.7 in 5.5 (V.1–V.7) aufgenommen; FR-026 ↔ 5.6 konsistent; keine neuen ADRs, Module, Reifegrade oder Blocker; Phase 4 weiter 16 Schritte (keine neuen), Phase 5 6. Ablaufdaten: kein Vorlauf erreicht (Guthaben ab 2026-10-22). Logbuch über 800 Zeilen – Auslagerung weiter nicht möglich, Verdichtung beim Phasenwechsel. Quick-Start unberührt. Alles auf Branch `docs/befunde-nutzung` gepusht; Pull Request noch nicht erstellt.
+
+### 2026-10-08 11:00 UTC – [BEOBACHTUNG] Wunsch: Modell-Auswahl aktuell von OpenRouter statt fest im Code
+
+- Eigentümer: Die Modell-Auswahl ist fest im Code hinterlegt; sie sollte aktuell sein, mit Kontextgröße und Kosten.
+- Befund im Code: `DEFAULT_MODELS` in `ai_gateway/models.py` enthält genau drei Modelle (grok-4.7, grok-4.6, qwen3.8-max) mit je eigener Einstellung (Reasoning „low“, weil diese Modelle Reasoning verlangen). `GET /api/models` (`api/writing_routes.py`) liefert nur diese Liste; die Oberfläche bietet nur sie an. Unbekannte Modelle bekämen „Reasoning aus“, was bei Modellen mit Pflicht-Reasoning (z. B. grok-4.5) scheitern würde.
+- Einordnung (KI, ohne Entscheidung): OpenRouter stellt eine Modell-Liste mit Kontextgröße, Preisen und unterstützten Parametern bereit; die Bestandsprüfung hat sie schon ausgewertet (458 Modelle, davon 324 ohne Moderation durch OpenRouter selbst, `docs/research/bestandspruefung.md`). Kein neuer Dienst, aber ein neuer Aufruf in `ai_gateway`, eine erweiterte Schnittstelle `GET /api/models` (Kategorie 5, additiv möglich) und eine neue Auswahl in `ui`. Offene Fragen für die Entscheidung: alle Modelle anzeigen (unübersichtlich, Befund 09:20 UTC) oder Suche/Filter (z. B. ohne Moderation, nach Preis) oder eine eigene Favoritenliste mit aktuellen Daten (gespeichert – Kategorie 4); wie Reasoning je Modell automatisch richtig gesetzt wird; Verhältnis zur geprüften Modell-Reihenfolge (ADR-010/011) als Voreinstellung. Gegen Kostenüberraschungen: Preis vor der Wahl sichtbar, Ausgabengrenze beim Anbieter bleibt.
+
+Landeplatz: als Eingabe der Neuplanung im STOPP-Block von Phase 4.
+
+### 2026-10-08 10:50 UTC – [BEOBACHTUNG] grok-4.5 aus TypingMind; Kontextfenster für die Modellwahl kaum maßgeblich
+
+- Eigentümer bestätigt: grok-4.5 war in TypingMind „sehr erfolgreich“. Er fragte, wie Modelle mit 256.000 statt 1 Mio. Token Kontextfenster im Skriptorium funktionieren würden.
+- Antwort (aus dem Code): Jede Anfrage ist auf 30.000 Token Eingabe begrenzt (`MAX_BUDGET`, `context/builder.py`, ADR-010), dazu höchstens 8.000 Token Ausgabe (`MAX_OUTPUT_TOKENS`, `api/flows/writing.py`). Ein Modell braucht also rund 40.000 Token Fenster; 256.000 reichen weit. Das große Fenster war in TypingMind nötig, weil dort der ganze Verlauf mitging; im Skriptorium tragen Kurzfassungen und letzte Seiten den Handlungsstand. Für die neue Modell-Reihenfolge zählen deshalb Inhaltsfilter, Kanon-Treue, Kosten und Reaktionszeit, nicht die Fenstergröße. Einschränkung: Ob die Treue beim Umfang der Referenzgeschichte trägt, ist erst mit D.4 belegt.
+
+### 2026-10-08 10:40 UTC – [BEOBACHTUNG] Modell-Sperren: grok-4.6 gut machbar, grok-4.7 „sehr übel“, grok-4.5 nie problematisch
+
+- Eigentümer hat geprüft: Mit grok-4.6 lassen sich seine Inhalte gut schreiben; grok-4.7 blockiert „sehr übel“; grok-4.5 war „immer nicht problematisch“.
+- Abweichung zum Befund 02:15 UTC: Dort musste er auch von grok-4.6 auf qwen wechseln. Ob grok-4.6 nur gelegentlich sperrt oder je nach Inhalt, ist offen.
+- grok-4.5 ist im Skriptorium nicht wählbar. Die Oberfläche bietet nur die Modell-Reihenfolge grok-4.7 → grok-4.6 → qwen3.8-max (`ai_gateway/models.py`, ADR-010/011). Die Erfahrung mit grok-4.5 stammt also vermutlich aus TypingMind (erfragt). Laut `docs/research/modell-eignungstest.md` verlangt grok-4.5 wie grok-4.6 Reasoning; auf Kanon-Treue, Kosten und Reaktionszeit ist es im Projekt nicht geprüft.
+- Folge für die Neuplanung (Befund Modell-Sperren): Das Startmodell grok-4.7 ist für die echten Inhalte des Eigentümers ungeeignet. Optionen für die Entscheidung: Startmodell grok-4.6; grok-4.5 nach Prüfung (Kanon-Treue, Kosten, Reaktionszeit) aufnehmen; grok-4.7 aus der Reihenfolge nehmen oder nachrangig führen. Änderung der Modell-Reihenfolge per ADR zu ADR-010/011.
+
+### 2026-10-08 10:30 UTC – [BEOBACHTUNG] Schreibweise: Bedarf bekräftigt, Genres des Eigentümers
+
+- Eigentümer: braucht die Funktion „auf jeden Fall“. Listen sollen zu der Literatur passen, die er tatsächlich schreibt: Dark Romance, Thriller, düstere Geschichten, Dark Erotic, CNC. In 5.6 eingetragen.
+- Einordnung (KI): Das sind eher **Genres** (je Geschichte) als Tonalität/Atmosphäre (je Kapitel). Ob es zwei Ebenen gibt, ist in 5.6 als offene Frage ergänzt. Priorität von FR-026 (Soll oder Muss) bleibt bei 5.6 zu bestätigen.
+- Bezug zum Befund Modell-Sperren (STOPP Phase 4): Bei diesen Genres ist mit Ablehnungen durch Modelle mit Inhaltsfilter zu rechnen; eine ausdrückliche Genre-Angabe im Prompt kann das verstärken. Beim Probeschreiben für 5.6 je Modell prüfen (Vision 6: Modelle ohne restriktive Inhaltsfilter, Modellwechsel muss möglich bleiben).
+
+### 2026-10-08 10:20 UTC – [BEOBACHTUNG] Schreibweise: je Kapitel, Auswahllisten plus freier Text
+
+- Eigentümer zu FR-026/5.6: Tonalität und Atmosphäre **je Kapitel** festlegen; Auswahllisten, auch mehrere kombiniert, weil er sich die passenden Angaben schlecht merken kann; freier Text bleibt zusätzlich. Seine Annahme, das gebe es heute als freien Text, trifft so nicht zu: Es gibt nur die Erzählperspektive je Geschichte. Tonalität kann er heute lediglich in die Anweisung an die KI schreiben, und die gilt nur für eine Anfrage.
+- In 5.6 (Zu tun, Freigabepflicht jetzt „ja“) und FR-026 eingetragen. Weiter offen: Vorgabe je Geschichte mit Änderung je Kapitel oder nur je Kapitel; Werte der Listen; Textprobe; Gewicht im Prompt. Bezug zur Übersichtlichkeit (09:20 UTC): Auswahllisten senken die Merklast, dürfen die Oberfläche aber nicht weiter überladen.
+
+### 2026-10-08 10:10 UTC – [BEOBACHTUNG] Kanon-Fortschreibung aus dem Text gilt dem Eigentümer als „für die Zukunft geplant“
+
+- Eigentümer fragte, ob „für die Zukunft“ eine Kanon-Fortschreibung geplant sei (Textstelle im Manuskript markieren, zum Kanon hinzufügen). Diese Funktion ist seit Schritt 3.8 (2026-09-27, FR-015) gebaut und eingespielt: Text im Editor markieren → Knopf „In den Kanon“ → „Bestehenden Eintrag ergänzen“ oder „Neuer Eintrag“.
+- Hinweis zur Auffindbarkeit (Bezug Befunde 08:35 und 09:20 UTC): Der Knopf liegt unter dem Editor; bei langem Kapitel also erst nach Scrollen durch den ganzen Text sichtbar und ohne Markierung ausgegraut. Dass der Eigentümer eine vorhandene Kernfunktion für geplant hält, ist ein Beleg für die Übersichtlichkeits-Probleme. Ob er den Knopf bisher nicht gefunden oder nur vergessen hat, ist erfragt.
+
+### 2026-10-08 10:00 UTC – [BEOBACHTUNG] Eigentümer: TypingMind passte, SillyTavern überforderte
+
+- Auf die Erklärung „SillyTavern = Chat-Rollenspiel mit der Figur im Mittelpunkt, Skriptorium = fortlaufende Prosa mit dem Kanon im Mittelpunkt“: Das erklärt laut Eigentümer, warum er mit TypingMind jahrelang zurechtkam, SillyTavern ihn aber „maßlos überfordert“ hat. Die Rollenspiel-Mechanik war ihm fremd, und ihm war nicht klar, dass dort die Figur im Mittelpunkt steht und nicht der Kanon.
+- Bestätigt Vision 8 („Chat- und Charakter-Rollenspiel-Fokus bewusst nicht übernehmen“) und ADR-004 (Eigenbau statt Anpassung von SillyTavern) aus Sicht des Nutzers. Für V.6: Beim Import gelten Character Cards als Lieferant von Kanon-Einträgen, nicht als Arbeitsmodell. Für die Chat-Ansicht (Befund 09:05 UTC) heißt das: Sie darf den Kanon nicht aus dem Mittelpunkt verdrängen.
+
+### 2026-10-08 09:45 UTC – [BEOBACHTUNG] Entscheidung SillyTavern: nur Import und Export, kein Umbau
+
+- Eigentümer: „dann bleiben wir einfach nur bei der Importfunktion und Exportfunktion später, wir werden das Grundsystem nicht umbauen.“ Weg (a) aus 09:35 UTC gewählt, Weg (b) Angleichung des Datenmodells verworfen.
+- Landeplatz nach `CLAUDE.md` Abschnitt 6: V.6 Import (Character Cards und Lorebooks) und V.7 Export, beide `[VERSCHOBEN]` mit Landeplatz 5.5, wie V.4/V.5. Querschnitt-Schritte, zählen nicht zu Phase 4. Das Format selbst (Kategorie 4/5) wird beim jeweiligen Schritt per ADR festgelegt. Weil Weg (b) nie geplant war, ist für die Ablehnung kein Descope-ADR nötig; sie steht in V.6.
+
+### 2026-10-08 09:35 UTC – [BEOBACHTUNG] Wunsch Austausch mit SillyTavern: Character Cards und Welten
+
+- **Wunsch des Eigentümers:** Character Cards aus SillyTavern importieren können oder das System allgemein mit ihnen kompatibel machen; dann ließen sich Figuren und vielleicht auch ganze Welten aus dem Internet herunterladen. Ziel: Interoperabilität. Der Eigentümer kennt die Formate nach eigener Aussage nicht im Detail.
+- **Einordnung (KI, ohne Entscheidung; Formatkenntnis aus dem Training, nicht gegen die Spezifikation geprüft):** Character Cards sind JSON-Daten, oft in ein PNG-Bild eingebettet (Spezifikation „Character Card V2“, neuer V3). Sie enthalten Felder wie Name, Beschreibung, Persönlichkeit, Szenario, erste Nachricht und Beispieldialoge und können ein eingebettetes Lorebook („character book“) tragen. Welten entsprechen in SillyTavern den Lorebooks/World Info, gespeichert als JSON (`docs/research/bestandspruefung.md`, Abschnitt SillyTavern). Ein Teil der Felder ist auf Chat-Rollenspiel zugeschnitten (erste Nachricht, Beispieldialoge, Szenario) und passt nicht zum Kanon. Die Vision lehnt den Chat-/Rollenspiel-Fokus ab (Vision 8), den Austausch von Daten aber nicht.
+- **Zwei Wege mit sehr verschiedener Tragweite:** (a) Import (ggf. später Export) als weiteres Eingangsformat in `canon.importers`, analog V.4 (TypingMind) und V.5 (Notion). Datenmodell bleibt, Kategorie 4 nur für das Eingangsformat (ADR-012). (b) „System auf Kompatibilität umschreiben“, also das eigene Datenmodell an Character Cards und Lorebooks angleichen. Das wäre eine Datenmodell- und Architekturänderung (Kategorien 1 und 4) am Kern (ADR-003, Markdown-Dateien als Quelle der Wahrheit). Erster Eindruck: (a) liefert die Interoperabilität mit Bruchteil des Aufwands.
+- **Zu beachten:** Heruntergeladene Karten sind Dateien aus fremder Quelle. Das Einlesen von PNG und JSON ist sicherheitsrelevant (Kategorie 6, Prüfung durch getrennte Instanz). Fremde Karten können eigene Nutzungsbedingungen tragen, die der Eigentümer selbst prüft. SillyTavern bleibt als Code-Basis ausgeschlossen (ADR-004); das betrifft das Datenformat nicht.
+
+Landeplatz: als Eingabe der Neuplanung im STOPP-Block von Phase 4; Bezug V.4/V.5 und 5.5.
+
+### 2026-10-08 09:20 UTC – [BEOBACHTUNG] Oberfläche schwer zu überblicken; Wunsch KI-gestützter Weltenbauer mit Internet-Wissen
+
+- Offene Fragen aus 09:05 UTC (Kosten-Zeile, Vision-Abgleich Chat-Ansicht) beantwortet der Eigentümer später; er ist unterwegs.
+- **Oberfläche insgesamt schwer zu überblicken:** Laut Eigentümer wird die Bedienung schon mit wenigen Welten unübersichtlich, nicht erst mit vielen. Noch ohne konkrete Stellen. Welche Seiten und Abläufe betroffen sind, wird bei der Neuplanung erfragt. Bezug: FR-022 (Einstieg ohne Hilfe), 4.15 (Bedienhinweise), Vision 8 („überladene Oberfläche bewusst nicht übernehmen“).
+- **Wunsch KI-gestützter Weltenbauer:** Figuren, Welten, Regeln, Gegenstände mit Verwendung und Auswirkung im Gespräch mit der KI definieren statt per Hand oder Import. Für Gegenstände (ggf. auch andere Kategorien) soll die KI tatsächliche Anwendung und Handhabung aus dem Internet einbeziehen, damit alltagsbekannte Gegenstände nicht jedes Mal von Hand erklärt werden müssen. Das würde die Import-Prompts (`docs/import-prompts.md`) weitgehend überflüssig machen. Ausdrücklich **nicht** gewünscht: den Import streichen.
+- Einordnung (KI, ohne Entscheidung): Die Vision schließt einen Weltenbauer nicht aus (Abschnitt 5). Er wäre ein neues Feature mit neuem Ablauf und wahrscheinlich neuem Modul oder neuer Verantwortung (`CLAUDE.md` Abschnitt 4 Kategorie 1/2). Internet-Wissen bedeutet eine neue externe Abhängigkeit (Suchdienst oder Websuche über den KI-Anbieter, Kategorie 3) mit eigenen Kosten (Kostenrahmen 50 €). Weil der Kanon verbindlich ist (FR-011), müssten KI-Vorschläge vor der Übernahme vom Autor bestätigt werden, wie bei der Import-Vorschau. Berührt 5.1 (Kanon-Vorschläge ohne `@`) und 5.5 (Planung der nächsten Ausbaustufe). Größe eher eine eigene Phase als ein Schritt in Phase 4.
+
+Landeplatz: beide als Eingaben der Neuplanung im STOPP-Block von Phase 4.
+
+### 2026-10-08 09:05 UTC – [BEOBACHTUNG] Wunsch Eingabe-Verlauf als umschaltbare Ansicht; Kosten je Vorschlag fehlen
+
+- **Gesamturteil des Eigentümers:** Die Manuskript-Ansicht als reiner Fließtext ist „schon mal nicht schlecht“. Einleitungs- und Schlusssätze (Befund 08:35 UTC) sind ärgerlich, weil sie beim Redigieren geprüft werden müssen.
+- **Wunsch Eingabe-Verlauf:** Ihm fehlt der Verlauf seiner Anweisungen, wie er ihn aus TypingMind kennt. Bekräftigt: Die Anweisungen gehören **nicht** ins Manuskript (FR-012: „Der Wechsel ist das Manuskript“). Gewünscht ist eine bei Bedarf umschaltbare Ansicht Chat (Autor ↔ KI) / Manuskript. Bedingung des Eigentümers: Alte Anweisungen werden beim Weiterschreiben **nicht** erneut an die KI geschickt (Token sparen, Vision 4). Befund im Code: Anweisungen werden heute nirgends gespeichert (nur in `api/writing_routes.py` und `api/flows/writing.py` durchgereicht); `manuscript` und `storage` kennen sie nicht. Ein Verlauf bräuchte also neue gespeicherte Daten (Datenmodell, `CLAUDE.md` Abschnitt 4 Kategorie 4) und eine neue Ansicht in `ui`. Abgleich nötig mit Vision Abschnitt 5/8 („Chat-Fokus bewusst nicht übernehmen“, „kein Chat getrennt vom Manuskript“, requirements Abschnitt „offene Fragen“ Nr. 2). Ein Verlauf nur zum Ansehen, der nicht in die Anfrage eingeht, widerspricht dem nach erstem Eindruck nicht, ist aber eine Entscheidung des Eigentümers. Neues Feature, freigabepflichtig.
+- **Kosten je Vorschlag fehlen:** Unter dem Vorschlag sieht der Eigentümer Eingabe- und Ausgabe-Token, aber keine Kosten. Befund im Code: Die Kosten werden bei OpenRouter angefragt (`"usage": {"include": True}` in `ai_gateway/openrouter.py`) und angezeigt, wenn sie gemeldet werden (`describeUsage` in `ui/src/views/WritingPanel.tsx`: „Kosten … $“, sonst „Kosten nicht gemeldet“). Die Verbrauchsdaten für Oktober enthalten eine Summe von 0,13 $, also kamen zumindest manche Kosten an. Ob die Zeile beim Eigentümer „Kosten nicht gemeldet“ zeigt oder ganz fehlt, ist erfragt; Ursache offen.
+
+Landeplatz: beide als Eingaben der Neuplanung im STOPP-Block von Phase 4.
+
+### 2026-10-08 08:50 UTC – [BEOBACHTUNG] Einleitungs- und Schlusssätze bei qwen und grok
+
+- Nachtrag zu Befund 2 (08:35 UTC), Eigentümer: tritt „sowohl mit qwen als auch mit grok“ auf (welche grok-Version, ist nicht genannt). Damit liegt die Ursache eher nicht an einem Modell. Die Vermutung „Rahmen verlangt keinen nahtlosen Anschluss“ wird gestützt, ist aber weiter nicht belegt. Ein Probeschreiben mit Rahmen-Ergänzung sollte beide Modelle abdecken.
+
+### 2026-10-08 08:40 UTC – [SESSIONENDE] Befunde aus der Nutzung festgehalten
+
+- **Dauer:** 08:23 – 08:40 UTC.
+- **Bearbeitet:** zwei Befunde des Eigentümers (Scrollen beim Wiedereinstieg; Einleitungs- und Schlusssätze der KI) am Code nachvollzogen, im Logbuch und im STOPP-Block von Phase 4 festgehalten. Kein Code geändert.
+- **Offen / nächster Schritt:** unverändert Neuplanung Phase 4 mit dem Eigentümer (jetzt drei Befunde), dann 4.8 abschließen; D.11 bis 2026-10-31.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient). Schritte oberhalb der Empfehlung: 1 (Doku-Pflege, Routine). Abgegeben: nichts (Kontext geladen, Einträge kurz).
+- **Kontextgröße:** nicht feststellbar (`used_tokens` 0).
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ war veraltet (4.8 als offen, D.11 „vor dem ersten echten Kapitel“) – nachgezogen. Drift zwischen Pflicht-Dokumenten: keine Änderung an ADRs, Modulen, Reifegraden, Blockern; Phase 4 weiter 16 Schritte (keine neuen angelegt). Ablaufdaten: Guthaben-Vorlauf ab 2026-10-22, noch nicht erreicht. Logbuch über 800 Zeilen – Auslagerung weiter nicht möglich (siehe Sessionende 04:00 UTC). Quick-Start unberührt.
+
+### 2026-10-08 08:35 UTC – [BEOBACHTUNG] Befunde aus der Nutzung: Scrollen beim Wiedereinstieg, Einleitungs- und Schlusssätze der KI
+
+Angaben des Eigentümers nach dem Schreiben echter Texte; beide in der Cloud-Session am Code nachvollzogen, nicht auf der Produktion (kein SSH-Zugang von hier, ADR-025).
+
+1. **Wiedereinstieg erfordert Scrollen durch das ganze Manuskript.** Beim Öffnen einer gespeicherten Geschichte muss bis ganz nach unten gescrollt werden, um weiterzuschreiben; bei langen Geschichten mühsam. Ursache im Code: Der Editor (`ui/src/views/ManuscriptEditor.tsx`, Klasse `.editor` in `ui/src/styles.css`) hat nur `min-height: 20rem`, keine Höhenbegrenzung und keinen Sprung ans Ende – er wächst mit dem ganzen Kapiteltext; der Schreib-Bereich (`WritingPanel`) steht darunter (`ChapterEditor.tsx`). Je länger das Kapitel, desto weiter liegt das Anweisungsfeld unten. Bezug: FR-022 (Einstieg), FR-019 (Smartphone – dort noch stärker).
+2. **Jede Fortschreibung beginnt mit einer kleinen Einleitung und endet mit einem ähnlich klingenden Schlusssatz.** Die KI stellt Ort und Lage neu vor und rundet ab, als wäre jeder Teil ein eigenständiges, wieder einstiegsfähiges Stück – unpassend für einen laufenden Text. Befund im Code: Der Rahmen (`_frame` in `src/skriptorium/context/builder.py`) sagt nur „Co-Autor einer Geschichte“; nirgends steht, dass nahtlos an den letzten Satz der „Letzten Manuskript-Seiten“ anzuschließen ist, ohne Wiederholung von Ort, Lage oder Figuren und ohne abschließenden Satz. Die Anweisung steht nach den letzten Seiten am Ende der Anfrage. Ursache damit **vermutet**, nicht belegt: Welche Modelle betroffen sind (qwen3.8-max nach dem Modellwechsel vom 2026-10-08, grok-4.6?) und ob eine Rahmen-Ergänzung wirkt, ist nur mit Probeschreiben zu klären. Bezug: FR-009 (Weiterschreiben), FR-026/5.6 (Schreibweise je Geschichte) als möglicher Landeplatz für Stilvorgaben.
+
+Landeplatz: Phase 4 steht im STOPP Phasen-Wucherung (16 Schritte); beide Befunde sind als Eingaben der Neuplanung im STOPP-Block des Fahrplans ergänzt – keine eigenen Schritte vor der Neuplanung (`CLAUDE.md` Abschnitt 8, Kriterium 9).
+
+### 2026-10-08 08:23 UTC – [SESSIONSTART] Befunde aus der Nutzung festhalten
+
+- Cloud-Session. Modell laut `get_session`: eingestellt `claude-opus-5-5`, bedient `claude-opus-5-5` – Entscheidungs-Klasse.
+- Kontextgröße: `get_session` meldet `used_tokens` 0 (nicht aktualisiert); Regel zur Sessiongröße damit nicht anwendbar.
+- Auftrag: zwei Befunde des Eigentümers zur Nutzung festhalten. Routine-Arbeit (Logbuch, Fahrplan) oberhalb der empfohlenen Klasse; keine Abgabe, weil der Kontext schon geladen ist und die Einträge kurz sind.
+
 ### 2026-10-08 02:45 UTC – [ERLEDIGT] Schritt 4.13 Kürzerer, lesbarer Einrichtungscode
 
 - Eigentümer hat auf dem VPS einen Code erzeugt: „sieht aus wie ABC-DEF-GHJ-KMN“ – neues Format bestätigt, Wert nicht weitergegeben. Alle Akzeptanzkriterien erfüllt (Tests, unabhängige Prüfung, Deployment, Format auf dem VPS). Der Code verfällt nach 24 Stunden ungenutzt; das Passwort bleibt gültig.
