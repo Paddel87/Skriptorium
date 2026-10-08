@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-10-08
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** 4.13 eingespielt, letzter Nachweis offen (Code im neuen Format auf dem VPS erzeugen, Eigentümer). 4.14, 4.15, 4.16 erledigt 2026-10-08. Danach D.11, dann 4.8
+- **Aktiver Schritt:** keiner – 4.13 bis 4.16 erledigt 2026-10-08; 4.8 Teil 1 und 2 erfüllt. Danach D.11, dann 4.8
 - **Nächster Schritt:** neue Session: STOPP Phasen-Wucherung – Befund Modell-Sperren (grok-4.7/4.6 sperren echte Inhalte per Text; Sperre nicht erkannt) wäre der 17. Schritt → Neuplanung Phase 4 mit dem Eigentümer; danach 4.8 abschließen (v0.1.0, Vision-Abgleich). Eigentümer: D.11-Angaben (Teil 1 und 2 von 4.8 erfüllt 2026-10-08; Phase 4 steht bei 16 Schritten – ein weiterer Befund erzwingt Neuplanung; danach erstes echtes Kapitel, Versionsvergabe und Vision-Abgleich). Davor D.11 (Sicherungs-Zugangsdaten außerhalb des Servers, spätestens 2026-10-31). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. D.8 verworfen (ADR-040)
 - **Offene STOPP-Situationen:**
 
@@ -340,7 +340,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 4.13: Kürzerer, lesbarer Einrichtungscode
 
-- **Status:** IN ARBEIT (seit 2026-10-07) – PR #36 gemergt (`04a0bde`), auf dem VPS eingespielt 2026-10-08 00:32 UTC (healthy; von außen `/api/health` 200, `/api/worlds` 401; im Container `SETUP_CODE_LENGTH` 12, Alphabet 31). Offen: ein auf dem VPS erzeugter Code im neuen Format (erzeugt der Eigentümer beim nächsten Bedarf)
+- **Status:** ERLEDIGT (2026-10-08) – PR #36 gemergt (`04a0bde`), auf dem VPS eingespielt 2026-10-08 00:32 UTC (healthy; von außen `/api/health` 200, `/api/worlds` 401; im Container `SETUP_CODE_LENGTH` 12, Alphabet 31). Eigentümer erzeugte auf dem VPS einen Code: Format `ABC-DEF-GHJ-KMN` bestätigt (Wert nicht weitergegeben)
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 4.7
 - **Frist:** vor 4.8
