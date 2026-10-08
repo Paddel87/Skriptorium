@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-10-07
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
-- **Aktiver Schritt:** keiner – 4.7 erledigt 2026-09-30, das Skriptorium ist öffentlich erreichbar
+- **Aktiver Schritt:** 4.13 Kürzerer, lesbarer Einrichtungscode (ADR-041) – vor 4.8
 - **Nächster Schritt:** 4.8 30-Minuten-Test durch den Eigentümer (mit Stoppuhr; danach erstes echtes Kapitel, Versionsvergabe und Vision-Abgleich). Davor D.11 (Sicherungs-Zugangsdaten außerhalb des Servers, spätestens 2026-10-31). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.9 2026-12-28. D.8 verworfen (ADR-040)
 - **Offene STOPP-Situationen:** keine
 
@@ -114,7 +114,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Reifegrad-Erwartung am Phasenende:** Host, Netz, Secrets im Betrieb, Backups und Bedrohungsmodell `[BELASTBAR]` (Backups erst nach erprobter Wiederherstellung).
 
-**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-09-28: 12 Schritte (+4.9, ADR-025; +4.10, Auftrag des Eigentümers; +4.11, Befund Branch-Schutz; +4.12, Befund D.7), Wucherungs-Schwelle (16 und mindestens +5) nicht berührt
+**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-09-26 – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Stand 2026-10-07: 13 Schritte (+4.9, ADR-025; +4.10, Auftrag des Eigentümers; +4.11, Befund Branch-Schutz; +4.12, Befund D.7; +4.13, Wunsch des Eigentümers, ADR-041), Wucherungs-Schwelle (16 und mindestens +5) nicht berührt
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
@@ -323,6 +323,23 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** ADR
 - **Notizen:** Angelegt 2026-09-28 aus D.7. Server-Details nur lokal.
+
+#### 4.13: Kürzerer, lesbarer Einrichtungscode
+
+- **Status:** IN ARBEIT (seit 2026-10-07)
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** 4.7
+- **Frist:** vor 4.8
+- **Freigabepflichtig:** ja – Kategorie 6, entschieden in ADR-041 (Option A)
+- **Empfohlene Klasse:** Entscheidung – `ENTSCHEIDUNG ERFORDERLICH` (Eskalations-Auslöser 1); die Umsetzung selbst ist Routine.
+- **Eingangskriterien:** ADR-041
+- **Anforderungen (ab Klasse M):** FR-022 (Einrichtung in 30 Minuten)
+- **Zu tun:** Wunsch des Eigentümers vor 4.8: Einrichtungscode zum Abtippen zu lang. `skriptorium-einrichtung` erzeugt 12 Zeichen aus 31 Zeichen ohne Verwechsler, in Dreiergruppen angezeigt; die Prüfung ignoriert Groß-/Kleinschreibung, Bindestriche und Leerzeichen; der Code wird mit scrypt statt SHA-256 gespeichert. Laufzeit 24 Stunden, einmalige Nutzung und Fehlversuchsgrenze unverändert.
+- **Akzeptanzkriterien:** Tests für Format, Alphabet, Eingabe in Kleinbuchstaben und ohne Bindestriche, Ablage ohne Klartext, Ablauf und Einmaligkeit grün; unabhängige Prüfung durch getrennte Instanz ohne offene Befunde hoch/mittel; nach dem Deployment auf dem VPS erzeugter Code hat das neue Format.
+- **Betroffene Module:** api
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR-041, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-07. Ursprünglicher Schrittplan Phase 4: 8; jetzt 13 – Wucherungs-Schwelle (16 und mindestens +5) nicht berührt.
 
 ### Phase 5: Soll-Anforderungen – Typ: UMSETZUNG
 

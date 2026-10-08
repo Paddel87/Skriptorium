@@ -63,6 +63,16 @@ def test_setup_with_wrong_code_and_rejected_password(
     assert again.status_code == 403
 
 
+def test_setup_accepts_code_typed_lowercase_without_hyphens(client: TestClient) -> None:
+    code = services_of(client).credentials.create_setup_code()
+    typed = code.replace("-", "").lower()
+    one_off = ("2" if typed[0] != "2" else "3") + typed[1:]
+    wrong = client.post("/api/auth/setup", json={"code": one_off, "password": PASSWORD})
+    assert wrong.status_code == 403
+    response = client.post("/api/auth/setup", json={"code": typed, "password": PASSWORD})
+    assert response.status_code == 204
+
+
 def test_world_names_are_context_words(client: TestClient) -> None:
     services_of(client).canon.create_world("Die Salzmark")
     code = services_of(client).credentials.create_setup_code()

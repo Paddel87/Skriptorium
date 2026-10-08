@@ -29,6 +29,27 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 00:10 – [BEOBACHTUNG] Unabhängige Prüfung des Einrichtungscodes (4.13)
+
+- Getrennte Instanz (Unteragent Claude Sonnet 5, ohne Gesprächsverlauf, nur Diff, Bedrohungsmodell, ADR-041). Ergebnis: keine Befunde hoch/mittel; ASVS 6.4.1 und 11.4.2 erfüllt. Entropie ≈ 59,45 Bit reicht auch mit vielen Adressen (bei IPv6 begrenzt zusätzlich die scrypt-Rate); Normalisierung macht keine falsche Eingabe richtig; Einmaligkeit unter Sperre korrekt; alte SHA-256-Hashes sicher ungültig; Code nicht in Logs.
+- Niedrige Befunde: fehlender Routentest mit kleingeschriebenem Code ohne Bindestriche – behoben (`test_setup_accepts_code_typed_lowercase_without_hyphens`, auch ein falsches Zeichen → 403). Über dem Niveau, nur optional (nicht umgesetzt, `CLAUDE.md` Abschnitt 6 „Schutzbedarf ist Obergrenze“): Sperre je IPv6-/64-Präfix, ASCII-Prüfung nach `upper()`, `max_length` am Feld `code`, Ausgleich des Zeitunterschieds bei aktivem Code, weitere Randfall-Tests. Hinweis zu `FORWARDED_ALLOW_IPS`: in 4.7 von außen belegt (ADR-030), nicht neu.
+
+### 2026-10-07 23:45 – [ADR-ANGELEGT] ADR-041 Kürzerer Einrichtungscode
+
+- Eigentümer: Code „viel zu lang“; vorgelegt A 12 Zeichen lesbar (Empfehlung) / B unverändert kopieren / C 6 Ziffern. Entscheidung: „A, mach das“. Folge im ADR: Ablage mit scrypt statt SHA-256, weil 59 Bit für einen schnellen Hash nach einem Abfluss der Datei zu wenig sind. Schritt 4.13 angelegt (Phase 4 jetzt 13 Schritte, Schwelle 16 nicht berührt).
+
+### 2026-10-07 23:30 – [BEOBACHTUNG] Produktion noch ohne Passwort und ohne Daten
+
+- Lesend per SSH geprüft: Im Container liegt unter `/data` nur `index.sqlite`; kein `system/zugang.md` – also weder Passwort noch Einrichtungscode, keine Welten. Das Skriptorium ist seit 4.7 erreichbar, aber noch nie eingerichtet. Passt zu 4.8 (erstes Öffnen durch den Eigentümer mit Einrichtung). Keine Werte ausgegeben.
+
+### 2026-10-07 23:14 – [SESSIONSTART] Neue Session
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Quelle: `get_session`) – Entscheidungs-Klasse.
+- **Kontextgröße:** ca. 157.000 Token nach der Pflichtlektüre (`get_usage`; Fenster 1 Mio., davon ca. 57.000 Grundlast aus Werkzeugen, Speicher und Systemtext). 5-Stunden-Limit 4 %, Wochenlimit 23 % (Zurücksetzung 2026-10-11 10:00 MESZ).
+- **Stand:** Lokaler `main` war 4 Commits hinter `origin/main` (PR #35, D.8 verworfen, D.12) – per Fast-Forward nachgezogen auf `cc67d37`; CI auf `main` grün.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2 (project-context, Logbuch ab letztem Sessionende 2026-10-07 19:55, Fahrplan Stand und Phase 4 samt Querschnitt-Status, Architektur 1/2/9, Decisions A/C, aktive Blocker: keine).
+- **Vorhaben:** offen – kein Auftrag genannt. Anstehend: D.11 (Eigentümer, spätestens 2026-10-31), danach 4.8.
+
 ### 2026-10-07 20:15 – [GELÖST] CI rot: Sicherheitslücke in `source-map-js` (D.12)
 
 - PR #35 (D.8, nur Doku) rot im Job „TypeScript“, Schritt „Dependency-Audit“: GHSA-68fv-2mgg-jv7q (hoch) in `source-map-js` 1.2.1, transitiv über vite/postcss, jsdom und vitest-Coverage. Nicht durch den PR verursacht – neue Meldung seit dem letzten grünen Lauf auf `main` (2026-09-30).

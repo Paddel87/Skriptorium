@@ -4,8 +4,6 @@ Header fields: ``passwort_hash``, ``passwort_geaendert``, ``einrichtungscode_has
 ``einrichtungscode_gueltig_bis``. Times are ISO 8601 text in UTC.
 """
 
-import hashlib
-import hmac
 import secrets
 import threading
 from collections.abc import Callable
@@ -17,7 +15,12 @@ from skriptorium.storage import DocumentStore, HeaderValue, NotFound
 
 PATH: Final = "system/zugang.md"
 SETUP_CODE_LIFETIME: Final = timedelta(hours=24)
-_SETUP_CODE_BYTES: Final = 16
+# Capital letters and digits without look-alikes (0/O, 1/I/L): 31 characters (ADR-041).
+SETUP_CODE_ALPHABET: Final = "23456789ABCDEFGHJKMNPQRSTUVWXYZ"
+# 12 characters, about 59 bits: enough against online guessing at 10 failures per address
+# in 15 minutes over the 24 hours of validity (ASVS 6.4.1, ADR-041).
+SETUP_CODE_LENGTH: Final = 12
+_SETUP_CODE_GROUP: Final = 3
 
 
 class SetupCodeInvalid(Exception):  # noqa: N818 - name follows the error names of the api module
@@ -59,15 +62,24 @@ class CredentialStore:
             self._write(header)
 
     def create_setup_code(self) -> str:
-        """Create a new setup code (128 bits), store its hash and return it once."""
-        code = secrets.token_urlsafe(_SETUP_CODE_BYTES)
+        """Create a new setup code, store its hash and return it once.
+
+        The code is shown in groups of three, e.g. ``K7Q-M3X-RAP-H9D`` (ADR-041).
+        """
+        raw = "".join(secrets.choice(SETUP_CODE_ALPHABET) for _ in range(SETUP_CODE_LENGTH))
+        # scrypt like the password: about 59 bits are too few for a fast hash if the file
+        # leaks, e.g. through a backup (ASVS 11.4.2, ADR-041).
+        code_hash = self._hasher.hash(raw)
         with self._lock:
             header = self._header()
-            header["einrichtungscode_hash"] = _code_digest(code)
+            header["einrichtungscode_hash"] = code_hash
             valid_until = self._clock() + SETUP_CODE_LIFETIME
             header["einrichtungscode_gueltig_bis"] = valid_until.isoformat()
             self._write(header)
-        return code
+        return "-".join(
+            raw[start : start + _SETUP_CODE_GROUP]
+            for start in range(0, SETUP_CODE_LENGTH, _SETUP_CODE_GROUP)
+        )
 
     def setup_code_valid(self, code: str) -> bool:
         """Whether ``code`` is the stored, unexpired setup code."""
@@ -95,9 +107,9 @@ class CredentialStore:
         valid_until = header.get("einrichtungscode_gueltig_bis")
         if not isinstance(stored, str) or not isinstance(valid_until, str):
             return False
-        if not hmac.compare_digest(_code_digest(code), stored):
+        if self._clock() >= datetime.fromisoformat(valid_until):
             return False
-        return self._clock() < datetime.fromisoformat(valid_until)
+        return self._hasher.verify(_normalize_code(code), stored)
 
     def _header(self) -> dict[str, HeaderValue]:
         try:
@@ -109,6 +121,6 @@ class CredentialStore:
         self._store.write(PATH, header, "")
 
 
-def _code_digest(code: str) -> str:
-    # 128 bits of randomness: a standard hash is sufficient (ASVS 6.5.2).
-    return hashlib.sha256(code.encode("utf-8")).hexdigest()
+def _normalize_code(code: str) -> str:
+    """The code as stored: capital letters, without hyphens and whitespace (ADR-041)."""
+    return "".join(char for char in code.upper() if char != "-" and not char.isspace())
