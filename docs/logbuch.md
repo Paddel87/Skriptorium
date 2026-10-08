@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 23:30 UTC – [ADR-ANGELEGT] ADR-046 React Router 7.18; Entwurf 5.11 bestätigt
+
+- **Entwurf 5.11** per Auswahlfragen: Überblick fehlt an allen vier genannten Stellen; ständig griffbereit Modell/Länge und Figuren-Schreibweise; Schreibseite mit Seitenleiste rechts; Navigation als Leiste links mit Welten und Geschichten; Kanon-Seite mit Suche, Filter, Liste und Eintrag nebeneinander; Zurück-Knopf und Neuladen behalten die Stelle. Im Fahrplan bei 5.11 festgehalten, drei Teile.
+- **Router:** Eigentümer wählte React Router. Versionsprüfung: Linie 8 erst ab 2026-12-17 mindestreif, Linie 7 (7.18.4) mit vermutetem Ende um v9 (ca. Mai 2027). `ENTSCHEIDUNG ERFORDERLICH` (Kategorie 3) mit Empfehlung B (eigene Umsetzung); Eigentümer: „a“ → ADR-046, D.15 (Wechsel auf Linie 8 ab 2026-12-17), Ablaufdaten-Register und Stack nachgezogen. Reaktiv-Quote 0/10 über ADR-037..046.
+
 ### 2026-10-08 23:10 UTC – [ERLEDIGT] Abnahme 5.9, 5.17, 5.18
 
 - Eigentümer nach dem Deployment `6e563e8`: „passt alles, trag ab“ → 5.9, 5.17, 5.18 `[ERLEDIGT]` 2026-10-08. Kein `[IN ARBEIT]` mehr.

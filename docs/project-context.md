@@ -46,6 +46,7 @@ Auswahl nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15, „Versi
   - React und react-dom 19.2 (19.2.8) — Verifiziert: 2026-09-26, Quelle: npm-Registry, react.dev/versions
   - Vite 8.3 (8.3.1) und @vitejs/plugin-react 6.1 (6.1.1) — Verifiziert: 2026-09-26, Quelle: npm-Registry, vite.dev/releases
   - PyYAML 6.0 (6.0.3, gepinnt `<7`) — Verifiziert: 2026-09-26, Quelle: PyPI; Dateikopf in `storage` (ADR-016)
+  - React Router 7.18 (7.18.4, gepinnt `<7.19`) — Verifiziert: 2026-10-08, Quelle: npm-Registry, remix.run-Blog zu v8; Linie 8 erst ab 2026-12-17 mindestreif (ADR-046, D.15)
   - CodeMirror 6 (@codemirror/state 6.7.6, view 6.43.13, autocomplete 6.20.3, lang-markdown 6.5.2) — Verifiziert: 2026-09-26, Quelle: npm-Registry
 - **Datenbank / Speicher:** Markdown-Dateien mit YAML-Kopf als Quelle der Wahrheit; SQLite (in Python enthalten, Version folgt Python 3.14) als abgeleiteter, jederzeit neu aufbaubarer Suchindex – ADR-003
 - **Laufzeitumgebung:** Node.js 24 LTS (24.21.0) nur für Build und Entwicklung der Oberfläche — Verifiziert: 2026-09-26, Quelle: nodejs.org, Release-Plan `schedule.json`. Betrieb: Python 3.14 mit uvicorn auf einem VPS (ADR-006), vorhandener netcup-VPS (ADR-025)
@@ -272,6 +273,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 | jsdom 30 – neue Linie, noch nicht reif (ADR-019) | Nachprüfung 2027-01-27 | – | npm-Registry | D.2 (mit erledigen) |
 | vitest 5 – neue Linie, noch nicht reif | Nachprüfung 2027-03-03 | – | npm-Registry (ADR-015) | D.2 (mit erledigen) |
 | Reverse Proxy auf dem VPS, Linie 3.7 (seit 2026-09-28, ADR-033; 2.11 ohne Unterstützung seit 2026-09-07) | Nachprüfung 2026-12-28 | – | doc.traefik.io, Release-Tabelle (D.7, 2026-09-28) | D.9 |
+| React Router 7 – Linie 8 mindestreif, v7 vermutlich bis zu v9 (ca. Mai 2027) gepflegt | 2026-12-17 | – | npm-Registry; remix.run-Blog (ADR-046) | D.15 – Wechsel auf Linie 8 |
 | Wochenkontingent der KI | wöchentlich, So 10:00 (MESZ) | – | Sitzungsabfrage 2026-09-26 | – |
 
 ### Kosten
