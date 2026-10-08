@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 16:35 UTC – [BEOBACHTUNG] PR #58 gemergt, Entscheidungen zu 5.15
+
+- PR #58 (`feat/5.15-nur-das-verlangte`) auf Anweisung „PR öffnen und nach grüner CI mergen“ geöffnet, CI 8/8 grün, gemergt als `38f0d34`.
+- Eigentümer per Auswahlfragen: Rest-Vorgriff **erst im Alltag prüfen** (weiterer Versuch nur, wenn er dort stört); Längenstufen **passen so** (60–120 / 150–300 / 400–600 Wörter, Voreinstellung mittel). In 5.8, 5.15 und „Aktueller Stand“ eingetragen.
+- Weitergearbeitet über der Kontextgrenze (288.070 Token) auf ausdrückliche Anweisung – Abweichung nach `CLAUDE.md` Abschnitt 0, kein neuer Schritt begonnen.
+
 ### 2026-10-08 16:02 UTC – [SESSIONENDE] 5.8 und 5.15 umgesetzt – Merge und Abnahme offen
 
 - **Dauer:** 15:23 – 16:02 UTC.
