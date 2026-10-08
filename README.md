@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 4 – Stabilisierung und erstes öffentliches Deployment (Stabilisierung), Schritte 4.1 bis 4.7 und 4.9 bis 4.16 erledigt: Das Skriptorium läuft seit 2026-09-30 als Container auf dem vorhandenen netcup-VPS öffentlich unter HTTPS mit Passwortschutz (ADR-027, ADR-029 bis ADR-032, ADR-039), mit täglicher Sicherung nach MEGA S4 und erprobter Wiederherstellung (ADR-036), ohne eigene Erreichbarkeits-Überwachung (ADR-034); offen: D.11, 4.8 Versionsvergabe und Vision-Abgleich (Test und Kanon-Treue erfüllt), Neuplanung Phase 4 wegen Modell-Sperren; Phase 3 – Schreiben mit KI abgeschlossen am 2026-09-27 (ADR-024: weiterbauen)
+- **Projektphase:** Phase 4 – Stabilisierung und erstes öffentliches Deployment (Stabilisierung), Schritte 4.1 bis 4.7 und 4.9 bis 4.16 erledigt: Das Skriptorium läuft seit 2026-09-30 als Container auf dem vorhandenen netcup-VPS öffentlich unter HTTPS mit Passwortschutz (ADR-027, ADR-029 bis ADR-032, ADR-039), mit täglicher Sicherung nach MEGA S4 und erprobter Wiederherstellung (ADR-036), ohne eigene Erreichbarkeits-Überwachung (ADR-034); offen: D.11, 4.8 Versionsvergabe und Vision-Abgleich (Test und Kanon-Treue erfüllt), danach Phase 5 nach Neuplanung (ADR-042: gezielt umbauen); Phase 3 – Schreiben mit KI abgeschlossen am 2026-09-27 (ADR-024: weiterbauen)
 - **Version:** v0.0.0 – öffentlich erreichbar, Versionsvergabe (v0.1.0) nach dem 30-Minuten-Test
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-10-08
@@ -87,8 +87,8 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **Neuplanung Phase 4:** Befunde aus der Nutzung (Modell-Sperren im Text, Scrollen beim Wiedereinstieg, Einleitungs- und Schlusssätze der KI, Kosten je Vorschlag, Übersichtlichkeit der Oberfläche) und die Wünsche Anweisungs-Verlauf, KI-gestützter Weltenbauer und aktuelle Modell-Auswahl einplanen – Phase 4 hat die Wucherungs-Schwelle erreicht.
-- **4.8:** Versionsvergabe v0.1.0 und Vision-Abgleich (30-Minuten-Test und erstes echtes Kapitel erfüllt).
+- **4.8:** Versionsvergabe v0.1.0 und Vision-Abgleich – schließt Phase 4 ab.
+- **Phase 5 „Alltagstauglichkeit“** (Neuplanung, ADR-042: gezielt umbauen): zuerst grok-4.6 als Startmodell, nahtloser Anschluss der KI ohne Einleitung und Schlusssatz, Kapitel öffnet am Textende; danach Kosten je Vorschlag und Neuordnung der Oberfläche.
 - **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – Startmodell grok-4.7, Zweitmodell grok-4.6.

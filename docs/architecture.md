@@ -318,7 +318,7 @@ data/
 - **Eigenes eingeschränktes Serverkonto für die KI / kein Serverzugriff der KI:** Docker-Zugriff ist root-gleich und der Administrator-Schlüssel liegt auf demselben Mac; ohne Zugriff hinge jede Wartung am Eigentümer – siehe ADR-037
 
 <!-- ANCHOR:reifegrad-uebersicht -->
-## 9. Reifegrad-Übersicht (Stand vom 2026-09-30, nach Schritt 4.7)
+## 9. Reifegrad-Übersicht (Stand vom 2026-10-08, nach 4.16 und 4.8 Teil 2; Neuplanung ADR-042 ohne Reifegrad-Wirkung)
 
 | Bestandteil | Reifegrad | Seit | Validiert durch / wartet auf |
 |---|---|---|---|

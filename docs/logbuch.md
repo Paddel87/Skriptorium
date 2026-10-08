@@ -29,6 +29,19 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 12:40 UTC – [SESSIONENDE] Neuplanung Phase 4 abgeschlossen (ADR-042)
+
+- **Abweichung Sessiongröße:** Eigentümer „Hier weiter“ (= „weiter hier“, `CLAUDE.md` Abschnitt 0) bei 266.172 Token. ADR und Neuplanung hier statt in neuer Session; Ende bei 309.609 Token (`get_session`).
+- **Bearbeitet:** ADR-042 angelegt (Pflichtfrage nach Phasen-Wucherung, Entscheidung B, Vision-Frage „Manuskript“). Vision-Abgleich gegen `docs/vision.md`: kein verwaistes Element (Befund im ADR). Fahrplan neu geplant: STOPP aufgelöst, Phase 4 ohne weitere Schritte (offen: 4.8), Phase 5 „Alltagstauglichkeit und Soll-Anforderungen“ mit neuem ursprünglichem Schrittplan 13 (5.7–5.13 neu, Reihenfolge festgelegt), D.13 (Erkundung Sperren im Text), V.9 (Weltenbauer); 5.2 und 5.6 hängen an 5.11. FR-027–FR-030 angelegt (Priorität vorläufig). `docs/architecture.md` Abschnitt 9 Überschrift korrigiert (Drift aus der Bewertung). README und project-context-Status nachgezogen. PR #49 und #50 gemergt (#50 von der KI auf Anweisung „Merge“ nach grüner CI, 8/8).
+- **Offen:** 4.8 (v0.1.0, Vision-Abgleich vor Go-Live) – schließt Phase 4; D.11 bis 2026-10-31 (Eigentümer); Antworten des Eigentümers: Kosten-Zeile (5.10), unübersichtliche Stellen (5.11), Knopf „In den Kanon“, Werte der Listen (5.6), Stellung von grok-4.7 (5.7).
+- **Nächster Schritt:** 4.8 abschließen, dann 5.7.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient). Schritte oberhalb der Empfehlung: 0 (Neuplanung mit strategischem ADR ist Entscheidungs-Klasse). Abgegeben: Bewertung an Sonnet 5 (getrennte Instanz).
+- **Sessionende-Prüfungen:** README (Phase, Nächste Schritte) nachgezogen. Drift: ADR-042 → 5.7–5.13, D.13, V.6–V.9 vorhanden; Anforderungen → Schritte: FR-026 → 5.6, FR-027 → 5.13, FR-028 → 5.12, FR-029 → V.9, FR-030 → V.6/V.7, alle im Fahrplan genannten IDs existieren; Reaktiv-Quote 0/10 über ADR-033..042 (Teil A angepasst); Modul-Liste unverändert; Reifegrade unverändert; Blocker 0, kein `[BLOCKIERT]`; Phasenumfang: Phase 4 16 (STOPP aufgelöst durch Neuplanung), Phase 5 13 von ursprünglich 13. Ablaufdaten: kein Vorlauf erreicht (Guthaben ab 2026-10-22, in „Nächster Schritt“ berücksichtigt). Quick-Start unberührt.
+
+### 2026-10-08 12:35 UTC – [ADR-ANGELEGT] ADR-042 Phasenende 4 / Wucherung – gezielt umbauen
+
+- `[STRATEGISCH]` (Eskalations-Auslöser 3 – Entscheidungs-Klasse aktiv, Opus 5.5). Bewertung der getrennten Instanz, Stellungnahme, Vision-Abgleich und Konsequenzen im ADR; Bewertung unverändert in `docs/research/bewertung-phase-4.md`.
+
 ### 2026-10-08 12:10 UTC – [BEOBACHTUNG] Antworten per Auswahl-Fragen: Vision-Frage bestätigt, 5.6 präzisiert
 
 - Eigentümer wünschte das Frage-Antwort-System; vier Fragen mit Auswahl, alle mit der empfohlenen Option beantwortet:
