@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 23:40 UTC – [SESSIONENDE] Session auf dem Mac: 5.7–5.10, 5.15, 5.17, 5.18 erledigt; 5.11 Teil 1 und 5.19 eingespielt
+
+- **Dauer:** 21:10 – 23:40 UTC. Die Uhrzeiten der Einträge 23:30 und 23:55 UTC unten sind geschätzt und zu spät (Container-Uhr beim Abschluss 23:37 UTC); Reihenfolge und Inhalt gelten.
+- **Bearbeitet:** Deployments `18ee07d`, `6e563e8`, `aedf68f`, `ebc7bc5`; Abnahmen 5.7, 5.8, 5.15, 5.9, 5.17, 5.18 → `[ERLEDIGT]`; 5.10 ohne Code erledigt; neue Schritte 5.16–5.20 aus Befunden und Wünschen des Eigentümers; ADR-046 (React Router 7.18), D.15; 5.11 Entwurf bestätigt, Teil 1 Schreibseite umgesetzt und eingespielt; 5.19 Dunkelmodus umgesetzt und eingespielt. PRs #62–#70 gemergt.
+- **Stand:** 5.11 `[IN ARBEIT]` (Teil 1 wartet auf Prüfung, Teile 2 und 3 offen), 5.19 `[IN ARBEIT]` (wartet auf Prüfung). Server auf `ebc7bc5`, `(healthy)`.
+- **Nächster Schritt:** Prüfung von 5.11 Teil 1 und 5.19 durch den Eigentümer; dann 5.11 Teil 2 Navigation (React Router 7.18.4 einbauen, Leiste links, Adressen je Ansicht), Teil 3 Kanon-Seite; 5.20. D.11 bis 2026-10-31 (Eigentümer).
+- **Reibung (Fehler der KI):** Beim Deployment von `ebc7bc5` wartete eine Schleife per SSH alle 5 s auf `(healthy)` – über 50 Verbindungen; danach lehnte der VPS SSH von diesem Mac vorübergehend ab („Connection refused“, vermutlich Begrenzung der Firewall oder Sperre nach vielen Verbindungen). Das Skriptorium lief weiter (HTTPS 200, neues Stylesheet ausgeliefert). Nach einigen Minuten wieder erreichbar. Lehre: auf `(healthy)` über die HTTPS-Gesundheitsprüfung warten, SSH nur einmal danach. Ursache auf dem Server nicht geprüft.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, `get_session` 23:36). Schritte oberhalb der Empfehlung: 6 (5.7-Abnahme, 5.9, 5.10, 5.17, 5.18, 5.19 empfohlen Routine – kleine Schritte mit geladenem Kontext, Abgabe hätte nicht gespart; zu Beginn der Schritte nicht jeweils genannt – Abweichung). Abgegeben: nichts.
+- **Kontextgröße:** von der Sitzungsabfrage nicht gemeldet; Session sehr lang – Regel „Sessiongröße“ ohne Messwert nicht anwendbar.
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ auf 5.11/5.19/5.20/5.16, Status-Block gültig (Phase 5, v0.1.0, Blocker 0). Drift: ADR-046 → 5.11 und D.15 vorhanden; Reaktiv-Quote 0/10 (ADR-037..046) stimmt; Modul-Liste und Reifegrade unverändert (alle Änderungen in `ui`); Anforderungen FR-031 → 5.16, FR-029 → V.9; Blocker 0, kein `[BLOCKIERT]`; Phase 5 20 Schritte (Schwelle 26). Ablaufdaten: kein Vorlauf erreicht (nächste: mypy 2 am 2026-11-06, D.1 ab 2026-11-05, D.15 ab 2026-12-17). Logbuch 433 Zeilen, project-context 345 Zeilen – keine Auslagerung. Nicht Quick-Start-relevant außer `package.json` erst in Teil 2.
+
 ### 2026-10-08 23:55 UTC – [BEOBACHTUNG] Deployment `aedf68f` (5.11 Teil 1), 5.19 Dunkelmodus umgesetzt
 
 - **Wunsch des Eigentümers:** Dunkelmodus. Auswahlfragen: folgt dem Gerät plus Schalter; jetzt als eigener Schritt (5.19); #69 mergen und deployen; Nebenbefund Kapitel-Anlegen als eigener Schritt (5.20).
