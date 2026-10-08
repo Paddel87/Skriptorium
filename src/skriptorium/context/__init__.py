@@ -2,6 +2,7 @@
 
 from skriptorium.context.builder import (
     CHARS_PER_TOKEN,
+    CONFLICT_MARKER,
     MAX_BUDGET,
     OPENING_WORDS,
     SAFETY_MARGIN,
@@ -15,6 +16,7 @@ from skriptorium.context.builder import (
 
 __all__ = [
     "CHARS_PER_TOKEN",
+    "CONFLICT_MARKER",
     "MAX_BUDGET",
     "OPENING_WORDS",
     "SAFETY_MARGIN",
