@@ -29,6 +29,30 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 08:40 UTC – [SESSIONENDE] Befunde aus der Nutzung festgehalten
+
+- **Dauer:** 08:23 – 08:40 UTC.
+- **Bearbeitet:** zwei Befunde des Eigentümers (Scrollen beim Wiedereinstieg; Einleitungs- und Schlusssätze der KI) am Code nachvollzogen, im Logbuch und im STOPP-Block von Phase 4 festgehalten. Kein Code geändert.
+- **Offen / nächster Schritt:** unverändert Neuplanung Phase 4 mit dem Eigentümer (jetzt drei Befunde), dann 4.8 abschließen; D.11 bis 2026-10-31.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient). Schritte oberhalb der Empfehlung: 1 (Doku-Pflege, Routine). Abgegeben: nichts (Kontext geladen, Einträge kurz).
+- **Kontextgröße:** nicht feststellbar (`used_tokens` 0).
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ war veraltet (4.8 als offen, D.11 „vor dem ersten echten Kapitel“) – nachgezogen. Drift zwischen Pflicht-Dokumenten: keine Änderung an ADRs, Modulen, Reifegraden, Blockern; Phase 4 weiter 16 Schritte (keine neuen angelegt). Ablaufdaten: Guthaben-Vorlauf ab 2026-10-22, noch nicht erreicht. Logbuch über 800 Zeilen – Auslagerung weiter nicht möglich (siehe Sessionende 04:00 UTC). Quick-Start unberührt.
+
+### 2026-10-08 08:35 UTC – [BEOBACHTUNG] Befunde aus der Nutzung: Scrollen beim Wiedereinstieg, Einleitungs- und Schlusssätze der KI
+
+Angaben des Eigentümers nach dem Schreiben echter Texte; beide in der Cloud-Session am Code nachvollzogen, nicht auf der Produktion (kein SSH-Zugang von hier, ADR-025).
+
+1. **Wiedereinstieg erfordert Scrollen durch das ganze Manuskript.** Beim Öffnen einer gespeicherten Geschichte muss bis ganz nach unten gescrollt werden, um weiterzuschreiben; bei langen Geschichten mühsam. Ursache im Code: Der Editor (`ui/src/views/ManuscriptEditor.tsx`, Klasse `.editor` in `ui/src/styles.css`) hat nur `min-height: 20rem`, keine Höhenbegrenzung und keinen Sprung ans Ende – er wächst mit dem ganzen Kapiteltext; der Schreib-Bereich (`WritingPanel`) steht darunter (`ChapterEditor.tsx`). Je länger das Kapitel, desto weiter liegt das Anweisungsfeld unten. Bezug: FR-022 (Einstieg), FR-019 (Smartphone – dort noch stärker).
+2. **Jede Fortschreibung beginnt mit einer kleinen Einleitung und endet mit einem ähnlich klingenden Schlusssatz.** Die KI stellt Ort und Lage neu vor und rundet ab, als wäre jeder Teil ein eigenständiges, wieder einstiegsfähiges Stück – unpassend für einen laufenden Text. Befund im Code: Der Rahmen (`_frame` in `src/skriptorium/context/builder.py`) sagt nur „Co-Autor einer Geschichte“; nirgends steht, dass nahtlos an den letzten Satz der „Letzten Manuskript-Seiten“ anzuschließen ist, ohne Wiederholung von Ort, Lage oder Figuren und ohne abschließenden Satz. Die Anweisung steht nach den letzten Seiten am Ende der Anfrage. Ursache damit **vermutet**, nicht belegt: Welche Modelle betroffen sind (qwen3.8-max nach dem Modellwechsel vom 2026-10-08, grok-4.6?) und ob eine Rahmen-Ergänzung wirkt, ist nur mit Probeschreiben zu klären. Bezug: FR-009 (Weiterschreiben), FR-026/5.6 (Schreibweise je Geschichte) als möglicher Landeplatz für Stilvorgaben.
+
+Landeplatz: Phase 4 steht im STOPP Phasen-Wucherung (16 Schritte); beide Befunde sind als Eingaben der Neuplanung im STOPP-Block des Fahrplans ergänzt – keine eigenen Schritte vor der Neuplanung (`CLAUDE.md` Abschnitt 8, Kriterium 9).
+
+### 2026-10-08 08:23 UTC – [SESSIONSTART] Befunde aus der Nutzung festhalten
+
+- Cloud-Session. Modell laut `get_session`: eingestellt `claude-opus-5-5`, bedient `claude-opus-5-5` – Entscheidungs-Klasse.
+- Kontextgröße: `get_session` meldet `used_tokens` 0 (nicht aktualisiert); Regel zur Sessiongröße damit nicht anwendbar.
+- Auftrag: zwei Befunde des Eigentümers zur Nutzung festhalten. Routine-Arbeit (Logbuch, Fahrplan) oberhalb der empfohlenen Klasse; keine Abgabe, weil der Kontext schon geladen ist und die Einträge kurz sind.
+
 ### 2026-10-08 02:45 UTC – [ERLEDIGT] Schritt 4.13 Kürzerer, lesbarer Einrichtungscode
 
 - Eigentümer hat auf dem VPS einen Code erzeugt: „sieht aus wie ABC-DEF-GHJ-KMN“ – neues Format bestätigt, Wert nicht weitergegeben. Alle Akzeptanzkriterien erfüllt (Tests, unabhängige Prüfung, Deployment, Format auf dem VPS). Der Code verfällt nach 24 Stunden ungenutzt; das Passwort bleibt gültig.

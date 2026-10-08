@@ -87,8 +87,9 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- **4.8:** 30-Minuten-Test durch den Eigentümer, danach erstes echtes Kapitel und Versionsvergabe.
-- **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (vor dem ersten echten Kapitel, spätestens 2026-10-31).
+- **Neuplanung Phase 4:** Befunde aus der Nutzung (Modell-Sperren im Text, Scrollen beim Wiedereinstieg, Einleitungs- und Schlusssätze der KI) einplanen – Phase 4 hat die Wucherungs-Schwelle erreicht.
+- **4.8:** Versionsvergabe v0.1.0 und Vision-Abgleich (30-Minuten-Test und erstes echtes Kapitel erfüllt).
+- **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – Startmodell grok-4.7, Zweitmodell grok-4.6.
 

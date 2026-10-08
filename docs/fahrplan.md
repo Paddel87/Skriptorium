@@ -22,6 +22,12 @@ Kontext: Phase 4 hat 16 Schritte (ursprünglich 8). Befund 2026-10-08: grok-4.7 
   grok-4.6 sperren die echten Inhalte des Eigentümers mit einer Weigerung als Text im
   Vorschlag; das Skriptorium erkennt das nicht (Verbrauch „ok“), „Übernehmen“ würde
   die Weigerung ins Kapitel schreiben. Ein Schritt dafür wäre der 17.
+  Weitere Befunde 2026-10-08 (Logbuch 08:35 UTC), ebenfalls ohne Schritt bis zur
+  Neuplanung: (a) Wiedereinstieg in ein langes Kapitel nur durch Scrollen durch den
+  ganzen Text – Editor ohne Höhenbegrenzung, Schreib-Bereich darunter (ui);
+  (b) jede Fortschreibung der KI beginnt mit Einleitung (Ort, Lage) und endet mit
+  ähnlichem Schlusssatz – Rahmen verlangt keinen nahtlosen Anschluss (context),
+  Ursache vermutet, Probeschreiben nötig.
 Benötigt: Neuplanung von Phase 4, Vision-Abgleich, Pflichtfrage „Weiterbauen, umbauen
   oder neu aufsetzen?“ (CLAUDE.md Abschnitt 12)
 Vorgeschlagene Auflösung: Optionen – Sperre im Text erkennen (wie Hinweis 4.14) /
