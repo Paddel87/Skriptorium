@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 5 – Alltagstauglichkeit und Soll-Anforderungen (Umsetzung), begonnen 2026-10-08 (ADR-042: gezielt umbauen). Fortschritt: ✅ 7 von 20 Schritten erledigt, 🟠 2 in Arbeit, ⚪ 11 offen – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
+- **Projektphase:** Phase 5 – Alltagstauglichkeit und Soll-Anforderungen (Umsetzung), begonnen 2026-10-08 (ADR-042: gezielt umbauen). Fortschritt: ✅ 7 von 21 Schritten erledigt, 🟠 2 in Arbeit, ⚪ 12 offen – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
 - **Version:** v0.1.0 – Vorabversion (ADR-043); Go-Live erst vor v1.0.0 (Schritt 5.14)
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-10-08
@@ -96,7 +96,8 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- 🟠 **5.11, 5.19:** neue Schreibseite und Dunkelmodus eingespielt, warten auf Prüfung; als Nächstes Navigation links mit Welten und Geschichten (Zurück-Knopf behält die Stelle) und Kanon-Seite mit Suche.
+- 🟠 **5.11, 5.19:** neue Schreibseite und Dunkelmodus eingespielt, warten auf Prüfung; als Nächstes Aufbau wie ein Chat (Eingabe fest unten, Leiste links mit Welten, Geschichten und Kapiteln, Zurück-Knopf behält die Stelle), danach Kanon-Seite mit Suche.
+- ⚪ **5.2, 5.21:** Bedienung am Smartphone prüfen und anpassen; als App installierbar (PWA) mit voller Bildschirmgröße.
 - ⚪ **5.20, 5.16:** schnell angelegte Kapitel; herangezogene Kanon-Einträge anklickbar.
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 

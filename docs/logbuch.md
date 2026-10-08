@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 00:05 UTC – [BEOBACHTUNG] Wünsche: Chat-Aufbau, PWA, mobile Bedienung
+
+- **Wunsch des Eigentümers:** PWA, damit die ganze Bildschirmgröße nutzbar ist; prüfen, wie weit die Seite für mobile Bedienung taugt; Aufbau eher wie TypingMind oder ChatGPT mit Menüs, die bei Bedarf ausklappen.
+- **Auswahlfragen:** Aufbau wie ein Chat – Eingabe mit Modell und Länge fest unten, Manuskript scrollt darüber, Leiste links mit Welten, Geschichten und Kapiteln, rechts bei Bedarf Kanon und Einstellungen; PWA installierbar, volle Bildschirmgröße, nur online (keine Texte im Gerät); Reihenfolge: Chat-Aufbau in 5.11 Teil 2, dann 5.2 mit PWA, dann 5.11 Teil 3.
+- **Fahrplan:** Entwurf von 5.11 ergänzt (Teil 2 baut Teil 1 um), neuer Schritt 5.21 PWA mit FR-032 (Soll – vorläufig), Notiz an 5.2, Übersicht und „Nächster Schritt“ nachgezogen. Phase 5 jetzt 21 Schritte (Schwelle 26). Kein Code geändert. Weiter nach dem Sessionende auf Anweisung des Eigentümers.
+
 ### 2026-10-08 23:55 UTC – [BEOBACHTUNG] Ampel im Fahrplan, README überarbeitet (nach dem Sessionende)
 
 - Auf Bitte des Eigentümers nach dem Sessionende 23:40 UTC: README aktualisieren und im Fahrplan ein Ampelsystem einführen („oder vielleicht fällt dir was Besseres ein“).
