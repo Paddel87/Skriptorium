@@ -123,7 +123,7 @@ test("@ menu names an entry; taken-over AI text is appended and saved", async ({
       status: 200,
       contentType: "text/event-stream",
       body: [
-        'event: start\ndata: {"model": "x-ai/grok-4.7", "estimated_tokens": 300}\n\n',
+        'event: start\ndata: {"model": "x-ai/grok-4.6", "estimated_tokens": 300}\n\n',
         'event: text\ndata: {"text": "Nebel lag über dem Wasser."}\n\n',
         'event: done\ndata: {"input_tokens": 300, "output_tokens": 8, "cost_usd": null, "finish_reason": "stop"}\n\n',
       ].join(""),
@@ -163,7 +163,7 @@ test("@ menu names an entry; taken-over AI text is appended and saved", async ({
   expect(sent).toEqual({
     instruction: "@Mira kommt.",
     references: ["mira"],
-    model: "x-ai/grok-4.7",
+    model: "x-ai/grok-4.6",
     scene: null,
   });
 
@@ -321,13 +321,14 @@ test("the model of a story survives a reload; costs of the month are shown", asy
   await page.getByLabel("Titel des neuen Kapitels").fill("Aufbruch");
   await page.getByRole("button", { name: "Kapitel anlegen" }).click();
   const model = page.getByRole("combobox", { name: "Modell", exact: true });
-  await expect(model).toHaveValue("x-ai/grok-4.7");
+  // Preset since step 5.7 (ADR-044); grok-4.7 stays selectable.
+  await expect(model).toHaveValue("x-ai/grok-4.6");
   const saved = page.waitForResponse(
     (response) =>
       response.request().method() === "PATCH" &&
       response.url().endsWith("/stories/nebelpfad"),
   );
-  await model.selectOption("x-ai/grok-4.6");
+  await model.selectOption("x-ai/grok-4.7");
   expect((await saved).status()).toBe(200);
 
   await page.reload();
@@ -335,7 +336,7 @@ test("the model of a story survives a reload; costs of the month are shown", asy
   await page.getByRole("button", { name: "Nebelpfad" }).click();
   await expect(
     page.getByRole("combobox", { name: "Modell", exact: true }),
-  ).toHaveValue("x-ai/grok-4.6");
+  ).toHaveValue("x-ai/grok-4.7");
 
   await page.getByRole("button", { name: "Konto" }).click();
   await expect(page.getByText(/ für \d+ Anfrage/)).toBeVisible();

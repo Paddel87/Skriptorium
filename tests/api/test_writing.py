@@ -353,8 +353,8 @@ def test_model_list(logged_in: TestClient) -> None:
     response = logged_in.get("/api/models")
 
     assert response.json() == {
-        "models": ["x-ai/grok-4.7", "x-ai/grok-4.6", "qwen/qwen3.8-max-0902"],
-        "default": "x-ai/grok-4.7",
+        "models": ["x-ai/grok-4.6", "x-ai/grok-4.7", "qwen/qwen3.8-max-0902"],
+        "default": "x-ai/grok-4.6",
     }
 
 

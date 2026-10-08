@@ -9,7 +9,13 @@ import pytest
 from fastapi.testclient import TestClient
 
 from skriptorium.ai_gateway import ModelRefused, ProviderUnavailable, Usage
-from skriptorium.api.flows import WriteOrder, prepare_request, stream_events, summarize_chapter
+from skriptorium.api.flows import (
+    DEFAULT_MODEL,
+    WriteOrder,
+    prepare_request,
+    stream_events,
+    summarize_chapter,
+)
 from skriptorium.api.usage import UsageLog
 from skriptorium.canon import CanonService
 from skriptorium.context import ContextBuilder
@@ -143,9 +149,9 @@ def test_writing_records_success_and_error(tmp_path: Path) -> None:
     _drain(FakeProvider(error=ProviderUnavailable("weg")), prepared, calls)
 
     assert calls == [
-        ("schreiben", "x-ai/grok-4.7", Usage(1200, 40, 0.0021), "ok"),
-        ("schreiben", "x-ai/grok-4.7", None, "abgelehnt"),
-        ("schreiben", "x-ai/grok-4.7", None, "nicht_erreichbar"),
+        ("schreiben", DEFAULT_MODEL, Usage(1200, 40, 0.0021), "ok"),
+        ("schreiben", DEFAULT_MODEL, None, "abgelehnt"),
+        ("schreiben", DEFAULT_MODEL, None, "nicht_erreichbar"),
     ]
 
 
@@ -163,7 +169,7 @@ def test_aborted_writing_is_recorded(tmp_path: Path) -> None:
 
     asyncio.run(read_two_then_abort())
 
-    assert calls == [("schreiben", "x-ai/grok-4.7", None, "abgebrochen")]
+    assert calls == [("schreiben", DEFAULT_MODEL, None, "abgebrochen")]
 
 
 def _summarize(tmp_path: Path, script: list[Any]) -> list[tuple[Any, ...]]:
@@ -189,14 +195,14 @@ def _summarize(tmp_path: Path, script: list[Any]) -> list[tuple[Any, ...]]:
 
 def test_summaries_record_each_request(tmp_path: Path) -> None:
     assert _summarize(tmp_path, ["Kurz.", ""]) == [
-        ("kurzfassung", "x-ai/grok-4.7", Usage(900, 60, 0.001), "ok"),
-        ("gesamtzusammenfassung", "x-ai/grok-4.7", Usage(900, 60, 0.001), "leer"),
+        ("kurzfassung", DEFAULT_MODEL, Usage(900, 60, 0.001), "ok"),
+        ("gesamtzusammenfassung", DEFAULT_MODEL, Usage(900, 60, 0.001), "leer"),
     ]
 
 
 def test_failed_summary_is_recorded(tmp_path: Path) -> None:
     assert _summarize(tmp_path, [ModelRefused("nein")]) == [
-        ("kurzfassung", "x-ai/grok-4.7", None, "abgelehnt"),
+        ("kurzfassung", DEFAULT_MODEL, None, "abgelehnt"),
     ]
 
 
@@ -227,19 +233,22 @@ def test_usage_endpoint_counts_writing_and_summaries(
 def test_story_keeps_its_model_and_writing_uses_it(
     writer: TestClient, provider: FakeProvider
 ) -> None:
-    changed = writer.patch(STORY, json={"model": "x-ai/grok-4.6"})
+    changed = writer.patch(STORY, json={"model": "x-ai/grok-4.7"})
     assert changed.status_code == 200, changed.text
-    assert changed.json()["model"] == "x-ai/grok-4.6"
-    assert writer.get(STORY).json()["model"] == "x-ai/grok-4.6"
+    assert changed.json()["model"] == "x-ai/grok-4.7"
+    assert writer.get(STORY).json()["model"] == "x-ai/grok-4.7"
 
     assert writer.post(WRITE, json={}).status_code == 200
-    assert writer.post(WRITE, json={"model": "x-ai/grok-4.7"}).status_code == 200
+    assert writer.post(WRITE, json={"model": "qwen/qwen3.8-max-0902"}).status_code == 200
 
-    assert [request.model for request in provider.requests] == ["x-ai/grok-4.6", "x-ai/grok-4.7"]
+    assert [request.model for request in provider.requests] == [
+        "x-ai/grok-4.7",
+        "qwen/qwen3.8-max-0902",
+    ]
     cleared = writer.patch(STORY, json={"model": None})
     assert cleared.json()["model"] is None
     assert writer.post(WRITE, json={}).status_code == 200
-    assert provider.requests[-1].model == "x-ai/grok-4.7"
+    assert provider.requests[-1].model == "x-ai/grok-4.6"
 
 
 def test_unknown_model_for_a_story_is_refused(writer: TestClient) -> None:

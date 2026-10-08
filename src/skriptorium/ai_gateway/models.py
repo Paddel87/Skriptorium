@@ -1,8 +1,10 @@
 """Per-model configuration: reasoning setting and excluded executing providers.
 
-Values from roadmap step 1.1/1.5 (``spikes/modell-eignungstest``): the model order grok-4.7 →
-grok-4.6 → qwen3.8-max (ADR-010, ADR-011) requires reasoning, so it runs at the lowest effort.
-Models not listed here run with reasoning switched off, as in the suitability test.
+Values from roadmap step 1.1/1.5 (``spikes/modell-eignungstest``): the models grok-4.6, grok-4.7
+and qwen3.8-max (ADR-010, ADR-011) require reasoning, so they run at the lowest effort. The order
+is the model order: grok-4.6 is preset because grok-4.7 refuses the owner's real stories, grok-4.7
+stays selectable, qwen3.8-max is the emergency reserve (step 5.7, ADR-044). Models not listed
+here run with reasoning switched off, as in the suitability test.
 """
 
 from collections.abc import Mapping
@@ -27,8 +29,8 @@ _LOWEST_REASONING: Final = MappingProxyType({"effort": "low"})
 
 DEFAULT_MODELS: Final[Mapping[str, ModelConfig]] = MappingProxyType(
     {
-        "x-ai/grok-4.7": ModelConfig(reasoning=_LOWEST_REASONING),
         "x-ai/grok-4.6": ModelConfig(reasoning=_LOWEST_REASONING),
+        "x-ai/grok-4.7": ModelConfig(reasoning=_LOWEST_REASONING),
         "qwen/qwen3.8-max-0902": ModelConfig(reasoning=_LOWEST_REASONING),
     }
 )
