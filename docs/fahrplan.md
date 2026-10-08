@@ -592,7 +592,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.14: Zeitlimit für den End-to-End-Job
 
-- **Status:** IN ARBEIT (seit 2026-10-08) – umgesetzt auf Branch `ci/d.14-e2e-zeitlimit` (ADR-045); `[ERLEDIGT]` mit grüner CI und Merge
+- **Status:** ERLEDIGT 2026-10-08 – PR #60 gemergt (`2fe666d`), CI 8/8 grün mit dem Zeitlimit (End-to-End ca. 1 Minute) (ADR-045)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – Kategorie 7, freigegeben vom Eigentümer 2026-10-08 („a“, ADR-045)
