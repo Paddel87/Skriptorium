@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 11:00 UTC – [BEOBACHTUNG] Wunsch: Modell-Auswahl aktuell von OpenRouter statt fest im Code
+
+- Eigentümer: Die Modell-Auswahl ist fest im Code hinterlegt; sie sollte aktuell sein, mit Kontextgröße und Kosten.
+- Befund im Code: `DEFAULT_MODELS` in `ai_gateway/models.py` enthält genau drei Modelle (grok-4.7, grok-4.6, qwen3.8-max) mit je eigener Einstellung (Reasoning „low“, weil diese Modelle Reasoning verlangen). `GET /api/models` (`api/writing_routes.py`) liefert nur diese Liste; die Oberfläche bietet nur sie an. Unbekannte Modelle bekämen „Reasoning aus“, was bei Modellen mit Pflicht-Reasoning (z. B. grok-4.5) scheitern würde.
+- Einordnung (KI, ohne Entscheidung): OpenRouter stellt eine Modell-Liste mit Kontextgröße, Preisen und unterstützten Parametern bereit; die Bestandsprüfung hat sie schon ausgewertet (458 Modelle, davon 324 ohne Moderation durch OpenRouter selbst, `docs/research/bestandspruefung.md`). Kein neuer Dienst, aber ein neuer Aufruf in `ai_gateway`, eine erweiterte Schnittstelle `GET /api/models` (Kategorie 5, additiv möglich) und eine neue Auswahl in `ui`. Offene Fragen für die Entscheidung: alle Modelle anzeigen (unübersichtlich, Befund 09:20 UTC) oder Suche/Filter (z. B. ohne Moderation, nach Preis) oder eine eigene Favoritenliste mit aktuellen Daten (gespeichert – Kategorie 4); wie Reasoning je Modell automatisch richtig gesetzt wird; Verhältnis zur geprüften Modell-Reihenfolge (ADR-010/011) als Voreinstellung. Gegen Kostenüberraschungen: Preis vor der Wahl sichtbar, Ausgabengrenze beim Anbieter bleibt.
+
+Landeplatz: als Eingabe der Neuplanung im STOPP-Block von Phase 4.
+
 ### 2026-10-08 10:50 UTC – [BEOBACHTUNG] grok-4.5 aus TypingMind; Kontextfenster für die Modellwahl kaum maßgeblich
 
 - Eigentümer bestätigt: grok-4.5 war in TypingMind „sehr erfolgreich“. Er fragte, wie Modelle mit 256.000 statt 1 Mio. Token Kontextfenster im Skriptorium funktionieren würden.

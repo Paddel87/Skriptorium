@@ -43,6 +43,9 @@ Kontext: Phase 4 hat 16 Schritte (ursprünglich 8). Befund 2026-10-08: grok-4.7 
   Nachtrag Modell-Sperren (Logbuch 10:40 UTC): grok-4.6 laut Eigentümer gut
   machbar, grok-4.7 blockiert stark, grok-4.5 (im Skriptorium nicht wählbar, nicht
   geprüft) nie problematisch – Kandidaten für eine neue Modell-Reihenfolge.
+  (h) Wunsch: Modell-Auswahl aktuell von OpenRouter mit Kontextgröße und Preis statt
+  fester Liste im Code (ai_gateway, api, ui; Kategorie 5, ggf. 4 für Favoriten;
+  Reasoning je Modell) (Logbuch 11:00 UTC).
 Benötigt: Neuplanung von Phase 4, Vision-Abgleich, Pflichtfrage „Weiterbauen, umbauen
   oder neu aufsetzen?“ (CLAUDE.md Abschnitt 12)
 Vorgeschlagene Auflösung: Optionen – Sperre im Text erkennen (wie Hinweis 4.14) /
