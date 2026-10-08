@@ -40,6 +40,9 @@ Kontext: Phase 4 hat 16 Schritte (ursprünglich 8). Befund 2026-10-08: grok-4.7 
   eher eigene Phase, Bezug 5.1 und 5.5 (Logbuch 09:20 UTC); (g) Wunsch:
   Austausch mit SillyTavern – entschieden: nur Import (V.6) und später Export (V.7),
   kein Umbau des Grundsystems (Logbuch 09:35 und 09:45 UTC).
+  Nachtrag Modell-Sperren (Logbuch 10:40 UTC): grok-4.6 laut Eigentümer gut
+  machbar, grok-4.7 blockiert stark, grok-4.5 (im Skriptorium nicht wählbar, nicht
+  geprüft) nie problematisch – Kandidaten für eine neue Modell-Reihenfolge.
 Benötigt: Neuplanung von Phase 4, Vision-Abgleich, Pflichtfrage „Weiterbauen, umbauen
   oder neu aufsetzen?“ (CLAUDE.md Abschnitt 12)
 Vorgeschlagene Auflösung: Optionen – Sperre im Text erkennen (wie Hinweis 4.14) /

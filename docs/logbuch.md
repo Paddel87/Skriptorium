@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-08 10:40 UTC – [BEOBACHTUNG] Modell-Sperren: grok-4.6 gut machbar, grok-4.7 „sehr übel“, grok-4.5 nie problematisch
+
+- Eigentümer hat geprüft: Mit grok-4.6 lassen sich seine Inhalte gut schreiben; grok-4.7 blockiert „sehr übel“; grok-4.5 war „immer nicht problematisch“.
+- Abweichung zum Befund 02:15 UTC: Dort musste er auch von grok-4.6 auf qwen wechseln. Ob grok-4.6 nur gelegentlich sperrt oder je nach Inhalt, ist offen.
+- grok-4.5 ist im Skriptorium nicht wählbar. Die Oberfläche bietet nur die Modell-Reihenfolge grok-4.7 → grok-4.6 → qwen3.8-max (`ai_gateway/models.py`, ADR-010/011). Die Erfahrung mit grok-4.5 stammt also vermutlich aus TypingMind (erfragt). Laut `docs/research/modell-eignungstest.md` verlangt grok-4.5 wie grok-4.6 Reasoning; auf Kanon-Treue, Kosten und Reaktionszeit ist es im Projekt nicht geprüft.
+- Folge für die Neuplanung (Befund Modell-Sperren): Das Startmodell grok-4.7 ist für die echten Inhalte des Eigentümers ungeeignet. Optionen für die Entscheidung: Startmodell grok-4.6; grok-4.5 nach Prüfung (Kanon-Treue, Kosten, Reaktionszeit) aufnehmen; grok-4.7 aus der Reihenfolge nehmen oder nachrangig führen. Änderung der Modell-Reihenfolge per ADR zu ADR-010/011.
+
 ### 2026-10-08 10:30 UTC – [BEOBACHTUNG] Schreibweise: Bedarf bekräftigt, Genres des Eigentümers
 
 - Eigentümer: braucht die Funktion „auf jeden Fall“. Listen sollen zu der Literatur passen, die er tatsächlich schreibt: Dark Romance, Thriller, düstere Geschichten, Dark Erotic, CNC. In 5.6 eingetragen.
