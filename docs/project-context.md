@@ -10,8 +10,8 @@
 
 - **Projektname:** Skriptorium
 - **Kurzbeschreibung:** Schreibwerkstatt für einen einzelnen Autor: Mehrere eigene Welten dienen als verbindlicher Kanon, Autor und KI schreiben im Wechsel Prosa darin, ohne der jeweiligen Welt zu widersprechen.
-- **Status:** In Entwicklung – Phase 4 „Stabilisierung und erstes öffentliches Deployment“; seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz erreichbar (Schritt 4.7); eingespielt Stand `edc24ad` (2026-10-08, nach 4.13–4.16); offen: 4.8 Versionsvergabe und Vision-Abgleich, D.11; danach Phase 5 „Alltagstauglichkeit und Soll-Anforderungen“ nach Neuplanung (ADR-042, 2026-10-08: gezielt umbauen) (Phase 3 „Schreiben mit KI“ abgeschlossen 2026-09-27, ADR-024)
-- **Version (SemVer):** v0.0.0 – öffentlich erreichbar, noch ohne Versionsvergabe; v0.1.0 wird nach dem 30-Minuten-Test vergeben (Schritt 4.8)
+- **Status:** In Entwicklung – Phase 5 „Alltagstauglichkeit und Soll-Anforderungen“ (begonnen 2026-10-08 nach Neuplanung, ADR-042: gezielt umbauen); seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz erreichbar (Schritt 4.7); eingespielt Stand `edc24ad` (2026-10-08); offen: D.11 bis 2026-10-31 (Phase 4 abgeschlossen 2026-10-08 mit v0.1.0 als Vorabversion, ADR-043)
+- **Version (SemVer):** v0.1.0 (2026-10-08, Schritt 4.8) – Vorabversion, kein Go-Live (ADR-043); Go-Live mit Vision-Checkpoint und externem Blick vor v1.0.0 (Schritt 5.14)
 - **Dokumentationssprache:** Deutsch
 - **Codesprache (Kommentare, Variablennamen):** Englisch (Eigentümer, 2026-09-26); Fachbegriffe einheitlich: world, canon, canon entry, story, manuscript, guest character
 - **Projekttyp:** Full-Stack (Web-App: Python-Server, TypeScript-Oberfläche)

@@ -23,7 +23,7 @@ Dieses Runbook führt vom frischen Klon bis zum laufenden Server mit Gesundheits
 
 **Voraussetzung an den Leser:** Grundkenntnisse in Bash; Lese-Zugriff auf das Repository.
 
-**Geprüft am:** 2026-09-27, Linux x86_64 (Cloud-Session des Coding-Agents), frischer `git worktree` von Commit `c0325f4` (Phasenabschluss 3); 2026-09-28, macOS arm64, frischer `git clone` von Commit `f75be2d` (Schritt 4.9) – Werkzeug-Caches unter `~/.cache/skriptorium-tools/` und `~/Library/Caches/ms-playwright/` waren schon vorhanden.
+**Geprüft am:** 2026-10-08, Linux x86_64 (Cloud-Session des Coding-Agents), frischer `git worktree` von Commit `fb912f4` (Phasenabschluss 4, v0.1.0); 2026-09-27, Linux x86_64, `c0325f4` (Phasenabschluss 3); 2026-09-28, macOS arm64, frischer `git clone` von Commit `f75be2d` (Schritt 4.9) – Werkzeug-Caches unter `~/.cache/skriptorium-tools/` und `~/Library/Caches/ms-playwright/` waren schon vorhanden.
 
 ## 2. Voraussetzungen pro Plattform
 

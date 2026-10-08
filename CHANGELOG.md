@@ -4,6 +4,10 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ## [Unreleased]
 
+## [0.1.0] – 2026-10-08
+
+Erste vergebene Version, als Vorabversion (ADR-043): Das Skriptorium läuft seit 2026-09-30 öffentlich mit Passwortschutz und wird vom Eigentümer für echte Texte genutzt. Go-Live erst vor v1.0.0.
+
 ### Geändert
 
 - Markdown-Import (2026-10-08, Schritt 4.16): Ein Gegenstand, unter dessen Namen direkt die Abschnitte Zweck, Verwendung und Auswirkung folgen, wird als ein Eintrag erkannt, statt in drei Einträge „Zweck“, „Verwendung“, „Auswirkung“ zu zerfallen.
