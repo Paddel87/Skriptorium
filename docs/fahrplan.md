@@ -519,7 +519,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.22: Wiederkehrende Atmosphäre und gleiche Schlussgeste bei langen Vorschlägen
 
-- **Status:** 🟠 IN ARBEIT – umgesetzt 2026-10-09 (Vorgaben in `context`), Probeschreiben erfüllt alle drei Kriterien; eingespielt 2026-10-09 mit `8372308`; offen: Bestätigung des Eigentümers im Alltag
+- **Status:** 🟠 IN ARBEIT – umgesetzt 2026-10-09 (Vorgaben in `context`), Probeschreiben erfüllt alle drei Kriterien; eingespielt 2026-10-09 mit `8372308`; erster Vorschlag „lang“ ohne Wiederholungen aus der Atmosphäre (Eigentümer, 2026-10-09); offen: Bestätigung des Eigentümers im Alltag
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.15
 - **Freigabepflichtig:** nein – Wortlaut der Vorgaben in `context`; ein Wechsel des voreingestellten Modells wäre ein ADR wie ADR-044

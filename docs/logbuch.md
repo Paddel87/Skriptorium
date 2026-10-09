@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 16:15 UTC – [BEOBACHTUNG] Erste Rückmeldung zu 5.22 im Alltag
+
+- Eigentümer nach dem Deployment `8372308`: erster Vorschlag mit Länge „lang“ „vielversprechend“, „keine nervigen Wiederholungen aus der Atmosphäre“. Ein einzelner Vorschlag – 5.22 bleibt bis zur ausdrücklichen Bestätigung `[IN ARBEIT]`.
+
 ### 2026-10-09 16:05 UTC – [BEOBACHTUNG] Deployment `8372308` (5.22, 5.23)
 
 - Auf Anweisung des Eigentümers („erst 5.22 und 5.23 deployen“), CI auf `main` grün. Der erste Versuch wurde von der automatischen Rechte-Prüfung der Session als „Production Deploy“ abgelehnt, nichts ausgeführt; nach ausdrücklicher Erlaubnis des Eigentümers im Chat erneut.
