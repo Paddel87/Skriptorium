@@ -475,19 +475,27 @@ def _requirements(length: Length) -> str:
 
     Proposals ran ahead of the author up to events the summary names, and after a few
     taken-over proposals each one opened and closed like the ones before (owner, 2026-10-08).
+    Long proposals filled up with the place's atmosphere in new words and closed with the same
+    gesture of waiting (owner, 2026-10-09; step 5.22): length is a ceiling, known surroundings
+    are described only when they change, and the end is an action or line, not a pause.
     """
     return (
         "# Vorgaben für deinen Text\n\n"
         "- Schreibe nur aus, was die Anweisung verlangt, und höre dann auf. Nimm nicht vorweg, "
         "was der Autor als Nächstes schreiben könnte.\n"
         f"- Länge: {LENGTHS[length]}.\n"
+        "- Die Länge ist eine Obergrenze: Gibt die Anweisung weniger her, schreibe kürzer, "
+        "statt mit Beschreibung aufzufüllen.\n"
         "- Die Schreibstelle ist das Ende des bisherigen Manuskripts. Was Handlungsstand, "
         "Kurzfassungen oder Zeitlinie über spätere Ereignisse sagen, liegt in der Zukunft: "
         "Erzähle es nicht und deute es nicht an.\n"
         "- Wiederhole keine Sätze, Bilder, Gesten und Wendungen aus den letzten "
         "Manuskript-Seiten; finde für Wiederkehrendes neue Worte oder lass es weg.\n"
+        "- Ort, Licht, Geräusche, Gerüche und Stimmung sind bekannt: Beschreibe sie nur, wenn "
+        "sich an ihnen etwas ändert, auch nicht umschrieben.\n"
         "- Kein abschließender, zusammenfassender oder ausblickender Satz: Dein Text hört "
-        "mitten im Geschehen auf."
+        "mitten im Geschehen auf, mit einer Handlung oder Rede einer Figur, nicht mit Warten, "
+        "Schweigen, einem Blick oder Stimmung."
     )
 
 
@@ -534,12 +542,12 @@ def _writing_mode(story: Story, by_id: dict[str, _Known]) -> str:
 
 
 def _reminder(names: str) -> str:
-    """Short repetition of the rule at the end of the request (steps 3.4, 5.15)."""
+    """Short repetition of the rule at the end of the request (steps 3.4, 5.15, 5.22)."""
     return (
         f"Erinnerung: {names} führt der Autor. Was die Anweisung für {names} vorgibt, schreibst "
         "du genau aus, nicht mehr. Darüber hinaus keine Handlung, keine Rede, keinen Entschluss "
-        "und keine Gedanken, nur Wahrnehmung. Ende, sobald die Figur handeln oder antworten "
-        "müsste."
+        "und keine Gedanken, nur Wahrnehmung. Schließe nicht mit Warten oder einem Blick auf "
+        f"{names}. Ende, sobald die Figur handeln oder antworten müsste."
     )
 
 
