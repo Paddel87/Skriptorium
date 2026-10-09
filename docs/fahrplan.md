@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 5.2 und 5.21 als Bündel (Smartphone und App), umgesetzt auf `feat/5.2-smartphone-und-pwa` (2026-10-09, ADR-048); 5.11 ruht bis Teil 3 (Teile 1 und 2 geprüft) – drei Einträge `[IN ARBEIT]`, weil 5.11 nur auf Teil 3 wartet und 5.2/5.21 ein Bündel sind (5.19 am 2026-10-09 `[ERLEDIGT]`)
-- **Nächster Schritt:** 5.2/5.21 mergen und einspielen (auf Anweisung), Prüfung auf dem Smartphone des Eigentümers; 5.11 Teil 3 Kanon-Seite; 5.20; 5.24 vor der nächsten Änderung an den Vorgaben der KI (Regel-002); 5.25 nach 5.21; danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** 5.1 Kanon-Vorschläge ohne `@` (vorgezogen, 2026-10-09); Prüfung von 5.2/5.21 auf dem Smartphone und am Mac des Eigentümers; 5.11 Teil 3; 5.25 Browser-Speicher; 5.11 Teil 3 Kanon-Seite; 5.20; 5.24 vor der nächsten Änderung an den Vorgaben der KI (Regel-002); 5.25 nach 5.21; danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -26,7 +26,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
-| ⚪ | 5.1 | Kanon-Vorschläge ohne `@` | offen | KI |
+| ⚪ | 5.1 | Kanon-Vorschläge ohne `@` | offen – vorgezogen | KI – als Nächstes |
 | 🟠 | 5.2 | Bedienung am Smartphone | in Arbeit – umgesetzt | KI: mergen und einspielen (auf Anweisung) · du: am Smartphone prüfen |
 | ⚪ | 5.3 | Lesbare Dateien – Nachweis | offen | KI |
 | ⚪ | 5.4 | Zeitlinie mit Datumsangaben im Kalender der Welt (Kann) | offen | du: umsetzen ja/nein |
@@ -175,7 +175,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-09: 25 Schritte (+5.14, ADR-043; +5.15 bis +5.23 Befunde und Wünsche des Eigentümers; +5.24 ADR-047; +5.25 Wunsch des Eigentümers).
 
-**Reihenfolge (ADR-042):** zuerst die kleinen Abhilfen 5.7, 5.8, 5.9, dann 5.10, der Umbau der Oberfläche 5.11, danach 5.16, 5.6, 5.12, 5.13; anschließend 5.2 (Smartphone, auf dem neuen Aufbau), 5.1, 5.3, 5.4, dann 5.14 (Go-Live-Prüfung) und 5.5.
+**Reihenfolge (ADR-042; 5.1 am 2026-10-09 vor 5.11 Teil 3 gezogen):** zuerst die kleinen Abhilfen 5.7, 5.8, 5.9, dann 5.10, der Umbau der Oberfläche 5.11, danach 5.16, 5.6, 5.12, 5.13; anschließend 5.2 (Smartphone, auf dem neuen Aufbau), 5.1, 5.3, 5.4, dann 5.14 (Go-Live-Prüfung) und 5.5.
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
@@ -193,7 +193,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** context, ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests
-- **Notizen:** –
+- **Notizen:** Vorgezogen auf Wunsch des Eigentümers (2026-10-09, nach der Frage, ob Wörter ohne `@` erkannt werden): direkt nach 5.2/5.21, vor 5.11 Teil 3.
 
 #### 5.2: Bedienung am Smartphone
 
@@ -341,7 +341,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.11: Seitenaufbau und Abläufe der Oberfläche neu ordnen
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-08) – Entwurf vom Eigentümer bestätigt (Auswahlfragen 2026-10-08); Umsetzung in drei Teilen, jeder einzeln eingespielt und geprüft. **Teil 1 Schreibseite** umgesetzt auf Branch `feat/5.11-oberflaeche`: Leiste rechts (Kapitel, Kanon nachschlagen mit Suche, Geschichte mit Gästen, Fakten, Gesamtzusammenfassung), schließbar, unter 56rem Breite als Menü über der Seite; Figuren-Schreibweise mit Kurzzeile direkt über dem Schreib-Bereich; Editorhöhe folgt dem Fenster, die Seite rückt beim Öffnen zum Kapitel, wenn es unter den Fensterrand reicht. Tests: `vitest` 115 bestanden, 98,65 % Zeilen / 96,29 % Zweige; Playwright 9 bestanden. Teil 1 gemergt (#69, `aedf68f`) und eingespielt 2026-10-08. **Teil 2 Chat-Aufbau** (2026-10-09) nach Mockup mit Vorher-/Nachher-Vergleich, vom Eigentümer freigegeben („Passt so“), umgesetzt auf Branch `feat/5.11-chat-aufbau`: Symbolleiste und Liste links (`Shell`, `StoryList`), Adressen je Ansicht mit React Router 7.18.4 hinter „#“, Schreibseite als Chat mit Vorschlag am Textende und Eingabe fest unten, rechte Leiste „Kanon & Geschichte“ bei Bedarf, „/“ ins Anweisungsfeld; ersetzt die Kapitel-Liste der rechten Leiste aus Teil 1. Tests: `vitest` 134 bestanden, 98,17 % Zeilen / 95,62 % Zweige; Playwright 9 bestanden; Onboarding im frischen Worktree geprüft. Gemergt (#79, `71f8d95`) und eingespielt 2026-10-09; Teile 1 und 2 vom Eigentümer geprüft („alles funktioniert“, 2026-10-09). Offen: Teil 3 Kanon-Seite (nach 5.2 und 5.21)
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-08) – Entwurf vom Eigentümer bestätigt (Auswahlfragen 2026-10-08); Umsetzung in drei Teilen, jeder einzeln eingespielt und geprüft. **Teil 1 Schreibseite** umgesetzt auf Branch `feat/5.11-oberflaeche`: Leiste rechts (Kapitel, Kanon nachschlagen mit Suche, Geschichte mit Gästen, Fakten, Gesamtzusammenfassung), schließbar, unter 56rem Breite als Menü über der Seite; Figuren-Schreibweise mit Kurzzeile direkt über dem Schreib-Bereich; Editorhöhe folgt dem Fenster, die Seite rückt beim Öffnen zum Kapitel, wenn es unter den Fensterrand reicht. Tests: `vitest` 115 bestanden, 98,65 % Zeilen / 96,29 % Zweige; Playwright 9 bestanden. Teil 1 gemergt (#69, `aedf68f`) und eingespielt 2026-10-08. **Teil 2 Chat-Aufbau** (2026-10-09) nach Mockup mit Vorher-/Nachher-Vergleich, vom Eigentümer freigegeben („Passt so“), umgesetzt auf Branch `feat/5.11-chat-aufbau`: Symbolleiste und Liste links (`Shell`, `StoryList`), Adressen je Ansicht mit React Router 7.18.4 hinter „#“, Schreibseite als Chat mit Vorschlag am Textende und Eingabe fest unten, rechte Leiste „Kanon & Geschichte“ bei Bedarf, „/“ ins Anweisungsfeld; ersetzt die Kapitel-Liste der rechten Leiste aus Teil 1. Tests: `vitest` 134 bestanden, 98,17 % Zeilen / 95,62 % Zweige; Playwright 9 bestanden; Onboarding im frischen Worktree geprüft. Gemergt (#79, `71f8d95`) und eingespielt 2026-10-09; Teile 1 und 2 vom Eigentümer geprüft („alles funktioniert“, 2026-10-09). Befund 2026-10-09: Während die KI schreibt, sprang die Ansicht bei jedem neuen Wort ans Ende – behoben auf `fix/5.11-mitlaufen` (Ansicht folgt nur am Textende, Entscheidung des Eigentümers per Auswahlfrage). Offen: Teil 3 Kanon-Seite (nach 5.1)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.9
 - **Freigabepflichtig:** teilweise – der Umbau innerhalb von `ui` nicht; eine neue Bibliothek (z. B. Router) ist Kategorie 3 und wird vorab vorgelegt

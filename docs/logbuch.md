@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 20:20 UTC – [GELÖST] Ansicht springt beim Schreiben der KI ans Ende
+
+- **Befund des Eigentümers:** „die KI Antwort scrollt den Text und Verlauf“. Auswahlfragen: Die Ansicht springt bei jedem neuen Wort ans Ende, man kann nicht weiter oben lesen; gewünscht: am Ende mitlaufen, sonst stehen bleiben (wie bei ChatGPT/TypingMind).
+- **Ursache:** Der Chat-Aufbau aus 5.11 Teil 2 scrollte bei jeder Änderung des Vorschlags ans Ende, unabhängig davon, wo man gerade war.
+- **Lösung:** `WritingPanel` merkt sich, ob man am Textende ist (weniger als 48 px Abstand); der wachsende Vorschlag zieht die Ansicht nur dann mit. Senden, Übernehmen und Öffnen eines Kapitels bringen weiter ans Ende. Neuer Test; `vitest` 138 bestanden, 97,97 % Zeilen / 95,43 % Zweige; Playwright 10 bestanden. Unter 5.11 geführt (Fehler aus Teil 2), kein neuer Schritt.
+- **Reihenfolge:** 5.1 (Kanon-Vorschläge ohne `@`) auf Wunsch des Eigentümers vor 5.11 Teil 3 gezogen.
+
 ### 2026-10-09 19:20 UTC – [GELÖST] End-to-End-Test „ohne Netz“ nur in der CI rot
 
 - **Symptom:** In #81 war nur der neue Test rot, an der Stelle nach dem ersten Neuladen („Welten“ nicht sichtbar); lokal grün, auch achtmal hintereinander. Meine Warteschleife auf die Prüfungen hing dabei, weil `gh pr checks` bei roten Prüfungen mit Fehlercode endet – der Eigentümer fragte nach („prüfe die checks“).
