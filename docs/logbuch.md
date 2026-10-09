@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 20:05 UTC – [BEOBACHTUNG] Installation am iPhone, Hinweis verworfen, Frage zu Namen ohne `@`
+
+- Eigentümer fand in Safari (iOS) zunächst keinen Eintrag „Zum Home-Bildschirm“; mit der Beschreibung (iOS 26: „⋯“ → „Teilen“ → „Zum Home-Bildschirm“) hat es geklappt. Ein daraufhin gebauter Installations-Hinweis nur für iPhone und iPad (Vorher-/Nachher-Bilder vorgelegt) wurde nicht gewünscht („ich brauche kein iPhone Hinweis“) und vor dem Commit verworfen.
+- Frage des Eigentümers, ob Wörter ohne `@` erkannt werden: nein, noch nicht – Kanon-Einträge gehen nur über `@`, über Ort und Figuren der neuen Szene und als selbst geführte Figuren an die KI. Geplant als 5.1 (FR-014: nur als Vorschlag „Meintest du @Kael?“, nie selbstständig); Reihenfolge unverändert, Vorziehen angeboten.
+
 ### 2026-10-09 19:45 UTC – [BEOBACHTUNG] Merge #81 und Deployment `a71cdff` (5.2, 5.21)
 
 - Auf Anweisung des Eigentümers („Ja, mergen“ auf die Frage nach Mergen und Einspielen): #81 nach grüner CI gemergt, CI auf `main` grün.
