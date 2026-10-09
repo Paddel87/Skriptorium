@@ -97,8 +97,8 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- 🟠 **5.11, 5.19:** Aufbau wie ein Chat (Teil 2) umgesetzt, Dunkelmodus eingespielt; warten auf Einspielen und Prüfung; danach Kanon-Seite mit Suche (Teil 3).
 - ⚪ **5.2, 5.21:** Bedienung am Smartphone prüfen und anpassen; als App installierbar (PWA) mit voller Bildschirmgröße.
+- 🟠 **5.11 Teil 3:** Kanon-Seite mit Suche, Kategorien als Filter, Liste und Eintrag nebeneinander.
 - ⚪ **5.20, 5.16:** schnell angelegte Kapitel; herangezogene Kanon-Einträge anklickbar.
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
