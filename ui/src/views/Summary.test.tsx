@@ -1,7 +1,14 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { CHAPTER, fail, fakeApi, ok, STORY } from "../../fake-api";
+import {
+  openStorySettings,
+  CHAPTER,
+  fail,
+  fakeApi,
+  ok,
+  STORY,
+} from "../../fake-api";
 import { describeSummaryFailure, type Chapter } from "../api";
 import { StoryPage } from "./StoryPage";
 
@@ -71,6 +78,7 @@ describe("chapter and overall summaries (step 3.6)", () => {
     expect(
       screen.getByText("Status: von der KI erstellt, noch nicht geprüft"),
     ).toBeDefined();
+    await openStorySettings(user);
     expect(screen.getByLabelText("Gesamtzusammenfassung")).toHaveProperty(
       "value",
       "Ilka verlässt die Insel.",
@@ -181,6 +189,7 @@ describe("chapter and overall summaries (step 3.6)", () => {
     });
     const user = userEvent.setup();
     render(<StoryPage story={STORY} />);
+    await openStorySettings(user);
     await user.click(
       await screen.findByText("Gesamtzusammenfassung", { selector: "summary" }),
     );

@@ -32,7 +32,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 
 ## Quick Start
 
-Stand 2026-10-08 (Phase 5): Server mit Anmeldung und Oberfläche für Welten, Kanon, Import und Geschichten; Schreibseite mit Leiste für Kapitel, Kanon und Geschichte; Schreiben mit KI (Figuren-Schreibweise, `@`-Menü, wählbare Länge, Kapitel-Kurzfassungen, Gast-Figuren aus anderen Welten) mit `OPENROUTER_API_KEY`; markierte Textstellen in den Kanon übernehmen; Modell je Geschichte, Kosten je Anfrage und Monat; Hell- und Dunkelmodus.
+Stand 2026-10-09 (Phase 5): Server mit Anmeldung und Oberfläche für Welten, Kanon, Import und Geschichten; Aufbau wie ein Chat mit Leiste links und eigener Adresse je Ansicht; Schreiben mit KI (Figuren-Schreibweise, `@`-Menü, wählbare Länge, Kapitel-Kurzfassungen, Gast-Figuren aus anderen Welten) mit `OPENROUTER_API_KEY`; markierte Textstellen in den Kanon übernehmen; Modell je Geschichte, Kosten je Anfrage und Monat; Hell- und Dunkelmodus.
 
 ### Voraussetzungen
 
@@ -85,18 +85,19 @@ Browser (ui) ──HTTP/SSE──> api ──> canon ─────┐
 
 Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:8000` im Browser öffnen (ohne TLS nur über `localhost`, weil das Sitzungs-Cookie `Secure` verlangt). Mit dem Einrichtungscode ein Passwort festlegen, anmelden, Welt anlegen.
 
-- **Welt:** Reiter für Geschichten, Kanon-Einträge je Kategorie, Markdown-Import mit Vorschau und die Beschreibung der Welt. Passwort ändern und Sitzungen beenden unter „Konto“; hell, dunkel oder wie das Gerät unter „Darstellung“.
-- **Schreibseite einer Geschichte:** in der Mitte das Kapitel im Markdown-Editor; ein langes Kapitel öffnet am Textende. Rechts eine schließbare Leiste (am Smartphone als Menü) mit den Kapiteln, dem Kanon zum Nachschlagen (Suche über Name und Alias, Eintrag lesen, ohne das Kapitel zu verlassen) und den Einstellungen der Geschichte: Gäste aus anderen Welten (nur für diese Geschichte), Fakten dieser Geschichte, Gesamtzusammenfassung.
-- **Figuren-Schreibweise:** direkt über dem Schreib-Bereich, zugeklappt als Kurzzeile (Perspektive, selbst geführte Figuren). Für die selbst geführten Figuren schreibt die KI keine Handlung, Rede oder Gedanken; beschreibt die Anweisung, was sie tun oder sagen, schreibt die KI genau das aus.
-- **Schreiben mit KI** (mit `OPENROUTER_API_KEY`): eine Anweisung geben oder eine neue Szene mit Ort, Figuren und Ziel beginnen; Länge kurz, mittel oder lang. Der Vorschlag erscheint fortlaufend und lässt sich übernehmen (ans Kapitelende), ändern, verwerfen, abbrechen oder mit einem anderen Modell neu schreiben. Leer „Weiterschreiben“ schreibt nur den nächsten Moment.
+- **Links:** eine schmale Symbolleiste (Liste, Welten, Kanon, Import, Darstellung, Konto, Abmelden) und daneben die einklappbare Liste mit allen Welten, ihren Geschichten und den Kapiteln der offenen Geschichte, mit Suche und „+ Kapitel“, „+ Geschichte“, „+ Welt“. Am Smartphone öffnet „☰“ beides als Menü. Jede Ansicht hat eine eigene Adresse: Neuladen, Zurück und Lesezeichen bleiben an der Stelle.
+- **Welt:** Bereiche für Geschichten, Kanon-Einträge je Kategorie, Markdown-Import mit Vorschau und die Beschreibung der Welt. Passwort ändern und Sitzungen beenden unter „Konto“; „Darstellung“ wechselt zwischen wie das Gerät, hell und dunkel.
+- **Schreibseite einer Geschichte:** aufgebaut wie ein Chat – das Manuskript scrollt, ein langes Kapitel öffnet am Textende, die Anweisung steht fest unten („/“ springt hinein). Oben Kapiteltitel und Speichern. „Kanon & Geschichte“ öffnet rechts eine Leiste mit dem Kanon zum Nachschlagen (Suche über Name und Alias) und den Einstellungen der Geschichte: Figuren-Schreibweise, Gäste aus anderen Welten (nur für diese Geschichte), Fakten dieser Geschichte, Gesamtzusammenfassung.
+- **Figuren-Schreibweise:** als Kurzzeile über der Anweisung (Perspektive, selbst geführte Figuren, „ändern“). Für die selbst geführten Figuren schreibt die KI keine Handlung, Rede oder Gedanken; beschreibt die Anweisung, was sie tun oder sagen, schreibt die KI genau das aus.
+- **Schreiben mit KI** (mit `OPENROUTER_API_KEY`): eine Anweisung geben oder eine neue Szene mit Ort, Figuren und Ziel beginnen; Länge kurz, mittel oder lang. Der Vorschlag erscheint fortlaufend am Textende wie eine Chat-Antwort und lässt sich übernehmen (ans Kapitelende), ändern, verwerfen, abbrechen oder mit einem anderen Modell neu schreiben. Leer „Weiterschreiben“ schreibt nur den nächsten Moment.
 - **`@` in der Anweisung:** öffnet eine Auswahl der Kanon-Einträge; die gewählten Einträge sind im Feld hervorgehoben und gehen der KI vollständig mit, nach der Auswahl folgt von selbst ein Leerzeichen.
 - **Kapitel abschließen:** Die KI erstellt eine Kurzfassung und schreibt die Gesamtzusammenfassung fort; beide lassen sich ansehen und ändern.
 - **In den Kanon:** Eine markierte Stelle wird zum neuen Eintrag oder ergänzt einen Eintrag – im Kanon der Welt oder nur für diese Geschichte.
-- **Modell und Kosten:** Das Modell wählst du im Schreib-Bereich (voreingestellt grok-4.6), die Geschichte merkt es sich. Unter jedem Vorschlag stehen Token und Kosten, unter „Konto“ die KI-Kosten des laufenden Monats.
+- **Modell und Kosten:** Das Modell wählst du unten neben der Anweisung (voreingestellt grok-4.6), die Geschichte merkt es sich. Unter jedem Vorschlag stehen Token und Kosten, unter „Konto“ die KI-Kosten des laufenden Monats.
 
 ## Nächste Schritte
 
-- 🟠 **5.11, 5.19:** neue Schreibseite und Dunkelmodus eingespielt, warten auf Prüfung; als Nächstes Aufbau wie ein Chat (Eingabe fest unten, Leiste links mit Welten, Geschichten und Kapiteln, Zurück-Knopf behält die Stelle), danach Kanon-Seite mit Suche.
+- 🟠 **5.11, 5.19:** Aufbau wie ein Chat (Teil 2) umgesetzt, Dunkelmodus eingespielt; warten auf Einspielen und Prüfung; danach Kanon-Seite mit Suche (Teil 3).
 - ⚪ **5.2, 5.21:** Bedienung am Smartphone prüfen und anpassen; als App installierbar (PWA) mit voller Bildschirmgröße.
 - ⚪ **5.20, 5.16:** schnell angelegte Kapitel; herangezogene Kanon-Einträge anklickbar.
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).

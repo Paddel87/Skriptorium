@@ -15,6 +15,7 @@ import { App, appTitle } from "./App";
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  window.location.hash = "";
 });
 
 const loggedIn = {
@@ -134,42 +135,79 @@ describe("App", () => {
     expect(screen.getByRole("button", { name: "Anmelden" })).toBeDefined();
   });
 
-  it("navigates worlds, story, account and logs out", async () => {
+  it("navigates with the list and the bar on the left; addresses survive a reload (step 5.11)", async () => {
     fakeApi({
       ...loggedIn,
       "GET /api/worlds/salzmark/stories": ok([STORY]),
       "GET /api/worlds/salzmark/stories/ueberfahrt/chapters": ok([CHAPTER]),
+      "GET /api/worlds/salzmark/entries": ok([]),
+      "GET /api/models": ok({ models: ["m"], default: "m" }),
       "GET /api/auth/sessions": ok([]),
+      "GET /api/usage": ok({
+        month: "2026-10",
+        requests: 0,
+        input_tokens: 0,
+        output_tokens: 0,
+        cost_usd: 0,
+        without_cost: 0,
+      }),
       "POST /api/worlds": created(WORLD),
     });
     const user = userEvent.setup();
-    render(<App />);
-    await user.click(
-      await screen.findByRole("button", { name: "Die Salzmark" }),
-    );
-    expect(screen.getByText("› Die Salzmark")).toBeDefined();
-    await user.click(
-      await screen.findByRole("button", { name: "Die Überfahrt" }),
-    );
-    expect(
-      await screen.findByRole("heading", { name: "Die Überfahrt" }),
-    ).toBeDefined();
-    await user.click(screen.getByRole("button", { name: "Die Salzmark" }));
-    expect(
-      await screen.findByRole("button", { name: "Die Überfahrt" }),
-    ).toBeDefined();
-    await user.click(screen.getByRole("button", { name: "Konto" }));
-    expect(
-      await screen.findByRole("heading", { name: "Sitzungen" }),
-    ).toBeDefined();
-    await user.click(screen.getByRole("button", { name: "Skriptorium" }));
+    const { unmount } = render(<App />);
     expect(
       await screen.findByRole("heading", { name: "Welten" }),
     ).toBeDefined();
-    await user.click(screen.getByRole("button", { name: "Abmelden" }));
+    const list = screen.getByRole("navigation", { name: "Geschichten" });
+    await user.click(
+      await within(list).findByRole("link", { name: "Die Salzmark" }),
+    );
+    expect(
+      await screen.findByRole("heading", { name: "Die Salzmark" }),
+    ).toBeDefined();
+    expect(window.location.hash).toBe("#/welt/salzmark/geschichten");
+    await user.click(within(list).getByRole("link", { name: "Die Überfahrt" }));
+    expect(await screen.findByDisplayValue("Aufbruch")).toBeDefined();
+    expect(window.location.hash).toBe("#/welt/salzmark/geschichte/ueberfahrt");
+
+    // The same address after a reload opens the same story again.
+    unmount();
+    render(<App />);
+    expect(await screen.findByDisplayValue("Aufbruch")).toBeDefined();
+
+    const bar = screen.getByRole("navigation", { name: "Bereiche" });
+    await user.click(within(bar).getByRole("button", { name: "Kanon" }));
+    expect(window.location.hash).toBe("#/welt/salzmark/kanon");
+    await user.click(within(bar).getByRole("button", { name: "Konto" }));
+    expect(
+      await screen.findByRole("heading", { name: "Sitzungen" }),
+    ).toBeDefined();
+    await user.click(within(bar).getByRole("button", { name: "Welten" }));
+    expect(
+      await screen.findByRole("heading", { name: "Welten" }),
+    ).toBeDefined();
+    const listToggle = within(bar).getByRole("button", { name: "Liste" });
+    expect(listToggle.getAttribute("aria-pressed")).toBe("true");
+    await user.click(listToggle);
+    expect(listToggle.getAttribute("aria-pressed")).toBe("false");
+    await user.click(within(bar).getByRole("button", { name: "Abmelden" }));
     expect(
       await screen.findByRole("button", { name: "Anmelden" }),
     ).toBeDefined();
+    expect(window.location.hash).toBe("#/");
+  });
+
+  it("opens and closes the menu on small screens", async () => {
+    fakeApi({ ...loggedIn, "GET /api/worlds/salzmark/stories": ok([STORY]) });
+    const user = userEvent.setup();
+    const { container } = render(<App />);
+    await user.click(await screen.findByRole("button", { name: "Menü" }));
+    expect(container.querySelector(".shell.menu-open")).not.toBeNull();
+    await user.click(screen.getByRole("button", { name: "Schließen" }));
+    expect(container.querySelector(".shell.menu-open")).toBeNull();
+    await user.click(screen.getByRole("button", { name: "Menü" }));
+    await user.click(await screen.findByRole("link", { name: "Die Salzmark" }));
+    expect(container.querySelector(".shell.menu-open")).toBeNull();
   });
 });
 
@@ -193,9 +231,7 @@ describe("expired session", () => {
     });
     const user = userEvent.setup();
     render(<App />);
-    await user.click(
-      await screen.findByRole("button", { name: "Die Salzmark" }),
-    );
+    await user.click(await screen.findByRole("link", { name: "Die Salzmark" }));
     await user.type(
       await screen.findByLabelText("Titel"),
       "Mein ungespeicherter Titel",

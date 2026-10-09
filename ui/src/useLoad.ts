@@ -8,11 +8,14 @@ export interface Loaded<T> {
   reload: () => void;
 }
 
-/** Load data asynchronously; `reload` loads again (e.g. after a change). */
-export function useLoad<T>(load: () => Promise<T>): Loaded<T> {
+/**
+ * Load data asynchronously; `reload` loads again (e.g. after a change), as does a new `round`
+ * (e.g. a change elsewhere on the page, step 5.11).
+ */
+export function useLoad<T>(load: () => Promise<T>, round = 0): Loaded<T> {
   const [data, setData] = useState<T>();
   const [error, setError] = useState<string | null>(null);
-  const [round, setRound] = useState(0);
+  const [own, setOwn] = useState(0);
 
   useEffect(() => {
     let active = true;
@@ -32,10 +35,10 @@ export function useLoad<T>(load: () => Promise<T>): Loaded<T> {
     return () => {
       active = false;
     };
-  }, [load, round]);
+  }, [load, round, own]);
 
   const reload = useCallback(() => {
-    setRound((value) => value + 1);
+    setOwn((value) => value + 1);
   }, []);
   return { data, error, reload };
 }

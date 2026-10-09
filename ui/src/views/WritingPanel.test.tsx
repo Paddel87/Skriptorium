@@ -130,6 +130,8 @@ describe("WritingPanel", () => {
     feed.close();
 
     await screen.findByRole("button", { name: "Übernehmen" });
+    expect(proposal).toHaveProperty("readOnly", true);
+    await user.click(screen.getByRole("button", { name: "Ändern" }));
     await user.clear(proposal);
     await user.type(proposal, "Der Nebel blieb.");
     await user.click(screen.getByRole("button", { name: "Übernehmen" }));
@@ -333,7 +335,7 @@ describe("WritingPanel", () => {
     feed.send("error", { kind: "abgelehnt" });
     feed.close();
     expect((await screen.findByRole("alert")).textContent).toBe(
-      "Das Modell hat die Anfrage abgelehnt. Wähle oben ein anderes Modell und schreibe neu.",
+      "Das Modell hat die Anfrage abgelehnt. Wähle unten ein anderes Modell und schreibe neu.",
     );
     expect(screen.queryByRole("button", { name: "Übernehmen" })).toBeNull();
 
@@ -457,6 +459,72 @@ describe("WritingPanel", () => {
   });
 });
 
+describe("WritingPanel as a chat (step 5.11)", () => {
+  it('jumps into the instruction with "/" outside a field, not inside one', async () => {
+    fakeApi(routes(sseFeed()));
+    const user = userEvent.setup();
+    panel();
+    await ready();
+    const content = await screen.findByLabelText(/Anweisung an die KI/);
+    await user.keyboard("/");
+    expect(document.activeElement).toBe(content);
+    expect((await instructionView()).state.doc.toString()).toBe("");
+    const select = screen.getByLabelText("Modell");
+    select.focus();
+    await user.keyboard("/");
+    expect(document.activeElement).toBe(select);
+    content.blur();
+    await user.keyboard("{Control>}/{/Control}");
+    expect(document.activeElement).not.toBe(content);
+  });
+
+  it("folds the more buttons on small screens", async () => {
+    fakeApi(routes(sseFeed()));
+    const user = userEvent.setup();
+    panel();
+    await ready();
+    const more = screen.getByRole("button", { name: "Weitere Knöpfe" });
+    expect(more.getAttribute("aria-expanded")).toBe("false");
+    await user.click(more);
+    expect(more.getAttribute("aria-expanded")).toBe("true");
+  });
+
+  it("keeps the end of the text in view when the width changes", async () => {
+    const observed: Element[] = [];
+    let changed: () => void = () => undefined;
+    vi.stubGlobal(
+      "ResizeObserver",
+      class {
+        constructor(callback: () => void) {
+          changed = callback;
+        }
+        observe(element: Element) {
+          observed.push(element);
+        }
+        disconnect() {
+          observed.length = 0;
+        }
+      },
+    );
+    fakeApi(routes(sseFeed()));
+    panel();
+    await ready();
+    const area = document.querySelector(".chat-scroll");
+    expect(observed).toContain(area);
+    if (!(area instanceof HTMLElement)) {
+      throw new Error("no chat area");
+    }
+    Object.defineProperty(area, "scrollHeight", { value: 800 });
+    changed();
+    expect(area.scrollTop).toBe(800);
+    // Scrolled up to read: a change of width leaves the place alone.
+    area.scrollTop = 100;
+    area.dispatchEvent(new Event("scroll"));
+    changed();
+    expect(area.scrollTop).toBe(100);
+  });
+});
+
 describe("StoryPage with writing", () => {
   it("saves own text first and appends taken-over text to the chapter end", async () => {
     const feed = sseFeed();
@@ -526,7 +594,8 @@ describe("StoryPage writing mode", () => {
     });
     const user = userEvent.setup();
     render(<StoryPage story={STORY} />);
-    await user.click(await screen.findByText("Figuren-Schreibweise"));
+    // "ändern" in the short line opens the form in the bar on the right (step 5.11).
+    await user.click(await screen.findByRole("button", { name: "ändern" }));
     const group = await screen.findByRole("group", {
       name: "Figuren, die du selbst führst",
     });
@@ -542,9 +611,10 @@ describe("StoryPage writing mode", () => {
       screen.getByRole("button", { name: "Schreibweise speichern" }),
     );
 
+    // In the short line above the instruction and in the form's summary line.
     expect(
-      await screen.findByText("Perspektive: Ich-Erzähler, Präteritum"),
-    ).toBeDefined();
+      await screen.findAllByText("Perspektive: Ich-Erzähler, Präteritum"),
+    ).toHaveLength(2);
     expect(calls.find((c) => c.method === "PATCH")?.body).toEqual({
       perspective: "Ich-Erzähler, Präteritum",
       controlled_characters: ["kael"],
@@ -566,7 +636,8 @@ describe("StoryPage writing mode", () => {
     });
     const user = userEvent.setup();
     render(<StoryPage story={STORY} />);
-    await user.click(await screen.findByText("Figuren-Schreibweise"));
+    // "ändern" in the short line opens the form in the bar on the right (step 5.11).
+    await user.click(await screen.findByRole("button", { name: "ändern" }));
     await user.clear(screen.getByLabelText("Erzählperspektive"));
     await user.click(
       screen.getByRole("button", { name: "Schreibweise speichern" }),

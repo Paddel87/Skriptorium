@@ -113,64 +113,43 @@ describe("StoryPage layout", () => {
     });
   }
 
-  it("shows chapters, canon and story in a side bar that can be closed (step 5.11)", async () => {
-    routes([CHAPTER, { ...CHAPTER, number: 2, title: "Sturm" }]);
+  it("opens canon and story in a bar on the right on demand (step 5.11)", async () => {
+    routes([CHAPTER]);
     const user = userEvent.setup();
     render(<StoryPage story={STORY} />);
-    const side = await screen.findByRole("complementary", {
-      name: "Kapitel, Kanon und Geschichte",
+    expect(await screen.findByDisplayValue("Aufbruch")).toBeDefined();
+    expect(screen.queryByRole("complementary")).toBeNull();
+    const toggle = screen.getByRole("button", { name: "Kanon & Geschichte" });
+    expect(toggle.getAttribute("aria-expanded")).toBe("false");
+    await user.click(toggle);
+    const side = screen.getByRole("complementary", {
+      name: "Kanon und Geschichte",
     });
-    const chapters = within(side).getByRole("navigation", { name: "Kapitel" });
-    expect(
-      await within(chapters).findByRole("button", { name: "2. Sturm" }),
-    ).toBeDefined();
     expect(within(side).getByLabelText("Kanon durchsuchen")).toBeDefined();
+    await user.click(within(side).getByRole("button", { name: "Geschichte" }));
     expect(
       within(side).getByText("Gesamtzusammenfassung", { selector: "summary" }),
     ).toBeDefined();
     await user.click(screen.getByRole("button", { name: "Leiste schließen" }));
     expect(screen.queryByRole("complementary")).toBeNull();
-    await user.click(
-      screen.getByRole("button", { name: "Kapitel, Kanon, Geschichte" }),
-    );
-    expect(screen.getByRole("complementary")).toBeDefined();
   });
 
-  it("opens the bar as a menu on narrow screens and closes it after a chapter is chosen", async () => {
-    vi.stubGlobal(
-      "matchMedia",
-      vi.fn((query: string) => ({
-        matches: query.includes("max-width"),
-        addListener: vi.fn(),
-        removeListener: vi.fn(),
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-      })),
-    );
+  it("opens the chapter from the address, the first one without it", async () => {
     routes([CHAPTER, { ...CHAPTER, number: 2, title: "Sturm" }]);
-    const user = userEvent.setup();
+    const { unmount } = render(<StoryPage story={STORY} chapter={2} />);
+    expect(await screen.findByDisplayValue("Sturm")).toBeDefined();
+    expect(screen.getByRole("region", { name: "Kapitel 2" })).toBeDefined();
+    unmount();
     render(<StoryPage story={STORY} />);
     expect(await screen.findByDisplayValue("Aufbruch")).toBeDefined();
-    expect(screen.queryByRole("complementary")).toBeNull();
-    await user.click(
-      screen.getByRole("button", { name: "Kapitel, Kanon, Geschichte" }),
-    );
-    await user.click(screen.getByRole("button", { name: "2. Sturm" }));
-    expect(screen.queryByRole("complementary")).toBeNull();
-    expect(await screen.findByDisplayValue("Sturm")).toBeDefined();
-    await user.click(
-      screen.getByRole("button", { name: "Kapitel, Kanon, Geschichte" }),
-    );
-    await user.click(screen.getByRole("button", { name: "Schließen" }));
-    expect(screen.queryByRole("complementary")).toBeNull();
   });
 
-  it("points to the side bar while the story has no chapter", async () => {
+  it("points to the list on the left while the story has no chapter", async () => {
     routes([]);
     render(<StoryPage story={STORY} />);
     expect(
       await screen.findByText(
-        "Noch kein Kapitel – lege in der Leiste unter „Kapitel“ eines an.",
+        "Noch kein Kapitel – lege links in der Liste unter der Geschichte eines an („+ Kapitel“).",
       ),
     ).toBeDefined();
   });

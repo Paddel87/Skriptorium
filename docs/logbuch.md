@@ -29,6 +29,20 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 17:00 UTC – [ONBOARDING-VALIDATION] Frischer Worktree nach React Router
+
+- Anlass: neue Laufzeit-Abhängigkeit `react-router` in `package.json` (Quick-Start-relevant). Worktree von `8fbf89b` im Scratchpad, eigenes Datenverzeichnis: `uv python install 3.14.7`, `uv sync --frozen`, `npm ci`, `uv run pre-commit install`, `uv run skriptorium-einrichtung` (Code nicht ausgegeben), `npx vite build`, Server auf Port 8125 – alle Schritte mit Exit 0; `/api/health` 200, `/` 200, `/api/worlds` 401; Anmeldeseite lädt unter einer `#`-Adresse ohne Fehler im Browser. Worktree danach entfernt. Keine Änderung am Quick Start nötig.
+- **Reibung:** `uv run pre-commit install` im Worktree schrieb den gemeinsamen Hook in `.git/hooks` auf die Python-Umgebung des Worktrees um; nach dessen Entfernen scheiterte der nächste Commit („`pre-commit` not found“). Behoben mit `uv run pre-commit install` im Hauptverzeichnis. Lehre: bei der Onboarding-Prüfung im Worktree den Schritt `pre-commit install` danach im Hauptverzeichnis wiederholen.
+
+### 2026-10-09 16:55 UTC – [BEOBACHTUNG] 5.11 Teil 2 Chat-Aufbau umgesetzt
+
+- **Ablauf:** Auf Wunsch des Eigentümers zuerst vorher/nachher: Bildschirmfotos vom Stand `8372308` (lokal, Testwelt „Die Salzmark“ aus `spikes/kontext-abnahme`, Test-Passwort aus der E2E-Fixture, Datenverzeichnis im Scratchpad) und Mockup des Entwurfs als HTML. Auf Bitte „gegenübergestellt“ eine Vergleichsseite mit je Ansicht vorher | nachher und Umschaltern (Bilder per Playwright in echter Fenstergröße). Freigabe: „Passt so, fang mit dem Umbau an“.
+- **Zwei Fragen vorab** (Stopp nach `CLAUDE.md` Abschnitt 8, Kriterium 5: Adressen ohne „#“ hätten eine Weiterleitung im Server gebraucht, Modul `api` nicht im Schritt): Eigentümer wählte „mit #“; Taste „/“ ins Anweisungsfeld: ja.
+- **Code:** `react-router` 7.18.4 (ADR-046, Abhängigkeiten `cookie`, `set-cookie-parser`, alle MIT, `npm audit` ohne Befund). Neu `paths.ts`, `title.ts`, `views/Shell.tsx`, `views/StoryList.tsx`, `views/Menu.tsx`; umgebaut `App.tsx` (HashRouter), `StoryPage`, `ChapterEditor`, `WritingPanel` (Chat-Aufbau, Vorschlag mit „Ändern“, Eingabe unten, „/“, Ende bleibt beim Breitenwechsel im Blick), `WritingMode` (Kurzzeile `ModeLine`), `WorldPage` (Bereiche als Adressen), `ThemeChoice` (Knopf in der Symbolleiste), `ManuscriptEditor` (wächst mit dem Text, `onEnd`), `useLoad` (zweiter Schlüssel für Neuladen nach Änderungen anderswo), `styles.css`.
+- **Abweichung vom Mockup:** „Anbieter: OpenRouter“ steht nicht mehr sichtbar neben dem Modell (Platz in der Eingabezeile), sondern im Vorschlag („… über OpenRouter“), als Hinweis beim Darüberfahren und für Bildschirmleser.
+- **Reibung:** (1) Mehrere Tests klickten „Kanon & Geschichte“, solange das Kapitel noch lud; der Knopf wurde dabei ersetzt, der Klick ging verloren – Hilfsfunktion wartet jetzt auf das Kapitel. (2) Die Eingabezeile brach am Desktop knapp um; Spalte von 46 auf 56rem verbreitert. (3) Der Browser-Bereich der App war ausgeblendet, Bildschirmfotos deshalb über Playwright.
+- **Läufe:** `vitest` 134 bestanden, 98,17 % Zeilen / 95,62 % Zweige (vorher 98,69 / 96,37); Playwright 9 bestanden (umgestellt auf Liste und Symbolleiste, Neuladen behält jetzt das Kapitel); `pre-commit run --all-files` grün.
+
 ### 2026-10-09 16:20 UTC – [ERLEDIGT] Abnahme 5.22
 
 - Eigentümer nach weiteren Vorschlägen: „Ja, es funktioniert definitiv.“ → 5.22 `[ERLEDIGT]` 2026-10-09; alle Akzeptanzkriterien erfüllt (Probeschreiben nach Regel-002-Ausnahme nur an der Salzmark, Bestätigung im Alltag). Phase 5: 9 von 24 erledigt.

@@ -75,26 +75,6 @@ body {
   background: var(--page);
 }
 
-main,
-.app > header {
-  max-width: 60rem;
-  margin: 0 auto;
-  padding: 0.75rem;
-}
-
-/* The writing page uses more width for the side bar (step 5.11). */
-main.wide,
-.app > header.wide {
-  max-width: 84rem;
-}
-
-.top {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  align-items: center;
-}
-
 .spacer {
   flex: 1;
 }
@@ -231,14 +211,10 @@ button.danger {
   font-size: 1.05rem;
 }
 
-/* Long chapters scroll inside the editor, so the buttons and the writing panel below stay
-   close (step 5.9); the height leaves room for them in the window (step 5.11). */
+/* The manuscript grows with its text and scrolls with the chat area around it (step 5.11). */
+.editor.manuscript,
 .editor.manuscript .cm-editor {
-  max-height: max(12rem, calc(100vh - 30rem));
-}
-
-.editor.manuscript .cm-scroller {
-  overflow: auto;
+  min-height: 12rem;
 }
 
 /* Names the instruction counts as `@` mentions (step 5.18). */
@@ -274,32 +250,404 @@ td {
   z-index: 10;
 }
 
-/* Writing page (step 5.11): chapter in the middle, bar with chapters, canon and story on the
-   side; on narrow screens the bar lies over the page like a menu. */
+/* Frame (step 5.11): bar of symbols and list on the left, the view in the middle. On small
+   screens bar and list open over the page as a menu. */
+.shell {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  height: 100vh;
+  height: 100dvh;
+}
+
+.side-nav {
+  display: flex;
+  min-height: 0;
+  border-right: 1px solid var(--line);
+}
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  width: 4.25rem;
+  padding: 0.5rem 0.25rem;
+  background: var(--button);
+  border-right: 1px solid var(--line);
+  overflow-y: auto;
+}
+
+.rail-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0.35rem 0.1rem;
+  border: 1px solid transparent;
+  background: none;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  color: var(--muted);
+}
+
+.rail-button .symbol {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.rail-button[aria-pressed="true"],
+.rail-button:hover:not(:disabled) {
+  border-color: var(--field-line);
+  background: var(--surface);
+}
+
+.rail-button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.rail .spacer {
+  flex: 1;
+}
+
+.list-pane {
+  display: none;
+  width: 16rem;
+  padding: 0.75rem;
+  overflow-y: auto;
+  background: var(--page);
+}
+
+.shell.list-open .list-pane {
+  display: block;
+}
+
+.story-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 100%;
+}
+
+.story-list h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.tree {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tree .tree {
+  padding-left: 1rem;
+}
+
+.tree li {
+  margin: 0.15rem 0;
+}
+
+.tree a {
+  color: var(--text);
+  text-decoration: none;
+  display: inline-block;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}
+
+.tree a:hover {
+  text-decoration: underline;
+}
+
+.tree a[aria-current="true"] {
+  font-weight: 600;
+}
+
+.tree.chapters a {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.tree.chapters a[aria-current="true"] {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.tree-world {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  font-weight: 600;
+  margin-top: 0.35rem;
+}
+
+button.fold {
+  border: none;
+  background: none;
+  padding: 0 0.2rem;
+  color: var(--muted);
+}
+
+.story-list a.add,
+.story-list button.add {
+  color: var(--link);
+  text-decoration: underline;
+  font-size: 0.9rem;
+}
+
+.story-list .foot {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.stack.tight {
+  gap: 0.4rem;
+}
+
+.close-menu,
+.menu-button,
+.mobile-bar,
+.veil {
+  display: none;
+}
+
+.main-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+main.page {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem;
+}
+
+main.page > * {
+  max-width: 60rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+main.writing {
+  flex: 1;
+  min-height: 0;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.tabs a.tab {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  background: var(--button);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.tabs a.tab[aria-current="page"] {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+button.primary {
+  background: var(--accent);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Writing page (step 5.11): the chapter fills the middle like a chat; the bar with canon and
+   story opens on the right when needed. */
 .story {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 1rem;
-  align-items: start;
+  height: 100%;
 }
 
 .story.with-side {
   grid-template-columns: minmax(0, 1fr) 20rem;
 }
 
+.story-main,
+.chapter {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+}
+
+.chapter-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+.chapter-bar .crumb {
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 40%;
+}
+
+input.chapter-title {
+  font-weight: 600;
+  border-color: transparent;
+  background: none;
+  min-width: 6rem;
+  flex: 0 1 18rem;
+}
+
+input.chapter-title:hover,
+input.chapter-title:focus {
+  border-color: var(--field-line);
+  background: var(--surface);
+}
+
+.empty-story {
+  margin: 1rem;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.chat-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.chat-sheet,
+.composer-sheet {
+  max-width: 56rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.proposal {
+  background: var(--button);
+  border: 1px solid var(--field-line);
+  border-left: 4px solid var(--accent);
+  border-radius: 6px;
+  padding: 0.6rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.proposal p {
+  margin: 0;
+}
+
+.proposal .who {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+textarea.proposal-text {
+  font-family: Georgia, serif;
+  font-size: 1.05rem;
+  border-color: transparent;
+  background: none;
+  resize: vertical;
+  padding: 0;
+  field-sizing: content;
+}
+
+textarea.proposal-text.editing {
+  border-color: var(--field-line);
+  background: var(--surface);
+  padding: 0.4rem;
+}
+
+.proposal .cost {
+  margin-left: auto;
+}
+
+.composer {
+  position: relative;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  padding: 0.6rem 1rem 0.75rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.composer-sheet {
+  gap: 0.4rem;
+}
+
+.mode-line {
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.controls .extra {
+  display: contents;
+}
+
+.controls .compact select {
+  padding: 0.3rem;
+  max-width: 11rem;
+}
+
+.chapter-bar button {
+  white-space: nowrap;
+}
+
+.narrow-only {
+  display: none;
+}
+
+button.more-toggle {
+  display: none;
+}
+
 .story-side {
-  position: sticky;
-  top: 0.75rem;
-  max-height: calc(100vh - 1.5rem);
-  overflow: auto;
+  background: var(--surface);
+  border-left: 1px solid var(--line);
+  padding: 0.75rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.story-side h3 {
-  margin: 0;
-}
-
-.story-main h2 {
-  margin: 0;
+.side-head {
+  flex-wrap: nowrap;
 }
 
 .mode summary .note {
@@ -315,16 +663,71 @@ td {
   margin: 0;
 }
 
-.story-side > button.link {
-  align-self: flex-start;
-}
-
 .entry-text {
   white-space: pre-wrap;
   margin: 0;
 }
 
 @media (max-width: 56rem) {
+  .shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .side-nav {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 20;
+    background: var(--page);
+    box-shadow: 4px 0 12px var(--shadow);
+    transform: translateX(-105%);
+    transition: transform 0.15s ease-out;
+  }
+
+  .shell.menu-open .side-nav {
+    transform: none;
+  }
+
+  .shell .list-pane {
+    display: block;
+    width: min(16rem, calc(100vw - 6rem));
+  }
+
+  .rail .list-toggle {
+    display: none;
+  }
+
+  .close-menu {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .veil {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 15;
+    background: var(--veil);
+  }
+
+  .menu-button,
+  .mobile-bar {
+    display: flex;
+  }
+
+  .menu-button {
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .mobile-bar {
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+  }
+
   .story.with-side {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -333,10 +736,50 @@ td {
     position: fixed;
     inset: 0 0 0 auto;
     width: min(22rem, 92vw);
-    max-height: none;
-    border-radius: 0;
-    z-index: 10;
+    z-index: 20;
     box-shadow: -4px 0 12px var(--shadow);
+  }
+
+  .chapter-bar {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .chapter-bar .crumb,
+  .wide-only,
+  .mode-line > .note:first-child {
+    display: none;
+  }
+
+  .narrow-only {
+    display: inline;
+  }
+
+  .controls .compact select {
+    max-width: 8.5rem;
+  }
+
+  .chat-scroll {
+    padding: 0.6rem;
+  }
+
+  .composer {
+    padding: 0.5rem 0.6rem 0.6rem;
+  }
+
+  button.more-toggle {
+    display: inline-block;
+  }
+
+  .controls .extra {
+    display: none;
+  }
+
+  .controls.more .extra {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    width: 100%;
+    order: 10;
   }
 }
 
@@ -390,8 +833,4 @@ td {
   li[aria-selected]
   .cm-completionDetail {
   color: inherit;
-}
-
-.theme-choice select {
-  padding: 0.2rem;
 }

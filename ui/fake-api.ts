@@ -1,4 +1,6 @@
 /** A fake `fetch` for component tests: routes "METHOD /path" to handlers and records calls. */
+import { screen } from "@testing-library/react";
+import type { UserEvent } from "@testing-library/user-event";
 import { vi } from "vitest";
 
 export interface Call {
@@ -150,3 +152,11 @@ export const CHAPTER = {
   summary_status: "fehlt" as const,
   text: "Es war kalt.",
 };
+
+/** Open the bar on the right of the story page at the settings of the story (step 5.11). */
+export async function openStorySettings(user: UserEvent): Promise<void> {
+  // Wait for the chapter: while it loads, the page shows a simpler top line.
+  await screen.findByLabelText("Kapiteltitel");
+  await user.click(screen.getByRole("button", { name: "Kanon & Geschichte" }));
+  await user.click(screen.getByRole("button", { name: "Geschichte" }));
+}

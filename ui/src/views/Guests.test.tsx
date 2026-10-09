@@ -5,6 +5,7 @@ import { EditorState } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  openStorySettings,
   CHAPTER,
   created,
   ENTRY,
@@ -69,6 +70,7 @@ describe("guests from other worlds on the story page (step 3.7)", () => {
     });
     const user = userEvent.setup();
     render(<StoryPage story={STORY} />);
+    await openStorySettings(user);
     await user.click(await screen.findByText("Gäste aus anderen Welten (0)"));
 
     const world = screen.getByLabelText("Welt des Gastes");
@@ -107,6 +109,7 @@ describe("guests from other worlds on the story page (step 3.7)", () => {
         story={{ ...WITH_GUEST, controlled_characters: ["nebelkoenig"] }}
       />,
     );
+    await openStorySettings(user);
     await user.click(await screen.findByText("Gäste aus anderen Welten (1)"));
     await user.click(
       await screen.findByRole("button", { name: "Nebelkönig entfernen" }),
@@ -120,6 +123,7 @@ describe("guests from other worlds on the story page (step 3.7)", () => {
     unmount();
 
     render(<StoryPage story={WITH_GUEST} />);
+    await openStorySettings(user);
     await user.click(await screen.findByText("Gäste aus anderen Welten (1)"));
     await user.click(
       await screen.findByRole("button", { name: "Nebelkönig entfernen" }),
@@ -138,6 +142,7 @@ describe("guests from other worlds on the story page (step 3.7)", () => {
     });
     const user = userEvent.setup();
     render(<StoryPage story={WITH_GUEST} />);
+    await openStorySettings(user);
     await user.click(await screen.findByText("Gäste aus anderen Welten (1)"));
 
     expect(
@@ -168,7 +173,7 @@ describe("guests from other worlds on the story page (step 3.7)", () => {
     });
     const user = userEvent.setup();
     render(<StoryPage story={WITH_GUEST} />);
-    await user.click(await screen.findByText("Figuren-Schreibweise"));
+    await user.click(await screen.findByRole("button", { name: "ändern" }));
     const group = await screen.findByRole("group", {
       name: "Figuren, die du selbst führst",
     });
