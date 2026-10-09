@@ -34,6 +34,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - **Befund des Eigentümers:** „die KI Antwort scrollt den Text und Verlauf“. Auswahlfragen: Die Ansicht springt bei jedem neuen Wort ans Ende, man kann nicht weiter oben lesen; gewünscht: am Ende mitlaufen, sonst stehen bleiben (wie bei ChatGPT/TypingMind).
 - **Ursache:** Der Chat-Aufbau aus 5.11 Teil 2 scrollte bei jeder Änderung des Vorschlags ans Ende, unabhängig davon, wo man gerade war.
 - **Lösung:** `WritingPanel` merkt sich, ob man am Textende ist (weniger als 48 px Abstand); der wachsende Vorschlag zieht die Ansicht nur dann mit. Senden, Übernehmen und Öffnen eines Kapitels bringen weiter ans Ende. Neuer Test; `vitest` 138 bestanden, 97,97 % Zeilen / 95,43 % Zweige; Playwright 10 bestanden. Unter 5.11 geführt (Fehler aus Teil 2), kein neuer Schritt.
+- **Nachgebessert (in der CI aufgefallen):** Der zweite Scroll-Schritt nach dem ersten Zeichnen zog auch dann ans Ende, wenn man dazwischen hochgescrollt hatte; lokal grün, in der CI rot. Er prüft jetzt ebenfalls die Stelle; der Test wartet ihn ab und schlägt mit dem alten Code zuverlässig fehl (gegengeprüft).
 - **Reihenfolge:** 5.1 (Kanon-Vorschläge ohne `@`) auf Wunsch des Eigentümers vor 5.11 Teil 3 gezogen.
 
 ### 2026-10-09 19:20 UTC – [GELÖST] End-to-End-Test „ohne Netz“ nur in der CI rot
