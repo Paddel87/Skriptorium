@@ -98,10 +98,10 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
+- 🟠 **Einspielen:** Mitlaufen beim Schreiben der KI (5.11) und Vorschläge für Namen ohne `@` (5.1) sind fertig, aber noch nicht auf dem Server.
 - 🟠 **5.2, 5.21:** Bedienung am Smartphone angepasst, als App installierbar – eingespielt, warten auf Prüfung auf dem Smartphone.
-- ⚪ **5.25:** Antworten des Servers nicht im Browser-Speicher.
-- 🟠 **5.11 Teil 3:** Kanon-Seite mit Suche, Kategorien als Filter, Liste und Eintrag nebeneinander.
-- ⚪ **5.20, 5.16:** schnell angelegte Kapitel; herangezogene Kanon-Einträge anklickbar.
+- 🟠 **5.24, 5.26:** zweite Testgeschichte fertig; Messung und Prüfung der Kanon-Treue mit grok-4.6 warten auf einen gültigen OpenRouter-Schlüssel für Tests.
+- ⚪ **5.11 Teil 3, 5.25:** Kanon-Seite mit Suche und Filter; Antworten des Servers nicht im Browser-Speicher.
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).
