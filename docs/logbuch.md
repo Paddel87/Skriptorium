@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 20:05 UTC – [BEOBACHTUNG] Installation am iPhone, Hinweis verworfen, Frage zu Namen ohne `@`
+
+- Eigentümer fand in Safari (iOS) zunächst keinen Eintrag „Zum Home-Bildschirm“; mit der Beschreibung (iOS 26: „⋯“ → „Teilen“ → „Zum Home-Bildschirm“) hat es geklappt. Ein daraufhin gebauter Installations-Hinweis nur für iPhone und iPad (Vorher-/Nachher-Bilder vorgelegt) wurde nicht gewünscht („ich brauche kein iPhone Hinweis“) und vor dem Commit verworfen.
+- Frage des Eigentümers, ob Wörter ohne `@` erkannt werden: nein, noch nicht – Kanon-Einträge gehen nur über `@`, über Ort und Figuren der neuen Szene und als selbst geführte Figuren an die KI. Geplant als 5.1 (FR-014: nur als Vorschlag „Meintest du @Kael?“, nie selbstständig); Reihenfolge unverändert, Vorziehen angeboten.
+
+### 2026-10-09 19:45 UTC – [BEOBACHTUNG] Merge #81 und Deployment `a71cdff` (5.2, 5.21)
+
+- Auf Anweisung des Eigentümers („Ja, mergen“ auf die Frage nach Mergen und Einspielen): #81 nach grüner CI gemergt, CI auf `main` grün.
+- Deployment nach Runbook Abschnitt 7 (ADR-039): `REVISION` `a71cdff`, Rückweg `skriptorium:vorher` = `71f8d95`; `/api/health` 200 nach ca. 55 s (über HTTPS), `(healthy)`. Von außen: `/manifest.webmanifest` als `application/manifest+json`, `/sw.js`, `/offline.html`, Symbole 200; Chrome meldet installierbar, Service Worker aktiv, ohne Netz die Hinweisseite, keine Fehler im Browser.
+- Offen: Prüfung auf dem Smartphone und am Mac des Eigentümers (Installation, Anmeldung in der App, Markieren mit dem Finger, Start ohne Netz).
+
 ### 2026-10-09 19:20 UTC – [GELÖST] End-to-End-Test „ohne Netz“ nur in der CI rot
 
 - **Symptom:** In #81 war nur der neue Test rot, an der Stelle nach dem ersten Neuladen („Welten“ nicht sichtbar); lokal grün, auch achtmal hintereinander. Meine Warteschleife auf die Prüfungen hing dabei, weil `gh pr checks` bei roten Prüfungen mit Fehlercode endet – der Eigentümer fragte nach („prüfe die checks“).
