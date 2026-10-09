@@ -436,6 +436,8 @@ test("without a connection the installed app shows a notice and keeps no texts",
 }) => {
   // Steps 5.21 (FR-032) and ADR-048: manifest, a service worker that keeps one static page.
   await login(page);
+  // The login must be through before the reload below (scrypt takes a while on CI runners).
+  await expect(page.getByRole("heading", { name: "Welten" })).toBeVisible();
   const manifest = await page.request.get("/manifest.webmanifest");
   expect(manifest.headers()["content-type"]).toContain(
     "application/manifest+json",
@@ -448,33 +450,8 @@ test("without a connection the installed app shows a notice and keeps no texts",
     await navigator.serviceWorker.ready;
   });
   // After a reload the worker controls the page; pages still come from the network.
-  // TODO(fahrplan-ref: 5.21): Diagnose für die CI, vor dem Merge entfernen.
-  const seen: string[] = [];
-  page.on("console", (message) => seen.push(`console ${message.text()}`));
-  page.on("pageerror", (error) => seen.push(`pageerror ${String(error)}`));
-  page.on("requestfailed", (request) =>
-    seen.push(`failed ${request.url()} ${request.failure()?.errorText ?? ""}`),
-  );
-  page.on("response", (response) =>
-    seen.push(
-      `response ${String(response.status())} ${response.url()} sw=${String(response.fromServiceWorker())}`,
-    ),
-  );
   await page.reload();
-  try {
-    await expect(page.getByRole("heading", { name: "Welten" })).toBeVisible();
-  } catch (error) {
-    const state = await page.evaluate(async () => ({
-      url: location.href,
-      text: document.body.innerText.slice(0, 300),
-      controller: navigator.serviceWorker.controller?.state ?? null,
-      registrations: (await navigator.serviceWorker.getRegistrations()).map(
-        (r) => r.active?.state ?? "keiner",
-      ),
-    }));
-    console.log("DIAGNOSE", JSON.stringify(state), "\n" + seen.join("\n"));
-    throw error;
-  }
+  await expect(page.getByRole("heading", { name: "Welten" })).toBeVisible();
   expect(
     await page.evaluate(() => navigator.serviceWorker.controller !== null),
   ).toBe(true);
