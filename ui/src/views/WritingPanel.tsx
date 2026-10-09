@@ -178,9 +178,12 @@ export function WritingPanel({
     }
     atEnd.current = true;
     area.scrollTop = area.scrollHeight;
-    // The editor measures its lines after the first paint; follow once more then.
+    // The editor measures its lines after the first paint; follow once more then, unless the
+    // author has scrolled up in between.
     const frame = requestAnimationFrame(() => {
-      area.scrollTop = area.scrollHeight;
+      if (atEnd.current) {
+        area.scrollTop = area.scrollHeight;
+      }
     });
     return () => {
       cancelAnimationFrame(frame);

@@ -526,10 +526,13 @@ describe("WritingPanel as a chat (step 5.11)", () => {
     // Sending brings the end into view.
     expect(area.scrollTop).toBe(800);
 
-    // Scrolled up to read: new words do not pull the view down.
+    // Scrolled up to read: new words do not pull the view down, nor does the second step
+    // after the first paint that sending started.
     area.scrollTop = 100;
     area.dispatchEvent(new Event("scroll"));
     height = 1000;
+    await new Promise((done) => requestAnimationFrame(done));
+    expect(area.scrollTop).toBe(100);
     feed.send("text", { text: "Der Nebel " });
     const proposal = await screen.findByLabelText("Vorschlag der KI");
     await waitFor(() => {
