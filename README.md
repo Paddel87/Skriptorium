@@ -98,7 +98,8 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- 🟠 **5.2, 5.21:** Bedienung am Smartphone angepasst, als App installierbar – warten auf Einspielen und Prüfung auf dem Smartphone.
+- 🟠 **5.2, 5.21:** Bedienung am Smartphone angepasst, als App installierbar – eingespielt, warten auf Prüfung auf dem Smartphone.
+- ⚪ **5.25:** Antworten des Servers nicht im Browser-Speicher.
 - 🟠 **5.11 Teil 3:** Kanon-Seite mit Suche, Kategorien als Filter, Liste und Eintrag nebeneinander.
 - ⚪ **5.20, 5.16:** schnell angelegte Kapitel; herangezogene Kanon-Einträge anklickbar.
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
