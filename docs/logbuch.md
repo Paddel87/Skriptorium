@@ -29,6 +29,20 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 16:05 UTC – [BEOBACHTUNG] Deployment `8372308` (5.22, 5.23)
+
+- Auf Anweisung des Eigentümers („erst 5.22 und 5.23 deployen“), CI auf `main` grün. Der erste Versuch wurde von der automatischen Rechte-Prüfung der Session als „Production Deploy“ abgelehnt, nichts ausgeführt; nach ausdrücklicher Erlaubnis des Eigentümers im Chat erneut.
+- Ablauf nach Runbook Abschnitt 7 (ADR-039): Archiv von `main` übertragen, `REVISION` `8372308`, Rückweg `skriptorium:vorher` = `ebc7bc5`, Image gebaut, gestartet. Warten über die HTTPS-Gesundheitsprüfung (Lehre vom 2026-10-08), `/api/health` 200 nach ca. 55 s; `/` 200, `/api/worlds` 401; danach einmal per SSH: `(healthy)`, `REVISION` `8372308`.
+- Offen: Bestätigung von 5.22 durch den Eigentümer im Alltag; 5.11 Teil 1 und 5.19 weiterhin zur Prüfung.
+
+### 2026-10-09 15:50 UTC – [SESSIONSTART] Session auf dem Mac
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` → Entscheidungs-Klasse (Quelle: `get_session`, 15:45 UTC; Aufwand „medium“).
+- **Reibung (Fehler der KI):** Die Mindest-Lektüre lief zuerst auf dem lokalen `main` `e4d1a81`, 13 Commits hinter `origin/main` (PRs #75–#77 aus der Session über 5.22–5.24). Erst auf Nachfrage des Eigentümers geholt (`git pull --ff-only` → `8372308`) und die geänderten Teile neu gelesen. Der vorab geschriebene, veraltete Sessionstart-Eintrag lag in `git stash` und wurde auf Anweisung des Eigentümers verworfen. Lehre: vor der Mindest-Lektüre `git fetch` und mit `origin/main` abgleichen.
+- **Mindest-Lektüre (auf `8372308`):** project-context vollständig; Logbuch ab Sessionende 2026-10-09 15:35 UTC; Fahrplan „Aktueller Stand“, „Übersicht“ und Phase 5; architecture 1, 2, 9; decisions Teil A und C (neu: ADR-047, Regel-002); blockers „Aktive Blocker“ (keine).
+- **Wiedereinstieg:** 5.11 Teil 1 und 5.19 warten auf Prüfung des Eigentümers; 5.22 und 5.23 warten auf das Deployment vom Mac (Server auf `ebc7bc5`), 5.22 danach auf Bestätigung im Alltag; als Nächstes 5.11 Teil 2 Chat-Aufbau; 5.24 vor der nächsten Änderung an den Vorgaben der KI.
+- **Kontextgröße:** von der Sitzungsabfrage nicht gemeldet – Regel „Sessiongröße“ ohne Messwert nicht anwendbar.
+
 ### 2026-10-09 15:35 UTC – [SESSIONENDE] 5.23 umgesetzt
 
 - **Rahmen:** Fortsetzung auf „weiter mit 5.23“ nach dem früheren „weiter hier“; Kontext ca. 365.000 Token über der Grenze 200.000 (Abweichung vermerkt). 5.23 empfohlen Routine, lief auf Entscheidung (zu Beginn genannt) – Abgabe hätte bei einem kleinen Schritt mit geladenem Kontext nicht gespart.
