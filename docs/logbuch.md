@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 16:20 UTC – [ERLEDIGT] Abnahme 5.22
+
+- Eigentümer nach weiteren Vorschlägen: „Ja, es funktioniert definitiv.“ → 5.22 `[ERLEDIGT]` 2026-10-09; alle Akzeptanzkriterien erfüllt (Probeschreiben nach Regel-002-Ausnahme nur an der Salzmark, Bestätigung im Alltag). Phase 5: 9 von 24 erledigt.
+
 ### 2026-10-09 16:15 UTC – [BEOBACHTUNG] Erste Rückmeldung zu 5.22 im Alltag
 
 - Eigentümer nach dem Deployment `8372308`: erster Vorschlag mit Länge „lang“ „vielversprechend“, „keine nervigen Wiederholungen aus der Atmosphäre“. Ein einzelner Vorschlag – 5.22 bleibt bis zur ausdrücklichen Bestätigung `[IN ARBEIT]`.
