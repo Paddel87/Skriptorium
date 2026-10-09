@@ -32,7 +32,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 
 ## Quick Start
 
-Stand 2026-10-09 (Phase 5): Server mit Anmeldung und Oberfläche für Welten, Kanon, Import und Geschichten; Aufbau wie ein Chat mit Leiste links und eigener Adresse je Ansicht; Schreiben mit KI (Figuren-Schreibweise, `@`-Menü, wählbare Länge, Kapitel-Kurzfassungen, Gast-Figuren aus anderen Welten) mit `OPENROUTER_API_KEY`; markierte Textstellen in den Kanon übernehmen; Modell je Geschichte, Kosten je Anfrage und Monat; Hell- und Dunkelmodus.
+Stand 2026-10-09 (Phase 5): Server mit Anmeldung und Oberfläche für Welten, Kanon, Import und Geschichten; Aufbau wie ein Chat mit Leiste links und eigener Adresse je Ansicht; Schreiben mit KI (Figuren-Schreibweise, `@`-Menü, wählbare Länge, Kapitel-Kurzfassungen, Gast-Figuren aus anderen Welten) mit `OPENROUTER_API_KEY`; markierte Textstellen in den Kanon übernehmen; Modell je Geschichte, Kosten je Anfrage und Monat; Hell- und Dunkelmodus; als App installierbar.
 
 ### Voraussetzungen
 
@@ -93,11 +93,12 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - **`@` in der Anweisung:** öffnet eine Auswahl der Kanon-Einträge; die gewählten Einträge sind im Feld hervorgehoben und gehen der KI vollständig mit, nach der Auswahl folgt von selbst ein Leerzeichen.
 - **Kapitel abschließen:** Die KI erstellt eine Kurzfassung und schreibt die Gesamtzusammenfassung fort; beide lassen sich ansehen und ändern.
 - **In den Kanon:** Eine markierte Stelle wird zum neuen Eintrag oder ergänzt einen Eintrag – im Kanon der Welt oder nur für diese Geschichte.
+- **Als App:** Im Browser „Zum Startbildschirm“ (iPhone) bzw. „App installieren“ (Android, Chrome am Rechner) wählen – das Skriptorium öffnet dann ohne Browserleiste. Es arbeitet nur mit Netz; ohne Verbindung erscheint ein Hinweis, Texte bleiben nie auf dem Gerät.
 - **Modell und Kosten:** Das Modell wählst du unten neben der Anweisung (voreingestellt grok-4.6), die Geschichte merkt es sich. Unter jedem Vorschlag stehen Token und Kosten, unter „Konto“ die KI-Kosten des laufenden Monats.
 
 ## Nächste Schritte
 
-- ⚪ **5.2, 5.21:** Bedienung am Smartphone prüfen und anpassen; als App installierbar (PWA) mit voller Bildschirmgröße.
+- 🟠 **5.2, 5.21:** Bedienung am Smartphone angepasst, als App installierbar – warten auf Einspielen und Prüfung auf dem Smartphone.
 - 🟠 **5.11 Teil 3:** Kanon-Seite mit Suche, Kategorien als Filter, Liste und Eintrag nebeneinander.
 - ⚪ **5.20, 5.16:** schnell angelegte Kapitel; herangezogene Kanon-Einträge anklickbar.
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).

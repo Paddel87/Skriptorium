@@ -29,6 +29,18 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 18:40 UTC – [BEOBACHTUNG] 5.2 und 5.21 umgesetzt, Prüfung durch getrennte Instanz
+
+- **Prüfung am Smartphone-Format** (Playwright, 390 × 844 und 360 × 740, Testwelt „Die Salzmark“, KI-Antwort vorgetäuscht): UC-004, UC-003, UC-008 und Kanon-Pflege durchführbar, kein seitliches Scrollen. Befunde: Formular „In den Kanon“ öffnet außerhalb des Blicks (auch Desktop); „Weiter“ bricht auf 360 px um; Szenen-Formular eng. Vorher-/Nachher-Vergleich diesmal mit echten Bildschirmfotos des noch nicht committeten Codes; Eigentümer wählte für den Start ohne Netz Option B (eigene Hinweisseite) → ADR-048.
+- **Umsetzung:** siehe Commit `e98705a`. Chrome: installierbar, Manifest fehlerfrei; End-to-End-Test: ohne Netz Hinweisseite, Zwischenspeicher enthält nur `/offline.html`, `/api` antwortet ohne Netz nicht aus einem Speicher.
+- **Prüfung durch getrennte Instanz** (`CLAUDE.md` Abschnitt 9, Kategorie 6; Unteragent mit Sonnet, nur Diff, Bedrohungsmodell und ADR-048, 2026-10-09): Vorgabe eingehalten, Urteil „Merge nach Behebung“. Niedrig, behoben: (1) Speichername und Hinweisseite nicht gekoppelt → Fingerabdruck in `sw.js`, geprüft von `serviceWorker.test.ts`; (2) Symbol der Hinweisseite ohne Netz nicht verfügbar → direkt in die Seite; (3) Test prüfte nicht, dass der Worker die Seite steuert, und nicht nach einem Kapitel → ergänzt. Optional (über ASVS Stufe 1), dem Eigentümer vorgelegt: (4) `Cache-Control: no-store` für `/api`, `no-cache` für `index.html` und `sw.js` – betrifft den HTTP-Speicher des Browsers, bestand schon vorher, Modul `api`; (5) `base-uri`/`form-action` in der Policy der Hinweisseite – gleich mit ergänzt, da wirkungsneutral und ohne Aufwand.
+- **Reibung (Fehler der KI):** Beim Einfügen der Regel für 360-px-Handys den Smartphone-Abschnitt des Stylesheets mittendrin geschlossen; „⋯“ und die verkürzte Eingabezeile galten dadurch nur noch unter 384 px. Aufgefallen erst auf den Bildschirmfotos – Unit- und End-to-End-Tests prüfen keine Darstellung. Lehre: nach Stylesheet-Änderungen immer Bildschirmfotos in beiden Größen.
+- **Läufe:** `vitest` 137 bestanden, 98,11 % Zeilen / 95,67 % Zweige; Playwright 10 bestanden; `pre-commit run --all-files` grün.
+
+### 2026-10-09 18:20 UTC – [ADR-ANGELEGT] ADR-048 Service Worker nur für eine Hinweisseite ohne Netz
+
+- `[OPERATIV]` `[SECURITY]`, Kategorie 6. Eigentümer wählte B gegen die Empfehlung A. Reaktiv-Quote 0/10 über ADR-039 bis ADR-048.
+
 ### 2026-10-09 17:25 UTC – [ERLEDIGT] Abnahme 5.19, Prüfung 5.11 Teile 1 und 2
 
 - Eigentümer nach dem Deployment `71f8d95`: „Ja, #80 mergen alles funktioniert.“ → als Bestätigung der vorgelegten Prüfpunkte gewertet (dem Eigentümer so gesagt): 5.19 Dunkelmodus `[ERLEDIGT]` 2026-10-09; 5.11 Teile 1 und 2 geprüft, 5.11 bleibt `[IN ARBEIT]` bis Teil 3. Phase 5: 10 von 24 erledigt.
