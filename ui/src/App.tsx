@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { HashRouter, useNavigate } from "react-router";
 import { api, setUnauthorizedHandler } from "./api";
+import { ConnectionNote } from "./views/ConnectionNote";
 import { Login } from "./views/Login";
 import { Setup } from "./views/Setup";
 import { Shell } from "./views/Shell";
@@ -15,6 +16,7 @@ export function App() {
   return (
     <HashRouter>
       <Root />
+      <ConnectionNote />
     </HashRouter>
   );
 }

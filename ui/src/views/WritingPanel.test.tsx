@@ -478,15 +478,34 @@ describe("WritingPanel as a chat (step 5.11)", () => {
     expect(document.activeElement).not.toBe(content);
   });
 
-  it("folds the more buttons on small screens", async () => {
+  it("folds the more buttons on small screens and again after a choice (step 5.2)", async () => {
     fakeApi(routes(sseFeed()));
     const user = userEvent.setup();
-    panel();
+    const tool = vi.fn();
+    render(
+      <WritingPanel
+        world="salzmark"
+        story="ueberfahrt"
+        chapter={1}
+        prepare={vi.fn(() => Promise.resolve(true))}
+        onAccept={vi.fn(() => Promise.resolve())}
+        tools={
+          <button type="button" onClick={tool}>
+            Werkzeug
+          </button>
+        }
+      />,
+    );
     await ready();
     const more = screen.getByRole("button", { name: "Weitere Knöpfe" });
     expect(more.getAttribute("aria-expanded")).toBe("false");
     await user.click(more);
     expect(more.getAttribute("aria-expanded")).toBe("true");
+    await user.click(screen.getByLabelText("Neue Szene"));
+    expect(more.getAttribute("aria-expanded")).toBe("true");
+    await user.click(screen.getByRole("button", { name: "Werkzeug" }));
+    expect(tool).toHaveBeenCalledOnce();
+    expect(more.getAttribute("aria-expanded")).toBe("false");
   });
 
   it("keeps the end of the text in view when the width changes", async () => {

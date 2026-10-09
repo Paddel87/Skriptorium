@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Static notice without data and without script (step 5.21, ADR-048). -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Skriptorium – keine Verbindung</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: system-ui, sans-serif;
+        line-height: 1.5;
+        color: #1f2328;
+        background: #f6f5f1;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          color: #e6e1d6;
+          background: #17150f;
+        }
+        a {
+          color: #d9b97a;
+        }
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 1.5rem;
+        box-sizing: border-box;
+      }
+      main {
+        max-width: 26rem;
+        text-align: center;
+      }
+      svg {
+        width: 72px;
+        height: 72px;
+      }
+      a {
+        color: #6b4f1d;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <svg viewBox="0 0 512 512" aria-hidden="true">
+        <rect width="512" height="512" rx="112" fill="#8a6d3b" />
+        <path
+          d="M392 88c-118 18-206 104-236 236l-14 64 28-22c118-26 204-120 222-278z"
+          fill="#fbf3e4"
+        />
+        <path
+          d="M150 396 336 150"
+          stroke="#8a6d3b"
+          stroke-width="14"
+          stroke-linecap="round"
+        />
+        <path
+          d="M120 424 168 376"
+          stroke="#fbf3e4"
+          stroke-width="18"
+          stroke-linecap="round"
+        />
+        <path
+          d="M212 424h180"
+          stroke="#fbf3e4"
+          stroke-width="18"
+          stroke-linecap="round"
+        />
+      </svg>
+      <h1>Keine Verbindung</h1>
+      <p>
+        Das Skriptorium arbeitet nur mit Netz und hält keine Texte auf diesem
+        Gerät. Sobald die Verbindung wieder da ist, geht es weiter.
+      </p>
+      <p><a href="/">Erneut versuchen</a></p>
+    </main>
+  </body>
+</html>

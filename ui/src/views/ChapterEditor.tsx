@@ -1,4 +1,11 @@
-import { lazy, Suspense, useState, type ReactNode } from "react";
+import {
+  lazy,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import {
   api,
   describeError,
@@ -63,6 +70,15 @@ export function ChapterEditor({
   const [canonRevision, setCanonRevision] = useState(0);
   // Counts the moments the end of the text should come into view (steps 5.9, 5.11).
   const [ends, setEnds] = useState(0);
+  const factForm = useRef<HTMLDivElement>(null);
+
+  // The form for "In den Kanon" opens below the text; bring its top into view, so it can grow
+  // downwards while it loads the entries (step 5.2).
+  useEffect(() => {
+    if (taking !== null) {
+      factForm.current?.scrollIntoView({ block: "start" });
+    }
+  }, [taking]);
 
   async function save(): Promise<boolean> {
     setError(null);
@@ -227,20 +243,22 @@ export function ChapterEditor({
           </p>
         )}
         {taking !== null && (
-          <CanonFact
-            story={story}
-            marked={taking}
-            onStory={onStory}
-            onDone={(note) => {
-              setTaking(null);
-              setCanonNote(note);
-              setCanonRevision((value) => value + 1);
-              onCanonChanged?.();
-            }}
-            onCancel={() => {
-              setTaking(null);
-            }}
-          />
+          <div ref={factForm}>
+            <CanonFact
+              story={story}
+              marked={taking}
+              onStory={onStory}
+              onDone={(note) => {
+                setTaking(null);
+                setCanonNote(note);
+                setCanonRevision((value) => value + 1);
+                onCanonChanged?.();
+              }}
+              onCancel={() => {
+                setTaking(null);
+              }}
+            />
+          </div>
         )}
         {summaryNote !== null && (
           <p className="error" role="alert">

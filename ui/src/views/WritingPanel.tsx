@@ -508,7 +508,18 @@ export function WritingPanel({
             >
               ⋯
             </button>
-            <span className="extra">
+            {/* After a choice behind "⋯" the extra buttons fold away again (step 5.2). */}
+            <span
+              className="extra"
+              onClick={(event) => {
+                if (
+                  event.target instanceof Element &&
+                  event.target.closest("button") !== null
+                ) {
+                  setMore(false);
+                }
+              }}
+            >
               <label className="check">
                 <input
                   type="checkbox"
