@@ -508,6 +508,50 @@ describe("WritingPanel as a chat (step 5.11)", () => {
     expect(more.getAttribute("aria-expanded")).toBe("false");
   });
 
+  it("follows the growing proposal only while the author is at the end", async () => {
+    const feed = sseFeed();
+    fakeApi(routes(feed));
+    const user = userEvent.setup();
+    panel();
+    await ready();
+    const area = document.querySelector(".chat-scroll");
+    if (!(area instanceof HTMLElement)) {
+      throw new Error("no chat area");
+    }
+    let height = 800;
+    Object.defineProperty(area, "scrollHeight", { get: () => height });
+
+    await typeInstruction("Mira kommt.");
+    await user.click(screen.getByRole("button", { name: "Weiterschreiben" }));
+    // Sending brings the end into view.
+    expect(area.scrollTop).toBe(800);
+
+    // Scrolled up to read: new words do not pull the view down, nor does the second step
+    // after the first paint that sending started.
+    area.scrollTop = 100;
+    area.dispatchEvent(new Event("scroll"));
+    height = 1000;
+    await new Promise((done) => requestAnimationFrame(done));
+    expect(area.scrollTop).toBe(100);
+    feed.send("text", { text: "Der Nebel " });
+    const proposal = await screen.findByLabelText("Vorschlag der KI");
+    await waitFor(() => {
+      expect(proposal).toHaveProperty("value", "Der Nebel ");
+    });
+    expect(area.scrollTop).toBe(100);
+
+    // Back at the end: the view follows again.
+    area.scrollTop = 1000;
+    area.dispatchEvent(new Event("scroll"));
+    height = 1200;
+    feed.send("text", { text: "hob sich." });
+    await waitFor(() => {
+      expect(proposal).toHaveProperty("value", "Der Nebel hob sich.");
+    });
+    expect(area.scrollTop).toBe(1200);
+    feed.close();
+  });
+
   it("keeps the end of the text in view when the width changes", async () => {
     const observed: Element[] = [];
     let changed: () => void = () => undefined;

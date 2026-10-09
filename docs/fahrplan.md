@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 5.2 und 5.21 als Bündel (Smartphone und App), eingespielt mit `a71cdff` (2026-10-09, ADR-048), warten auf Prüfung auf dem Gerät; 5.11 ruht bis Teil 3 (Teile 1 und 2 geprüft) – drei Einträge `[IN ARBEIT]`, weil 5.11 nur auf Teil 3 wartet und 5.2/5.21 ein Bündel sind (5.19 am 2026-10-09 `[ERLEDIGT]`)
-- **Nächster Schritt:** Prüfung von 5.2/5.21 auf dem Smartphone und am Mac des Eigentümers; 5.25 Browser-Speicher; 5.11 Teil 3 Kanon-Seite; 5.20; 5.24 vor der nächsten Änderung an den Vorgaben der KI (Regel-002); 5.25 nach 5.21; danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** 5.1 Kanon-Vorschläge ohne `@` (vorgezogen, 2026-10-09); Prüfung von 5.2/5.21 auf dem Smartphone und am Mac des Eigentümers; 5.24 zweite Testgeschichte, dann 5.26 Kanon-Treue mit grok-4.6 (Wunsch des Eigentümers 2026-10-09); 5.11 Teil 3 Kanon-Seite; 5.25 Browser-Speicher; 5.20; danach 5.16, 5.6, 5.12, 5.13, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -22,11 +22,11 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 10 von 25 erledigt, 3 in Arbeit, 12 offen.**
+**Phase 5: 10 von 26 erledigt, 3 in Arbeit, 13 offen.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
-| ⚪ | 5.1 | Kanon-Vorschläge ohne `@` | offen | KI |
+| ⚪ | 5.1 | Kanon-Vorschläge ohne `@` | offen – vorgezogen | KI – als Nächstes |
 | 🟠 | 5.2 | Bedienung am Smartphone | in Arbeit – eingespielt | du: am Smartphone prüfen |
 | ⚪ | 5.3 | Lesbare Dateien – Nachweis | offen | KI |
 | ⚪ | 5.4 | Zeitlinie mit Datumsangaben im Kalender der Welt (Kann) | offen | du: umsetzen ja/nein |
@@ -51,6 +51,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | 5.23 | `@`-Verweis mit Genitiv-s | erledigt und eingespielt 2026-10-09 | – |
 | ⚪ | 5.24 | Zweite Testgeschichte und wiederholte Läufe (Regel-002) | offen | KI |
 | ⚪ | 5.25 | Antworten des Servers nicht im Browser-Speicher | offen | KI – nach 5.21 |
+| ⚪ | 5.26 | Kanon-Treue mit grok-4.6 prüfen | offen | KI – nach 5.24 |
 
 **Querschnitt (offen):**
 
@@ -169,13 +170,13 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Ziel:** Das Skriptorium ist für das tägliche Schreiben des Eigentümers alltagstauglich – Modelle sperren seine Texte nicht, die KI schreibt nahtlos weiter, die Oberfläche ist übersichtlich und intuitiv (gezielter Umbau nach ADR-042) –, die Soll-Anforderungen und die Kann-Anforderung sind umgesetzt oder begründet zurückgestellt, und die nächste Ausbaustufe ist geplant.
 
-**Abschlusskriterium:** Schritte 5.1–5.25 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
+**Abschlusskriterium:** Schritte 5.1–5.26 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
 
 **Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`. Der Umbau betrifft nur `ui` (Seitenaufbau, 5.11) und Randstellen in `ai_gateway`/`api` (Modell-Katalog, 5.12); neue gespeicherte Daten (5.6, 5.13) werden per ADR festgelegt.
 
-**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-09: 25 Schritte (+5.14, ADR-043; +5.15 bis +5.23 Befunde und Wünsche des Eigentümers; +5.24 ADR-047; +5.25 Wunsch des Eigentümers).
+**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-09: 26 Schritte (+5.14, ADR-043; +5.15 bis +5.23 Befunde und Wünsche des Eigentümers; +5.24 ADR-047; +5.25 und +5.26 Wünsche des Eigentümers) – an der Wucherungs-Schwelle.
 
-**Reihenfolge (ADR-042):** zuerst die kleinen Abhilfen 5.7, 5.8, 5.9, dann 5.10, der Umbau der Oberfläche 5.11, danach 5.16, 5.6, 5.12, 5.13; anschließend 5.2 (Smartphone, auf dem neuen Aufbau), 5.1, 5.3, 5.4, dann 5.14 (Go-Live-Prüfung) und 5.5.
+**Reihenfolge (ADR-042; 5.1 am 2026-10-09 vor 5.11 Teil 3 gezogen):** zuerst die kleinen Abhilfen 5.7, 5.8, 5.9, dann 5.10, der Umbau der Oberfläche 5.11, danach 5.16, 5.6, 5.12, 5.13; anschließend 5.2 (Smartphone, auf dem neuen Aufbau), 5.1, 5.3, 5.4, dann 5.14 (Go-Live-Prüfung) und 5.5.
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
@@ -193,7 +194,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** context, ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests
-- **Notizen:** –
+- **Notizen:** Vorgezogen auf Wunsch des Eigentümers (2026-10-09, nach der Frage, ob Wörter ohne `@` erkannt werden): direkt nach 5.2/5.21, vor 5.11 Teil 3.
 
 #### 5.2: Bedienung am Smartphone
 
@@ -341,7 +342,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.11: Seitenaufbau und Abläufe der Oberfläche neu ordnen
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-08) – Entwurf vom Eigentümer bestätigt (Auswahlfragen 2026-10-08); Umsetzung in drei Teilen, jeder einzeln eingespielt und geprüft. **Teil 1 Schreibseite** umgesetzt auf Branch `feat/5.11-oberflaeche`: Leiste rechts (Kapitel, Kanon nachschlagen mit Suche, Geschichte mit Gästen, Fakten, Gesamtzusammenfassung), schließbar, unter 56rem Breite als Menü über der Seite; Figuren-Schreibweise mit Kurzzeile direkt über dem Schreib-Bereich; Editorhöhe folgt dem Fenster, die Seite rückt beim Öffnen zum Kapitel, wenn es unter den Fensterrand reicht. Tests: `vitest` 115 bestanden, 98,65 % Zeilen / 96,29 % Zweige; Playwright 9 bestanden. Teil 1 gemergt (#69, `aedf68f`) und eingespielt 2026-10-08. **Teil 2 Chat-Aufbau** (2026-10-09) nach Mockup mit Vorher-/Nachher-Vergleich, vom Eigentümer freigegeben („Passt so“), umgesetzt auf Branch `feat/5.11-chat-aufbau`: Symbolleiste und Liste links (`Shell`, `StoryList`), Adressen je Ansicht mit React Router 7.18.4 hinter „#“, Schreibseite als Chat mit Vorschlag am Textende und Eingabe fest unten, rechte Leiste „Kanon & Geschichte“ bei Bedarf, „/“ ins Anweisungsfeld; ersetzt die Kapitel-Liste der rechten Leiste aus Teil 1. Tests: `vitest` 134 bestanden, 98,17 % Zeilen / 95,62 % Zweige; Playwright 9 bestanden; Onboarding im frischen Worktree geprüft. Gemergt (#79, `71f8d95`) und eingespielt 2026-10-09; Teile 1 und 2 vom Eigentümer geprüft („alles funktioniert“, 2026-10-09). Offen: Teil 3 Kanon-Seite (nach 5.2 und 5.21)
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-08) – Entwurf vom Eigentümer bestätigt (Auswahlfragen 2026-10-08); Umsetzung in drei Teilen, jeder einzeln eingespielt und geprüft. **Teil 1 Schreibseite** umgesetzt auf Branch `feat/5.11-oberflaeche`: Leiste rechts (Kapitel, Kanon nachschlagen mit Suche, Geschichte mit Gästen, Fakten, Gesamtzusammenfassung), schließbar, unter 56rem Breite als Menü über der Seite; Figuren-Schreibweise mit Kurzzeile direkt über dem Schreib-Bereich; Editorhöhe folgt dem Fenster, die Seite rückt beim Öffnen zum Kapitel, wenn es unter den Fensterrand reicht. Tests: `vitest` 115 bestanden, 98,65 % Zeilen / 96,29 % Zweige; Playwright 9 bestanden. Teil 1 gemergt (#69, `aedf68f`) und eingespielt 2026-10-08. **Teil 2 Chat-Aufbau** (2026-10-09) nach Mockup mit Vorher-/Nachher-Vergleich, vom Eigentümer freigegeben („Passt so“), umgesetzt auf Branch `feat/5.11-chat-aufbau`: Symbolleiste und Liste links (`Shell`, `StoryList`), Adressen je Ansicht mit React Router 7.18.4 hinter „#“, Schreibseite als Chat mit Vorschlag am Textende und Eingabe fest unten, rechte Leiste „Kanon & Geschichte“ bei Bedarf, „/“ ins Anweisungsfeld; ersetzt die Kapitel-Liste der rechten Leiste aus Teil 1. Tests: `vitest` 134 bestanden, 98,17 % Zeilen / 95,62 % Zweige; Playwright 9 bestanden; Onboarding im frischen Worktree geprüft. Gemergt (#79, `71f8d95`) und eingespielt 2026-10-09; Teile 1 und 2 vom Eigentümer geprüft („alles funktioniert“, 2026-10-09). Befund 2026-10-09: Während die KI schreibt, sprang die Ansicht bei jedem neuen Wort ans Ende – behoben auf `fix/5.11-mitlaufen` (Ansicht folgt nur am Textende, Entscheidung des Eigentümers per Auswahlfrage). Offen: Teil 3 Kanon-Seite (nach 5.1)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.9
 - **Freigabepflichtig:** teilweise – der Umbau innerhalb von `ui` nicht; eine neue Bibliothek (z. B. Router) ist Kategorie 3 und wird vorab vorgelegt
@@ -582,6 +583,22 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, ADR, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-09 auf Wunsch des Eigentümers. Wucherungs-Prüfung: Phase 5 jetzt 25 Schritte (ursprünglich 13, Schwelle mehr als 26) – keine Wucherung.
+
+#### 5.26: Kanon-Treue mit grok-4.6 prüfen
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (Prüfschritt; Ergebnis als Bericht, keine Funktion)
+- **Abhängigkeiten:** 5.24 (zweite Testgeschichte, Regel-002)
+- **Freigabepflichtig:** nein – Prüfwerkzeug unter `spikes/`; ein Wechsel der Voreinstellung als Folge wäre eine eigene Entscheidung (ADR)
+- **Empfohlene Klasse:** Entscheidung – Bewertung der Kanon-Treue und mögliche Folgen für die Modellwahl; das Schreiben der Testdetails ist Routine.
+- **Eingangskriterien:** 5.24 erledigt
+- **Anforderungen (ab Klasse M):** FR-011, FR-013 (Prüfung der Befehlstreue am aktuellen Modell)
+- **Zu tun:** Wunsch des Eigentümers 2026-10-09: prüfen, ob die Kanon-Einträge technisch sauber ankommen und ob das Sprachmodell sie befolgt. (a) Technik: an echten Anfragen zeigen, dass per `@` genannte Einträge vollständig in der Anfrage stehen und nicht vom Token-Budget beschnitten werden – auch mit vielen Einträgen und langem Kapitel. (b) Befolgung: in beiden Testgeschichten Kanon-Details anlegen, die vom Üblichen abweichen (z. B. Linkshänderin, ungewöhnliche Ortsregel, Name eines Gegenstands), Anweisungen schreiben, die sie berühren, ohne sie zu wiederholen; je Variante drei Läufe nach Regel-002, grok-4.6 und zum Vergleich grok-4.7; zählen, wie oft ein Detail eingehalten, übergangen oder widersprochen wird.
+- **Akzeptanzkriterien:** Bericht unter `docs/research/` mit Technik-Befund und Quote eingehaltener Details je Modell (Mittelwert und Spannweite); bei Quote unter dem Ziel aus FR-011 ein Folgeschritt oder eine Entscheidungsvorlage; Kosten im Bericht.
+- **Betroffene Module:** keine (nur `spikes/`; Lesen von `context` für den Technik-Teil)
+- **Reifegrad-Wirkung:** möglicherweise – NFR Kanon-Treue wird mit dem Ergebnis neu belegt oder auf `[VORLÄUFIG]` gesetzt (ADR)
+- **Artefakte:** Prüfskript, Bericht, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-09 auf Wunsch des Eigentümers. Bisherige Belege der Kanon-Treue: grok-4.7 an Testtexten, qwen3.8-max am ersten echten Kapitel (4.8), je ein Lauf; grok-4.6 nie gezielt an echten Texten gemessen. Wucherungs-Prüfung: Phase 5 jetzt 26 Schritte (ursprünglich 13, Schwelle mehr als 26) – an der Grenze; der nächste neue Schritt löst den Stopp nach `CLAUDE.md` Abschnitt 8, Kriterium 9 aus.
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 

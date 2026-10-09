@@ -29,6 +29,21 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 20:45 UTC – [BEOBACHTUNG] Rückmeldung des Eigentümers, Prüfschritt Kanon-Treue
+
+- Eigentümer bestätigt: Der in der CI gefundene Fall (zweiter Scroll-Schritt zieht nach dem Senden wieder nach unten) war genau sein Befund.
+- Eigentümer hält das Skriptorium für seine Art Romane für einen vollwertigen Ersatz von TypingMind; Einsparung, weil frühere Anweisungen nicht mitgehen. Richtiggestellt: Mit jeder Anfrage gehen die letzten Manuskript-Seiten wörtlich, Gesamt- und Kapitel-Zusammenfassungen, `@`-Einträge und Schreibweise mit – nicht das ganze Kapitel, höchstens 30.000 Token (vorher 125.000–140.000).
+- Wunsch: Kanon-Treue prüfen – technisch und auf Befehlstreue des Modells. Befund dazu: grok-4.6 (Voreinstellung seit 5.7) nie gezielt an echten Texten gemessen. Angelegt als 5.26 nach 5.24; Phase 5 jetzt 26 Schritte, an der Wucherungs-Schwelle (nächster neuer Schritt → Stopp und Neuplanung).
+- Merge von #82 und #83 auf Anweisung; ausdrücklich keine Arbeiten am VPS – die Korrektur zum Mitlaufen ist gemergt, aber nicht eingespielt.
+
+### 2026-10-09 20:20 UTC – [GELÖST] Ansicht springt beim Schreiben der KI ans Ende
+
+- **Befund des Eigentümers:** „die KI Antwort scrollt den Text und Verlauf“. Auswahlfragen: Die Ansicht springt bei jedem neuen Wort ans Ende, man kann nicht weiter oben lesen; gewünscht: am Ende mitlaufen, sonst stehen bleiben (wie bei ChatGPT/TypingMind).
+- **Ursache:** Der Chat-Aufbau aus 5.11 Teil 2 scrollte bei jeder Änderung des Vorschlags ans Ende, unabhängig davon, wo man gerade war.
+- **Lösung:** `WritingPanel` merkt sich, ob man am Textende ist (weniger als 48 px Abstand); der wachsende Vorschlag zieht die Ansicht nur dann mit. Senden, Übernehmen und Öffnen eines Kapitels bringen weiter ans Ende. Neuer Test; `vitest` 138 bestanden, 97,97 % Zeilen / 95,43 % Zweige; Playwright 10 bestanden. Unter 5.11 geführt (Fehler aus Teil 2), kein neuer Schritt.
+- **Nachgebessert (in der CI aufgefallen):** Der zweite Scroll-Schritt nach dem ersten Zeichnen zog auch dann ans Ende, wenn man dazwischen hochgescrollt hatte; lokal grün, in der CI rot. Er prüft jetzt ebenfalls die Stelle; der Test wartet ihn ab und schlägt mit dem alten Code zuverlässig fehl (gegengeprüft).
+- **Reihenfolge:** 5.1 (Kanon-Vorschläge ohne `@`) auf Wunsch des Eigentümers vor 5.11 Teil 3 gezogen.
+
 ### 2026-10-09 20:05 UTC – [BEOBACHTUNG] Installation am iPhone, Hinweis verworfen, Frage zu Namen ohne `@`
 
 - Eigentümer fand in Safari (iOS) zunächst keinen Eintrag „Zum Home-Bildschirm“; mit der Beschreibung (iOS 26: „⋯“ → „Teilen“ → „Zum Home-Bildschirm“) hat es geklappt. Ein daraufhin gebauter Installations-Hinweis nur für iPhone und iPad (Vorher-/Nachher-Bilder vorgelegt) wurde nicht gewünscht („ich brauche kein iPhone Hinweis“) und vor dem Commit verworfen.
