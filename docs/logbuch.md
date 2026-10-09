@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 15:35 UTC – [SESSIONENDE] 5.23 umgesetzt
+
+- **Rahmen:** Fortsetzung auf „weiter mit 5.23“ nach dem früheren „weiter hier“; Kontext ca. 365.000 Token über der Grenze 200.000 (Abweichung vermerkt). 5.23 empfohlen Routine, lief auf Entscheidung (zu Beginn genannt) – Abgabe hätte bei einem kleinen Schritt mit geladenem Kontext nicht gespart.
+- **Code:** `ui/src/references.ts` – Hilfsfunktion `labelEnd` erlaubt ein Genitiv-s nach Name oder Alias; längerer Eintrag („Kaels“) geht vor, Hervorhebung schließt das „s“ ein.
+- **Läufe:** `vitest` 123 bestanden (4 neu), `references.ts` 100 % Zeilen und Zweige, gesamt 98,69 % Zeilen / 96,37 % Zweige; eslint, tsc, prettier grün. End-to-End lokal nicht gelaufen – läuft in der CI.
+- **Stand:** 5.23 `[ERLEDIGT]` (live mit dem nächsten Deployment vom Mac); 5.22 `[IN ARBEIT]` (Deployment, Bestätigung im Alltag); 5.24 `[OFFEN]`.
+- **Modell-Bilanz:** Entscheidungs-Klasse; Schritte oberhalb der Empfehlung: 1 (5.23). Abgegeben: nichts.
+- **Sessionende-Prüfungen:** README unverändert gültig; Drift: Ampel 8/3/13 von 24 geprüft, keine neuen ADRs, Module und Reifegrade unverändert, Blocker 0. Ablaufdaten: kein Vorlauf erreicht.
+
 ### 2026-10-09 15:25 UTC – [SESSIONENDE] 5.22 umgesetzt, Prüfverfahren festgelegt
 
 - **Bearbeitet:** 5.22 umgesetzt und geprüft (PR #76, CI grün); auf Frage des Eigentümers festes Prüfverfahren beschlossen → ADR-047, Regel-002, Schritt 5.24 (zweite Testgeschichte, wiederholte Läufe).
