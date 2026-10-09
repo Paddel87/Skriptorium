@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-08 (Neuplanung nach ADR-042; 5.7, 5.8, 5.15 erledigt und eingespielt mit `18ee07d`)
+- **Stand vom:** 2026-10-09 (5.22 und 5.23 eingespielt mit `8372308`, beide `[ERLEDIGT]`)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 5.11 Seitenaufbau – Teil 1 Schreibseite eingespielt, wartet auf Prüfung des Eigentümers, Teile 2 und 3 offen; 5.19 Dunkelmodus eingespielt (`ebc7bc5`), wartet auf Prüfung (zwei Schritte gleichzeitig, weil beide nur auf die Prüfung warten) (5.7, 5.8 und 5.15 am 2026-10-08 `[ERLEDIGT]`)
-- **Nächster Schritt:** Prüfung 5.11 Teil 1 und 5.19 durch den Eigentümer; 5.11 Teil 2 Chat-Aufbau mit Leiste links und Adressen je Ansicht (React Router 7.18.4, ADR-046); 5.2 Smartphone mit 5.21 PWA; 5.11 Teil 3 Kanon-Seite; 5.20; 5.22 und 5.23 Deployment, 5.22 Bestätigung im Alltag; 5.24 vor der nächsten Änderung an den Vorgaben der KI (Regel-002); danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** Prüfung 5.11 Teil 1 und 5.19 durch den Eigentümer; 5.11 Teil 2 Chat-Aufbau mit Leiste links und Adressen je Ansicht (React Router 7.18.4, ADR-046); 5.2 Smartphone mit 5.21 PWA; 5.11 Teil 3 Kanon-Seite; 5.20; 5.24 vor der nächsten Änderung an den Vorgaben der KI (Regel-002); danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -22,7 +22,7 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 8 von 24 erledigt, 3 in Arbeit, 13 offen.**
+**Phase 5: 9 von 24 erledigt, 2 in Arbeit, 13 offen.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -47,8 +47,8 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | 🟠 | 5.19 | Dunkelmodus | in Arbeit | du: prüfen |
 | ⚪ | 5.20 | Schnell nacheinander angelegte Kapitel | offen | KI |
 | ⚪ | 5.21 | Als App installierbar (PWA) | offen | KI – mit 5.2 |
-| 🟠 | 5.22 | Wiederkehrende Atmosphäre und Schlussgeste bei „lang“ | umgesetzt, Probeschreiben erfüllt | KI: Deployment vom Mac; du: im Alltag bestätigen |
-| ✅ | 5.23 | `@`-Verweis mit Genitiv-s | erledigt 2026-10-09 | – (live mit dem nächsten Deployment) |
+| ✅ | 5.22 | Wiederkehrende Atmosphäre und Schlussgeste bei „lang“ | erledigt 2026-10-09 | – |
+| ✅ | 5.23 | `@`-Verweis mit Genitiv-s | erledigt und eingespielt 2026-10-09 | – |
 | ⚪ | 5.24 | Zweite Testgeschichte und wiederholte Läufe (Regel-002) | offen | KI |
 
 **Querschnitt (offen):**
@@ -519,7 +519,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.22: Wiederkehrende Atmosphäre und gleiche Schlussgeste bei langen Vorschlägen
 
-- **Status:** 🟠 IN ARBEIT – umgesetzt 2026-10-09 (Vorgaben in `context`), Probeschreiben erfüllt alle drei Kriterien; offen: Deployment vom Mac (ADR-039, auf Anweisung) und Bestätigung des Eigentümers im Alltag
+- **Status:** ✅ ERLEDIGT (2026-10-09) – umgesetzt 2026-10-09 (Vorgaben in `context`), Probeschreiben erfüllt alle drei Kriterien; eingespielt 2026-10-09 mit `8372308`; Eigentümer bestätigt im Alltag: keine Wiederholungen aus der Atmosphäre bei „lang“ („funktioniert definitiv“, 2026-10-09)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.15
 - **Freigabepflichtig:** nein – Wortlaut der Vorgaben in `context`; ein Wechsel des voreingestellten Modells wäre ein ADR wie ADR-044
@@ -535,7 +535,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.23: `@`-Verweis auch in gebeugter Form erkennen
 
-- **Status:** ✅ ERLEDIGT (2026-10-09) – `ui/src/references.ts` erkennt `@Name` mit angehängtem Genitiv-s; 4 neue Komponenten-Tests, `references.ts` 100 % Zeilen und Zweige; Lint, Typen, Format grün; CI im Pull Request
+- **Status:** ✅ ERLEDIGT (2026-10-09) – `ui/src/references.ts` erkennt `@Name` mit angehängtem Genitiv-s; 4 neue Komponenten-Tests, `references.ts` 100 % Zeilen und Zweige; Lint, Typen, Format grün; CI im Pull Request; eingespielt 2026-10-09 mit `8372308`
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.18
 - **Freigabepflichtig:** nein
