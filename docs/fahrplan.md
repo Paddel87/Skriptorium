@@ -22,7 +22,7 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 10 von 25 erledigt, 3 in Arbeit, 12 offen.**
+**Phase 5: 10 von 26 erledigt, 3 in Arbeit, 13 offen.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -51,6 +51,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | 5.23 | `@`-Verweis mit Genitiv-s | erledigt und eingespielt 2026-10-09 | – |
 | ⚪ | 5.24 | Zweite Testgeschichte und wiederholte Läufe (Regel-002) | offen | KI |
 | ⚪ | 5.25 | Antworten des Servers nicht im Browser-Speicher | offen | KI – nach 5.21 |
+| ⚪ | 5.26 | Kanon-Treue mit grok-4.6 prüfen | offen | KI – nach 5.24 |
 
 **Querschnitt (offen):**
 
@@ -169,11 +170,11 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Ziel:** Das Skriptorium ist für das tägliche Schreiben des Eigentümers alltagstauglich – Modelle sperren seine Texte nicht, die KI schreibt nahtlos weiter, die Oberfläche ist übersichtlich und intuitiv (gezielter Umbau nach ADR-042) –, die Soll-Anforderungen und die Kann-Anforderung sind umgesetzt oder begründet zurückgestellt, und die nächste Ausbaustufe ist geplant.
 
-**Abschlusskriterium:** Schritte 5.1–5.25 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
+**Abschlusskriterium:** Schritte 5.1–5.26 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
 
 **Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`. Der Umbau betrifft nur `ui` (Seitenaufbau, 5.11) und Randstellen in `ai_gateway`/`api` (Modell-Katalog, 5.12); neue gespeicherte Daten (5.6, 5.13) werden per ADR festgelegt.
 
-**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-09: 25 Schritte (+5.14, ADR-043; +5.15 bis +5.23 Befunde und Wünsche des Eigentümers; +5.24 ADR-047; +5.25 Wunsch des Eigentümers).
+**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-09: 26 Schritte (+5.14, ADR-043; +5.15 bis +5.23 Befunde und Wünsche des Eigentümers; +5.24 ADR-047; +5.25 und +5.26 Wünsche des Eigentümers) – an der Wucherungs-Schwelle.
 
 **Reihenfolge (ADR-042; 5.1 am 2026-10-09 vor 5.11 Teil 3 gezogen):** zuerst die kleinen Abhilfen 5.7, 5.8, 5.9, dann 5.10, der Umbau der Oberfläche 5.11, danach 5.16, 5.6, 5.12, 5.13; anschließend 5.2 (Smartphone, auf dem neuen Aufbau), 5.1, 5.3, 5.4, dann 5.14 (Go-Live-Prüfung) und 5.5.
 
@@ -582,6 +583,22 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, ADR, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-09 auf Wunsch des Eigentümers. Wucherungs-Prüfung: Phase 5 jetzt 25 Schritte (ursprünglich 13, Schwelle mehr als 26) – keine Wucherung.
+
+#### 5.26: Kanon-Treue mit grok-4.6 prüfen
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (Prüfschritt; Ergebnis als Bericht, keine Funktion)
+- **Abhängigkeiten:** 5.24 (zweite Testgeschichte, Regel-002)
+- **Freigabepflichtig:** nein – Prüfwerkzeug unter `spikes/`; ein Wechsel der Voreinstellung als Folge wäre eine eigene Entscheidung (ADR)
+- **Empfohlene Klasse:** Entscheidung – Bewertung der Kanon-Treue und mögliche Folgen für die Modellwahl; das Schreiben der Testdetails ist Routine.
+- **Eingangskriterien:** 5.24 erledigt
+- **Anforderungen (ab Klasse M):** FR-011, FR-013 (Prüfung der Befehlstreue am aktuellen Modell)
+- **Zu tun:** Wunsch des Eigentümers 2026-10-09: prüfen, ob die Kanon-Einträge technisch sauber ankommen und ob das Sprachmodell sie befolgt. (a) Technik: an echten Anfragen zeigen, dass per `@` genannte Einträge vollständig in der Anfrage stehen und nicht vom Token-Budget beschnitten werden – auch mit vielen Einträgen und langem Kapitel. (b) Befolgung: in beiden Testgeschichten Kanon-Details anlegen, die vom Üblichen abweichen (z. B. Linkshänderin, ungewöhnliche Ortsregel, Name eines Gegenstands), Anweisungen schreiben, die sie berühren, ohne sie zu wiederholen; je Variante drei Läufe nach Regel-002, grok-4.6 und zum Vergleich grok-4.7; zählen, wie oft ein Detail eingehalten, übergangen oder widersprochen wird.
+- **Akzeptanzkriterien:** Bericht unter `docs/research/` mit Technik-Befund und Quote eingehaltener Details je Modell (Mittelwert und Spannweite); bei Quote unter dem Ziel aus FR-011 ein Folgeschritt oder eine Entscheidungsvorlage; Kosten im Bericht.
+- **Betroffene Module:** keine (nur `spikes/`; Lesen von `context` für den Technik-Teil)
+- **Reifegrad-Wirkung:** möglicherweise – NFR Kanon-Treue wird mit dem Ergebnis neu belegt oder auf `[VORLÄUFIG]` gesetzt (ADR)
+- **Artefakte:** Prüfskript, Bericht, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-09 auf Wunsch des Eigentümers. Bisherige Belege der Kanon-Treue: grok-4.7 an Testtexten, qwen3.8-max am ersten echten Kapitel (4.8), je ein Lauf; grok-4.6 nie gezielt an echten Texten gemessen. Wucherungs-Prüfung: Phase 5 jetzt 26 Schritte (ursprünglich 13, Schwelle mehr als 26) – an der Grenze; der nächste neue Schritt löst den Stopp nach `CLAUDE.md` Abschnitt 8, Kriterium 9 aus.
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 

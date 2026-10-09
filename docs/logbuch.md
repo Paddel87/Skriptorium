@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 20:45 UTC – [BEOBACHTUNG] Rückmeldung des Eigentümers, Prüfschritt Kanon-Treue
+
+- Eigentümer bestätigt: Der in der CI gefundene Fall (zweiter Scroll-Schritt zieht nach dem Senden wieder nach unten) war genau sein Befund.
+- Eigentümer hält das Skriptorium für seine Art Romane für einen vollwertigen Ersatz von TypingMind; Einsparung, weil frühere Anweisungen nicht mitgehen. Richtiggestellt: Mit jeder Anfrage gehen die letzten Manuskript-Seiten wörtlich, Gesamt- und Kapitel-Zusammenfassungen, `@`-Einträge und Schreibweise mit – nicht das ganze Kapitel, höchstens 30.000 Token (vorher 125.000–140.000).
+- Wunsch: Kanon-Treue prüfen – technisch und auf Befehlstreue des Modells. Befund dazu: grok-4.6 (Voreinstellung seit 5.7) nie gezielt an echten Texten gemessen. Angelegt als 5.26 nach 5.24; Phase 5 jetzt 26 Schritte, an der Wucherungs-Schwelle (nächster neuer Schritt → Stopp und Neuplanung).
+- Merge von #82 und #83 auf Anweisung; ausdrücklich keine Arbeiten am VPS – die Korrektur zum Mitlaufen ist gemergt, aber nicht eingespielt.
+
 ### 2026-10-09 20:20 UTC – [GELÖST] Ansicht springt beim Schreiben der KI ans Ende
 
 - **Befund des Eigentümers:** „die KI Antwort scrollt den Text und Verlauf“. Auswahlfragen: Die Ansicht springt bei jedem neuen Wort ans Ende, man kann nicht weiter oben lesen; gewünscht: am Ende mitlaufen, sonst stehen bleiben (wie bei ChatGPT/TypingMind).
