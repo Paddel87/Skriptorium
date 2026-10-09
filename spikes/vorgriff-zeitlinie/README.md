@@ -74,3 +74,20 @@ Wörtliche Wiederholung als Anteil der 4-Wort-Folgen eines Vorschlags, die schon
 - **Länge eingehalten:** grok-4.6 hält „lang“ meist ein (6 von 7 im Rahmen 400–600 Wörter oder knapp darüber). Bei kleinen Anweisungen ist das mehr, als Handlung da ist; der Rest wird mit Atmosphäre gefüllt.
 - **5.15 wirkt bei der eigenen Figur:** Anweisung 2 erscheint jetzt als Ilkas wörtliche Rede („Eine Silberschale die Nacht“, sagte ich.).
 - **Landeplatz:** Fahrplan-Schritt 5.22.
+
+## Nachtrag 2026-10-09: Prüfung von 5.22
+
+Neue Vorgaben in `context`: Die Länge ist eine Obergrenze. Ort, Licht, Geräusche, Gerüche und Stimmung werden nur beschrieben, wenn sich an ihnen etwas ändert. Ein Vorschlag endet mit einer Handlung oder Rede, nicht mit Warten, Schweigen, einem Blick oder Stimmung. Dieselbe Kette lief mit grok-4.6 in den Längen lang und mittel; Ergebnisse in `ergebnisse/522-lang-grok46/` und `ergebnisse/522-mittel-grok46/`, Kosten 0,33 $.
+
+| | lang vorher | lang nachher | mittel nachher |
+|---|---|---|---|
+| Enden mit Warten, Blick oder Schweigen | 5 von 7 | **0 von 7** | 0 von 7 |
+| längste Folge von Vorschlägen mit demselben Ortsmotiv | 7 (Geruch), sonst 3 | **2** | 2 |
+| wörtliche Wiederholung (4-Wort-Folgen, Mittel) | 1,7 % | **0,9 %** | 1,0 % |
+| Wörter je Vorschlag | 294–699 | 60–492 | 24–162 |
+
+- **Akzeptanzkriterien von 5.22 erfüllt:** Höchstens 2 Warte- oder Blick-Enden, kein Ortsmotiv in mehr als 2 aufeinanderfolgenden Vorschlägen, wörtliche Wiederholung nicht höher. Die Vorschläge enden jetzt mit wörtlicher Rede einer Figur.
+- **Kürzer, wo wenig zu tun ist:** Bei „lang“ schreibt die KI nur noch 60 Wörter, wenn die Anweisung kaum Handlung hergibt (Schritt 2). Das ist die gewollte Obergrenzen-Wirkung. Bei „mittel“ waren es in Schritt 4 nur 24 Wörter.
+- **5.15 bleibt wirksam:** Ilkas Angebot erscheint als wörtliche Rede. Unverändert deutet grok-4.6 Aschs Weg „zum Turm“ an; das gehört zu 5.15, nicht zu 5.22.
+- **Neben-Wiederholung:** Gunda sagt in Schritt 3 und 4 fast denselben Satz („verkauft er dich, bevor du den Namen des Buchs gesagt hast“).
+- **Grenzen:** eine Kette je Länge und nur grok-4.6. Die Bestätigung im Alltag durch den Eigentümer steht aus.
