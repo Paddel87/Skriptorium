@@ -108,7 +108,7 @@ def table(variant: str) -> str:
         runs = [chain(run, story_dir.name) for run in sorted(story_dir.glob("lauf-*"))]
         if not runs:
             continue
-        lines += [f"### {story_dir.name} ({len(runs)} Läufe)", ""]
+        lines += [f"## {story_dir.name} ({len(runs)} Läufe)", ""]
         lines += ["| Kennzahl | Mittel | Spannweite |", "|---|---|---|"]
         for key in runs[0]:
             values = [r[key] for r in runs]

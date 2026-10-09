@@ -1,6 +1,6 @@
 # Auswertung ausgang-mittel
 
-### glimmergrund (3 Läufe)
+## glimmergrund (3 Läufe)
 
 | Kennzahl | Mittel | Spannweite |
 |---|---|---|
@@ -11,7 +11,7 @@
 | Wörter | 123.67 | 94.86 – 146.00 |
 | Kosten $ | 0.34 | 0.31 – 0.37 |
 
-### salzmark (3 Läufe)
+## salzmark (3 Läufe)
 
 | Kennzahl | Mittel | Spannweite |
 |---|---|---|
