@@ -29,6 +29,26 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 15:25 UTC – [SESSIONENDE] 5.22 umgesetzt, Prüfverfahren festgelegt
+
+- **Bearbeitet:** 5.22 umgesetzt und geprüft (PR #76, CI grün); auf Frage des Eigentümers festes Prüfverfahren beschlossen → ADR-047, Regel-002, Schritt 5.24 (zweite Testgeschichte, wiederholte Läufe).
+- **Stand:** 5.22 `[IN ARBEIT]` – wartet auf Deployment vom Mac und Bestätigung im Alltag; 5.23 und 5.24 `[OFFEN]`. Merge von #76 auf Anweisung des Eigentümers.
+- **Nächster Schritt:** neue Session; vor der nächsten Änderung an den Vorgaben der KI zuerst 5.24.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`). Schritte oberhalb der Empfehlung: 0 (5.22 empfohlen Entscheidung). Abgegeben: nichts.
+- **Kontextgröße:** ca. 360.000 Token, über der Grenze 200.000 auf ausdrückliche Anweisung des Eigentümers („weiter hier“).
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ unverändert gültig (5.22–5.24 nicht unter den nächsten 1–3); Drift: ADR-047 → 5.22/5.24 vorhanden, Reaktiv-Quote 0/10 über ADR-038 bis ADR-047 nachgezogen, Ampel-Zählung 7/3/14 von 24 geprüft, Module und Reifegrade unverändert, Blocker 0; Phase 5 24 Schritte (Schwelle mehr als 26). Ablaufdaten: kein Vorlauf erreicht.
+
+### 2026-10-09 15:25 UTC – [ADR-ANGELEGT] ADR-047 Festes Verfahren für Probeschreiben
+
+- `[OPERATIV]` `[METHODIK]`, keine Kategorie aus Abschnitt 4. Regel-002 in Teil C: vorher und nachher im gleichen Aufbau, jede Variante mindestens dreimal an zwei Testgeschichten, Mittelwert mit Spannweite. Zweite Testgeschichte fehlt noch → 5.24. Reaktiv-Quote 0/10 über ADR-038 bis ADR-047.
+
+### 2026-10-09 15:30 UTC – [BEOBACHTUNG] 5.22 umgesetzt, Probeschreiben erfüllt
+
+- **Rahmen:** Eigentümer sagte ausdrücklich „weiter hier“ (Kontext ca. 355.000 Token, Grenze 200.000) – Abweichung nach `CLAUDE.md` Abschnitt 0 vermerkt. Branch `scp/nice-lamport-as724t` neu auf `main` `cf0650b` (normaler Push, alter Branch-Stand ist in `main` enthalten).
+- **Code:** `_requirements` um „Länge ist Obergrenze“ und „Ort, Licht, Geräusche, Gerüche, Stimmung nur bei Änderung, auch nicht umschrieben“ ergänzt, Ende mit Handlung oder Rede statt Warten, Schweigen, Blick oder Stimmung; `_reminder` ohne Warte-Schluss. Kleinste Budgets in zwei Tests angehoben (1300 → 1400, 1500 → 1600), weil der feste Teil um ca. 60 Token wuchs.
+- **Läufe:** `pytest --cov` 427 bestanden, 99,79 %, `builder.py` 100 %; pre-commit grün.
+- **Probeschreiben:** grok-4.6 lang Warte-Enden 5 → 0 von 7, längste Motiv-Folge 7 → 2, wörtliche Wiederholung 1,7 → 0,9 %; mittel 0 von 7 (Kosten 0,33 $). Offen: Deployment vom Mac, Bestätigung im Alltag.
+
 ### 2026-10-09 14:58 UTC – [SESSIONENDE] Befunde 5.22 und 5.23 erfasst
 
 - **Bearbeitet (2026-10-09):** Befunde des Eigentümers geprüft – Atmosphäre und Schlussgeste bei „lang“ (5.22), `@` und Aliasse (5.23); Antwort des Eigentümers zu 5.23 eingetragen: nur Genitiv-s. Kein Produktionscode geändert.

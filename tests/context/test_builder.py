@@ -176,7 +176,7 @@ def test_other_worlds_never_appear(services: tuple[CanonService, ManuscriptServi
         build(services, "nebelkoenig")
 
 
-@pytest.mark.parametrize("budget", [1300, 1500, 3000, MAX_BUDGET])
+@pytest.mark.parametrize("budget", [1400, 1600, 3000, MAX_BUDGET])
 def test_budget_is_never_exceeded(
     services: tuple[CanonService, ManuscriptService], budget: int
 ) -> None:
@@ -203,7 +203,7 @@ def test_pages_are_whole_paragraphs_from_the_end(
         WORLD, STORY, 2, text="\n\n".join(f"Absatz {n} " + "x" * 300 for n in range(20))
     )
 
-    context = build(services, budget=1500)
+    context = build(services, budget=1600)
 
     user = context.messages[1].content
     assert "Absatz 19" in user
@@ -362,6 +362,7 @@ def test_writing_mode_forbids_action_speech_and_thought_of_led_characters(
         "Erinnerung Figuren-Schreibweise",
     ]
     assert user.index("# Anweisung") < user.index("Erinnerung: Ilka Varn")
+    assert "Schließe nicht mit Warten oder einem Blick auf Ilka Varn." in user  # step 5.22
 
 
 def test_no_rule_and_no_reminder_without_led_characters(
@@ -462,9 +463,16 @@ def test_requirements_follow_the_instruction_in_every_request(
         "liegt in der Zukunft: Erzähle es nicht und deute es nicht an.",
         "Wiederhole keine Sätze, Bilder, Gesten und Wendungen aus den letzten",
         "Kein abschließender, zusammenfassender oder ausblickender Satz",
+        # Step 5.22: length as a ceiling, known surroundings, no closing pause.
+        "Die Länge ist eine Obergrenze",
+        "Ort, Licht, Geräusche, Gerüche und Stimmung sind bekannt",
+        "auch nicht umschrieben",
     ):
         assert rule in requirements
-    assert user.endswith("Dein Text hört mitten im Geschehen auf.")
+    assert user.endswith(
+        "mit einer Handlung oder Rede einer Figur, nicht mit Warten, Schweigen, einem Blick oder "
+        "Stimmung."
+    )
 
 
 @pytest.mark.parametrize("length", ["kurz", "mittel", "lang"])

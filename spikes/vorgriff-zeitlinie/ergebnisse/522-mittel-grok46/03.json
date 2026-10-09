@@ -1,0 +1,12 @@
+{
+  "variante": "522-mittel-grok46",
+  "schritt": 3,
+  "anweisung": "Die nächsten Tage schleppe ich Salz für einen Händler aus der Oberstadt, um nicht aufzufallen. Am dritten Abend kommt Gunda zu mir in die Kammer herauf.",
+  "modell": "x-ai/grok-4.6",
+  "woerter": 128,
+  "sekunden": 32.2,
+  "token_ein": 8186,
+  "token_aus": 1269,
+  "kosten_usd": 0.02355606,
+  "finish_reason": "stop"
+}
