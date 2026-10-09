@@ -1,4 +1,4 @@
-## ausgang-mittel
+# Auswertung ausgang-mittel
 
 ### glimmergrund (3 Läufe)
 
@@ -21,4 +21,3 @@
 | Motivfolge | 2.00 | 1.00 – 3.00 |
 | Wörter | 115.19 | 108.86 – 123.57 |
 | Kosten $ | 0.15 | 0.14 – 0.15 |
-

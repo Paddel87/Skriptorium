@@ -1,4 +1,4 @@
-## ausgang-lang
+# Auswertung ausgang-lang
 
 ### glimmergrund (3 Läufe)
 
@@ -21,4 +21,3 @@
 | Motivfolge | 3.67 | 3.00 – 5.00 |
 | Wörter | 312.57 | 251.43 – 372.86 |
 | Kosten $ | 0.17 | 0.16 – 0.18 |
-

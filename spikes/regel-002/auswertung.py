@@ -102,7 +102,7 @@ def chain(path: Path, story: str) -> dict[str, float]:
 
 
 def table(variant: str) -> str:
-    lines = [f"## {variant}", ""]
+    lines = [f"# Auswertung {variant}", ""]
     base = ROOT / "ergebnisse" / variant
     for story_dir in sorted(p for p in base.iterdir() if p.is_dir()):
         runs = [chain(run, story_dir.name) for run in sorted(story_dir.glob("lauf-*"))]
@@ -122,7 +122,9 @@ def table(variant: str) -> str:
 def main() -> None:
     for variant in sys.argv[1:]:
         text = table(variant)
-        (ROOT / "ergebnisse" / variant / "auswertung.md").write_text(text + "\n", encoding="utf-8")
+        (ROOT / "ergebnisse" / variant / "auswertung.md").write_text(
+            text.rstrip() + "\n", encoding="utf-8"
+        )
         print(text)
 
 
