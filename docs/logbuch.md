@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 17:25 UTC – [ERLEDIGT] Abnahme 5.19, Prüfung 5.11 Teile 1 und 2
+
+- Eigentümer nach dem Deployment `71f8d95`: „Ja, #80 mergen alles funktioniert.“ → als Bestätigung der vorgelegten Prüfpunkte gewertet (dem Eigentümer so gesagt): 5.19 Dunkelmodus `[ERLEDIGT]` 2026-10-09; 5.11 Teile 1 und 2 geprüft, 5.11 bleibt `[IN ARBEIT]` bis Teil 3. Phase 5: 10 von 24 erledigt.
+
 ### 2026-10-09 17:15 UTC – [BEOBACHTUNG] Merge #79 und Deployment `71f8d95` (5.11 Teil 2)
 
 - Auf Anweisung des Eigentümers („Ja, mergen und einspielen“): #79 nach grüner CI gemergt (`71f8d95`), CI auf `main` grün.

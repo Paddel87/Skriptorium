@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-10-09 (5.22 und 5.23 eingespielt mit `8372308`, beide `[ERLEDIGT]`; 5.11 Teil 2 eingespielt mit `71f8d95`)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 5.11 Seitenaufbau – Teil 1 eingespielt, Teil 2 Chat-Aufbau eingespielt (`71f8d95`, 2026-10-09), Teil 3 offen; 5.19 Dunkelmodus eingespielt (seit `ebc7bc5`), wartet auf Prüfung (zwei Schritte gleichzeitig, weil beide nur auf die Prüfung warten) (5.7, 5.8 und 5.15 am 2026-10-08 `[ERLEDIGT]`)
-- **Nächster Schritt:** Prüfung 5.11 Teile 1 und 2 und 5.19 durch den Eigentümer; 5.2 Smartphone mit 5.21 PWA; 5.11 Teil 3 Kanon-Seite; 5.20; 5.24 vor der nächsten Änderung an den Vorgaben der KI (Regel-002); danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** 5.11 Seitenaufbau – Teile 1 und 2 eingespielt (`71f8d95`) und vom Eigentümer geprüft (2026-10-09), Teil 3 Kanon-Seite offen (5.19 am 2026-10-09 `[ERLEDIGT]`)
+- **Nächster Schritt:** 5.2 Smartphone mit 5.21 PWA; 5.11 Teil 3 Kanon-Seite; 5.20; 5.24 vor der nächsten Änderung an den Vorgaben der KI (Regel-002); danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -22,7 +22,7 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 9 von 24 erledigt, 2 in Arbeit, 13 offen.**
+**Phase 5: 10 von 24 erledigt, 1 in Arbeit, 13 offen.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -36,7 +36,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | 5.8 | Nahtloser Anschluss ohne Einleitung und Schlusssatz | erledigt | – |
 | ✅ | 5.9 | Kapitel öffnet am Textende | erledigt | – |
 | ✅ | 5.10 | Kosten je Vorschlag sichtbar | erledigt | – |
-| 🟠 | 5.11 | Seitenaufbau und Abläufe der Oberfläche neu ordnen | in Arbeit – Teil 2 eingespielt | du: Teile 1 und 2 prüfen · KI: Teil 3 |
+| 🟠 | 5.11 | Seitenaufbau und Abläufe der Oberfläche neu ordnen | in Arbeit – Teile 1 und 2 geprüft | KI: nach 5.2/5.21 Teil 3 Kanon-Seite |
 | ⚪ | 5.12 | Modell-Auswahl aktuell vom Anbieter | offen | KI |
 | ⚪ | 5.13 | Verlauf der Anweisungen als umschaltbare Ansicht | offen | KI |
 | ⚪ | 5.14 | Go-Live-Prüfung vor v1.0.0 | offen | KI – nach 5.1–5.13 |
@@ -44,7 +44,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⚪ | 5.16 | Herangezogene Kanon-Einträge anklickbar | offen | KI |
 | ✅ | 5.17 | Leerzeichen nach der Auswahl im `@`-Menü | erledigt | – |
 | ✅ | 5.18 | Herangezogene Begriffe im Anweisungsfeld hervorheben | erledigt | – |
-| 🟠 | 5.19 | Dunkelmodus | in Arbeit | du: prüfen |
+| ✅ | 5.19 | Dunkelmodus | erledigt 2026-10-09 | – |
 | ⚪ | 5.20 | Schnell nacheinander angelegte Kapitel | offen | KI |
 | ⚪ | 5.21 | Als App installierbar (PWA) | offen | KI – mit 5.2 |
 | ✅ | 5.22 | Wiederkehrende Atmosphäre und Schlussgeste bei „lang“ | erledigt 2026-10-09 | – |
@@ -340,7 +340,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.11: Seitenaufbau und Abläufe der Oberfläche neu ordnen
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-08) – Entwurf vom Eigentümer bestätigt (Auswahlfragen 2026-10-08); Umsetzung in drei Teilen, jeder einzeln eingespielt und geprüft. **Teil 1 Schreibseite** umgesetzt auf Branch `feat/5.11-oberflaeche`: Leiste rechts (Kapitel, Kanon nachschlagen mit Suche, Geschichte mit Gästen, Fakten, Gesamtzusammenfassung), schließbar, unter 56rem Breite als Menü über der Seite; Figuren-Schreibweise mit Kurzzeile direkt über dem Schreib-Bereich; Editorhöhe folgt dem Fenster, die Seite rückt beim Öffnen zum Kapitel, wenn es unter den Fensterrand reicht. Tests: `vitest` 115 bestanden, 98,65 % Zeilen / 96,29 % Zweige; Playwright 9 bestanden. Teil 1 gemergt (#69, `aedf68f`) und eingespielt 2026-10-08. **Teil 2 Chat-Aufbau** (2026-10-09) nach Mockup mit Vorher-/Nachher-Vergleich, vom Eigentümer freigegeben („Passt so“), umgesetzt auf Branch `feat/5.11-chat-aufbau`: Symbolleiste und Liste links (`Shell`, `StoryList`), Adressen je Ansicht mit React Router 7.18.4 hinter „#“, Schreibseite als Chat mit Vorschlag am Textende und Eingabe fest unten, rechte Leiste „Kanon & Geschichte“ bei Bedarf, „/“ ins Anweisungsfeld; ersetzt die Kapitel-Liste der rechten Leiste aus Teil 1. Tests: `vitest` 134 bestanden, 98,17 % Zeilen / 95,62 % Zweige; Playwright 9 bestanden; Onboarding im frischen Worktree geprüft. Gemergt (#79, `71f8d95`) und eingespielt 2026-10-09. Offen: Prüfung von Teil 1 und 2 durch den Eigentümer; Teil 3 Kanon-Seite
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-08) – Entwurf vom Eigentümer bestätigt (Auswahlfragen 2026-10-08); Umsetzung in drei Teilen, jeder einzeln eingespielt und geprüft. **Teil 1 Schreibseite** umgesetzt auf Branch `feat/5.11-oberflaeche`: Leiste rechts (Kapitel, Kanon nachschlagen mit Suche, Geschichte mit Gästen, Fakten, Gesamtzusammenfassung), schließbar, unter 56rem Breite als Menü über der Seite; Figuren-Schreibweise mit Kurzzeile direkt über dem Schreib-Bereich; Editorhöhe folgt dem Fenster, die Seite rückt beim Öffnen zum Kapitel, wenn es unter den Fensterrand reicht. Tests: `vitest` 115 bestanden, 98,65 % Zeilen / 96,29 % Zweige; Playwright 9 bestanden. Teil 1 gemergt (#69, `aedf68f`) und eingespielt 2026-10-08. **Teil 2 Chat-Aufbau** (2026-10-09) nach Mockup mit Vorher-/Nachher-Vergleich, vom Eigentümer freigegeben („Passt so“), umgesetzt auf Branch `feat/5.11-chat-aufbau`: Symbolleiste und Liste links (`Shell`, `StoryList`), Adressen je Ansicht mit React Router 7.18.4 hinter „#“, Schreibseite als Chat mit Vorschlag am Textende und Eingabe fest unten, rechte Leiste „Kanon & Geschichte“ bei Bedarf, „/“ ins Anweisungsfeld; ersetzt die Kapitel-Liste der rechten Leiste aus Teil 1. Tests: `vitest` 134 bestanden, 98,17 % Zeilen / 95,62 % Zweige; Playwright 9 bestanden; Onboarding im frischen Worktree geprüft. Gemergt (#79, `71f8d95`) und eingespielt 2026-10-09; Teile 1 und 2 vom Eigentümer geprüft („alles funktioniert“, 2026-10-09). Offen: Teil 3 Kanon-Seite (nach 5.2 und 5.21)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.9
 - **Freigabepflichtig:** teilweise – der Umbau innerhalb von `ui` nicht; eine neue Bibliothek (z. B. Router) ist Kategorie 3 und wird vorab vorgelegt
@@ -472,7 +472,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.19: Dunkelmodus
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-08) – umgesetzt auf Branch `feat/5.19-dunkelmodus`: alle Farben als Farbwerte an einer Stelle (`styles.css`), dunkle Farbgebung bei dunkel eingestelltem Gerät oder auf Wahl; Schalter „Darstellung“ (Automatisch/Hell/Dunkel) in der Kopfzeile, im Browser gemerkt (`theme.ts`, `ThemeChoice.tsx`), vor dem ersten Zeichnen gesetzt; Editor, Cursor, Auswahl und `@`-Menü in den Seitenfarben. Tests: `vitest` 119 bestanden, 98,68 % Zeilen / 96,52 % Zweige; Playwright 9 bestanden; Bildschirm-Probelauf hell und dunkel. Gemergt (#70, `ebc7bc5`) und eingespielt 2026-10-08. Offen: Prüfung durch den Eigentümer
+- **Status:** ✅ ERLEDIGT (2026-10-09) – vom Eigentümer bestätigt („alles funktioniert“, 2026-10-09, mit dem Darstellungs-Knopf in der Symbolleiste seit 5.11 Teil 2); umgesetzt auf Branch `feat/5.19-dunkelmodus`: alle Farben als Farbwerte an einer Stelle (`styles.css`), dunkle Farbgebung bei dunkel eingestelltem Gerät oder auf Wahl; Schalter „Darstellung“ (Automatisch/Hell/Dunkel) in der Kopfzeile, im Browser gemerkt (`theme.ts`, `ThemeChoice.tsx`), vor dem ersten Zeichnen gesetzt; Editor, Cursor, Auswahl und `@`-Menü in den Seitenfarben. Tests: `vitest` 119 bestanden, 98,68 % Zeilen / 96,52 % Zweige; Playwright 9 bestanden; Bildschirm-Probelauf hell und dunkel. Gemergt (#70, `ebc7bc5`) und eingespielt 2026-10-08. Offen: Prüfung durch den Eigentümer
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11 Teil 1
 - **Freigabepflichtig:** nein – nur `ui`, keine neue Abhängigkeit; die Wahl liegt nur im Browser (`localStorage`), nicht auf dem Server
