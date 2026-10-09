@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 20:53 UTC – [SESSIONSTART] 5.24 Ausgangsmessung nach Regel-002
+
+- **Umgebung:** Cloud-Session (Linux), nicht der Mac; gestartet vom iPhone. `main` abgeglichen (`6065f4b`), Branch `spike/5.24-ausgangsmessung`.
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage `get_session`) → Entscheidungs-Klasse. 5.24 empfiehlt Routine – Hinweis zu Beginn gegeben; Abgabe spart nichts (überwiegend Warten auf Läufe, Auswertung ist Lesearbeit bei gleichem Cache-Lesepreis).
+- **Kontextgröße:** Sitzungsabfrage meldet `used_tokens` 0 bei Sessionbeginn – Wert offenbar nicht gepflegt; Regel „Sessiongröße“ vorerst ohne verlässlichen Messwert.
+- **Schlüssel:** `OPENROUTER_API_KEY` in dieser Umgebung gesetzt (Länge geprüft, Wert nicht ausgegeben); `/api/v1/key` antwortet 200, Ausgabengrenze 250 $, gut 247 $ frei, gültig bis 2027-10-08. Die Messung kann laufen.
+- **Auftrag:** „5.24 Ausgangsmessung nach Regel-002“.
+
 ### 2026-10-09 20:45 UTC – [SESSIONENDE] Session auf dem Mac: 5.22, 5.19 erledigt; 5.11 Teil 2, 5.2, 5.21, 5.1 umgesetzt; 5.24 Testwelt und Werkzeug
 
 - **Dauer:** 15:44 – 20:45 UTC (Commit-Zeiten maßgeblich). Die Uhrzeiten der Einträge ab „ADR-048“ (18:20 UTC) sind geschätzt und um bis zu zwei Stunden zu spät; Reihenfolge und Inhalt gelten.
