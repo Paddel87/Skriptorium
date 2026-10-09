@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 21:00 UTC – [ADR-ANGELEGT] ADR-049 Kanon-Vorschläge ohne `@` im Browser
+
+- 5.1 begonnen. Auswahlfragen: Erkennung nur in der Anweisung; Vorschläge als Zeile darunter. Danach `ENTSCHEIDUNG ERFORDERLICH` (Kategorie 1): Erkennung im Browser statt in `context` – Eigentümer „A“. `[REAKTIV]` `[MODUL]`; Reaktiv-Quote 1/10 über ADR-040 bis ADR-049 (Schwelle 30 %). Architektur (Module `context`, `ui`) angepasst.
+
 ### 2026-10-09 20:45 UTC – [BEOBACHTUNG] Rückmeldung des Eigentümers, Prüfschritt Kanon-Treue
 
 - Eigentümer bestätigt: Der in der CI gefundene Fall (zweiter Scroll-Schritt zieht nach dem Senden wieder nach unten) war genau sein Befund.
