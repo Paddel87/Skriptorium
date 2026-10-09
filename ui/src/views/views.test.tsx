@@ -363,9 +363,12 @@ describe("Stories and chapters", () => {
     expect(
       await within(list).findByRole("link", { name: "2. Sturm" }),
     ).toBeDefined();
-    expect(screen.getByLabelText("Adresse").textContent).toBe(
-      "/welt/salzmark/geschichte/ueberfahrt/kapitel/2",
-    );
+    // The new chapter opens once the list knows it; the address may follow a moment later.
+    await waitFor(() => {
+      expect(screen.getByLabelText("Adresse").textContent).toBe(
+        "/welt/salzmark/geschichte/ueberfahrt/kapitel/2",
+      );
+    });
     expect(await screen.findByDisplayValue("Sturm")).toBeDefined();
     await user.click(within(list).getByRole("link", { name: "1. Aufbruch" }));
     const title = await screen.findByLabelText("Kapiteltitel");
