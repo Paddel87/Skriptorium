@@ -603,6 +603,24 @@ textarea.proposal-text.editing {
   gap: 0.4rem;
 }
 
+/* Names written without @, offered as suggestions (step 5.1). */
+.suggest {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  margin: 0;
+}
+
+.suggest button {
+  padding: 0.15rem 0.6rem;
+  border-style: dashed;
+}
+
+.suggest small {
+  opacity: 0.75;
+}
+
 .mode-line {
   margin: 0;
   font-size: 0.88rem;

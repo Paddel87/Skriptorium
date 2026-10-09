@@ -21,7 +21,11 @@ import {
   type WriteLength,
   type WriteOrder,
 } from "../api";
-import { referencedEntries } from "../references";
+import {
+  acceptSuggestion,
+  referencedEntries,
+  suggestions,
+} from "../references";
 import { loadStoryEntries } from "../storyEntries";
 import { useLoad } from "../useLoad";
 import { ErrorText } from "./Common";
@@ -351,6 +355,7 @@ export function WritingPanel({
   const places = storyEntries.filter((e) => e.category === "ort");
   const figures = storyEntries.filter((e) => e.category === "figur");
   const referenced = referencedEntries(instruction, storyEntries);
+  const suggested = suggestions(instruction, storyEntries);
   const shown = (entry: CanonEntry) =>
     entry.world === world ? entry.name : `${entry.name} (Gast)`;
 
@@ -475,6 +480,30 @@ export function WritingPanel({
               />
             </Suspense>
           </div>
+          {!busy && suggested.length > 0 && (
+            <p className="note suggest">
+              {/* Names without @ are only offered (step 5.1, FR-014). */}
+              <span>Meintest du:</span>
+              {suggested.map(({ word, entry }) => (
+                <button
+                  type="button"
+                  key={entry.id}
+                  aria-label={`@${word} heranziehen`}
+                  onClick={() => {
+                    setInstruction(
+                      acceptSuggestion(instruction, storyEntries, entry),
+                    );
+                  }}
+                >
+                  @{word}
+                  {word.toLocaleLowerCase("de") !==
+                    entry.name.toLocaleLowerCase("de") && (
+                    <small> → {shown(entry)}</small>
+                  )}
+                </button>
+              ))}
+            </p>
+          )}
           {referenced.length > 0 && (
             <p className="note">
               Herangezogen: {referenced.map(shown).join(", ")}
