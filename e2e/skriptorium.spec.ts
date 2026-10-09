@@ -7,6 +7,41 @@ async function login(page: Page, password = E2E_PASSWORD) {
   await page.getByRole("button", { name: "Anmelden" }).click();
 }
 
+/** A button in the bar of symbols on the left (step 5.11). */
+function bar(page: Page, name: string) {
+  return page
+    .getByRole("navigation", { name: "Bereiche" })
+    .getByRole("button", { name, exact: true });
+}
+
+/** An area of the open world: Geschichten, Kanon, Import, Welt. */
+function area(page: Page, name: string) {
+  return page
+    .getByRole("navigation", { name: "Bereiche der Welt" })
+    .getByRole("link", { name, exact: true });
+}
+
+/** A world, story or chapter in the list on the left. */
+function inList(page: Page, name: string) {
+  return page
+    .getByRole("navigation", { name: "Geschichten" })
+    .getByRole("link", { name, exact: true });
+}
+
+/** Add a chapter to the open novel in the list on the left. */
+async function addChapter(page: Page, title: string) {
+  await page.getByRole("button", { name: "+ Kapitel" }).click();
+  await page.getByLabel("Titel des neuen Kapitels").fill(title);
+  await page.getByRole("button", { name: "Kapitel anlegen" }).click();
+  await expect(page.getByLabel("Kapiteltitel")).toHaveValue(title);
+}
+
+/** Open the settings of the story in the bar on the right. */
+async function storySettings(page: Page) {
+  await page.getByRole("button", { name: "Kanon & Geschichte" }).click();
+  await page.getByRole("button", { name: "Geschichte", exact: true }).click();
+}
+
 test("refuses a wrong password", async ({ page }) => {
   await login(page, "das ist falsch und lang");
   await expect(page.getByRole("alert")).toHaveText("Passwort falsch");
@@ -51,16 +86,18 @@ test("world, canon, import, story and manuscript survive a reload", async ({
   await login(page);
   await page.getByLabel("Name").fill("Die Salzmark");
   await page.getByRole("button", { name: "Welt anlegen" }).click();
-  await expect(page.getByText("› Die Salzmark")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Die Salzmark" }),
+  ).toBeVisible();
 
-  await page.getByRole("button", { name: "Kanon", exact: true }).click();
+  await area(page, "Kanon").click();
   await page.getByRole("button", { name: "Neuer Eintrag" }).click();
   await page.getByLabel("Name").fill("Kael");
   await page.getByLabel("Text").fill("Fährmann über den Salzsee.");
   await page.getByRole("button", { name: "Speichern" }).click();
   await expect(page.getByRole("button", { name: "Kael" })).toBeVisible();
 
-  await page.getByRole("button", { name: "Import" }).click();
+  await area(page, "Import").click();
   await page
     .getByLabel("oder Text einfügen")
     .fill("# Orte\n\n## Salzsee\nWeit und weiß.\n");
@@ -68,26 +105,28 @@ test("world, canon, import, story and manuscript survive a reload", async ({
   await page.getByRole("button", { name: "Übernehmen" }).click();
   await expect(page.getByText(/1 neu, 0 überschrieben/)).toBeVisible();
 
-  await page.getByRole("button", { name: "Geschichten" }).click();
+  await area(page, "Geschichten").click();
   await page.getByLabel("Titel").fill("Die Überfahrt");
   await page.getByRole("button", { name: "Geschichte anlegen" }).click();
-  await page.getByLabel("Titel des neuen Kapitels").fill("Aufbruch");
-  await page.getByRole("button", { name: "Kapitel anlegen" }).click();
+  await addChapter(page, "Aufbruch");
   const editor = page.getByLabel("Manuskript");
   await editor.click();
   await page.keyboard.type("Kael stieß das Boot ab. <script>alert(1)</script>");
   await page.getByRole("button", { name: "Speichern" }).click();
   await expect(page.getByText("Gespeichert.")).toBeVisible();
 
+  // The address keeps the chapter open across a reload (step 5.11).
   await page.reload();
-  await expect(page.getByRole("heading", { name: "Welten" })).toBeVisible();
-  await page.getByRole("button", { name: "Die Salzmark" }).click();
-  await page.getByRole("button", { name: "Die Überfahrt" }).click();
+  await expect(page).toHaveURL(
+    /#\/welt\/die-salzmark\/geschichte\/die-ueberfahrt\/kapitel\/1$/,
+  );
   await expect(page.getByLabel("Manuskript")).toHaveText(
     "Kael stieß das Boot ab. <script>alert(1)</script>",
   );
+  await page.goBack();
+  await expect(inList(page, "Die Überfahrt")).toBeVisible();
 
-  await page.getByRole("button", { name: "Abmelden" }).click();
+  await bar(page, "Abmelden").click();
   await expect(page.getByRole("button", { name: "Anmelden" })).toBeVisible();
   await page.reload();
   await expect(page.getByRole("button", { name: "Anmelden" })).toBeVisible();
@@ -95,7 +134,7 @@ test("world, canon, import, story and manuscript survive a reload", async ({
 
 test("password change form reaches the server", async ({ page }) => {
   await login(page);
-  await page.getByRole("button", { name: "Konto" }).click();
+  await bar(page, "Konto").click();
   await page
     .getByLabel("Bisheriges Passwort")
     .fill("nicht das richtige Passwort");
@@ -132,17 +171,16 @@ test("@ menu names an entry; taken-over AI text is appended and saved", async ({
   await login(page);
   await page.getByLabel("Name").fill("Die Nebelküste");
   await page.getByRole("button", { name: "Welt anlegen" }).click();
-  await page.getByRole("button", { name: "Kanon", exact: true }).click();
+  await area(page, "Kanon").click();
   await page.getByRole("button", { name: "Neuer Eintrag" }).click();
   await page.getByLabel("Name").fill("Mira");
   await page.getByLabel("Text").fill("Zöllnerin mit einer Narbe am Kinn.");
   await page.getByRole("button", { name: "Speichern" }).click();
   await expect(page.getByRole("button", { name: "Mira" })).toBeVisible();
-  await page.getByRole("button", { name: "Geschichten" }).click();
+  await area(page, "Geschichten").click();
   await page.getByLabel("Titel").fill("Am Ufer");
   await page.getByRole("button", { name: "Geschichte anlegen" }).click();
-  await page.getByLabel("Titel des neuen Kapitels").fill("Ankunft");
-  await page.getByRole("button", { name: "Kapitel anlegen" }).click();
+  await addChapter(page, "Ankunft");
   await page.getByLabel("Manuskript").click();
   await page.keyboard.type("Das Boot lief auf Grund.");
 
@@ -174,8 +212,6 @@ test("@ menu names an entry; taken-over AI text is appended and saved", async ({
   });
 
   await page.reload();
-  await page.getByRole("button", { name: "Die Nebelküste" }).click();
-  await page.getByRole("button", { name: "Am Ufer" }).click();
   await expect(page.getByLabel("Manuskript")).toHaveText(
     "Das Boot lief auf Grund.Nebel lag über dem Wasser.",
   );
@@ -197,26 +233,26 @@ test("a guest from another world is bound in and named with @", async ({
   await login(page);
   await page.getByLabel("Name").fill("Das Frostreich");
   await page.getByRole("button", { name: "Welt anlegen" }).click();
-  await page.getByRole("button", { name: "Kanon", exact: true }).click();
+  await area(page, "Kanon").click();
   await page.getByRole("button", { name: "Neuer Eintrag" }).click();
   await page.getByLabel("Name").fill("Eiskönigin");
   await page.getByLabel("Text").fill("Herrscht über den Frost, trägt Reif.");
   await page.getByRole("button", { name: "Speichern" }).click();
   await expect(page.getByRole("button", { name: "Eiskönigin" })).toBeVisible();
 
-  await page.locator("button.brand").click();
+  await bar(page, "Welten").click();
   await page.getByLabel("Name").fill("Die Salzbucht");
   await page.getByRole("button", { name: "Welt anlegen" }).click();
-  await page.getByRole("button", { name: "Geschichten" }).click();
+  await area(page, "Geschichten").click();
   await page.getByLabel("Titel").fill("Gastspiel");
   await page.getByRole("button", { name: "Geschichte anlegen" }).click();
+  await storySettings(page);
   await page.getByText(/Gäste aus anderen Welten/).click();
   await page.getByLabel("Welt des Gastes").selectOption("das-frostreich");
   await page.getByLabel("Gast-Eintrag").selectOption("eiskoenigin");
   await page.getByRole("button", { name: "Als Gast einbinden" }).click();
   await expect(page.getByText("Eiskönigin aus Das Frostreich")).toBeVisible();
-  await page.getByLabel("Titel des neuen Kapitels").fill("Ankunft");
-  await page.getByRole("button", { name: "Kapitel anlegen" }).click();
+  await addChapter(page, "Ankunft");
 
   await page.getByLabel(/Anweisung an die KI/).click();
   await page.keyboard.type("@Eis");
@@ -240,32 +276,32 @@ test("a marked passage goes into the canon or into this story only", async ({
   await login(page);
   await page.getByLabel("Name").fill("Das Aschenland");
   await page.getByRole("button", { name: "Welt anlegen" }).click();
-  await page.getByRole("button", { name: "Kanon", exact: true }).click();
+  await area(page, "Kanon").click();
   await page.getByRole("button", { name: "Neuer Eintrag" }).click();
   await page.getByLabel("Name").fill("Aschenfürst");
   await page.getByLabel("Text").fill("Herrscht über die Glut.");
   await page.getByRole("button", { name: "Speichern" }).click();
   await expect(page.getByRole("button", { name: "Aschenfürst" })).toBeVisible();
 
-  await page.locator("button.brand").click();
+  await bar(page, "Welten").click();
   await page.getByLabel("Name").fill("Die Kreideküste");
   await page.getByRole("button", { name: "Welt anlegen" }).click();
-  await page.getByRole("button", { name: "Kanon", exact: true }).click();
+  await area(page, "Kanon").click();
   await page.getByRole("button", { name: "Neuer Eintrag" }).click();
   await page.getByLabel("Name").fill("Tamsin");
   await page.getByLabel("Text").fill("Lotsin an der Kreideküste.");
   await page.getByRole("button", { name: "Speichern" }).click();
   await expect(page.getByRole("button", { name: "Tamsin" })).toBeVisible();
-  await page.getByRole("button", { name: "Geschichten" }).click();
+  await area(page, "Geschichten").click();
   await page.getByLabel("Titel").fill("Kreidefelsen");
   await page.getByRole("button", { name: "Geschichte anlegen" }).click();
+  await storySettings(page);
   await page.getByText(/Gäste aus anderen Welten/).click();
   await page.getByLabel("Welt des Gastes").selectOption("das-aschenland");
   await page.getByLabel("Gast-Eintrag").selectOption("aschenfuerst");
   await page.getByRole("button", { name: "Als Gast einbinden" }).click();
   await expect(page.getByText("Aschenfürst aus Das Aschenland")).toBeVisible();
-  await page.getByLabel("Titel des neuen Kapitels").fill("Brandung");
-  await page.getByRole("button", { name: "Kapitel anlegen" }).click();
+  await addChapter(page, "Brandung");
   await page.getByLabel("Manuskript").click();
   await page.keyboard.type("Tamsin fürchtet tiefes Wasser.");
   await page.keyboard.press("Enter");
@@ -301,15 +337,14 @@ test("a marked passage goes into the canon or into this story only", async ({
   ).toBeVisible();
 
   await page.reload();
-  await page.getByRole("button", { name: "Die Kreideküste" }).click();
-  await page.getByRole("button", { name: "Kanon", exact: true }).click();
+  await inList(page, "Die Kreideküste").click();
+  await area(page, "Kanon").click();
   await page.getByRole("button", { name: "Tamsin" }).click();
   await expect(page.getByLabel("Text")).toHaveValue(
     "Lotsin an der Kreideküste.\n\nTamsin fürchtet tiefes Wasser.",
   );
-  await page.locator("button.brand").click();
-  await page.getByRole("button", { name: "Das Aschenland" }).click();
-  await page.getByRole("button", { name: "Kanon", exact: true }).click();
+  await inList(page, "Das Aschenland").click();
+  await area(page, "Kanon").click();
   await page.getByRole("button", { name: "Aschenfürst" }).click();
   await expect(page.getByLabel("Text")).toHaveValue("Herrscht über die Glut.");
 });
@@ -321,11 +356,10 @@ test("the model of a story survives a reload; costs of the month are shown", asy
   await login(page);
   await page.getByLabel("Name").fill("Die Moorlande");
   await page.getByRole("button", { name: "Welt anlegen" }).click();
-  await page.getByRole("button", { name: "Geschichten" }).click();
+  await area(page, "Geschichten").click();
   await page.getByLabel("Titel").fill("Nebelpfad");
   await page.getByRole("button", { name: "Geschichte anlegen" }).click();
-  await page.getByLabel("Titel des neuen Kapitels").fill("Aufbruch");
-  await page.getByRole("button", { name: "Kapitel anlegen" }).click();
+  await addChapter(page, "Aufbruch");
   const model = page.getByRole("combobox", { name: "Modell", exact: true });
   // Preset since step 5.7 (ADR-044); grok-4.7 stays selectable.
   await expect(model).toHaveValue("x-ai/grok-4.6");
@@ -338,13 +372,11 @@ test("the model of a story survives a reload; costs of the month are shown", asy
   expect((await saved).status()).toBe(200);
 
   await page.reload();
-  await page.getByRole("button", { name: "Die Moorlande" }).click();
-  await page.getByRole("button", { name: "Nebelpfad" }).click();
   await expect(
     page.getByRole("combobox", { name: "Modell", exact: true }),
   ).toHaveValue("x-ai/grok-4.7");
 
-  await page.getByRole("button", { name: "Konto" }).click();
+  await bar(page, "Konto").click();
   await expect(page.getByText(/ für \d+ Anfrage/)).toBeVisible();
 });
 
@@ -360,15 +392,14 @@ async function waitForCompletionInteraction(page: Page): Promise<void> {
 test("a long chapter opens at its end with the writing area close by", async ({
   page,
 }) => {
-  // Step 5.9 (FR-022): the editor scrolls on its own and shows the end of the text.
+  // Steps 5.9, 5.11 (FR-022): the chapter scrolls like a chat and opens at the end of the text.
   await login(page);
   await page.getByLabel("Name").fill("Die Lange Nacht");
   await page.getByRole("button", { name: "Welt anlegen" }).click();
-  await page.getByRole("button", { name: "Geschichten" }).click();
+  await area(page, "Geschichten").click();
   await page.getByLabel("Titel").fill("Endlos");
   await page.getByRole("button", { name: "Geschichte anlegen" }).click();
-  await page.getByLabel("Titel des neuen Kapitels").fill("Lang");
-  await page.getByRole("button", { name: "Kapitel anlegen" }).click();
+  await addChapter(page, "Lang");
   await expect(page.getByLabel("Manuskript")).toBeVisible();
   const text = Array.from(
     { length: 300 },
@@ -388,8 +419,6 @@ test("a long chapter opens at its end with the writing area close by", async ({
   expect(status).toBe(200);
 
   await page.reload();
-  await page.getByRole("button", { name: "Die Lange Nacht" }).click();
-  await page.getByRole("button", { name: "Endlos" }).click();
   const last = page.getByText("Absatz 300: Die Nacht wollte nicht enden.");
   await expect(last).toBeInViewport();
   await expect(
@@ -398,5 +427,5 @@ test("a long chapter opens at its end with the writing area close by", async ({
   await expect(
     page.getByRole("button", { name: "In den Kanon" }),
   ).toBeInViewport();
-  await expect(page.getByText(/^Anweisung an die KI/)).toBeInViewport();
+  await expect(page.getByLabel(/Anweisung an die KI/)).toBeInViewport();
 });

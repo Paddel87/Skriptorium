@@ -1,4 +1,4 @@
-import { lazy, Suspense, useRef, useState, type ReactNode } from "react";
+import { lazy, Suspense, useState, type ReactNode } from "react";
 import {
   api,
   describeError,
@@ -8,7 +8,7 @@ import {
 } from "../api";
 import { CanonFact } from "./CanonFact";
 import { ChapterSummary } from "./ChapterSummary";
-import { ErrorText, Field } from "./Common";
+import { ErrorText } from "./Common";
 import { WritingPanel } from "./WritingPanel";
 
 // The editor with its Markdown grammar is large; it is loaded when a chapter is opened.
@@ -19,8 +19,10 @@ const ManuscriptEditor = lazy(() =>
 );
 
 /**
- * One chapter: title and text in the editor, saving, completing with its summary, taking a
- * marked passage into the canon, and the writing panel below.
+ * One chapter (step 5.11): a top line with the story, the chapter title and saving; below it the
+ * text in the editor, which scrolls like a chat with the AI's proposal at its end, and the
+ * instruction at the bottom with completing the chapter and taking a marked passage into the
+ * canon.
  */
 export function ChapterEditor({
   chapter,
@@ -29,6 +31,8 @@ export function ChapterEditor({
   onStory,
   mode,
   onCanonChanged,
+  lead,
+  tools,
 }: {
   chapter: Chapter;
   /** The story; its guests are offered in the writing panel and in "In den Kanon". */
@@ -36,10 +40,14 @@ export function ChapterEditor({
   onSaved: () => void;
   /** The story after its overall summary changed. */
   onStory: (story: Story) => void;
-  /** Figuren-Schreibweise, shown right above the writing panel (step 5.11). */
+  /** Short line of the Figuren-Schreibweise, right above the instruction (step 5.11). */
   mode?: ReactNode;
   /** Called after a passage went into the canon, so canon views load again. */
   onCanonChanged?: () => void;
+  /** At the start of the top line (the menu button on small screens). */
+  lead?: ReactNode;
+  /** At the end of the top line (the button for the bar on the right). */
+  tools?: ReactNode;
 }) {
   const [title, setTitle] = useState(chapter.title);
   const [text, setText] = useState(chapter.text);
@@ -53,18 +61,8 @@ export function ChapterEditor({
   const [canonNote, setCanonNote] = useState<string | null>(null);
   // Counts canon changes, so the writing panel offers new entries in its `@` menu.
   const [canonRevision, setCanonRevision] = useState(0);
-  const card = useRef<HTMLElement>(null);
-
-  /**
-   * When the chapter opens and its card reaches below the window, the page moves to the chapter,
-   * so the end of the text, "In den Kanon" and the writing panel are in reach (steps 5.9, 5.11).
-   */
-  function arrange() {
-    const below = card.current?.getBoundingClientRect().bottom ?? 0;
-    if (below > window.innerHeight) {
-      card.current?.scrollIntoView({ block: "start" });
-    }
-  }
+  // Counts the moments the end of the text should come into view (steps 5.9, 5.11).
+  const [ends, setEnds] = useState(0);
 
   async function save(): Promise<boolean> {
     setError(null);
@@ -134,30 +132,24 @@ export function ChapterEditor({
   }
 
   return (
-    <section className="card" ref={card}>
-      <Field label="Kapiteltitel">
+    <section
+      className="chapter"
+      aria-label={`Kapitel ${String(chapter.number)}`}
+    >
+      <header className="chapter-bar">
+        {lead}
+        <span className="crumb">{story.title} ›</span>
         <input
+          className="chapter-title"
+          aria-label="Kapiteltitel"
           value={title}
           onChange={(event) => {
             setTitle(event.target.value);
             setState("dirty");
           }}
         />
-      </Field>
-      <Suspense fallback={<p>Editor lädt …</p>}>
-        <ManuscriptEditor
-          label="Manuskript"
-          value={text}
-          onChange={(value) => {
-            setText(value);
-            setState("dirty");
-          }}
-          onSelect={setMarked}
-          onReady={arrange}
-        />
-      </Suspense>
-      <ErrorText message={error} />
-      <div className="row">
+        <span className="spacer" />
+        {state === "saved" && <span className="ok">Gespeichert.</span>}
         <button
           type="button"
           onClick={() => void save()}
@@ -165,70 +157,8 @@ export function ChapterEditor({
         >
           Speichern
         </button>
-        {state === "saved" && <span className="ok">Gespeichert.</span>}
-        {chapter.status === "abgeschlossen" ? (
-          <span className="note">Kapitel abgeschlossen</span>
-        ) : (
-          <button
-            type="button"
-            disabled={summarizing}
-            onClick={() => void complete()}
-          >
-            Kapitel abschließen
-          </button>
-        )}
-        <button
-          type="button"
-          disabled={marked.trim() === "" || taking !== null}
-          onClick={() => {
-            setCanonNote(null);
-            setTaking(marked);
-          }}
-        >
-          In den Kanon
-        </button>
-        {summarizing && (
-          <span className="note" role="status">
-            Kurzfassung wird erstellt …
-          </span>
-        )}
-        {canonNote !== null && (
-          <span className="ok" role="status">
-            {canonNote}
-          </span>
-        )}
-      </div>
-      {taking !== null && (
-        <CanonFact
-          story={story}
-          marked={taking}
-          onStory={onStory}
-          onDone={(note) => {
-            setTaking(null);
-            setCanonNote(note);
-            setCanonRevision((value) => value + 1);
-            onCanonChanged?.();
-          }}
-          onCancel={() => {
-            setTaking(null);
-          }}
-        />
-      )}
-      {summaryNote !== null && (
-        <p className="error" role="alert">
-          {summaryNote}
-        </p>
-      )}
-      {(chapter.status === "abgeschlossen" || chapter.summary !== "") && (
-        <ChapterSummary
-          key={`${chapter.summary_status}:${chapter.summary}`}
-          chapter={chapter}
-          busy={summarizing}
-          onSummarize={() => void summarize()}
-          onSaved={onSaved}
-        />
-      )}
-      {mode}
+        {tools}
+      </header>
       <WritingPanel
         world={chapter.world}
         story={chapter.story}
@@ -242,7 +172,91 @@ export function ChapterEditor({
         }}
         prepare={() => (state === "dirty" ? save() : Promise.resolve(true))}
         onAccept={append}
-      />
+        endSignal={ends}
+        mode={mode}
+        tools={
+          <>
+            <button
+              type="button"
+              disabled={marked.trim() === "" || taking !== null}
+              title="Markierte Stelle in den Kanon oder nur in diese Geschichte"
+              onClick={() => {
+                setCanonNote(null);
+                setTaking(marked);
+              }}
+            >
+              In den Kanon
+            </button>
+            {chapter.status === "abgeschlossen" ? (
+              <span className="note">Kapitel abgeschlossen</span>
+            ) : (
+              <button
+                type="button"
+                disabled={summarizing}
+                onClick={() => void complete()}
+              >
+                Kapitel abschließen
+              </button>
+            )}
+          </>
+        }
+      >
+        <Suspense fallback={<p>Editor lädt …</p>}>
+          <ManuscriptEditor
+            label="Manuskript"
+            value={text}
+            onChange={(value) => {
+              setText(value);
+              setState("dirty");
+            }}
+            onSelect={setMarked}
+            onEnd={() => {
+              setEnds((value) => value + 1);
+            }}
+          />
+        </Suspense>
+        <ErrorText message={error} />
+        {summarizing && (
+          <p className="note" role="status">
+            Kurzfassung wird erstellt …
+          </p>
+        )}
+        {canonNote !== null && (
+          <p className="ok" role="status">
+            {canonNote}
+          </p>
+        )}
+        {taking !== null && (
+          <CanonFact
+            story={story}
+            marked={taking}
+            onStory={onStory}
+            onDone={(note) => {
+              setTaking(null);
+              setCanonNote(note);
+              setCanonRevision((value) => value + 1);
+              onCanonChanged?.();
+            }}
+            onCancel={() => {
+              setTaking(null);
+            }}
+          />
+        )}
+        {summaryNote !== null && (
+          <p className="error" role="alert">
+            {summaryNote}
+          </p>
+        )}
+        {(chapter.status === "abgeschlossen" || chapter.summary !== "") && (
+          <ChapterSummary
+            key={`${chapter.summary_status}:${chapter.summary}`}
+            chapter={chapter}
+            busy={summarizing}
+            onSummarize={() => void summarize()}
+            onSaved={onSaved}
+          />
+        )}
+      </WritingPanel>
     </section>
   );
 }

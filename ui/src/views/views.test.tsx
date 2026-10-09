@@ -12,19 +12,29 @@ import {
   STORY,
   WORLD,
 } from "../../fake-api";
+import { renderShell } from "../../render-shell";
 import { Account } from "./Account";
 import { Canon } from "./Canon";
 import { Import } from "./Import";
 import { ManuscriptEditor } from "./ManuscriptEditor";
 import { Stories } from "./Stories";
-import { StoryPage } from "./StoryPage";
-import { WorldPage } from "./WorldPage";
 import { Worlds } from "./Worlds";
 
 afterEach(() => {
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
+
+/** What the frame loads for the list on the left. */
+const SHELL = {
+  "GET /api/worlds": ok([WORLD]),
+  "GET /api/worlds/salzmark/stories": ok([STORY]),
+  "GET /api/worlds/salzmark/entries": ok([ENTRY]),
+  "GET /api/models": ok({
+    models: ["x-ai/grok-4.6"],
+    default: "x-ai/grok-4.6",
+  }),
+};
 
 describe("Worlds", () => {
   it("lists, creates and opens worlds", async () => {
@@ -308,9 +318,10 @@ describe("Stories and chapters", () => {
     expect(await screen.findByText("Existiert bereits")).toBeDefined();
   });
 
-  it("adds, switches, saves and completes chapters", async () => {
+  it("adds chapters in the list, switches, saves and completes them (step 5.11)", async () => {
     let chapters = [CHAPTER];
     const { calls } = fakeApi({
+      ...SHELL,
       "GET /api/worlds/salzmark/stories/ueberfahrt/chapters": () => ({
         status: 200,
         body: chapters,
@@ -341,14 +352,22 @@ describe("Stories and chapters", () => {
         }),
     });
     const user = userEvent.setup();
-    render(<StoryPage story={STORY} />);
+    renderShell("/welt/salzmark/geschichte/ueberfahrt");
     expect(await screen.findByText("Perspektive: ich")).toBeDefined();
+    const list = screen.getByRole("list", { name: "Kapitel" });
+    await user.click(
+      await within(list).findByRole("button", { name: "+ Kapitel" }),
+    );
     await user.type(screen.getByLabelText("Titel des neuen Kapitels"), "Sturm");
     await user.click(screen.getByRole("button", { name: "Kapitel anlegen" }));
     expect(
-      await screen.findByRole("button", { name: "2. Sturm" }),
+      await within(list).findByRole("link", { name: "2. Sturm" }),
     ).toBeDefined();
-    await user.click(screen.getByRole("button", { name: "1. Aufbruch" }));
+    expect(screen.getByLabelText("Adresse").textContent).toBe(
+      "/welt/salzmark/geschichte/ueberfahrt/kapitel/2",
+    );
+    expect(await screen.findByDisplayValue("Sturm")).toBeDefined();
+    await user.click(within(list).getByRole("link", { name: "1. Aufbruch" }));
     const title = await screen.findByLabelText("Kapiteltitel");
     await waitFor(() => {
       expect(title).toHaveProperty("value", "Aufbruch");
@@ -374,6 +393,7 @@ describe("Stories and chapters", () => {
 
   it("shows chapter errors; short stories have no new chapters", async () => {
     fakeApi({
+      ...SHELL,
       "GET /api/worlds/salzmark/stories/ueberfahrt/chapters": ok([CHAPTER]),
       "PUT /api/worlds/salzmark/stories/ueberfahrt/chapters/1": fail(
         500,
@@ -389,13 +409,13 @@ describe("Stories and chapters", () => {
       ),
     });
     const user = userEvent.setup();
-    const { rerender } = render(<StoryPage story={STORY} />);
-    await user.type(
-      await screen.findByLabelText("Titel des neuen Kapitels"),
-      "x",
-    );
+    const { unmount } = renderShell("/welt/salzmark/geschichte/ueberfahrt");
+    await user.click(await screen.findByRole("button", { name: "+ Kapitel" }));
+    await user.type(screen.getByLabelText("Titel des neuen Kapitels"), "x");
     await user.click(screen.getByRole("button", { name: "Kapitel anlegen" }));
     expect(await screen.findByText("Titel fehlt")).toBeDefined();
+    await user.click(screen.getByRole("button", { name: "Abbrechen" }));
+    expect(screen.queryByLabelText("Titel des neuen Kapitels")).toBeNull();
     await user.type(await screen.findByLabelText("Kapiteltitel"), "!");
     await user.click(screen.getByRole("button", { name: "Speichern" }));
     expect(await screen.findByText("Speichern fehlgeschlagen")).toBeDefined();
@@ -406,12 +426,18 @@ describe("Stories and chapters", () => {
     await waitFor(() => {
       expect(screen.getAllByText("Speichern fehlgeschlagen")).toHaveLength(1);
     });
-    rerender(
-      <StoryPage
-        story={{ ...STORY, form: "kurzgeschichte", perspective: null }}
-      />,
-    );
-    expect(screen.queryByLabelText("Titel des neuen Kapitels")).toBeNull();
+    unmount();
+    fakeApi({
+      ...SHELL,
+      "GET /api/worlds/salzmark/stories": ok([
+        { ...STORY, form: "kurzgeschichte", perspective: null },
+      ]),
+      "GET /api/worlds/salzmark/stories/ueberfahrt/chapters": ok([CHAPTER]),
+    });
+    renderShell("/welt/salzmark/geschichte/ueberfahrt");
+    expect(await screen.findByDisplayValue("Aufbruch")).toBeDefined();
+    expect(await screen.findByText("(Kurzgeschichte)")).toBeDefined();
+    expect(screen.queryByRole("button", { name: "+ Kapitel" })).toBeNull();
   });
 });
 
@@ -562,43 +588,63 @@ describe("Account", () => {
 });
 
 describe("WorldPage", () => {
-  it("switches tabs and changes the world", async () => {
+  it("has an address per area and changes the world (step 5.11)", async () => {
     const { calls } = fakeApi({
+      ...SHELL,
       "GET /api/worlds/salzmark/stories": ok([]),
       "GET /api/worlds/salzmark/entries": ok([]),
       "PATCH /api/worlds/salzmark": ok({ ...WORLD, name: "Neue Mark" }),
     });
     const user = userEvent.setup();
-    render(<WorldPage world={WORLD} onOpenStory={vi.fn()} />);
+    renderShell("/welt/salzmark");
     expect(await screen.findByText("Noch keine Geschichte.")).toBeDefined();
-    await user.click(screen.getByRole("button", { name: "Kanon" }));
+    expect(screen.getByLabelText("Adresse").textContent).toBe(
+      "/welt/salzmark/geschichten",
+    );
+    const areas = screen.getByRole("navigation", { name: "Bereiche der Welt" });
+    await user.click(within(areas).getByRole("link", { name: "Kanon" }));
     expect(await screen.findByText("Noch keine Kanon-Einträge.")).toBeDefined();
-    await user.click(screen.getByRole("button", { name: "Import" }));
+    await user.click(within(areas).getByRole("link", { name: "Import" }));
     expect(
       screen.getByRole("heading", { name: "Welt-Material importieren" }),
     ).toBeDefined();
-    await user.click(screen.getByRole("button", { name: "Welt" }));
+    await user.click(within(areas).getByRole("link", { name: "Welt" }));
+    expect(screen.getByLabelText("Adresse").textContent).toBe(
+      "/welt/salzmark/beschreibung",
+    );
     const name = screen.getByLabelText("Name");
     await user.clear(name);
     await user.type(name, "Neue Mark");
     await user.click(screen.getByRole("button", { name: "Speichern" }));
     expect(await screen.findByText("Gespeichert.")).toBeDefined();
-    expect(calls.at(-1)?.body).toEqual({
+    expect(calls.find((c) => c.method === "PATCH")?.body).toEqual({
       name: "Neue Mark",
       description: "Salz",
     });
+    expect(
+      await screen.findByRole("heading", { name: "Neue Mark" }),
+    ).toBeDefined();
   });
 
-  it("shows errors when saving the world", async () => {
+  it("shows errors when saving the world; unknown areas lead to the stories", async () => {
     fakeApi({
+      ...SHELL,
       "GET /api/worlds/salzmark/stories": ok([]),
       "PATCH /api/worlds/salzmark": fail(422, "Name fehlt"),
     });
     const user = userEvent.setup();
-    render(<WorldPage world={WORLD} onOpenStory={vi.fn()} />);
-    await user.click(screen.getByRole("button", { name: "Welt" }));
-    await user.type(screen.getByLabelText("Beschreibung und Grundregeln"), "!");
+    const { unmount } = renderShell("/welt/salzmark/beschreibung");
+    await user.type(
+      await screen.findByLabelText("Beschreibung und Grundregeln"),
+      "!",
+    );
     await user.click(screen.getByRole("button", { name: "Speichern" }));
     expect(await screen.findByText("Name fehlt")).toBeDefined();
+    unmount();
+    renderShell("/welt/salzmark/irgendwas");
+    expect(await screen.findByText("Noch keine Geschichte.")).toBeDefined();
+    expect(screen.getByLabelText("Adresse").textContent).toBe(
+      "/welt/salzmark/geschichten",
+    );
   });
 });

@@ -6,6 +6,7 @@ import {
   useId,
   useRef,
   useState,
+  type ReactNode,
 } from "react";
 import {
   api,
@@ -23,7 +24,7 @@ import {
 import { referencedEntries } from "../references";
 import { loadStoryEntries } from "../storyEntries";
 import { useLoad } from "../useLoad";
-import { ErrorText, Field } from "./Common";
+import { ErrorText } from "./Common";
 import { SceneForm } from "./SceneForm";
 
 // CodeMirror is large; the instruction field is loaded with the chapter like the editor.
@@ -51,6 +52,11 @@ const EXAMPLE_INSTRUCTION =
  * Entries named with `@` in the instruction are sent as references (step 3.5, FR-013); guests
  * of the story from other worlds can be named and put into a new scene like entries of the
  * world (step 3.7, FR-017). The length of a proposal is chosen per request (step 5.15).
+ *
+ * Laid out like a chat (step 5.11): `children` (the manuscript) and the proposal below it scroll
+ * together, the proposal stands at the end of the text like an answer; the instruction with
+ * model, length and the buttons stays at the bottom. "/" outside a field jumps into the
+ * instruction.
  */
 export function WritingPanel({
   world,
@@ -63,6 +69,10 @@ export function WritingPanel({
   onModelChange,
   prepare,
   onAccept,
+  children,
+  mode,
+  tools,
+  endSignal = 0,
 }: {
   world: string;
   story: string;
@@ -81,6 +91,14 @@ export function WritingPanel({
   prepare: () => Promise<boolean>;
   /** Append the proposal to the end of the chapter and save it. */
   onAccept: (text: string) => Promise<void>;
+  /** The manuscript and what belongs to it; scrolls above the instruction. */
+  children?: ReactNode;
+  /** Short line of the Figuren-Schreibweise above the instruction. */
+  mode?: ReactNode;
+  /** More buttons in the line of the instruction (e.g. "In den Kanon"). */
+  tools?: ReactNode;
+  /** Changes when the end of the text should come into view (chapter opened, text taken over). */
+  endSignal?: number;
 }) {
   const loadModels = useCallback(() => api.models(), []);
   const models = useLoad(loadModels);
@@ -114,7 +132,11 @@ export function WritingPanel({
   const [lastOrder, setLastOrder] = useState<WriteOrder | null>(null);
   const [usage, setUsage] = useState<Usage | null>(null);
   const [modelError, setModelError] = useState<string | null>(null);
+  const [editing, setEditing] = useState(false);
+  const [more, setMore] = useState(false);
   const controller = useRef<AbortController | null>(null);
+  const scroller = useRef<HTMLDivElement>(null);
+  const composer = useRef<HTMLDivElement>(null);
   const instructionLabel = useId();
 
   const offered = models.data?.models ?? [];
@@ -145,7 +167,79 @@ export function WritingPanel({
     [],
   );
 
+  // When the width changes (bar on the right, turning the phone), the end stays in view if it
+  // was in view before.
+  useEffect(() => {
+    const area = scroller.current;
+    const sheet = area?.firstElementChild;
+    if (
+      area === null ||
+      sheet === null ||
+      sheet === undefined ||
+      typeof ResizeObserver === "undefined"
+    ) {
+      return;
+    }
+    let atEnd = true;
+    const remember = () => {
+      atEnd = area.scrollHeight - area.scrollTop - area.clientHeight < 48;
+    };
+    const observer = new ResizeObserver(() => {
+      if (atEnd) {
+        area.scrollTop = area.scrollHeight;
+      }
+    });
+    area.addEventListener("scroll", remember);
+    observer.observe(sheet);
+    observer.observe(area);
+    return () => {
+      area.removeEventListener("scroll", remember);
+      observer.disconnect();
+    };
+  }, []);
+
+  // The end of the text (and the proposal growing there) stays in view, as in a chat.
+  useEffect(() => {
+    const area = scroller.current;
+    if (area === null) {
+      return;
+    }
+    area.scrollTop = area.scrollHeight;
+    // The editor measures its lines after the first paint; follow once more then.
+    const frame = requestAnimationFrame(() => {
+      area.scrollTop = area.scrollHeight;
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+    };
+  }, [endSignal, phase, proposal]);
+
+  useEffect(() => {
+    function jump(event: KeyboardEvent) {
+      if (
+        event.key !== "/" ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.altKey ||
+        writable(event.target)
+      ) {
+        return;
+      }
+      const field =
+        composer.current?.querySelector<HTMLElement>(".cm-content") ?? null;
+      if (field !== null) {
+        event.preventDefault();
+        field.focus();
+      }
+    }
+    document.addEventListener("keydown", jump);
+    return () => {
+      document.removeEventListener("keydown", jump);
+    };
+  }, []);
+
   async function send(order: WriteOrder) {
+    setEditing(false);
     setPhase("thinking");
     setSeconds(0);
     setProposal("");
@@ -207,6 +301,7 @@ export function WritingPanel({
   }
 
   function discard() {
+    setEditing(false);
     setPhase("idle");
     setProposal("");
     setNote(null);
@@ -237,136 +332,22 @@ export function WritingPanel({
   const shown = (entry: CanonEntry) =>
     entry.world === world ? entry.name : `${entry.name} (Gast)`;
 
-  return (
-    <section className="card" aria-label="Schreiben mit der KI">
-      <ErrorText message={models.error ?? entries.error ?? modelError} />
-      {chapterEmpty && phase === "idle" && (
-        <p className="note">
-          So fängst du an: Schreib unten, was passieren soll, und klick auf
-          „Weiterschreiben“ – oder schreib selbst oben im Kapitel.
-        </p>
-      )}
-      <div className="row">
-        <Field label="Modell">
-          <select
-            value={chosenModel}
-            onChange={(event) => {
-              const next = event.target.value;
-              setModel(next);
-              setModelError(null);
-              onModelChange?.(next).catch((reason: unknown) => {
-                setModelError(describeError(reason));
-              });
-            }}
-          >
-            {offered.map((id) => (
-              <option key={id} value={id}>
-                {id}
-              </option>
-            ))}
-          </select>
-        </Field>
-        <span className="note">Anbieter: OpenRouter</span>
-        <Field label="Länge">
-          <select
-            value={length}
-            disabled={busy}
-            onChange={(event) => {
-              setLength(event.target.value as WriteLength);
-            }}
-          >
-            {LENGTHS.map((name) => (
-              <option key={name} value={name}>
-                {name}
-              </option>
-            ))}
-          </select>
-        </Field>
-        <label className="check">
-          <input
-            type="checkbox"
-            checked={sceneOpen}
-            disabled={busy}
-            onChange={(event) => {
-              setSceneOpen(event.target.checked);
-            }}
-          />
-          Neue Szene
-        </label>
-      </div>
-      {sceneOpen && (
-        <SceneForm
-          places={places}
-          figures={figures}
-          shown={shown}
-          place={place}
-          characters={characters}
-          goal={goal}
-          onPlace={setPlace}
-          onCharacters={setCharacters}
-          onGoal={setGoal}
-        />
-      )}
-      <div className="field">
-        <span id={instructionLabel}>
-          Anweisung an die KI (leer: einfach weiterschreiben; @ für Kanon)
-        </span>
-        <Suspense fallback={<p>Eingabe lädt …</p>}>
-          <InstructionEditor
-            value={instruction}
-            onChange={setInstruction}
-            entries={storyEntries}
-            world={world}
-            labelledBy={instructionLabel}
-            disabled={busy}
-            example={EXAMPLE_INSTRUCTION}
-          />
-        </Suspense>
-      </div>
-      {referenced.length > 0 && (
-        <p className="note">Herangezogen: {referenced.map(shown).join(", ")}</p>
-      )}
-      <div className="row">
-        <button
-          type="button"
-          disabled={busy || chosenModel === ""}
-          onClick={() => void send(newOrder())}
-        >
-          {sceneOpen ? "Szene beginnen" : "Weiterschreiben"}
-        </button>
-        {busy && (
-          <button type="button" onClick={stop}>
-            Abbrechen
-          </button>
-        )}
-        {phase === "thinking" && (
-          <span className="note" role="status">
-            denkt nach … {seconds} s
-          </span>
-        )}
-        {phase === "writing" && (
-          <span className="note" role="status">
-            schreibt …
-          </span>
-        )}
-      </div>
-      {note !== null && phase !== "idle" && (
-        <p className="note" role="note">
-          Hinweis der KI (wird nicht übernommen): {note}
-        </p>
-      )}
-      {(phase === "writing" || phase === "review") && (
-        <Field label="Vorschlag der KI">
-          <textarea
-            rows={8}
-            value={proposal}
-            readOnly={phase !== "review"}
-            onChange={(event) => {
-              setProposal(event.target.value);
-            }}
-          />
-        </Field>
-      )}
+  const proposalBlock = (phase === "writing" || phase === "review") && (
+    <article className="proposal" aria-label="Vorschlag">
+      <p className="who">
+        Vorschlag der KI · {lastOrder?.model ?? chosenModel} über OpenRouter ·{" "}
+        {lastOrder?.length ?? length}
+      </p>
+      <textarea
+        aria-label="Vorschlag der KI"
+        className={editing ? "proposal-text editing" : "proposal-text"}
+        rows={rowsFor(proposal)}
+        value={proposal}
+        readOnly={phase !== "review" || !editing}
+        onChange={(event) => {
+          setProposal(event.target.value);
+        }}
+      />
       {phase === "review" && (
         <>
           {aborted && <p className="note">Abgebrochen.</p>}
@@ -374,15 +355,28 @@ export function WritingPanel({
             <p className="error" role="alert">
               {describeWriteError(failure)}
               {failure === "abgelehnt" &&
-                " Wähle oben ein anderes Modell und schreibe neu."}
+                " Wähle unten ein anderes Modell und schreibe neu."}
             </p>
           )}
-          {usage !== null && <p className="note">{describeUsage(usage)}</p>}
           <ErrorText message={error} />
           <div className="row">
             {proposal.trim() !== "" && (
-              <button type="button" onClick={() => void accept()}>
+              <button
+                type="button"
+                className="primary"
+                onClick={() => void accept()}
+              >
                 Übernehmen
+              </button>
+            )}
+            {proposal.trim() !== "" && !editing && (
+              <button
+                type="button"
+                onClick={() => {
+                  setEditing(true);
+                }}
+              >
+                Ändern
               </button>
             )}
             <button type="button" onClick={discard}>
@@ -398,10 +392,191 @@ export function WritingPanel({
                 Neu schreiben mit {chosenModel}
               </button>
             )}
+            {usage !== null && (
+              <span className="note cost">{describeUsage(usage)}</span>
+            )}
           </div>
         </>
       )}
+    </article>
+  );
+
+  return (
+    <section className="chat" aria-label="Schreiben mit der KI">
+      <div className="chat-scroll" ref={scroller}>
+        <div className="chat-sheet">
+          {children}
+          {note !== null && phase !== "idle" && (
+            <p className="note" role="note">
+              Hinweis der KI (wird nicht übernommen): {note}
+            </p>
+          )}
+          {proposalBlock}
+        </div>
+      </div>
+      <div className="composer" ref={composer}>
+        <div className="composer-sheet">
+          <ErrorText message={models.error ?? entries.error ?? modelError} />
+          {chapterEmpty && phase === "idle" && (
+            <p className="note">
+              So fängst du an: Schreib unten, was passieren soll, und klick auf
+              „Weiterschreiben“ – oder schreib selbst oben im Kapitel.
+            </p>
+          )}
+          {mode}
+          {sceneOpen && (
+            <SceneForm
+              places={places}
+              figures={figures}
+              shown={shown}
+              place={place}
+              characters={characters}
+              goal={goal}
+              onPlace={setPlace}
+              onCharacters={setCharacters}
+              onGoal={setGoal}
+            />
+          )}
+          <div className="field">
+            <span id={instructionLabel} className="sr-only">
+              Anweisung an die KI (leer: einfach weiterschreiben; @ für Kanon)
+            </span>
+            <Suspense fallback={<p>Eingabe lädt …</p>}>
+              <InstructionEditor
+                value={instruction}
+                onChange={setInstruction}
+                entries={storyEntries}
+                world={world}
+                labelledBy={instructionLabel}
+                disabled={busy}
+                example={EXAMPLE_INSTRUCTION}
+              />
+            </Suspense>
+          </div>
+          {referenced.length > 0 && (
+            <p className="note">
+              Herangezogen: {referenced.map(shown).join(", ")}
+            </p>
+          )}
+          <div className={more ? "controls more" : "controls"}>
+            <label className="compact" title="Anbieter: OpenRouter">
+              <span className="sr-only">Anbieter: OpenRouter</span>
+              <select
+                aria-label="Modell"
+                value={chosenModel}
+                onChange={(event) => {
+                  const next = event.target.value;
+                  setModel(next);
+                  setModelError(null);
+                  onModelChange?.(next).catch((reason: unknown) => {
+                    setModelError(describeError(reason));
+                  });
+                }}
+              >
+                {offered.map((id) => (
+                  <option key={id} value={id}>
+                    {id}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="compact">
+              <span className="sr-only">Länge</span>
+              <select
+                aria-label="Länge"
+                value={length}
+                disabled={busy}
+                onChange={(event) => {
+                  setLength(event.target.value as WriteLength);
+                }}
+              >
+                {LENGTHS.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <button
+              type="button"
+              className="more-toggle"
+              aria-expanded={more}
+              aria-label="Weitere Knöpfe"
+              onClick={() => {
+                setMore(!more);
+              }}
+            >
+              ⋯
+            </button>
+            <span className="extra">
+              <label className="check">
+                <input
+                  type="checkbox"
+                  checked={sceneOpen}
+                  disabled={busy}
+                  onChange={(event) => {
+                    setSceneOpen(event.target.checked);
+                  }}
+                />
+                Neue Szene
+              </label>
+              {tools}
+            </span>
+            <span className="spacer" />
+            {phase === "thinking" && (
+              <span className="note" role="status">
+                denkt nach … {seconds} s
+              </span>
+            )}
+            {phase === "writing" && (
+              <span className="note" role="status">
+                schreibt …
+              </span>
+            )}
+            {busy && (
+              <button type="button" onClick={stop}>
+                Abbrechen
+              </button>
+            )}
+            <button
+              type="button"
+              className="primary"
+              aria-label={sceneOpen ? "Szene beginnen" : "Weiterschreiben"}
+              disabled={busy || chosenModel === ""}
+              onClick={() => void send(newOrder())}
+            >
+              {sceneOpen ? (
+                "Szene beginnen"
+              ) : (
+                <>
+                  <span className="wide-only">Weiterschreiben</span>
+                  <span className="narrow-only">Weiter</span>
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
     </section>
+  );
+}
+
+/** Rough height of the proposal, where the browser cannot size the field to its text. */
+function rowsFor(text: string): number {
+  const lines = text
+    .split("\n")
+    .reduce((sum, line) => sum + Math.max(1, Math.ceil(line.length / 75)), 0);
+  return Math.max(2, lines);
+}
+
+/** Whether a key press goes into a field the author is writing in. */
+function writable(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) {
+    return false;
+  }
+  return (
+    target.isContentEditable ||
+    ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName)
   );
 }
 

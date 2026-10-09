@@ -1,50 +1,52 @@
 import { useState, type SyntheticEvent } from "react";
-import { api, describeError, type Story, type World } from "../api";
+import { Link, useNavigate } from "react-router";
+import { api, describeError, type World } from "../api";
+import { storyPath, useNavigation, worldPath, type WorldArea } from "../paths";
 import { Canon } from "./Canon";
 import { ErrorText, Field } from "./Common";
 import { Import } from "./Import";
 import { Stories } from "./Stories";
 
-type Tab = "canon" | "import" | "stories" | "world";
-
-const TABS: readonly { id: Tab; label: string }[] = [
-  { id: "stories", label: "Geschichten" },
-  { id: "canon", label: "Kanon" },
+const AREAS: readonly { id: WorldArea; label: string }[] = [
+  { id: "geschichten", label: "Geschichten" },
+  { id: "kanon", label: "Kanon" },
   { id: "import", label: "Import" },
-  { id: "world", label: "Welt" },
+  { id: "beschreibung", label: "Welt" },
 ];
 
-/** A world with its tabs: stories, canon, import, description. */
-export function WorldPage({
-  world,
-  onOpenStory,
-}: {
-  world: World;
-  onOpenStory: (story: Story) => void;
-}) {
-  const [tab, setTab] = useState<Tab>("stories");
+/** A world with its areas, each under its own address: stories, canon, import, description. */
+export function WorldPage({ world, area }: { world: World; area: WorldArea }) {
+  const navigate = useNavigate();
+  const { refresh } = useNavigation();
   const [current, setCurrent] = useState(world);
   const [canonRound, setCanonRound] = useState(0);
 
   return (
     <div className="stack">
+      <h1 className="page-title">{current.name}</h1>
       <nav className="tabs" aria-label="Bereiche der Welt">
-        {TABS.map(({ id, label }) => (
-          <button
-            type="button"
+        {AREAS.map(({ id, label }) => (
+          <Link
             key={id}
-            aria-current={tab === id}
-            onClick={() => {
-              setTab(id);
-            }}
+            className="tab"
+            to={worldPath(current.id, id)}
+            aria-current={area === id ? "page" : undefined}
           >
             {label}
-          </button>
+          </Link>
         ))}
       </nav>
-      {tab === "stories" && <Stories world={current.id} onOpen={onOpenStory} />}
-      {tab === "canon" && <Canon key={canonRound} world={current.id} />}
-      {tab === "import" && (
+      {area === "geschichten" && (
+        <Stories
+          world={current.id}
+          onOpen={(story) => {
+            refresh();
+            void navigate(storyPath(current.id, story.id));
+          }}
+        />
+      )}
+      {area === "kanon" && <Canon key={canonRound} world={current.id} />}
+      {area === "import" && (
         <Import
           world={current.id}
           onImported={() => {
@@ -52,7 +54,15 @@ export function WorldPage({
           }}
         />
       )}
-      {tab === "world" && <WorldForm world={current} onSaved={setCurrent} />}
+      {area === "beschreibung" && (
+        <WorldForm
+          world={current}
+          onSaved={(saved) => {
+            setCurrent(saved);
+            refresh();
+          }}
+        />
+      )}
     </div>
   );
 }

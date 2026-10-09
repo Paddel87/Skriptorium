@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { EditorView } from "@codemirror/view";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  openStorySettings,
   CHAPTER,
   created,
   ENTRY,
@@ -137,6 +138,7 @@ describe("taking a marked passage into the canon (step 3.8)", () => {
       entry: "kael",
       fact: "Kael fürchtet tiefes Wasser.",
     });
+    await openStorySettings(user);
     expect(screen.getByText("Fakten dieser Geschichte (1)")).toBeDefined();
   });
 
@@ -339,6 +341,7 @@ describe("facts of this story (step 3.8)", () => {
     });
     const user = userEvent.setup();
     render(<StoryPage story={{ ...WITH_GUEST, facts: [fact] }} />);
+    await openStorySettings(user);
     await user.click(await screen.findByText("Fakten dieser Geschichte (1)"));
     const list = screen.getByRole("list", { name: "Fakten" });
     expect(
@@ -364,6 +367,7 @@ describe("facts of this story (step 3.8)", () => {
         story={{ ...STORY, facts: [{ entry: "weg", fact: "Alt." }] }}
       />,
     );
+    await openStorySettings(user);
     await user.click(await screen.findByText("Fakten dieser Geschichte (1)"));
     expect(await screen.findByText("weg: Alt.")).toBeDefined();
     await user.click(screen.getByRole("button", { name: "Fakt 1 entfernen" }));

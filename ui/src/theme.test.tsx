@@ -43,14 +43,18 @@ describe("theme", () => {
 });
 
 describe("ThemeChoice", () => {
-  it("switches the appearance and remembers it", async () => {
+  it("moves on to the next appearance with each click and remembers it (step 5.11)", async () => {
     saveTheme("hell");
     const user = userEvent.setup();
     render(<ThemeChoice />);
-    const choice = screen.getByLabelText("Darstellung");
-    expect(choice).toHaveProperty("value", "hell");
-    await user.selectOptions(choice, "dunkel");
+    await user.click(screen.getByRole("button", { name: "Darstellung: Hell" }));
     expect(document.documentElement.dataset.theme).toBe("dark");
     expect(readTheme()).toBe("dunkel");
+    await user.click(
+      screen.getByRole("button", { name: "Darstellung: Dunkel" }),
+    );
+    expect(document.documentElement.dataset.theme).toBeUndefined();
+    expect(readTheme()).toBe("automatisch");
+    expect(screen.getByText("Auto")).toBeDefined();
   });
 });
