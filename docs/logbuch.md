@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 22:15 UTC – [BEOBACHTUNG] 5.24 Testwelt und Werkzeug fertig, Messung scheitert am Schlüssel
+
+- **Testwelt „Glimmergrund“:** von einem Unteragenten der Routine-Klasse (Sonnet) geschrieben – ausgabelastige Arbeit, Abgabe nach `CLAUDE.md` Abschnitt 0; ca. 18.400 Wörter, 23 Einträge, zwölf Kanon-Proben. Geprüft: Laden über die echten Dienste fehlerfrei, Schreibstelle genau einmal, Stichprobe der Kapitel gegen die Kanon-Proben ohne Widerspruch („Herr Brack“ wird im Text sofort korrigiert, „sieben“ nur über Tage).
+- **Werkzeug `spikes/regel-002/`:** Trockenlauf ohne KI: beide Geschichten an der richtigen Stelle abgeschnitten, Anfrage Glimmergrund ca. 86.000 Zeichen (nahe am Budget, wie gewollt); Auswertung an einer künstlichen Kette nachgerechnet.
+- **Reibung:** Ausgangsmessung (grok-4.6, mittel und lang, je 3 Ketten je Geschichte) scheiterte ab dem ersten Aufruf mit HTTP 401 („Schlüssel abgelehnt oder Guthaben bzw. Ausgabengrenze erschöpft“); 219 Fehlversuche in den Logs, keine Kosten. Läufe angehalten, leere Ergebnisordner entfernt. Vermutlich steht in der Umgebung des Macs noch der am 2026-10-08 abgelaufene Schlüssel; ob auch der Schlüssel auf dem Server betroffen ist, ist ungeprüft (keine Arbeiten am VPS). Kein Blocker nach Abschnitt 10 (kein dreifach gescheiterter Ansatz), sondern fehlende Eingabe des Eigentümers.
+
 ### 2026-10-09 21:30 UTC – [BEOBACHTUNG] 5.1 Vorschläge ohne `@` umgesetzt
 
 - **Mockup:** echte Schreibseite (Testwelt „Die Salzmark“) mit eingesetzter Vorschlagszeile, Desktop und Smartphone. Erste Fassung nutzte „Kael“, den es in der Testwelt nicht gibt, und „Gunda“ ohne geprüften Alias – vor dem Versand auf echte Namen und Aliasse umgestellt (Tomas → Tomas Rehl, Gunda → Gunda Hollt, Aschturm). Freigabe „Ja“.
