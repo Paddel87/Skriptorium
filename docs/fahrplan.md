@@ -48,7 +48,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⚪ | 5.20 | Schnell nacheinander angelegte Kapitel | offen | KI |
 | ⚪ | 5.21 | Als App installierbar (PWA) | offen | KI – mit 5.2 |
 | ⚪ | 5.22 | Wiederkehrende Atmosphäre und Schlussgeste bei „lang“ | offen | KI – Befund 2026-10-09 |
-| ⚪ | 5.23 | `@`-Verweis in gebeugter Form | offen | Eigentümer: welche Endungen; dann KI |
+| ⚪ | 5.23 | `@`-Verweis mit Genitiv-s | offen | KI |
 
 **Querschnitt (offen):**
 
@@ -539,10 +539,10 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Abhängigkeiten:** 5.18
 - **Freigabepflichtig:** nein
 - **Empfohlene Klasse:** Routine – Erweiterung der Erkennung in `ui/src/references.ts` mit Komponenten-Tests.
-- **Eingangskriterien:** Angabe des Eigentümers, welche Endungen vorkommen (z. B. Genitiv-s)
+- **Eingangskriterien:** erfüllt – Eigentümer 2026-10-09: nur Genitiv-s
 - **Anforderungen (ab Klasse M):** FR-013
-- **Zu tun:** Frage des Eigentümers 2026-10-09: Werden bei `@` nur Namen oder auch Aliasse erkannt? Prüfung 2026-10-09 (Probe gegen `referencedEntries`): Name und jeder Alias werden erkannt, ohne Rücksicht auf Groß-/Kleinschreibung, auch mehrwortig („@der Schmied“) und vor Satzzeichen; der KI geht dann der ganze Eintrag samt Aliassen zu („Auch: …“). **Nicht erkannt** wird eine gebeugte Form: „@Kaels Hammer“, „@Aschturms Tor“ – der Eintrag geht dann nicht an die KI, ohne Hinweis. Abhilfe: Genitiv-Endung (s, es, ’) nach einem Namen oder Alias zulassen; die Hervorhebung (5.18) zeigt den Treffer.
-- **Akzeptanzkriterien:** Komponenten-Tests für Name, Alias, Genitiv-s und Apostroph; kein Treffer mitten in einem längeren Wort.
+- **Zu tun:** Frage des Eigentümers 2026-10-09: Werden bei `@` nur Namen oder auch Aliasse erkannt? Prüfung 2026-10-09 (Probe gegen `referencedEntries`): Name und jeder Alias werden erkannt, ohne Rücksicht auf Groß-/Kleinschreibung, auch mehrwortig („@der Schmied“) und vor Satzzeichen; der KI geht dann der ganze Eintrag samt Aliassen zu („Auch: …“). **Nicht erkannt** wird eine gebeugte Form: „@Kaels Hammer“, „@Aschturms Tor“ – der Eintrag geht dann nicht an die KI, ohne Hinweis. Abhilfe (Eigentümer 2026-10-09: nur Genitiv-s): ein angehängtes „s“ nach einem Namen oder Alias zulassen; die Hervorhebung (5.18) zeigt den Treffer.
+- **Akzeptanzkriterien:** Komponenten-Tests für Name, Alias und Genitiv-s („@Kaels“, „@Aschturms“); kein Treffer mitten in einem längeren Wort; ein Name, der selbst auf „s“ endet, wird weiter erkannt.
 - **Betroffene Module:** ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests

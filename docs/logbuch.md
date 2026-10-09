@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 14:58 UTC – [SESSIONENDE] Befunde 5.22 und 5.23 erfasst
+
+- **Bearbeitet (2026-10-09):** Befunde des Eigentümers geprüft – Atmosphäre und Schlussgeste bei „lang“ (5.22), `@` und Aliasse (5.23); Antwort des Eigentümers zu 5.23 eingetragen: nur Genitiv-s. Kein Produktionscode geändert.
+- **Stand:** 5.22 und 5.23 `[OFFEN]`, Eingangskriterien erfüllt; unverändert 5.11 Teil 1 und 5.19 warten auf Prüfung des Eigentümers.
+- **Nächster Schritt:** neue Session nach Fahrplan „Nächster Schritt“; 5.22 und 5.23 dort eingereiht.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 14:57). Schritte oberhalb der Empfehlung: 0 – nur Prüfung und Doku. Abgegeben: nichts.
+- **Kontextgröße:** 353.805 Token (`get_session` 14:57), Grenze 200.000 – überschritten auf Anweisung des Eigentümers.
+- **Sessionende-Prüfungen:** README unverändert gültig (neue Schritte nicht unter den nächsten 1–3); Drift: kein neuer ADR, Reaktiv-Quote unverändert, Module und Reifegrade unverändert, Blocker 0; Phase 5 23 Schritte (Schwelle mehr als 26). Ablaufdaten: kein Vorlauf erreicht (mypy 2 am 2026-11-06). Merge auf Anweisung des Eigentümers.
+
 ### 2026-10-09 11:55 UTC – [BEOBACHTUNG] Befunde des Eigentümers: Atmosphäre bei „lang“, `@` und Aliasse
 
 - **Rahmen:** Fortsetzung der Session vom 2026-10-08 auf Anweisung des Eigentümers, weit über der Kontextgrenze (Abweichung „Sessiongröße“, vermerkt); kein Produktionscode geändert. Branch `scp/nice-lamport-as724t` nach Merge von #57 neu auf `main` `e4d1a81` gesetzt.
