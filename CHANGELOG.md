@@ -6,6 +6,8 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v0.1.0)
 
+- Vorschläge für Kanon-Namen ohne `@` (2026-10-09, Schritt 5.1): Schreibst du in der Anweisung den Namen oder Alias eines Kanon-Eintrags ohne `@` („Tomas betritt die Schänke“), erscheint darunter „Meintest du: @Tomas → Tomas Rehl“. Ein Tipp macht daraus einen `@`-Verweis; ohne Tipp geht der Eintrag nicht an die KI.
+
 - Als App installierbar (2026-10-09, Schritt 5.21, ADR-048): Das Skriptorium lässt sich auf dem Smartphone und am Rechner als App mit eigenem Symbol (Feder) auf den Startbildschirm legen und öffnet dann ohne Browserleiste. Fehlt die Verbindung, steht oben ein Hinweis; wird die App ganz ohne Netz geöffnet, erscheint eine eigene Seite „Keine Verbindung“. Auf dem Gerät liegt dafür nur diese eine Hinweisseite – keine Texte.
 
 - Dunkelmodus (2026-10-08, Schritt 5.19): Das Skriptorium folgt der Hell-/Dunkel-Einstellung des Geräts; oben lässt sich unter „Darstellung“ Automatisch, Hell oder Dunkel wählen, der Browser merkt sich die Wahl.

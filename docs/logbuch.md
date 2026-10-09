@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 21:30 UTC – [BEOBACHTUNG] 5.1 Vorschläge ohne `@` umgesetzt
+
+- **Mockup:** echte Schreibseite (Testwelt „Die Salzmark“) mit eingesetzter Vorschlagszeile, Desktop und Smartphone. Erste Fassung nutzte „Kael“, den es in der Testwelt nicht gibt, und „Gunda“ ohne geprüften Alias – vor dem Versand auf echte Namen und Aliasse umgestellt (Tomas → Tomas Rehl, Gunda → Gunda Hollt, Aschturm). Freigabe „Ja“.
+- **Code:** `suggestions`/`acceptSuggestion` in `references.ts` (Wortgrenzen und Genitiv-s wie bei `@`, längster Name zuerst, schon genannte Einträge und Wörter in `@`-Verweisen ausgenommen); Zeile „Meintest du:“ in `WritingPanel`, während die KI schreibt ausgeblendet.
+- **Reibung:** Zwei eigene Testerwartungen waren falsch („den Fährmann“ ist nicht der Alias „der Fährmann“; eine Position verzählt) – der Code war richtig.
+- **Läufe:** `vitest` 144 bestanden, 98,03 % Zeilen / 95,46 % Zweige, `references.ts` 100 %; Playwright 10 bestanden; Bildschirmfotos des echten Ergebnisses entsprechen dem Mockup. Nicht eingespielt (keine Arbeiten am VPS, Anweisung des Eigentümers).
+
 ### 2026-10-09 21:00 UTC – [ADR-ANGELEGT] ADR-049 Kanon-Vorschläge ohne `@` im Browser
 
 - 5.1 begonnen. Auswahlfragen: Erkennung nur in der Anweisung; Vorschläge als Zeile darunter. Danach `ENTSCHEIDUNG ERFORDERLICH` (Kategorie 1): Erkennung im Browser statt in `context` – Eigentümer „A“. `[REAKTIV]` `[MODUL]`; Reaktiv-Quote 1/10 über ADR-040 bis ADR-049 (Schwelle 30 %). Architektur (Module `context`, `ui`) angepasst.

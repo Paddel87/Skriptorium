@@ -26,7 +26,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
-| 🟠 | 5.1 | Kanon-Vorschläge ohne `@` | in Arbeit (ADR-049) | du: Mockup ansehen · KI: umsetzen |
+| 🟠 | 5.1 | Kanon-Vorschläge ohne `@` | in Arbeit – umgesetzt (ADR-049) | KI: mergen · Einspielen später · du: bestätigen |
 | 🟠 | 5.2 | Bedienung am Smartphone | in Arbeit – eingespielt | du: am Smartphone prüfen |
 | ⚪ | 5.3 | Lesbare Dateien – Nachweis | offen | KI |
 | ⚪ | 5.4 | Zeitlinie mit Datumsangaben im Kalender der Welt (Kann) | offen | du: umsetzen ja/nein |
@@ -182,7 +182,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.1: Kanon-Vorschläge ohne `@`
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-09) – Form vom Eigentümer gewählt (Auswahlfragen): Erkennung nur in der Anweisung, Vorschläge als Zeile darunter, ein Tipp macht den Namen zum `@`-Verweis; Erkennung im Browser (ADR-049). Offen: Mockup vorher/nachher, Umsetzung
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-09) – Form vom Eigentümer gewählt (Auswahlfragen): Erkennung nur in der Anweisung, Vorschläge als Zeile darunter, ein Tipp macht den Namen zum `@`-Verweis; Erkennung im Browser (ADR-049). Mockup vorher/nachher freigegeben („Ja“); umgesetzt auf `feat/5.1-vorschlaege-ohne-at`: `suggestions` und `acceptSuggestion` in `references.ts`, Zeile „Meintest du:“ im Schreibfeld. Tests: `vitest` 144 bestanden, `references.ts` 100 %, gesamt 98,03 % Zeilen / 95,46 % Zweige; Playwright 10 bestanden; Test belegt: nicht angenommener Vorschlag geht nicht an die KI. Offen: Merge, Einspielen (derzeit keine Arbeiten am VPS), Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.5
 - **Freigabepflichtig:** nein
