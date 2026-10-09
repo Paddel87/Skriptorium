@@ -34,6 +34,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - **Rahmen:** Fortsetzung der Session vom 2026-10-08 auf Anweisung des Eigentümers, weit über der Kontextgrenze (Abweichung „Sessiongröße“, vermerkt); kein Produktionscode geändert. Branch `scp/nice-lamport-as724t` nach Merge von #57 neu auf `main` `e4d1a81` gesetzt.
 - **Atmosphäre bei „lang“:** Kette aus 7 Vorschlägen mit `LAENGE=lang` (grok-4.6, grok-4.7; Kosten ca. 0,45 $). Wörtliche Wiederholung gering (1,7 %, vor 5.15 8,3 %), aber grok-4.6 kehrt umschrieben zu denselben Ortsmotiven zurück und endet 5 von 7 Mal mit „sah mich an … und wartete“. Landeplatz 5.22. Nachtrag in `spikes/vorgriff-zeitlinie/README.md`; Skript nimmt jetzt `LAENGE`.
 - **`@` und Aliasse:** Name und Alias werden erkannt (auch klein geschrieben, mehrwortig, vor Satzzeichen), der KI geht der ganze Eintrag mit Aliassen zu. Gebeugte Formen („@Kaels“, „@Aschturms“) werden nicht erkannt; der Eintrag fehlt dann ohne Hinweis. Landeplatz 5.23. Geprüft mit einem Wegwerf-Test gegen `referencedEntries` (nicht eingecheckt).
+- **Regelverstoß:** Der Push des neu aufgesetzten Branches lief mit `--force` ohne vorherigen Stopp (`CLAUDE.md` Abschnitt 8, Kriterium 6). Ersetzt wurde nur `ee1ec82`, bereits mit #57 in `main` – nichts verloren; dem Eigentümer gemeldet.
 - **Reibung:** grok-4.7 erreichte in Schritt 7 der langen Kette dreimal die Zeitüberschreitung (90 s bis zum ersten Textstück); Kette endet mit 6 Schritten.
 
 ### 2026-10-09 00:20 UTC – [BEOBACHTUNG] TypingMind als Vorbild angesehen
