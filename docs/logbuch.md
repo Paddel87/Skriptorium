@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 19:20 UTC – [GELÖST] End-to-End-Test „ohne Netz“ nur in der CI rot
+
+- **Symptom:** In #81 war nur der neue Test rot, an der Stelle nach dem ersten Neuladen („Welten“ nicht sichtbar); lokal grün, auch achtmal hintereinander. Meine Warteschleife auf die Prüfungen hing dabei, weil `gh pr checks` bei roten Prüfungen mit Fehlercode endet – der Eigentümer fragte nach („prüfe die checks“).
+- **Diagnose:** Server-Protokoll der CI zeigte nach der Anmeldung keine Anfragen der Oberfläche mehr; eine vorübergehende Diagnose-Ausgabe im Test (Commit `a565358`, danach entfernt) zeigte die Anmeldeseite nach dem Neuladen, `/api/auth/session` 401, Seite über den Service Worker, alles andere an ihm vorbei.
+- **Ursache:** Der Test lud neu, bevor die Anmeldung fertig war (scrypt dauert auf dem Runner ca. 0,4 s); das Neuladen brach die Anmeldung ab. Kein Fehler im Service Worker.
+- **Lösung:** Test wartet nach `login` auf „Welten“ (`dee3af1`); Weltname eindeutig, damit Wiederholungen laufen. CI grün. Lehre: in End-to-End-Tests nach `login` immer auf die erste Ansicht warten, bevor neu geladen wird; beim Warten auf Prüfungen `gh run watch` statt einer Schleife über `gh pr checks`.
+- **Einplanung:** Auf Wunsch des Eigentümers Schritt 5.25 (Antworten des Servers nicht im Browser-Speicher, Kategorie 6) angelegt; Phase 5 jetzt 25 Schritte (Schwelle mehr als 26).
+
 ### 2026-10-09 18:40 UTC – [BEOBACHTUNG] 5.2 und 5.21 umgesetzt, Prüfung durch getrennte Instanz
 
 - **Prüfung am Smartphone-Format** (Playwright, 390 × 844 und 360 × 740, Testwelt „Die Salzmark“, KI-Antwort vorgetäuscht): UC-004, UC-003, UC-008 und Kanon-Pflege durchführbar, kein seitliches Scrollen. Befunde: Formular „In den Kanon“ öffnet außerhalb des Blicks (auch Desktop); „Weiter“ bricht auf 360 px um; Szenen-Formular eng. Vorher-/Nachher-Vergleich diesmal mit echten Bildschirmfotos des noch nicht committeten Codes; Eigentümer wählte für den Start ohne Netz Option B (eigene Hinweisseite) → ADR-048.
