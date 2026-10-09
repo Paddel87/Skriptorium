@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 00:20 UTC – [BEOBACHTUNG] TypingMind als Vorbild angesehen
+
+- Auf Bitte des Eigentümers typingmind.com im eingebauten Browser angesehen (ohne Konto, Desktop und Smartphone); Werbefenster beim Öffnen des Menüs verhinderte den Blick auf die ausgeklappte Liste. Ergebnis und Übertragung in `docs/research/inspiration-typingmind.md`.
+- Auswahlfragen: schmale Symbolleiste links dauerhaft plus ausklappbare Liste; Manuskript bleibt direkt editierbar; Vorschlag am Textende wie eine Chat-Antwort. In 5.11 vermerkt. Kein Code geändert.
+
 ### 2026-10-09 00:05 UTC – [BEOBACHTUNG] Wünsche: Chat-Aufbau, PWA, mobile Bedienung
 
 - **Wunsch des Eigentümers:** PWA, damit die ganze Bildschirmgröße nutzbar ist; prüfen, wie weit die Seite für mobile Bedienung taugt; Aufbau eher wie TypingMind oder ChatGPT mit Menüs, die bei Bedarf ausklappen.
