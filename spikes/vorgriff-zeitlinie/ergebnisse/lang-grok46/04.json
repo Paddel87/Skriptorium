@@ -1,0 +1,12 @@
+{
+  "variante": "lang-grok46",
+  "schritt": 4,
+  "anweisung": "Gunda warnt mich vor Fenn Asch: Er stottert, wenn er lügt, und er stottert viel. Sie sagt, Asch habe gestern gefragt, ob die Varn wieder in der Stadt ist.",
+  "modell": "x-ai/grok-4.6",
+  "woerter": 589,
+  "sekunden": 38.4,
+  "token_ein": 10353,
+  "token_aus": 1335,
+  "kosten_usd": 0.02823876,
+  "finish_reason": "stop"
+}

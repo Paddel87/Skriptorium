@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 5.11 Seitenaufbau – Teil 1 Schreibseite eingespielt, wartet auf Prüfung des Eigentümers, Teile 2 und 3 offen; 5.19 Dunkelmodus eingespielt (`ebc7bc5`), wartet auf Prüfung (zwei Schritte gleichzeitig, weil beide nur auf die Prüfung warten) (5.7, 5.8 und 5.15 am 2026-10-08 `[ERLEDIGT]`)
-- **Nächster Schritt:** Prüfung 5.11 Teil 1 und 5.19 durch den Eigentümer; 5.11 Teil 2 Chat-Aufbau mit Leiste links und Adressen je Ansicht (React Router 7.18.4, ADR-046); 5.2 Smartphone mit 5.21 PWA; 5.11 Teil 3 Kanon-Seite; 5.20; danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** Prüfung 5.11 Teil 1 und 5.19 durch den Eigentümer; 5.11 Teil 2 Chat-Aufbau mit Leiste links und Adressen je Ansicht (React Router 7.18.4, ADR-046); 5.2 Smartphone mit 5.21 PWA; 5.11 Teil 3 Kanon-Seite; 5.20; 5.22 und 5.23 (Befunde 2026-10-09); danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -47,6 +47,8 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | 🟠 | 5.19 | Dunkelmodus | in Arbeit | du: prüfen |
 | ⚪ | 5.20 | Schnell nacheinander angelegte Kapitel | offen | KI |
 | ⚪ | 5.21 | Als App installierbar (PWA) | offen | KI – mit 5.2 |
+| ⚪ | 5.22 | Wiederkehrende Atmosphäre und Schlussgeste bei „lang“ | offen | KI – Befund 2026-10-09 |
+| ⚪ | 5.23 | `@`-Verweis mit Genitiv-s | offen | KI |
 
 **Querschnitt (offen):**
 
@@ -165,11 +167,11 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Ziel:** Das Skriptorium ist für das tägliche Schreiben des Eigentümers alltagstauglich – Modelle sperren seine Texte nicht, die KI schreibt nahtlos weiter, die Oberfläche ist übersichtlich und intuitiv (gezielter Umbau nach ADR-042) –, die Soll-Anforderungen und die Kann-Anforderung sind umgesetzt oder begründet zurückgestellt, und die nächste Ausbaustufe ist geplant.
 
-**Abschlusskriterium:** Schritte 5.1–5.21 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
+**Abschlusskriterium:** Schritte 5.1–5.23 `[ERLEDIGT]` oder `[VERWORFEN]` mit ADR.
 
 **Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`. Der Umbau betrifft nur `ui` (Seitenaufbau, 5.11) und Randstellen in `ai_gateway`/`api` (Modell-Katalog, 5.12); neue gespeicherte Daten (5.6, 5.13) werden per ADR festgelegt.
 
-**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-08: 21 Schritte (+5.14, ADR-043; +5.15 bis +5.21 Befunde und Wünsche des Eigentümers).
+**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-08 durch die Neuplanung nach ADR-042 (vorher 5 Schritte vom 2026-09-26, +5.6) – wird nicht still hochgesetzt (CLAUDE.md Abschnitt 8, Kriterium 9). Wucherungs-Schwelle: mehr als 26 Schritte und mindestens +5. Stand 2026-10-09: 23 Schritte (+5.14, ADR-043; +5.15 bis +5.23 Befunde und Wünsche des Eigentümers).
 
 **Reihenfolge (ADR-042):** zuerst die kleinen Abhilfen 5.7, 5.8, 5.9, dann 5.10, der Umbau der Oberfläche 5.11, danach 5.16, 5.6, 5.12, 5.13; anschließend 5.2 (Smartphone, auf dem neuen Aufbau), 5.1, 5.3, 5.4, dann 5.14 (Go-Live-Prüfung) und 5.5.
 
@@ -513,6 +515,38 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-08 auf Wunsch des Eigentümers. Wucherungs-Prüfung: Phase 5 jetzt 21 Schritte (ursprünglich 13, Schwelle 26) – keine Wucherung.
+
+#### 5.22: Wiederkehrende Atmosphäre und gleiche Schlussgeste bei langen Vorschlägen
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 5.15
+- **Freigabepflichtig:** nein – Wortlaut der Vorgaben in `context`; ein Wechsel des voreingestellten Modells wäre ein ADR wie ADR-044
+- **Empfohlene Klasse:** Entscheidung – Eingriff in die Kontext-Zusammenstellung, Wirkung nur im Probeschreiben bewertbar.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-009, FR-012
+- **Zu tun:** Befund des Eigentümers 2026-10-09: Mit der Länge „lang“ wiederholt die KI wieder die Atmosphäre des Ortes. Probeschreiben 2026-10-09 (`spikes/vorgriff-zeitlinie/README.md`, Nachtrag): wörtliche Wiederholung bleibt gering (4-Wort-Folgen aus dem Manuskript im Mittel 1,7 % gegenüber 8,3 % vor 5.15), aber grok-4.6 kehrt **umschrieben** zu denselben Motiven zurück (Dunst durch die Ritze, dampfende Schüssel, Tran) und beendet 5 von 7 langen Vorschlägen mit derselben Geste („sah mich an … und wartete“); grok-4.7 lang 1 von 7, grok-4.6 mittel 2 von 7. Ursachen vermutet: die Vorgabe gegen Wiederholung greift nur wörtlich; die Länge 400–600 Wörter ist bei kleinen Anweisungen mehr, als Handlung da ist, und wird mit Atmosphäre gefüllt; „Ende, sobald die geführte Figur handeln müsste“ wird als Warte-Geste ausgeschrieben. Abhilfe prüfen: Vorgabe „Ort und Stimmung sind bekannt – beschreibe sie nur, wenn sich etwas ändert“; Ende mit der letzten Handlung oder dem letzten Satz einer anderen Figur statt mit Warten oder Blick; „lang“ als Obergrenze statt Ziel formulieren; Vergleich der Modelle in der Kette.
+- **Akzeptanzkriterien:** Kette aus 7 Vorschlägen mit „lang“ und grok-4.6: höchstens 2 Enden mit Warte- oder Blickgeste; Motive des Ortes nicht in mehr als 2 aufeinanderfolgenden Vorschlägen; wörtliche Wiederholung nicht höher als heute; Eigentümer bestätigt im Alltag.
+- **Betroffene Module:** context
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Probeschreiben, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-09 auf Befund des Eigentümers. Wucherungs-Prüfung: Phase 5 jetzt 23 Schritte (ursprünglich 13, Schwelle mehr als 26) – keine Wucherung, Abstand 3.
+
+#### 5.23: `@`-Verweis auch in gebeugter Form erkennen
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 5.18
+- **Freigabepflichtig:** nein
+- **Empfohlene Klasse:** Routine – Erweiterung der Erkennung in `ui/src/references.ts` mit Komponenten-Tests.
+- **Eingangskriterien:** erfüllt – Eigentümer 2026-10-09: nur Genitiv-s
+- **Anforderungen (ab Klasse M):** FR-013
+- **Zu tun:** Frage des Eigentümers 2026-10-09: Werden bei `@` nur Namen oder auch Aliasse erkannt? Prüfung 2026-10-09 (Probe gegen `referencedEntries`): Name und jeder Alias werden erkannt, ohne Rücksicht auf Groß-/Kleinschreibung, auch mehrwortig („@der Schmied“) und vor Satzzeichen; der KI geht dann der ganze Eintrag samt Aliassen zu („Auch: …“). **Nicht erkannt** wird eine gebeugte Form: „@Kaels Hammer“, „@Aschturms Tor“ – der Eintrag geht dann nicht an die KI, ohne Hinweis. Abhilfe (Eigentümer 2026-10-09: nur Genitiv-s): ein angehängtes „s“ nach einem Namen oder Alias zulassen; die Hervorhebung (5.18) zeigt den Treffer.
+- **Akzeptanzkriterien:** Komponenten-Tests für Name, Alias und Genitiv-s („@Kaels“, „@Aschturms“); kein Treffer mitten in einem längeren Wort; ein Name, der selbst auf „s“ endet, wird weiter erkannt.
+- **Betroffene Module:** ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests
+- **Notizen:** Angelegt 2026-10-09 auf Frage des Eigentümers.
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 

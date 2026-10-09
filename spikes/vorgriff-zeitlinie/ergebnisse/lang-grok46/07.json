@@ -1,0 +1,12 @@
+{
+  "variante": "lang-grok46",
+  "schritt": 7,
+  "anweisung": "Ich schlage vor, in zwei Nächten einzubrechen und die Riegel der Wachstube zu binden. Tomas will lieber Marr eine Nachricht schicken. Wir streiten.",
+  "modell": "x-ai/grok-4.6",
+  "woerter": 538,
+  "sekunden": 40.1,
+  "token_ein": 12638,
+  "token_aus": 1453,
+  "kosten_usd": 0.03365406,
+  "finish_reason": "stop"
+}

@@ -1,0 +1,12 @@
+{
+  "variante": "lang-grok47",
+  "schritt": 6,
+  "anweisung": "Nach der fünften Nacht kommt Pell mit seinem Bericht: vier Männer in der Wachstube, Wachwechsel zur zweiten Glocke nach Mitternacht, und einmal ist Asch nachts mit einem Bündel aus dem Haus gegangen.",
+  "modell": "x-ai/grok-4.7",
+  "woerter": 643,
+  "sekunden": 112.4,
+  "token_ein": 13275,
+  "token_aus": 5298,
+  "kosten_usd": 0.04520934,
+  "finish_reason": "stop"
+}

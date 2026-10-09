@@ -1,0 +1,12 @@
+{
+  "variante": "lang-grok47",
+  "schritt": 1,
+  "anweisung": "Pell kommt am nächsten Morgen in Tomas' Kammer. Tomas erklärt ihm, dass er fünf Nächte die Wachen am Vogtshaus zählen soll. Pell fragt nach dem Lohn.",
+  "modell": "x-ai/grok-4.7",
+  "woerter": 533,
+  "sekunden": 75.9,
+  "token_ein": 8901,
+  "token_aus": 4150,
+  "kosten_usd": 0.04056426,
+  "finish_reason": "stop"
+}
