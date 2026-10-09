@@ -16,7 +16,7 @@
 <!-- ANCHOR:teil-a-adr-uebersicht -->
 ## Teil A: ADR-Übersicht
 
-Stand 2026-10-08 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11, ADR-029 bis ADR-032 aus Schritt 4.2, ADR-033 aus Schritt 4.12, ADR-034 aus Schritt 4.2, ADR-035 aus D.6, ADR-036 aus Schritt 4.3, ADR-037 und ADR-038 aus Schritt 4.6, ADR-039 aus Schritt 4.7, ADR-040 aus D.8, ADR-041 aus Schritt 4.13, ADR-042 aus der Neuplanung von Phase 4, ADR-043 aus Schritt 4.8, ADR-044 aus Schritt 5.7, ADR-045 aus D.14, ADR-046 aus Schritt 5.11). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
+Stand 2026-10-08 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt 1.1, ADR-011 aus Schritt 1.5, ADR-012 aus Schritt 1.2, ADR-013 und ADR-014 aus Schritt 1.4, ADR-015 aus Schritt 2.1, ADR-016 aus Schritt 2.2, ADR-017 und ADR-018 aus Schritt 2.6, ADR-019 aus Schritt 2.7, ADR-020 aus dem Phasenabschluss 2, ADR-021 vor Schritt 3.1, ADR-022 aus der Abnahme von 3.3, ADR-023 aus Schritt 3.9, ADR-024 aus dem Phasenabschluss 3, ADR-025 aus Schritt 4.2, ADR-026 aus Schritt 4.9, ADR-027 aus Schritt 4.10, ADR-028 aus Schritt 4.11, ADR-029 bis ADR-032 aus Schritt 4.2, ADR-033 aus Schritt 4.12, ADR-034 aus Schritt 4.2, ADR-035 aus D.6, ADR-036 aus Schritt 4.3, ADR-037 und ADR-038 aus Schritt 4.6, ADR-039 aus Schritt 4.7, ADR-040 aus D.8, ADR-041 aus Schritt 4.13, ADR-042 aus der Neuplanung von Phase 4, ADR-043 aus Schritt 4.8, ADR-044 aus Schritt 5.7, ADR-045 aus D.14, ADR-046 aus Schritt 5.11, ADR-047 aus Schritt 5.22). Sortiert nach Nummer; Mindest-Lektüre bei Sessionstart.
 
 | ADR | Datum | Status | Klassifikation | Themen | Kategorie | Kurztitel |
 |---|---|---|---|---|---|---|
@@ -66,12 +66,13 @@ Stand 2026-10-08 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 044 | 2026-10-08 | Aktiv | ERKENNTNIS | PERFORMANCE | – (Ergebnis Schritt 5.7) | grok-4.6 als Voreinstellung, grok-4.7 bleibt wählbar |
 | 045 | 2026-10-08 | Aktiv | OPERATIV | METHODIK | Build-Pipeline | Zeitlimit 20 Minuten für den End-to-End-Job |
 | 046 | 2026-10-08 | Aktiv | OPERATIV | STACK | Externe Abh. | React Router 7.18, Wechsel auf Linie 8 ab 2026-12-17 |
+| 047 | 2026-10-09 | Aktiv | OPERATIV | METHODIK | – (Prüfverfahren) | Festes Verfahren für Probeschreiben: wiederholte Läufe, zwei Testgeschichten |
 
 ### Reaktiv-Quote
 
 Anzahl `[REAKTIV]`-ADRs / Gesamtzahl der letzten 10 ADRs (Bezugsgröße nach `docs/project-context.md` Abschnitt 6).
 
-- **Aktueller Wert:** 0 / 10 (0 %) über ADR-037 bis ADR-046 – ADR-046 in 5.11 (React Router, Kategorie 3 – in 5.11 als Vorlage vorgesehen, keine Architekturentscheidung der Kategorien 1, 2, 4, 5, nicht reaktiv); ADR-036 nicht mehr im Fenster; ADR-045 aus D.14 (Zeitlimit der CI, Kategorie 7 – keine Architekturentscheidung, nicht reaktiv); ADR-035 nicht mehr im Fenster; ADR-044 in 5.7 (Modellwahl ist Konfiguration, Erkenntnis aus der Nutzung, in 5.7 vorgesehen – nicht reaktiv); ADR-034 nicht mehr im Fenster; ADR-043 in 4.8 (Release-Entscheidung, keine Architekturentscheidung – nicht reaktiv); ADR-033 nicht mehr im Fenster; ADR-042 Pflichtfrage nach Phasen-Wucherung (Methodik, keine Architekturentscheidung der Kategorien 1, 2, 4, 5 – nicht reaktiv; die Umbau-Entscheidungen fallen in den Schritten 5.11–5.13 als geplante ADRs der UMSETZUNG-Phase 5); ADR-032 nicht mehr im Fenster; ADR-041 in 4.13 (Einrichtungscode, Kategorie 6 – keine Architekturentscheidung, nicht reaktiv); ADR-040 aus D.8 (Verzicht auf Rotation, Kategorie 6 – keine Architekturentscheidung, nicht reaktiv); ADR-039 in 4.7 (Deployment-Weg, Kategorie 7 – nicht reaktiv, in 4.7 vorgesehen); ADR-038 in 4.6 (Verzicht auf Gate-Punkt 4a, Kategorie 6 – nicht reaktiv); ADR-037 in 4.6 (Zugriff der KI, Kategorie 6 – nicht reaktiv, laut ADR-032 dort vorgesehen); ADR-036 in 4.3 (Sicherungsziel, Kategorien 3, 6, 7 – nicht reaktiv, in 4.3 vorgesehen); ADR-035 aus der Erkundung D.6 (Erkenntnis aus geplanter Messung, wie ADR-022 – nicht reaktiv); ADR-034 in 4.2 (Überwachung, Kategorie 7 – nicht reaktiv); ADR-033 in 4.12 (Kategorien 3 und 7 – nicht reaktiv); ADR-029 bis ADR-032 in 4.2 (Kategorien 3 und 6 – nicht reaktiv; ADR-029 bis ADR-031 nicht mehr im Fenster); ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv, nicht mehr im Fenster); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-025 in 4.2 (geplante Anbieterwahl, nicht mehr im Fenster); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3 (nicht mehr im Fenster). ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
+- **Aktueller Wert:** 0 / 10 (0 %) über ADR-038 bis ADR-047 – ADR-047 in 5.22 (Prüfverfahren, Methodik – keine Architekturentscheidung, nicht reaktiv); ADR-037 nicht mehr im Fenster; ADR-046 in 5.11 (React Router, Kategorie 3 – in 5.11 als Vorlage vorgesehen, keine Architekturentscheidung der Kategorien 1, 2, 4, 5, nicht reaktiv); ADR-036 nicht mehr im Fenster; ADR-045 aus D.14 (Zeitlimit der CI, Kategorie 7 – keine Architekturentscheidung, nicht reaktiv); ADR-035 nicht mehr im Fenster; ADR-044 in 5.7 (Modellwahl ist Konfiguration, Erkenntnis aus der Nutzung, in 5.7 vorgesehen – nicht reaktiv); ADR-034 nicht mehr im Fenster; ADR-043 in 4.8 (Release-Entscheidung, keine Architekturentscheidung – nicht reaktiv); ADR-033 nicht mehr im Fenster; ADR-042 Pflichtfrage nach Phasen-Wucherung (Methodik, keine Architekturentscheidung der Kategorien 1, 2, 4, 5 – nicht reaktiv; die Umbau-Entscheidungen fallen in den Schritten 5.11–5.13 als geplante ADRs der UMSETZUNG-Phase 5); ADR-032 nicht mehr im Fenster; ADR-041 in 4.13 (Einrichtungscode, Kategorie 6 – keine Architekturentscheidung, nicht reaktiv); ADR-040 aus D.8 (Verzicht auf Rotation, Kategorie 6 – keine Architekturentscheidung, nicht reaktiv); ADR-039 in 4.7 (Deployment-Weg, Kategorie 7 – nicht reaktiv, in 4.7 vorgesehen); ADR-038 in 4.6 (Verzicht auf Gate-Punkt 4a, Kategorie 6 – nicht reaktiv); ADR-037 in 4.6 (Zugriff der KI, Kategorie 6 – nicht reaktiv, laut ADR-032 dort vorgesehen); ADR-036 in 4.3 (Sicherungsziel, Kategorien 3, 6, 7 – nicht reaktiv, in 4.3 vorgesehen); ADR-035 aus der Erkundung D.6 (Erkenntnis aus geplanter Messung, wie ADR-022 – nicht reaktiv); ADR-034 in 4.2 (Überwachung, Kategorie 7 – nicht reaktiv); ADR-033 in 4.12 (Kategorien 3 und 7 – nicht reaktiv); ADR-029 bis ADR-032 in 4.2 (Kategorien 3 und 6 – nicht reaktiv; ADR-029 bis ADR-031 nicht mehr im Fenster); ADR-028 in 4.11 (Branch-Schutz, Kategorie 7 – nicht reaktiv, nicht mehr im Fenster); ADR-027 in 4.10 (Einpassung in den VPS, Kategorien 3, 6, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-026 in 4.9 (Werkzeuge, Kategorien 3, 7 – nicht reaktiv, nicht mehr im Fenster); ADR-025 in 4.2 (geplante Anbieterwahl, nicht mehr im Fenster); ADR-019 aus Phase 2 (operativ, geplant in 2.2, 2.6, 2.7), ADR-020 Pflichtfrage am Phasenende 2, ADR-021 vor 3.1 (geplant laut Notiz an 3.1), ADR-022 Abnahme 3.3 (Erkenntnis aus geplanter Messung, keine Architekturentscheidung der Kategorien 1, 2, 4, 5), ADR-023 in 3.9 (laut ADR-021 dort geplant), ADR-024 Pflichtfrage am Phasenende 3 (nicht mehr im Fenster). ADR-018 (reaktiv, neue Beziehungen von `api`, in 2.6 ungeplant) liegt nicht mehr im Fenster. Korrektur 2026-09-28: Der Wert zum Stand ADR-027 hätte 1 / 10 lauten müssen, weil ADR-018 noch im Fenster lag.
 - **Schwellenwert (in `project-context.md` festgelegt):** 30 % `[REAKTIV]`-Anteil über die letzten 10 ADRs (Klasse M).
 - **Bei Überschreitung:** STOPP, Reflexion in `fahrplan.md` ergänzen, prüfen ob Architektur-Refactoring nötig ist.
 
@@ -1157,6 +1158,25 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 
 ---
 
+#### ADR-047: Festes Verfahren für Probeschreiben – wiederholte Läufe, zwei Testgeschichten
+
+- **Datum:** 2026-10-09
+- **Entscheider:** Eigentümer („Ja, als festes Verfahren einführen“); Vorschlag der KI
+- **Status:** Aktiv
+- **Tags:** `[OPERATIV]` `[METHODIK]`
+- **Phasentyp-Kontext:** UMSETZUNG (Phase 5, nach der Prüfung von 5.22)
+- **Reifegrad-Wirkung:** keine
+- **Kategorie:** keine aus `CLAUDE.md` Abschnitt 4 (Arbeitsweise der KI)
+- **Kontext:** Änderungen an den Vorgaben für die KI (5.8, 5.15, 5.22) wurden mit Probeschreiben geprüft. Der Aufbau war vergleichbar: dieselbe Testgeschichte, dieselbe Schreibstelle, dieselben Anweisungen. Es lief aber nur eine Kette je Variante, und das immer an der Salzmark. Die KI schreibt mit Zufallsanteil, kleine Unterschiede (z. B. 1,7 % → 0,9 %) liegen im Rauschen, und Vorgaben könnten nur zu einer Welt passen. Frage des Eigentümers: „Testest du immer mit der gleichen Geschichte?“
+- **Optionen:** A wie bisher eine Kette an einer Geschichte / B jede Variante mehrfach und an zwei Testgeschichten / C nur noch Bestätigung im Alltag.
+- **Entscheidung:** B, als Regel-002.
+- **Vision-Frage, die entschied:** „Soll eine Verbesserung erst als belegt gelten, wenn sie sich wiederholt und an einer zweiten Geschichte zeigt?“ → ja.
+- **Konfidenz zum Zeitpunkt:** hoch. Umkehrbarkeit billig.
+- **Konsequenzen:** Ein Probeschreiben kostet etwa das Sechsfache: 3 Läufe × 2 Geschichten, bei grok-4.6 ca. 0,20–0,30 $ je Kette. Die zweite Testgeschichte fehlt noch → Schritt 5.24. Die Prüfung von 5.22 lief vor dieser Regel (eine Kette je Länge) und wird nicht wiederholt; ihre Zahlen gelten als Einzelbeleg, die Bestätigung im Alltag steht aus.
+- **Abgeleitete Regel:** Regel-002
+
+---
+
 ---
 
 <!-- ANCHOR:teil-c-entscheidungsregeln -->
@@ -1191,6 +1211,14 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Zusatz (ADR-015):** Hat eine Linie, die die 6 Monate der Mindestreife erfüllt, keine einzige Fehlerkorrektur-Version (der Hersteller liefert Korrekturen als Unterversionen), gilt ihre neueste Version – z. B. pytest-cov 7.1.0, actions/setup-python v6.3.0.
 - **Ausnahmen:** keine
 - **Gegenbeispiel:** uvicorn 0.54.0 wählen, weil sie die neueste ist, obwohl sie noch keine Fehlerkorrektur-Version hat (gewählt wurde 0.52.4).
+
+#### Regel-002: Probeschreiben mit wiederholten Läufen an zwei Testgeschichten
+
+- **Herkunft:** ADR-047
+- **Gilt für:** jede Prüfung einer Änderung an Rahmen, Vorgaben oder Kontext-Zusammenstellung der KI (`context`) und jeden Vergleich von Modellen oder Einstellungen (Länge, Modell-Voreinstellung) per Probeschreiben.
+- **Regel:** Vorher und nachher laufen im **gleichen Aufbau**: gleiche Testgeschichte, gleiche Schreibstelle, gleiche Anweisungen, gleiches Modell. Jede Variante läuft **mindestens dreimal** an **beiden Testgeschichten**: der Salzmark (`spikes/vorgriff-zeitlinie/`) und der zweiten Testgeschichte aus 5.24. Berichtet wird je Kennzahl der Mittelwert mit Spannweite (kleinster und größter Wert); als Wirkung gilt nur, was sich in beiden Geschichten zeigt und außerhalb der Spannweite des Vorher-Zustands liegt. Die Bestätigung des Eigentümers im Alltag bleibt Teil der Abnahme.
+- **Ausnahmen:** Bis 5.24 erledigt ist, läuft das Verfahren nur an der Salzmark, mit Vermerk im Ergebnis.
+- **Gegenbeispiel:** Eine einzelne Kette vorher und nachher vergleichen und 1,7 % → 0,9 % als Verbesserung melden.
 
 <!-- ANCHOR:teil-d-geschaeftsentscheidungen -->
 ## Teil D: Geschäftsentscheidungen (BDR)
