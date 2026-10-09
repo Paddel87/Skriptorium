@@ -1,0 +1,12 @@
+{
+  "geschichte": "salzmark",
+  "schritt": 1,
+  "anweisung": "Pell kommt am nächsten Morgen in Tomas' Kammer. Tomas erklärt ihm, dass er fünf Nächte die Wachen am Vogtshaus zählen soll. Pell fragt nach dem Lohn.",
+  "modell": "x-ai/grok-4.6",
+  "woerter": 376,
+  "sekunden": 31.5,
+  "token_ein": 7967,
+  "token_aus": 1113,
+  "kosten_usd": 0.01060092,
+  "finish_reason": "stop"
+}
