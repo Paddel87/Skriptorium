@@ -49,7 +49,7 @@ Freitag Abend und Nacht. Zurück in der „Nassen Sohle“. Lenka Vorst kommt he
 
 ### Kapitel 5 – Der Flüsterer
 
-Samstag, 11. November. Gantner trifft mit dem Postwagen ein, umarmt Wendt, bringt Pfefferminz und eine Kiste Wein aus Unterwehr mit. Wendt befragt mit Doktor Salm Jodok Ranke im Lazarett. Ranke flüstert: Die Lampen wurden rot, bevor das Wasser kam; er wurde erst am Samstagabend in die Nachtschicht gerufen, durch Brack. Gantner lobt Brack und bittet Wendt zugleich beiläufig, „nicht zu viel auf die Aussagen eines Verwirrten zu geben“. 
+Samstag, 11. November. Gantner trifft mit dem Postwagen ein, umarmt Wendt, bringt Pfefferminz und eine Kiste Wein aus Unterwehr mit. Wendt befragt mit Doktor Salm Jodok Ranke im Lazarett. Ranke flüstert: Die Lampen wurden rot, bevor das Wasser kam; er wurde erst am Samstagabend in die Nachtschicht gerufen, durch Brack. Gantner lobt Brack und bittet Wendt zugleich beiläufig, „nicht zu viel auf die Aussagen eines Verwirrten zu geben“.
 
 ### Kapitel 6 – Berta schweigt
 

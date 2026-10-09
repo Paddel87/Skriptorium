@@ -22,7 +22,7 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 10 von 26 erledigt, 4 in Arbeit, 12 offen.**
+**Phase 5: 10 von 26 erledigt, 5 in Arbeit, 11 offen.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -49,7 +49,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | 🟠 | 5.21 | Als App installierbar (PWA) | in Arbeit – eingespielt (ADR-048) | du: installieren und prüfen |
 | ✅ | 5.22 | Wiederkehrende Atmosphäre und Schlussgeste bei „lang“ | erledigt 2026-10-09 | – |
 | ✅ | 5.23 | `@`-Verweis mit Genitiv-s | erledigt und eingespielt 2026-10-09 | – |
-| ⚪ | 5.24 | Zweite Testgeschichte und wiederholte Läufe (Regel-002) | offen | KI |
+| 🟠 | 5.24 | Zweite Testgeschichte und wiederholte Läufe (Regel-002) | in Arbeit – Messung wartet | du: gültigen OpenRouter-Schlüssel für die Arbeitsumgebung |
 | ⚪ | 5.25 | Antworten des Servers nicht im Browser-Speicher | offen | KI – nach 5.21 |
 | ⚪ | 5.26 | Kanon-Treue mit grok-4.6 prüfen | offen | KI – nach 5.24 |
 
@@ -554,7 +554,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.24: Zweite Testgeschichte und wiederholte Läufe für Probeschreiben
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-09) – zweite Testwelt „Glimmergrund“ angelegt (`spikes/modell-eignungstest/testwelt/glimmergrund`, 23 Einträge, 12 Kanon-Proben, Geschichte „Kein Stein glimmt umsonst“ Kapitel 1–4, Schreibstelle Kapitel 3, sieben Anweisungen); Werkzeug `spikes/regel-002/` (Laden beider Geschichten, Ketten mit Wiederholungen, Auswertung mit Mittelwert und Spannweite) trocken geprüft. **Ausgangsmessung offen:** der OpenRouter-Schlüssel der Arbeitsumgebung auf dem Mac wird abgelehnt (HTTP 401, 2026-10-09) – wartet auf einen gültigen Schlüssel vom Eigentümer
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein (Prüfwerkzeug unter `spikes/`, Regel-002 schon entschieden, ADR-047)
