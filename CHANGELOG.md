@@ -6,11 +6,15 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v0.1.0)
 
+- Als App installierbar (2026-10-09, Schritt 5.21, ADR-048): Das Skriptorium lässt sich auf dem Smartphone und am Rechner als App mit eigenem Symbol (Feder) auf den Startbildschirm legen und öffnet dann ohne Browserleiste. Fehlt die Verbindung, steht oben ein Hinweis; wird die App ganz ohne Netz geöffnet, erscheint eine eigene Seite „Keine Verbindung“. Auf dem Gerät liegt dafür nur diese eine Hinweisseite – keine Texte.
+
 - Dunkelmodus (2026-10-08, Schritt 5.19): Das Skriptorium folgt der Hell-/Dunkel-Einstellung des Geräts; oben lässt sich unter „Darstellung“ Automatisch, Hell oder Dunkel wählen, der Browser merkt sich die Wahl.
 - Herangezogene Begriffe im Anweisungsfeld hervorgehoben (2026-10-08, Schritt 5.18): Jede erkannte `@`-Nennung eines Kanon-Eintrags ist im Feld „Anweisung an die KI“ farbig hinterlegt und fett; was nicht markiert ist, zählt nicht als genannt.
 - Länge je Vorschlag wählbar (2026-10-08, Schritt 5.15): Auswahl „Länge“ im Schreib-Bereich mit kurz (etwa 60–120 Wörter), mittel (150–300, voreingestellt) und lang (400–600). Neues optionales Feld `length` im Schreib-Endpunkt.
 
 ### Geändert (nach v0.1.0)
+
+- Bedienung am Smartphone (2026-10-09, Schritt 5.2): Das Formular „In den Kanon“ rückt beim Öffnen ins Bild, statt unterhalb zu erscheinen (auch am Desktop); die Knöpfe hinter „⋯“ klappen nach einer Wahl wieder zu; auf schmalen Handys passen Modell, Länge, „⋯“ und „Weiter“ in eine Zeile.
 
 - Aufbau wie ein Chat (2026-10-09, Schritt 5.11 Teil 2): Links eine schmale Symbolleiste, die immer da ist (Liste, Welten, Kanon, Import, Darstellung, Konto, Abmelden), daneben eine einklappbare Liste mit allen Welten, ihren Geschichten und den Kapiteln der offenen Geschichte, mit Suche und „+ Kapitel“, „+ Geschichte“, „+ Welt“. Jede Ansicht hat eine eigene Adresse (mit „#“): Neuladen, Zurück und Lesezeichen bleiben an der Stelle. Auf der Schreibseite scrollt das Manuskript wie ein Chatverlauf, der Vorschlag der KI steht am Textende mit Übernehmen, Ändern, Verwerfen und Neu schreiben; die Anweisung mit Modell, Länge, Neue Szene, „In den Kanon“ und „Kapitel abschließen“ steht fest unten, „/“ springt hinein. Kanon und Einstellungen der Geschichte öffnen sich bei Bedarf rechts („Kanon & Geschichte“). Am Smartphone öffnen sich beide Leisten als Menü, seltene Knöpfe liegen hinter „⋯“. „Darstellung“ wechselt jetzt per Klick zwischen Automatisch, Hell und Dunkel.
 

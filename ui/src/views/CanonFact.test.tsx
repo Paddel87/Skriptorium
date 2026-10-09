@@ -319,14 +319,21 @@ describe("taking a marked passage into the canon (step 3.8)", () => {
     expect(onCancel).toHaveBeenCalled();
   });
 
-  it("cancels from the story page", async () => {
+  it("brings the form into view and cancels from the story page (step 5.2)", async () => {
     fakeApi(routes());
+    const shown = vi.spyOn(HTMLElement.prototype, "scrollIntoView");
     const user = userEvent.setup();
     render(<StoryPage story={STORY} />);
     await mark(0, 4);
     await user.click(
       await screen.findByRole("button", { name: "In den Kanon" }),
     );
+    expect(shown).toHaveBeenCalledWith({ block: "start" });
+    expect(
+      (shown.mock.contexts[0] as HTMLElement).querySelector(
+        '[aria-label="In den Kanon"]',
+      ),
+    ).not.toBeNull();
     await user.click(await screen.findByRole("button", { name: "Abbrechen" }));
     expect(screen.queryByRole("region", { name: "In den Kanon" })).toBeNull();
   });

@@ -594,7 +594,7 @@ textarea.proposal-text.editing {
   position: relative;
   border-top: 1px solid var(--line);
   background: var(--surface);
-  padding: 0.6rem 1rem 0.75rem;
+  padding: 0.6rem 1rem max(0.75rem, env(safe-area-inset-bottom));
   max-height: 60vh;
   overflow-y: auto;
 }
@@ -758,12 +758,28 @@ button.more-toggle {
     max-width: 8.5rem;
   }
 
+  /* Installed as an app (step 5.21): keep clear of the notch and the home bar. */
+  .chapter-bar,
+  .mobile-bar {
+    padding-top: max(0.4rem, env(safe-area-inset-top));
+  }
+
+  .side-nav {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .story-side {
+    padding-top: max(0.75rem, env(safe-area-inset-top));
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+
   .chat-scroll {
     padding: 0.6rem;
   }
 
   .composer {
-    padding: 0.5rem 0.6rem 0.6rem;
+    padding: 0.5rem 0.6rem max(0.6rem, env(safe-area-inset-bottom));
   }
 
   button.more-toggle {
@@ -780,6 +796,13 @@ button.more-toggle {
     gap: 0.4rem;
     width: 100%;
     order: 10;
+  }
+}
+
+/* Narrow phones (360 px): model, length, "⋯" and "Weiter" in one line (step 5.2). */
+@media (max-width: 24rem) {
+  .controls .compact select {
+    max-width: 7rem;
   }
 }
 
@@ -833,4 +856,17 @@ button.more-toggle {
   li[aria-selected]
   .cm-completionDetail {
   color: inherit;
+}
+
+/* Without a connection (step 5.21): a line over the top bar, the instruction stays free. */
+.offline {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 30;
+  margin: 0;
+  padding: max(0.5rem, env(safe-area-inset-top)) 1rem 0.5rem;
+  background: var(--danger);
+  color: var(--accent-text);
+  text-align: center;
+  font-size: 0.9rem;
 }

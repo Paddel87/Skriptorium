@@ -51,4 +51,19 @@ export default tseslint.config(
     },
   },
   { files: ["eslint.config.js"], ...tseslint.configs.disableTypeChecked },
+  {
+    // Service worker (step 5.21): plain script in its own global scope, not part of the app.
+    files: ["ui/public/sw.js"],
+    ...tseslint.configs.disableTypeChecked,
+    languageOptions: {
+      parserOptions: { projectService: false },
+      globals: {
+        self: "readonly",
+        caches: "readonly",
+        fetch: "readonly",
+        Request: "readonly",
+        Response: "readonly",
+      },
+    },
+  },
 );

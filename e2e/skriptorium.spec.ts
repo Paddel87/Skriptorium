@@ -429,3 +429,77 @@ test("a long chapter opens at its end with the writing area close by", async ({
   ).toBeInViewport();
   await expect(page.getByLabel(/Anweisung an die KI/)).toBeInViewport();
 });
+
+test("without a connection the installed app shows a notice and keeps no texts", async ({
+  page,
+  context,
+}) => {
+  // Steps 5.21 (FR-032) and ADR-048: manifest, a service worker that keeps one static page.
+  await login(page);
+  // The login must be through before the reload below (scrypt takes a while on CI runners).
+  await expect(page.getByRole("heading", { name: "Welten" })).toBeVisible();
+  const manifest = await page.request.get("/manifest.webmanifest");
+  expect(manifest.headers()["content-type"]).toContain(
+    "application/manifest+json",
+  );
+  expect(await manifest.json()).toMatchObject({
+    display: "standalone",
+    start_url: "/",
+  });
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+  });
+  // After a reload the worker controls the page; pages still come from the network.
+  await page.reload();
+  await expect(page.getByRole("heading", { name: "Welten" })).toBeVisible();
+  expect(
+    await page.evaluate(() => navigator.serviceWorker.controller !== null),
+  ).toBe(true);
+
+  // Open a chapter with text, so answers of the interface pass by the worker.
+  await page.getByLabel("Name").fill(`Funkstille ${String(Date.now())}`);
+  await page.getByRole("button", { name: "Welt anlegen" }).click();
+  await page.getByLabel("Titel").fill("Ohne Netz");
+  await page.getByRole("button", { name: "Geschichte anlegen" }).click();
+  await addChapter(page, "Stille");
+  await page.getByLabel("Manuskript").click();
+  await page.keyboard.type("Kein Wort davon gehört ins Gerät.");
+  await page.getByRole("button", { name: "Speichern" }).click();
+  await expect(page.getByText("Gespeichert.")).toBeVisible();
+
+  await context.setOffline(true);
+  const answer = await page.evaluate(async () => {
+    try {
+      const response = await fetch("/api/worlds");
+      return `Antwort ${String(response.status)}`;
+    } catch {
+      return "kein Netz";
+    }
+  });
+  expect(answer).toBe("kein Netz");
+  await page.reload();
+  await expect(
+    page.getByRole("heading", { name: "Keine Verbindung" }),
+  ).toBeVisible();
+  const stored = await page.evaluate(async () => {
+    const urls: string[] = [];
+    for (const name of await caches.keys()) {
+      const cache = await caches.open(name);
+      for (const request of await cache.keys()) {
+        urls.push(new URL(request.url).pathname);
+      }
+    }
+    return urls;
+  });
+  expect(stored).toEqual(["/offline.html"]);
+
+  // Back online: the notice has no script and leads to the start; the text is on the server.
+  await context.setOffline(false);
+  await page.getByRole("link", { name: "Erneut versuchen" }).click();
+  await expect(page.getByRole("heading", { name: "Welten" })).toBeVisible();
+  await page.goBack();
+  await page.reload();
+  await expect(page.getByLabel("Manuskript")).toHaveText(
+    "Kein Wort davon gehört ins Gerät.",
+  );
+});

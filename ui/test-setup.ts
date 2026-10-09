@@ -13,3 +13,8 @@ if (!("getClientRects" in Range.prototype)) {
     getBoundingClientRect: () => new DOMRect(),
   });
 }
+
+// jsdom has no layout and no `scrollIntoView`; a no-op lets components call it (step 5.2).
+HTMLElement.prototype.scrollIntoView = function scrollIntoView() {
+  // nothing to scroll without layout
+};
