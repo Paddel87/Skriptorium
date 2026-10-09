@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 17:15 UTC – [BEOBACHTUNG] Merge #79 und Deployment `71f8d95` (5.11 Teil 2)
+
+- Auf Anweisung des Eigentümers („Ja, mergen und einspielen“): #79 nach grüner CI gemergt (`71f8d95`), CI auf `main` grün.
+- Deployment nach Runbook Abschnitt 7 (ADR-039): `REVISION` `71f8d95`, Rückweg `skriptorium:vorher` = `8372308`; `/api/health` 200 nach ca. 60 s (über HTTPS gewartet), `/` 200, `/api/worlds` 401; danach einmal per SSH `(healthy)`. Anmeldeseite unter einer `#`-Adresse lädt im Browser ohne Fehler (Content-Security-Policy unverändert ausreichend).
+- Offen: Prüfung von 5.11 Teil 1 und 2 sowie 5.19 durch den Eigentümer.
+
 ### 2026-10-09 17:00 UTC – [ONBOARDING-VALIDATION] Frischer Worktree nach React Router
 
 - Anlass: neue Laufzeit-Abhängigkeit `react-router` in `package.json` (Quick-Start-relevant). Worktree von `8fbf89b` im Scratchpad, eigenes Datenverzeichnis: `uv python install 3.14.7`, `uv sync --frozen`, `npm ci`, `uv run pre-commit install`, `uv run skriptorium-einrichtung` (Code nicht ausgegeben), `npx vite build`, Server auf Port 8125 – alle Schritte mit Exit 0; `/api/health` 200, `/` 200, `/api/worlds` 401; Anmeldeseite lädt unter einer `#`-Adresse ohne Fehler im Browser. Worktree danach entfernt. Keine Änderung am Quick Start nötig.
