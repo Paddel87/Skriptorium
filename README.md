@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 5 – Alltagstauglichkeit und Soll-Anforderungen (Umsetzung), begonnen 2026-10-08 (ADR-042: gezielt umbauen). Fortschritt: ✅ 7 von 21 Schritten erledigt, 🟠 2 in Arbeit, ⚪ 12 offen – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
+- **Projektphase:** Phase 5 – Alltagstauglichkeit und Soll-Anforderungen (Umsetzung), begonnen 2026-10-08 (ADR-042: gezielt umbauen). Fortschritt: ✅ 11 von 26 Schritten erledigt, 🟠 4 in Arbeit, ⚪ 11 offen – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
 - **Version:** v0.1.0 – Vorabversion (ADR-043); Go-Live erst vor v1.0.0 (Schritt 5.14)
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-10-08
@@ -100,7 +100,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 - 🟠 **Einspielen:** Mitlaufen beim Schreiben der KI (5.11) und Vorschläge für Namen ohne `@` (5.1) sind fertig, aber noch nicht auf dem Server.
 - 🟠 **5.2, 5.21:** Bedienung am Smartphone angepasst, als App installierbar – eingespielt, warten auf Prüfung auf dem Smartphone.
-- 🟠 **5.24, 5.26:** zweite Testgeschichte fertig; Messung und Prüfung der Kanon-Treue mit grok-4.6 warten auf einen gültigen OpenRouter-Schlüssel für Tests.
+- ⚪ **5.26:** Kanon-Treue mit grok-4.6 prüfen – die Ausgangsmessung an zwei Testgeschichten (5.24) liegt vor.
 - ⚪ **5.11 Teil 3, 5.25:** Kanon-Seite mit Suche und Filter; Antworten des Servers nicht im Browser-Speicher.
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 

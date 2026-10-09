@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-09, Sessionende (Server auf `a71cdff`; auf `main` seither gemergt, aber **nicht eingespielt**: Mitlaufen beim Schreiben der KI (#83, 5.11) und Vorschläge ohne `@` (#84, 5.1) – derzeit keine Arbeiten am VPS auf Anweisung des Eigentümers)
+- **Stand vom:** 2026-10-09, nach der Ausgangsmessung 5.24 (Server auf `a71cdff`; auf `main` seither gemergt, aber **nicht eingespielt**: Mitlaufen beim Schreiben der KI (#83, 5.11) und Vorschläge ohne `@` (#84, 5.1) – derzeit keine Arbeiten am VPS auf Anweisung des Eigentümers)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** fünf Einträge `[IN ARBEIT]`, alle warten auf den Eigentümer oder das Einspielen: 5.1 (umgesetzt, nicht eingespielt), 5.2/5.21 (eingespielt, Prüfung auf dem Gerät), 5.11 (Teile 1 und 2 geprüft, Korrektur Mitlaufen nicht eingespielt, Teil 3 offen), 5.24 (Testwelt und Werkzeug fertig, Ausgangsmessung wartet auf einen gültigen OpenRouter-Schlüssel in der Arbeitsumgebung)
-- **Nächster Schritt:** (1) Wenn der Eigentümer Arbeiten am VPS wieder freigibt: `main` einspielen (#83, #84), dann Bestätigung von 5.1 und vom Mitlaufen; (2) Prüfung von 5.2/5.21 auf dem Smartphone und am Mac (Installation, Anmeldung in der App, Markieren mit dem Finger, Start ohne Netz); (3) 5.24 Ausgangsmessung (`spikes/regel-002/`, grok-4.6, mittel und lang, je 3 Ketten je Geschichte), sobald ein gültiger Schlüssel gesetzt ist; (4) 5.26 Kanon-Treue mit grok-4.6; (5) 5.11 Teil 3 Kanon-Seite (mit Mockup vorher/nachher); (6) 5.25 Browser-Speicher; danach 5.20, 5.16, 5.6, 5.12, 5.13, 5.3, 5.4, 5.14, 5.5. Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** vier Einträge `[IN ARBEIT]`, alle warten auf den Eigentümer oder das Einspielen: 5.1 (umgesetzt, nicht eingespielt), 5.2/5.21 (eingespielt, Prüfung auf dem Gerät), 5.11 (Teile 1 und 2 geprüft, Korrektur Mitlaufen nicht eingespielt, Teil 3 offen). 5.24 erledigt 2026-10-09 (Ausgangsmessung)
+- **Nächster Schritt:** (1) Wenn der Eigentümer Arbeiten am VPS wieder freigibt: `main` einspielen (#83, #84), dann Bestätigung von 5.1 und vom Mitlaufen; (2) Prüfung von 5.2/5.21 auf dem Smartphone und am Mac (Installation, Anmeldung in der App, Markieren mit dem Finger, Start ohne Netz); (3) 5.26 Kanon-Treue mit grok-4.6 (Ausgangsmessung 5.24 liegt vor; der Schlüssel der Cloud-Session ist gültig, der auf dem Mac nicht); (4) 5.11 Teil 3 Kanon-Seite (mit Mockup vorher/nachher); (5) 5.25 Browser-Speicher; danach 5.20, 5.16, 5.6, 5.12, 5.13, 5.3, 5.4, 5.14, 5.5. Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -22,7 +22,7 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 10 von 26 erledigt, 5 in Arbeit, 11 offen.**
+**Phase 5: 11 von 26 erledigt, 4 in Arbeit, 11 offen.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -49,9 +49,9 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | 🟠 | 5.21 | Als App installierbar (PWA) | in Arbeit – eingespielt (ADR-048) | du: installieren und prüfen |
 | ✅ | 5.22 | Wiederkehrende Atmosphäre und Schlussgeste bei „lang“ | erledigt 2026-10-09 | – |
 | ✅ | 5.23 | `@`-Verweis mit Genitiv-s | erledigt und eingespielt 2026-10-09 | – |
-| 🟠 | 5.24 | Zweite Testgeschichte und wiederholte Läufe (Regel-002) | in Arbeit – Messung wartet | du: gültigen OpenRouter-Schlüssel für die Arbeitsumgebung |
+| ✅ | 5.24 | Zweite Testgeschichte und wiederholte Läufe (Regel-002) | erledigt 2026-10-09 | – |
 | ⚪ | 5.25 | Antworten des Servers nicht im Browser-Speicher | offen | KI – nach 5.21 |
-| ⚪ | 5.26 | Kanon-Treue mit grok-4.6 prüfen | offen | KI – nach 5.24 |
+| ⚪ | 5.26 | Kanon-Treue mit grok-4.6 prüfen | offen | KI |
 
 **Querschnitt (offen):**
 
@@ -554,7 +554,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.24: Zweite Testgeschichte und wiederholte Läufe für Probeschreiben
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-09) – zweite Testwelt „Glimmergrund“ angelegt (`spikes/modell-eignungstest/testwelt/glimmergrund`, 23 Einträge, 12 Kanon-Proben, Geschichte „Kein Stein glimmt umsonst“ Kapitel 1–4, Schreibstelle Kapitel 3, sieben Anweisungen); Werkzeug `spikes/regel-002/` (Laden beider Geschichten, Ketten mit Wiederholungen, Auswertung mit Mittelwert und Spannweite) trocken geprüft. **Ausgangsmessung offen:** der OpenRouter-Schlüssel der Arbeitsumgebung auf dem Mac wird abgelehnt (HTTP 401, 2026-10-09) – wartet auf einen gültigen Schlüssel vom Eigentümer
+- **Status:** ✅ ERLEDIGT (2026-10-09) – zweite Testwelt „Glimmergrund“ angelegt (`spikes/modell-eignungstest/testwelt/glimmergrund`, 23 Einträge, 12 Kanon-Proben, Geschichte „Kein Stein glimmt umsonst“ Kapitel 1–4, Schreibstelle Kapitel 3, sieben Anweisungen); Werkzeug `spikes/regel-002/` (Laden beider Geschichten, Ketten mit Wiederholungen, Auswertung mit Mittelwert und Spannweite). **Ausgangsmessung** am 2026-10-09 in der Cloud-Session (gültiger Schlüssel): grok-4.6, mittel und lang, je 3 Ketten je Geschichte, 12 Ketten ohne Fehler, 3,06 $; Kennzahlen und Handbewertung (getrennte Instanzen) in `spikes/regel-002/README.md` Abschnitt „Ausgangsmessung“. Wichtigste Befunde: Länge schwankt innerhalb der Kette stark, „Weiter“ erzählt bei „lang“ zu viel, Vorgriffe an festen Stellen, wörtliche Wiederholung gering. Die Ausnahme in Regel-002 (nur Salzmark) entfällt damit
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein (Prüfwerkzeug unter `spikes/`, Regel-002 schon entschieden, ADR-047)
