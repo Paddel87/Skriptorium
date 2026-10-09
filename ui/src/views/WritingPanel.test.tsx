@@ -459,6 +459,56 @@ describe("WritingPanel", () => {
   });
 });
 
+describe("suggestions without @ (step 5.1, FR-014)", () => {
+  it("offers names written without @ and sends only accepted ones", async () => {
+    const feed = sseFeed();
+    const { calls } = fakeApi(routes(feed));
+    const user = userEvent.setup();
+    panel();
+    await ready();
+    await typeInstruction("Kael rudert nach grauwasser.");
+    const kael = await screen.findByRole("button", {
+      name: "@Kael heranziehen",
+    });
+    expect(
+      screen.getByRole("button", { name: "@grauwasser heranziehen" }),
+    ).toBeDefined();
+    expect(screen.queryByText(/^Herangezogen/)).toBeNull();
+
+    await user.click(kael);
+    expect((await instructionView()).state.doc.toString()).toBe(
+      "@Kael rudert nach grauwasser.",
+    );
+    expect(screen.getByText("Herangezogen: Kael")).toBeDefined();
+    expect(
+      screen.queryByRole("button", { name: "@Kael heranziehen" }),
+    ).toBeNull();
+
+    // The suggestion not taken stays a suggestion: it does not reach the AI.
+    await user.click(screen.getByRole("button", { name: "Weiterschreiben" }));
+    expect(screen.queryByText("Meintest du:")).toBeNull();
+    await waitFor(() => {
+      expect(calls.some((c) => c.method === "POST")).toBe(true);
+    });
+    expect(calls.find((c) => c.method === "POST")?.body).toMatchObject({
+      instruction: "@Kael rudert nach grauwasser.",
+      references: ["kael"],
+    });
+    feed.close();
+  });
+
+  it("shows the entry behind an alias", async () => {
+    fakeApi(routes(sseFeed()));
+    panel();
+    await ready();
+    await typeInstruction("Der Fährmann schweigt.");
+    const button = await screen.findByRole("button", {
+      name: "@Der Fährmann heranziehen",
+    });
+    expect(button.textContent).toBe("@Der Fährmann → Kael");
+  });
+});
+
 describe("WritingPanel as a chat (step 5.11)", () => {
   it('jumps into the instruction with "/" outside a field, not inside one', async () => {
     fakeApi(routes(sseFeed()));

@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 import type { CanonEntry } from "./api";
-import { mentionRanges, menuItems, referencedEntries } from "./references";
+import {
+  acceptSuggestion,
+  mentionRanges,
+  menuItems,
+  referencedEntries,
+  suggestions,
+} from "./references";
 
 function entry(id: string, name: string, aliases: string[] = []): CanonEntry {
   return {
@@ -126,5 +132,51 @@ describe("menuItems", () => {
       "kael",
     ]);
     expect(menuItems("Fährmann", ENTRIES)).toEqual([]);
+  });
+});
+
+describe("suggestions (step 5.1, FR-014)", () => {
+  const TOMAS = entry("tomas-rehl", "Tomas Rehl", ["Tomas", "Rehl"]);
+  const ALL = [...ENTRIES, TOMAS];
+  const found = (text: string) =>
+    suggestions(text, ALL).map((s) => [s.word, s.entry.id, s.from]);
+
+  it("finds names and aliases without @ as whole words, longest first, once each", () => {
+    expect(
+      found("tomas sieht Kael der Alte und den Fährmann; Kael nickt."),
+    ).toEqual([
+      ["tomas", "tomas-rehl", 0],
+      ["Kael der Alte", "kael-der-alte", 12],
+      // „den Fährmann“ is not the alias „der Fährmann“; the later „Kael“ is.
+      ["Kael", "kael", 44],
+    ]);
+    expect(found("Der Fährmann wartet.")).toEqual([
+      ["Der Fährmann", "kael", 0],
+    ]);
+  });
+
+  it("takes a genitive s, but no longer words or names inside other words", () => {
+    expect(found("Kaels Boot")).toEqual([["Kaels", "kael", 0]]);
+    expect(found("Kaelin und Rehlinger, xTomas")).toEqual([]);
+  });
+
+  it("leaves out entries named with @ and words inside an @ mention", () => {
+    expect(found("@Tomas Rehl grüßt Tomas und Kael.")).toEqual([
+      ["Kael", "kael", 28],
+    ]);
+    expect(found("@Kael und Kael")).toEqual([]);
+  });
+
+  it("turns the first mention of the chosen entry into an @ mention", () => {
+    const text = "Tomas, Kael und noch einmal Tomas.";
+    expect(acceptSuggestion(text, ALL, TOMAS)).toBe(
+      "@Tomas, Kael und noch einmal Tomas.",
+    );
+    expect(acceptSuggestion("Kael allein.", ALL, TOMAS)).toBe("Kael allein.");
+    expect(
+      referencedEntries(acceptSuggestion(text, ALL, KAEL), ALL).map(
+        (e) => e.id,
+      ),
+    ).toEqual(["kael"]);
   });
 });
