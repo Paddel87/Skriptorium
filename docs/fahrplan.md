@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 5.11 Seitenaufbau – Teil 1 Schreibseite eingespielt, wartet auf Prüfung des Eigentümers, Teile 2 und 3 offen; 5.19 Dunkelmodus eingespielt (`ebc7bc5`), wartet auf Prüfung (zwei Schritte gleichzeitig, weil beide nur auf die Prüfung warten) (5.7, 5.8 und 5.15 am 2026-10-08 `[ERLEDIGT]`)
-- **Nächster Schritt:** Prüfung 5.11 Teil 1 und 5.19 durch den Eigentümer; 5.11 Teil 2 Chat-Aufbau mit Leiste links und Adressen je Ansicht (React Router 7.18.4, ADR-046); 5.2 Smartphone mit 5.21 PWA; 5.11 Teil 3 Kanon-Seite; 5.20; 5.22 und 5.23 (Befunde 2026-10-09); danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** Prüfung 5.11 Teil 1 und 5.19 durch den Eigentümer; 5.11 Teil 2 Chat-Aufbau mit Leiste links und Adressen je Ansicht (React Router 7.18.4, ADR-046); 5.2 Smartphone mit 5.21 PWA; 5.11 Teil 3 Kanon-Seite; 5.20; 5.22 Deployment und Bestätigung im Alltag; 5.23; danach 5.16, 5.6, 5.12, 5.13, 5.2, 5.1, 5.3, 5.4, 5.14, 5.5. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -22,7 +22,7 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 7 von 21 erledigt, 2 in Arbeit, 12 offen.**
+**Phase 5: 7 von 23 erledigt, 3 in Arbeit, 13 offen.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -47,7 +47,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | 🟠 | 5.19 | Dunkelmodus | in Arbeit | du: prüfen |
 | ⚪ | 5.20 | Schnell nacheinander angelegte Kapitel | offen | KI |
 | ⚪ | 5.21 | Als App installierbar (PWA) | offen | KI – mit 5.2 |
-| ⚪ | 5.22 | Wiederkehrende Atmosphäre und Schlussgeste bei „lang“ | offen | KI – Befund 2026-10-09 |
+| 🟠 | 5.22 | Wiederkehrende Atmosphäre und Schlussgeste bei „lang“ | umgesetzt, Probeschreiben erfüllt | KI: Deployment vom Mac; du: im Alltag bestätigen |
 | ⚪ | 5.23 | `@`-Verweis mit Genitiv-s | offen | KI |
 
 **Querschnitt (offen):**
@@ -518,7 +518,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.22: Wiederkehrende Atmosphäre und gleiche Schlussgeste bei langen Vorschlägen
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT – umgesetzt 2026-10-09 (Vorgaben in `context`), Probeschreiben erfüllt alle drei Kriterien; offen: Deployment vom Mac (ADR-039, auf Anweisung) und Bestätigung des Eigentümers im Alltag
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.15
 - **Freigabepflichtig:** nein – Wortlaut der Vorgaben in `context`; ein Wechsel des voreingestellten Modells wäre ein ADR wie ADR-044
@@ -530,7 +530,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** context
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Probeschreiben, Logbuch-Eintrag
-- **Notizen:** Angelegt 2026-10-09 auf Befund des Eigentümers. Wucherungs-Prüfung: Phase 5 jetzt 23 Schritte (ursprünglich 13, Schwelle mehr als 26) – keine Wucherung, Abstand 3.
+- **Notizen:** Umsetzung 2026-10-09: Vorgaben „Länge ist Obergrenze, kürzer statt auffüllen“, „Ort, Licht, Geräusche, Gerüche und Stimmung sind bekannt: nur bei Änderung beschreiben, auch nicht umschrieben“, Ende mit Handlung oder Rede statt Warten, Schweigen, Blick oder Stimmung; Erinnerung zur Figuren-Schreibweise ohne Warte-Schluss. Probeschreiben (`spikes/vorgriff-zeitlinie/README.md`, Nachtrag 5.22): grok-4.6 lang – Warte- oder Blick-Enden 0 von 7 (vorher 5), längste Folge eines Ortsmotivs 2 (vorher 3, Geruch 7), wörtliche Wiederholung 0,9 % (vorher 1,7 %); mittel ebenso 0 von 7. Eine Kette je Länge – Bestätigung im Alltag steht aus. Angelegt 2026-10-09 auf Befund des Eigentümers. Wucherungs-Prüfung: Phase 5 jetzt 23 Schritte (ursprünglich 13, Schwelle mehr als 26) – keine Wucherung, Abstand 3.
 
 #### 5.23: `@`-Verweis auch in gebeugter Form erkennen
 

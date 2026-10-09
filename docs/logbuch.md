@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 15:30 UTC – [BEOBACHTUNG] 5.22 umgesetzt, Probeschreiben erfüllt
+
+- **Rahmen:** Eigentümer sagte ausdrücklich „weiter hier“ (Kontext ca. 355.000 Token, Grenze 200.000) – Abweichung nach `CLAUDE.md` Abschnitt 0 vermerkt. Branch `scp/nice-lamport-as724t` neu auf `main` `cf0650b` (normaler Push, alter Branch-Stand ist in `main` enthalten).
+- **Code:** `_requirements` um „Länge ist Obergrenze“ und „Ort, Licht, Geräusche, Gerüche, Stimmung nur bei Änderung, auch nicht umschrieben“ ergänzt, Ende mit Handlung oder Rede statt Warten, Schweigen, Blick oder Stimmung; `_reminder` ohne Warte-Schluss. Kleinste Budgets in zwei Tests angehoben (1300 → 1400, 1500 → 1600), weil der feste Teil um ca. 60 Token wuchs.
+- **Läufe:** `pytest --cov` 427 bestanden, 99,79 %, `builder.py` 100 %; pre-commit grün.
+- **Probeschreiben:** grok-4.6 lang Warte-Enden 5 → 0 von 7, längste Motiv-Folge 7 → 2, wörtliche Wiederholung 1,7 → 0,9 %; mittel 0 von 7 (Kosten 0,33 $). Offen: Deployment vom Mac, Bestätigung im Alltag.
+
 ### 2026-10-09 14:58 UTC – [SESSIONENDE] Befunde 5.22 und 5.23 erfasst
 
 - **Bearbeitet (2026-10-09):** Befunde des Eigentümers geprüft – Atmosphäre und Schlussgeste bei „lang“ (5.22), `@` und Aliasse (5.23); Antwort des Eigentümers zu 5.23 eingetragen: nur Genitiv-s. Kein Produktionscode geändert.
