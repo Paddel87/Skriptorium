@@ -51,6 +51,45 @@ describe("referencedEntries", () => {
   });
 });
 
+describe("referencedEntries with a genitive s (step 5.23)", () => {
+  const TOWER = entry("aschturm", "Aschturm", ["Turm"]);
+  const KAELS = entry("kaels", "Kaels");
+  const MARKUS = entry("markus", "Markus");
+
+  it("accepts a name or alias followed by a genitive s", () => {
+    expect(
+      referencedEntries(
+        "@Kaels Hammer liegt vor @Aschturms Tor; @der Fährmanns Boot, @Turms.",
+        [KAEL, TOWER],
+      ).map((e) => e.id),
+    ).toEqual(["kael", "aschturm"]);
+  });
+
+  it("does not accept other endings or a longer word", () => {
+    expect(
+      referencedEntries("@Kaela @Kaelsa @Kaelen @KaelS", [KAEL]).map(
+        (e) => e.id,
+      ),
+    ).toEqual([]);
+  });
+
+  it("prefers an entry whose name itself ends in s", () => {
+    expect(
+      referencedEntries("@Kaels kommt", [KAEL, KAELS]).map((e) => e.id),
+    ).toEqual(["kaels"]);
+    expect(
+      referencedEntries("@Markus geht", [MARKUS]).map((e) => e.id),
+    ).toEqual(["markus"]);
+  });
+
+  it("marks the s as part of the mention", () => {
+    const text = "Vor @Aschturms Tor.";
+    expect(
+      mentionRanges(text, [TOWER]).map((m) => text.slice(m.from, m.to)),
+    ).toEqual(["@Aschturms"]);
+  });
+});
+
 describe("mentionRanges", () => {
   it("gives every recognised mention with its place, repeats included (step 5.18)", () => {
     const text = "@Kael der Alte ruft @kael; mail@Kael @Mira, wieder @Kael.";

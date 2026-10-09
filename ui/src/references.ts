@@ -4,9 +4,9 @@ const WORD_CHARACTER = /[\p{L}\p{N}]/u;
 
 /**
  * Canon entries named with `@` in an instruction (FR-013): `@` followed by the name or an alias
- * of an entry, case-insensitive, not inside a word and not followed by a letter or digit. The
- * longest name wins, so `@Kael der Alte` names that entry and not `Kael`. Order of first
- * mention, each entry once.
+ * of an entry, case-insensitive, not inside a word and not followed by a letter or digit – except
+ * a genitive „s“ (`@Kaels`, step 5.23). The longest name wins, so `@Kael der Alte` names that
+ * entry and not `Kael`. Order of first mention, each entry once.
  */
 export function referencedEntries(
   text: string,
@@ -52,16 +52,39 @@ export function mentionRanges(
       continue;
     }
     const rest = text.slice(at + 1);
-    const hit = labels.find(
-      (item) =>
-        rest.slice(0, item.label.length).toLocaleLowerCase("de") ===
-          item.lower && !WORD_CHARACTER.test(rest.charAt(item.label.length)),
-    );
+    let length = 0;
+    const hit = labels.find((item) => {
+      if (
+        rest.slice(0, item.label.length).toLocaleLowerCase("de") !== item.lower
+      ) {
+        return false;
+      }
+      length = labelEnd(rest, item.label.length);
+      return length > 0;
+    });
     if (hit !== undefined) {
-      found.push({ from: at, to: at + 1 + hit.label.length, entry: hit.entry });
+      found.push({ from: at, to: at + 1 + length, entry: hit.entry });
     }
   }
   return found;
+}
+
+/**
+ * Length of the mention when a name or alias of `length` characters starts `rest`: the name
+ * itself if no letter or digit follows, the name with a genitive „s“ (`@Kaels Hammer`, owner,
+ * step 5.23) if only that follows, otherwise 0 – the name is part of a longer word.
+ */
+function labelEnd(rest: string, length: number): number {
+  if (!WORD_CHARACTER.test(rest.charAt(length))) {
+    return length;
+  }
+  if (
+    rest.charAt(length) === "s" &&
+    !WORD_CHARACTER.test(rest.charAt(length + 1))
+  ) {
+    return length + 1;
+  }
+  return 0;
 }
 
 /** One line of the `@` menu: a name or alias and the entry it belongs to. */
