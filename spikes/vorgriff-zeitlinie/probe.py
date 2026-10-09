@@ -12,7 +12,7 @@ Nasse Grab“), abgeschnitten nach „Also holten wir Pell.“. Sieben Anweisung
 nacheinander über ``prepare_request`` (wie die Oberfläche); jeder Vorschlag wird übernommen und
 ans Kapitel gehängt.
 
-Aufruf: VARIANTE=NAME [MODELL=x-ai/grok-4.6] uv run python spikes/vorgriff-zeitlinie/probe.py
+Aufruf: VARIANTE=NAME [MODELL=x-ai/grok-4.6] [LAENGE=kurz|mittel|lang] uv run python spikes/vorgriff-zeitlinie/probe.py
 Den Rahmen liefert der installierte Code (für den Stand von ``main``: ``PYTHONPATH`` auf das
 ``src`` eines Worktrees von ``main``). Der Schlüssel kommt aus OPENROUTER_API_KEY.
 """
@@ -116,6 +116,8 @@ def accepted(answer: str) -> str:
 async def main() -> None:
     variant = os.environ["VARIANTE"]
     model = os.environ.get("MODELL", "x-ai/grok-4.6")
+    # Length of the proposals (step 5.15); unset for code without the setting.
+    extra = {"length": os.environ["LAENGE"]} if "LAENGE" in os.environ else {}
     out = ROOT / "ergebnisse" / variant
     out.mkdir(parents=True, exist_ok=True)
     provider = OpenRouterProvider(os.environ["OPENROUTER_API_KEY"])
@@ -123,7 +125,7 @@ async def main() -> None:
         with tempfile.TemporaryDirectory() as tmp:
             canon, manuscripts, builder = setup(Path(tmp))
             for step, instruction in enumerate(INSTRUCTIONS, start=1):
-                order = WriteOrder(WORLD, STORY, 1, instruction=instruction, model=model)
+                order = WriteOrder(WORLD, STORY, 1, instruction=instruction, model=model, **extra)
                 prepared = prepare_request(canon, manuscripts, builder, order)
                 started = time.monotonic()
                 for attempt in range(3):

@@ -53,3 +53,24 @@ Gleiche Kette, gleiche Anweisungen, Stand mit Versuch 1 von 5.8 (in `main`) und 
 6. **Kanon-Treue nicht schlechter:** eindeutig 1 → 0, fraglich 4 → 4 über alle Ketten.
 
 grok-4.7 lief in 2 von 7 Schritten dreimal in die Zeitüberschreitung bis zum ersten Textstück (90 s), ohne Text. Das ist Anbieter-Latenz und keine Wirkung der Vorgaben, verfälscht aber die Kette: Gunda erscheint ohne Schritt 3. Grenzen wie oben: eine Kette je Modell, Testwelt statt echter Welt.
+
+## Nachtrag 2026-10-09: Länge „lang“
+
+Befund des Eigentümers: Mit „lang“ wiederholt die KI wieder die Atmosphäre des Ortes. Dieselbe Kette auf Stand `main` `e4d1a81` (mit 5.8 und 5.15) und `LAENGE=lang`; Ergebnisse in `ergebnisse/lang-grok46/` und `ergebnisse/lang-grok47/` (grok-4.7: Schritt 7 brach nach Zeitüberschreitungen ab, 6 Schritte).
+
+Wörtliche Wiederholung als Anteil der 4-Wort-Folgen eines Vorschlags, die schon im Manuskript davor standen (Mittel über die Kette / Schritte 5–7):
+
+| Kette | Mittel | Schritte 5–7 | Wörter je Vorschlag |
+|---|---|---|---|
+| main-grok46 (vor 5.15) | 8,3 % | 14,3 % | 58–254 |
+| main-grok47 (vor 5.15) | 7,7 % | 13,3 % | 83–363 |
+| neu-grok46 (mittel) | 0,4 % | 1,0 % | 106–211 |
+| lang-grok46 | 1,7 % | 2,7 % | 294–699 |
+| lang-grok47 | 0,2 % | 0,0 % | 422–643 |
+
+- **Wörtlich kaum noch Wiederholung**, auch bei „lang“. Die Vorgabe aus 5.15 wirkt hier.
+- **Umschrieben aber doch:** lang-grok46 kehrt immer wieder zu denselben Motiven des Ortes zurück: Hafendunst, der durch die Ritze kriecht (3×), die dampfende Schüssel mit Zwiebeln und Linsen (4×), Tran (3×).
+- **Gleiche Schlussgeste:** 5 von 7 Vorschlägen enden mit „sah mich an … und wartete“ oder einer ähnlichen Formel. Zum Vergleich: lang-grok47 1 von 6, neu-grok46 (mittel) 2 von 7, main-grok46 1 von 7. Das ist der Befund des Eigentümers.
+- **Länge eingehalten:** grok-4.6 hält „lang“ meist ein (6 von 7 im Rahmen 400–600 Wörter oder knapp darüber). Bei kleinen Anweisungen ist das mehr, als Handlung da ist; der Rest wird mit Atmosphäre gefüllt.
+- **5.15 wirkt bei der eigenen Figur:** Anweisung 2 erscheint jetzt als Ilkas wörtliche Rede („Eine Silberschale die Nacht“, sagte ich.).
+- **Landeplatz:** Fahrplan-Schritt 5.22.

@@ -1,0 +1,12 @@
+{
+  "variante": "lang-grok47",
+  "schritt": 5,
+  "anweisung": "(leer: Weiter)",
+  "modell": "x-ai/grok-4.7",
+  "woerter": 595,
+  "sekunden": 54.3,
+  "token_ein": 12319,
+  "token_aus": 2263,
+  "kosten_usd": 0.03612312,
+  "finish_reason": "stop"
+}
