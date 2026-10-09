@@ -56,7 +56,7 @@ grok-4.7 lief in 2 von 7 Schritten dreimal in die Zeitüberschreitung bis zum er
 
 ## Nachtrag 2026-10-09: Länge „lang“
 
-Befund des Eigentümers: Mit „lang“ wiederholt die KI wieder die Atmosphäre des Ortes. Dieselbe Kette auf Stand `main` `e4d1a81` (mit 5.8 und 5.15) und `LAENGE=lang`; Ergebnisse in `ergebnisse/lang-grok46/` und `ergebnisse/lang-grok47/` (grok-4.7: Schritt 7 brach nach Zeitüberschreitungen ab, 6 Schritte).
+Befund des Eigentümers: Mit „lang“ wiederholt die KI wieder die Atmosphäre des Ortes. Dieselbe Kette auf Stand `main` `e4d1a81` (mit 5.8 und 5.15) und `LAENGE=lang`; Ergebnisse in `ergebnisse/lang-grok46/` und `ergebnisse/lang-grok47/` (grok-4.7: Schritt 7 erst im dritten Versuch nach zwei Zeitüberschreitungen, insgesamt 274 s).
 
 Wörtliche Wiederholung als Anteil der 4-Wort-Folgen eines Vorschlags, die schon im Manuskript davor standen (Mittel über die Kette / Schritte 5–7):
 
@@ -66,11 +66,11 @@ Wörtliche Wiederholung als Anteil der 4-Wort-Folgen eines Vorschlags, die schon
 | main-grok47 (vor 5.15) | 7,7 % | 13,3 % | 83–363 |
 | neu-grok46 (mittel) | 0,4 % | 1,0 % | 106–211 |
 | lang-grok46 | 1,7 % | 2,7 % | 294–699 |
-| lang-grok47 | 0,2 % | 0,0 % | 422–643 |
+| lang-grok47 | 0,1 % | 0,0 % | 418–643 |
 
 - **Wörtlich kaum noch Wiederholung**, auch bei „lang“. Die Vorgabe aus 5.15 wirkt hier.
 - **Umschrieben aber doch:** lang-grok46 kehrt immer wieder zu denselben Motiven des Ortes zurück: Hafendunst, der durch die Ritze kriecht (3×), die dampfende Schüssel mit Zwiebeln und Linsen (4×), Tran (3×).
-- **Gleiche Schlussgeste:** 5 von 7 Vorschlägen enden mit „sah mich an … und wartete“ oder einer ähnlichen Formel. Zum Vergleich: lang-grok47 1 von 6, neu-grok46 (mittel) 2 von 7, main-grok46 1 von 7. Das ist der Befund des Eigentümers.
+- **Gleiche Schlussgeste:** 5 von 7 Vorschlägen enden mit „sah mich an … und wartete“ oder einer ähnlichen Formel. Zum Vergleich: lang-grok47 1 von 7, neu-grok46 (mittel) 2 von 7, main-grok46 1 von 7. Das ist der Befund des Eigentümers.
 - **Länge eingehalten:** grok-4.6 hält „lang“ meist ein (6 von 7 im Rahmen 400–600 Wörter oder knapp darüber). Bei kleinen Anweisungen ist das mehr, als Handlung da ist; der Rest wird mit Atmosphäre gefüllt.
 - **5.15 wirkt bei der eigenen Figur:** Anweisung 2 erscheint jetzt als Ilkas wörtliche Rede („Eine Silberschale die Nacht“, sagte ich.).
 - **Landeplatz:** Fahrplan-Schritt 5.22.
