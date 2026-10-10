@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [ADR-ANGELEGT] ADR-057 Nachweis D.4 an „The Trap“
+
+- Eigentümer: Kurzfassungen Kapitel 1–3 erstellt und als geprüft gespeichert. Messung im Container (Anfrage für Kapitel 4 ohne KI gebaut; Verbrauch nur als Zahlen): Werte siehe ADR-057. Eigentümer: „Ja, mit Vermerk V.10“ → D.4 und FR-010 erledigt.
+- Reibung: Die Ausgabe der Bausteine nannte auch die **Titel** der Regel- und Zeitlinien-Einträge (der Filter kannte die Bausteinarten nicht), obwohl nur Größen angekündigt waren; keine Texte. Dem Eigentümer offen gesagt. Bei solchen Abfragen künftig nur Art und Größe ausgeben.
+- Die einzelnen Kosten der drei Kurzfassungen ließen sich nicht zuordnen (Zeitfilter auf das lokale Datum, Protokoll in UTC) – nicht nachgeholt, steckt in den Monatskosten.
+
 ### 2026-10-11 – [BEOBACHTUNG] Vorab-Abgleich gegen die Vision vor 5.14
 
 - Frage des Eigentümers: „Ist die Vision jetzt komplett?“ `docs/vision.md` vollständig gelesen und jedes Element gegen Fahrplan und `docs/requirements.md` geprüft. Erledigt: Kernidee und Zielbild (FR-001–004, 007–009, 011–017, 024), Szenarien 1, 3, 4, 5; Erfolgskriterien Widersprüche (FR-011), 10 Sekunden (FR-015), Figuren übergreifend (FR-016/017), 30 Minuten (FR-022, Einschätzung des Eigentümers – Stoppuhr laut Eigentümer „problemlos zu unterbieten“); harte Randbedingungen (Cloud-Modelle, Modellwechsel FR-018/025/028, Lizenz ADR-005); weiche Präferenzen (FR-019, FR-020 + 5.3, FR-032, ADR-004). Abgrenzungen unverändert (Publizieren, Bilder, Karten nicht in der ersten Version). Kann-Wünsche FR-023, FR-029, FR-030 sind keine Vision-Elemente und haben Landeplätze in V.x.

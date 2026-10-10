@@ -60,7 +60,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⚪ | D.1 | Wechsel Node.js 24 → Node.js 26 LTS | offen | KI – ab 2026-11-05 |
 | ⚪ | D.2 | Nachprüfung TypeScript 7 | offen | KI – am 2027-01-08 |
 | ⚪ | D.3 | Nachprüfung httpx | offen | KI – am 2027-03-26 |
-| ⚪ | D.4 | Prüfung „kein Kontextverlust" beim Referenzumfang | offen | wartet, bis eine Geschichte den Referenzumfang erreicht |
+| ✅ | D.4 | Prüfung „kein Kontextverlust" beim Referenzumfang | erledigt 2026-10-11 (ADR-057, an „The Trap“) | – |
 | ⚪ | D.5 | Wechsel auf httpx2 und Nachprüfung mypy 2 | offen | KI – ab 2026-11-12 |
 | ⚪ | D.9 | Nachprüfung Unterstützung des Reverse Proxys | offen | KI – am 2026-12-28 |
 | ⚪ | D.11 | Sicherungs-Zugangsdaten außerhalb des Servers ablegen | offen | du – bis 2026-10-31 |
@@ -660,7 +660,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.4: Prüfung „kein Kontextverlust" beim Referenzumfang
 
-- **Status:** ⚪ OFFEN
+- **Status:** ✅ ERLEDIGT (2026-10-11) – Nachweis an „The Trap“ mit Hochrechnung (ADR-057): Handlungsstand vollständig (Gesamtzusammenfassung 481 Wörter, Kurzfassungen 164/162/177), Anfrage ≤ 30.000 Token, im Betrieb ca. 23.000 Token und ca. 0,05 $ statt 125.000–140.000 Token; Einschränkung: Figuren-, Orts- und Gegenstands-Einträge gehen bei langen Kapiteln nur per `@` mit (V.10)
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 3.6
 - **Frist:** kein Datum – Auslöser: eine Geschichte erreicht ≥ 500.000 Token (Entscheidung des Eigentümers, ADR-009)
