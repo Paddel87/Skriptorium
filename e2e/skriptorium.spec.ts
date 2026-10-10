@@ -340,13 +340,23 @@ test("a marked passage goes into the canon or into this story only", async ({
   await inList(page, "Die Kreideküste").click();
   await area(page, "Kanon").click();
   await page.getByRole("button", { name: "Tamsin" }).click();
+  // The entry has its own address and stays open after a reload (step 5.11 part 3).
+  await expect(page).toHaveURL(/#\/welt\/die-kreidekueste\/kanon\/tamsin$/);
+  await page.reload();
+  await expect(page.getByRole("article")).toContainText(
+    "Tamsin fürchtet tiefes Wasser.",
+  );
+  await page.getByRole("button", { name: "Bearbeiten" }).click();
   await expect(page.getByLabel("Text")).toHaveValue(
     "Lotsin an der Kreideküste.\n\nTamsin fürchtet tiefes Wasser.",
   );
   await inList(page, "Das Aschenland").click();
   await area(page, "Kanon").click();
   await page.getByRole("button", { name: "Aschenfürst" }).click();
-  await expect(page.getByLabel("Text")).toHaveValue("Herrscht über die Glut.");
+  await expect(page.getByRole("article")).toContainText(
+    "Herrscht über die Glut.",
+  );
+  await expect(page.getByRole("article")).not.toContainText("lacht nie");
 });
 
 test("the model of a story survives a reload; costs of the month are shown", async ({
