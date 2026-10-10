@@ -1,0 +1,16 @@
+{
+  "geschichte": "glimmergrund",
+  "schritt": 1,
+  "anweisung": "Ich frage @Brack, wer von den Stollen unten auf der Tiefen Sohle zuletzt in Betrieb war und wie viele es dort überhaupt gab. @Brack antwortet kurz. Ich frage ihn, wer den Schlüssel zum neuen Schloss hat.",
+  "verweise": [
+    "brack"
+  ],
+  "modell": "x-ai/grok-4.7",
+  "woerter": 105,
+  "sekunden": 279.0,
+  "token_geschaetzt": 28712,
+  "token_ein": 24617,
+  "token_aus": 3571,
+  "kosten_usd": 0.03345804,
+  "finish_reason": "stop"
+}

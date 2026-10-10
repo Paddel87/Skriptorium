@@ -1,0 +1,17 @@
+{
+  "geschichte": "salzmark",
+  "schritt": 2,
+  "anweisung": "Spät am Abend sitzen @Tomas und ich unten bei @Gunda. @Gunda stellt uns einen Krug hin. Ich frage @Tomas nach seinem Bruder.",
+  "verweise": [
+    "gunda-hollt",
+    "tomas-rehl"
+  ],
+  "modell": "x-ai/grok-4.6",
+  "woerter": 20,
+  "sekunden": 19.3,
+  "token_geschaetzt": 9529,
+  "token_ein": 8170,
+  "token_aus": 830,
+  "kosten_usd": 0.02091672,
+  "finish_reason": "stop"
+}

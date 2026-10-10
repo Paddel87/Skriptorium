@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-09, nach der Ausgangsmessung 5.24 (Server auf `a71cdff`; auf `main` seither gemergt, aber **nicht eingespielt**: Mitlaufen beim Schreiben der KI (#83, 5.11) und Vorschläge ohne `@` (#84, 5.1) – derzeit keine Arbeiten am VPS auf Anweisung des Eigentümers)
+- **Stand vom:** 2026-10-10, nach der Prüfung der Kanon-Treue 5.26 (Server auf `a71cdff`; auf `main` seither gemergt, aber **nicht eingespielt**: Mitlaufen beim Schreiben der KI (#83, 5.11) und Vorschläge ohne `@` (#84, 5.1) – derzeit keine Arbeiten am VPS auf Anweisung des Eigentümers)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** vier Einträge `[IN ARBEIT]`, alle warten auf den Eigentümer oder das Einspielen: 5.1 (umgesetzt, nicht eingespielt), 5.2/5.21 (eingespielt, Prüfung auf dem Gerät), 5.11 (Teile 1 und 2 geprüft, Korrektur Mitlaufen nicht eingespielt, Teil 3 offen). 5.24 erledigt 2026-10-09 (Ausgangsmessung)
-- **Nächster Schritt:** (1) Wenn der Eigentümer Arbeiten am VPS wieder freigibt: `main` einspielen (#83, #84), dann Bestätigung von 5.1 und vom Mitlaufen; (2) Prüfung von 5.2/5.21 auf dem Smartphone und am Mac (Installation, Anmeldung in der App, Markieren mit dem Finger, Start ohne Netz); (3) 5.26 Kanon-Treue mit grok-4.6 (Ausgangsmessung 5.24 liegt vor; der Schlüssel der Cloud-Session ist gültig, der auf dem Mac nicht); (4) 5.11 Teil 3 Kanon-Seite (mit Mockup vorher/nachher); (5) 5.25 Browser-Speicher; danach 5.20, 5.16, 5.6, 5.12, 5.13, 5.3, 5.4, 5.14, 5.5. Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** vier Einträge `[IN ARBEIT]`, alle warten auf den Eigentümer oder das Einspielen: 5.1 (umgesetzt, nicht eingespielt), 5.2/5.21 (eingespielt, Prüfung auf dem Gerät), 5.11 (Teile 1 und 2 geprüft, Korrektur Mitlaufen nicht eingespielt, Teil 3 offen). 5.26 erledigt 2026-10-10 (Kanon-Treue)
+- **Nächster Schritt:** (1) Wenn der Eigentümer Arbeiten am VPS wieder freigibt: `main` einspielen (#83, #84), dann Bestätigung von 5.1 und vom Mitlaufen; (2) Prüfung von 5.2/5.21 auf dem Smartphone und am Mac (Installation, Anmeldung in der App, Markieren mit dem Finger, Start ohne Netz); (3) Entscheidungen des Eigentümers zu den Vorlagen aus 5.26 (E1: nicht genannte Kanon-Einträge gehen bei langen Kapiteln verloren; E2: grok-4.7 überschreitet die Wartezeit von 90 s) – jeder neue Schritt daraus löst den Stopp Phasen-Wucherung mit Neuplanung aus; (4) 5.11 Teil 3 Kanon-Seite (mit Mockup vorher/nachher); (5) 5.25 Browser-Speicher; danach 5.20, 5.16, 5.6, 5.12, 5.13, 5.3, 5.4, 5.14, 5.5. Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -51,7 +51,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | 5.23 | `@`-Verweis mit Genitiv-s | erledigt und eingespielt 2026-10-09 | – |
 | ✅ | 5.24 | Zweite Testgeschichte und wiederholte Läufe (Regel-002) | erledigt 2026-10-09 | – |
 | ⚪ | 5.25 | Antworten des Servers nicht im Browser-Speicher | offen | KI – nach 5.21 |
-| ⚪ | 5.26 | Kanon-Treue mit grok-4.6 prüfen | offen | KI |
+| ✅ | 5.26 | Kanon-Treue mit grok-4.6 prüfen | erledigt 2026-10-10 | – |
 
 **Querschnitt (offen):**
 
@@ -586,7 +586,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.26: Kanon-Treue mit grok-4.6 prüfen
 
-- **Status:** ⚪ OFFEN
+- **Status:** ✅ ERLEDIGT (2026-10-10) – Bericht `docs/research/kanon-treue-grok.md`, Werkzeug `spikes/kanon-treue/`. (a) Per `@` genannte Einträge, Regeln, Zeitlinie und geführte Figur kommen vollständig an, auch alle Einträge per `@` am längsten Kapitel; nicht genannte Einträge nur bei Restbudget nach den letzten Seiten – in Glimmergrund fehlen ab ca. 2.800 Wörtern Kapitel 1–3 von 23 Einträgen. (b) Verblindet bewertet, je 3 Ketten an beiden Geschichten: grok-4.6 hält 95–100 % der berührten Proben ein, 6 Widersprüche in 12 Ketten (3 eindeutig, ca. 0,6–1,0 je Kapitel – an der Grenze von FR-011); grok-4.7 100 %, 0 Widersprüche in 6 Ketten (Tendenz, nach Regel-002 kein Beleg); `@` ohne messbaren Unterschied. Neuer Befund: grok-4.7 braucht an echten Anfragen im Mittel 113–131 s, bis 370 s bis zum ersten Textstück – über der Wartezeit des Produkts (90 s, ADR-035). Kosten ca. 5,15 $. Zwei Entscheidungsvorlagen an den Eigentümer (E1 nicht genannte Einträge, E2 grok-4.7), offen – neue Schritte daraus lösen den Stopp Phasen-Wucherung aus
 - **Phasentyp-Kontext:** UMSETZUNG (Prüfschritt; Ergebnis als Bericht, keine Funktion)
 - **Abhängigkeiten:** 5.24 (zweite Testgeschichte, Regel-002)
 - **Freigabepflichtig:** nein – Prüfwerkzeug unter `spikes/`; ein Wechsel der Voreinstellung als Folge wäre eine eigene Entscheidung (ADR)

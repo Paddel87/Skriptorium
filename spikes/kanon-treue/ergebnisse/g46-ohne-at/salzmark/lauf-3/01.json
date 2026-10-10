@@ -1,0 +1,14 @@
+{
+  "geschichte": "salzmark",
+  "schritt": 1,
+  "anweisung": "Pell kommt am nächsten Morgen in die Kammer. Ich schreibe ihm die Zeiten der Wachwechsel, die Tomas noch kennt, auf einen Zettel und gebe ihn ihm.",
+  "verweise": [],
+  "modell": "x-ai/grok-4.6",
+  "woerter": 159,
+  "sekunden": 24.8,
+  "token_geschaetzt": 9280,
+  "token_ein": 7965,
+  "token_aus": 956,
+  "kosten_usd": 0.02125926,
+  "finish_reason": "stop"
+}

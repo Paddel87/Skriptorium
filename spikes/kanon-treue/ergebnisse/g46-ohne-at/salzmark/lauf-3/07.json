@@ -1,0 +1,14 @@
+{
+  "geschichte": "salzmark",
+  "schritt": 7,
+  "anweisung": "Abends kommt Tomas zu mir herauf und erzählt, dass am Kai ein ertrunkener Fischer verabschiedet wurde. Ich frage ihn, wie die Leute gekleidet waren und wer der Tote war.",
+  "verweise": [],
+  "modell": "x-ai/grok-4.6",
+  "woerter": 108,
+  "sekunden": 31.5,
+  "token_geschaetzt": 10590,
+  "token_ein": 9064,
+  "token_aus": 1252,
+  "kosten_usd": 0.02519352,
+  "finish_reason": "stop"
+}

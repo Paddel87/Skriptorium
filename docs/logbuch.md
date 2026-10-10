@@ -29,11 +29,47 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 03:00 UTC – [GELÖST] 5.26 doppelt begonnen – Arbeit einer anderen Session übersehen
+
+- **Was:** Auf „5.26 hier starten“ begann die KI in der Session der Ausgangsmessung (über der Größengrenze, „weiter hier“ vermerkt) Teil (a) und die Ketten für Teil (b) neu. 5.26 war aber schon von einer anderen Session auf `spike/5.26-kanon-treue` erledigt (00:50–01:55 UTC, noch ohne PR). Aufgefallen erst beim abgelehnten Push auf denselben Branch.
+- **Ursache:** Beim Start nur `main` abgeglichen, nicht die Branches auf GitHub; die Frage des Eigentümers („Was haben wir denn eben gemacht?“) nicht als Hinweis gelesen.
+- **Folge:** Läufe nach vier Vorschlägen angehalten (0,10 $), eigener Stand verworfen (nie gepusht). Eigene Nachrechnung bestätigte Teil (a) der anderen Session (fehlende Einträge ohne `@` bei Glimmergrund ab Schritt 4). Auf Wunsch des Eigentümers `main` in den Branch gemergt (Konflikt im Logbuch chronologisch aufgelöst) und PR geöffnet.
+- **Merke:** Vor jedem Schritt auch `git ls-remote --heads origin '*<schritt-id>*'` prüfen.
+
 ### 2026-10-10 02:27 UTC – [BEOBACHTUNG] Rückfragen mit Antworten zum Antippen
 
 - **Anlass:** Der Eigentümer möchte Antworten auf Rückfragen anklicken können; die Fragen dieser Session standen nur als Text (Fehler der KI, das Werkzeug bietet Auswahlfragen an).
 - **Folge:** Auf Wahl des Eigentümers dauerhaft festgehalten in `docs/project-context.md` Abschnitt 9 („Form von Rückfragen“). Eingetragen nach dem Sessionende-Eintrag – kleine Dokumentationsänderung ohne Fahrplan-Schritt, daher keine Abweichung von der Regel „Sessiongröße“.
 - **Nebenbei:** PR #87 (5.24) am 2026-10-10 gemergt (`19f6beb`); Frage des Eigentümers zum Display-Standby im Chat beantwortet (Skriptorium nutzt keine Wake-Lock-Schnittstelle).
+
+### 2026-10-10 01:55 UTC – [SESSIONENDE] 5.26 erledigt – Kanon-Treue mit grok-4.6 und grok-4.7
+
+- **Dauer:** 00:50 – 01:55 UTC, Cloud-Session (Linux).
+- **Bearbeitet:** 5.26 → `[ERLEDIGT]`; Bericht `docs/research/kanon-treue-grok.md`; Fahrplan (Status, Übersicht, Aktueller Stand), README (Fortschritt 12 von 26, Nächste Schritte), `docs/architecture.md` (Nachweis-Spalte NFR Kanon-Treue, Reifegrad unverändert), `docs/requirements.md` (FR-011, Vermerk).
+- **Stand:** Server unverändert auf `a71cdff`; #83 und #84 weiter nicht eingespielt. `[IN ARBEIT]`: 5.1, 5.2, 5.11, 5.21 (warten auf Eigentümer oder Einspielen). Branch `spike/5.26-kanon-treue` gepusht, Pull Request noch nicht angelegt.
+- **Nächster Schritt:** Entscheidungsvorlagen E1 (nicht genannte Kanon-Einträge gehen bei langen Kapiteln verloren) und E2 (grok-4.7 über der Wartezeit von 90 s) als `ENTSCHEIDUNG ERFORDERLICH` vorlegen – mit `templates/architektur-heuristiken.md`; ein neuer Schritt daraus löst den Stopp Phasen-Wucherung (Phase 5 bei 26 Schritten) mit Neuplanung aus. Sonst wie Fahrplan „Nächster Schritt“.
+- **Offen beim Eigentümer:** Entscheidungen E1, E2; Schlüssel auf dem Mac erneuern; Freigabe für das Einspielen; D.11 bis 2026-10-31.
+- **Reibungen:** grok-4.7 lief mit der Wartezeit des Produkts in Zeitüberschreitungen (17 von 29 Anfragen); zuerst Parallelität vermutet, Gegenprobe nacheinander scheiterte ebenso – Ursache ist langes Vorab-Denken an der echten Anfrage (Salzmark 370 s). Zwei Läufe verworfen (0,55 $). Ein `pkill -f` auf das Laufskript beendete auch die eigene Shell (Muster traf die Befehlszeile) – künftig per PID beenden. Stop-Hook verlangte Commits während der Läufe: Ergebnisordner wieder vorübergehend in `.git/info/exclude`, danach entfernt.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 01:48 UTC). Schritte oberhalb der Empfehlung: 0 (5.26 empfiehlt Entscheidung). Abgegeben: verblindete Handbewertung je Geschichte an zwei Unteragenten der Routine-Klasse (Sonnet; ca. 155.000 und 163.000 Token); alle Widersprüche am Text nachgeprüft, ein Urteil korrigiert.
+- **Kontextgröße:** 302.188 Token laut Sitzungsabfrage (01:48 UTC) – über der Grenze von 200.000; Schritt 5.26 zu Ende geführt, kein neuer Schritt. Bei Sessionstart (nach `/clear`) 102.620.
+- **Sessionende-Prüfungen:** README Status-Block (Phase 5, v0.1.0, Blocker 0, 12 von 26) und „Nächste Schritte“ synchron. Drift: keine neuen ADRs (Reaktiv-Quote unverändert 1/10); Modul-Liste und Reifegrade unverändert; Blocker 0, kein `[BLOCKIERT]`; Phase 5 weiter 26 Schritte (kein neuer Schritt angelegt). Ablaufdaten: kein Vorlauf erreicht (nächste: D.1 ab 2026-11-05). Logbuch ca. 690 Zeilen, project-context 345 Zeilen – keine Auslagerung.
+
+### 2026-10-10 01:50 UTC – [ERLEDIGT] 5.26 Kanon-Treue mit grok-4.6 und grok-4.7
+
+- **Technik (a):** `spikes/kanon-treue/technik.py` ohne Anbieter. Per `@` genannte Einträge, Regeln, Zeitlinie, geführte Figur immer vollständig und wortgleich, auch alle Einträge per `@` am längsten Kapitel (Glimmergrund ca. 29.700 Token). Nicht genannte Einträge nur bei Restbudget nach den letzten Seiten: Glimmergrund Schritt 6 fehlt 1, Schritt 7 fehlen 3 von 23 (u. a. Bergmannsbrauch, Schichtbuch); Salzmark nie (nur ca. 10.000 Token).
+- **Befolgung (b):** grok-4.6 ohne und mit `@`, grok-4.7 mit `@` (Wartezeit 600 s), je 3 Ketten „mittel“ an beiden Geschichten; Glimmergrund ohne `@` aus der Ausgangsmessung 5.24 (Server-Code unverändert). Verblindet bewertet: grok-4.6 hält 95–100 % der berührten Proben ein, 6 Widersprüche in 12 Ketten (3 eindeutig: drittes statt zweites Gewölbe, weiße statt graue Haube, Lenkas Abschrift „nicht meine Schrift“; 3 knapp); grok-4.7 100 %, 0 in 6 Ketten. `@` ohne messbaren Unterschied. Hochrechnung grok-4.6: ca. 0,6–1,0 eindeutige Widersprüche je Kapitel – an der Grenze von FR-011.
+- **Neuer Befund:** grok-4.7 im Mittel 113–131 s je Vorschlag, bis 370 s vor dem ersten Textstück, ca. 4.400–4.800 Ausgabe-Token (grok-4.6 ca. 1.100); 20 von 42 Vorschlägen über 90 s. Gegenprobe mit einfacher Anfrage 4 s. Widerspricht ADR-035 (höchstens 90 s).
+- **Grenzen:** wenige Ketten (Vorsprung grok-4.7 nur Tendenz nach Regel-002); Kaffee-Probe nie prüfbar, Trauerfarbe Gelb steht auch im Kapitel.
+- **Kosten:** ca. 5,15 $ (Schlüssel danach 237,86 $ frei).
+- **DoD:** nur `spikes/` und `docs/`, kein Produktcode; Pre-Commit (markdownlint) grün.
+
+### 2026-10-10 00:50 UTC – [SESSIONSTART] 5.26 Kanon-Treue mit grok-4.6
+
+- **Umgebung:** Cloud-Session (Linux), gestartet vom iPhone; nach `/clear` in derselben Session wie 5.24. `main` abgeglichen (`19f6beb`, #87 gemergt), Branch `spike/5.26-kanon-treue`.
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage `get_session`, 00:50 UTC) → Entscheidungs-Klasse. 5.26 empfiehlt Entscheidung – keine Warnung nötig.
+- **Kontextgröße:** 102.620 Token laut Sitzungsabfrage nach der Pflichtlektüre (Grenze 200.000).
+- **Schlüssel:** `OPENROUTER_API_KEY` gesetzt (nur Länge geprüft).
+- **Auftrag:** „Pull gegen Main, dann fang an mit 5.26“.
 
 ### 2026-10-09 21:30 UTC – [SESSIONENDE] 5.24 erledigt – Ausgangsmessung nach Regel-002
 

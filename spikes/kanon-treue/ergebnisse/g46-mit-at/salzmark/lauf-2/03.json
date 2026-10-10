@@ -1,0 +1,16 @@
+{
+  "geschichte": "salzmark",
+  "schritt": 3,
+  "anweisung": "Am nächsten Tag steige ich allein zum @Aschturm hinauf, um nach dem Totenbuch von 401 zu fragen. Eine junge Schwester öffnet mir die Pforte.",
+  "verweise": [
+    "aschturm"
+  ],
+  "modell": "x-ai/grok-4.6",
+  "woerter": 71,
+  "sekunden": 25.1,
+  "token_geschaetzt": 9806,
+  "token_ein": 8406,
+  "token_aus": 1017,
+  "kosten_usd": 0.02268486,
+  "finish_reason": "stop"
+}

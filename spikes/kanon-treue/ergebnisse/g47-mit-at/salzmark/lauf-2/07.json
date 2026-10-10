@@ -1,0 +1,16 @@
+{
+  "geschichte": "salzmark",
+  "schritt": 7,
+  "anweisung": "Abends kommt @Tomas zu mir herauf und erzählt, dass am Kai ein ertrunkener Fischer verabschiedet wurde. Ich frage ihn, wie die Leute gekleidet waren und wer der Tote war.",
+  "verweise": [
+    "tomas-rehl"
+  ],
+  "modell": "x-ai/grok-4.7",
+  "woerter": 147,
+  "sekunden": 242.6,
+  "token_geschaetzt": 11013,
+  "token_ein": 10424,
+  "token_aus": 5702,
+  "kosten_usd": 0.05279868,
+  "finish_reason": "stop"
+}

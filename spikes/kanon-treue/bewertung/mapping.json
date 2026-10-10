@@ -1,0 +1,24 @@
+{
+  "salzmark": {
+    "K1": "kanon-treue/ergebnisse/g46-mit-at/lauf-3",
+    "K2": "kanon-treue/ergebnisse/g46-mit-at/lauf-2",
+    "K3": "kanon-treue/ergebnisse/g47-mit-at/lauf-1",
+    "K4": "kanon-treue/ergebnisse/g47-mit-at/lauf-2",
+    "K5": "kanon-treue/ergebnisse/g47-mit-at/lauf-3",
+    "K6": "kanon-treue/ergebnisse/g46-ohne-at/lauf-1",
+    "K7": "kanon-treue/ergebnisse/g46-ohne-at/lauf-2",
+    "K8": "kanon-treue/ergebnisse/g46-mit-at/lauf-1",
+    "K9": "kanon-treue/ergebnisse/g46-ohne-at/lauf-3"
+  },
+  "glimmergrund": {
+    "K1": "kanon-treue/ergebnisse/g46-mit-at/lauf-3",
+    "K2": "kanon-treue/ergebnisse/g46-mit-at/lauf-2",
+    "K3": "kanon-treue/ergebnisse/g47-mit-at/lauf-1",
+    "K4": "kanon-treue/ergebnisse/g47-mit-at/lauf-2",
+    "K5": "kanon-treue/ergebnisse/g47-mit-at/lauf-3",
+    "K6": "regel-002/ergebnisse/ausgang-mittel/lauf-1",
+    "K7": "regel-002/ergebnisse/ausgang-mittel/lauf-2",
+    "K8": "kanon-treue/ergebnisse/g46-mit-at/lauf-1",
+    "K9": "regel-002/ergebnisse/ausgang-mittel/lauf-3"
+  }
+}
