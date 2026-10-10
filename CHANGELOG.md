@@ -4,7 +4,11 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ## [Unreleased]
 
-### Hinzugefügt (nach v0.1.0)
+## [1.0.0] – 2026-10-11
+
+Erstes produktives Release (ADR-058) nach der Go-Live-Prüfung 5.14: Alle Elemente der Vision sind erledigt oder bewusst ausgeklammert (Publizieren, Bilder und Karten nicht in der ersten Version); „kein Kontextverlust“ und „günstiger pro Anfrage“ an „The Trap“ nachgewiesen (ADR-057). Auf den Blick eines Menschen von außen wurde verzichtet; stattdessen eine unabhängige Prüfung durch eine getrennte KI-Instanz (Urteil „freigeben“). Bekannte Einschränkung: Bei langen Kapiteln gehen nicht genannte Kanon-Einträge nicht mit – wichtige Einträge per `@` nennen (V.10).
+
+### Hinzugefügt (1.0.0)
 
 - Verlauf der Anweisungen (2026-10-10, Schritt 5.13, ADR-056): Über dem Kapiteltext wechseln die Reiter „Manuskript“ und „Verlauf“. Der Verlauf zeigt jeden übernommenen Vorschlag wie im Chat: deine Anweisung (oder „Weiter“) rechts mit Datum und Uhrzeit, darunter links der Text der KI so, wie du ihn übernommen hast, mit dem Modell – nur zum Nachschlagen, nie im Manuskript und nie erneut an die KI. Gespeichert je Kapitel in `verlauf/NN.md` neben den Kapiteln; neu `GET|POST …/chapters/{n}/instructions`.
 - Herangezogene Einträge anklickbar (2026-10-10, Schritt 5.16): Die Namen unter „Herangezogen“ sind Links. Ein Tipp öffnet rechts die Leiste mit dem Kanon-Eintrag, Gäste aus anderen Welten eingeschlossen; das Kapitel mit Anweisung und Vorschlag bleibt offen.
@@ -20,7 +24,11 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 - Herangezogene Begriffe im Anweisungsfeld hervorgehoben (2026-10-08, Schritt 5.18): Jede erkannte `@`-Nennung eines Kanon-Eintrags ist im Feld „Anweisung an die KI“ farbig hinterlegt und fett; was nicht markiert ist, zählt nicht als genannt.
 - Länge je Vorschlag wählbar (2026-10-08, Schritt 5.15): Auswahl „Länge“ im Schreib-Bereich mit kurz (etwa 60–120 Wörter), mittel (150–300, voreingestellt) und lang (400–600). Neues optionales Feld `length` im Schreib-Endpunkt.
 
-### Geändert (nach v0.1.0)
+### Behoben (1.0.0)
+
+- Schnell nacheinander angelegte Kapitel (2026-10-10, Schritt 5.20): Ein zweites „+ Kapitel“, bevor die Liste neu geladen war, benannte ein vorhandenes Kapitel um, statt ein neues anzulegen (der Text blieb erhalten). Jetzt zählt die Nummer richtig weiter, ein zweites Absenden wartet auf das erste.
+
+### Geändert (1.0.0)
 
 - grok-4.7 nicht mehr im Auswahlfeld (2026-10-10, Schritt 5.12, ADR-052, ADR-055): Die Start-Favoriten sind grok-4.6 und qwen3.8-max. grok-4.7 lässt sich über „Modelle verwalten …“ wieder hinzufügen. Eine Geschichte, die grok-4.7 oder ein anderes Modell außerhalb der Favoriten gewählt hat, behält es.
 
