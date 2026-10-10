@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [BEOBACHTUNG] 5.16 herangezogene Einträge anklickbar umgesetzt
+
+- Arbeit oberhalb der empfohlenen Klasse (Routine) auf der Entscheidungs-Klasse, zu Beginn genannt; keine Abgabe (Kontext geladen, kleiner Schritt). Vorher `git ls-remote --heads origin`: kein 5.16-Branch.
+- Umsetzung nur in `ui`: `WritingPanel` bekommt `onLookUp`; mit ihm sind die Namen unter „Herangezogen“ Knöpfe im Link-Stil. `StoryPage` öffnet damit die vorhandene Leiste rechts beim Reiter Kanon und wählt den Eintrag (`lookedUp`) – die Entscheidung „über der Schreibseite einblenden“ nutzt die Leiste aus 5.11, kein neues Fenster.
+- Tests: Klick zeigt Name und Text, nach dem Schließen sind Manuskript, Anweisung und Vorschlag unverändert; Gast-Eintrag aus anderer Welt in der Leiste mit Gast-Hinweis; ohne `onLookUp` bleiben die Namen Text. `vitest` 170 grün (alle Dateien 98,22 % Zeilen, `WritingPanel.tsx` 97,56 %, `StoryPage.tsx` 94,11 %), tsc/eslint/prettier sauber, Playwright 11 grün.
+- Mini-Reibung: Playwright lieferte zuerst den Build von 15:55 aus `dist/` aus (der Server bedient `dist`, `npx playwright test` baut nicht neu) – ein Test schlug fehl, auch auf `main`. Nach `npm run build` alle grün. Vor Playwright immer neu bauen.
+
 ### 2026-10-10 – [GELÖST] 5.20 schnell nacheinander angelegte Kapitel
 
 - Arbeit oberhalb der empfohlenen Klasse (Routine) auf der Entscheidungs-Klasse, zu Beginn genannt; keine Abgabe an einen Unteragenten (Kontext schon geladen, kleiner Schritt).
