@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -75,20 +76,96 @@ describe("Worlds", () => {
   });
 });
 
+/** The canon page with its address kept in a state, as `WorldPage` does with the router. */
+function CanonAt({ start = null }: { start?: string | null }) {
+  const [selected, setSelected] = useState<string | null>(start);
+  return <Canon world="salzmark" selected={selected} onSelect={setSelected} />;
+}
+
+const MIRA = {
+  ...ENTRY,
+  id: "mira",
+  name: "Mira",
+  aliases: ["die Zöllnerin"],
+  category: "ort" as const,
+  body: "# Mira\n\n- **Alter:** 30\n- Narbe\n\n1. erstens\n2. zweitens\n\n## Herkunft\nAus **Tolm** und\nweiter.",
+};
+
 describe("Canon", () => {
-  it("lists entries by category and creates one", async () => {
-    const { calls } = fakeApi({
+  it("lists entries by category, searches name and alias, filters by category", async () => {
+    fakeApi({
       "GET /api/worlds/salzmark/entries": ok([
         ENTRY,
-        { ...ENTRY, id: "tod", name: "Tod", status: "tot" },
+        MIRA,
+        { ...ENTRY, id: "tod", name: "Tod", status: "tot", aliases: [] },
       ]),
-      "POST /api/worlds/salzmark/entries": created(ENTRY),
     });
     const user = userEvent.setup();
-    render(<Canon world="salzmark" />);
-    expect(await screen.findByRole("heading", { name: "Figur" })).toBeDefined();
+    render(<CanonAt />);
+    expect(
+      await screen.findByRole("heading", { name: "Figuren" }),
+    ).toBeDefined();
     expect(screen.getByText("(tot)")).toBeDefined();
-    await user.click(screen.getByRole("button", { name: "Neuer Eintrag" }));
+    expect(screen.getByText("3 von 3 Einträgen")).toBeDefined();
+    expect(screen.getByText("Einen Eintrag links wählen.")).toBeDefined();
+    await user.type(screen.getByLabelText("Kanon durchsuchen"), "zöllner");
+    expect(screen.getByText("1 von 3 Einträgen")).toBeDefined();
+    expect(screen.getByRole("button", { name: /Mira/ })).toBeDefined();
+    await user.clear(screen.getByLabelText("Kanon durchsuchen"));
+    await user.click(screen.getByRole("button", { name: "Figuren 2" }));
+    expect(screen.queryByRole("button", { name: /Mira/ })).toBeNull();
+    expect(screen.getByRole("button", { name: "Figuren 2" })).toHaveProperty(
+      "ariaPressed",
+      "true",
+    );
+    await user.click(screen.getByRole("button", { name: "Figuren 2" }));
+    expect(screen.getByRole("button", { name: /Mira/ })).toBeDefined();
+    await user.type(screen.getByLabelText("Kanon durchsuchen"), "nichts");
+    expect(screen.getByText("Kein Eintrag passt.")).toBeDefined();
+  });
+
+  it("shows the chosen entry to read, with bold, lists and headings", async () => {
+    fakeApi({ "GET /api/worlds/salzmark/entries": ok([ENTRY, MIRA]) });
+    const user = userEvent.setup();
+    render(<CanonAt />);
+    await user.click(await screen.findByRole("button", { name: /Mira/ }));
+    const detail = screen.getByRole("article");
+    expect(within(detail).getByRole("heading", { name: "Mira" })).toBeDefined();
+    expect(
+      within(detail).getByText("Ort / Geografie · Auch: die Zöllnerin"),
+    ).toBeDefined();
+    expect(within(detail).getByText("Alter:").tagName).toBe("STRONG");
+    expect(within(detail).getAllByRole("listitem")).toHaveLength(4);
+    expect(
+      within(detail).getByRole("heading", { name: "Herkunft" }),
+    ).toBeDefined();
+    expect(within(detail).getByText("Tolm").tagName).toBe("STRONG");
+    expect(
+      within(detail).queryAllByRole("heading", { name: "Mira" }),
+    ).toHaveLength(1);
+    expect(screen.getByRole("button", { name: /Mira/ })).toHaveProperty(
+      "ariaCurrent",
+      "true",
+    );
+    await user.click(screen.getByRole("button", { name: "← Liste" }));
+    expect(screen.getByText("Einen Eintrag links wählen.")).toBeDefined();
+  });
+
+  it("creates an entry and opens it", async () => {
+    const { calls } = fakeApi({
+      "GET /api/worlds/salzmark/entries": ok([ENTRY]),
+      "POST /api/worlds/salzmark/entries": created({
+        ...ENTRY,
+        id: "chronik",
+        name: "Chronik",
+      }),
+    });
+    const onSelect = vi.fn();
+    const user = userEvent.setup();
+    render(<Canon world="salzmark" onSelect={onSelect} />);
+    await user.click(
+      await screen.findByRole("button", { name: "Neuer Eintrag" }),
+    );
     await user.selectOptions(screen.getByLabelText("Kategorie"), "zeitlinie");
     expect(screen.getByText(/Reihenfolge untereinander/)).toBeDefined();
     expect(screen.getByText(/Kommentare im Dateikopf/)).toBeDefined();
@@ -99,7 +176,9 @@ describe("Canon", () => {
     );
     await user.type(screen.getByLabelText("Text"), "1. Gründung");
     await user.click(screen.getByRole("button", { name: "Speichern" }));
-    await screen.findByRole("button", { name: "Neuer Eintrag" });
+    await waitFor(() => {
+      expect(onSelect).toHaveBeenCalledWith("chronik");
+    });
     expect(calls.find((c) => c.method === "POST")?.body).toEqual({
       category: "zeitlinie",
       name: "Chronik",
@@ -109,7 +188,7 @@ describe("Canon", () => {
     });
   });
 
-  it("changes and deletes an entry", async () => {
+  it("changes and deletes an entry beside the list", async () => {
     const { calls } = fakeApi({
       "GET /api/worlds/salzmark/entries": ok([ENTRY]),
       "PATCH /api/worlds/salzmark/entries/kael": ok(ENTRY),
@@ -117,8 +196,9 @@ describe("Canon", () => {
     });
     const confirm = vi.spyOn(window, "confirm");
     const user = userEvent.setup();
-    render(<Canon world="salzmark" />);
-    await user.click(await screen.findByRole("button", { name: "Kael" }));
+    render(<CanonAt start="kael" />);
+    await user.click(await screen.findByRole("button", { name: "Bearbeiten" }));
+    expect(screen.getByLabelText("Kanon durchsuchen")).toBeDefined();
     expect(
       screen.getByLabelText("Aliasse (durch Komma getrennt)"),
     ).toHaveProperty("value", "der Fährmann");
@@ -127,13 +207,15 @@ describe("Canon", () => {
       "tot",
     );
     await user.click(screen.getByRole("button", { name: "Speichern" }));
-    await user.click(await screen.findByRole("button", { name: "Kael" }));
+    await user.click(await screen.findByRole("button", { name: "Bearbeiten" }));
     confirm.mockReturnValueOnce(false);
     await user.click(screen.getByRole("button", { name: "Löschen" }));
     expect(calls.some((c) => c.method === "DELETE")).toBe(false);
     confirm.mockReturnValueOnce(true);
     await user.click(screen.getByRole("button", { name: "Löschen" }));
-    await screen.findByRole("button", { name: "Neuer Eintrag" });
+    expect(
+      await screen.findByText("Einen Eintrag links wählen."),
+    ).toBeDefined();
     expect(calls.find((c) => c.method === "PATCH")?.body).toMatchObject({
       status: "tot",
     });
@@ -148,22 +230,50 @@ describe("Canon", () => {
     });
     vi.spyOn(window, "confirm").mockReturnValue(true);
     const user = userEvent.setup();
-    render(<Canon world="salzmark" />);
-    await user.click(await screen.findByRole("button", { name: "Kael" }));
+    render(<CanonAt start="kael" />);
+    await user.click(await screen.findByRole("button", { name: "Bearbeiten" }));
     await user.click(screen.getByRole("button", { name: "Speichern" }));
     expect(await screen.findByText("Name fehlt")).toBeDefined();
     await user.click(screen.getByRole("button", { name: "Löschen" }));
     expect(await screen.findByText("weg")).toBeDefined();
     await user.click(screen.getByRole("button", { name: "Abbrechen" }));
     expect(
-      await screen.findByRole("button", { name: "Neuer Eintrag" }),
+      await screen.findByRole("button", { name: "Bearbeiten" }),
     ).toBeDefined();
   });
 
-  it("says when there are no entries", async () => {
+  it("gives each entry its own address", async () => {
+    fakeApi({
+      ...SHELL,
+      "GET /api/worlds/salzmark/entries": ok([ENTRY, MIRA]),
+    });
+    const user = userEvent.setup();
+    renderShell("/welt/salzmark/kanon/kael");
+    const detail = await screen.findByRole("article");
+    expect(within(detail).getByRole("heading", { name: "Kael" })).toBeDefined();
+    await user.click(screen.getByRole("button", { name: /Mira/ }));
+    expect(screen.getByLabelText("Adresse").textContent).toBe(
+      "/welt/salzmark/kanon/mira",
+    );
+    await user.click(screen.getByRole("button", { name: "← Liste" }));
+    expect(screen.getByLabelText("Adresse").textContent).toBe(
+      "/welt/salzmark/kanon",
+    );
+  });
+
+  it("says when an entry from the address is missing", async () => {
+    fakeApi({ "GET /api/worlds/salzmark/entries": ok([ENTRY]) });
+    render(<CanonAt start="weg" />);
+    expect(await screen.findByText("Eintrag nicht gefunden.")).toBeDefined();
+  });
+
+  it("says when there are no entries and still creates the first", async () => {
     fakeApi({ "GET /api/worlds/salzmark/entries": ok([]) });
+    const user = userEvent.setup();
     render(<Canon world="salzmark" />);
     expect(await screen.findByText("Noch keine Kanon-Einträge.")).toBeDefined();
+    await user.click(screen.getByRole("button", { name: "Neuer Eintrag" }));
+    expect(screen.getByLabelText("Name")).toBeDefined();
   });
 });
 

@@ -175,6 +175,10 @@ export function Shell({ onLogout }: { onLogout: () => void }) {
                   path="/welt/:world/geschichte/:story"
                   element={<StoryRoute />}
                 />
+                <Route
+                  path="/welt/:world/kanon/:entry"
+                  element={<WorldRoute area="kanon" />}
+                />
                 <Route path="/welt/:world/:area" element={<WorldRoute />} />
                 <Route
                   path="/welt/:world"
@@ -238,8 +242,10 @@ function WorldsRoute() {
 }
 
 /** A world with the area from the address. */
-function WorldRoute() {
-  const { world = "", area = "" } = useParams();
+function WorldRoute({ area: fixed }: { area?: WorldArea }) {
+  const params = useParams();
+  const { world = "", entry } = params;
+  const area = fixed ?? params.area ?? "";
   const { revision } = useNavigation();
   const load = useCallback(() => api.worlds(), []);
   const { data, error } = useLoad(load, revision);
@@ -255,7 +261,14 @@ function WorldRoute() {
       </>
     );
   }
-  return <WorldPage key={found.id} world={found} area={area as WorldArea} />;
+  return (
+    <WorldPage
+      key={found.id}
+      world={found}
+      area={area as WorldArea}
+      entry={entry ?? null}
+    />
+  );
 }
 
 /** A story with the chapter from the address (the first chapter without one). */
