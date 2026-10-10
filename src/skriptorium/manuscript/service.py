@@ -20,6 +20,7 @@ for the existence of the world.
 
 from collections.abc import Sequence
 from dataclasses import dataclass
+from datetime import datetime
 from enum import Enum
 from pathlib import PurePosixPath
 from typing import Final, Literal, get_args
@@ -98,6 +99,7 @@ _STYLE_KEY = "schreibweise"
 _STORY_FILE = "story.md"
 _FACTS_FILE = "facts.md"
 _CHAPTERS = "chapters"
+_HISTORY = "verlauf"
 
 
 class _Keep(Enum):
@@ -123,6 +125,17 @@ class StoryFact:
 
     entry: str
     fact: str
+
+
+@dataclass(frozen=True)
+class InstructionNote:
+    """One taken-over exchange (step 5.13, FR-027, ADR-056): the author's instruction and the
+    AI's text as it went into the manuscript, with the model that wrote it."""
+
+    at: datetime
+    instruction: str
+    text: str
+    model: str | None = None
 
 
 @dataclass(frozen=True)
@@ -460,6 +473,55 @@ class ManuscriptService:
         chapter = self.get_chapter(world_id, story_id, number)
         return self._rewrite_chapter(chapter, summary=summary, summary_status=status)
 
+    # --- history of instructions (step 5.13, ADR-056) --------------------------------------
+
+    def list_instructions(self, world_id: str, story_id: str, number: int) -> list[InstructionNote]:
+        """The taken-over instructions of a chapter, oldest first; never sent to the AI.
+
+        Raises:
+            NotFound: The story or the chapter does not exist.
+        """
+        self._chapter_path(world_id, story_id, number)
+        path = _history_path(world_id, story_id, number)
+        if path not in self._store.list_paths(f"{_story_dir(world_id, story_id)}/{_HISTORY}"):
+            return []
+        return _notes_from(self._store.read(path))
+
+    def add_instruction(
+        self,
+        world_id: str,
+        story_id: str,
+        number: int,
+        note: InstructionNote,
+    ) -> list[InstructionNote]:
+        """Note a taken-over exchange; the chapter file stays as it is.
+
+        Raises:
+            NotFound: The story or the chapter does not exist.
+            InvalidInput: Empty instruction or text.
+        """
+        checked = InstructionNote(
+            note.at,
+            _required_text(note.instruction, "Anweisung"),
+            _required_text(note.text, "Text"),
+            (note.model.strip() or None) if note.model is not None else None,
+        )
+        notes = [*self.list_instructions(world_id, story_id, number), checked]
+        header: dict[str, HeaderValue] = {
+            "kapitel": number,
+            "anweisungen": [
+                {
+                    "zeit": n.at.isoformat(timespec="seconds"),
+                    "anweisung": n.instruction,
+                    "modell": n.model,
+                    "text": n.text,
+                }
+                for n in notes
+            ],
+        }
+        self._store.write(_history_path(world_id, story_id, number), header, "")
+        return notes
+
     # --- helpers --------------------------------------------------------------------------
 
     def _chapter_paths(self, world_id: str, story_id: str) -> list[str]:
@@ -555,6 +617,37 @@ def _story_path(world_id: str, story_id: str) -> str:
 
 def _facts_path(world_id: str, story_id: str) -> str:
     return f"{_story_dir(world_id, story_id)}/{_FACTS_FILE}"
+
+
+def _history_path(world_id: str, story_id: str, number: int) -> str:
+    return f"{_story_dir(world_id, story_id)}/{_HISTORY}/{number:02d}.md"
+
+
+def _notes_from(document: Document) -> list[InstructionNote]:
+    value = document.header.get("anweisungen", [])
+    if not isinstance(value, list):
+        raise InvalidInput(f"{document.path}: Feld 'anweisungen' muss eine Liste sein")
+    notes: list[InstructionNote] = []
+    for item in value:
+        at = item.get("zeit") if isinstance(item, dict) else None
+        instruction = item.get("anweisung") if isinstance(item, dict) else None
+        text = item.get("text", "") if isinstance(item, dict) else None
+        model = item.get("modell") if isinstance(item, dict) else None
+        if (
+            not isinstance(at, str)
+            or not isinstance(instruction, str)
+            or not isinstance(text, str)
+            or not (model is None or isinstance(model, str))
+        ):
+            raise InvalidInput(
+                f"{document.path}: anweisungen braucht je Eintrag zeit und anweisung"
+            )
+        try:
+            moment = datetime.fromisoformat(at)
+        except ValueError as error:
+            raise InvalidInput(f"{document.path}: ungültige Zeit {at!r}") from error
+        notes.append(InstructionNote(moment, instruction, text, model))
+    return notes
 
 
 def _chapter_number(path: str) -> int | None:

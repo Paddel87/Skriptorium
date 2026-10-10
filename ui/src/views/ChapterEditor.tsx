@@ -17,6 +17,7 @@ import {
 import { CanonFact } from "./CanonFact";
 import { ChapterSummary } from "./ChapterSummary";
 import { ErrorText } from "./Common";
+import { InstructionHistory } from "./InstructionHistory";
 import { WritingPanel } from "./WritingPanel";
 
 // The editor with its Markdown grammar is large; it is loaded when a chapter is opened.
@@ -72,6 +73,9 @@ export function ChapterEditor({
   // Marked text in the editor, and the passage being taken into the canon (step 3.8).
   const [marked, setMarked] = useState("");
   const [taking, setTaking] = useState<string | null>(null);
+  // Manuscript or the history of instructions over the text (step 5.13).
+  const [view, setView] = useState<"manuskript" | "verlauf">("manuskript");
+  const [noted, setNoted] = useState(0);
   const [canonNote, setCanonNote] = useState<string | null>(null);
   // Counts canon changes, so the writing panel offers new entries in its `@` menu.
   const [canonRevision, setCanonRevision] = useState(0);
@@ -198,6 +202,9 @@ export function ChapterEditor({
         endSignal={ends}
         mode={mode}
         onLookUp={onLookUp}
+        onNoted={() => {
+          setNoted((value) => value + 1);
+        }}
         tools={
           <>
             <button
@@ -225,19 +232,49 @@ export function ChapterEditor({
           </>
         }
       >
-        <Suspense fallback={<p>Editor lädt …</p>}>
-          <ManuscriptEditor
-            label="Manuskript"
-            value={text}
-            onChange={(value) => {
-              setText(value);
-              setState("dirty");
+        <nav className="tabs view-tabs" aria-label="Ansicht des Kapitels">
+          <button
+            type="button"
+            aria-current={view === "manuskript"}
+            onClick={() => {
+              setView("manuskript");
             }}
-            onSelect={setMarked}
-            onEnd={() => {
-              setEnds((value) => value + 1);
+          >
+            Manuskript
+          </button>
+          <button
+            type="button"
+            aria-current={view === "verlauf"}
+            onClick={() => {
+              setView("verlauf");
             }}
+          >
+            Verlauf
+          </button>
+        </nav>
+        {view === "verlauf" && (
+          <InstructionHistory
+            world={chapter.world}
+            story={chapter.story}
+            chapter={chapter.number}
+            round={noted}
           />
+        )}
+        <Suspense fallback={<p>Editor lädt …</p>}>
+          <div hidden={view !== "manuskript"}>
+            <ManuscriptEditor
+              label="Manuskript"
+              value={text}
+              onChange={(value) => {
+                setText(value);
+                setState("dirty");
+              }}
+              onSelect={setMarked}
+              onEnd={() => {
+                setEnds((value) => value + 1);
+              }}
+            />
+          </div>
         </Suspense>
         <ErrorText message={error} />
         {summarizing && (
