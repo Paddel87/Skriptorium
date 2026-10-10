@@ -1,7 +1,13 @@
 import { useState, type SyntheticEvent } from "react";
 import { Link, useNavigate } from "react-router";
 import { api, describeError, type World } from "../api";
-import { storyPath, useNavigation, worldPath, type WorldArea } from "../paths";
+import {
+  canonEntryPath,
+  storyPath,
+  useNavigation,
+  worldPath,
+  type WorldArea,
+} from "../paths";
 import { Canon } from "./Canon";
 import { ErrorText, Field } from "./Common";
 import { Import } from "./Import";
@@ -14,8 +20,20 @@ const AREAS: readonly { id: WorldArea; label: string }[] = [
   { id: "beschreibung", label: "Welt" },
 ];
 
-/** A world with its areas, each under its own address: stories, canon, import, description. */
-export function WorldPage({ world, area }: { world: World; area: WorldArea }) {
+/**
+ * A world with its areas, each under its own address: stories, canon (and each canon entry),
+ * import, description.
+ */
+export function WorldPage({
+  world,
+  area,
+  entry = null,
+}: {
+  world: World;
+  area: WorldArea;
+  /** Canon entry from the address, if one is open. */
+  entry?: string | null;
+}) {
   const navigate = useNavigate();
   const { refresh } = useNavigation();
   const [current, setCurrent] = useState(world);
@@ -45,7 +63,20 @@ export function WorldPage({ world, area }: { world: World; area: WorldArea }) {
           }}
         />
       )}
-      {area === "kanon" && <Canon key={canonRound} world={current.id} />}
+      {area === "kanon" && (
+        <Canon
+          key={canonRound}
+          world={current.id}
+          selected={entry}
+          onSelect={(chosen) => {
+            void navigate(
+              chosen === null
+                ? worldPath(current.id, "kanon")
+                : canonEntryPath(current.id, chosen),
+            );
+          }}
+        />
+      )}
       {area === "import" && (
         <Import
           world={current.id}

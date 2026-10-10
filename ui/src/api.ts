@@ -10,13 +10,18 @@ export type Category =
 export type Form = "roman" | "kurzgeschichte" | "fragment";
 export type SummaryStatus = "fehlt" | "erzeugt" | "geprüft";
 
-export const CATEGORIES: readonly { id: Category; label: string }[] = [
-  { id: "figur", label: "Figur" },
-  { id: "ort", label: "Ort / Geografie" },
-  { id: "gegenstand", label: "Gegenstand" },
-  { id: "zeitlinie", label: "Zeitlinie" },
-  { id: "regel", label: "Regel" },
-  { id: "kultur", label: "Kultur" },
+/** Categories in display order; `plural` names a group of entries (filter, list on the canon page). */
+export const CATEGORIES: readonly {
+  id: Category;
+  label: string;
+  plural: string;
+}[] = [
+  { id: "figur", label: "Figur", plural: "Figuren" },
+  { id: "ort", label: "Ort / Geografie", plural: "Orte" },
+  { id: "gegenstand", label: "Gegenstand", plural: "Gegenstände" },
+  { id: "zeitlinie", label: "Zeitlinie", plural: "Zeitlinie" },
+  { id: "regel", label: "Regel", plural: "Regeln" },
+  { id: "kultur", label: "Kultur", plural: "Kultur" },
 ];
 
 export const FORMS: readonly { id: Form; label: string }[] = [

@@ -12,6 +12,11 @@ export function worldPath(world: string, area: WorldArea = "geschichten") {
   return `/welt/${encodeURIComponent(world)}/${area}`;
 }
 
+/** One canon entry of a world, shown on the canon page (step 5.11 part 3). */
+export function canonEntryPath(world: string, entry: string) {
+  return `${worldPath(world, "kanon")}/${encodeURIComponent(entry)}`;
+}
+
 export function storyPath(world: string, story: string) {
   return `/welt/${encodeURIComponent(world)}/geschichte/${encodeURIComponent(story)}`;
 }
