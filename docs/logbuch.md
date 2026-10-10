@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [ERLEDIGT] Abnahme 5.11
+
+- Eigentümer: Kanon-Seite „sehr zufriedenstellend“, die Gliederung nach Kategorie „sehr gut“; das letzte Update (Mitlaufen, Vorschläge ohne `@`) erfolgreich → 5.11 `[ERLEDIGT]` (alle drei Teile). Phase 5: 14 von 26 erledigt, in Arbeit nur noch 5.2/5.21 (Prüfung am Gerät).
+
 ### 2026-10-10 – [ERLEDIGT] Abnahme 5.1
 
 - Eigentümer: „die Canonerkennung ohne @ funktioniert“ → 5.1 `[ERLEDIGT]`, FR-014 erledigt. Kurze Reibung beim Namen „Sibylle“ mit unterschiedlichen Schreibweisen; Frage, ob die Erkennung Aliasse berücksichtigt: ja (Name und Aliasse, Groß-/Kleinschreibung egal, ganzes Wort, Genitiv-s), aber keine unscharfe Erkennung ähnlicher Schreibweisen – Varianten als Aliasse eintragen. Unscharfe Erkennung angeboten, nur als Vormerkung für die nächste Ausbaustufe (Phase 5 an der Wucherungs-Schwelle); Eigentümer: Aliasse reichen, kein neuer Entwicklungsschritt; letztes Update erfolgreich, Kanon-Seite (5.11 Teil 3) sieht er sich noch an.
