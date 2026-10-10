@@ -769,7 +769,7 @@ describe("history of instructions (step 5.13, FR-027)", () => {
 
   function storyRoutes(feed: ReturnType<typeof sseFeed>, failNote = false) {
     let saved = CHAPTER;
-    let notes: { at: string; instruction: string }[] = [];
+    let notes: object[] = [];
     return fakeApi({
       ...routes(feed),
       "GET /api/worlds/salzmark/stories/ueberfahrt/chapters": () => ({
@@ -786,10 +786,7 @@ describe("history of instructions (step 5.13, FR-027)", () => {
         : (body) => {
             notes = [
               ...notes,
-              {
-                at: "2026-10-10T19:40:00Z",
-                instruction: (body as { instruction: string }).instruction,
-              },
+              { at: "2026-10-10T19:40:00Z", ...(body as object) },
             ];
             return { status: 201, body: notes };
           },
@@ -810,7 +807,7 @@ describe("history of instructions (step 5.13, FR-027)", () => {
     await user.click(await screen.findByRole("button", { name: "Übernehmen" }));
   }
 
-  it("notes the instruction of a taken-over proposal and shows it on its own tab", async () => {
+  it("notes instruction and taken-over text and shows them like a chat on their own tab", async () => {
     const feed = sseFeed();
     const { calls } = storyRoutes(feed);
     const user = userEvent.setup();
@@ -827,7 +824,11 @@ describe("history of instructions (step 5.13, FR-027)", () => {
     await waitFor(() => {
       expect(
         calls.find((c) => c.method === "POST" && c.path === HISTORY)?.body,
-      ).toEqual({ instruction: "Mira kommt mit der Laterne." });
+      ).toEqual({
+        instruction: "Mira kommt mit der Laterne.",
+        text: "Mira trat ein.",
+        model: "x-ai/grok-4.7",
+      });
     });
     expect(view.state.doc.toString()).toBe("");
 
@@ -835,10 +836,14 @@ describe("history of instructions (step 5.13, FR-027)", () => {
     const history = screen.getByRole("region", {
       name: "Verlauf der Anweisungen",
     });
+    const asked = await within(history).findByLabelText("Deine Anweisung");
     expect(
-      await within(history).findByText("Mira kommt mit der Laterne."),
+      within(asked).getByText("Mira kommt mit der Laterne."),
     ).toBeDefined();
-    expect(within(history).getByText(/10\.10\.2026/)).toBeDefined();
+    expect(within(asked).getByText(/10\.10\.2026/)).toBeDefined();
+    const answer = within(history).getByLabelText("Text der KI");
+    expect(within(answer).getByText("KI · grok-4.7")).toBeDefined();
+    expect(within(answer).getByText("Mira trat ein.")).toBeDefined();
     expect(
       screen.getByLabelText("Manuskript").closest("[hidden]"),
     ).not.toBeNull();
@@ -855,25 +860,34 @@ describe("history of instructions (step 5.13, FR-027)", () => {
     );
   });
 
-  it("notes nothing for Weiter without instruction and says when the history is empty", async () => {
+  it("says when the history is empty and notes Weiter without instruction", async () => {
     const feed = sseFeed();
     const { calls } = storyRoutes(feed);
     const user = userEvent.setup();
     render(<StoryPage story={STORY} />);
     await ready();
-    await takeOver(feed, "Der Wind drehte.");
-    await waitFor(() => {
-      expect(calls.filter((c) => c.method === "PUT")).toHaveLength(1);
-    });
-    expect(calls.some((c) => c.path === HISTORY && c.method === "POST")).toBe(
-      false,
-    );
     await user.click(screen.getByRole("button", { name: "Verlauf" }));
     expect(
       await screen.findByText(
-        "Noch keine übernommenen Anweisungen in diesem Kapitel.",
+        "Noch keine übernommenen Vorschläge in diesem Kapitel.",
       ),
     ).toBeDefined();
+    await takeOver(feed, "  Der Wind drehte.\n");
+    await waitFor(() => {
+      expect(
+        calls.find((c) => c.method === "POST" && c.path === HISTORY)?.body,
+      ).toEqual({
+        instruction: "Weiter",
+        text: "Der Wind drehte.",
+        model: "x-ai/grok-4.7",
+      });
+    });
+    // The history open on its tab loads again after taking over.
+    const history = screen.getByRole("region", {
+      name: "Verlauf der Anweisungen",
+    });
+    expect(await within(history).findByText("Der Wind drehte.")).toBeDefined();
+    expect(within(history).getByText("Weiter")).toBeDefined();
   });
 
   it("keeps the taken-over text and says when the history could not be saved", async () => {

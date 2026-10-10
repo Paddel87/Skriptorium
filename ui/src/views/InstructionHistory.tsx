@@ -9,9 +9,10 @@ const TIME = new Intl.DateTimeFormat("de-DE", {
 });
 
 /**
- * The instructions of a chapter whose proposals were taken over, oldest first (step 5.13,
- * FR-027, ADR-056). Only to look up: the list is never part of the manuscript and never goes
- * to the AI. `round` changes when a new instruction was noted.
+ * The taken-over exchanges of a chapter, oldest first, laid out like a chat (step 5.13,
+ * FR-027, ADR-056): the author's instruction on the right, the AI's text as it went into the
+ * manuscript on the left. Only to look up: never part of the manuscript, never sent to the AI.
+ * `round` changes when a new exchange was noted.
  */
 export function InstructionHistory({
   world,
@@ -33,23 +34,36 @@ export function InstructionHistory({
   return (
     <section className="history" aria-label="Verlauf der Anweisungen">
       <p className="note">
-        Anweisungen, deren Vorschlag du übernommen hast – nur zum Nachschlagen,
-        sie gehen nicht an die KI.
+        Was du angewiesen und übernommen hast – nur zum Nachschlagen, geht nicht
+        an die KI.
       </p>
       <ErrorText message={error} />
       {data?.length === 0 && (
-        <p>Noch keine übernommenen Anweisungen in diesem Kapitel.</p>
+        <p>Noch keine übernommenen Vorschläge in diesem Kapitel.</p>
       )}
       {data !== undefined && data.length > 0 && (
         <ol className="history-list">
           {data.map((note, index) => (
             <li key={index}>
-              <time dateTime={note.at}>{TIME.format(new Date(note.at))}</time>
-              <p>{note.instruction}</p>
+              <div className="history-in" aria-label="Deine Anweisung">
+                <time dateTime={note.at}>{TIME.format(new Date(note.at))}</time>
+                <p>{note.instruction}</p>
+              </div>
+              <div className="history-out" aria-label="Text der KI">
+                <p className="who">
+                  KI{note.model !== null && ` · ${shortModel(note.model)}`}
+                </p>
+                <p>{note.text}</p>
+              </div>
             </li>
           ))}
         </ol>
       )}
     </section>
   );
+}
+
+/** Model identifier without the provider, e.g. "x-ai/grok-4.6" → "grok-4.6". */
+function shortModel(model: string): string {
+  return model.slice(model.lastIndexOf("/") + 1);
 }

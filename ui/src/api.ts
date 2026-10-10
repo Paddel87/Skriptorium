@@ -120,11 +120,15 @@ export interface Chapter {
   writing_style: WritingStyle | null;
 }
 
-/** An instruction whose proposal was taken over (step 5.13, ADR-056); never sent to the AI. */
+/** A taken-over exchange (step 5.13, ADR-056); never sent to the AI. */
 export interface InstructionNote {
   /** Time of taking over, ISO 8601 in UTC. */
   at: string;
+  /** The author's instruction, "Weiter" or "Neue Szene" without one. */
   instruction: string;
+  /** The AI's text as it went into the manuscript. */
+  text: string;
+  model: string | null;
 }
 
 export interface SessionInfo {
@@ -596,12 +600,12 @@ export const api = {
     world: string,
     story: string,
     number: number,
-    instruction: string,
+    note: Omit<InstructionNote, "at">,
   ) =>
     request(
       "POST",
       `${storyPath(world, story)}/chapters/${String(number)}/instructions`,
-      { instruction },
+      note,
     ) as Promise<InstructionNote[]>,
   setStorySummary: (world: string, story: string, summary: string) =>
     request("PUT", `${storyPath(world, story)}/summary`, {

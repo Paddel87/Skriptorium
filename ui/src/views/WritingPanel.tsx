@@ -354,8 +354,9 @@ export function WritingPanel({
 
   async function accept() {
     setError(null);
-    // The instruction the proposal came from, for the history (step 5.13); not the field now.
-    const noted = lastOrder?.instruction.trim() ?? "";
+    // What the proposal came from, for the history (step 5.13); not the field as it is now.
+    const order = lastOrder;
+    const text = proposal.trim();
     try {
       await onAccept(proposal);
       setInstruction("");
@@ -368,11 +369,21 @@ export function WritingPanel({
       setError(describeError(reason));
       return;
     }
-    if (noted === "") {
+    if (order === null) {
       return;
     }
+    const asked = order.instruction.trim();
     try {
-      await api.addInstruction(world, story, chapter, noted);
+      await api.addInstruction(world, story, chapter, {
+        instruction:
+          asked !== ""
+            ? asked
+            : (order.scene ?? null) !== null
+              ? "Neue Szene"
+              : "Weiter",
+        text,
+        model: order.model,
+      });
       onNoted?.();
     } catch (reason: unknown) {
       setHistoryError(

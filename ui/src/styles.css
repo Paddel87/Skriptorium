@@ -1232,20 +1232,38 @@ button.more-toggle {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1.25rem;
 }
 
 .history-list li {
-  border-left: 3px solid var(--accent);
-  padding-left: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.history-list time {
+/* The author's instruction on the right, like an own message in a chat. */
+.history-in {
+  align-self: flex-end;
+  max-width: min(85%, 36rem);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  background: var(--button);
+  border: 1px solid var(--accent);
+}
+
+.history-in time {
   color: var(--muted);
   font-size: 0.85rem;
 }
 
-.history-list p {
+.history-in p,
+.history-out p {
   margin: 0.25rem 0 0;
   white-space: pre-wrap;
+}
+
+.history-out .who {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0;
 }
