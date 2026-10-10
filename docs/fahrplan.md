@@ -586,7 +586,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.26: Kanon-Treue mit grok-4.6 prüfen
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-10) – Technik-Teil (a) und Prüfaufbau (b) in Arbeit auf `spike/5.26-kanon-treue`
 - **Phasentyp-Kontext:** UMSETZUNG (Prüfschritt; Ergebnis als Bericht, keine Funktion)
 - **Abhängigkeiten:** 5.24 (zweite Testgeschichte, Regel-002)
 - **Freigabepflichtig:** nein – Prüfwerkzeug unter `spikes/`; ein Wechsel der Voreinstellung als Folge wäre eine eigene Entscheidung (ADR)

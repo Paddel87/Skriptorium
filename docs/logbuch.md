@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 00:50 UTC – [SESSIONSTART] 5.26 Kanon-Treue mit grok-4.6
+
+- **Umgebung:** Cloud-Session (Linux), gestartet vom iPhone; nach `/clear` in derselben Session wie 5.24. `main` abgeglichen (`19f6beb`, #87 gemergt), Branch `spike/5.26-kanon-treue`.
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage `get_session`, 00:50 UTC) → Entscheidungs-Klasse. 5.26 empfiehlt Entscheidung – keine Warnung nötig.
+- **Kontextgröße:** 102.620 Token laut Sitzungsabfrage nach der Pflichtlektüre (Grenze 200.000).
+- **Schlüssel:** `OPENROUTER_API_KEY` gesetzt (nur Länge geprüft).
+- **Auftrag:** „Pull gegen Main, dann fang an mit 5.26“.
+
 ### 2026-10-09 21:30 UTC – [SESSIONENDE] 5.24 erledigt – Ausgangsmessung nach Regel-002
 
 - **Dauer:** 20:53 – 21:30 UTC, Cloud-Session (Linux).
