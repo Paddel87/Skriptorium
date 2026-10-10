@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 03:00 UTC – [GELÖST] 5.26 doppelt begonnen – Arbeit einer anderen Session übersehen
+
+- **Was:** Auf „5.26 hier starten“ begann die KI in der Session der Ausgangsmessung (über der Größengrenze, „weiter hier“ vermerkt) Teil (a) und die Ketten für Teil (b) neu. 5.26 war aber schon von einer anderen Session auf `spike/5.26-kanon-treue` erledigt (00:50–01:55 UTC, noch ohne PR). Aufgefallen erst beim abgelehnten Push auf denselben Branch.
+- **Ursache:** Beim Start nur `main` abgeglichen, nicht die Branches auf GitHub; die Frage des Eigentümers („Was haben wir denn eben gemacht?“) nicht als Hinweis gelesen.
+- **Folge:** Läufe nach vier Vorschlägen angehalten (0,10 $), eigener Stand verworfen (nie gepusht). Eigene Nachrechnung bestätigte Teil (a) der anderen Session (fehlende Einträge ohne `@` bei Glimmergrund ab Schritt 4). Auf Wunsch des Eigentümers `main` in den Branch gemergt (Konflikt im Logbuch chronologisch aufgelöst) und PR geöffnet.
+- **Merke:** Vor jedem Schritt auch `git ls-remote --heads origin '*<schritt-id>*'` prüfen.
+
 ### 2026-10-10 02:27 UTC – [BEOBACHTUNG] Rückfragen mit Antworten zum Antippen
 
 - **Anlass:** Der Eigentümer möchte Antworten auf Rückfragen anklicken können; die Fragen dieser Session standen nur als Text (Fehler der KI, das Werkzeug bietet Auswahlfragen an).
