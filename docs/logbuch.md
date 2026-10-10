@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [BEOBACHTUNG] Schlüsseltausch: Skript verworfen, einzelner Befehl
+
+- Wunsch „Skript zum Ersetzen des OpenRouter-Schlüssels“ zunächst als Skript mit ADR-Vorlage, Tests und unabhängiger Prüfung umgesetzt (Branch `feat/d.18-schluessel-tauschen`, nie gepusht). Eigentümer stellte klar: gemeint war nur ein Terminalbefehl für macOS; das Skript auf seinen Wunsch verworfen (Branch gelöscht, kein ADR, kein Fahrplan-Schritt auf `main`).
+- Lehre: Bei einem Wunsch nach „Skript“ erst die Form klären (einmaliger Befehl oder gepflegtes Werkzeug), bevor der volle Ablauf für Kategorie 6 anläuft.
+- Ausgegeben: ein Befehl für das Terminal (zsh) – Schlüssel unsichtbar abfragen, per Standardeingabe über SSH auf den Server, `.env` nach `.env.vorher` sichern, neu erzeugen, auf `(healthy)` warten, im Container bei OpenRouter prüfen, Meldung ERFOLG oder FEHLER. Syntax von zsh-, bash- und Python-Teil geprüft, nicht ausgeführt. Die KI sieht den Schlüssel nicht.
+
 ### 2026-10-10 – [ERLEDIGT] Abnahme 5.12
 
 - Eigentümer: „alles funktioniert“ (Auswahlfeld mit Favoriten, „Modelle verwalten …“, Stern auf einem zweiten Gerät sichtbar) → 5.12 `[ERLEDIGT]`, FR-028 erledigt. Phase 5: 18 von 26 erledigt, keiner in Arbeit, 7 offen (5.20, 5.16, 5.13, 5.3, 5.4, 5.14, 5.5), 1 verschoben. README-Fortschritt war veraltet (12 von 26) – Drift behoben.
