@@ -31,7 +31,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 
 ### 2026-10-10 – [ERLEDIGT] Abnahme 5.1
 
-- Eigentümer: „die Canonerkennung ohne @ funktioniert“ → 5.1 `[ERLEDIGT]`, FR-014 erledigt. Kurze Reibung beim Namen „Sibylle“ mit unterschiedlichen Schreibweisen; Frage, ob die Erkennung Aliasse berücksichtigt: ja (Name und Aliasse, Groß-/Kleinschreibung egal, ganzes Wort, Genitiv-s), aber keine unscharfe Erkennung ähnlicher Schreibweisen – Varianten als Aliasse eintragen. Unscharfe Erkennung angeboten, nur als Vormerkung für die nächste Ausbaustufe (Phase 5 an der Wucherungs-Schwelle); keine Antwort, kein Schritt angelegt.
+- Eigentümer: „die Canonerkennung ohne @ funktioniert“ → 5.1 `[ERLEDIGT]`, FR-014 erledigt. Kurze Reibung beim Namen „Sibylle“ mit unterschiedlichen Schreibweisen; Frage, ob die Erkennung Aliasse berücksichtigt: ja (Name und Aliasse, Groß-/Kleinschreibung egal, ganzes Wort, Genitiv-s), aber keine unscharfe Erkennung ähnlicher Schreibweisen – Varianten als Aliasse eintragen. Unscharfe Erkennung angeboten, nur als Vormerkung für die nächste Ausbaustufe (Phase 5 an der Wucherungs-Schwelle); Antwort des Eigentümers offen, kein Schritt angelegt.
 
 ### 2026-10-10 01:05 UTC – [BEOBACHTUNG] Deployment `e61ccd3` (5.1, Mitlaufen, 5.11 Teil 3)
 
