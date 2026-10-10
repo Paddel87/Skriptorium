@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [ADR-ANGELEGT] ADR-058 Freigabe v1.0.0 (5.14 erledigt)
+
+- Eigentümer zu den freiwilligen Maßnahmen: „Keine – so freigeben“. ADR-058: Vision-Checkpoint erfüllt, Verzicht auf den menschlichen Blick mit benanntem Restrisiko, unabhängige KI-Prüfung „freigeben“. Freiwillige Maßnahmen als V.18 (Datenschutz an OpenRouter) und V.19 (CSP, Einbettschutz, 422) mit Landeplatz 5.5.
+- v1.0.0 in `pyproject.toml`, `package.json`, `uv.lock`, `package-lock.json`, CHANGELOG (neuer Abschnitt `[1.0.0]`, 5.20 unter „Behoben“ nachgetragen), README (Badges Version und Status „In Betrieb“), `docs/project-context.md`. 5.14 `[ERLEDIGT]`; Phase 5: 23 von 26, offen nur 5.5.
+
 ### 2026-10-11 – [BEOBACHTUNG] Unabhängige Prüfung vor v1.0.0 (5.14): „freigeben“
 
 - Getrennte Instanz (Sonnet, ohne Gesprächsverlauf), nur lesend: Code, `tests/api/test_security.py` (17 grün), `npm audit` (0), unangemeldete Abrufe der öffentlichen Adresse. Ohne Befund: Schutz aller Routen (auch `/api/models`, `/api/models/favoriten`, `…/instructions`), Cookie `__Host-` mit `Secure`/`HttpOnly`/`SameSite=Strict`, Sitzungen (256 Bit, Leerlauf 7 Tage, absolut 30, höchstens 5), Herkunftsprüfung, Passwortregeln und Pwned Passwords, Sperre nach Fehlversuchen, Pfadprüfung, Katalog ohne Nutzerdaten, Verlauf, Service Worker, Logs ohne Inhalte, Header, Container.
