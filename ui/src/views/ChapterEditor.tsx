@@ -40,6 +40,7 @@ export function ChapterEditor({
   onCanonChanged,
   lead,
   tools,
+  canonVersion = 0,
 }: {
   chapter: Chapter;
   /** The story; its guests are offered in the writing panel and in "In den Kanon". */
@@ -55,6 +56,8 @@ export function ChapterEditor({
   lead?: ReactNode;
   /** At the end of the top line (the button for the bar on the right). */
   tools?: ReactNode;
+  /** Counts canon changes made elsewhere on the page, so the `@` menu loads again. */
+  canonVersion?: number;
 }) {
   const [title, setTitle] = useState(chapter.title);
   const [text, setText] = useState(chapter.text);
@@ -181,7 +184,7 @@ export function ChapterEditor({
         chapter={chapter.number}
         chapterEmpty={text.trim() === ""}
         guests={story.guest_links}
-        canonRevision={canonRevision}
+        canonRevision={canonRevision + canonVersion}
         storyModel={story.model}
         onModelChange={async (model) => {
           onStory(await api.updateStory(story.world, story.id, { model }));

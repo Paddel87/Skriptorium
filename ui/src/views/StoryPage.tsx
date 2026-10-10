@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { api, type Story } from "../api";
 import { useNavigation } from "../paths";
 import { useLoad } from "../useLoad";
-import { CanonLookup } from "./CanonLookup";
+import { Canon } from "./Canon";
 import { ChapterEditor } from "./ChapterEditor";
 import { ErrorText } from "./Common";
 import { Facts } from "./Facts";
@@ -40,6 +40,9 @@ export function StoryPage({
   const [side, setSide] = useState(false);
   const [tab, setTab] = useState<SideTab>("kanon");
   const [canonRound, setCanonRound] = useState(0);
+  // Entry open in the canon of the bar, and changes made there (the `@` menu loads again).
+  const [lookedUp, setLookedUp] = useState<string | null>(null);
+  const [canonVersion, setCanonVersion] = useState(0);
   // Counts "ändern" in the short line; the form of the writing mode then opens.
   const [modeRound, setModeRound] = useState(0);
 
@@ -81,6 +84,7 @@ export function StoryPage({
             onCanonChanged={() => {
               setCanonRound((round) => round + 1);
             }}
+            canonVersion={canonVersion}
             lead={<MenuButton />}
             tools={sideToggle}
             mode={
@@ -150,10 +154,16 @@ export function StoryPage({
             </button>
           </div>
           {tab === "kanon" ? (
-            <CanonLookup
+            <Canon
               key={canonRound}
               world={story.world}
               guests={story.guest_links}
+              compact
+              selected={lookedUp}
+              onSelect={setLookedUp}
+              onChanged={() => {
+                setCanonVersion((version) => version + 1);
+              }}
             />
           ) : (
             <div className="stack">
