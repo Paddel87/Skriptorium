@@ -10,6 +10,7 @@ from pathlib import Path
 
 
 def main() -> None:
+    print("# Übersicht Kosten und Antwortzeiten (5.26)\n")
     print("| Variante | Geschichte | Ketten | Kosten je Kette $ | Sekunden je Vorschlag Mittel (max) | Wörter je Vorschlag | Ausgabe-Token je Vorschlag |")
     print("|---|---|---|---|---|---|---|")
     for folder in map(Path, sys.argv[1:]):

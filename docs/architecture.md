@@ -339,7 +339,7 @@ data/
 | NFR Kontexttreue Referenzumfang | OFFEN | 2026-09-26 | Schritt D.4 (Geschichte ≥ 500.000 Token) |
 | Observability: Logging | BELASTBAR | 2026-09-26 | ADR-021 |
 | Observability: Metriken (Speicherung) | BELASTBAR | 2026-09-27 | ADR-023; durch Umsetzung validiert in 3.9 (Tests, echte Läufe `spikes/modellwahl/README.md`) |
-| NFR Kanon-Treue | BELASTBAR | 2026-10-08 | Vorprüfung 1.1 (ADR-010); Probeschreiben 3.3 (0 eindeutige Widersprüche je Kapitel); 4.8 (ADR-024): erstes echtes Kapitel des Eigentümers in eigener Welt, 0 Widersprüche beim Redigieren – gemessen mit qwen3.8-max-0902, weil grok-4.7/4.6 die Inhalte sperrten; für grok-4.7 nur Test- und Glasküste-Texte (0 Widersprüche, Bewertung der KI) |
+| NFR Kanon-Treue | BELASTBAR | 2026-10-08 | Vorprüfung 1.1 (ADR-010); Probeschreiben 3.3 (0 eindeutige Widersprüche je Kapitel); 4.8 (ADR-024): erstes echtes Kapitel des Eigentümers in eigener Welt, 0 Widersprüche beim Redigieren – gemessen mit qwen3.8-max-0902, weil grok-4.7/4.6 die Inhalte sperrten; für grok-4.7 nur Test- und Glasküste-Texte (0 Widersprüche, Bewertung der KI); 5.26 (2026-10-10, Regel-002, verblindet): grok-4.6 3 eindeutige und 3 knappe Widersprüche in 12 Ketten (ca. 0,6–1,0 je Kapitel – an der Grenze), grok-4.7 0 in 6 Ketten; nicht per `@` genannte Einträge fehlen bei langen Kapiteln in der Anfrage (`docs/research/kanon-treue-grok.md`) |
 | Sicherheitsniveau ASVS 5.0.0 L1 / Auth L2 | BELASTBAR | 2026-09-26 | ADR-006 |
 | Bedrohungsmodell Gesamtsystem | BELASTBAR | 2026-09-28 | Unabhängige Prüfung 4.5 (getrennte Instanz, Sonnet 5, keine Befunde); Netz-Teil von außen geprüft in 4.7 (2026-09-30) |
 | Schutzbedarf normal | BELASTBAR | 2026-09-26 | ADR-007 |

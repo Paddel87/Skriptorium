@@ -1,3 +1,5 @@
+# Übersicht Kosten und Antwortzeiten (5.26)
+
 | Variante | Geschichte | Ketten | Kosten je Kette $ | Sekunden je Vorschlag Mittel (max) | Wörter je Vorschlag | Ausgabe-Token je Vorschlag |
 |---|---|---|---|---|---|---|
 | ausgang-mittel | glimmergrund | 3 | 0.34 | 25 (45) | 124 | 1016 |
