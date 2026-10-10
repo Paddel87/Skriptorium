@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 12:35 UTC – [BEOBACHTUNG] Wunsch Wortzähler – V.12
+
+- **Wunsch des Eigentümers:** im Manuskriptfeld die vorhandenen Wörter zählen.
+- **Entscheidung (Auswahlfrage):** „Nächste Ausbaustufe (V.12)“, Landeplatz 5.5 – in Phase 5 hätte ein 27. Schritt den Stopp Phasen-Wucherung ausgelöst.
+
 ### 2026-10-10 12:20 UTC – [BEOBACHTUNG] Kurzfassung langer Kapitel scheitert – V.11
 
 - **Befund des Eigentümers:** „Kurzfassung nicht erstellt, der Text ist zu lang für eine Anfrage. Bis dahin nutzt die KI den Kapitelanfang. Das ist durchaus ein Problem.“
