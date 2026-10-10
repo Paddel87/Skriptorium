@@ -69,7 +69,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.16.
+Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.17.
 
 ---
 
@@ -1178,6 +1178,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** ggf. Datenmodell
 - **Artefakte:** Code, Tests oder ADR
 - **Notizen:** Angelegt 2026-10-10 beim Verschieben von 5.4; Phase 5 steht an der Wucherungs-Schwelle.
+
+#### V.17: Umfang des Kapitels im Manuskript anzeigen
+
+- **Status:** ⏸️ VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 (Eigentümer, 2026-10-11: „Nächste Ausbaustufe“)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 5.11
+- **Freigabepflichtig:** nein (nur Anzeige in `ui`); Mockup vorher/nachher vor dem Bau
+- **Empfohlene Klasse:** Routine – klar spezifizierte Anzeige mit Test.
+- **Eingangskriterien:** 5.5
+- **Anforderungen (ab Klasse M):** neu anzulegen in 5.5 (Wunsch 2026-10-11)
+- **Zu tun:** Wunsch des Eigentümers: Im Manuskript anzeigen, wie viel Text ein Kapitel hat, damit er weiß, wann er es abschließen sollte. Form gewählt (Auswahlfrage): Wörter plus Grenze – z. B. „9.786 Wörter“, ab etwa 10.000 Wörtern Hinweis „Kurzfassung passt bis ca. 12.000 – bald abschließen“, darüber deutlich markiert. Grenze aus dem Budget der Kurzfassung (30.000 Token, `build_chapter_summary`) ableiten, nicht fest raten; Anlass: Kapitel mit 38.000 Wörtern, Kurzfassung abgelehnt (Logbuch 2026-10-11).
+- **Akzeptanzkriterien:** Zahl stimmt mit der Wortzählung überein (Test), Hinweis erscheint an der Schwelle (Test), Mockup freigegeben, Eigentümer bestätigt.
+- **Betroffene Module:** ui (ggf. api für die Grenze)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-11; Phase 5 steht an der Wucherungs-Schwelle, daher nicht als Phasenschritt.
 
 ---
 

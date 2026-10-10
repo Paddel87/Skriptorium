@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] Wunsch Wortanzeige im Manuskript → V.17
+
+- Eigentümer vermisst eine Anzeige, wie viel Text ein Kapitel hat. Auswahlfragen: „Nächste Ausbaustufe“ (statt sofort mit Neuplanung von Phase 5, die an der Wucherungs-Schwelle steht) und „Wörter plus Grenze“. Angelegt als V.17 mit Landeplatz 5.5.
+
 ### 2026-10-11 – [BEOBACHTUNG] „The Trap“ auf Wunsch in 4 Kapitel geteilt
 
 - Eigentümer per Auswahlfrage: „Ja, 4 Kapitel“. Vorher bemerkt, dass er gerade schrieb (Kapitel umbenannt in „Kapitel 1“, 7 Minuten zuvor gespeichert) – angehalten und gebeten, zu speichern und auf allen Geräten zu schließen (sonst hätte ein alter Stand im Browser den ungeteilten Text zurückgeschrieben); Bestätigung „Ja, teilen“.
