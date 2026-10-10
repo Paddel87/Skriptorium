@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-10, nach D.16 (ADR-052) (Server auf `a71cdff`; auf `main` seither gemergt, aber **nicht eingespielt**: Mitlaufen beim Schreiben der KI (#83, 5.11) und Vorschläge ohne `@` (#84, 5.1) – derzeit keine Arbeiten am VPS auf Anweisung des Eigentümers)
+- **Stand vom:** 2026-10-10, nach dem Deployment `e61ccd3` (5.1, Mitlaufen aus 5.11, 5.11 Teil 3 Kanon-Seite eingespielt; Freigabe des Eigentümers „Deploy“)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** vier Einträge `[IN ARBEIT]`, alle warten auf den Eigentümer oder das Einspielen: 5.1 (umgesetzt, nicht eingespielt), 5.2/5.21 (eingespielt, Prüfung auf dem Gerät), 5.11 (Teile 1 und 2 geprüft, Korrektur Mitlaufen nicht eingespielt, Teil 3 umgesetzt 2026-10-10, nicht eingespielt). 5.26 erledigt 2026-10-10 (Kanon-Treue)
-- **Nächster Schritt:** (1) Wenn der Eigentümer Arbeiten am VPS wieder freigibt: `main` einspielen (#83, #84), dann Bestätigung von 5.1 und vom Mitlaufen; (2) Prüfung von 5.2/5.21 auf dem Smartphone und am Mac (Installation, Anmeldung in der App, Markieren mit dem Finger, Start ohne Netz); (3) 5.11 Teil 3 Kanon-Seite umgesetzt – mit #83/#84 einspielen, dann Prüfung durch den Eigentümer; (4) 5.25 Browser-Speicher – D.16 erledigt (ADR-052: grok-4.7 in 5.12 aus der Voreinstellung), E1 zurückgestellt auf V.10 (ADR-050); danach 5.20, 5.16, 5.6, 5.12, 5.13, 5.3, 5.4, 5.14, 5.5. Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** vier Einträge `[IN ARBEIT]`, alle eingespielt (`e61ccd3`) und warten auf die Prüfung des Eigentümers: 5.1 (Vorschläge ohne `@`), 5.2/5.21 (Smartphone, App), 5.11 (Teile 1 und 2 geprüft; Mitlaufen und Teil 3 Kanon-Seite neu). 5.26 erledigt 2026-10-10 (Kanon-Treue)
+- **Nächster Schritt:** (1) Prüfung durch den Eigentümer: 5.1 (Vorschläge ohne `@`), Mitlaufen beim Schreiben der KI, 5.11 Teil 3 Kanon-Seite (alle eingespielt mit `e61ccd3`); (2) Prüfung von 5.2/5.21 auf dem Smartphone und am Mac (Installation, Anmeldung in der App, Markieren mit dem Finger, Start ohne Netz); (4) 5.25 Browser-Speicher – D.16 erledigt (ADR-052: grok-4.7 in 5.12 aus der Voreinstellung), E1 zurückgestellt auf V.10 (ADR-050); danach 5.20, 5.16, 5.6, 5.12, 5.13, 5.3, 5.4, 5.14, 5.5. Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -26,7 +26,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
-| 🟠 | 5.1 | Kanon-Vorschläge ohne `@` | in Arbeit – umgesetzt (ADR-049) | KI: mergen · Einspielen später · du: bestätigen |
+| 🟠 | 5.1 | Kanon-Vorschläge ohne `@` | in Arbeit – eingespielt (ADR-049) | du: bestätigen |
 | 🟠 | 5.2 | Bedienung am Smartphone | in Arbeit – eingespielt | du: am Smartphone prüfen |
 | ⚪ | 5.3 | Lesbare Dateien – Nachweis | offen | KI |
 | ⚪ | 5.4 | Zeitlinie mit Datumsangaben im Kalender der Welt (Kann) | offen | du: umsetzen ja/nein |
@@ -36,7 +36,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | 5.8 | Nahtloser Anschluss ohne Einleitung und Schlusssatz | erledigt | – |
 | ✅ | 5.9 | Kapitel öffnet am Textende | erledigt | – |
 | ✅ | 5.10 | Kosten je Vorschlag sichtbar | erledigt | – |
-| 🟠 | 5.11 | Seitenaufbau und Abläufe der Oberfläche neu ordnen | in Arbeit – Teile 1 und 2 geprüft, Teil 3 umgesetzt | KI: mergen · Einspielen später · du: prüfen |
+| 🟠 | 5.11 | Seitenaufbau und Abläufe der Oberfläche neu ordnen | in Arbeit – Teile 1 und 2 geprüft; Mitlaufen und Teil 3 eingespielt | du: prüfen |
 | ⚪ | 5.12 | Modell-Auswahl aktuell vom Anbieter | offen | KI |
 | ⚪ | 5.13 | Verlauf der Anweisungen als umschaltbare Ansicht | offen | KI |
 | ⚪ | 5.14 | Go-Live-Prüfung vor v1.0.0 | offen | KI – nach 5.1–5.13 |

@@ -98,10 +98,10 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- 🟠 **Einspielen:** Mitlaufen beim Schreiben der KI (5.11) und Vorschläge für Namen ohne `@` (5.1) sind fertig, aber noch nicht auf dem Server.
+- 🟠 **Prüfen:** Vorschläge für Namen ohne `@` (5.1), Mitlaufen beim Schreiben der KI und die neue Kanon-Seite mit Suche und Filtern (5.11) – eingespielt 2026-10-10.
 - 🟠 **5.2, 5.21:** Bedienung am Smartphone angepasst, als App installierbar – eingespielt, warten auf Prüfung auf dem Smartphone.
 - ✅ **D.16:** grok-4.7 denkt an echten Schreib-Anfragen 44–157 s vor, über die Einstellungen nicht zu beheben; kommt in 5.12 aus der Voreinstellung ([Bericht](docs/research/reaktionszeit-d16.md), ADR-052). Kanon-Einträge, die bei langen Kapiteln nicht mitgehen: zurückgestellt auf die nächste Ausbaustufe (V.10, ADR-050).
-- ⚪ **5.11 Teil 3, 5.25:** Kanon-Seite mit Suche und Filter; Antworten des Servers nicht im Browser-Speicher.
+- ⚪ **5.25:** Antworten des Servers nicht im Browser-Speicher.
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).
