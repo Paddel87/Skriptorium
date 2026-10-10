@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [GELÖST] 5.20 schnell nacheinander angelegte Kapitel
+
+- Arbeit oberhalb der empfohlenen Klasse (Routine) auf der Entscheidungs-Klasse, zu Beginn genannt; keine Abgabe an einen Unteragenten (Kontext schon geladen, kleiner Schritt).
+- Ursache am Code belegt: „+ Kapitel“ (seit 5.11 in `StoryList.tsx`) nahm `chapters.length + 1` aus der Liste, die erst nach dem Anlegen neu lädt. Ein zweites Anlegen davor schickte die Nummer eines vorhandenen Kapitels; `save_chapter` behandelt das als Änderung: **Titel überschrieben, Text bleibt**. Ein doppeltes Absenden schickte zweimal dieselbe Nummer (zweites Mal: Umbenennen des gerade angelegten). Beides in Tests nachgestellt, beide schlugen am alten Code fehl.
+- Behoben nur in `ui`: Nummer = größere von Listenlänge und zuletzt angelegter Nummer (je Geschichte) + 1; Sperre über eine Ref gegen ein zweites Absenden im selben Moment, Knopf „Kapitel anlegen“ während des Anlegens aus. Kein Mockup – sichtbar ist nur der kurz gesperrte Knopf.
+- Nicht angefasst: Auf dem Server können zwei gleichzeitige Anfragen dieselbe neue Nummer beschreiben (keine Sperre in `manuscript`); bei einem Nutzer mit der Sperre in der Oberfläche nicht mehr erreichbar. Kein neuer Schritt (Phase an der Wucherungs-Schwelle), Vermerk hier.
+- Prüfungen: `vitest` 167 grün (`StoryList.tsx` 98,4 % Zeilen), tsc/eslint/prettier sauber, Playwright 11 grün.
+
 ### 2026-10-10 – [ERLEDIGT] Abnahme 5.12
 
 - Eigentümer: „alles funktioniert“ (Auswahlfeld mit Favoriten, „Modelle verwalten …“, Stern auf einem zweiten Gerät sichtbar) → 5.12 `[ERLEDIGT]`, FR-028 erledigt. Phase 5: 18 von 26 erledigt, keiner in Arbeit, 7 offen (5.20, 5.16, 5.13, 5.3, 5.4, 5.14, 5.5), 1 verschoben. README-Fortschritt war veraltet (12 von 26) – Drift behoben.

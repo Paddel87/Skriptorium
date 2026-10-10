@@ -1,4 +1,10 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -180,5 +186,96 @@ describe("Shell (step 5.11)", () => {
       await screen.findByRole("heading", { name: "Welten" }),
     ).toBeDefined();
     expect(screen.getByLabelText("Adresse").textContent).toBe("/");
+  });
+});
+
+describe("chapters created in quick succession (step 5.20)", () => {
+  it("numbers the second chapter on even before the list is loaded again", async () => {
+    // The list stays at its old state, as when the reload has not arrived yet.
+    const { calls } = fakeApi({
+      ...TWO_WORLDS,
+      "PUT /api/worlds/salzmark/stories/ueberfahrt/chapters/*": (
+        body,
+        path,
+      ) => ({
+        status: 200,
+        body: {
+          ...CHAPTER,
+          ...(body as object),
+          number: Number(path.split("/").at(-1)),
+        },
+      }),
+    });
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <StoryList world="salzmark" story="ueberfahrt" chapter={1} />
+      </MemoryRouter>,
+    );
+    const list = screen.getByRole("navigation", { name: "Geschichten" });
+    await within(list).findByRole("link", { name: "1. Aufbruch" });
+
+    for (const title of ["Zweites", "Drittes"]) {
+      await user.click(within(list).getByRole("button", { name: "+ Kapitel" }));
+      await user.type(
+        within(list).getByLabelText("Titel des neuen Kapitels"),
+        title,
+      );
+      await user.click(
+        within(list).getByRole("button", { name: "Kapitel anlegen" }),
+      );
+      await waitFor(() => {
+        expect(
+          within(list).queryByLabelText("Titel des neuen Kapitels"),
+        ).toBeNull();
+      });
+    }
+
+    expect(
+      calls
+        .filter((call) => call.method === "PUT")
+        .map((call) => [call.path.split("/").at(-1), call.body]),
+    ).toEqual([
+      ["2", { title: "Zweites" }],
+      ["3", { title: "Drittes" }],
+    ]);
+  });
+
+  it("sends a double submit only once", async () => {
+    const { calls } = fakeApi({
+      ...TWO_WORLDS,
+      "PUT /api/worlds/salzmark/stories/ueberfahrt/chapters/2": () => ({
+        status: 200,
+        body: { ...CHAPTER, number: 2, title: "Zweites" },
+      }),
+    });
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <StoryList world="salzmark" story="ueberfahrt" chapter={1} />
+      </MemoryRouter>,
+    );
+    const list = screen.getByRole("navigation", { name: "Geschichten" });
+    await within(list).findByRole("link", { name: "1. Aufbruch" });
+    await user.click(within(list).getByRole("button", { name: "+ Kapitel" }));
+    await user.type(
+      within(list).getByLabelText("Titel des neuen Kapitels"),
+      "Zweites",
+    );
+    const form = within(list)
+      .getByRole("button", { name: "Kapitel anlegen" })
+      .closest("form");
+    if (form === null) {
+      throw new Error("Formular fehlt");
+    }
+    fireEvent.submit(form);
+    fireEvent.submit(form);
+
+    await waitFor(() => {
+      expect(
+        within(list).queryByLabelText("Titel des neuen Kapitels"),
+      ).toBeNull();
+    });
+    expect(calls.filter((call) => call.method === "PUT")).toHaveLength(1);
   });
 });
