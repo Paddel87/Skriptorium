@@ -29,6 +29,32 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 03:40 UTC – [SESSIONENDE] Entscheidungen E1 und E2 aus 5.26 festgehalten
+
+- **Dauer:** 03:21 – 03:40 UTC, Cloud-Session (Linux).
+- **Bearbeitet:** Vorlagen E1 und E2 aus 5.26 vorgelegt und entschieden (ADR-050, ADR-051); neue Schritte D.16 (Querschnitt, offen) und V.10 (verschoben, Landeplatz 5.5); NFR Reaktionszeit `[VORLÄUFIG]`; Fahrplan, `docs/architecture.md`, `docs/decisions.md`, README nachgezogen.
+- **Stand:** Server unverändert auf `a71cdff`; #83 und #84 weiter nicht eingespielt. `[IN ARBEIT]`: 5.1, 5.2, 5.11, 5.21 (warten auf Eigentümer oder Einspielen). Branch `docs/5.26-entscheidungen` gepusht, Pull Request noch nicht angelegt.
+- **Nächster Schritt:** D.16 Reaktionszeit erneut erkunden (vor 5.12; Werkzeug muss die Zeit bis zum ersten Textstück erfassen); sonst wie Fahrplan „Nächster Schritt“.
+- **Offen beim Eigentümer:** Pull Request für diesen Branch; Freigabe für das Einspielen; Schlüssel auf dem Mac erneuern; D.11 bis 2026-10-31.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 03:34 UTC). Schritte oberhalb der Empfehlung: 0 (Vorlagen verlangen Entscheidung). Abgegeben: nichts – reine Lese- und Prüfarbeit, gleicher Cache-Lesepreis bei der Routine-Klasse.
+- **Kontextgröße:** Sitzungsabfrage meldet unverändert 102.615 Token (Wert seit Sessionstart nicht aktualisiert); eigene Schätzung ca. 130.000 – unter der Grenze von 200.000.
+- **Sessionende-Prüfungen:** README Status-Block (Phase 5, v0.1.0, Blocker 0, 12 von 26, Reaktionszeit VORLÄUFIG) und „Nächste Schritte“ synchron. Drift: Zusammenfassung der Fahrplan-Übersicht stand auf „11 von 26 erledigt, 11 offen“ statt 12/10 (seit 5.26) – korrigiert. ADR-050/051 verweisen auf existierende Schritte (5.26, 5.5, 5.12, D.16, V.10); Reifegrad NFR Reaktionszeit passt zu ADR-051; Modul-Liste unverändert; Blocker 0, kein `[BLOCKIERT]`; Reaktiv-Quote 1/10 (ADR-042 bis ADR-051) nachgezählt; Phase 5 weiter 26 Schritte. Ablaufdaten: kein Vorlauf erreicht (nächste: D.1 ab 2026-11-05). Logbuch ca. 720 Zeilen (Trigger 800), project-context 346 Zeilen – keine Auslagerung.
+
+### 2026-10-10 03:45 UTC – [ADR-ANGELEGT] ADR-050 und ADR-051 – Entscheidungen E1 und E2 aus 5.26
+
+- **Vorlage:** beide als `ENTSCHEIDUNG ERFORDERLICH` mit Auswahlfragen (Empfehlung zuerst).
+- **E1 → ADR-050:** Eigentümer wählt D (zurückstellen) statt der Empfehlung A (Kultur-Einträge immer mitgeben). Neuer Schritt V.10 `[VERSCHOBEN]`, Landeplatz 5.5; Kontext-Zusammenstellung unverändert.
+- **E2 → ADR-051:** Eigentümer wählt A (Ursache erkunden). Neuer Querschnitt-Schritt D.16 (vor 5.12); grok-4.7 bleibt wählbar, 90-s-Grenze bleibt. NFR Reaktionszeit `[BELASTBAR]` → `[VORLÄUFIG]` bis D.16.
+- **Nachgerechnet für die Vorlage:** grok-4.6 in 5.26 Median 26–29 s je Vorschlag (max. 59 s), 52 von 63 über 20 s; die Rohdaten (`spikes/kanon-treue/ergebnisse/`) enthalten keine Zeit bis zum ersten Textstück – ob das Ziel für grok-4.6 (höchstens 20 s) hält, ist offen und Teil von D.16.
+- **Wucherung:** kein neuer Schritt in Phase 5 (V.10 und D.16 liegen außerhalb des Schrittplans, wie V.1–V.9 und D.6); Phase 5 bleibt bei 26. Reaktiv-Quote 1/10 (ADR-042 bis ADR-051).
+
+### 2026-10-10 03:21 UTC – [SESSIONSTART] Entscheidungsvorlagen E1 und E2 aus 5.26
+
+- **Umgebung:** Cloud-Session (Linux), nach `/clear` in derselben Session wie 5.24 und 5.26. `main` abgeglichen (`017da79`, #89 gemergt); Branches auf GitHub geprüft – keine parallele Arbeit an E1/E2. Branch `docs/5.26-entscheidungen`.
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage `get_session`, 03:20 UTC) → Entscheidungs-Klasse. Vorlagen nach `CLAUDE.md` Abschnitt 4 verlangen die Entscheidungs-Klasse (Eskalations-Auslöser 1) – erfüllt, kein Stopp.
+- **Kontextgröße:** 102.615 Token laut Sitzungsabfrage (Grenze 200.000).
+- **Auftrag:** „Entscheidungen E1 und E2 aus 5.26 vorlegen“.
+
 ### 2026-10-10 03:00 UTC – [GELÖST] 5.26 doppelt begonnen – Arbeit einer anderen Session übersehen
 
 - **Was:** Auf „5.26 hier starten“ begann die KI in der Session der Ausgangsmessung (über der Größengrenze, „weiter hier“ vermerkt) Teil (a) und die Ketten für Teil (b) neu. 5.26 war aber schon von einer anderen Session auf `spike/5.26-kanon-treue` erledigt (00:50–01:55 UTC, noch ohne PR). Aufgefallen erst beim abgelehnten Push auf denselben Branch.
