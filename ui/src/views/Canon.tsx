@@ -5,7 +5,9 @@ import {
   describeError,
   type CanonEntry,
   type Category,
+  type GuestLink,
 } from "../api";
+import { loadStoryEntries } from "../storyEntries";
 import { useLoad } from "../useLoad";
 import { ErrorText, Field } from "./Common";
 import { EntryText } from "./EntryText";
@@ -25,18 +27,37 @@ const HINTS: Partial<Record<Category, string>> = {
  * filter, the list on the left, the chosen entry on the right to read and change. The chosen
  * entry has its own address (`selected`, `onSelect`); on narrow screens the entry takes the whole
  * width, with a way back to the list.
+ *
+ * The same view serves the bar on the right of a story (finding of 2026-10-10 on step 5.11):
+ * `compact` always shows list or entry, `guests` adds the story's guests from other worlds,
+ * which can be read here but are changed in their own world.
  */
 export function Canon({
   world,
   selected = null,
   onSelect = () => undefined,
+  guests,
+  compact = false,
+  onChanged,
 }: {
   world: string;
   /** Identifier of the entry shown on the right, or none. */
   selected?: string | null;
   onSelect?: (entry: string | null) => void;
+  /** Guests of a story; given, they are listed and marked as guests. */
+  guests?: readonly GuestLink[];
+  /** List or entry, never both side by side (the narrow bar of a story). */
+  compact?: boolean;
+  /** Called after an entry was created, changed or deleted. */
+  onChanged?: () => void;
 }) {
-  const load = useCallback(() => api.entries(world), [world]);
+  const load = useCallback(
+    () =>
+      guests === undefined
+        ? api.entries(world)
+        : loadStoryEntries(world, guests),
+    [world, guests],
+  );
   const { data, error, reload } = useLoad(load);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Category | null>(null);
@@ -57,6 +78,7 @@ export function Canon({
   const formFor =
     editing === NEW ? null : editing === selected ? current : undefined;
   const detail = editing === NEW || selected !== null;
+  const guest = (entry: CanonEntry) => entry.world !== world;
 
   function choose(entry: string | null) {
     setEditing(null);
@@ -64,7 +86,7 @@ export function Canon({
   }
 
   return (
-    <section className="card">
+    <section className={compact ? "card canon-panel" : "card"}>
       <div className="row">
         <h2>Kanon</h2>
         <button
@@ -80,7 +102,15 @@ export function Canon({
       {data?.length === 0 && editing !== NEW ? (
         <p>Noch keine Kanon-Einträge.</p>
       ) : (
-        <div className={detail ? "canon has-detail" : "canon"}>
+        <div
+          className={[
+            "canon",
+            compact ? "compact" : "",
+            detail ? "has-detail" : "",
+          ]
+            .filter((name) => name !== "")
+            .join(" ")}
+        >
           <div className="canon-list">
             <input
               type="search"
@@ -159,6 +189,7 @@ export function Canon({
                           {entry.status !== null && (
                             <small> ({entry.status})</small>
                           )}
+                          {guest(entry) && <small> · Gast</small>}
                         </button>
                       </li>
                     ))}
@@ -188,6 +219,7 @@ export function Canon({
                   setEditing(null);
                   reload();
                   if (saved !== undefined) {
+                    onChanged?.();
                     onSelect(saved);
                   }
                 }}
@@ -196,15 +228,22 @@ export function Canon({
               <article>
                 <div className="row">
                   <h2>{current.name}</h2>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setEditing(current.id);
-                    }}
-                  >
-                    Bearbeiten
-                  </button>
+                  {!guest(current) && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditing(current.id);
+                      }}
+                    >
+                      Bearbeiten
+                    </button>
+                  )}
                 </div>
+                {guest(current) && (
+                  <p className="note">
+                    Gast aus einer anderen Welt – nur in deren Kanon zu ändern.
+                  </p>
+                )}
                 <p className="note">
                   {CATEGORIES.find((c) => c.id === current.category)?.label}
                   {current.aliases.length > 0 &&

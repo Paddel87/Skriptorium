@@ -762,6 +762,31 @@ button.more-toggle {
   display: none;
 }
 
+/* The canon in the bar of a story (finding 2026-10-10 on step 5.11): list or entry. */
+.canon.compact {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.canon.compact .canon-list {
+  border-right: 0;
+  padding-right: 0;
+}
+
+.canon.compact.has-detail .canon-list,
+.canon.compact:not(.has-detail) .canon-detail {
+  display: none;
+}
+
+.canon.compact .canon-back {
+  display: inline;
+  margin-bottom: 0.5rem;
+}
+
+.card.canon-panel {
+  border: 0;
+  padding: 0;
+}
+
 .entry-read {
   line-height: 1.5;
 }

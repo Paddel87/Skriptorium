@@ -1,8 +1,9 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
+import { useState } from "react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { CHAPTER, ENTRY, fakeApi, ok, STORY } from "../../fake-api";
-import { CanonLookup, matching } from "./CanonLookup";
+import { Canon } from "./Canon";
 import { StoryPage } from "./StoryPage";
 
 afterEach(() => {
@@ -26,78 +27,85 @@ const KING = {
   aliases: [],
 };
 
-describe("matching", () => {
-  it("finds names and aliases containing the query, sorted by name", () => {
-    expect(matching([MIRA, ENTRY], "").map((e) => e.id)).toEqual([
-      "kael",
-      "mira",
-    ]);
-    expect(matching([MIRA, ENTRY], "FÄHR").map((e) => e.id)).toEqual(["kael"]);
-    expect(matching([MIRA, ENTRY], "  ir ").map((e) => e.id)).toEqual(["mira"]);
-  });
-});
+/** The canon of the bar with its own selection, as the story page holds it. */
+function Bar({ onChanged }: { onChanged?: () => void }) {
+  const [selected, setSelected] = useState<string | null>(null);
+  return (
+    <Canon
+      world="salzmark"
+      guests={[{ world: "nebelreich", entry: "nebelkoenig" }]}
+      compact
+      selected={selected}
+      onSelect={setSelected}
+      onChanged={onChanged}
+    />
+  );
+}
 
-describe("CanonLookup", () => {
-  it("searches, opens an entry with guests marked and goes back (step 5.11)", async () => {
+describe("canon in the bar of a story (finding 2026-10-10 on step 5.11)", () => {
+  it("lists entries and guests by category, opens one and goes back", async () => {
     fakeApi({
       "GET /api/worlds/salzmark/entries": ok([ENTRY, MIRA]),
       "GET /api/worlds/nebelreich/entries/nebelkoenig": ok(KING),
     });
     const user = userEvent.setup();
-    render(
-      <CanonLookup
-        world="salzmark"
-        guests={[{ world: "nebelreich", entry: "nebelkoenig" }]}
-      />,
-    );
-    expect(
-      await screen.findByRole("button", { name: "Nebelkönig" }),
-    ).toBeDefined();
-    expect(screen.getByText("Figur · Gast")).toBeDefined();
-    await user.type(screen.getByLabelText("Kanon durchsuchen"), "zz");
-    expect(screen.getByText("Nichts gefunden.")).toBeDefined();
-    await user.clear(screen.getByLabelText("Kanon durchsuchen"));
+    const { container } = render(<Bar />);
+    const king = await screen.findByRole("button", { name: /Nebelkönig/ });
+    expect(king.textContent).toContain("· Gast");
+    expect(screen.getByRole("heading", { name: "Figuren" })).toBeDefined();
+    expect(screen.getByRole("button", { name: /^Orte/ })).toBeDefined();
+    expect(container.querySelector(".canon.compact")).not.toBeNull();
+
     await user.type(screen.getByLabelText("Kanon durchsuchen"), "mi");
-    await user.click(screen.getByRole("button", { name: "Mira" }));
-    const article = screen.getByRole("article", { name: "Kanon: Mira" });
-    expect(within(article).getByText("Ort / Geografie")).toBeDefined();
-    expect(within(article).getByText(/Zollstation am Ufer\./).textContent).toBe(
-      "Zollstation am Ufer.\nZweite Zeile.",
-    );
-    await user.click(screen.getByRole("button", { name: "← Zur Liste" }));
+    await user.click(screen.getByRole("button", { name: /^Mira/ }));
+    expect(screen.getByRole("heading", { name: "Mira" })).toBeDefined();
+    expect(screen.getByRole("button", { name: "Bearbeiten" })).toBeDefined();
+    await user.click(screen.getByRole("button", { name: "← Liste" }));
     expect(screen.getByLabelText("Kanon durchsuchen")).toHaveProperty(
       "value",
       "mi",
     );
+
+    await user.clear(screen.getByLabelText("Kanon durchsuchen"));
+    await user.click(screen.getByRole("button", { name: /Nebelkönig/ }));
+    expect(screen.queryByRole("button", { name: "Bearbeiten" })).toBeNull();
+    expect(
+      screen.getByText(
+        "Gast aus einer anderen Welt – nur in deren Kanon zu ändern.",
+      ),
+    ).toBeDefined();
+  });
+
+  it("changes an entry of the world in the bar and reports it", async () => {
+    let entries = [ENTRY];
+    fakeApi({
+      "GET /api/worlds/salzmark/entries": () => ({
+        status: 200,
+        body: entries,
+      }),
+      "GET /api/worlds/nebelreich/entries/nebelkoenig": ok(KING),
+      "PATCH /api/worlds/salzmark/entries/kael": (body) => {
+        entries = [{ ...ENTRY, ...(body as object) }];
+        return { status: 200, body: entries[0] };
+      },
+    });
+    const onChanged = vi.fn();
+    const user = userEvent.setup();
+    render(<Bar onChanged={onChanged} />);
+    await user.click(await screen.findByRole("button", { name: /^Kael/ }));
+    await user.click(screen.getByRole("button", { name: "Bearbeiten" }));
+    const status = screen.getByLabelText(/^Status/);
+    await user.type(status, "verschollen");
+    await user.click(screen.getByRole("button", { name: "Speichern" }));
+    await waitFor(() => {
+      expect(onChanged).toHaveBeenCalledOnce();
+    });
   });
 
   it("says when the world has no entries yet", async () => {
     fakeApi({ "GET /api/worlds/salzmark/entries": ok([]) });
-    render(<CanonLookup world="salzmark" guests={[]} />);
+    render(<Canon world="salzmark" guests={[]} compact />);
     expect(await screen.findByText("Noch keine Kanon-Einträge.")).toBeDefined();
-  });
-
-  it("shows aliases, status and the guest mark of an open entry", async () => {
-    fakeApi({
-      "GET /api/worlds/salzmark/entries": ok([
-        { ...ENTRY, status: "verschollen" },
-      ]),
-      "GET /api/worlds/nebelreich/entries/nebelkoenig": ok(KING),
-    });
-    const user = userEvent.setup();
-    render(
-      <CanonLookup
-        world="salzmark"
-        guests={[{ world: "nebelreich", entry: "nebelkoenig" }]}
-      />,
-    );
-    await user.click(await screen.findByRole("button", { name: "Kael" }));
-    expect(
-      screen.getByText("Figur · der Fährmann · verschollen"),
-    ).toBeDefined();
-    await user.click(screen.getByRole("button", { name: "← Zur Liste" }));
-    await user.click(screen.getByRole("button", { name: "Nebelkönig" }));
-    expect(screen.getByText("Figur · Gast")).toBeDefined();
   });
 });
 
