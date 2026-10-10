@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [BEOBACHTUNG] 5.25 in die nächste Ausbaustufe verschoben, kein Befund in Firefox
+
+- Befund des Eigentümers („in Firefox schlägt `@` keine Kanon-Einträge mehr vor“) war eine Verwechslung: geschrieben im Feld „Kurzfassung des Kapitels“, nicht im Anweisungsfeld. Fehlersuche abgebrochen; dabei fiel auf, dass Playwright für Firefox einen neueren Browser (`firefox-1538`) erwartet, der lokal fehlt – nicht heruntergeladen. Angeboten: Kurzfassung deutlicher absetzen (neuer Schritt), keine Antwort.
+- Auf Wunsch des Eigentümers („Schritt in eine andere Phase übertragen, dieser soll den Phasenabschluss nicht behindern“): 5.25 `[VERSCHOBEN]` → neuer Schritt V.13 (Landeplatz 5.5, Inhalt übernommen). Abschlusskriterium von Phase 5 ergänzt um „`[VERSCHOBEN]` mit Ziel-Schritt in der nächsten Ausbaustufe“. FR-032, Architektur und README nachgezogen.
+
 ### 2026-10-10 – [ERLEDIGT] Abnahme 5.2 und 5.21
 
 - Prüfliste (iPhone: Anmeldung bleibt, neue Szene, Weiterschreiben, „In den Kanon“ mit Markieren per Finger, Flugmodus; Mac: Installation, Fenster ohne Browserleiste, Anmeldung) vom Eigentümer abgearbeitet: „passt alles“ → 5.2 und 5.21 `[ERLEDIGT]`; FR-019 und FR-032 erledigt. Phase 5: 16 von 26 erledigt, keiner in Arbeit.
