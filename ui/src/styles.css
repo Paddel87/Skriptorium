@@ -1213,3 +1213,57 @@ button.more-toggle {
       env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
 }
+
+/* Verlauf der Anweisungen (step 5.13) */
+/* Stays at the top of the text, which opens scrolled to its end (step 5.11). */
+.view-tabs {
+  position: sticky;
+  /* Covers the padding of `.chat-scroll` too, so no text shows above the tabs. */
+  top: -1rem;
+  z-index: 1;
+  margin: -1rem 0 0.5rem;
+  padding: 1rem 0 0.25rem;
+  background: var(--page);
+}
+
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.history-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* The author's instruction on the right, like an own message in a chat. */
+.history-in {
+  align-self: flex-end;
+  max-width: min(85%, 36rem);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  background: var(--button);
+  border: 1px solid var(--accent);
+}
+
+.history-in time {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.history-in p,
+.history-out p {
+  margin: 0.25rem 0 0;
+  white-space: pre-wrap;
+}
+
+.history-out .who {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0;
+}

@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-10-10, nach dem Deployment `628f559` (5.6 Genre und Schreibweise, 5.11 Kanon in der Leiste der Geschichte eingespielt; Anweisung des Eigentümers „einspielen“)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 5.16 herangezogene Einträge anklickbar (umgesetzt, Prüfung offen); 5.20 schnell angelegte Kapitel (behoben, Prüfung offen). Am 2026-10-10 erledigt: 5.12, 5.26, 5.1, 5.2, 5.21, 5.11, 5.6
-- **Nächster Schritt:** 5.11 Kanon in der Leiste einspielen (auf Anweisung) und bestätigen lassen; (5.25 nach V.13 verschoben, 2026-10-10) D.16 erledigt (ADR-052: grok-4.7 in 5.12 aus der Voreinstellung), E1 zurückgestellt auf V.10 (ADR-050); danach 5.20, 5.16, 5.6, 5.12, 5.13, 5.3, 5.4, 5.14, 5.5. Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** 5.13 Verlauf der Anweisungen (umgesetzt, Prüfung offen); 5.16 herangezogene Einträge anklickbar (umgesetzt, Prüfung offen); 5.20 schnell angelegte Kapitel (behoben, Prüfung offen). Am 2026-10-10 erledigt: 5.12, 5.26, 5.1, 5.2, 5.21, 5.11, 5.6, 5.3
+- **Nächster Schritt:** Einspielen (vom Mac, auf Anweisung) und Prüfung durch den Eigentümer: 5.13, 5.16, 5.20; danach 5.14 Go-Live-Prüfung, zuletzt 5.5 (V.1–V.16). 5.4 nach V.16 und 5.25 nach V.13 verschoben (2026-10-10). Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -22,14 +22,14 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 18 von 26 erledigt, 2 in Arbeit, 5 offen, 1 verschoben (5.25 → V.13).**
+**Phase 5: 19 von 26 erledigt, 3 in Arbeit, 2 offen, 2 verschoben (5.25 → V.13, 5.4 → V.16).**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | ✅ | 5.1 | Kanon-Vorschläge ohne `@` | erledigt 2026-10-10 | – |
 | ✅ | 5.2 | Bedienung am Smartphone | erledigt 2026-10-10 | – |
-| ⚪ | 5.3 | Lesbare Dateien – Nachweis | offen | KI |
-| ⚪ | 5.4 | Zeitlinie mit Datumsangaben im Kalender der Welt (Kann) | offen | du: umsetzen ja/nein |
+| ✅ | 5.3 | Lesbare Dateien – Nachweis | erledigt 2026-10-10 | – |
+| ⏸️ | 5.4 | Zeitlinie mit Datumsangaben im Kalender der Welt (Kann) | verschoben → V.16 | – |
 | ⚪ | 5.5 | Planung der nächsten Ausbaustufe | offen | KI – zuletzt |
 | ✅ | 5.6 | Atmosphärische Schreibweise je Geschichte | erledigt 2026-10-10 | – |
 | ✅ | 5.7 | Startmodell grok-4.6 | erledigt | – |
@@ -38,7 +38,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | 5.10 | Kosten je Vorschlag sichtbar | erledigt | – |
 | ✅ | 5.11 | Seitenaufbau und Abläufe der Oberfläche neu ordnen | erledigt 2026-10-10 | – |
 | ✅ | 5.12 | Modell-Auswahl aktuell vom Anbieter | erledigt 2026-10-10 (ADR-055) | – |
-| ⚪ | 5.13 | Verlauf der Anweisungen als umschaltbare Ansicht | offen | KI |
+| 🟠 | 5.13 | Verlauf der Anweisungen als umschaltbare Ansicht | umgesetzt, Prüfung offen | du: prüfen |
 | ⚪ | 5.14 | Go-Live-Prüfung vor v1.0.0 | offen | KI – nach 5.1–5.13 |
 | ✅ | 5.15 | KI schreibt nur das Verlangte, nicht bis zum bekannten Ende | erledigt | – |
 | 🟠 | 5.16 | Herangezogene Kanon-Einträge anklickbar | umgesetzt, Prüfung offen | du: prüfen |
@@ -69,7 +69,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.15.
+Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.16.
 
 ---
 
@@ -172,7 +172,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Ziel:** Das Skriptorium ist für das tägliche Schreiben des Eigentümers alltagstauglich – Modelle sperren seine Texte nicht, die KI schreibt nahtlos weiter, die Oberfläche ist übersichtlich und intuitiv (gezielter Umbau nach ADR-042) –, die Soll-Anforderungen und die Kann-Anforderung sind umgesetzt oder begründet zurückgestellt, und die nächste Ausbaustufe ist geplant.
 
-**Abschlusskriterium:** Schritte 5.1–5.26 `[ERLEDIGT]`, `[VERWORFEN]` mit ADR oder `[VERSCHOBEN]` mit Ziel-Schritt in der nächsten Ausbaustufe (5.25 → V.13, Eigentümer 2026-10-10).
+**Abschlusskriterium:** Schritte 5.1–5.26 `[ERLEDIGT]`, `[VERWORFEN]` mit ADR oder `[VERSCHOBEN]` mit Ziel-Schritt in der nächsten Ausbaustufe (5.25 → V.13, 5.4 → V.16, Eigentümer 2026-10-10).
 
 **Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`. Der Umbau betrifft nur `ui` (Seitenaufbau, 5.11) und Randstellen in `ai_gateway`/`api` (Modell-Katalog, 5.12); neue gespeicherte Daten (5.6, 5.13) werden per ADR festgelegt.
 
@@ -216,7 +216,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.3: Lesbare Dateien – Nachweis
 
-- **Status:** ⚪ OFFEN
+- **Status:** ✅ ERLEDIGT (2026-10-10) – Nachweis an einer über die Schnittstelle angelegten Welt (Kanon mit Alias, Gast aus zweiter Welt, Geschichte mit Genre, Schreibweise, Fakten, Gesamtzusammenfassung, Kapitel mit Kurzfassung): alles liegt unter `worlds/<welt>/` als Markdown mit YAML-Kopf (`world.md`, `canon/<kategorie>/<eintrag>.md`, `stories/<geschichte>/story.md`, `facts.md`, `chapters/01-<titel>.md`), UTF-8, deutsche Schlüssel; `index.sqlite` ist nur der abgeleitete Suchindex, keine Datei einer Welt liegt anderswo. Keine Lücke gefunden. Dauerhaft abgesichert durch `tests/api/test_readable_files.py`; Belegauszug im Logbuch
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.5
 - **Freigabepflichtig:** nein
@@ -232,7 +232,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.4: Zeitlinie mit Datumsangaben im Kalender der Welt (Kann)
 
-- **Status:** ⚪ OFFEN
+- **Status:** ⏸️ VERSCHOBEN → V.16 (Eigentümer, 2026-10-10, Auswahlfrage: „In die nächste Ausbaustufe“)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.3
 - **Freigabepflichtig:** ja, falls das Datenmodell erweitert wird (Kategorie 4)
@@ -255,8 +255,8 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich, nicht bloß Status-Update.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 5
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Die verschobenen Schritte V.1 bis V.15 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5; V.6 bis V.9 ergänzt 2026-10-08, Wünsche des Eigentümers; V.10 ergänzt 2026-10-10, ADR-050).
-- **Akzeptanzkriterien:** Jeder Schritt V.1–V.15 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
+- **Zu tun:** Die verschobenen Schritte V.1 bis V.16 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5; V.6 bis V.9 ergänzt 2026-10-08, Wünsche des Eigentümers; V.10 ergänzt 2026-10-10, ADR-050).
+- **Akzeptanzkriterien:** Jeder Schritt V.1–V.16 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Fahrplan, ggf. ADRs
@@ -380,7 +380,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.13: Verlauf der Anweisungen als umschaltbare Ansicht
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-10) – Datenmodell entschieden (ADR-056, Eigentümer: eigene Datei je Kapitel, nur übernommene Vorschläge, Reiter über dem Text; nach dem ersten Bildschirmstand erweitert: je Eintrag Anweisung und Text der KI wie übernommen, „Weiter“ als Eingabe, Darstellung wie im Chat). Umgesetzt: `manuscript` (`verlauf/NN.md`, `list_instructions`, `add_instruction`), `api` (`GET|POST …/chapters/{n}/instructions`), `ui` (Reiter „Manuskript | Verlauf“, haftet oben im Textbereich; Eingabe rechts, Text der KI links; Vermerk beim Übernehmen). Test: Anfrage an die KI enthält keinen Verlauf (`test_history_of_instructions_never_reaches_the_ai`); Umschalten, „Weiter“, Fehlerfall in `WritingPanel.test.tsx`. `pytest` 487, `vitest` 173, Playwright 11 grün. Offen: Merge, Einspielen, Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11
 - **Freigabepflichtig:** ja – neue gespeicherte Daten (Anweisungen je Kapitel, Kategorie 4)
@@ -1161,6 +1161,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Mockup, Code, Tests
 - **Notizen:** Angelegt 2026-10-10. In Phase 5 hätte der Schritt den Stopp Phasen-Wucherung ausgelöst; der Eigentümer gab den Befund „nur als Hinweis“.
+
+#### V.16: Zeitlinie mit Datumsangaben im Kalender der Welt (Kann)
+
+- **Status:** ⏸️ VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 (Eigentümer, 2026-10-10: aus 5.4 „in die nächste Ausbaustufe“)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 2.3
+- **Freigabepflichtig:** ja, falls das Datenmodell erweitert wird (Kategorie 4)
+- **Empfohlene Klasse:** Entscheidung – eine Datenmodell-Erweiterung ist freigabepflichtig (Eskalations-Auslöser 1).
+- **Eingangskriterien:** 5.5; Zeitrechnung der Welt vom Eigentümer geklärt (eigene Monatsnamen oder nur Jahreszahlen)
+- **Anforderungen (ab Klasse M):** FR-023
+- **Zu tun:** Zeitlinien-Einträge optional mit Datumsangaben im Kalender der Welt (übernommen aus 5.4). Heute stehen Ereignisse als Text im Eintrag der Kategorie „Zeitlinie“; die KI liest sie ohnehin so. Nutzen vor allem Übersicht und Sortierung für den Autor.
+- **Akzeptanzkriterien:** Umgesetzt mit Tests oder `[VERWORFEN]` mit ADR.
+- **Betroffene Module:** canon, ui
+- **Reifegrad-Wirkung:** ggf. Datenmodell
+- **Artefakte:** Code, Tests oder ADR
+- **Notizen:** Angelegt 2026-10-10 beim Verschieben von 5.4; Phase 5 steht an der Wucherungs-Schwelle.
 
 ---
 

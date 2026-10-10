@@ -84,6 +84,7 @@ export function WritingPanel({
   tools,
   endSignal = 0,
   onLookUp,
+  onNoted,
 }: {
   world: string;
   story: string;
@@ -112,6 +113,8 @@ export function WritingPanel({
   endSignal?: number;
   /** Show a referenced entry over the page (step 5.16); given, the names under "Herangezogen" are links. */
   onLookUp?: (entry: CanonEntry) => void;
+  /** Called after the instruction of a taken-over proposal went into the history (step 5.13). */
+  onNoted?: () => void;
 }) {
   const loadModels = useCallback(() => api.models(), []);
   const models = useLoad(loadModels);
@@ -142,6 +145,8 @@ export function WritingPanel({
   const [failure, setFailure] = useState<WriteErrorKind | null>(null);
   const [aborted, setAborted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // The instruction of a taken-over proposal could not be noted (step 5.13); shown below.
+  const [historyError, setHistoryError] = useState<string | null>(null);
   const [lastOrder, setLastOrder] = useState<WriteOrder | null>(null);
   const [usage, setUsage] = useState<Usage | null>(null);
   const [modelError, setModelError] = useState<string | null>(null);
@@ -275,6 +280,7 @@ export function WritingPanel({
   }, []);
 
   async function send(order: WriteOrder) {
+    setHistoryError(null);
     setEditing(false);
     setPhase("thinking");
     setSeconds(0);
@@ -348,6 +354,9 @@ export function WritingPanel({
 
   async function accept() {
     setError(null);
+    // What the proposal came from, for the history (step 5.13); not the field as it is now.
+    const order = lastOrder;
+    const text = proposal.trim();
     try {
       await onAccept(proposal);
       setInstruction("");
@@ -358,6 +367,28 @@ export function WritingPanel({
       discard();
     } catch (reason: unknown) {
       setError(describeError(reason));
+      return;
+    }
+    if (order === null) {
+      return;
+    }
+    const asked = order.instruction.trim();
+    try {
+      await api.addInstruction(world, story, chapter, {
+        instruction:
+          asked !== ""
+            ? asked
+            : (order.scene ?? null) !== null
+              ? "Neue Szene"
+              : "Weiter",
+        text,
+        model: order.model,
+      });
+      onNoted?.();
+    } catch (reason: unknown) {
+      setHistoryError(
+        `Übernommen, aber nicht im Verlauf vermerkt: ${describeError(reason)}`,
+      );
     }
   }
 
@@ -453,7 +484,11 @@ export function WritingPanel({
       </div>
       <div className="composer" ref={composer}>
         <div className="composer-sheet">
-          <ErrorText message={models.error ?? entries.error ?? modelError} />
+          <ErrorText
+            message={
+              models.error ?? entries.error ?? modelError ?? historyError
+            }
+          />
           {managing && modelList !== undefined && (
             <ModelManager
               list={modelList}

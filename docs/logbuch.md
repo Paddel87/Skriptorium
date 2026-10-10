@@ -42,6 +42,28 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - Ausgegeben: ein Befehl für das Terminal (zsh) – Schlüssel unsichtbar abfragen, per Standardeingabe über SSH auf den Server, `.env` nach `.env.vorher` sichern, neu erzeugen, auf `(healthy)` warten, im Container bei OpenRouter prüfen, Meldung ERFOLG oder FEHLER. Syntax von zsh-, bash- und Python-Teil geprüft, nicht ausgeführt. Die KI sieht den Schlüssel nicht.
 - Ausgeführt vom Eigentümer am 2026-10-10 gegen 18:53 UTC: Schlüssel eingetragen, Container neu erzeugt und gesund; im Container `GET /api/v1/key` → 200, `.env` verschieden von `.env.vorher`. „ERFOLG“ erschien erst nach gut einer Minute (Warten auf `(healthy)`, bis 120 s) – der Eigentümer hatte zunächst keine Meldung gesehen. Eigentümer hat den alten Schlüssel bei OpenRouter deaktiviert und gelöscht; danach auf seine Bestätigung `.env.vorher` auf dem Server gelöscht (nur noch `.env`, Rechte 600; Dienst `(healthy)`, `/api/health` 200).
 
+### 2026-10-10 – [BEOBACHTUNG] 5.4 in die nächste Ausbaustufe verschoben (V.16)
+
+- Eigentümer per Auswahlfrage: 5.4 (FR-023, Kann – Datumsangaben in Zeitlinien) „in die nächste Ausbaustufe“ (Empfehlung der KI: Nutzen vor allem Übersicht für den Autor, die KI liest Zeitlinien als Text ohnehin; Phase 5 an der Wucherungs-Schwelle). Landeplatz V.16 mit Eingangskriterium „Zeitrechnung der Welt geklärt“; V-Bereich jetzt V.1–V.16. Kein ADR (Verschiebung, kein Verwerfen).
+- Phase 5: 19 von 26 erledigt, 3 in Arbeit (5.13, 5.16, 5.20 – Prüfung durch den Eigentümer), 2 offen (5.14, 5.5), 2 verschoben.
+
+### 2026-10-10 – [ADR] ADR-056 und Umsetzung 5.13 Verlauf der Anweisungen
+
+- Klasse: Entscheidungs-Klasse (`claude-opus-5-5`, per `get_session` abgefragt) – Eskalations-Auslöser 1 (Datenmodell, Kategorie 4) ohne Modellwechsel erfüllt. Vorher `git ls-remote --heads origin`: kein 5.13-Branch.
+- `ENTSCHEIDUNG ERFORDERLICH` vorgelegt (A eigene Datei / B Kapitelkopf / C nur Browser); Eigentümer per Auswahlfrage: A (Empfehlung), **nur übernommene** Anweisungen (nicht alle abgeschickten), Reiter über dem Text. ADR-056 angelegt, Reaktiv-Quote unverändert 1 / 10 (ADR-047 bis ADR-056).
+- Umsetzung: `manuscript` schreibt `stories/<g>/verlauf/NN.md` (Kopf `kapitel`, `anweisungen` mit `zeit`/`anweisung`), die Kapiteldatei bleibt unberührt; `api` zwei Routen mit Uhr aus `Services`; `ui` vermerkt beim Übernehmen die Anweisung aus `lastOrder` (nicht den Feldinhalt), „Weiter“ ohne Anweisung nicht; Fehler beim Vermerken als Hinweis unten, übernommener Text bleibt.
+- Erweiterung nach dem ersten Bildschirmstand (Eigentümer: „Im Verlauf muss zwischen user input und agent output unterschieden werden können, vielleicht sollte user input rechts eingerückt sein?“), noch vor Merge und Einspielen: drei Auswahlfragen mit Vorschau, jeweils Empfehlung gewählt – Text der KI wie übernommen, „Weiter“ als Eingabe, Darstellung wie im Chat. ADR-056, FR-027 und Architektur nachgezogen; Eintrag hat jetzt `zeit`, `anweisung`, `modell`, `text`.
+- Bildschirm-Probelauf (Kopie der Testdaten, Desktop 1280 und Smartphone 390): Die Schreibseite öffnet am Textende (5.11), die Reiter waren bei langen Kapiteln weggescrollt. Abhilfe: Reiter haften oben im Textbereich (`position: sticky`, deckt das Innenmaß von `.chat-scroll` ab, damit kein Text darüber durchscheint). Nachher geprüft.
+- Prüfungen: `pytest` 487 (`manuscript` und `manuscript_routes` 100 %; Routenzahl in `test_security.py` 40 → 42, neue Routen ohne Sitzung 401); `vitest` 173 (alle Dateien 98,11 % Zeilen, `WritingPanel.tsx` 96,77 %); Playwright 11; ruff, mypy --strict, bandit, tsc, eslint, prettier sauber.
+- Sessiongröße: ca. 250.000 Token laut Laufzeit, über der Grenze von 200.000 – Weiterarbeit auf ausdrückliche Anweisung des Eigentümers in dieser Session (bereits vermerkt).
+
+### 2026-10-10 – [ERLEDIGT] 5.3 lesbare Dateien – Nachweis
+
+- Arbeit oberhalb der empfohlenen Klasse (Routine) auf der Entscheidungs-Klasse, zu Beginn genannt; keine Abgabe (kleiner Schritt, Kontext geladen). Vorher `git ls-remote --heads origin`: kein 5.3-Branch.
+- Weg: Welt „Die Salzmark“ über die Schnittstelle angelegt (wie im Betrieb, Test-Client mit frischem Datenverzeichnis): Eintrag Kael mit Alias und Text, zweite Welt „Nordland“ mit Ragna als Gast, Geschichte mit Genre, Schreibweise, Fakt, Gesamtzusammenfassung, Kapitel mit Text und geprüfter Kurzfassung. Dann die Dateien angesehen.
+- Befund: Alles einer Welt liegt unter `worlds/<welt>/` als Markdown mit YAML-Kopf, UTF-8, deutsche Schlüssel (`name`, `aliasse`, `kategorie`, `titel`, `gefuehrte_figuren`, `gast_verbindungen`, `genre`, `schreibweise`, `kurzfassung`, `fakten`): `world.md`, `canon/figur/kael.md`, `stories/die-ueberfahrt/story.md` (Text = Gesamtzusammenfassung), `facts.md`, `chapters/01-aufbruch.md` (Text = Kapiteltext, Absätze erhalten, Fett als `**…**`). Daneben nur `index.sqlite` (abgeleiteter Suchindex, ADR-003) und `system/zugang.md` (Zugang, nicht Teil der Welt; Inhalt nicht ausgegeben). Gäste stehen als Kennung (`welt: nordland`, `eintrag: ragna`) – im Editor über den Pfad `worlds/nordland/canon/figur/ragna.md` auffindbar. Keine Lücke, nichts zu schließen.
+- Absicherung: `tests/api/test_readable_files.py` (2 Tests: nur `.md` mit Kopf unter der Welt, alle Inhalte im Klartext; kein SQLite unter `worlds/`). `pytest` 484 grün; ruff, mypy --strict sauber.
+
 ### 2026-10-10 – [BEOBACHTUNG] 5.16 herangezogene Einträge anklickbar umgesetzt
 
 - Arbeit oberhalb der empfohlenen Klasse (Routine) auf der Entscheidungs-Klasse, zu Beginn genannt; keine Abgabe (Kontext geladen, kleiner Schritt). Vorher `git ls-remote --heads origin`: kein 5.16-Branch.

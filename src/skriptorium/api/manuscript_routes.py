@@ -12,7 +12,14 @@ from fastapi import APIRouter, Depends, status
 from pydantic import BaseModel
 
 from skriptorium.api.context import Services, ServicesDep, current_session
-from skriptorium.manuscript import Chapter, Form, Story, SummaryStatus, WritingStyle
+from skriptorium.manuscript import (
+    Chapter,
+    Form,
+    InstructionNote,
+    Story,
+    SummaryStatus,
+    WritingStyle,
+)
 from skriptorium.storage import InvalidInput, NotFound
 
 router = APIRouter(prefix="/api/worlds/{world_id}/stories", dependencies=[Depends(current_session)])
@@ -86,6 +93,15 @@ class ChapterSummary(BaseModel):
 
     summary: str
     status: SummaryStatus
+
+
+class InstructionIn(BaseModel):
+    """A taken-over exchange (step 5.13, ADR-056): the author's instruction ("Weiter" without
+    one), the text as it went into the manuscript and the model that wrote it."""
+
+    instruction: str
+    text: str
+    model: str | None = None
 
 
 class GuestLinkIn(BaseModel):
@@ -238,6 +254,25 @@ def set_chapter_summary(
         body.summary,
         body.status,
     )
+
+
+@router.get("/{story_id}/chapters/{number}/instructions")
+def list_instructions(
+    world_id: str, story_id: str, number: int, found: ServicesDep
+) -> list[InstructionNote]:
+    """Taken-over exchanges of a chapter, oldest first (step 5.13, FR-027, ADR-056)."""
+    found.canon.get_world(world_id)
+    return found.manuscript.list_instructions(world_id, story_id, number)
+
+
+@router.post("/{story_id}/chapters/{number}/instructions", status_code=status.HTTP_201_CREATED)
+def add_instruction(
+    world_id: str, story_id: str, number: int, body: InstructionIn, found: ServicesDep
+) -> list[InstructionNote]:
+    """Note a taken-over exchange; the AI never gets this list."""
+    found.canon.get_world(world_id)
+    note = InstructionNote(found.clock(), body.instruction, body.text, body.model)
+    return found.manuscript.add_instruction(world_id, story_id, number, note)
 
 
 def _story(found: Services, world_id: str, story_id: str) -> Story:
