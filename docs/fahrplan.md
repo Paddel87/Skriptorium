@@ -36,7 +36,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | 5.8 | Nahtloser Anschluss ohne Einleitung und Schlusssatz | erledigt | – |
 | ✅ | 5.9 | Kapitel öffnet am Textende | erledigt | – |
 | ✅ | 5.10 | Kosten je Vorschlag sichtbar | erledigt | – |
-| 🟠 | 5.11 | Seitenaufbau und Abläufe der Oberfläche neu ordnen | wieder in Arbeit – Kanon in der Leiste umgesetzt | KI: mergen und einspielen (auf Anweisung) · du: bestätigen |
+| 🟠 | 5.11 | Seitenaufbau und Abläufe der Oberfläche neu ordnen | wieder in Arbeit – Kanon in der Leiste gemergt | KI: einspielen (auf Anweisung) · du: bestätigen |
 | ⚪ | 5.12 | Modell-Auswahl aktuell vom Anbieter | offen | KI |
 | ⚪ | 5.13 | Verlauf der Anweisungen als umschaltbare Ansicht | offen | KI |
 | ⚪ | 5.14 | Go-Live-Prüfung vor v1.0.0 | offen | KI – nach 5.1–5.13 |
