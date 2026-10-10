@@ -1,0 +1,12 @@
+{
+  "geschichte": "glimmergrund",
+  "schritt": 4,
+  "anweisung": "Zurück in der Nassen Sohle schiebt mir jemand eine Nachricht unter der Tür durch. Ich lese sie, dann schreibe ich Lenka Vorst eine Antwort und bitte Rosl, sie ihr zu bringen.",
+  "modell": "x-ai/grok-4.6",
+  "woerter": 64,
+  "sekunden": 44.9,
+  "token_ein": 24145,
+  "token_aus": 1553,
+  "kosten_usd": 0.05684184,
+  "finish_reason": "stop"
+}

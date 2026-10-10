@@ -29,6 +29,33 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-09 21:30 UTC – [SESSIONENDE] 5.24 erledigt – Ausgangsmessung nach Regel-002
+
+- **Dauer:** 20:53 – 21:30 UTC, Cloud-Session (Linux).
+- **Bearbeitet:** 5.24 Ausgangsmessung → `[ERLEDIGT]`; Fahrplan (Status, Übersicht, Aktueller Stand), README (Nächste Schritte; Fortschrittszeile im Status-Block stand noch auf „7 von 21“ – Drift behoben auf 11 von 26).
+- **Stand:** Server unverändert auf `a71cdff`; #83 und #84 weiter nicht eingespielt. `[IN ARBEIT]`: 5.1, 5.2, 5.11, 5.21 (warten auf Eigentümer oder Einspielen).
+- **Nächster Schritt:** 5.26 Kanon-Treue mit grok-4.6 – geht in einer Cloud-Session sofort (gültiger Schlüssel); dafür die Kanon-Abweichungen aus der Ausgangsmessung (`spikes/regel-002/README.md`, Befund 7) heranziehen. Sonst wie Fahrplan „Nächster Schritt“.
+- **Offen beim Eigentümer:** Schlüssel auf dem Mac erneuern (der der Cloud-Session ist gültig); Freigabe für das Einspielen; D.11 bis 2026-10-31.
+- **Reibungen:** Stop-Hook verlangte Commits während der laufenden Messung – Ergebnisordner vorübergehend nur lokal in `.git/info/exclude` ausgeschlossen, vor dem Commit wieder entfernt; erster Versuch mit Kommentar in derselben Zeile war als Muster ungültig.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 21:26 UTC). Schritte oberhalb der Empfehlung: 1 (5.24, Empfehlung Routine) – zu Beginn genannt. Abgegeben: Handbewertung der Ketten an zwei Unteragenten der Routine-Klasse (Sonnet; ca. 165.000 und 229.000 Token; Zitate stichprobenartig geprüft).
+- **Kontextgröße:** 219.252 Token laut Sitzungsabfrage (21:26 UTC) – über der Grenze von 200.000; kein neuer Schritt in dieser Session. Bei Sessionstart meldete die Abfrage 0.
+- **Sessionende-Prüfungen:** README Status-Block (Phase 5, v0.1.0, Blocker 0) und „Nächste Schritte“ synchron. Drift: keine neuen ADRs (Reaktiv-Quote unverändert 1/10); Modul-Liste und Reifegrade unverändert; 5.26 hängt an 5.24 – erfüllt; Blocker 0, kein `[BLOCKIERT]`; Phase 5 weiter 26 Schritte (an der Schwelle, kein neuer Schritt). Ablaufdaten: kein Vorlauf erreicht (nächste: D.1 ab 2026-11-05). Logbuch ca. 660 Zeilen, project-context 345 Zeilen – keine Auslagerung.
+
+### 2026-10-09 21:25 UTC – [ERLEDIGT] 5.24 Ausgangsmessung nach Regel-002
+
+- **Lauf:** Stand `6065f4b`, grok-4.6, „mittel“ und „lang“, je 3 Ketten an Salzmark und Glimmergrund, beide Längen parallel – 12 Ketten, 84 Vorschläge, alle `stop`, keine Fehler; 3,06 $ (Ausgabengrenze des Schlüssels 250 $).
+- **Ergebnis:** Kennzahlen und Handbewertung in `spikes/regel-002/README.md`, Abschnitt „Ausgangsmessung“. Kurz: Länge schwankt innerhalb der Kette stark („mittel“ meist unter 150 Wörtern, „lang“ mit Ausreißern von 24–46 Wörtern); „Weiter“ erzählt bei „lang“ bis zu 576 Wörter mit neuen Handlungsankern; Vorgriffe an festen Stellen (Salzmark: Buch „längst woanders“; Glimmergrund: Lenkas Zettel-Aussage aus Kapitel 4 in 4 von 6 Ketten); geführte Figur nur dort über die Anweisung hinaus, wo die Anweisung den Inhalt offenlässt; wörtliche Wiederholung höchstens 2,7 %.
+- **Beobachtung:** Die beiden Handbewerter legten „Ende an einer Übergabestelle“ unterschiedlich streng aus – im README vermerkt, die Zeile ist zwischen den Geschichten nicht vergleichbar. Für Vorher-nachher-Vergleiche je Geschichte dieselbe Auslegung verwenden.
+- **DoD:** nur `spikes/` und `docs/`, kein Produktcode; Pre-Commit (markdownlint) grün; Regel-002 kann ab jetzt an beiden Geschichten laufen.
+
+### 2026-10-09 20:53 UTC – [SESSIONSTART] 5.24 Ausgangsmessung nach Regel-002
+
+- **Umgebung:** Cloud-Session (Linux), nicht der Mac; gestartet vom iPhone. `main` abgeglichen (`6065f4b`), Branch `spike/5.24-ausgangsmessung`.
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage `get_session`) → Entscheidungs-Klasse. 5.24 empfiehlt Routine – Hinweis zu Beginn gegeben; Abgabe spart nichts (überwiegend Warten auf Läufe, Auswertung ist Lesearbeit bei gleichem Cache-Lesepreis).
+- **Kontextgröße:** Sitzungsabfrage meldet `used_tokens` 0 bei Sessionbeginn – Wert offenbar nicht gepflegt; Regel „Sessiongröße“ vorerst ohne verlässlichen Messwert.
+- **Schlüssel:** `OPENROUTER_API_KEY` in dieser Umgebung gesetzt (Länge geprüft, Wert nicht ausgegeben); `/api/v1/key` antwortet 200, Ausgabengrenze 250 $, gut 247 $ frei, gültig bis 2027-10-08. Die Messung kann laufen.
+- **Auftrag:** „5.24 Ausgangsmessung nach Regel-002“.
+
 ### 2026-10-09 20:45 UTC – [SESSIONENDE] Session auf dem Mac: 5.22, 5.19 erledigt; 5.11 Teil 2, 5.2, 5.21, 5.1 umgesetzt; 5.24 Testwelt und Werkzeug
 
 - **Dauer:** 15:44 – 20:45 UTC (Commit-Zeiten maßgeblich). Die Uhrzeiten der Einträge ab „ADR-048“ (18:20 UTC) sind geschätzt und um bis zu zwei Stunden zu spät; Reihenfolge und Inhalt gelten.

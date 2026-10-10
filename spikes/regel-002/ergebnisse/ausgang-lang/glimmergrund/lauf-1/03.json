@@ -1,0 +1,12 @@
+{
+  "geschichte": "glimmergrund",
+  "schritt": 3,
+  "anweisung": "Am Abend bin ich beim Direktor zum Essen eingeladen. Ich komme zur verabredeten Uhrzeit nach der Kirchenuhr. Nach dem Essen bringt seine Frau ein Getränk für alle.",
+  "modell": "x-ai/grok-4.6",
+  "woerter": 248,
+  "sekunden": 30.4,
+  "token_ein": 24142,
+  "token_aus": 1149,
+  "kosten_usd": 0.05443614,
+  "finish_reason": "stop"
+}
