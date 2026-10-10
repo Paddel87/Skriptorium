@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [ERLEDIGT] Abnahme 5.11 (Kanon in der Leiste)
+
+- Eigentümer: Kanon in der Leiste der Geschichte in der mobilen App geprüft und bestätigt („auf der Desktop-App wird es ebenso sein“) → 5.11 `[ERLEDIGT]`. Eintrag lokal, Push erst mit der Rückmeldung zu 5.6 (gebündelt, ein CI-Lauf).
+
 ### 2026-10-10 – [BEOBACHTUNG] Deployment `628f559` (5.6, Kanon in der Leiste)
 
 - In der fortgesetzten Mac-Session (`claude-opus-5-5`) auf Anweisung des Eigentümers („einspielen“). Vorher mit `origin/main` abgeglichen: aus Cloud-Sessions #99 (Wirkungsprobe 5.6), #100 (5.6 umgesetzt, ADR-053), #101 (V.15). CI auf `628f559` grün. Ältere Geschichten ohne die neuen Felder werden als „keine Schreibweise“ gelesen (`test_old_files_without_style_fields_read_as_empty`) – keine Umwandlung nötig.
