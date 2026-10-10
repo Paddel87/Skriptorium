@@ -1,7 +1,8 @@
 """``ContextBuilder``: one AI request under a fixed token budget (ADR-003, ADR-010).
 
-Order of precedence: (1) frame, world, writing mode, all rules and the timeline; (2) entries
-named with ``@``, the characters the author leads and the facts of the story; (3) overall
+Order of precedence: (1) frame, world, writing mode, atmospheric writing style (step 5.6),
+all rules and the timeline; (2) entries named with ``@``, the characters the author leads and
+the facts of the story; (3) overall
 summary and chapter summaries; (4) the last manuscript pages verbatim, then further canon
 entries of the world until the budget is used (precision before step 3.2,
 docs/architecture.md section 3). If (1)-(3) and the instruction do not fit, the request is
@@ -89,6 +90,7 @@ BlockKind = Literal[
     "rahmen",
     "welt",
     "schreibweise",
+    "schreibweise-atmo",
     "regel",
     "zeitlinie",
     "verweis",
@@ -222,6 +224,9 @@ class ContextBuilder:
             _Part("welt", world.name, f"# Welt: {world.name}\n\n{world.description}".strip()),
             _Part("schreibweise", "Figuren-Schreibweise", _writing_mode(story, by_id)),
         ]
+        atmosphere = _atmosphere(story, current)
+        if atmosphere:
+            fixed.append(_Part("schreibweise-atmo", "Schreibweise", atmosphere))
         included: set[tuple[str, str]] = set()
         for category in ("regel", "zeitlinie"):
             for entry in entries:
@@ -539,6 +544,35 @@ def _writing_mode(story: Story, by_id: dict[str, _Known]) -> str:
             "Stelle. Dort schreibt der Autor weiter."
         )
     return "\n\n".join(lines)
+
+
+def _atmosphere(story: Story, current: Chapter) -> str:
+    """Genres and atmospheric writing style of the chapter (step 5.6, ADR-053).
+
+    The chapter's own style applies; a chapter without one follows the default of the story.
+    Only lines with values; with nothing set there is no block. The block yields to the canon
+    and to the Figuren-Schreibweise, as tested in the trial of step 5.6.
+    """
+    style = current.writing_style if current.writing_style is not None else story.writing_style
+    values = [
+        ("Genre", ", ".join(story.genres)),
+        ("Tonalität", ", ".join(style.tone)),
+        ("Atmosphäre", ", ".join(style.atmosphere)),
+        ("Tempo", style.tempo or ""),
+        ("Stil", ", ".join(style.style)),
+        ("Deutlichkeit", style.explicitness or ""),
+        ("Weitere Angaben", style.free.strip()),
+    ]
+    lines = [f"- {label}: {value}" for label, value in values if value]
+    if not lines:
+        return ""
+    return (
+        "## Schreibweise\n\n"
+        + "\n".join(lines)
+        + "\n\nHalte diese Schreibweise in Wortwahl, Satzbau und Tempo ein. Sie tritt hinter den "
+        "Kanon und die Figuren-Schreibweise zurück: Widerspricht sie einem Kanon-Eintrag oder der "
+        "Führung einer Figur, gelten Kanon und Figuren-Schreibweise."
+    )
 
 
 def _reminder(names: str) -> str:
