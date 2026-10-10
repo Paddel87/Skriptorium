@@ -364,14 +364,16 @@ export function ChapterStyle({
       <h3 id={heading} ref={top} tabIndex={-1}>
         Schreibweise dieses Kapitels (Kapitel {chapter.number})
       </h3>
-      <p className="note">
-        Beim Anlegen aus der Vorgabe der Geschichte übernommen; hier nur für
-        dieses Kapitel geändert.
-      </p>
-      {chapter.writing_style === null && (
+      {/* One note: the chapter either has its own style or follows the story. */}
+      {chapter.writing_style === null ? (
         <p className="note">
           Dieses Kapitel hat keine eigene Schreibweise; es gilt die Vorgabe der
           Geschichte.
+        </p>
+      ) : (
+        <p className="note">
+          Beim Anlegen aus der Vorgabe der Geschichte übernommen; hier nur für
+          dieses Kapitel geändert.
         </p>
       )}
       <form

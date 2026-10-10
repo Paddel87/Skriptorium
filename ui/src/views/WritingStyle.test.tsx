@@ -229,10 +229,8 @@ describe("style of one chapter (step 5.6)", () => {
     const chapter = section("Schreibweise dieses Kapitels (Kapitel 1)");
 
     expect(
-      within(chapter).getByText(
-        "Beim Anlegen aus der Vorgabe der Geschichte übernommen; hier nur für dieses Kapitel geändert.",
-      ),
-    ).toBeDefined();
+      within(chapter).queryByText(/hier nur für dieses Kapitel geändert/),
+    ).toBeNull();
     expect(
       within(chapter).getByText(/keine eigene Schreibweise/),
     ).toBeDefined();
@@ -271,6 +269,9 @@ describe("style of one chapter (step 5.6)", () => {
     await openStorySettings(user);
     const chapter = section("Schreibweise dieses Kapitels (Kapitel 1)");
     expect(within(chapter).queryByText(/keine eigene Schreibweise/)).toBeNull();
+    expect(
+      within(chapter).getByText(/hier nur für dieses Kapitel geändert/),
+    ).toBeDefined();
     expect(
       within(chapter)
         .getByRole("button", { name: "düster" })
