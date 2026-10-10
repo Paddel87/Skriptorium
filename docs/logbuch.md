@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [ERLEDIGT] Abnahme 5.12
+
+- Eigentümer: „alles funktioniert“ (Auswahlfeld mit Favoriten, „Modelle verwalten …“, Stern auf einem zweiten Gerät sichtbar) → 5.12 `[ERLEDIGT]`, FR-028 erledigt. Phase 5: 18 von 26 erledigt, keiner in Arbeit, 7 offen (5.20, 5.16, 5.13, 5.3, 5.4, 5.14, 5.5), 1 verschoben. README-Fortschritt war veraltet (12 von 26) – Drift behoben.
+
 ### 2026-10-10 – [BEOBACHTUNG] Deployment `7b89102` (5.12) und echte Anfrage mit Katalog-Modell
 
 - Auf Anweisung des Eigentümers („mergen und einspielen“): #104 gemergt, CI auf `main` grün. Einspielen nach Runbook Abschnitt 7 (ADR-039): `REVISION` `7b89102`, Rückweg `skriptorium:vorher` = `628f559`. `/api/health` 200 nach ca. 57 s (über HTTPS), `/` 200, `/api/worlds` und `/api/models` 401. Danach einmal per SSH: `(healthy)`, 0 Fehlerzeilen in den letzten 3 Minuten.
