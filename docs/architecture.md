@@ -317,9 +317,10 @@ data/
 - **Nur Datenbank als Speicher / nur Dateien ohne Index:** Datenbank allein widerspricht offenen Formaten; Dateien ohne Index (Empfehlung der KI) vom Eigentümer zugunsten von Dateien plus Suchindex verworfen – siehe ADR-003
 - **Ganzen Verlauf bei jeder Anfrage mitschicken (Ist-Zustand TypingMind):** Kosten und Kontextgrenzen sind der Anlass des Projekts – siehe ADR-003
 - **Eigenes eingeschränktes Serverkonto für die KI / kein Serverzugriff der KI:** Docker-Zugriff ist root-gleich und der Administrator-Schlüssel liegt auf demselben Mac; ohne Zugriff hinge jede Wartung am Eigentümer – siehe ADR-037
+- **Denk-Token von grok-4.7 deckeln (1.024) / Denken abschalten:** Deckel verlängert das Vorab-Denken auf 162–244 s, Abschalten lehnt der Anbieter ab – siehe ADR-052 (D.16)
 
 <!-- ANCHOR:reifegrad-uebersicht -->
-## 9. Reifegrad-Übersicht (Stand vom 2026-10-10, nach ADR-051; Neuplanung ADR-042 ohne Reifegrad-Wirkung)
+## 9. Reifegrad-Übersicht (Stand vom 2026-10-10, nach ADR-052; Neuplanung ADR-042 ohne Reifegrad-Wirkung)
 
 | Bestandteil | Reifegrad | Seit | Validiert durch / wartet auf |
 |---|---|---|---|
@@ -335,7 +336,7 @@ data/
 | Alle Schnittstellen (Abschnitt 4) | BELASTBAR | 2026-09-26 | ADR-013 (Grobverträge) |
 | Datenmodell (Abschnitt 7) | BELASTBAR | 2026-09-26 | ADR-013 (Kopffelder an Testwelt erprobt) |
 | NFR Token-Budget | BELASTBAR | 2026-09-26 | ADR-010, ADR-013 |
-| NFR Reaktionszeit (Anzeige 1 s, erstes Textstück grok-4.7 meist < 30 s / max. 90 s, grok-4.6 meist < 10 s / max. 20 s) | VORLÄUFIG | 2026-10-10 | ADR-035 nach Erkundung D.6 (28 Läufe, `spikes/reaktionszeit/README.md`); zurückgestuft mit ADR-051: 5.26 grok-4.7 20 von 42 Vorschlägen über 90 s – wartet auf D.16 |
+| NFR Reaktionszeit (Anzeige 1 s, erstes Textstück grok-4.6 meist < 30 s / max. 45 s; grok-4.7 ohne Ziel, nicht voreingestellt) | BELASTBAR | 2026-10-10 | ADR-052 nach Erkundung D.16 (30 Anfragen an beiden Testgeschichten, `docs/research/reaktionszeit-d16.md`: grok-4.6 12–28 s); zuvor ADR-035 (D.6), zurückgestuft mit ADR-051 |
 | NFR Kontexttreue Referenzumfang | OFFEN | 2026-09-26 | Schritt D.4 (Geschichte ≥ 500.000 Token) |
 | Observability: Logging | BELASTBAR | 2026-09-26 | ADR-021 |
 | Observability: Metriken (Speicherung) | BELASTBAR | 2026-09-27 | ADR-023; durch Umsetzung validiert in 3.9 (Tests, echte Läufe `spikes/modellwahl/README.md`) |

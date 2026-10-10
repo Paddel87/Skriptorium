@@ -29,6 +29,28 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 11:35 UTC – [SESSIONENDE] D.16 erledigt; 5.24, 5.26, E1/E2 gemergt
+
+- **Dauer:** seit 2026-10-09 20:53 UTC mit Pausen (eine durchgehende Cloud-Session, über der Größengrenze auf ausdrücklichen Wunsch des Eigentümers fortgesetzt).
+- **Bearbeitet seit dem letzten Sessionende-Eintrag dieser Session:** PRs #87 (5.24), #88 (Rückfragen zum Antippen), #89 (5.26 aus einer anderen Session, `main` eingeführt), #90 (E1/E2 aus einer anderen Session) gemergt; D.16 gemessen und entschieden (ADR-052). Zwei überzählige Sessions angehalten und archiviert (E1/E2 und D.16, zusammen ca. 3,65 $).
+- **Stand:** NFR Reaktionszeit wieder `[BELASTBAR]`; Server unverändert auf `a71cdff`, #83/#84 nicht eingespielt.
+- **Nächster Schritt:** nach Fahrplan – Einspielen bei Freigabe, Prüfung 5.2/5.21 am Gerät, dann 5.11 Teil 3 (Mockup vorher/nachher), 5.25; 5.12 nimmt grok-4.7 aus der Voreinstellung (ADR-052).
+- **Reibungen (Fehler der KI):** zweimal nicht geprüft, ob auf GitHub schon gearbeitet wurde (5.26 doppelt begonnen; Session für die schon entschiedenen E1/E2 gestartet) – Merke: vor jedem Schritt `git ls-remote --heads origin` und offene Branches lesen.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`). D.16 empfiehlt Entscheidung – keine Arbeit oberhalb der Empfehlung; 5.24 vorher einmal (genannt).
+- **Kontextgröße:** über 200.000 Token (letzte Messung 219.252, seither gewachsen); Abweichung vermerkt.
+- **Sessionende-Prüfungen:** README Status-Block (Reaktionszeit BELASTBAR) und „Nächste Schritte“ nachgezogen. Drift: ADR-052 → D.16 vorhanden, Reifegrad NFR Reaktionszeit passt zu ADR-052; Reaktiv-Quote 1/10 über ADR-043 bis ADR-052; Modul-Liste unverändert; Phase 5 unverändert 26 Schritte (D.16 ist Querschnitt). Blocker 0. Ablaufdaten: kein Vorlauf erreicht.
+
+### 2026-10-10 11:30 UTC – [ERLEDIGT] D.16 Reaktionszeit – ADR-052
+
+- **Messung:** `spikes/reaktionszeit/d16.py`, 30 Anfragen, 1,27 $, Bericht `docs/research/reaktionszeit-d16.md`. grok-4.7 voll 44–157 s bis zum ersten Textstück, ohne Vorgaben 37–88 s, mit Deckel 1.024 Denk-Token 162–244 s, Denken aus abgelehnt; grok-4.6 12–28 s.
+- **Entscheidung des Eigentümers (Auswahlfragen):** grok-4.7 in 5.12 aus der Voreinstellung (A); Ziel grok-4.6 meist < 30 s, max. 45 s. NFR Reaktionszeit `[VORLÄUFIG]` → `[BELASTBAR]` (ADR-052).
+
+### 2026-10-10 10:50 UTC – [BEOBACHTUNG] D.16 begonnen, weiter in der Session der Ausgangsmessung
+
+- **Abweichung Sessiongröße:** Der Eigentümer verlangt ausdrücklich, D.16 in dieser Session zu machen („In dieser Session machen“) – Ausnahme nach `CLAUDE.md` Abschnitt 0, vermerkt. Eine zuvor gestartete eigene Session für D.16 angehalten und archiviert (nur gelesen, nichts gepusht; ca. 2,85 $). Ebenso eine Session für E1/E2, die schon erledigt waren (ca. 0,80 $) – zuvor nicht geprüft, ob die Entscheidungen auf einem Branch lagen.
+- **Klasse:** Entscheidung (Opus 5.5), wie für D.16 empfohlen.
+- **Aufbau:** `spikes/reaktionszeit/d16.py` misst direkt bei OpenRouter (wie D.6) an der echten Schreib-Anfrage beider Testgeschichten (Anweisung 2 aus 5.26 mit `@`, „mittel“), je 3 Anfragen: grok-4.6 und grok-4.7 voll, grok-4.7 ohne Anschluss-Hinweis und Vorgaben aus 5.8–5.22, mit Denk-Deckel 1.024 Token, mit Denken aus. Größe des Kontexts allein ist laut Gegenprobe 5.26 nicht die Ursache (25.000 Token, einfache Anweisung: 4 s).
+
 ### 2026-10-10 03:40 UTC – [SESSIONENDE] Entscheidungen E1 und E2 aus 5.26 festgehalten
 
 - **Dauer:** 03:21 – 03:40 UTC, Cloud-Session (Linux).

@@ -27,7 +27,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 - **Version:** v0.1.0 – Vorabversion (ADR-043); Go-Live erst vor v1.0.0 (Schritt 5.14)
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-10-08
-- **Architektur-Reife:** Module, Schnittstellen, Datenmodell und Token-Budget BELASTBAR (ADR-013); Reaktionszeit VORLÄUFIG (grok-4.7 in 5.26 oft über 90 s, Ursache wird in D.16 erkundet, ADR-051); Kanon-Treue BELASTBAR (erstes echtes Kapitel des Eigentümers in 4.8: 0 Widersprüche, mit qwen3.8-max); Sicherheitsniveau und Schutzbedarf BELASTBAR (ADR-006, ADR-007); Observability BELASTBAR (Log-Zeile und Monatskosten, ADR-021, ADR-023); Bedrohungsmodell BELASTBAR (Prüfung 4.5); Host BELASTBAR (4.2); Netz BELASTBAR (Prüfungen von außen, 4.7); Backups BELASTBAR (4.3); Secrets im Betrieb VORLÄUFIG (Gate 4.6, BELASTBAR mit D.11)
+- **Architektur-Reife:** Module, Schnittstellen, Datenmodell und Token-Budget BELASTBAR (ADR-013); Reaktionszeit BELASTBAR (grok-4.6 erstes Textstück meist unter 30 s, ADR-052; grok-4.7 denkt zu lange vor und kommt in 5.12 aus der Voreinstellung); Kanon-Treue BELASTBAR (erstes echtes Kapitel des Eigentümers in 4.8: 0 Widersprüche, mit qwen3.8-max); Sicherheitsniveau und Schutzbedarf BELASTBAR (ADR-006, ADR-007); Observability BELASTBAR (Log-Zeile und Monatskosten, ADR-021, ADR-023); Bedrohungsmodell BELASTBAR (Prüfung 4.5); Host BELASTBAR (4.2); Netz BELASTBAR (Prüfungen von außen, 4.7); Backups BELASTBAR (4.3); Secrets im Betrieb VORLÄUFIG (Gate 4.6, BELASTBAR mit D.11)
 - **Aktive Blocker:** 0
 
 ## Quick Start
@@ -100,7 +100,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 - 🟠 **Einspielen:** Mitlaufen beim Schreiben der KI (5.11) und Vorschläge für Namen ohne `@` (5.1) sind fertig, aber noch nicht auf dem Server.
 - 🟠 **5.2, 5.21:** Bedienung am Smartphone angepasst, als App installierbar – eingespielt, warten auf Prüfung auf dem Smartphone.
-- ⚪ **D.16:** Erkunden, warum grok-4.7 derzeit länger als 90 s vorab denkt – mit und ohne die neueren Schreib-Vorgaben ([Bericht 5.26](docs/research/kanon-treue-grok.md), ADR-051). Kanon-Einträge, die bei langen Kapiteln nicht mitgehen: zurückgestellt auf die nächste Ausbaustufe (V.10, ADR-050).
+- ✅ **D.16:** grok-4.7 denkt an echten Schreib-Anfragen 44–157 s vor, über die Einstellungen nicht zu beheben; kommt in 5.12 aus der Voreinstellung ([Bericht](docs/research/reaktionszeit-d16.md), ADR-052). Kanon-Einträge, die bei langen Kapiteln nicht mitgehen: zurückgestellt auf die nächste Ausbaustufe (V.10, ADR-050).
 - ⚪ **5.11 Teil 3, 5.25:** Kanon-Seite mit Suche und Filter; Antworten des Servers nicht im Browser-Speicher.
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
