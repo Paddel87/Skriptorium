@@ -390,6 +390,48 @@ test("the model of a story survives a reload; costs of the month are shown", asy
   await expect(page.getByText(/ für \d+ Anfrage/)).toBeVisible();
 });
 
+test("a default style is set for the story; a new chapter takes it over", async ({
+  page,
+}) => {
+  // Step 5.6 (ADR-053): the default is copied into chapters created afterwards.
+  await login(page);
+  await page.getByLabel("Name").fill("Die Nachtmark");
+  await page.getByRole("button", { name: "Welt anlegen" }).click();
+  await area(page, "Geschichten").click();
+  await page.getByLabel("Titel").fill("Schattenspiel");
+  await page.getByRole("button", { name: "Geschichte anlegen" }).click();
+  await addChapter(page, "Eins");
+  await expect(page.getByText("Schreibweise Kapitel 1:")).toBeVisible();
+  await expect(page.getByText("keine", { exact: true })).toBeVisible();
+
+  await storySettings(page);
+  const story = page.getByRole("region", {
+    name: "Genre und Schreibweise der Geschichte",
+  });
+  await story.getByRole("button", { name: "Thriller", exact: true }).click();
+  await story.getByRole("button", { name: "düster", exact: true }).click();
+  await story.getByRole("button", { name: "atemlos", exact: true }).click();
+  await story.getByRole("button", { name: "Speichern" }).click();
+  await expect(story.getByText("Gespeichert.")).toBeVisible();
+
+  await addChapter(page, "Zwei");
+  await expect(page.getByText("Schreibweise Kapitel 2:")).toBeVisible();
+  await expect(page.getByText("düster · atemlos")).toBeVisible();
+  const chapter = page.getByRole("region", {
+    name: "Schreibweise dieses Kapitels (Kapitel 2)",
+  });
+  // The bar stays open when a chapter is added; open it only if it was closed.
+  if (!(await chapter.isVisible())) {
+    await storySettings(page);
+  }
+  await expect(
+    chapter.getByRole("button", { name: "düster", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+
+  await page.reload();
+  await expect(page.getByText("düster · atemlos")).toBeVisible();
+});
+
 /**
  * The `@` menu ignores Enter for 75 ms after it opens (`interactionDelay` of
  * @codemirror/autocomplete, against accidental choices); an Enter within that time

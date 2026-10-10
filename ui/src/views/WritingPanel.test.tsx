@@ -708,7 +708,11 @@ describe("StoryPage writing mode", () => {
     const user = userEvent.setup();
     render(<StoryPage story={STORY} />);
     // "ändern" in the short line opens the form in the bar on the right (step 5.11).
-    await user.click(await screen.findByRole("button", { name: "ändern" }));
+    await user.click(
+      await screen.findByRole("button", {
+        name: "Figuren-Schreibweise ändern",
+      }),
+    );
     const group = await screen.findByRole("group", {
       name: "Figuren, die du selbst führst",
     });
@@ -750,7 +754,11 @@ describe("StoryPage writing mode", () => {
     const user = userEvent.setup();
     render(<StoryPage story={STORY} />);
     // "ändern" in the short line opens the form in the bar on the right (step 5.11).
-    await user.click(await screen.findByRole("button", { name: "ändern" }));
+    await user.click(
+      await screen.findByRole("button", {
+        name: "Figuren-Schreibweise ändern",
+      }),
+    );
     await user.clear(screen.getByLabelText("Erzählperspektive"));
     await user.click(
       screen.getByRole("button", { name: "Schreibweise speichern" }),

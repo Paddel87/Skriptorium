@@ -173,7 +173,11 @@ describe("guests from other worlds on the story page (step 3.7)", () => {
     });
     const user = userEvent.setup();
     render(<StoryPage story={WITH_GUEST} />);
-    await user.click(await screen.findByRole("button", { name: "ändern" }));
+    await user.click(
+      await screen.findByRole("button", {
+        name: "Figuren-Schreibweise ändern",
+      }),
+    );
     const group = await screen.findByRole("group", {
       name: "Figuren, die du selbst führst",
     });

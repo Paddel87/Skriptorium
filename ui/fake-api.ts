@@ -2,6 +2,7 @@
 import { screen } from "@testing-library/react";
 import type { UserEvent } from "@testing-library/user-event";
 import { vi } from "vitest";
+import type { WritingStyle } from "./src/api";
 
 export interface Call {
   method: string;
@@ -141,6 +142,15 @@ export const STORY = {
   facts: [],
   summary: "",
   model: null as string | null,
+  genres: [] as string[],
+  writing_style: {
+    tone: [] as string[],
+    atmosphere: [] as string[],
+    style: [] as string[],
+    tempo: null as string | null,
+    explicitness: null as string | null,
+    free: "",
+  },
 };
 export const CHAPTER = {
   world: "salzmark",
@@ -151,6 +161,7 @@ export const CHAPTER = {
   summary: "",
   summary_status: "fehlt" as const,
   text: "Es war kalt.",
+  writing_style: null as WritingStyle | null,
 };
 
 /** Open the bar on the right of the story page at the settings of the story (step 5.11). */

@@ -80,6 +80,16 @@ export interface StoryFact {
   fact: string;
 }
 
+/** Atmospheric writing style (step 5.6); the empty style has nothing set. */
+export interface WritingStyle {
+  tone: string[];
+  atmosphere: string[];
+  style: string[];
+  tempo: string | null;
+  explicitness: string | null;
+  free: string;
+}
+
 export interface Story {
   world: string;
   id: string;
@@ -92,6 +102,9 @@ export interface Story {
   summary: string;
   /** Model chosen for this story (step 3.9); `null` means the preset model. */
   model: string | null;
+  /** Genres and the default writing style that new chapters copy (step 5.6). */
+  genres: string[];
+  writing_style: WritingStyle;
 }
 
 export interface Chapter {
@@ -103,6 +116,8 @@ export interface Chapter {
   summary: string;
   summary_status: SummaryStatus;
   text: string;
+  /** `null`: no style of its own, the default of the story applies (step 5.6). */
+  writing_style: WritingStyle | null;
 }
 
 export interface SessionInfo {
@@ -470,6 +485,8 @@ export const api = {
       perspective?: string | null;
       controlled_characters?: string[];
       model?: string | null;
+      genres?: string[];
+      writing_style?: WritingStyle;
     },
   ) => request("PATCH", storyPath(world, story), change) as Promise<Story>,
   addGuest: (world: string, story: string, guest: GuestLink) =>
@@ -497,7 +514,12 @@ export const api = {
     world: string,
     story: string,
     number: number,
-    change: { title?: string; text?: string },
+    change: {
+      title?: string;
+      text?: string;
+      /** `null` takes the chapter back to the default of the story. */
+      writing_style?: WritingStyle | null;
+    },
   ) =>
     request(
       "PUT",

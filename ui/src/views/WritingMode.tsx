@@ -162,7 +162,12 @@ export function ModeLine({
       <span className="note">Figuren-Schreibweise:</span>{" "}
       <ModeText story={story} figures={figures} />
       {" · "}
-      <button type="button" className="link" onClick={onChange}>
+      <button
+        type="button"
+        className="link"
+        aria-label="Figuren-Schreibweise ändern"
+        onClick={onChange}
+      >
         ändern
       </button>
     </p>
