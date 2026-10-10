@@ -31,7 +31,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⚪ | 5.3 | Lesbare Dateien – Nachweis | offen | KI |
 | ⚪ | 5.4 | Zeitlinie mit Datumsangaben im Kalender der Welt (Kann) | offen | du: umsetzen ja/nein |
 | ⚪ | 5.5 | Planung der nächsten Ausbaustufe | offen | KI – zuletzt |
-| 🟠 | 5.6 | Atmosphärische Schreibweise je Geschichte | in Arbeit – Erkundung | Cloud-Session: Wirkungsprobe · dann du: Datenmodell entscheiden |
+| 🟠 | 5.6 | Atmosphärische Schreibweise je Geschichte | in Arbeit – umgesetzt (ADR-053) | KI: mergen · Einspielen später · du: prüfen |
 | ✅ | 5.7 | Startmodell grok-4.6 | erledigt | – |
 | ✅ | 5.8 | Nahtloser Anschluss ohne Einleitung und Schlusssatz | erledigt | – |
 | ✅ | 5.9 | Kapitel öffnet am Textende | erledigt | – |
@@ -263,7 +263,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.6: Atmosphärische Schreibweise je Geschichte
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-10) – Erkundung der Form innerhalb des Schritts (Eigentümer: „5.6 Erkundung“, Reihenfolge bestätigt). Listenwerte übernommen (siehe „Entschieden 2026-10-10“). Wirkungsprobe gelaufen 2026-10-10 (`spikes/schreibweise-5.6/README.md`, 12 Ketten, 2,91 $): verblindet 18 von 18 Ketten richtig zugeordnet, B kürzt die Sätze in beiden Geschichten, 0 Kanon-Verstöße mit und ohne Schreibweise, keine Sperren – Platz hinter der Figuren-Schreibweise bestätigt. Datenmodell entschieden (ADR-053: Vorgabe je Geschichte, Kopie ins neue Kapitel; Tempo und Deutlichkeit je ein Wert; Genre nur je Geschichte; Option B als V.14). Nächstes: Mockup der Oberfläche, dann Umsetzung. Bisher: Datenmodell als `ENTSCHEIDUNG ERFORDERLICH` (Kategorie 4) mit Mockup
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-10) – Erkundung der Form innerhalb des Schritts (Eigentümer: „5.6 Erkundung“, Reihenfolge bestätigt). Listenwerte übernommen (siehe „Entschieden 2026-10-10“). Wirkungsprobe gelaufen 2026-10-10 (`spikes/schreibweise-5.6/README.md`, 12 Ketten, 2,91 $): verblindet 18 von 18 Ketten richtig zugeordnet, B kürzt die Sätze in beiden Geschichten, 0 Kanon-Verstöße mit und ohne Schreibweise, keine Sperren – Platz hinter der Figuren-Schreibweise bestätigt. Datenmodell entschieden (ADR-053: Vorgabe je Geschichte, Kopie ins neue Kapitel; Tempo und Deutlichkeit je ein Wert; Genre nur je Geschichte; Option B als V.14). Mockup vorher/nachher freigegeben („Passt so“). **Umgesetzt** auf Branch `feat/5.6-schreibweise` (Umsetzung an einen Unteragenten der Routine-Klasse abgegeben, geprüft): `manuscript` (`WritingStyle`, Felder an Geschichte und Kapitel, Kopie beim Anlegen), `context` (Block hinter der Figuren-Schreibweise), `api` (Felder rein ergänzend), `ui` (`WritingStyle.tsx`, Zeile „Schreibweise Kapitel N“). Tests: pytest 460, Python 99,8 %, `context` 100 %; `vitest` 156, 98,08 % Zeilen / 95,5 % Zweige; Playwright 11. Offen: Merge, Einspielen, Bestätigung des Eigentümers. Bisher: Datenmodell als `ENTSCHEIDUNG ERFORDERLICH` (Kategorie 4) mit Mockup
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 4.8, 5.11 (Platz in der neuen Oberfläche; ADR-042)
 - **Freigabepflichtig:** ja – neue Felder je Kapitel (ggf. auch je Geschichte) sind eine Datenmodelländerung (Kategorie 4); Form vor Beginn klären

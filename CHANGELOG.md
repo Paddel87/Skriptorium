@@ -6,6 +6,7 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v0.1.0)
 
+- Genre und atmosphärische Schreibweise (2026-10-10, Schritt 5.6, ADR-053): Je Geschichte Genre, Tonalität, Atmosphäre, Tempo, Stil, Deutlichkeit und freie Angaben als Vorgabe; ein neues Kapitel übernimmt sie und lässt sich einzeln ändern oder auf die Vorgabe zurücksetzen. Die KI bekommt die Schreibweise mit jeder Anfrage; Kanon und Figuren-Schreibweise gehen vor. Neue, optionale Felder `genres` und `writing_style` an Geschichte und Kapitel.
 - Vorschläge für Kanon-Namen ohne `@` (2026-10-09, Schritt 5.1): Schreibst du in der Anweisung den Namen oder Alias eines Kanon-Eintrags ohne `@` („Tomas betritt die Schänke“), erscheint darunter „Meintest du: @Tomas → Tomas Rehl“. Ein Tipp macht daraus einen `@`-Verweis; ohne Tipp geht der Eintrag nicht an die KI.
 
 - Als App installierbar (2026-10-09, Schritt 5.21, ADR-048): Das Skriptorium lässt sich auf dem Smartphone und am Rechner als App mit eigenem Symbol (Feder) auf den Startbildschirm legen und öffnet dann ohne Browserleiste. Fehlt die Verbindung, steht oben ein Hinweis; wird die App ganz ohne Netz geöffnet, erscheint eine eigene Seite „Keine Verbindung“. Auf dem Gerät liegt dafür nur diese eine Hinweisseite – keine Texte.

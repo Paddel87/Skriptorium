@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 16:20 UTC – [BEOBACHTUNG] 5.6 umgesetzt
+
+- **Mockup:** Schreibseite, Vorgabe der Geschichte und Schreibweise des Kapitels in der echten Oberfläche (Glimmergrund), Desktop und Smartphone; freigegeben („Passt so“).
+- **Umsetzung:** an einen Unteragenten der Routine-Klasse (Sonnet) mit genauer Vorgabe abgegeben – ausgabelastig, frischer Kontext statt der sehr langen Session; vier Commits (`manuscript`, `context`, `api`, `ui`). Von mir geprüft: Tests selbst wiederholt (pytest 460, vitest 156), Kopie beim Anlegen und Block in `context` gelesen, Bildschirmfotos. Korrektur: Kapitel-Bereich zeigte zwei sich widersprechende Hinweise – jetzt nur der passende.
+- **Abweichungen des Unteragenten (geprüft, übernommen):** „ändern“-Knöpfe mit eigenem Zugriffsnamen („Figuren-Schreibweise ändern“, „Schreibweise Kapitel N ändern“); `genres: null`/`writing_style: null` bei der Geschichte leert, beim Kapitel setzt `null` auf die Vorgabe zurück; neue Geschichten schreiben leere Felder in `story.md` wie `modell: null`.
+- **Quick-Start-Relevanz:** keine.
+
 ### 2026-10-10 15:35 UTC – [ADR-ANGELEGT] ADR-053 Datenmodell der Schreibweise (5.6)
 
 - **Entscheidung (Auswahlfragen):** A – Geschichte speichert Genre und Vorgabe, ein neues Kapitel bekommt eine eigene Kopie; Tempo und Deutlichkeit je ein Wert; Genre nur je Geschichte. Option B (Kapitel folgen der Vorgabe) „im Hinterkopf“ → V.14, Landeplatz 5.5.
