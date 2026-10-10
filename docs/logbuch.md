@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] Testkapitel 5 und 6 in „The Trap“ gelöscht
+
+- Auf ausdrücklichen Wunsch des Eigentümers („Kannst du mir noch Kapitel 5 und 6 löschen?“). Beide leer (0 Wörter), ohne Verlauf; vorher nach `/opt/docker/skriptorium/sicherungen/` kopiert, dann über `DocumentStore.delete` gelöscht (Index mit aufgeräumt). Danach: Kapitel 1–4 mit 9.786 / 9.719 / 9.758 / 9.788 Wörtern. Eine Funktion zum Löschen von Kapiteln gibt es in der Oberfläche nicht.
+
 ### 2026-10-11 – [ERLEDIGT] Abnahme 5.20
 
 - Eigentümer: „5.20 funktioniert, beide Kapitel wurden angelegt“ (in „The Trap“, jetzt Roman). Auf dem Server nachgesehen: Kapitel 05 und 06 neu, 01–04 unverändert benannt → 5.20 `[ERLEDIGT]`. Phase 5: 22 von 26 erledigt, keiner in Arbeit, 2 offen (5.14, 5.5), 2 verschoben. README-Fortschritt nachgezogen.
