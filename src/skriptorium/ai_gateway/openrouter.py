@@ -101,13 +101,14 @@ class OpenRouterProvider:
         environ: Mapping[str, str] = os.environ,
         *,
         transport: httpx.AsyncBaseTransport | None = None,
+        models: Mapping[str, ModelConfig] = DEFAULT_MODELS,
     ) -> OpenRouterProvider:
         """Create the adapter with the key from ``OPENROUTER_API_KEY`` (only source of the key).
 
         Raises:
             ProviderUnavailable: The variable is missing or empty.
         """
-        return cls(environ.get(KEY_VARIABLE, ""), transport=transport)
+        return cls(environ.get(KEY_VARIABLE, ""), transport=transport, models=models)
 
     def __repr__(self) -> str:
         """Representation without the key."""

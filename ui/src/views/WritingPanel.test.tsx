@@ -8,6 +8,7 @@ import {
 import { EditorView } from "@codemirror/view";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  modelList,
   CHAPTER,
   ENTRY,
   fail,
@@ -20,10 +21,7 @@ import { StoryPage } from "./StoryPage";
 import { WritingPanel } from "./WritingPanel";
 
 const WRITE = "POST /api/worlds/salzmark/stories/ueberfahrt/chapters/1/write";
-const MODELS = {
-  models: ["x-ai/grok-4.7", "x-ai/grok-4.6"],
-  default: "x-ai/grok-4.7",
-};
+const MODELS = modelList(["x-ai/grok-4.7", "x-ai/grok-4.6"]);
 const PLACE = {
   ...ENTRY,
   id: "grauwasser",

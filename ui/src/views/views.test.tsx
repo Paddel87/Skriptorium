@@ -3,6 +3,7 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  modelList,
   CHAPTER,
   created,
   ENTRY,
@@ -31,10 +32,7 @@ const SHELL = {
   "GET /api/worlds": ok([WORLD]),
   "GET /api/worlds/salzmark/stories": ok([STORY]),
   "GET /api/worlds/salzmark/entries": ok([ENTRY]),
-  "GET /api/models": ok({
-    models: ["x-ai/grok-4.6"],
-    default: "x-ai/grok-4.6",
-  }),
+  "GET /api/models": ok(modelList(["x-ai/grok-4.6"])),
 };
 
 describe("Worlds", () => {

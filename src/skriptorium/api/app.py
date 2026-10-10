@@ -16,7 +16,12 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from skriptorium.ai_gateway import ModelProvider, OpenRouterProvider, ProviderUnavailable
+from skriptorium.ai_gateway import (
+    ModelCatalog,
+    ModelProvider,
+    OpenRouterProvider,
+    ProviderUnavailable,
+)
 from skriptorium.api import auth_routes, canon_routes, manuscript_routes, writing_routes
 from skriptorium.api.access import (
     CredentialStore,
@@ -28,6 +33,7 @@ from skriptorium.api.access import (
 )
 from skriptorium.api.access.pwned import BreachedPasswordCheck
 from skriptorium.api.context import Services
+from skriptorium.api.favorites import Favorites
 from skriptorium.api.settings import Settings
 from skriptorium.api.usage import UsageLog
 from skriptorium.canon import CanonService
@@ -52,7 +58,7 @@ _SECURITY_HEADERS: Final = {
 _log = logging.getLogger("skriptorium.api")
 
 Clock = Callable[[], datetime]
-ProviderFactory = Callable[[], ModelProvider | None]
+ProviderFactory = Callable[[ModelCatalog], ModelProvider | None]
 
 
 class Health(BaseModel):
@@ -68,6 +74,7 @@ def create_app(
     breached: BreachedPasswordCheck | None = None,
     clock: Clock | None = None,
     provider_factory: ProviderFactory | None = None,
+    catalog: ModelCatalog | None = None,
 ) -> FastAPI:
     """Build the FastAPI application.
 
@@ -77,7 +84,9 @@ def create_app(
         breached: Check against breached passwords; Pwned Passwords if missing.
         clock: Source of the current time (UTC); tests pass a controllable clock.
         provider_factory: Creates the AI provider; OpenRouter with the key from the environment
-            if missing. Without a key the server runs, writing answers 503.
+            if missing. Without a key the server runs, writing answers 503. Gets the catalog,
+            whose reasoning settings the provider uses.
+        catalog: Selectable models; the catalog of OpenRouter if missing (step 5.12).
     """
     _configure_logging()
     settings = settings or Settings.from_environment()
@@ -85,7 +94,8 @@ def create_app(
     store = DocumentStore(settings.data_dir)
     canon = CanonService(store)
     manuscript = ManuscriptService(store)
-    provider = (provider_factory or _provider_from_environment)()
+    catalog = catalog or ModelCatalog()
+    provider = (provider_factory or _provider_from_environment)(catalog)
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -108,6 +118,8 @@ def create_app(
         context=ContextBuilder(canon, manuscript),
         provider=provider,
         usage=UsageLog(store, now),
+        catalog=catalog,
+        favorites=Favorites(store),
     )
 
     @app.get("/api/health")
@@ -132,10 +144,10 @@ def create_app(
 Next = Callable[[Request], Awaitable[Response]]
 
 
-def _provider_from_environment() -> ModelProvider | None:
+def _provider_from_environment(catalog: ModelCatalog) -> ModelProvider | None:
     """OpenRouter with the key from ``OPENROUTER_API_KEY``; ``None`` if the key is missing."""
     try:
-        return OpenRouterProvider.from_environment()
+        return OpenRouterProvider.from_environment(models=catalog)
     except ProviderUnavailable:
         _log.warning("ki-anbieter nicht eingerichtet schluessel=fehlt")
         return None

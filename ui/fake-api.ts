@@ -2,7 +2,7 @@
 import { screen } from "@testing-library/react";
 import type { UserEvent } from "@testing-library/user-event";
 import { vi } from "vitest";
-import type { WritingStyle } from "./src/api";
+import type { CatalogModel, ModelList, WritingStyle } from "./src/api";
 
 export interface Call {
   method: string;
@@ -170,4 +170,38 @@ export async function openStorySettings(user: UserEvent): Promise<void> {
   await screen.findByLabelText("Kapiteltitel");
   await user.click(screen.getByRole("button", { name: "Kanon & Geschichte" }));
   await user.click(screen.getByRole("button", { name: "Geschichte" }));
+}
+
+/** Answer of `GET /api/models` (step 5.12): favorites, the first as preset, and a catalog. */
+export function modelList(
+  favorites: string[],
+  catalog: CatalogModel[] = [],
+): ModelList {
+  return {
+    models: favorites,
+    default: favorites[0] ?? "",
+    favorites,
+    catalog,
+    catalog_available: catalog.length > 0,
+  };
+}
+
+/** A catalog model; `changes` replace single fields. */
+export function catalogModel(
+  id: string,
+  changes: Partial<CatalogModel> = {},
+): CatalogModel {
+  return {
+    id,
+    name: `Anbieter: ${id.split("/")[1] ?? id}`,
+    provider: id.split("/")[0] ?? id,
+    input_price: 2,
+    output_price: 6,
+    estimated_cost: 0.063,
+    context_length: 500_000,
+    moderated: false,
+    thinking: null,
+    checked: false,
+    ...changes,
+  };
 }

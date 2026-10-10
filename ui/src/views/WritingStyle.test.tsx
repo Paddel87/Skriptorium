@@ -2,6 +2,7 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  modelList,
   CHAPTER,
   ENTRY,
   fail,
@@ -40,7 +41,7 @@ afterEach(() => {
 
 function routes(story: Story = STORY, chapter: Chapter = CHAPTER) {
   return {
-    "GET /api/models": ok({ models: ["m"], default: "m" }),
+    "GET /api/models": ok(modelList(["m"])),
     "GET /api/worlds": ok([WORLD]),
     "GET /api/worlds/salzmark/entries": ok([ENTRY]),
     [`GET ${BASE}/chapters`]: ok([chapter]),

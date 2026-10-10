@@ -1060,3 +1060,156 @@ button.more-toggle {
   color: var(--muted);
   font-weight: 400;
 }
+
+/* "Modelle verwalten …" (step 5.12): catalog of OpenRouter in a dialog; full screen on phones. */
+.model-manager {
+  position: fixed;
+  inset: 5vh auto 5vh 50%;
+  transform: translateX(-50%);
+  width: min(760px, 94vw);
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-radius: 10px;
+  box-shadow: 0 8px 30px var(--shadow);
+}
+
+.model-manager-head,
+.model-manager-foot {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
+}
+
+.model-manager-head {
+  border-bottom: 1px solid var(--line);
+}
+
+.model-manager-head h2 {
+  flex: 1;
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.model-manager-foot {
+  border-top: 1px solid var(--line);
+  justify-content: space-between;
+}
+
+.model-manager-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.model-manager-filters .note {
+  margin: 0;
+}
+
+.model-manager-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  font-size: 0.9rem;
+}
+
+.model-manager-list {
+  flex: 1;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.model-manager-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.model-manager-list li.favorite {
+  background: var(--button);
+}
+
+.model-manager-list .star {
+  border: 0;
+  background: none;
+  padding: 0 0.2rem;
+  font-size: 1.3rem;
+  line-height: 1.2;
+  color: var(--accent);
+}
+
+.model-info {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.model-info small,
+.model-cost small {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.model-info .note {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.2rem;
+}
+
+.badge {
+  border: 1px solid var(--field-line);
+  border-radius: 4px;
+  padding: 0 0.35rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.badge.warn {
+  border-color: var(--link);
+  color: var(--link);
+}
+
+.badge.bad {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.badge.good {
+  border-color: var(--good);
+  color: var(--good);
+}
+
+.model-cost {
+  text-align: right;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.model-cost small {
+  display: block;
+  font-weight: 400;
+}
+
+@media (max-width: 600px) {
+  .model-manager {
+    inset: 0;
+    transform: none;
+    width: auto;
+    border-radius: 0;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+      env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+}

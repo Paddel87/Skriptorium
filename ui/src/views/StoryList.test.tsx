@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  modelList,
   CHAPTER,
   created,
   ENTRY,
@@ -36,7 +37,7 @@ const TWO_WORLDS = {
   "GET /api/worlds/salzmark/stories/ueberfahrt/chapters": ok([CHAPTER]),
   "GET /api/worlds/salzmark/entries": ok([ENTRY]),
   "GET /api/worlds/moor/entries": ok([]),
-  "GET /api/models": ok({ models: ["m"], default: "m" }),
+  "GET /api/models": ok(modelList(["m"])),
 };
 
 describe("matchingStories", () => {

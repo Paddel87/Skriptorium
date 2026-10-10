@@ -11,7 +11,6 @@ from typing import Any
 from fastapi import APIRouter, Depends, status
 from pydantic import BaseModel
 
-from skriptorium.ai_gateway import DEFAULT_MODELS
 from skriptorium.api.context import Services, ServicesDep, current_session
 from skriptorium.manuscript import Chapter, Form, Story, SummaryStatus, WritingStyle
 from skriptorium.storage import InvalidInput, NotFound
@@ -57,7 +56,8 @@ class StoryChange(BaseModel):
     form: Form | None = None
     perspective: str | None = None
     controlled_characters: list[str] | None = None
-    # One of ``GET /api/models``; ``null`` returns to the preset model (step 3.9, ADR-023).
+    # A model of the catalog (``GET /api/models``, ADR-055); ``null`` returns to the preset model
+    # (step 3.9, ADR-023).
     model: str | None = None
     # Genres and the default writing style for new chapters (step 5.6, ADR-053); ``null``
     # empties them.
@@ -131,10 +131,14 @@ def get_story(world_id: str, story_id: str, found: ServicesDep) -> Story:
 
 
 @router.patch("/{story_id}")
-def update_story(world_id: str, story_id: str, body: StoryChange, found: ServicesDep) -> Story:
+async def update_story(
+    world_id: str, story_id: str, body: StoryChange, found: ServicesDep
+) -> Story:
     """Change title, form, the settings of the character mode (FR-012) or the model."""
     story = _story(found, world_id, story_id)
-    if body.model is not None and body.model not in DEFAULT_MODELS:
+    if body.model is not None:
+        await found.catalog.refresh()
+    if body.model is not None and body.model not in found.catalog:
         raise InvalidInput(f"Unbekanntes Modell: {body.model}")
     if body.controlled_characters is not None:
         _check_entries(found, world_id, body.controlled_characters, guests=story.guest_links)
