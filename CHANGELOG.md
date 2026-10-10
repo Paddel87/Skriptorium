@@ -6,6 +6,7 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v0.1.0)
 
+- Verlauf der Anweisungen (2026-10-10, Schritt 5.13, ADR-056): Über dem Kapiteltext wechseln die Reiter „Manuskript“ und „Verlauf“. Der Verlauf zeigt die Anweisungen, deren Vorschlag du übernommen hast, mit Datum und Uhrzeit – nur zum Nachschlagen, nie im Manuskript und nie erneut an die KI. Gespeichert je Kapitel in `verlauf/NN.md` neben den Kapiteln; neu `GET|POST …/chapters/{n}/instructions`.
 - Herangezogene Einträge anklickbar (2026-10-10, Schritt 5.16): Die Namen unter „Herangezogen“ sind Links. Ein Tipp öffnet rechts die Leiste mit dem Kanon-Eintrag, Gäste aus anderen Welten eingeschlossen; das Kapitel mit Anweisung und Vorschlag bleibt offen.
 
 - Modelle aus dem Angebot von OpenRouter (2026-10-10, Schritt 5.12, ADR-055): Das Auswahlfeld neben der Anweisung zeigt deine Favoriten mit den geschätzten Kosten je Vorschlag. Darunter öffnet „Modelle verwalten …“ alle Modelle von OpenRouter mit Preis je 1 Mio. Token, Kontextgröße und den Hinweisen „denkt lange“, „denkt vor“, „moderiert“ und „geprüft“, dazu Suche und Filter nach Anbieter, Preis, ohne OpenRouter-Moderation und mindestens 30.000 Token Kontext. Ein Stern nimmt ein Modell in die Favoriten auf oder entfernt es. Die Favoriten liegen auf dem Server und sind auf allen Geräten gleich. `GET /api/models` liefert zusätzlich `favorites`, `catalog` und `catalog_available`; neu ist `PUT /api/models/favoriten`.

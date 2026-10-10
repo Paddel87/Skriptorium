@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [ADR] ADR-056 und Umsetzung 5.13 Verlauf der Anweisungen
+
+- Klasse: Entscheidungs-Klasse (`claude-opus-5-5`, per `get_session` abgefragt) – Eskalations-Auslöser 1 (Datenmodell, Kategorie 4) ohne Modellwechsel erfüllt. Vorher `git ls-remote --heads origin`: kein 5.13-Branch.
+- `ENTSCHEIDUNG ERFORDERLICH` vorgelegt (A eigene Datei / B Kapitelkopf / C nur Browser); Eigentümer per Auswahlfrage: A (Empfehlung), **nur übernommene** Anweisungen (nicht alle abgeschickten), Reiter über dem Text. ADR-056 angelegt, Reaktiv-Quote unverändert 1 / 10 (ADR-047 bis ADR-056).
+- Umsetzung: `manuscript` schreibt `stories/<g>/verlauf/NN.md` (Kopf `kapitel`, `anweisungen` mit `zeit`/`anweisung`), die Kapiteldatei bleibt unberührt; `api` zwei Routen mit Uhr aus `Services`; `ui` vermerkt beim Übernehmen die Anweisung aus `lastOrder` (nicht den Feldinhalt), „Weiter“ ohne Anweisung nicht; Fehler beim Vermerken als Hinweis unten, übernommener Text bleibt.
+- Bildschirm-Probelauf (Kopie der Testdaten, Desktop 1280 und Smartphone 390): Die Schreibseite öffnet am Textende (5.11), die Reiter waren bei langen Kapiteln weggescrollt. Abhilfe: Reiter haften oben im Textbereich (`position: sticky`, deckt das Innenmaß von `.chat-scroll` ab, damit kein Text darüber durchscheint). Nachher geprüft.
+- Prüfungen: `pytest` 487 (`manuscript` und `manuscript_routes` 100 %; Routenzahl in `test_security.py` 40 → 42, neue Routen ohne Sitzung 401); `vitest` 173 (alle Dateien 98,18 % Zeilen, `WritingPanel.tsx` 97,2 %); Playwright 11; ruff, mypy --strict, bandit, tsc, eslint, prettier sauber.
+- Sessiongröße: ca. 250.000 Token laut Laufzeit, über der Grenze von 200.000 – Weiterarbeit auf ausdrückliche Anweisung des Eigentümers in dieser Session (bereits vermerkt).
+
 ### 2026-10-10 – [ERLEDIGT] 5.3 lesbare Dateien – Nachweis
 
 - Arbeit oberhalb der empfohlenen Klasse (Routine) auf der Entscheidungs-Klasse, zu Beginn genannt; keine Abgabe (kleiner Schritt, Kontext geladen). Vorher `git ls-remote --heads origin`: kein 5.3-Branch.
