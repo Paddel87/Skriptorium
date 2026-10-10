@@ -29,7 +29,7 @@ def test_route_list_is_complete(client: TestClient) -> None:
     app = client.app
     assert isinstance(app, FastAPI)
     routes = _routes(app)
-    assert len(routes) == 40
+    assert len(routes) == 42
     assert set(routes) >= PUBLIC
 
 
@@ -45,7 +45,7 @@ def test_every_protected_endpoint_refuses_without_session(client: TestClient) ->
         response = client.request(method, url, json={})
         assert response.status_code == 401, (method, path, response.status_code)
         checked += 1
-    assert checked == 37
+    assert checked == 39
 
 
 def test_invalid_session_cookie_is_refused(client: TestClient) -> None:

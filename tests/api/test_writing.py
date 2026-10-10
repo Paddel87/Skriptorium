@@ -592,3 +592,27 @@ def test_answer_that_is_only_a_note_ends_with_done(
     events = _events(writer.post(WRITE, json={"instruction": "Ein Toter spricht."}).text)
 
     assert [name for name, _ in events] == ["start", "hinweis", "done"]
+
+
+def test_history_of_instructions_never_reaches_the_ai(
+    writer: TestClient, provider: FakeProvider
+) -> None:
+    """Step 5.13 (FR-027, ADR-056): taken-over instructions are noted, but never sent again."""
+    history = "/api/worlds/die-salzmark/stories/am-ufer/chapters/1/instructions"
+    assert writer.get(history).json() == []
+    noted = writer.post(history, json={"instruction": "Mira kommt mit der Laterne."})
+    assert noted.status_code == 201, noted.text
+    assert noted.json() == [
+        {"at": "2026-09-26T12:00:00Z", "instruction": "Mira kommt mit der Laterne."}
+    ]
+    assert writer.post(history, json={"instruction": "  "}).status_code == 422
+    assert writer.post(history.replace("/1/", "/7/"), json={"instruction": "x"}).status_code == 404
+
+    writer.post(WRITE, json={"instruction": "Kael schweigt."})
+
+    system, user = (message.content for message in provider.requests[0].messages)
+    assert "Laterne" not in system + user
+    assert _instruction(user) == "Kael schweigt."
+    assert writer.get(history).json()[0]["instruction"] == "Mira kommt mit der Laterne."
+    chapter = writer.get("/api/worlds/die-salzmark/stories/am-ufer/chapters/1").json()
+    assert "Laterne" not in chapter["text"]

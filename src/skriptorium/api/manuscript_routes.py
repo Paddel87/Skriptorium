@@ -12,7 +12,14 @@ from fastapi import APIRouter, Depends, status
 from pydantic import BaseModel
 
 from skriptorium.api.context import Services, ServicesDep, current_session
-from skriptorium.manuscript import Chapter, Form, Story, SummaryStatus, WritingStyle
+from skriptorium.manuscript import (
+    Chapter,
+    Form,
+    InstructionNote,
+    Story,
+    SummaryStatus,
+    WritingStyle,
+)
 from skriptorium.storage import InvalidInput, NotFound
 
 router = APIRouter(prefix="/api/worlds/{world_id}/stories", dependencies=[Depends(current_session)])
@@ -86,6 +93,12 @@ class ChapterSummary(BaseModel):
 
     summary: str
     status: SummaryStatus
+
+
+class InstructionIn(BaseModel):
+    """The instruction of a proposal that was taken over (step 5.13)."""
+
+    instruction: str
 
 
 class GuestLinkIn(BaseModel):
@@ -237,6 +250,26 @@ def set_chapter_summary(
         number,
         body.summary,
         body.status,
+    )
+
+
+@router.get("/{story_id}/chapters/{number}/instructions")
+def list_instructions(
+    world_id: str, story_id: str, number: int, found: ServicesDep
+) -> list[InstructionNote]:
+    """Taken-over instructions of a chapter, oldest first (step 5.13, FR-027, ADR-056)."""
+    found.canon.get_world(world_id)
+    return found.manuscript.list_instructions(world_id, story_id, number)
+
+
+@router.post("/{story_id}/chapters/{number}/instructions", status_code=status.HTTP_201_CREATED)
+def add_instruction(
+    world_id: str, story_id: str, number: int, body: InstructionIn, found: ServicesDep
+) -> list[InstructionNote]:
+    """Note the instruction of a proposal that was taken over; the AI never gets this list."""
+    found.canon.get_world(world_id)
+    return found.manuscript.add_instruction(
+        world_id, story_id, number, body.instruction, found.clock()
     )
 
 

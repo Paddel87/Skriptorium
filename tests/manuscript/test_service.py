@@ -1,5 +1,6 @@
 """Tests for ManuscriptService (roadmap step 2.5, FR-007)."""
 
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
@@ -445,3 +446,53 @@ def test_style_missing_keys_count_as_empty(ms: ManuscriptService, root: Path) ->
         "---\ntitel: Halb\nform: roman\nschreibweise:\n  stil: [knapp]\n---\n", encoding="utf-8"
     )
     assert ms.get_story(W, "halb").writing_style == WritingStyle(style=("knapp",))
+
+
+# --- step 5.13 (FR-027, ADR-056): history of taken-over instructions ------------------------
+
+
+def test_taken_over_instructions_are_kept_per_chapter_in_their_own_file(
+    ms: ManuscriptService, root: Path
+) -> None:
+    story = ms.create_story(W, "Die Überfahrt", "roman")
+    ms.save_chapter(W, story.id, 1, title="Aufbruch", text="Es war kalt.")
+    ms.save_chapter(W, story.id, 2, title="Sturm")
+    first = datetime(2026, 10, 10, 19, 0, tzinfo=UTC)
+    second = datetime(2026, 10, 10, 19, 5, tzinfo=UTC)
+    assert ms.list_instructions(W, story.id, 1) == []
+
+    ms.add_instruction(W, story.id, 1, "  Mit @Kael ans Ufer\nund los  ", first)
+    notes = ms.add_instruction(W, story.id, 1, "Der Nebel steigt", second)
+
+    assert [(n.at, n.instruction) for n in notes] == [
+        (first, "Mit @Kael ans Ufer\nund los"),
+        (second, "Der Nebel steigt"),
+    ]
+    assert ms.list_instructions(W, story.id, 1) == notes
+    assert ms.list_instructions(W, story.id, 2) == []
+    assert ms.get_chapter(W, story.id, 1).text == "Es war kalt."
+    file = root / "worlds" / W / "stories" / story.id / "verlauf" / "01.md"
+    content = file.read_text(encoding="utf-8")
+    assert "kapitel: 1" in content
+    assert "zeit: '2026-10-10T19:05:00+00:00'" in content
+    assert "anweisung: Der Nebel steigt" in content
+    assert [c.number for c in ms.list_chapters(W, story.id)] == [1, 2]
+
+
+def test_instruction_history_refuses_empty_text_and_missing_chapters(
+    ms: ManuscriptService, root: Path
+) -> None:
+    now = datetime(2026, 10, 10, tzinfo=UTC)
+    story = ms.create_story(W, "Die Überfahrt", "roman")
+    ms.save_chapter(W, story.id, 1, title="Aufbruch")
+    with pytest.raises(InvalidInput):
+        ms.add_instruction(W, story.id, 1, "   ", now)
+    with pytest.raises(NotFound):
+        ms.add_instruction(W, story.id, 2, "Weiter", now)
+    with pytest.raises(NotFound):
+        ms.list_instructions(W, "fehlt", 1)
+    broken = root / "worlds" / W / "stories" / story.id / "verlauf" / "01.md"
+    broken.parent.mkdir(parents=True)
+    broken.write_text("---\nanweisungen:\n- zeit: gestern\n  anweisung: x\n---\n", "utf-8")
+    with pytest.raises(InvalidInput):
+        ms.list_instructions(W, story.id, 1)
