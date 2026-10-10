@@ -34,6 +34,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - Wunsch „Skript zum Ersetzen des OpenRouter-Schlüssels“ zunächst als Skript mit ADR-Vorlage, Tests und unabhängiger Prüfung umgesetzt (Branch `feat/d.18-schluessel-tauschen`, nie gepusht). Eigentümer stellte klar: gemeint war nur ein Terminalbefehl für macOS; das Skript auf seinen Wunsch verworfen (Branch gelöscht, kein ADR, kein Fahrplan-Schritt auf `main`).
 - Lehre: Bei einem Wunsch nach „Skript“ erst die Form klären (einmaliger Befehl oder gepflegtes Werkzeug), bevor der volle Ablauf für Kategorie 6 anläuft.
 - Ausgegeben: ein Befehl für das Terminal (zsh) – Schlüssel unsichtbar abfragen, per Standardeingabe über SSH auf den Server, `.env` nach `.env.vorher` sichern, neu erzeugen, auf `(healthy)` warten, im Container bei OpenRouter prüfen, Meldung ERFOLG oder FEHLER. Syntax von zsh-, bash- und Python-Teil geprüft, nicht ausgeführt. Die KI sieht den Schlüssel nicht.
+- Ausgeführt vom Eigentümer am 2026-10-10 gegen 18:53 UTC: Schlüssel eingetragen, Container neu erzeugt und gesund; im Container `GET /api/v1/key` → 200, `.env` verschieden von `.env.vorher`. „ERFOLG“ erschien erst nach gut einer Minute (Warten auf `(healthy)`, bis 120 s) – der Eigentümer hatte zunächst keine Meldung gesehen. Offen beim Eigentümer: alten Schlüssel bei OpenRouter löschen; danach ist `.env.vorher` kein Rückweg mehr.
 
 ### 2026-10-10 – [ERLEDIGT] Abnahme 5.12
 
