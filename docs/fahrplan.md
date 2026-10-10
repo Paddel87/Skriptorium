@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-10-10, nach dem Deployment `628f559` (5.6 Genre und Schreibweise, 5.11 Kanon in der Leiste der Geschichte eingespielt; Anweisung des Eigentümers „einspielen“)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 5.20 schnell angelegte Kapitel (eingespielt `1dd8bdb`, Prüfung offen – „+ Kapitel“ gibt es nur bei Romanen). Am 2026-10-11 erledigt: 5.13, 5.16. Am 2026-10-10 erledigt: 5.12, 5.26, 5.1, 5.2, 5.21, 5.11, 5.6, 5.3
-- **Nächster Schritt:** Einspielen (vom Mac, auf Anweisung) und Prüfung durch den Eigentümer: 5.13, 5.16, 5.20; danach 5.14 Go-Live-Prüfung, zuletzt 5.5 (V.1–V.16). 5.4 nach V.16 und 5.25 nach V.13 verschoben (2026-10-10). Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** keiner. Am 2026-10-11 erledigt: 5.20, 5.13, 5.16. Am 2026-10-10 erledigt: 5.12, 5.26, 5.1, 5.2, 5.21, 5.11, 5.6, 5.3
+- **Nächster Schritt:** 5.14 Go-Live-Prüfung vor v1.0.0, zuletzt 5.5 Planung der nächsten Ausbaustufe (V.1–V.17). Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -22,7 +22,7 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 21 von 26 erledigt, 1 in Arbeit, 2 offen, 2 verschoben (5.25 → V.13, 5.4 → V.16).**
+**Phase 5: 22 von 26 erledigt, 0 in Arbeit, 2 offen, 2 verschoben (5.25 → V.13, 5.4 → V.16).**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -45,7 +45,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | 5.17 | Leerzeichen nach der Auswahl im `@`-Menü | erledigt | – |
 | ✅ | 5.18 | Herangezogene Begriffe im Anweisungsfeld hervorheben | erledigt | – |
 | ✅ | 5.19 | Dunkelmodus | erledigt 2026-10-09 | – |
-| 🟠 | 5.20 | Schnell nacheinander angelegte Kapitel | eingespielt, Prüfung offen (nur bei Romanen) | du: prüfen |
+| ✅ | 5.20 | Schnell nacheinander angelegte Kapitel | erledigt 2026-10-11 | – |
 | ✅ | 5.21 | Als App installierbar (PWA) | erledigt 2026-10-10 | – |
 | ✅ | 5.22 | Wiederkehrende Atmosphäre und Schlussgeste bei „lang“ | erledigt 2026-10-09 | – |
 | ✅ | 5.23 | `@`-Verweis mit Genitiv-s | erledigt und eingespielt 2026-10-09 | – |
@@ -493,7 +493,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.20: Schnell nacheinander angelegte Kapitel
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-10) – Ursache belegt: `StoryList.tsx` (seit 5.11, vorher `StoryPage.tsx`) nahm die Nummer aus der noch nicht neu geladenen Liste; das zweite Anlegen schickte die Nummer eines vorhandenen Kapitels, der Server benannte dieses um (Titel überschrieben, Text blieb – `save_chapter` behält ihn bei vorhandener Nummer); ein doppeltes Absenden schickte zweimal dieselbe Nummer. Zwei Tests schlugen vorher fehl. Behoben: nächste Nummer aus Liste oder letzter Antwort (je Geschichte), zweites Absenden gesperrt, Knopf während des Anlegens aus. `vitest` 167, Playwright 11 grün. Gemergt (#106) und eingespielt (`bd48bed`, 2026-10-10). Offen: Bestätigung des Eigentümers
+- **Status:** ✅ ERLEDIGT (2026-10-11) – eingespielt (`1dd8bdb`), vom Eigentümer bestätigt („beide Kapitel wurden angelegt“; Kapitel 5 und 6 in „The Trap“, Kapitel 1–4 unverändert). Verlauf: 🟠 IN ARBEIT (seit 2026-10-10) – Ursache belegt: `StoryList.tsx` (seit 5.11, vorher `StoryPage.tsx`) nahm die Nummer aus der noch nicht neu geladenen Liste; das zweite Anlegen schickte die Nummer eines vorhandenen Kapitels, der Server benannte dieses um (Titel überschrieben, Text blieb – `save_chapter` behält ihn bei vorhandener Nummer); ein doppeltes Absenden schickte zweimal dieselbe Nummer. Zwei Tests schlugen vorher fehl. Behoben: nächste Nummer aus Liste oder letzter Antwort (je Geschichte), zweites Absenden gesperrt, Knopf während des Anlegens aus. `vitest` 167, Playwright 11 grün. Gemergt (#106) und eingespielt (`bd48bed`, 2026-10-10). Offen: Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11 Teil 1
 - **Freigabepflichtig:** nein (Fehlerbehebung)

@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [ERLEDIGT] Abnahme 5.20
+
+- Eigentümer: „5.20 funktioniert, beide Kapitel wurden angelegt“ (in „The Trap“, jetzt Roman). Auf dem Server nachgesehen: Kapitel 05 und 06 neu, 01–04 unverändert benannt → 5.20 `[ERLEDIGT]`. Phase 5: 22 von 26 erledigt, keiner in Arbeit, 2 offen (5.14, 5.5), 2 verschoben. README-Fortschritt nachgezogen.
+
 ### 2026-10-11 – [BEOBACHTUNG] Wunsch Wortanzeige im Manuskript → V.17
 
 - Eigentümer vermisst eine Anzeige, wie viel Text ein Kapitel hat. Auswahlfragen: „Nächste Ausbaustufe“ (statt sofort mit Neuplanung von Phase 5, die an der Wucherungs-Schwelle steht) und „Wörter plus Grenze“. Angelegt als V.17 mit Landeplatz 5.5.
