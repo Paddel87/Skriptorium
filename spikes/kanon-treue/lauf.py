@@ -7,7 +7,7 @@ wie die Oberfläche sie schickt; in ``ohne-at`` keine.
 
 Aufruf:
     VARIANTE=NAME FASSUNG=mit-at|ohne-at [MODELL=x-ai/grok-4.6] [LAENGE=mittel] [LAEUFE=3]
-    [GESCHICHTEN=salzmark,glimmergrund] uv run python spikes/kanon-treue/lauf.py
+    [GESCHICHTEN=salzmark,glimmergrund] [NACHEINANDER=1] uv run python spikes/kanon-treue/lauf.py
 Ergebnisse unter ``ergebnisse/<VARIANTE>/<geschichte>/lauf-<n>/``. Schlüssel aus
 OPENROUTER_API_KEY.
 """
@@ -71,6 +71,11 @@ async def chain(
                 break
             except GatewayError as error:
                 print(g.name, step, "Versuch", attempt + 1, "Fehler:", error, flush=True)
+        else:
+            # Drei Fehlschläge: Kette abbrechen statt einen leeren Schritt anzuhängen.
+            (out / "abgebrochen.txt").write_text(f"Schritt {step}\n", encoding="utf-8")
+            print(g.name, out.name, step, "abgebrochen", flush=True)
+            return cost
         (out / f"{step:02d}.txt").write_text(answer, encoding="utf-8")
         chapter = g.manuscripts.get_chapter(g.world, g.story, g.chapter)
         text = f"{chapter.text.rstrip()}\n\n{accepted(answer)}"
@@ -122,14 +127,23 @@ async def main() -> None:
     names = os.environ.get("GESCHICHTEN", "salzmark,glimmergrund").split(",")
     provider = OpenRouterProvider(os.environ["OPENROUTER_API_KEY"])
     try:
-        # Ketten unabhängig voneinander: je Geschichte und Lauf parallel.
-        costs = await asyncio.gather(
-            *(
-                run_story(name, run, variant, with_at, provider, model, length)
-                for name in names
-                for run in range(1, runs + 1)
+        jobs = [(name, run) for name in names for run in range(1, runs + 1)]
+        if os.environ.get("NACHEINANDER"):
+            # Eine Kette nach der anderen: langsame Modelle nicht zusätzlich belasten.
+            costs = [
+                await run_story(name, run, variant, with_at, provider, model, length)
+                for name, run in jobs
+            ]
+        else:
+            # Ketten unabhängig voneinander: je Geschichte und Lauf parallel.
+            costs = list(
+                await asyncio.gather(
+                    *(
+                        run_story(name, run, variant, with_at, provider, model, length)
+                        for name, run in jobs
+                    )
+                )
             )
-        )
     finally:
         await provider.aclose()
     print(f"Kosten gesamt: {sum(costs):.3f} $", flush=True)
