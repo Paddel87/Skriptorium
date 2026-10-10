@@ -1,4 +1,4 @@
-import { useCallback, useState, type SyntheticEvent } from "react";
+import { useCallback, useRef, useState, type SyntheticEvent } from "react";
 import { Link, useNavigate } from "react-router";
 import { api, describeError, FORMS, type Story, type World } from "../api";
 import { chapterPath, storyPath, useNavigation, worldPath } from "../paths";
@@ -159,6 +159,18 @@ export function StoryList({
   );
 }
 
+function storyKey(story: Story): string {
+  return `${story.world}/${story.id}`;
+}
+
+/** Number of the chapter last created in ``story``; 0 if it was another story. */
+function createdHere(
+  last: { story: string; number: number },
+  story: Story,
+): number {
+  return last.story === storyKey(story) ? last.number : 0;
+}
+
 /** Chapters of the open story; novels can get a new chapter here. */
 function Chapters({
   story,
@@ -182,19 +194,30 @@ function Chapters({
   const [adding, setAdding] = useState(false);
   const [title, setTitle] = useState("");
   const [createError, setCreateError] = useState<string | null>(null);
+  const [creating, setCreating] = useState(false);
+  // Step 5.20: the list reloads only after creating; until then the number of the last created
+  // chapter counts, and a second submit waits for the first (a ref, as state updates later).
+  const lastCreated = useRef({ story: "", number: 0 });
+  const sending = useRef(false);
   const chapters = data ?? [];
   const shownCurrent = current ?? chapters[0]?.number;
 
   async function add(event: SyntheticEvent) {
     event.preventDefault();
+    if (sending.current) {
+      return;
+    }
+    sending.current = true;
+    setCreating(true);
     setCreateError(null);
     try {
       const created = await api.saveChapter(
         story.world,
         story.id,
-        chapters.length + 1,
+        Math.max(chapters.length, createdHere(lastCreated.current, story)) + 1,
         { title },
       );
+      lastCreated.current = { story: storyKey(story), number: created.number };
       setTitle("");
       setAdding(false);
       onCreated();
@@ -202,6 +225,9 @@ function Chapters({
       onGo?.();
     } catch (reason: unknown) {
       setCreateError(describeError(reason));
+    } finally {
+      sending.current = false;
+      setCreating(false);
     }
   }
 
@@ -238,7 +264,9 @@ function Chapters({
                   autoFocus
                 />
                 <div className="row">
-                  <button type="submit">Kapitel anlegen</button>
+                  <button type="submit" disabled={creating}>
+                    Kapitel anlegen
+                  </button>
                   <button
                     type="button"
                     className="link"
