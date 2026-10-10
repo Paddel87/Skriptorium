@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [ERLEDIGT] Abnahme 5.2 und 5.21
+
+- Prüfliste (iPhone: Anmeldung bleibt, neue Szene, Weiterschreiben, „In den Kanon“ mit Markieren per Finger, Flugmodus; Mac: Installation, Fenster ohne Browserleiste, Anmeldung) vom Eigentümer abgearbeitet: „passt alles“ → 5.2 und 5.21 `[ERLEDIGT]`; FR-019 und FR-032 erledigt. Phase 5: 16 von 26 erledigt, keiner in Arbeit.
+
 ### 2026-10-10 – [ERLEDIGT] Abnahme 5.11
 
 - Eigentümer: Kanon-Seite „sehr zufriedenstellend“, die Gliederung nach Kategorie „sehr gut“; das letzte Update (Mitlaufen, Vorschläge ohne `@`) erfolgreich → 5.11 `[ERLEDIGT]` (alle drei Teile). Phase 5: 14 von 26 erledigt, in Arbeit nur noch 5.2/5.21 (Prüfung am Gerät).

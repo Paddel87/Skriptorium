@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-10-10, nach dem Deployment `e61ccd3` (5.1, Mitlaufen aus 5.11, 5.11 Teil 3 Kanon-Seite eingespielt; Freigabe des Eigentümers „Deploy“)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 5.2/5.21 (Smartphone, App) als Bündel, eingespielt, warten auf die Prüfung des Eigentümers am Gerät. Am 2026-10-10 erledigt: 5.26 (Kanon-Treue), 5.1 (Vorschläge ohne `@`), 5.11 (Seitenaufbau, alle drei Teile)
-- **Nächster Schritt:** (1) Prüfung von 5.2/5.21 auf dem Smartphone und am Mac (Installation, Anmeldung in der App, Markieren mit dem Finger, Start ohne Netz); (4) 5.25 Browser-Speicher – D.16 erledigt (ADR-052: grok-4.7 in 5.12 aus der Voreinstellung), E1 zurückgestellt auf V.10 (ADR-050); danach 5.20, 5.16, 5.6, 5.12, 5.13, 5.3, 5.4, 5.14, 5.5. Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** keiner – am 2026-10-10 erledigt: 5.26 (Kanon-Treue), 5.1 (Vorschläge ohne `@`), 5.11 (Seitenaufbau), 5.2 (Smartphone), 5.21 (App)
+- **Nächster Schritt:** 5.25 Browser-Speicher – D.16 erledigt (ADR-052: grok-4.7 in 5.12 aus der Voreinstellung), E1 zurückgestellt auf V.10 (ADR-050); danach 5.20, 5.16, 5.6, 5.12, 5.13, 5.3, 5.4, 5.14, 5.5. Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -22,12 +22,12 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 14 von 26 erledigt, 2 in Arbeit, 10 offen.**
+**Phase 5: 16 von 26 erledigt, 0 in Arbeit, 10 offen.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | ✅ | 5.1 | Kanon-Vorschläge ohne `@` | erledigt 2026-10-10 | – |
-| 🟠 | 5.2 | Bedienung am Smartphone | in Arbeit – eingespielt | du: am Smartphone prüfen |
+| ✅ | 5.2 | Bedienung am Smartphone | erledigt 2026-10-10 | – |
 | ⚪ | 5.3 | Lesbare Dateien – Nachweis | offen | KI |
 | ⚪ | 5.4 | Zeitlinie mit Datumsangaben im Kalender der Welt (Kann) | offen | du: umsetzen ja/nein |
 | ⚪ | 5.5 | Planung der nächsten Ausbaustufe | offen | KI – zuletzt |
@@ -46,7 +46,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | 5.18 | Herangezogene Begriffe im Anweisungsfeld hervorheben | erledigt | – |
 | ✅ | 5.19 | Dunkelmodus | erledigt 2026-10-09 | – |
 | ⚪ | 5.20 | Schnell nacheinander angelegte Kapitel | offen | KI |
-| 🟠 | 5.21 | Als App installierbar (PWA) | in Arbeit – eingespielt (ADR-048) | du: installieren und prüfen |
+| ✅ | 5.21 | Als App installierbar (PWA) | erledigt 2026-10-10 | – |
 | ✅ | 5.22 | Wiederkehrende Atmosphäre und Schlussgeste bei „lang“ | erledigt 2026-10-09 | – |
 | ✅ | 5.23 | `@`-Verweis mit Genitiv-s | erledigt und eingespielt 2026-10-09 | – |
 | ✅ | 5.24 | Zweite Testgeschichte und wiederholte Läufe (Regel-002) | erledigt 2026-10-09 | – |
@@ -199,7 +199,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.2: Bedienung am Smartphone
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-09) – Prüfung am Smartphone-Format (Playwright, 390 × 844 und 360 × 740, Abläufe UC-003, UC-004, UC-008 und Kanon-Pflege, kein seitliches Scrollen): drei Befunde; behoben auf Branch `feat/5.2-smartphone-und-pwa` nach Vorher-/Nachher-Vergleich: Formular „In den Kanon“ rückt ins Bild (auch Desktop), Knöpfe hinter „⋯“ klappen nach der Wahl zu, auf 360 px eine Zeile für Modell, Länge, „⋯“, „Weiter“; Szenen-Formular bleibt (eng, aber bedienbar). Tests: `vitest` 137 bestanden, 98,11 % Zeilen / 95,67 % Zweige; Playwright 10 bestanden. Gemergt (#81, `a71cdff`) und eingespielt 2026-10-09. Offen: Prüfung auf dem Smartphone des Eigentümers (Markieren mit dem Finger)
+- **Status:** ✅ ERLEDIGT (2026-10-10) – vom Eigentümer am iPhone in der installierten App geprüft („passt alles“, 2026-10-10: neue Szene, Weiterschreiben, „In den Kanon“ mit Markieren per Finger). Verlauf: 🟠 IN ARBEIT (seit 2026-10-09) – Prüfung am Smartphone-Format (Playwright, 390 × 844 und 360 × 740, Abläufe UC-003, UC-004, UC-008 und Kanon-Pflege, kein seitliches Scrollen): drei Befunde; behoben auf Branch `feat/5.2-smartphone-und-pwa` nach Vorher-/Nachher-Vergleich: Formular „In den Kanon“ rückt ins Bild (auch Desktop), Knöpfe hinter „⋯“ klappen nach der Wahl zu, auf 360 px eine Zeile für Modell, Länge, „⋯“, „Weiter“; Szenen-Formular bleibt (eng, aber bedienbar). Tests: `vitest` 137 bestanden, 98,11 % Zeilen / 95,67 % Zweige; Playwright 10 bestanden. Gemergt (#81, `a71cdff`) und eingespielt 2026-10-09. Offen: Prüfung auf dem Smartphone des Eigentümers (Markieren mit dem Finger)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 4.7, 5.11 (neuer Seitenaufbau; ADR-042)
 - **Freigabepflichtig:** nein
@@ -507,7 +507,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.21: Als App installierbar (PWA)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-09) – umgesetzt auf Branch `feat/5.2-smartphone-und-pwa`: Manifest (`standalone`), Symbole (Feder; 192, 512, maskierbar, iPhone), Meta-Angaben, Abstand zu Kerbe und Home-Leiste, Hinweis oben ohne Verbindung (`ConnectionNote`); Service Worker nach ADR-048 nur mit `/offline.html`. Chrome meldet installierbar, Manifest fehlerfrei. Prüfung durch getrennte Instanz (Sonnet, 2026-10-09): Vorgabe eingehalten, drei niedrige Befunde behoben, zwei optionale dem Eigentümer vorgelegt. Gemergt (#81, `a71cdff`) und eingespielt 2026-10-09; von außen geprüft: installierbar, Service Worker aktiv, Hinweisseite ohne Netz. Offen: Installation und Anmeldung auf dem Smartphone und am Mac des Eigentümers, Start ohne Netz auf dem Gerät
+- **Status:** ✅ ERLEDIGT (2026-10-10) – vom Eigentümer am iPhone und am Mac geprüft („passt alles“, 2026-10-10: Installation, ohne Browserleiste, Anmeldung bleibt, ohne Netz „Keine Verbindung“). Verlauf: 🟠 IN ARBEIT (seit 2026-10-09) – umgesetzt auf Branch `feat/5.2-smartphone-und-pwa`: Manifest (`standalone`), Symbole (Feder; 192, 512, maskierbar, iPhone), Meta-Angaben, Abstand zu Kerbe und Home-Leiste, Hinweis oben ohne Verbindung (`ConnectionNote`); Service Worker nach ADR-048 nur mit `/offline.html`. Chrome meldet installierbar, Manifest fehlerfrei. Prüfung durch getrennte Instanz (Sonnet, 2026-10-09): Vorgabe eingehalten, drei niedrige Befunde behoben, zwei optionale dem Eigentümer vorgelegt. Gemergt (#81, `a71cdff`) und eingespielt 2026-10-09; von außen geprüft: installierbar, Service Worker aktiv, Hinweisseite ohne Netz. Offen: Installation und Anmeldung auf dem Smartphone und am Mac des Eigentümers, Start ohne Netz auf dem Gerät
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11 Teil 2, 5.2
 - **Freigabepflichtig:** ja – Service Worker freigegeben mit ADR-048 (Kategorie 6, Eigentümer 2026-10-09: „B“); ursprünglicher Text: ohne Service Worker nein (nur Manifest, Symbole, Kopfzeilen der Seite in `ui`; ggf. `manifest-src` in der Content-Security-Policy, `api`); falls ein Browser für die Installation einen Service Worker verlangt: Vorlage als Kategorie 6 (Zwischenspeicher im Gerät), mit der Vorgabe „nichts aus Welten und Texten zwischenspeichern“
