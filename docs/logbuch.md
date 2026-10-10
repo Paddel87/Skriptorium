@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] „The Trap“ auf Wunsch in 4 Kapitel geteilt
+
+- Eigentümer per Auswahlfrage: „Ja, 4 Kapitel“. Vorher bemerkt, dass er gerade schrieb (Kapitel umbenannt in „Kapitel 1“, 7 Minuten zuvor gespeichert) – angehalten und gebeten, zu speichern und auf allen Geräten zu schließen (sonst hätte ein alter Stand im Browser den ungeteilten Text zurückgeschrieben); Bestätigung „Ja, teilen“.
+- Sicherung: ganzer Ordner der Geschichte nach `/opt/docker/skriptorium/sicherungen/the-trap-vor-teilung-2026-10-11/` (außerhalb von `data/`, Verzeichnis 700; zusätzlich tägliche Duplicati-Sicherung).
+- Teilung im Container über `ManuscriptService`: keine Szenenmarken im Text (550 Absätze), Schnitt an den Absatzgrenzen nächst den Vierteln; Prüfung, dass die Teile mit den Trennern den Originaltext exakt ergeben. Ergebnis: Kapitel 1–4 mit 9.786 / 9.719 / 9.758 / 9.788 Wörtern, Summe 39.051 wie vorher. Neue Kapitel „Kapitel 2“–„Kapitel 4“; 1–3 abgeschlossen (damit „Kurzfassung nachholen“ erscheint), 4 in Arbeit. Verlauf (`verlauf/01.md`) bleibt bei Kapitel 1. Kein Text ausgegeben. Dateien Besitzer 10001, Rechte 600.
+
 ### 2026-10-11 – [ERLEDIGT] Abnahme 5.13 und 5.16; Befunde zu 5.20 und zur Kurzfassung
 
 - Eigentümer: 5.13 „positiv“, 5.16 „ebenfalls“ → beide `[ERLEDIGT]`, FR-027 und FR-031 erledigt. Phase 5: 21 von 26 erledigt, 1 in Arbeit (5.20), 2 offen (5.14, 5.5), 2 verschoben.
