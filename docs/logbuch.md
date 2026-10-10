@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 16:40 UTC – [BEOBACHTUNG] Kurzfassung am Smartphone mit der Anweisung verwechselt – V.15
+
+- **Befund des Eigentümers:** „Die Kapitel-Zusammenfassung verwechsle ich gerne mit der Eingabe für die KI, das muss ganz anders gemacht werden – nur als Hinweis.“
+- **Landeplatz:** V.15 (nächste Ausbaustufe, 5.5) – als Hinweis aufgenommen, kein Schritt in Phase 5 (Wucherungs-Schwelle). PR #100 (5.6) gemergt (`9c46fe7`).
+
 ### 2026-10-10 16:20 UTC – [BEOBACHTUNG] 5.6 umgesetzt
 
 - **Mockup:** Schreibseite, Vorgabe der Geschichte und Schreibweise des Kapitels in der echten Oberfläche (Glimmergrund), Desktop und Smartphone; freigegeben („Passt so“).
