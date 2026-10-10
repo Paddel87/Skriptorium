@@ -29,12 +29,34 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [BEOBACHTUNG] Deployment `bd48bed` (5.20, 5.16)
+
+- Auf Anweisung des Eigentümers („Einspielen“; #106 vorher nur gemergt, „Korrektur nur mergen“). Enthält 5.20 (#106) und 5.16 (#107 aus einer anderen Session). CI auf `bd48bed` grün.
+- Ablauf nach Runbook Abschnitt 7 (ADR-039): `REVISION` `bd48bed`, Rückweg `skriptorium:vorher` = `7b89102`; `/api/health` 200 nach ca. 60 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; danach einmal per SSH `(healthy)`, 0 Fehlerzeilen in den letzten 3 Minuten.
+- Offen: Prüfung durch den Eigentümer – 5.20 (zwei Kapitel schnell hintereinander anlegen) und 5.16 (herangezogene Einträge anklickbar).
+
 ### 2026-10-10 – [BEOBACHTUNG] Schlüsseltausch: Skript verworfen, einzelner Befehl
 
 - Wunsch „Skript zum Ersetzen des OpenRouter-Schlüssels“ zunächst als Skript mit ADR-Vorlage, Tests und unabhängiger Prüfung umgesetzt (Branch `feat/d.18-schluessel-tauschen`, nie gepusht). Eigentümer stellte klar: gemeint war nur ein Terminalbefehl für macOS; das Skript auf seinen Wunsch verworfen (Branch gelöscht, kein ADR, kein Fahrplan-Schritt auf `main`).
 - Lehre: Bei einem Wunsch nach „Skript“ erst die Form klären (einmaliger Befehl oder gepflegtes Werkzeug), bevor der volle Ablauf für Kategorie 6 anläuft.
 - Ausgegeben: ein Befehl für das Terminal (zsh) – Schlüssel unsichtbar abfragen, per Standardeingabe über SSH auf den Server, `.env` nach `.env.vorher` sichern, neu erzeugen, auf `(healthy)` warten, im Container bei OpenRouter prüfen, Meldung ERFOLG oder FEHLER. Syntax von zsh-, bash- und Python-Teil geprüft, nicht ausgeführt. Die KI sieht den Schlüssel nicht.
 - Ausgeführt vom Eigentümer am 2026-10-10 gegen 18:53 UTC: Schlüssel eingetragen, Container neu erzeugt und gesund; im Container `GET /api/v1/key` → 200, `.env` verschieden von `.env.vorher`. „ERFOLG“ erschien erst nach gut einer Minute (Warten auf `(healthy)`, bis 120 s) – der Eigentümer hatte zunächst keine Meldung gesehen. Eigentümer hat den alten Schlüssel bei OpenRouter deaktiviert und gelöscht; danach auf seine Bestätigung `.env.vorher` auf dem Server gelöscht (nur noch `.env`, Rechte 600; Dienst `(healthy)`, `/api/health` 200).
+
+### 2026-10-10 – [BEOBACHTUNG] 5.16 herangezogene Einträge anklickbar umgesetzt
+
+- Arbeit oberhalb der empfohlenen Klasse (Routine) auf der Entscheidungs-Klasse, zu Beginn genannt; keine Abgabe (Kontext geladen, kleiner Schritt). Vorher `git ls-remote --heads origin`: kein 5.16-Branch.
+- Umsetzung nur in `ui`: `WritingPanel` bekommt `onLookUp`; mit ihm sind die Namen unter „Herangezogen“ Knöpfe im Link-Stil. `StoryPage` öffnet damit die vorhandene Leiste rechts beim Reiter Kanon und wählt den Eintrag (`lookedUp`) – die Entscheidung „über der Schreibseite einblenden“ nutzt die Leiste aus 5.11, kein neues Fenster.
+- Tests: Klick zeigt Name und Text, nach dem Schließen sind Manuskript, Anweisung und Vorschlag unverändert; Gast-Eintrag aus anderer Welt in der Leiste mit Gast-Hinweis; ohne `onLookUp` bleiben die Namen Text. `vitest` 170 grün (alle Dateien 98,22 % Zeilen, `WritingPanel.tsx` 97,56 %, `StoryPage.tsx` 94,11 %), tsc/eslint/prettier sauber, Playwright 11 grün.
+- Mini-Reibung: Playwright lieferte zuerst den Build von 15:55 aus `dist/` aus (der Server bedient `dist`, `npx playwright test` baut nicht neu) – ein Test schlug fehl, auch auf `main`. Nach `npm run build` alle grün. Vor Playwright immer neu bauen.
+- CI auf #107 rot in `ModelChoice.test.tsx` („keeps the story's model outside the favorites“), lokal 5-mal grün: Wettlauf – `modelSelect` wartet nur auf den Wert der Geschichte, der vor den Favoriten im Feld steht; auf dem langsameren CI-Rechner wurde die Liste zu früh gelesen. Test wartet jetzt auf die ganze Liste (nicht-deterministische Tests sind Blocker, `CLAUDE.md` Abschnitt 6).
+
+### 2026-10-10 – [GELÖST] 5.20 schnell nacheinander angelegte Kapitel
+
+- Arbeit oberhalb der empfohlenen Klasse (Routine) auf der Entscheidungs-Klasse, zu Beginn genannt; keine Abgabe an einen Unteragenten (Kontext schon geladen, kleiner Schritt).
+- Ursache am Code belegt: „+ Kapitel“ (seit 5.11 in `StoryList.tsx`) nahm `chapters.length + 1` aus der Liste, die erst nach dem Anlegen neu lädt. Ein zweites Anlegen davor schickte die Nummer eines vorhandenen Kapitels; `save_chapter` behandelt das als Änderung: **Titel überschrieben, Text bleibt**. Ein doppeltes Absenden schickte zweimal dieselbe Nummer (zweites Mal: Umbenennen des gerade angelegten). Beides in Tests nachgestellt, beide schlugen am alten Code fehl.
+- Behoben nur in `ui`: Nummer = größere von Listenlänge und zuletzt angelegter Nummer (je Geschichte) + 1; Sperre über eine Ref gegen ein zweites Absenden im selben Moment, Knopf „Kapitel anlegen“ während des Anlegens aus. Kein Mockup – sichtbar ist nur der kurz gesperrte Knopf.
+- Nicht angefasst: Auf dem Server können zwei gleichzeitige Anfragen dieselbe neue Nummer beschreiben (keine Sperre in `manuscript`); bei einem Nutzer mit der Sperre in der Oberfläche nicht mehr erreichbar. Kein neuer Schritt (Phase an der Wucherungs-Schwelle), Vermerk hier.
+- Prüfungen: `vitest` 167 grün (`StoryList.tsx` 98,4 % Zeilen), tsc/eslint/prettier sauber, Playwright 11 grün.
 
 ### 2026-10-10 – [ERLEDIGT] Abnahme 5.12
 
