@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 03:21 UTC – [SESSIONSTART] Entscheidungsvorlagen E1 und E2 aus 5.26
+
+- **Umgebung:** Cloud-Session (Linux), nach `/clear` in derselben Session wie 5.24 und 5.26. `main` abgeglichen (`017da79`, #89 gemergt); Branches auf GitHub geprüft – keine parallele Arbeit an E1/E2. Branch `docs/5.26-entscheidungen`.
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage `get_session`, 03:20 UTC) → Entscheidungs-Klasse. Vorlagen nach `CLAUDE.md` Abschnitt 4 verlangen die Entscheidungs-Klasse (Eskalations-Auslöser 1) – erfüllt, kein Stopp.
+- **Kontextgröße:** 102.615 Token laut Sitzungsabfrage (Grenze 200.000).
+- **Auftrag:** „Entscheidungen E1 und E2 aus 5.26 vorlegen“.
+
 ### 2026-10-10 03:00 UTC – [GELÖST] 5.26 doppelt begonnen – Arbeit einer anderen Session übersehen
 
 - **Was:** Auf „5.26 hier starten“ begann die KI in der Session der Ausgangsmessung (über der Größengrenze, „weiter hier“ vermerkt) Teil (a) und die Ketten für Teil (b) neu. 5.26 war aber schon von einer anderen Session auf `spike/5.26-kanon-treue` erledigt (00:50–01:55 UTC, noch ohne PR). Aufgefallen erst beim abgelehnten Push auf denselben Branch.
