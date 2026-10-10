@@ -29,6 +29,16 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [ERLEDIGT] Abnahme 5.12
+
+- Eigentümer: „alles funktioniert“ (Auswahlfeld mit Favoriten, „Modelle verwalten …“, Stern auf einem zweiten Gerät sichtbar) → 5.12 `[ERLEDIGT]`, FR-028 erledigt. Phase 5: 18 von 26 erledigt, keiner in Arbeit, 7 offen (5.20, 5.16, 5.13, 5.3, 5.4, 5.14, 5.5), 1 verschoben. README-Fortschritt war veraltet (12 von 26) – Drift behoben.
+
+### 2026-10-10 – [BEOBACHTUNG] Deployment `7b89102` (5.12) und echte Anfrage mit Katalog-Modell
+
+- Auf Anweisung des Eigentümers („mergen und einspielen“): #104 gemergt, CI auf `main` grün. Einspielen nach Runbook Abschnitt 7 (ADR-039): `REVISION` `7b89102`, Rückweg `skriptorium:vorher` = `628f559`. `/api/health` 200 nach ca. 57 s (über HTTPS), `/` 200, `/api/worlds` und `/api/models` 401. Danach einmal per SSH: `(healthy)`, 0 Fehlerzeilen in den letzten 3 Minuten.
+- Im selben SSH-Aufruf das Akzeptanzkriterium von 5.12 geprüft, mit dem Schlüssel des Servers im Container: Katalog geladen (442 Modelle), `x-ai/grok-4.5` wählbar mit Vordenken `effort: low` aus dem Katalog; echte Anfrage (ein Satz) → `finish_reason` `stop`, 217 Token ein, 76 aus, 0,00088 $, 105 Zeichen Text. Den Text selbst nicht ausgegeben.
+- Offen: Abnahme durch den Eigentümer (Auswahlfeld, „Modelle verwalten …“, Stern auf mehreren Geräten).
+
 ### 2026-10-10 – [BEOBACHTUNG] 5.12 umgesetzt, Prüfung durch den Eigentümer offen
 
 - Mockup vorher/nachher (echtes Bildschirmfoto der heutigen Auswahl, Nachher mit echten Katalogdaten) vom Eigentümer freigegeben („Passt, umbauen“).
