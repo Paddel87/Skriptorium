@@ -1,0 +1,12 @@
+{
+  "geschichte": "glimmergrund",
+  "schritt": 7,
+  "anweisung": "Ich besuche am Abend Bracks Haus und bringe einen Korb Äpfel mit. Seine Frau öffnet die Tür; ich sage ihr, warum ich komme, und bitte sie, ihren Mann zu holen.",
+  "modell": "x-ai/grok-4.6",
+  "woerter": 50,
+  "sekunden": 77.3,
+  "token_ein": 24294,
+  "token_aus": 1255,
+  "kosten_usd": 0.0196317,
+  "finish_reason": "stop"
+}
