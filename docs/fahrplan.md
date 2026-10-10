@@ -22,7 +22,7 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 11 von 26 erledigt, 4 in Arbeit, 11 offen.**
+**Phase 5: 12 von 26 erledigt, 4 in Arbeit, 10 offen.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|

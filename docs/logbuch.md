@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 03:40 UTC – [SESSIONENDE] Entscheidungen E1 und E2 aus 5.26 festgehalten
+
+- **Dauer:** 03:21 – 03:40 UTC, Cloud-Session (Linux).
+- **Bearbeitet:** Vorlagen E1 und E2 aus 5.26 vorgelegt und entschieden (ADR-050, ADR-051); neue Schritte D.16 (Querschnitt, offen) und V.10 (verschoben, Landeplatz 5.5); NFR Reaktionszeit `[VORLÄUFIG]`; Fahrplan, `docs/architecture.md`, `docs/decisions.md`, README nachgezogen.
+- **Stand:** Server unverändert auf `a71cdff`; #83 und #84 weiter nicht eingespielt. `[IN ARBEIT]`: 5.1, 5.2, 5.11, 5.21 (warten auf Eigentümer oder Einspielen). Branch `docs/5.26-entscheidungen` gepusht, Pull Request noch nicht angelegt.
+- **Nächster Schritt:** D.16 Reaktionszeit erneut erkunden (vor 5.12; Werkzeug muss die Zeit bis zum ersten Textstück erfassen); sonst wie Fahrplan „Nächster Schritt“.
+- **Offen beim Eigentümer:** Pull Request für diesen Branch; Freigabe für das Einspielen; Schlüssel auf dem Mac erneuern; D.11 bis 2026-10-31.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 03:34 UTC). Schritte oberhalb der Empfehlung: 0 (Vorlagen verlangen Entscheidung). Abgegeben: nichts – reine Lese- und Prüfarbeit, gleicher Cache-Lesepreis bei der Routine-Klasse.
+- **Kontextgröße:** Sitzungsabfrage meldet unverändert 102.615 Token (Wert seit Sessionstart nicht aktualisiert); eigene Schätzung ca. 130.000 – unter der Grenze von 200.000.
+- **Sessionende-Prüfungen:** README Status-Block (Phase 5, v0.1.0, Blocker 0, 12 von 26, Reaktionszeit VORLÄUFIG) und „Nächste Schritte“ synchron. Drift: Zusammenfassung der Fahrplan-Übersicht stand auf „11 von 26 erledigt, 11 offen“ statt 12/10 (seit 5.26) – korrigiert. ADR-050/051 verweisen auf existierende Schritte (5.26, 5.5, 5.12, D.16, V.10); Reifegrad NFR Reaktionszeit passt zu ADR-051; Modul-Liste unverändert; Blocker 0, kein `[BLOCKIERT]`; Reaktiv-Quote 1/10 (ADR-042 bis ADR-051) nachgezählt; Phase 5 weiter 26 Schritte. Ablaufdaten: kein Vorlauf erreicht (nächste: D.1 ab 2026-11-05). Logbuch ca. 720 Zeilen (Trigger 800), project-context 346 Zeilen – keine Auslagerung.
+
 ### 2026-10-10 03:45 UTC – [ADR-ANGELEGT] ADR-050 und ADR-051 – Entscheidungen E1 und E2 aus 5.26
 
 - **Vorlage:** beide als `ENTSCHEIDUNG ERFORDERLICH` mit Auswahlfragen (Empfehlung zuerst).
