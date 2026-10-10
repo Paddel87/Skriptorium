@@ -60,7 +60,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⚪ | D.1 | Wechsel Node.js 24 → Node.js 26 LTS | offen | KI – ab 2026-11-05 |
 | ⚪ | D.2 | Nachprüfung TypeScript 7 | offen | KI – am 2027-01-08 |
 | ⚪ | D.3 | Nachprüfung httpx | offen | KI – am 2027-03-26 |
-| ✅ | D.4 | Prüfung „kein Kontextverlust" beim Referenzumfang | erledigt 2026-10-11 (ADR-057, an „The Trap“) | – |
+| ✅ | D.4 | Prüfung „kein Kontextverlust" beim Referenzumfang | erledigt 2026-10-11 (ADR-057, an „Geschichte des Eigentümers“) | – |
 | ⚪ | D.5 | Wechsel auf httpx2 und Nachprüfung mypy 2 | offen | KI – ab 2026-11-12 |
 | ⚪ | D.9 | Nachprüfung Unterstützung des Reverse Proxys | offen | KI – am 2026-12-28 |
 | ⚪ | D.11 | Sicherungs-Zugangsdaten außerhalb des Servers ablegen | offen | du – bis 2026-10-31 |
@@ -493,7 +493,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.20: Schnell nacheinander angelegte Kapitel
 
-- **Status:** ✅ ERLEDIGT (2026-10-11) – eingespielt (`1dd8bdb`), vom Eigentümer bestätigt („beide Kapitel wurden angelegt“; Kapitel 5 und 6 in „The Trap“, Kapitel 1–4 unverändert). Verlauf: 🟠 IN ARBEIT (seit 2026-10-10) – Ursache belegt: `StoryList.tsx` (seit 5.11, vorher `StoryPage.tsx`) nahm die Nummer aus der noch nicht neu geladenen Liste; das zweite Anlegen schickte die Nummer eines vorhandenen Kapitels, der Server benannte dieses um (Titel überschrieben, Text blieb – `save_chapter` behält ihn bei vorhandener Nummer); ein doppeltes Absenden schickte zweimal dieselbe Nummer. Zwei Tests schlugen vorher fehl. Behoben: nächste Nummer aus Liste oder letzter Antwort (je Geschichte), zweites Absenden gesperrt, Knopf während des Anlegens aus. `vitest` 167, Playwright 11 grün. Gemergt (#106) und eingespielt (`bd48bed`, 2026-10-10). Offen: Bestätigung des Eigentümers
+- **Status:** ✅ ERLEDIGT (2026-10-11) – eingespielt (`1dd8bdb`), vom Eigentümer bestätigt („beide Kapitel wurden angelegt“; Kapitel 5 und 6 in „Geschichte des Eigentümers“, Kapitel 1–4 unverändert). Verlauf: 🟠 IN ARBEIT (seit 2026-10-10) – Ursache belegt: `StoryList.tsx` (seit 5.11, vorher `StoryPage.tsx`) nahm die Nummer aus der noch nicht neu geladenen Liste; das zweite Anlegen schickte die Nummer eines vorhandenen Kapitels, der Server benannte dieses um (Titel überschrieben, Text blieb – `save_chapter` behält ihn bei vorhandener Nummer); ein doppeltes Absenden schickte zweimal dieselbe Nummer. Zwei Tests schlugen vorher fehl. Behoben: nächste Nummer aus Liste oder letzter Antwort (je Geschichte), zweites Absenden gesperrt, Knopf während des Anlegens aus. `vitest` 167, Playwright 11 grün. Gemergt (#106) und eingespielt (`bd48bed`, 2026-10-10). Offen: Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11 Teil 1
 - **Freigabepflichtig:** nein (Fehlerbehebung)
@@ -660,7 +660,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.4: Prüfung „kein Kontextverlust" beim Referenzumfang
 
-- **Status:** ✅ ERLEDIGT (2026-10-11) – Nachweis an „The Trap“ mit Hochrechnung (ADR-057): Handlungsstand vollständig (Gesamtzusammenfassung 481 Wörter, Kurzfassungen 164/162/177), Anfrage ≤ 30.000 Token, im Betrieb ca. 23.000 Token und ca. 0,05 $ statt 125.000–140.000 Token; Einschränkung: Figuren-, Orts- und Gegenstands-Einträge gehen bei langen Kapiteln nur per `@` mit (V.10)
+- **Status:** ✅ ERLEDIGT (2026-10-11) – Nachweis an „Geschichte des Eigentümers“ mit Hochrechnung (ADR-057): Handlungsstand vollständig (Gesamtzusammenfassung 481 Wörter, Kurzfassungen 164/162/177), Anfrage ≤ 30.000 Token, im Betrieb ca. 23.000 Token und ca. 0,05 $ statt 125.000–140.000 Token; Einschränkung: Figuren-, Orts- und Gegenstands-Einträge gehen bei langen Kapiteln nur per `@` mit (V.10)
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 3.6
 - **Frist:** kein Datum – Auslöser: eine Geschichte erreicht ≥ 500.000 Token (Entscheidung des Eigentümers, ADR-009)
@@ -673,7 +673,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Betroffene Module:** context
 - **Reifegrad-Wirkung:** NFR Kontexttreue Referenzumfang `[OFFEN]` → `[BELASTBAR]` oder begründeter Erkundungsbedarf
 - **Artefakte:** Messprotokoll, ADR `[ERKENNTNIS]`
-- **Notizen:** Bis dahin gilt das Kriterium als unbelegt. **Entscheidung 2026-10-11** (Eigentümer, Auswahlfrage vor 5.14): Nachweis an „The Trap“ (39.051 Wörter in 4 Kapiteln, etwa halber Referenzumfang) nach den Kurzfassungen von Kapitel 1–3, Hochrechnung auf die Referenz; Ergebnis per ADR als ausreichend festhalten.
+- **Notizen:** Bis dahin gilt das Kriterium als unbelegt. **Entscheidung 2026-10-11** (Eigentümer, Auswahlfrage vor 5.14): Nachweis an „Geschichte des Eigentümers“ (39.051 Wörter in 4 Kapiteln, etwa halber Referenzumfang) nach den Kurzfassungen von Kapitel 1–3, Hochrechnung auf die Referenz; Ergebnis per ADR als ausreichend festhalten.
 
 #### D.5: Wechsel auf httpx2 und Nachprüfung mypy 2
 
