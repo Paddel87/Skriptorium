@@ -600,13 +600,17 @@ def test_history_of_instructions_never_reaches_the_ai(
     """Step 5.13 (FR-027, ADR-056): taken-over instructions are noted, but never sent again."""
     history = "/api/worlds/die-salzmark/stories/am-ufer/chapters/1/instructions"
     assert writer.get(history).json() == []
-    noted = writer.post(history, json={"instruction": "Mira kommt mit der Laterne."})
+    exchange = {
+        "instruction": "Mira kommt mit der Laterne.",
+        "text": "Mira hob die Laterne.",
+        "model": "x-ai/grok-4.6",
+    }
+    noted = writer.post(history, json=exchange)
     assert noted.status_code == 201, noted.text
-    assert noted.json() == [
-        {"at": "2026-09-26T12:00:00Z", "instruction": "Mira kommt mit der Laterne."}
-    ]
-    assert writer.post(history, json={"instruction": "  "}).status_code == 422
-    assert writer.post(history.replace("/1/", "/7/"), json={"instruction": "x"}).status_code == 404
+    assert noted.json() == [{"at": "2026-09-26T12:00:00Z", **exchange}]
+    assert writer.post(history, json={**exchange, "instruction": "  "}).status_code == 422
+    assert writer.post(history, json={"instruction": "Weiter"}).status_code == 422
+    assert writer.post(history.replace("/1/", "/7/"), json=exchange).status_code == 404
 
     writer.post(WRITE, json={"instruction": "Kael schweigt."})
 

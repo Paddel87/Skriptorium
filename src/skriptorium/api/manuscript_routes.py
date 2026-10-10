@@ -96,9 +96,12 @@ class ChapterSummary(BaseModel):
 
 
 class InstructionIn(BaseModel):
-    """The instruction of a proposal that was taken over (step 5.13)."""
+    """A taken-over exchange (step 5.13, ADR-056): the author's instruction ("Weiter" without
+    one), the text as it went into the manuscript and the model that wrote it."""
 
     instruction: str
+    text: str
+    model: str | None = None
 
 
 class GuestLinkIn(BaseModel):
@@ -257,7 +260,7 @@ def set_chapter_summary(
 def list_instructions(
     world_id: str, story_id: str, number: int, found: ServicesDep
 ) -> list[InstructionNote]:
-    """Taken-over instructions of a chapter, oldest first (step 5.13, FR-027, ADR-056)."""
+    """Taken-over exchanges of a chapter, oldest first (step 5.13, FR-027, ADR-056)."""
     found.canon.get_world(world_id)
     return found.manuscript.list_instructions(world_id, story_id, number)
 
@@ -266,11 +269,10 @@ def list_instructions(
 def add_instruction(
     world_id: str, story_id: str, number: int, body: InstructionIn, found: ServicesDep
 ) -> list[InstructionNote]:
-    """Note the instruction of a proposal that was taken over; the AI never gets this list."""
+    """Note a taken-over exchange; the AI never gets this list."""
     found.canon.get_world(world_id)
-    return found.manuscript.add_instruction(
-        world_id, story_id, number, body.instruction, found.clock()
-    )
+    note = InstructionNote(found.clock(), body.instruction, body.text, body.model)
+    return found.manuscript.add_instruction(world_id, story_id, number, note)
 
 
 def _story(found: Services, world_id: str, story_id: str) -> Story:

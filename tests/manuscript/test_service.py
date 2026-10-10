@@ -17,6 +17,7 @@ from skriptorium.manuscript import (
     AlreadyExists,
     Form,
     GuestLink,
+    InstructionNote,
     InvalidInput,
     ManuscriptService,
     NotFound,
@@ -448,10 +449,10 @@ def test_style_missing_keys_count_as_empty(ms: ManuscriptService, root: Path) ->
     assert ms.get_story(W, "halb").writing_style == WritingStyle(style=("knapp",))
 
 
-# --- step 5.13 (FR-027, ADR-056): history of taken-over instructions ------------------------
+# --- step 5.13 (FR-027, ADR-056): history of taken-over exchanges --------------------------
 
 
-def test_taken_over_instructions_are_kept_per_chapter_in_their_own_file(
+def test_taken_over_exchanges_are_kept_per_chapter_in_their_own_file(
     ms: ManuscriptService, root: Path
 ) -> None:
     story = ms.create_story(W, "Die Überfahrt", "roman")
@@ -461,12 +462,19 @@ def test_taken_over_instructions_are_kept_per_chapter_in_their_own_file(
     second = datetime(2026, 10, 10, 19, 5, tzinfo=UTC)
     assert ms.list_instructions(W, story.id, 1) == []
 
-    ms.add_instruction(W, story.id, 1, "  Mit @Kael ans Ufer\nund los  ", first)
-    notes = ms.add_instruction(W, story.id, 1, "Der Nebel steigt", second)
+    ms.add_instruction(
+        W,
+        story.id,
+        1,
+        InstructionNote(first, "  Mit @Kael ans Ufer\nund los  ", " Kael stieß ab. ", " x/m "),
+    )
+    notes = ms.add_instruction(
+        W, story.id, 1, InstructionNote(second, "Weiter", "Der Nebel stieg.", None)
+    )
 
-    assert [(n.at, n.instruction) for n in notes] == [
-        (first, "Mit @Kael ans Ufer\nund los"),
-        (second, "Der Nebel steigt"),
+    assert notes == [
+        InstructionNote(first, "Mit @Kael ans Ufer\nund los", "Kael stieß ab.", "x/m"),
+        InstructionNote(second, "Weiter", "Der Nebel stieg.", None),
     ]
     assert ms.list_instructions(W, story.id, 1) == notes
     assert ms.list_instructions(W, story.id, 2) == []
@@ -475,24 +483,34 @@ def test_taken_over_instructions_are_kept_per_chapter_in_their_own_file(
     content = file.read_text(encoding="utf-8")
     assert "kapitel: 1" in content
     assert "zeit: '2026-10-10T19:05:00+00:00'" in content
-    assert "anweisung: Der Nebel steigt" in content
+    assert "anweisung: Weiter" in content
+    assert "text: Der Nebel stieg." in content
+    assert "modell: x/m" in content
     assert [c.number for c in ms.list_chapters(W, story.id)] == [1, 2]
 
 
-def test_instruction_history_refuses_empty_text_and_missing_chapters(
+def test_history_refuses_empty_parts_missing_chapters_and_broken_files(
     ms: ManuscriptService, root: Path
 ) -> None:
     now = datetime(2026, 10, 10, tzinfo=UTC)
     story = ms.create_story(W, "Die Überfahrt", "roman")
     ms.save_chapter(W, story.id, 1, title="Aufbruch")
     with pytest.raises(InvalidInput):
-        ms.add_instruction(W, story.id, 1, "   ", now)
+        ms.add_instruction(W, story.id, 1, InstructionNote(now, "   ", "Text"))
+    with pytest.raises(InvalidInput):
+        ms.add_instruction(W, story.id, 1, InstructionNote(now, "Weiter", " "))
     with pytest.raises(NotFound):
-        ms.add_instruction(W, story.id, 2, "Weiter", now)
+        ms.add_instruction(W, story.id, 2, InstructionNote(now, "Weiter", "Text"))
     with pytest.raises(NotFound):
         ms.list_instructions(W, "fehlt", 1)
     broken = root / "worlds" / W / "stories" / story.id / "verlauf" / "01.md"
     broken.parent.mkdir(parents=True)
-    broken.write_text("---\nanweisungen:\n- zeit: gestern\n  anweisung: x\n---\n", "utf-8")
-    with pytest.raises(InvalidInput):
-        ms.list_instructions(W, story.id, 1)
+    for header in (
+        "anweisungen: keine",
+        "anweisungen:\n- zeit: gestern\n  anweisung: x",
+        "anweisungen:\n- zeit: '2026-10-10T19:00:00+00:00'\n  anweisung: x\n  modell: 3",
+        "anweisungen:\n- nur text",
+    ):
+        broken.write_text(f"---\n{header}\n---\n", "utf-8")
+        with pytest.raises(InvalidInput):
+            ms.list_instructions(W, story.id, 1)

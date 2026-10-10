@@ -129,10 +129,13 @@ class StoryFact:
 
 @dataclass(frozen=True)
 class InstructionNote:
-    """An instruction whose proposal the author took over (step 5.13, FR-027, ADR-056)."""
+    """One taken-over exchange (step 5.13, FR-027, ADR-056): the author's instruction and the
+    AI's text as it went into the manuscript, with the model that wrote it."""
 
     at: datetime
     instruction: str
+    text: str
+    model: str | None = None
 
 
 @dataclass(frozen=True)
@@ -485,20 +488,34 @@ class ManuscriptService:
         return _notes_from(self._store.read(path))
 
     def add_instruction(
-        self, world_id: str, story_id: str, number: int, instruction: str, at: datetime
+        self,
+        world_id: str,
+        story_id: str,
+        number: int,
+        note: InstructionNote,
     ) -> list[InstructionNote]:
-        """Note an instruction whose proposal was taken over; the chapter file stays as it is.
+        """Note a taken-over exchange; the chapter file stays as it is.
 
         Raises:
             NotFound: The story or the chapter does not exist.
-            InvalidInput: Empty instruction.
+            InvalidInput: Empty instruction or text.
         """
-        note = InstructionNote(at, _required_text(instruction, "Anweisung"))
-        notes = [*self.list_instructions(world_id, story_id, number), note]
+        checked = InstructionNote(
+            note.at,
+            _required_text(note.instruction, "Anweisung"),
+            _required_text(note.text, "Text"),
+            (note.model.strip() or None) if note.model is not None else None,
+        )
+        notes = [*self.list_instructions(world_id, story_id, number), checked]
         header: dict[str, HeaderValue] = {
             "kapitel": number,
             "anweisungen": [
-                {"zeit": n.at.isoformat(timespec="seconds"), "anweisung": n.instruction}
+                {
+                    "zeit": n.at.isoformat(timespec="seconds"),
+                    "anweisung": n.instruction,
+                    "modell": n.model,
+                    "text": n.text,
+                }
                 for n in notes
             ],
         }
@@ -607,13 +624,29 @@ def _history_path(world_id: str, story_id: str, number: int) -> str:
 
 
 def _notes_from(document: Document) -> list[InstructionNote]:
+    value = document.header.get("anweisungen", [])
+    if not isinstance(value, list):
+        raise InvalidInput(f"{document.path}: Feld 'anweisungen' muss eine Liste sein")
     notes: list[InstructionNote] = []
-    for at, instruction in _pairs(document, "anweisungen", "zeit", "anweisung"):
+    for item in value:
+        at = item.get("zeit") if isinstance(item, dict) else None
+        instruction = item.get("anweisung") if isinstance(item, dict) else None
+        text = item.get("text", "") if isinstance(item, dict) else None
+        model = item.get("modell") if isinstance(item, dict) else None
+        if (
+            not isinstance(at, str)
+            or not isinstance(instruction, str)
+            or not isinstance(text, str)
+            or not (model is None or isinstance(model, str))
+        ):
+            raise InvalidInput(
+                f"{document.path}: anweisungen braucht je Eintrag zeit und anweisung"
+            )
         try:
             moment = datetime.fromisoformat(at)
         except ValueError as error:
             raise InvalidInput(f"{document.path}: ungültige Zeit {at!r}") from error
-        notes.append(InstructionNote(moment, instruction))
+        notes.append(InstructionNote(moment, instruction, text, model))
     return notes
 
 
