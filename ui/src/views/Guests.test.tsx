@@ -282,3 +282,30 @@ describe("mentions and story entries with guests", () => {
     await expect(loadStoryEntries("salzmark", [LINK])).rejects.toThrow();
   });
 });
+
+describe("guests named under Herangezogen (step 5.16)", () => {
+  it("shows the guest's entry in the bar of the story", async () => {
+    fakeApi(storyRoutes());
+    const user = userEvent.setup();
+    render(<StoryPage story={WITH_GUEST} />);
+    const content = await screen.findByLabelText(/Anweisung an die KI/);
+    EditorView.findFromDOM(content)?.dispatch({
+      changes: { from: 0, insert: "@König tritt ein." },
+    });
+    await user.click(
+      await screen.findByRole("button", { name: "Nebelkönig (Gast)" }),
+    );
+    const side = screen.getByRole("complementary", {
+      name: "Kanon und Geschichte",
+    });
+    expect(
+      await within(side).findByRole("heading", { name: "Nebelkönig" }),
+    ).toBeDefined();
+    expect(within(side).getByText("Trägt eine Krone aus Reif.")).toBeDefined();
+    expect(
+      within(side).getByText(
+        "Gast aus einer anderen Welt – nur in deren Kanon zu ändern.",
+      ),
+    ).toBeDefined();
+  });
+});

@@ -1,4 +1,5 @@
 import {
+  Fragment,
   lazy,
   Suspense,
   useCallback,
@@ -82,6 +83,7 @@ export function WritingPanel({
   mode,
   tools,
   endSignal = 0,
+  onLookUp,
 }: {
   world: string;
   story: string;
@@ -108,6 +110,8 @@ export function WritingPanel({
   tools?: ReactNode;
   /** Changes when the end of the text should come into view (chapter opened, text taken over). */
   endSignal?: number;
+  /** Show a referenced entry over the page (step 5.16); given, the names under "Herangezogen" are links. */
+  onLookUp?: (entry: CanonEntry) => void;
 }) {
   const loadModels = useCallback(() => api.models(), []);
   const models = useLoad(loadModels);
@@ -521,7 +525,24 @@ export function WritingPanel({
           )}
           {referenced.length > 0 && (
             <p className="note">
-              Herangezogen: {referenced.map(shown).join(", ")}
+              Herangezogen:{" "}
+              {onLookUp === undefined
+                ? referenced.map(shown).join(", ")
+                : referenced.map((entry, index) => (
+                    <Fragment key={entry.id}>
+                      {index > 0 && ", "}
+                      <button
+                        type="button"
+                        className="link"
+                        title="Eintrag ansehen"
+                        onClick={() => {
+                          onLookUp(entry);
+                        }}
+                      >
+                        {shown(entry)}
+                      </button>
+                    </Fragment>
+                  ))}
             </p>
           )}
           <div className={more ? "controls more" : "controls"}>

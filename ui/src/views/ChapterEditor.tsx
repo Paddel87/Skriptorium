@@ -10,6 +10,7 @@ import {
   api,
   describeError,
   describeSummaryFailure,
+  type CanonEntry,
   type Chapter,
   type Story,
 } from "../api";
@@ -41,6 +42,7 @@ export function ChapterEditor({
   lead,
   tools,
   canonVersion = 0,
+  onLookUp,
 }: {
   chapter: Chapter;
   /** The story; its guests are offered in the writing panel and in "In den Kanon". */
@@ -58,6 +60,8 @@ export function ChapterEditor({
   tools?: ReactNode;
   /** Counts canon changes made elsewhere on the page, so the `@` menu loads again. */
   canonVersion?: number;
+  /** Show an entry named under "Herangezogen" in the bar on the right (step 5.16). */
+  onLookUp?: (entry: CanonEntry) => void;
 }) {
   const [title, setTitle] = useState(chapter.title);
   const [text, setText] = useState(chapter.text);
@@ -193,6 +197,7 @@ export function ChapterEditor({
         onAccept={append}
         endSignal={ends}
         mode={mode}
+        onLookUp={onLookUp}
         tools={
           <>
             <button

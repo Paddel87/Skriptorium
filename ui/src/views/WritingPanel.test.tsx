@@ -692,6 +692,77 @@ describe("StoryPage with writing", () => {
   });
 });
 
+describe("referenced entries over the page (step 5.16, FR-031)", () => {
+  it("shows a named entry in the bar and leaves text, instruction and proposal as they were", async () => {
+    const feed = sseFeed();
+    fakeApi({
+      ...routes(feed),
+      "GET /api/worlds/salzmark/stories/ueberfahrt/chapters": ok([CHAPTER]),
+    });
+    const user = userEvent.setup();
+    render(<StoryPage story={STORY} />);
+    await ready();
+    const view = await typeInstruction("Mit @Kael ans Ufer");
+    const link = await screen.findByRole("button", { name: "Kael" });
+    expect(link.closest("p")?.textContent).toBe("Herangezogen: Kael");
+
+    await user.click(screen.getByRole("button", { name: "Weiterschreiben" }));
+    feed.send("text", { text: "Kael stieß ab." });
+    feed.send("done", {
+      input_tokens: 1,
+      output_tokens: 1,
+      cost_usd: null,
+      finish_reason: "stop",
+    });
+    feed.close();
+    await screen.findByRole("button", { name: "Übernehmen" });
+    const proposal = screen.getByLabelText("Vorschlag der KI");
+
+    await user.click(screen.getByRole("button", { name: "Kael" }));
+    const side = screen.getByRole("complementary", {
+      name: "Kanon und Geschichte",
+    });
+    expect(within(side).getByRole("heading", { name: "Kael" })).toBeDefined();
+    expect(within(side).getByText("Fährt über den See.")).toBeDefined();
+    await user.click(screen.getByRole("button", { name: "Leiste schließen" }));
+
+    expect(screen.queryByRole("complementary")).toBeNull();
+    expect(view.state.doc.toString()).toBe("Mit @Kael ans Ufer");
+    expect(proposal).toHaveProperty("value", "Kael stieß ab.");
+    expect(screen.getByLabelText("Manuskript").textContent).toBe(
+      "Es war kalt.",
+    );
+    expect(screen.getByRole("button", { name: "Übernehmen" })).toBeDefined();
+  });
+
+  it("hands the clicked entry on and keeps plain names without a place to show them", async () => {
+    fakeApi(routes(sseFeed()));
+    const onLookUp = vi.fn();
+    const { unmount } = render(
+      <WritingPanel
+        world="salzmark"
+        story="ueberfahrt"
+        chapter={1}
+        prepare={() => Promise.resolve(true)}
+        onAccept={() => Promise.resolve()}
+        onLookUp={onLookUp}
+      />,
+    );
+    const user = userEvent.setup();
+    await ready();
+    await typeInstruction("@Kael und @Grauwasser");
+    await user.click(await screen.findByRole("button", { name: "Grauwasser" }));
+    expect(onLookUp).toHaveBeenCalledWith(PLACE);
+    unmount();
+
+    panel();
+    await ready();
+    await typeInstruction("@Kael");
+    expect(await screen.findByText("Herangezogen: Kael")).toBeDefined();
+    expect(screen.queryByRole("button", { name: "Kael" })).toBeNull();
+  });
+});
+
 describe("StoryPage writing mode", () => {
   it("saves perspective and the characters the author leads", async () => {
     const feed = sseFeed();

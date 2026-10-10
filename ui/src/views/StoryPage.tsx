@@ -88,6 +88,11 @@ export function StoryPage({
               setCanonRound((round) => round + 1);
             }}
             canonVersion={canonVersion}
+            onLookUp={(entry) => {
+              setLookedUp(entry.id);
+              setTab("kanon");
+              setSide(true);
+            }}
             lead={<MenuButton />}
             tools={sideToggle}
             mode={

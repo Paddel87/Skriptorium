@@ -86,16 +86,19 @@ describe("model per story (step 3.9, FR-018)", () => {
     fakeApi(routes(sseFeed()));
     render(<StoryPage story={{ ...STORY, model: "alt/modell" }} />);
     const select = await modelSelect("alt/modell");
-    const options = [...(select as HTMLSelectElement).options].map(
-      (option) => option.text,
-    );
-    expect(options).toEqual([
-      "★ x-ai/grok-4.7",
-      "★ x-ai/grok-4.6",
-      "alt/modell",
-      "──────────",
-      "Modelle verwalten …",
-    ]);
+    // The story's model is shown before the favorites have loaded; wait for the whole list.
+    await waitFor(() => {
+      const options = [...(select as HTMLSelectElement).options].map(
+        (option) => option.text,
+      );
+      expect(options).toEqual([
+        "★ x-ai/grok-4.7",
+        "★ x-ai/grok-4.6",
+        "alt/modell",
+        "──────────",
+        "Modelle verwalten …",
+      ]);
+    });
   });
 
   it("reports a model that could not be kept", async () => {
