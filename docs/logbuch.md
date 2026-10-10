@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [ERLEDIGT] 5.3 lesbare Dateien – Nachweis
+
+- Arbeit oberhalb der empfohlenen Klasse (Routine) auf der Entscheidungs-Klasse, zu Beginn genannt; keine Abgabe (kleiner Schritt, Kontext geladen). Vorher `git ls-remote --heads origin`: kein 5.3-Branch.
+- Weg: Welt „Die Salzmark“ über die Schnittstelle angelegt (wie im Betrieb, Test-Client mit frischem Datenverzeichnis): Eintrag Kael mit Alias und Text, zweite Welt „Nordland“ mit Ragna als Gast, Geschichte mit Genre, Schreibweise, Fakt, Gesamtzusammenfassung, Kapitel mit Text und geprüfter Kurzfassung. Dann die Dateien angesehen.
+- Befund: Alles einer Welt liegt unter `worlds/<welt>/` als Markdown mit YAML-Kopf, UTF-8, deutsche Schlüssel (`name`, `aliasse`, `kategorie`, `titel`, `gefuehrte_figuren`, `gast_verbindungen`, `genre`, `schreibweise`, `kurzfassung`, `fakten`): `world.md`, `canon/figur/kael.md`, `stories/die-ueberfahrt/story.md` (Text = Gesamtzusammenfassung), `facts.md`, `chapters/01-aufbruch.md` (Text = Kapiteltext, Absätze erhalten, Fett als `**…**`). Daneben nur `index.sqlite` (abgeleiteter Suchindex, ADR-003) und `system/zugang.md` (Zugang, nicht Teil der Welt; Inhalt nicht ausgegeben). Gäste stehen als Kennung (`welt: nordland`, `eintrag: ragna`) – im Editor über den Pfad `worlds/nordland/canon/figur/ragna.md` auffindbar. Keine Lücke, nichts zu schließen.
+- Absicherung: `tests/api/test_readable_files.py` (2 Tests: nur `.md` mit Kopf unter der Welt, alle Inhalte im Klartext; kein SQLite unter `worlds/`). `pytest` 484 grün; ruff, mypy --strict sauber.
+
 ### 2026-10-10 – [BEOBACHTUNG] 5.16 herangezogene Einträge anklickbar umgesetzt
 
 - Arbeit oberhalb der empfohlenen Klasse (Routine) auf der Entscheidungs-Klasse, zu Beginn genannt; keine Abgabe (Kontext geladen, kleiner Schritt). Vorher `git ls-remote --heads origin`: kein 5.16-Branch.

@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-10-10, nach dem Deployment `628f559` (5.6 Genre und Schreibweise, 5.11 Kanon in der Leiste der Geschichte eingespielt; Anweisung des Eigentümers „einspielen“)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 5.16 herangezogene Einträge anklickbar (umgesetzt, Prüfung offen); 5.20 schnell angelegte Kapitel (behoben, Prüfung offen). Am 2026-10-10 erledigt: 5.12, 5.26, 5.1, 5.2, 5.21, 5.11, 5.6
+- **Aktiver Schritt:** 5.16 herangezogene Einträge anklickbar (umgesetzt, Prüfung offen); 5.20 schnell angelegte Kapitel (behoben, Prüfung offen). Am 2026-10-10 erledigt: 5.12, 5.26, 5.1, 5.2, 5.21, 5.11, 5.6, 5.3
 - **Nächster Schritt:** 5.11 Kanon in der Leiste einspielen (auf Anweisung) und bestätigen lassen; (5.25 nach V.13 verschoben, 2026-10-10) D.16 erledigt (ADR-052: grok-4.7 in 5.12 aus der Voreinstellung), E1 zurückgestellt auf V.10 (ADR-050); danach 5.20, 5.16, 5.6, 5.12, 5.13, 5.3, 5.4, 5.14, 5.5. Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
@@ -22,13 +22,13 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 18 von 26 erledigt, 2 in Arbeit, 5 offen, 1 verschoben (5.25 → V.13).**
+**Phase 5: 19 von 26 erledigt, 2 in Arbeit, 4 offen, 1 verschoben (5.25 → V.13).**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | ✅ | 5.1 | Kanon-Vorschläge ohne `@` | erledigt 2026-10-10 | – |
 | ✅ | 5.2 | Bedienung am Smartphone | erledigt 2026-10-10 | – |
-| ⚪ | 5.3 | Lesbare Dateien – Nachweis | offen | KI |
+| ✅ | 5.3 | Lesbare Dateien – Nachweis | erledigt 2026-10-10 | – |
 | ⚪ | 5.4 | Zeitlinie mit Datumsangaben im Kalender der Welt (Kann) | offen | du: umsetzen ja/nein |
 | ⚪ | 5.5 | Planung der nächsten Ausbaustufe | offen | KI – zuletzt |
 | ✅ | 5.6 | Atmosphärische Schreibweise je Geschichte | erledigt 2026-10-10 | – |
@@ -216,7 +216,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.3: Lesbare Dateien – Nachweis
 
-- **Status:** ⚪ OFFEN
+- **Status:** ✅ ERLEDIGT (2026-10-10) – Nachweis an einer über die Schnittstelle angelegten Welt (Kanon mit Alias, Gast aus zweiter Welt, Geschichte mit Genre, Schreibweise, Fakten, Gesamtzusammenfassung, Kapitel mit Kurzfassung): alles liegt unter `worlds/<welt>/` als Markdown mit YAML-Kopf (`world.md`, `canon/<kategorie>/<eintrag>.md`, `stories/<geschichte>/story.md`, `facts.md`, `chapters/01-<titel>.md`), UTF-8, deutsche Schlüssel; `index.sqlite` ist nur der abgeleitete Suchindex, keine Datei einer Welt liegt anderswo. Keine Lücke gefunden. Dauerhaft abgesichert durch `tests/api/test_readable_files.py`; Belegauszug im Logbuch
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.5
 - **Freigabepflichtig:** nein
