@@ -7,7 +7,8 @@ wie die Oberfläche sie schickt; in ``ohne-at`` keine.
 
 Aufruf:
     VARIANTE=NAME FASSUNG=mit-at|ohne-at [MODELL=x-ai/grok-4.6] [LAENGE=mittel] [LAEUFE=3]
-    [GESCHICHTEN=salzmark,glimmergrund] [NACHEINANDER=1] uv run python spikes/kanon-treue/lauf.py
+    [GESCHICHTEN=salzmark,glimmergrund] [NACHEINANDER=1] [WARTEZEIT=90]
+    uv run python spikes/kanon-treue/lauf.py
 Ergebnisse unter ``ergebnisse/<VARIANTE>/<geschichte>/lauf-<n>/``. Schlüssel aus
 OPENROUTER_API_KEY.
 """
@@ -125,7 +126,12 @@ async def main() -> None:
     length = os.environ.get("LAENGE", "mittel")
     runs = int(os.environ.get("LAEUFE", "3"))
     names = os.environ.get("GESCHICHTEN", "salzmark,glimmergrund").split(",")
-    provider = OpenRouterProvider(os.environ["OPENROUTER_API_KEY"])
+    # WARTEZEIT: Sekunden bis zum ersten Textstück (Produkt: 90). grok-4.7 denkt an der echten
+    # Anfrage bis zu ca. 6 Minuten vor (5.26); für die Messung der Befolgung länger warten.
+    wait = float(os.environ.get("WARTEZEIT", "90"))
+    provider = OpenRouterProvider(
+        os.environ["OPENROUTER_API_KEY"], first_chunk_timeout=wait, chunk_timeout=max(30.0, wait / 3)
+    )
     try:
         jobs = [(name, run) for name in names for run in range(1, runs + 1)]
         if os.environ.get("NACHEINANDER"):
