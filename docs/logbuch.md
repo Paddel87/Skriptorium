@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] Vorab-Abgleich gegen die Vision vor 5.14
+
+- Frage des Eigentümers: „Ist die Vision jetzt komplett?“ `docs/vision.md` vollständig gelesen und jedes Element gegen Fahrplan und `docs/requirements.md` geprüft. Erledigt: Kernidee und Zielbild (FR-001–004, 007–009, 011–017, 024), Szenarien 1, 3, 4, 5; Erfolgskriterien Widersprüche (FR-011), 10 Sekunden (FR-015), Figuren übergreifend (FR-016/017), 30 Minuten (FR-022, Einschätzung des Eigentümers – Stoppuhr laut Eigentümer „problemlos zu unterbieten“); harte Randbedingungen (Cloud-Modelle, Modellwechsel FR-018/025/028, Lizenz ADR-005); weiche Präferenzen (FR-019, FR-020 + 5.3, FR-032, ADR-004). Abgrenzungen unverändert (Publizieren, Bilder, Karten nicht in der ersten Version). Kann-Wünsche FR-023, FR-029, FR-030 sind keine Vision-Elemente und haben Landeplätze in V.x.
+- **Offen:** Erfolgskriterien „kein Kontextverlust“ und „günstiger pro Anfrage“ beim Referenzumfang sowie Szenario 2 (Handlungsstand aller Kapitel) – FR-010 TEILWEISE, D.4. Entscheidung des Eigentümers: Nachweis an „The Trap“ mit Hochrechnung (statt Import der alten Referenzgeschichte oder Warten). Der formale Vision-Checkpoint folgt in 5.14.
+
 ### 2026-10-11 – [BEOBACHTUNG] Testkapitel 5 und 6 in „The Trap“ gelöscht
 
 - Auf ausdrücklichen Wunsch des Eigentümers („Kannst du mir noch Kapitel 5 und 6 löschen?“). Beide leer (0 Wörter), ohne Verlauf; vorher nach `/opt/docker/skriptorium/sicherungen/` kopiert, dann über `DocumentStore.delete` gelöscht (Index mit aufgeräumt). Danach: Kapitel 1–4 mit 9.786 / 9.719 / 9.758 / 9.788 Wörtern. Eine Funktion zum Löschen von Kapiteln gibt es in der Oberfläche nicht.
