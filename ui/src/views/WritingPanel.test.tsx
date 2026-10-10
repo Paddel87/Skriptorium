@@ -763,6 +763,135 @@ describe("referenced entries over the page (step 5.16, FR-031)", () => {
   });
 });
 
+describe("history of instructions (step 5.13, FR-027)", () => {
+  const HISTORY =
+    "/api/worlds/salzmark/stories/ueberfahrt/chapters/1/instructions";
+
+  function storyRoutes(feed: ReturnType<typeof sseFeed>, failNote = false) {
+    let saved = CHAPTER;
+    let notes: { at: string; instruction: string }[] = [];
+    return fakeApi({
+      ...routes(feed),
+      "GET /api/worlds/salzmark/stories/ueberfahrt/chapters": () => ({
+        status: 200,
+        body: [saved],
+      }),
+      "PUT /api/worlds/salzmark/stories/ueberfahrt/chapters/1": (body) => {
+        saved = { ...saved, ...(body as object) };
+        return { status: 200, body: saved };
+      },
+      [`GET ${HISTORY}`]: () => ({ status: 200, body: notes }),
+      [`POST ${HISTORY}`]: failNote
+        ? fail(500, "Speichern fehlgeschlagen")
+        : (body) => {
+            notes = [
+              ...notes,
+              {
+                at: "2026-10-10T19:40:00Z",
+                instruction: (body as { instruction: string }).instruction,
+              },
+            ];
+            return { status: 201, body: notes };
+          },
+    });
+  }
+
+  async function takeOver(feed: ReturnType<typeof sseFeed>, text: string) {
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Weiterschreiben" }));
+    feed.send("text", { text });
+    feed.send("done", {
+      input_tokens: 1,
+      output_tokens: 1,
+      cost_usd: null,
+      finish_reason: "stop",
+    });
+    feed.close();
+    await user.click(await screen.findByRole("button", { name: "Übernehmen" }));
+  }
+
+  it("notes the instruction of a taken-over proposal and shows it on its own tab", async () => {
+    const feed = sseFeed();
+    const { calls } = storyRoutes(feed);
+    const user = userEvent.setup();
+    render(<StoryPage story={STORY} />);
+    await ready();
+    const view = await typeInstruction("Mira kommt mit der Laterne.");
+    expect(
+      screen
+        .getByRole("button", { name: "Manuskript" })
+        .getAttribute("aria-current"),
+    ).toBe("true");
+
+    await takeOver(feed, "Mira trat ein.");
+    await waitFor(() => {
+      expect(
+        calls.find((c) => c.method === "POST" && c.path === HISTORY)?.body,
+      ).toEqual({ instruction: "Mira kommt mit der Laterne." });
+    });
+    expect(view.state.doc.toString()).toBe("");
+
+    await user.click(screen.getByRole("button", { name: "Verlauf" }));
+    const history = screen.getByRole("region", {
+      name: "Verlauf der Anweisungen",
+    });
+    expect(
+      await within(history).findByText("Mira kommt mit der Laterne."),
+    ).toBeDefined();
+    expect(within(history).getByText(/10\.10\.2026/)).toBeDefined();
+    expect(
+      screen.getByLabelText("Manuskript").closest("[hidden]"),
+    ).not.toBeNull();
+
+    await user.click(screen.getByRole("button", { name: "Manuskript" }));
+    expect(
+      screen.queryByRole("region", { name: "Verlauf der Anweisungen" }),
+    ).toBeNull();
+    expect(screen.getByLabelText("Manuskript").textContent).toContain(
+      "Mira trat ein.",
+    );
+    expect(screen.getByLabelText("Manuskript").textContent).not.toContain(
+      "Laterne",
+    );
+  });
+
+  it("notes nothing for Weiter without instruction and says when the history is empty", async () => {
+    const feed = sseFeed();
+    const { calls } = storyRoutes(feed);
+    const user = userEvent.setup();
+    render(<StoryPage story={STORY} />);
+    await ready();
+    await takeOver(feed, "Der Wind drehte.");
+    await waitFor(() => {
+      expect(calls.filter((c) => c.method === "PUT")).toHaveLength(1);
+    });
+    expect(calls.some((c) => c.path === HISTORY && c.method === "POST")).toBe(
+      false,
+    );
+    await user.click(screen.getByRole("button", { name: "Verlauf" }));
+    expect(
+      await screen.findByText(
+        "Noch keine übernommenen Anweisungen in diesem Kapitel.",
+      ),
+    ).toBeDefined();
+  });
+
+  it("keeps the taken-over text and says when the history could not be saved", async () => {
+    const feed = sseFeed();
+    storyRoutes(feed, true);
+    render(<StoryPage story={STORY} />);
+    await ready();
+    await typeInstruction("Kael schweigt.");
+    await takeOver(feed, "Kael schwieg.");
+    expect(
+      await screen.findByText(/^Übernommen, aber nicht im Verlauf vermerkt: /),
+    ).toBeDefined();
+    expect(screen.getByLabelText("Manuskript").textContent).toContain(
+      "Kael schwieg.",
+    );
+  });
+});
+
 describe("StoryPage writing mode", () => {
   it("saves perspective and the characters the author leads", async () => {
     const feed = sseFeed();
