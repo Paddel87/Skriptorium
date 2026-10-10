@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-10, nach der Prüfung der Kanon-Treue 5.26 (Server auf `a71cdff`; auf `main` seither gemergt, aber **nicht eingespielt**: Mitlaufen beim Schreiben der KI (#83, 5.11) und Vorschläge ohne `@` (#84, 5.1) – derzeit keine Arbeiten am VPS auf Anweisung des Eigentümers)
+- **Stand vom:** 2026-10-10, nach den Entscheidungen zu 5.26 (ADR-050, ADR-051) (Server auf `a71cdff`; auf `main` seither gemergt, aber **nicht eingespielt**: Mitlaufen beim Schreiben der KI (#83, 5.11) und Vorschläge ohne `@` (#84, 5.1) – derzeit keine Arbeiten am VPS auf Anweisung des Eigentümers)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** vier Einträge `[IN ARBEIT]`, alle warten auf den Eigentümer oder das Einspielen: 5.1 (umgesetzt, nicht eingespielt), 5.2/5.21 (eingespielt, Prüfung auf dem Gerät), 5.11 (Teile 1 und 2 geprüft, Korrektur Mitlaufen nicht eingespielt, Teil 3 offen). 5.26 erledigt 2026-10-10 (Kanon-Treue)
-- **Nächster Schritt:** (1) Wenn der Eigentümer Arbeiten am VPS wieder freigibt: `main` einspielen (#83, #84), dann Bestätigung von 5.1 und vom Mitlaufen; (2) Prüfung von 5.2/5.21 auf dem Smartphone und am Mac (Installation, Anmeldung in der App, Markieren mit dem Finger, Start ohne Netz); (3) Entscheidungen des Eigentümers zu den Vorlagen aus 5.26 (E1: nicht genannte Kanon-Einträge gehen bei langen Kapiteln verloren; E2: grok-4.7 überschreitet die Wartezeit von 90 s) – jeder neue Schritt daraus löst den Stopp Phasen-Wucherung mit Neuplanung aus; (4) 5.11 Teil 3 Kanon-Seite (mit Mockup vorher/nachher); (5) 5.25 Browser-Speicher; danach 5.20, 5.16, 5.6, 5.12, 5.13, 5.3, 5.4, 5.14, 5.5. Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** (1) Wenn der Eigentümer Arbeiten am VPS wieder freigibt: `main` einspielen (#83, #84), dann Bestätigung von 5.1 und vom Mitlaufen; (2) Prüfung von 5.2/5.21 auf dem Smartphone und am Mac (Installation, Anmeldung in der App, Markieren mit dem Finger, Start ohne Netz); (3) D.16 Reaktionszeit erneut erkunden (E2 aus 5.26, ADR-051; vor 5.12) – E1 zurückgestellt auf V.10 (ADR-050); (4) 5.11 Teil 3 Kanon-Seite (mit Mockup vorher/nachher); (5) 5.25 Browser-Speicher; danach 5.20, 5.16, 5.6, 5.12, 5.13, 5.3, 5.4, 5.14, 5.5. Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -66,8 +66,9 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⚪ | D.11 | Sicherungs-Zugangsdaten außerhalb des Servers ablegen | offen | du – bis 2026-10-31 |
 | ⚪ | D.13 | Weigerungen der KI im Text erkennen – Erkundung | offen | du: Beispiele echter Sperren |
 | ⚪ | D.15 | Wechsel React Router 7 → Linie 8 | offen | KI – ab 2026-12-17 |
+| ⚪ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | offen | KI – vor 5.12 |
 
-Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.9.
+Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.10.
 
 ---
 
@@ -253,8 +254,8 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich, nicht bloß Status-Update.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 5
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Die verschobenen Schritte V.1 bis V.9 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5; V.6 bis V.9 ergänzt 2026-10-08, Wünsche des Eigentümers).
-- **Akzeptanzkriterien:** Jeder Schritt V.1–V.9 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
+- **Zu tun:** Die verschobenen Schritte V.1 bis V.10 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5; V.6 bis V.9 ergänzt 2026-10-08, Wünsche des Eigentümers; V.10 ergänzt 2026-10-10, ADR-050).
+- **Akzeptanzkriterien:** Jeder Schritt V.1–V.10 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Fahrplan, ggf. ADRs
@@ -586,7 +587,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.26: Kanon-Treue mit grok-4.6 prüfen
 
-- **Status:** ✅ ERLEDIGT (2026-10-10) – Bericht `docs/research/kanon-treue-grok.md`, Werkzeug `spikes/kanon-treue/`. (a) Per `@` genannte Einträge, Regeln, Zeitlinie und geführte Figur kommen vollständig an, auch alle Einträge per `@` am längsten Kapitel; nicht genannte Einträge nur bei Restbudget nach den letzten Seiten – in Glimmergrund fehlen ab ca. 2.800 Wörtern Kapitel 1–3 von 23 Einträgen. (b) Verblindet bewertet, je 3 Ketten an beiden Geschichten: grok-4.6 hält 95–100 % der berührten Proben ein, 6 Widersprüche in 12 Ketten (3 eindeutig, ca. 0,6–1,0 je Kapitel – an der Grenze von FR-011); grok-4.7 100 %, 0 Widersprüche in 6 Ketten (Tendenz, nach Regel-002 kein Beleg); `@` ohne messbaren Unterschied. Neuer Befund: grok-4.7 braucht an echten Anfragen im Mittel 113–131 s, bis 370 s bis zum ersten Textstück – über der Wartezeit des Produkts (90 s, ADR-035). Kosten ca. 5,15 $. Zwei Entscheidungsvorlagen an den Eigentümer (E1 nicht genannte Einträge, E2 grok-4.7), offen – neue Schritte daraus lösen den Stopp Phasen-Wucherung aus
+- **Status:** ✅ ERLEDIGT (2026-10-10) – Bericht `docs/research/kanon-treue-grok.md`, Werkzeug `spikes/kanon-treue/`. (a) Per `@` genannte Einträge, Regeln, Zeitlinie und geführte Figur kommen vollständig an, auch alle Einträge per `@` am längsten Kapitel; nicht genannte Einträge nur bei Restbudget nach den letzten Seiten – in Glimmergrund fehlen ab ca. 2.800 Wörtern Kapitel 1–3 von 23 Einträgen. (b) Verblindet bewertet, je 3 Ketten an beiden Geschichten: grok-4.6 hält 95–100 % der berührten Proben ein, 6 Widersprüche in 12 Ketten (3 eindeutig, ca. 0,6–1,0 je Kapitel – an der Grenze von FR-011); grok-4.7 100 %, 0 Widersprüche in 6 Ketten (Tendenz, nach Regel-002 kein Beleg); `@` ohne messbaren Unterschied. Neuer Befund: grok-4.7 braucht an echten Anfragen im Mittel 113–131 s, bis 370 s bis zum ersten Textstück – über der Wartezeit des Produkts (90 s, ADR-035). Kosten ca. 5,15 $. Entscheidungen des Eigentümers 2026-10-10 (Auswahlfragen): E1 nicht genannte Einträge zurückgestellt auf V.10 (ADR-050); E2 grok-4.7 – Ursache zuerst erkunden in D.16 (ADR-051); NFR Reaktionszeit `[VORLÄUFIG]` bis D.16. Kein neuer Schritt in Phase 5
 - **Phasentyp-Kontext:** UMSETZUNG (Prüfschritt; Ergebnis als Bericht, keine Funktion)
 - **Abhängigkeiten:** 5.24 (zweite Testgeschichte, Regel-002)
 - **Freigabepflichtig:** nein – Prüfwerkzeug unter `spikes/`; ein Wechsel der Voreinstellung als Folge wäre eine eigene Entscheidung (ADR)
@@ -855,6 +856,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Artefakte:** ADR, Code, Tests
 - **Notizen:** Angelegt 2026-10-08 mit ADR-046. Querschnitt, nicht Teil des Schrittplans von Phase 5.
 
+#### D.16: Reaktionszeit erneut erkunden – grok-4.7 über 90 s
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** ERKUNDUNG
+- **Abhängigkeiten:** 5.26
+- **Frist:** vor 5.12 (Modell-Auswahl soll auf belastbaren Reaktionszeiten aufbauen)
+- **Freigabepflichtig:** nein (Erkundung); eine Abhilfe aus dem Ergebnis (Vorgaben des Rahmens, Wartezeit, Modell-Liste, Zielwerte) ist eine eigene Entscheidung mit ADR
+- **Empfohlene Klasse:** Entscheidung – am Ende steht eine Vorlage zur Abhilfe (Eskalations-Auslöser 1); die Messreihe selbst ist Routine wie D.6.
+- **Eingangskriterien:** `OPENROUTER_API_KEY` gesetzt; Guthaben für ca. 1–2 $
+- **Anforderungen (ab Klasse M):** keine (NFR Reaktionszeit, ADR-035, ADR-051)
+- **Zu tun:** Befund 5.26: grok-4.7 an echten Schreib-Anfragen im Mittel 113–131 s je Vorschlag, bis 370 s vor dem ersten Textstück (D.6: höchstens 29 s); grok-4.6 Median 26–29 s je Vorschlag, Zeit bis zum ersten Textstück nicht erfasst. Messen: Zeit bis zum ersten Textstück und Ausgabe-Token je Vorschlag für grok-4.6 und grok-4.7, nacheinander, an beiden Testgeschichten (Regel-002) – (1) heutiger Rahmen, (2) Rahmen ohne die Vorgaben aus 5.8, 5.15 und 5.22; dazu die einfache Gegenprobe aus 5.26. Das Werkzeug `spikes/kanon-treue/lauf.py` erfasst die Zeit bis zum ersten Textstück noch nicht.
+- **Akzeptanzkriterien:** Wissensbasiert: Ursache belegt (Vorgaben des Rahmens, Anbieter oder beides) oder als nicht beeinflussbar belegt; Bericht mit Mittelwert und Spannweite je Modell und Variante; Vorlage an den Eigentümer; NFR Reaktionszeit wieder `[BELASTBAR]` per ADR.
+- **Betroffene Module:** ai_gateway, context (nur Erkundung)
+- **Reifegrad-Wirkung:** NFR Reaktionszeit `[VORLÄUFIG]` → `[BELASTBAR]`
+- **Artefakte:** Spike-Bericht, ADR, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-10 auf die Vorlage E2 aus 5.26 (ADR-051, Eigentümer: „erst wissen“). Querschnitt wie D.6, nicht Teil des Schrittplans von Phase 5.
+
 #### M.1: Branch-Konvention festlegen
 
 - **Status:** ✅ ERLEDIGT (2026-09-26)
@@ -1023,6 +1041,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** offen
 - **Artefakte:** ADR, Code, Tests
 - **Notizen:** Mindert Vision-Risiko 9 „Manuelle Kanon-Pflege“.
+
+#### V.10: Nicht genannte Kanon-Einträge bei langen Kapiteln
+
+- **Status:** ⏸️ VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 (ADR-050)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 5.26
+- **Freigabepflichtig:** ja – Reihenfolge der Kontext-Zusammenstellung (ADR-003), Kategorie 1
+- **Empfohlene Klasse:** Entscheidung – Architekturänderung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** 5.5
+- **Anforderungen (ab Klasse M):** FR-011
+- **Zu tun:** Befund 5.26 (a): Einträge, die nicht per `@` genannt und weder Regel noch Zeitlinie sind, gehen nur mit Restbudget nach den letzten Seiten in die Anfrage; bei langen Kapiteln fehlen sie (Glimmergrund ab ca. 2.800 Wörtern 1–3 von 23). Optionen der Vorlage E1: (A) Kultur-Einträge immer mitgeben wie Regeln und Zeitlinie, (B) in der Oberfläche zeigen, welche Einträge nicht mitgingen, (C) erst an einer echten Welt messen, mit einer Probe, die nur im Kanon-Eintrag steht. Wahl bei 5.5.
+- **Akzeptanzkriterien:** nach FR-011; je nach Wahl: Nachweis an einer Probe, die nur im Kanon-Eintrag steht, bei langem Kapitel (Regel-002).
+- **Betroffene Module:** context (bei B: ui)
+- **Reifegrad-Wirkung:** keine erwartet
+- **Artefakte:** ADR, Code, Tests
+- **Notizen:** Angelegt 2026-10-10; der Eigentümer stellte die Vorlage E1 zurück (ADR-050). Restrisiko bis dahin: nicht genannte Einträge gehen bei langen Kapiteln still verloren; Abhilfe im Alltag per `@`.
 
 ---
 
