@@ -36,6 +36,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - **Entscheidung (Auswahlfragen):** als Befund zu 5.11 (kein neuer Schritt, Phase 5 an der Wucherungs-Schwelle); Leiste wie die Kanon-Seite mit Bearbeiten.
 - **Lösung:** `Canon` mit `guests` (Gast-Figuren gekennzeichnet, nur lesbar) und `compact` (Liste oder Eintrag), in der Leiste mit eigener Auswahl; Änderungen dort zählen als Kanon-Änderung für das `@`-Menü (`canonVersion`). `CanonLookup` entfernt, Tests umgestellt. Vorher-/Nachher-Vergleich (Desktop, Smartphone) freigegeben. `vitest` 147 bestanden, 97,74 % Zeilen / 95,38 % Zweige; Playwright 10 bestanden. 5.11 wieder `[IN ARBEIT]` bis zum Einspielen und zur Bestätigung.
 
+### 2026-10-10 – [BEOBACHTUNG] 5.25 in die nächste Ausbaustufe verschoben, kein Befund in Firefox
+
+- Befund des Eigentümers („in Firefox schlägt `@` keine Kanon-Einträge mehr vor“) war eine Verwechslung: geschrieben im Feld „Kurzfassung des Kapitels“, nicht im Anweisungsfeld. Fehlersuche abgebrochen; dabei fiel auf, dass Playwright für Firefox einen neueren Browser (`firefox-1538`) erwartet, der lokal fehlt – nicht heruntergeladen. Angeboten: Kurzfassung deutlicher absetzen (neuer Schritt), keine Antwort.
+- Auf Wunsch des Eigentümers („Schritt in eine andere Phase übertragen, dieser soll den Phasenabschluss nicht behindern“): 5.25 `[VERSCHOBEN]` → neuer Schritt V.13 (Landeplatz 5.5, Inhalt übernommen). Abschlusskriterium von Phase 5 ergänzt um „`[VERSCHOBEN]` mit Ziel-Schritt in der nächsten Ausbaustufe“. FR-032, Architektur und README nachgezogen.
+
 ### 2026-10-10 – [ERLEDIGT] Abnahme 5.2 und 5.21
 
 - Prüfliste (iPhone: Anmeldung bleibt, neue Szene, Weiterschreiben, „In den Kanon“ mit Markieren per Finger, Flugmodus; Mac: Installation, Fenster ohne Browserleiste, Anmeldung) vom Eigentümer abgearbeitet: „passt alles“ → 5.2 und 5.21 `[ERLEDIGT]`; FR-019 und FR-032 erledigt. Phase 5: 16 von 26 erledigt, keiner in Arbeit.

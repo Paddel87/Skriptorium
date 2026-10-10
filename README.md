@@ -101,7 +101,6 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - ✅ **5.1, 5.11:** Vorschläge ohne `@`, Chat-Aufbau mit Mitlaufen und neue Kanon-Seite mit Suche und Gliederung nach Kategorie – erledigt 2026-10-10.
 - ✅ **5.2, 5.21:** Bedienung am Smartphone und Installation als App am iPhone und Mac – erledigt 2026-10-10.
 - ✅ **D.16:** grok-4.7 denkt an echten Schreib-Anfragen 44–157 s vor, über die Einstellungen nicht zu beheben; kommt in 5.12 aus der Voreinstellung ([Bericht](docs/research/reaktionszeit-d16.md), ADR-052). Kanon-Einträge, die bei langen Kapiteln nicht mitgehen: zurückgestellt auf die nächste Ausbaustufe (V.10, ADR-050).
-- ⚪ **5.25:** Antworten des Servers nicht im Browser-Speicher.
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).
