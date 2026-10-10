@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [ADR-ANGELEGT] ADR-054 CI nur für `main` und fertige Pull Requests (D.17)
+
+- Eigentümer: PRs mit offenen Rückfragen und späteren Nachträgen lassen die CI immer wieder laufen – „eine Frage der Wirtschaftlichkeit“; #102 auf Wunsch in einen Entwurf umgewandelt. Geprüft: Repo öffentlich (Actions-Minuten ohne Kontingent), aber jeder Push lief doppelt (Push auf alle Branches + Pull Request), auch bei Entwürfen.
+- Entscheidung per Auswahlfrage (der Eigentümer verlangte ausdrücklich das Frage-Antwort-System statt eines Textblocks): A. `[OPERATIV]` `[METHODIK]`, Kategorie 7. Arbeitsweise zusätzlich: bei offenen Prüfungen lokal committen, erst nach Freigabe pushen (im Gedächtnis der KI festgehalten). Querschnitt-Schritt D.17.
+
 ### 2026-10-10 16:40 UTC – [BEOBACHTUNG] Kurzfassung am Smartphone mit der Anweisung verwechselt – V.15
 
 - **Befund des Eigentümers:** „Die Kapitel-Zusammenfassung verwechsle ich gerne mit der Eingabe für die KI, das muss ganz anders gemacht werden – nur als Hinweis.“

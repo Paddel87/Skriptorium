@@ -66,6 +66,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⚪ | D.11 | Sicherungs-Zugangsdaten außerhalb des Servers ablegen | offen | du – bis 2026-10-31 |
 | ⚪ | D.13 | Weigerungen der KI im Text erkennen – Erkundung | offen | du: Beispiele echter Sperren |
 | ⚪ | D.15 | Wechsel React Router 7 → Linie 8 | offen | KI – ab 2026-12-17 |
+| 🟠 | D.17 | CI nur für `main` und fertige Pull Requests | in Arbeit | KI |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
 Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.15.
@@ -873,6 +874,22 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** NFR Reaktionszeit `[VORLÄUFIG]` → `[BELASTBAR]`
 - **Artefakte:** Spike-Bericht, ADR, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-10 auf die Vorlage E2 aus 5.26 (ADR-051, Eigentümer: „erst wissen“). Querschnitt wie D.6, nicht Teil des Schrittplans von Phase 5.
+
+#### D.17: CI nur für `main` und fertige Pull Requests
+
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-10) – umgesetzt auf `ci/d.17-ci-nur-fertige-prs`; offen: Pull Request, CI-Lauf mit der neuen Einstellung, Merge
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – Kategorie 7, freigegeben vom Eigentümer 2026-10-10 („A“, ADR-054)
+- **Empfohlene Klasse:** Routine – wenige Zeilen Konfiguration nach getroffener Entscheidung.
+- **Eingangskriterien:** Entscheidung des Eigentümers
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Befund 2026-10-10: Jeder Push lief die CI doppelt (Push und Pull Request), auch bei Entwürfen. Auslöser auf Push nach `main` und Pull Requests (ohne Entwürfe) beschränken.
+- **Akzeptanzkriterien:** Pull Request startet genau einen CI-Lauf mit allen vier Pflicht-Checks; Push auf den Branch allein startet keinen; nach dem Merge läuft die CI auf `main`; ADR-054.
+- **Betroffene Module:** keine (CI)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** `.github/workflows/ci.yml`, ADR, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-10 auf Wunsch des Eigentümers. Querschnitt, nicht Teil des Schrittplans von Phase 5.
 
 #### M.1: Branch-Konvention festlegen
 

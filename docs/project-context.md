@@ -226,7 +226,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 - **CI-Plattform:** GitHub Actions
 - **Workflow-Dateien:** `.github/workflows/ci.yml` mit den Jobs Pre-Commit, Python, TypeScript (alle Pflicht-Gates, seit Schritt 2.1 scharf) und End-to-End (seit 2.7, ADR-019; Zeitlimit 20 Minuten seit 2026-10-08, ADR-045)
 - **Einrichtung der Cloud-Session:** SessionStart-Hook `.claude/settings.json` → `scripts/session-start.sh` (ADR-015)
-- **Trigger:** `push` auf alle Branches und `pull_request` auf `main`
+- **Trigger:** `push` auf `main` und `pull_request` auf `main`, Entwürfe ausgenommen (seit 2026-10-10, ADR-054); bei offenen Prüfungen des Eigentümers erst nach Freigabe pushen
 - **Verpflichtende CI-Gates (Merge-Block bei Rot):** Lint, Format-Check, Type-Check, Security-Scan, Dependency-Audit (Schwellenwert high), Tests inklusive Coverage-Mindestwert
 - **Branch-Protection auf Hauptbranch:** aktiv seit 2026-09-28 (ADR-028) – die vier CI-Jobs sind Pflicht-Checks; Force-Push und Löschen gesperrt; siehe Abschnitt 10
 
