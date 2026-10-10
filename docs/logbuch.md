@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] Tag v1.0.0 und Deployment `0af840f`
+
+- Auf Anweisung des Eigentümers („112 mergen und einspielen. Vorher Markierung durchführen, 1.0.0“): #112 nach grüner CI gemergt, CI auf `main` (`0af840f`) grün; annotierter Tag `v1.0.0` auf `0af840f` gesetzt und gepusht (öffentlich sichtbar). Keine Release-Seite auf GitHub angelegt (Frage des Eigentümers dazu beantwortet).
+- Einspielen nach Runbook Abschnitt 7 (ADR-039): `REVISION` `0af840f`, Rückweg `skriptorium:vorher` = `1dd8bdb`; `/api/health` 200 nach ca. 63 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; einmal per SSH `(healthy)`, 0 Fehlerzeilen, `pyproject.toml` im Container mit `version = "1.0.0"`.
+- Beobachtung: Der Titel der Geschichte „The Trap“ steht seit dieser Session in öffentlichen Doku-Dateien (Logbuch, Fahrplan, ADR-057, CHANGELOG, Anforderungen); keine Inhalte. Dem Eigentümer genannt.
+
 ### 2026-10-11 – [ADR-ANGELEGT] ADR-058 Freigabe v1.0.0 (5.14 erledigt)
 
 - Eigentümer zu den freiwilligen Maßnahmen: „Keine – so freigeben“. ADR-058: Vision-Checkpoint erfüllt, Verzicht auf den menschlichen Blick mit benanntem Restrisiko, unabhängige KI-Prüfung „freigeben“. Freiwillige Maßnahmen als V.18 (Datenschutz an OpenRouter) und V.19 (CSP, Einbettschutz, 422) mit Landeplatz 5.5.
