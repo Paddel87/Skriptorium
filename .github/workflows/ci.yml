@@ -5,11 +5,14 @@
 
 name: CI
 
+# Runs on pushes to main and on pull requests that are ready for review; a draft pull request
+# and a branch without one start nothing, so a push no longer runs twice (D.17, ADR-054).
 on:
   push:
-    branches: ["**"]
+    branches: [main]
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
 
 permissions:
   contents: read
@@ -22,6 +25,7 @@ env:
 jobs:
   pre-commit:
     name: Pre-Commit (alle Hooks)
+    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6.0.3
@@ -39,6 +43,7 @@ jobs:
 
   python:
     name: Python – Lint, Format, Typen, Sicherheit, Audit, Tests
+    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6.0.3
@@ -71,6 +76,7 @@ jobs:
 
   typescript:
     name: TypeScript – Lint, Format, Typen, Audit, Tests, Build
+    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6.0.3
@@ -94,6 +100,7 @@ jobs:
 
   e2e:
     name: End-to-End – Server und Oberfläche in Chromium (ADR-019)
+    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
     runs-on: ubuntu-latest
     # A stuck Chromium download held the job for over 4 hours (2026-10-08); normal runs take
     # 1-2 minutes, the slowest seen about 10 (ADR-045).
