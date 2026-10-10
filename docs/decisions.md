@@ -75,7 +75,7 @@ Stand 2026-10-10 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 053 | 2026-10-10 | Aktiv | OPERATIV | DATENMODELL | Datenmodell | Atmosphärische Schreibweise: Genre je Geschichte, Vorgabe wird ins neue Kapitel kopiert |
 | 054 | 2026-10-10 | Aktiv | OPERATIV | METHODIK | Build-Pipeline | CI nur für `main` und fertige Pull Requests |
 | 055 | 2026-10-10 | Aktiv | OPERATIV | DATENMODELL, SCHNITTSTELLE | Datenmodell, API | Modell-Katalog von OpenRouter und Favoriten auf dem Server |
-| 056 | 2026-10-10 | Aktiv | OPERATIV | DATENMODELL, SCHNITTSTELLE | Datenmodell, API | Verlauf übernommener Anweisungen in eigener Datei je Kapitel |
+| 056 | 2026-10-10 | Aktiv | OPERATIV | DATENMODELL, SCHNITTSTELLE | Datenmodell, API | Verlauf übernommener Vorschläge (Anweisung und Text) in eigener Datei je Kapitel |
 
 ### Reaktiv-Quote
 
@@ -1358,10 +1358,10 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 
 ---
 
-#### ADR-056: Verlauf übernommener Anweisungen in eigener Datei je Kapitel (5.13)
+#### ADR-056: Verlauf übernommener Vorschläge (Anweisung und Text) in eigener Datei je Kapitel (5.13)
 
 - **Datum:** 2026-10-10
-- **Entscheider:** Eigentümer (Auswahlfragen: Ablage A „eigene Datei je Kapitel“ – Empfehlung der KI; Umfang „nur übernommene“; Umschalten „Reiter über dem Text“)
+- **Entscheider:** Eigentümer (Auswahlfragen: Ablage A „eigene Datei je Kapitel“ – Empfehlung der KI; Umfang „nur übernommene“; Umschalten „Reiter über dem Text“. Erweitert am selben Tag nach dem ersten Bildschirmstand, vor Merge und Einspielen: „Im Verlauf muss zwischen user input und agent output unterschieden werden können, vielleicht sollte user input rechts eingerückt sein?“ – Text der KI so wie übernommen, „Weiter“ als Eingabe, Darstellung wie im Chat; jeweils Empfehlung der KI)
 - **Status:** Aktiv
 - **Tags:** `[OPERATIV]` `[DATENMODELL]` `[SCHNITTSTELLE]`
 - **Phasentyp-Kontext:** UMSETZUNG (Phase 5, Schritt 5.13 – „Freigabepflichtig: ja – neue gespeicherte Daten“; als Vorlage vorgesehen, nicht reaktiv)
@@ -1369,15 +1369,16 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Kategorie:** Datenmodell (Kategorie 4); API rein ergänzend (Kategorie 5 nicht berührt)
 - **Kontext:** FR-027 verlangt den Verlauf der eigenen Anweisungen je Kapitel als umschaltbare Nachschlage-Ansicht, nie im Manuskript, nie erneut an die KI (ADR-042, Vision-Frage bestätigt). Anweisungen werden bisher nirgends gespeichert, nur in `api/flows/writing.py` durchgereicht.
 - **Optionen:** A eigene Datei je Kapitel `stories/<geschichte>/verlauf/<NN>.md` (Empfehlung) / B Liste im Kopf der Kapiteldatei / C nur im Browser des Geräts.
-- **Entscheidung:** A, nur übernommene Anweisungen.
-  - Datei `worlds/<welt>/stories/<geschichte>/verlauf/<NN>.md` (Kapitelnummer zweistellig, unabhängig vom Titel), Kopf `kapitel` und `anweisungen` als Liste mit `zeit` (UTC, ISO 8601) und `anweisung`; kein Text.
-  - Eingetragen wird beim Übernehmen eines Vorschlags: Die Oberfläche schickt die Anweisung, mit der der Vorschlag entstand, an `POST …/chapters/{n}/instructions`; `GET` liefert die Liste in zeitlicher Reihenfolge. Leere Anweisung („Weiter“) wird nicht eingetragen. Die Kapiteldatei wird dabei nicht geschrieben.
+- **Entscheidung:** A, nur übernommene Vorschläge – je Eintrag Anweisung und Text der KI.
+  - Datei `worlds/<welt>/stories/<geschichte>/verlauf/<NN>.md` (Kapitelnummer zweistellig, unabhängig vom Titel), Kopf `kapitel` und `anweisungen` als Liste mit `zeit` (UTC, ISO 8601), `anweisung`, `modell` und `text` (der Text der KI so, wie er ins Manuskript ging, mit Änderungen über „Ändern“; spätere Änderungen im Manuskript wirken nicht zurück); kein Dateitext.
+  - Eingetragen wird beim Übernehmen eines Vorschlags: Die Oberfläche schickt Anweisung, Text und Modell an `POST …/chapters/{n}/instructions`; `GET` liefert die Liste in zeitlicher Reihenfolge. Ohne Anweisung steht „Weiter“ (bzw. „Neue Szene“) als Eingabe. Die Kapiteldatei wird dabei nicht geschrieben.
+  - Darstellung wie im Chat: Eingabe rechts eingerückt in eigener Fläche, Text der KI links mit Modell.
   - `context` und der Schreib-Ablauf lesen die Datei nicht – der Verlauf geht nie an die KI.
 - **Vision-Frage, die entschied:** „Soll im Verlauf jede abgeschickte Anweisung stehen, auch wenn du den Vorschlag verworfen hast – oder nur die, deren Text du übernommen hast?“ → nur übernommene.
 - **Konfidenz zum Zeitpunkt:** hoch – gleiches Speichermuster wie Fakten und Kapitel (ADR-003), Lesbarkeit belegt in 5.3. Umkehrbarkeit billig.
 - **Konsequenzen:**
   - Verworfene Vorschläge hinterlassen keine Spur; eine Anweisung ohne Übernahme ist später nicht nachzulesen.
-  - Wird ein übernommener Vorschlag vor dem Übernehmen geändert, steht im Verlauf die ursprüngliche Anweisung, nicht die Änderung.
+  - Der Text der KI steht damit doppelt (Manuskript und Verlauf); die Verlaufsdatei wächst je Übernahme um die Länge des Vorschlags (bis etwa 600 Wörter). Ein im Manuskript später geänderter Text bleibt im Verlauf in der übernommenen Fassung.
   - Betroffen: `manuscript` (Datei, lesen und ergänzen), `api` (zwei Routen), `ui` (Eintrag beim Übernehmen, Reiter „Manuskript | Verlauf“).
 - **Abgeleitete Regel:** keine
 
