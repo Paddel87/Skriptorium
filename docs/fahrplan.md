@@ -31,7 +31,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⚪ | 5.3 | Lesbare Dateien – Nachweis | offen | KI |
 | ⚪ | 5.4 | Zeitlinie mit Datumsangaben im Kalender der Welt (Kann) | offen | du: umsetzen ja/nein |
 | ⚪ | 5.5 | Planung der nächsten Ausbaustufe | offen | KI – zuletzt |
-| 🟠 | 5.6 | Atmosphärische Schreibweise je Geschichte | in Arbeit – Erkundung | Cloud-Session: Wirkungsprobe · dann du: Datenmodell entscheiden |
+| 🟠 | 5.6 | Atmosphärische Schreibweise je Geschichte | in Arbeit – umgesetzt (ADR-053) | KI: mergen · Einspielen später · du: prüfen |
 | ✅ | 5.7 | Startmodell grok-4.6 | erledigt | – |
 | ✅ | 5.8 | Nahtloser Anschluss ohne Einleitung und Schlusssatz | erledigt | – |
 | ✅ | 5.9 | Kapitel öffnet am Textende | erledigt | – |
@@ -68,7 +68,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⚪ | D.15 | Wechsel React Router 7 → Linie 8 | offen | KI – ab 2026-12-17 |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.13.
+Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.14.
 
 ---
 
@@ -254,8 +254,8 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich, nicht bloß Status-Update.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 5
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Die verschobenen Schritte V.1 bis V.12 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5; V.6 bis V.9 ergänzt 2026-10-08, Wünsche des Eigentümers; V.10 ergänzt 2026-10-10, ADR-050).
-- **Akzeptanzkriterien:** Jeder Schritt V.1–V.12 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
+- **Zu tun:** Die verschobenen Schritte V.1 bis V.14 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5; V.6 bis V.9 ergänzt 2026-10-08, Wünsche des Eigentümers; V.10 ergänzt 2026-10-10, ADR-050).
+- **Akzeptanzkriterien:** Jeder Schritt V.1–V.14 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Fahrplan, ggf. ADRs
@@ -263,7 +263,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.6: Atmosphärische Schreibweise je Geschichte
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-10) – Erkundung der Form innerhalb des Schritts (Eigentümer: „5.6 Erkundung“, Reihenfolge bestätigt). Listenwerte übernommen (siehe „Entschieden 2026-10-10“). Wirkungsprobe gelaufen 2026-10-10 (`spikes/schreibweise-5.6/README.md`, 12 Ketten, 2,91 $): verblindet 18 von 18 Ketten richtig zugeordnet, B kürzt die Sätze in beiden Geschichten, 0 Kanon-Verstöße mit und ohne Schreibweise, keine Sperren – Platz hinter der Figuren-Schreibweise bestätigt. Nächstes: Datenmodell als `ENTSCHEIDUNG ERFORDERLICH` (Kategorie 4) mit Mockup
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-10) – Erkundung der Form innerhalb des Schritts (Eigentümer: „5.6 Erkundung“, Reihenfolge bestätigt). Listenwerte übernommen (siehe „Entschieden 2026-10-10“). Wirkungsprobe gelaufen 2026-10-10 (`spikes/schreibweise-5.6/README.md`, 12 Ketten, 2,91 $): verblindet 18 von 18 Ketten richtig zugeordnet, B kürzt die Sätze in beiden Geschichten, 0 Kanon-Verstöße mit und ohne Schreibweise, keine Sperren – Platz hinter der Figuren-Schreibweise bestätigt. Datenmodell entschieden (ADR-053: Vorgabe je Geschichte, Kopie ins neue Kapitel; Tempo und Deutlichkeit je ein Wert; Genre nur je Geschichte; Option B als V.14). Mockup vorher/nachher freigegeben („Passt so“). **Umgesetzt** auf Branch `feat/5.6-schreibweise` (Umsetzung an einen Unteragenten der Routine-Klasse abgegeben, geprüft): `manuscript` (`WritingStyle`, Felder an Geschichte und Kapitel, Kopie beim Anlegen), `context` (Block hinter der Figuren-Schreibweise), `api` (Felder rein ergänzend), `ui` (`WritingStyle.tsx`, Zeile „Schreibweise Kapitel N“). Tests: pytest 460, Python 99,8 %, `context` 100 %; `vitest` 156, 98,08 % Zeilen / 95,5 % Zweige; Playwright 11. Offen: Merge, Einspielen, Bestätigung des Eigentümers. Bisher: Datenmodell als `ENTSCHEIDUNG ERFORDERLICH` (Kategorie 4) mit Mockup
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 4.8, 5.11 (Platz in der neuen Oberfläche; ADR-042)
 - **Freigabepflichtig:** ja – neue Felder je Kapitel (ggf. auch je Geschichte) sind eine Datenmodelländerung (Kategorie 4); Form vor Beginn klären
@@ -1110,6 +1110,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, ADR, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-10 als Landeplatz für 5.25 (Inhalt übernommen).
+
+#### V.14: Schreibweise der Geschichte wirkt auf bestehende Kapitel
+
+- **Status:** ⏸️ VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 (ADR-053, Eigentümer: „optional B im Hinterkopf behalten“)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 5.6
+- **Freigabepflichtig:** ja – Datenmodell (Kategorie 4)
+- **Empfohlene Klasse:** Entscheidung – Änderung am Datenmodell.
+- **Eingangskriterien:** 5.5
+- **Anforderungen (ab Klasse M):** FR-026
+- **Zu tun:** Option B aus ADR-053: Kapitel speichern nur Abweichungen von der Vorgabe der Geschichte; nicht einzeln geänderte Kapitel folgen einer geänderten Vorgabe sofort. Prüfen, ob das nach der Nutzung von A gebraucht wird; Übergang für Kapitel mit eigener Kopie festlegen.
+- **Akzeptanzkriterien:** Entscheidung mit ADR; bei Umsetzung: Tests für Vorgabe, Abweichung und Übergang.
+- **Betroffene Module:** manuscript, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR, ggf. Code und Tests
+- **Notizen:** Angelegt 2026-10-10 mit ADR-053.
 
 ---
 

@@ -15,7 +15,7 @@ from skriptorium.context import (
     ContextTooLarge,
     estimate_tokens,
 )
-from skriptorium.manuscript import ManuscriptService
+from skriptorium.manuscript import ManuscriptService, WritingStyle
 from skriptorium.storage import DocumentStore
 
 WORLD = "die-salzmark"
@@ -626,3 +626,129 @@ def test_chapter_without_text_and_summary_adds_nothing(
 
     assert labels(context, "kapitelanfang") == []
     assert labels(context, "kurzfassung") == []
+
+
+# --- atmospheric writing style (roadmap step 5.6, ADR-053) --------------------------------
+
+STORY_STYLE = WritingStyle(
+    tone=("sinnlich", "melancholisch"),
+    atmosphere=("intim", "schwül"),
+    style=("poetisch", "bildhaft"),
+    tempo="langsam",
+    explicitness="angedeutet",
+    free="Viel Nähe, wenig Dialog.",
+)
+
+
+def system_text(context: BuiltContext) -> str:
+    return context.messages[0].content
+
+
+def test_no_atmosphere_block_when_nothing_is_set(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    context = build(services)
+
+    assert "schreibweise-atmo" not in kinds(context)
+    assert "## Schreibweise" not in system_text(context)
+
+
+def test_atmosphere_block_follows_the_figure_mode_with_only_set_lines(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    _, manuscripts = services
+    manuscripts.update_story(
+        WORLD,
+        STORY,
+        genres=["Dark Romance", "Thriller"],
+        writing_style=WritingStyle(tone=("kalt",), tempo="atemlos"),
+    )
+
+    context = build(services)
+
+    order = kinds(context)
+    assert order[:4] == ["rahmen", "welt", "schreibweise", "schreibweise-atmo"]
+    assert labels(context, "schreibweise-atmo") == ["Schreibweise"]
+    system = system_text(context)
+    assert system.index("## Figuren-Schreibweise") < system.index("## Schreibweise\n")
+    assert system.index("## Schreibweise\n") < system.index("Salzbindung")
+    assert (
+        "## Schreibweise\n\n- Genre: Dark Romance, Thriller\n- Tonalität: kalt\n"
+        "- Tempo: atemlos\n\nHalte diese Schreibweise in Wortwahl, Satzbau und Tempo ein. "
+        "Sie tritt hinter den Kanon und die Figuren-Schreibweise zurück: Widerspricht sie "
+        "einem Kanon-Eintrag oder der Führung einer Figur, gelten Kanon und "
+        "Figuren-Schreibweise."
+    ) in system
+    assert "Atmosphäre:" not in system
+    assert "Weitere Angaben" not in system
+
+
+def test_atmosphere_block_lists_every_value(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    _, manuscripts = services
+    manuscripts.update_story(WORLD, STORY, genres=["Horror"], writing_style=STORY_STYLE)
+
+    system = system_text(build(services))
+
+    for line in (
+        "- Genre: Horror",
+        "- Tonalität: sinnlich, melancholisch",
+        "- Atmosphäre: intim, schwül",
+        "- Tempo: langsam",
+        "- Stil: poetisch, bildhaft",
+        "- Deutlichkeit: angedeutet",
+        "- Weitere Angaben: Viel Nähe, wenig Dialog.",
+    ):
+        assert line in system
+
+
+def test_genres_alone_make_a_block(services: tuple[CanonService, ManuscriptService]) -> None:
+    _, manuscripts = services
+    manuscripts.update_story(WORLD, STORY, genres=["Krimi"])
+
+    assert "- Genre: Krimi" in system_text(build(services))
+
+
+def test_chapter_style_beats_the_default_of_the_story(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    _, manuscripts = services
+    manuscripts.update_story(WORLD, STORY, genres=["Thriller"], writing_style=STORY_STYLE)
+    manuscripts.save_chapter(
+        WORLD, STORY, 2, writing_style=WritingStyle(tone=("kalt",), tempo="atemlos")
+    )
+
+    system = system_text(build(services))
+
+    assert "- Tonalität: kalt" in system
+    assert "- Tempo: atemlos" in system
+    assert "sinnlich" not in system
+    assert "poetisch" not in system
+    assert "- Genre: Thriller" in system  # genres belong to the story
+
+
+def test_chapter_without_style_follows_the_default_and_an_empty_one_overrides_it(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    _, manuscripts = services
+    manuscripts.update_story(WORLD, STORY, writing_style=STORY_STYLE)
+    assert "- Tempo: langsam" in system_text(build(services))
+
+    manuscripts.save_chapter(WORLD, STORY, 2, writing_style=WritingStyle())
+    assert "schreibweise-atmo" not in kinds(build(services))
+
+
+def test_summary_requests_carry_no_atmosphere(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    _, manuscripts = services
+    manuscripts.update_story(WORLD, STORY, genres=["Horror"], writing_style=STORY_STYLE)
+    builder = ContextBuilder(*services)
+
+    chapter = builder.build_chapter_summary(WORLD, STORY, 2)
+    overall = builder.build_story_summary(WORLD, STORY, 1)
+
+    for context in (chapter, overall):
+        assert "schreibweise-atmo" not in kinds(context)
+        assert all("Schreibweise" not in m.content for m in context.messages)

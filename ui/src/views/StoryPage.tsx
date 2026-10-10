@@ -10,6 +10,7 @@ import { Guests } from "./Guests";
 import { MenuButton } from "./Menu";
 import { StorySummary } from "./StorySummary";
 import { ModeLine, WritingMode } from "./WritingMode";
+import { ChapterStyle, StoryStyle, StyleLine } from "./WritingStyle";
 
 type SideTab = "kanon" | "geschichte";
 
@@ -17,7 +18,7 @@ type SideTab = "kanon" | "geschichte";
  * One story, laid out for writing like a chat (step 5.11): the open chapter fills the middle,
  * its text scrolls with the AI's proposal at the end, the instruction stays at the bottom. On
  * demand a bar on the right holds the canon to look up and the settings of the story
- * (Figuren-Schreibweise, guests, facts, overall summary); on small screens it lies over the page.
+ * (Figuren-Schreibweise, genre and writing style, guests, facts, overall summary); on small screens it lies over the page.
  * Chapters are chosen in the list on the left.
  */
 export function StoryPage({
@@ -45,6 +46,8 @@ export function StoryPage({
   const [canonVersion, setCanonVersion] = useState(0);
   // Counts "ändern" in the short line; the form of the writing mode then opens.
   const [modeRound, setModeRound] = useState(0);
+  // Counts "ändern" in the line of the chapter's style; the editor of the chapter comes into view.
+  const [styleRound, setStyleRound] = useState(0);
 
   const chapters = data ?? [];
   const current = chapters.find((c) => c.number === chapter) ?? chapters[0];
@@ -88,14 +91,25 @@ export function StoryPage({
             lead={<MenuButton />}
             tools={sideToggle}
             mode={
-              <ModeLine
-                story={story}
-                onChange={() => {
-                  setSide(true);
-                  setTab("geschichte");
-                  setModeRound((round) => round + 1);
-                }}
-              />
+              <>
+                <ModeLine
+                  story={story}
+                  onChange={() => {
+                    setSide(true);
+                    setTab("geschichte");
+                    setModeRound((round) => round + 1);
+                  }}
+                />
+                <StyleLine
+                  story={story}
+                  chapter={current}
+                  onChange={() => {
+                    setSide(true);
+                    setTab("geschichte");
+                    setStyleRound((round) => round + 1);
+                  }}
+                />
+              </>
             }
           />
         ) : (
@@ -173,6 +187,16 @@ export function StoryPage({
                 onSaved={setStory}
                 startOpen={modeRound > 0}
               />
+              <StoryStyle story={story} onSaved={setStory} />
+              {current !== undefined && (
+                <ChapterStyle
+                  key={current.number}
+                  story={story}
+                  chapter={current}
+                  onSaved={reload}
+                  round={styleRound}
+                />
+              )}
               <Guests story={story} onSaved={setStory} />
               <Facts story={story} onSaved={setStory} />
               <StorySummary

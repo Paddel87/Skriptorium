@@ -5,7 +5,14 @@ from pathlib import Path
 import pytest
 
 from skriptorium.manuscript import (
+    ATMOSPHERES,
+    EXPLICITNESSES,
     FORMS,
+    FREE_TEXT_MAX,
+    GENRES,
+    STYLES,
+    TEMPOS,
+    TONES,
     AlreadyExists,
     Form,
     GuestLink,
@@ -13,6 +20,7 @@ from skriptorium.manuscript import (
     ManuscriptService,
     NotFound,
     StoryFact,
+    WritingStyle,
 )
 from skriptorium.storage import DocumentStore
 
@@ -269,3 +277,171 @@ def test_other_files_below_chapters_are_ignored(ms: ManuscriptService, root: Pat
     (extra / "03-alt.md").write_text("alter Entwurf", encoding="utf-8")
     assert [c.number for c in ms.list_chapters(W, "roman")] == [1, 2]
     assert ms.get_chapter(W, "roman", 2).text == "Zweiter Text."
+
+
+# --- step 5.6 (ADR-053): atmospheric writing style ----------------------------------------
+
+STYLE = WritingStyle(
+    tone=("düster", "kalt"),
+    atmosphere=("angespannt",),
+    style=("knapp",),
+    tempo="atemlos",
+    explicitness="angedeutet",
+    free="Kurze Absätze.",
+)
+
+
+def test_old_files_without_style_fields_read_as_empty(ms: ManuscriptService, root: Path) -> None:
+    folder = root / "worlds/salzmark/stories/alt"
+    (folder / "chapters").mkdir(parents=True)
+    (folder / "story.md").write_text("---\ntitel: Alt\nform: roman\n---\n", encoding="utf-8")
+    (folder / "chapters/01-eins.md").write_text(
+        "---\nkapitel: 1\ntitel: Eins\nstatus: in-arbeit\nkurzfassung: ''\n"
+        "kurzfassung_status: fehlt\n---\nText\n",
+        encoding="utf-8",
+    )
+    story = ms.get_story(W, "alt")
+    assert story.genres == ()
+    assert story.writing_style == WritingStyle()
+    assert ms.get_chapter(W, "alt", 1).writing_style is None
+
+
+def test_story_style_is_saved_and_read(ms: ManuscriptService, root: Path) -> None:
+    ms.create_story(W, "Nacht", "roman")
+    story = ms.update_story(
+        W, "nacht", genres=["Thriller", "Horror", "Thriller"], writing_style=STYLE
+    )
+    assert story.genres == ("Thriller", "Horror")
+    assert story.writing_style == STYLE
+    assert ms.get_story(W, "nacht") == story
+    header = (root / "worlds/salzmark/stories/nacht/story.md").read_text(encoding="utf-8")
+    assert "tonalitaet:" in header
+    assert "- düster" in header
+    assert "deutlichkeit: angedeutet" in header
+    # Other fields stay when only the title changes.
+    assert ms.update_story(W, "nacht", title="Nacht II").writing_style == STYLE
+
+
+def test_new_chapter_copies_the_default_of_the_story(ms: ManuscriptService) -> None:
+    ms.create_story(W, "Nacht", "roman")
+    ms.save_chapter(W, "nacht", 1, title="Vor der Vorgabe")
+    ms.update_story(W, "nacht", writing_style=STYLE)
+    second = ms.save_chapter(W, "nacht", 2, title="Nach der Vorgabe")
+    assert second.writing_style == STYLE
+    assert ms.get_chapter(W, "nacht", 1).writing_style is None
+    # A later change of the default does not reach existing chapters (ADR-053).
+    ms.update_story(W, "nacht", writing_style=WritingStyle(tempo="langsam"))
+    assert ms.get_chapter(W, "nacht", 2).writing_style == STYLE
+
+
+def test_empty_default_gives_new_chapter_no_style(ms: ManuscriptService, root: Path) -> None:
+    ms.create_story(W, "Nacht", "roman")
+    chapter = ms.save_chapter(W, "nacht", 1, title="Eins")
+    assert chapter.writing_style is None
+    text = (root / "worlds/salzmark/stories/nacht/chapters/01-eins.md").read_text("utf-8")
+    assert "schreibweise" not in text
+
+
+def test_chapter_style_can_be_set_kept_and_reset(ms: ManuscriptService) -> None:
+    ms.create_story(W, "Nacht", "roman")
+    ms.save_chapter(W, "nacht", 1, title="Eins", text="a")
+    own = WritingStyle(tone=("zärtlich",), free="  weich  ")
+    saved = ms.save_chapter(W, "nacht", 1, writing_style=own)
+    assert saved.writing_style == WritingStyle(tone=("zärtlich",), free="weich")
+    # Saving the text keeps the style; completing and a summary too.
+    ms.save_chapter(W, "nacht", 1, text="b", title="Neu")
+    ms.complete_chapter(W, "nacht", 1)
+    ms.set_chapter_summary(W, "nacht", 1, "Kurz", "erzeugt")
+    assert ms.get_chapter(W, "nacht", 1).writing_style == saved.writing_style
+    # An empty style of its own differs from "none": it overrides the default.
+    empty = ms.save_chapter(W, "nacht", 1, writing_style=WritingStyle())
+    assert empty.writing_style == WritingStyle()
+    reset = ms.save_chapter(W, "nacht", 1, writing_style=None)
+    assert reset.writing_style is None
+
+
+def test_new_chapter_can_be_given_a_style_at_once(ms: ManuscriptService) -> None:
+    ms.create_story(W, "Nacht", "roman")
+    ms.update_story(W, "nacht", writing_style=STYLE)
+    other = WritingStyle(tempo="langsam")
+    chapter = ms.save_chapter(W, "nacht", 1, title="Eins", writing_style=other)
+    assert chapter.writing_style == other
+    assert ms.save_chapter(W, "nacht", 2, title="Zwei", writing_style=None).writing_style is None
+
+
+@pytest.mark.parametrize(
+    "bad",
+    [
+        WritingStyle(tone=("fröhlich",)),
+        WritingStyle(atmosphere=("hell",)),
+        WritingStyle(style=("lang",)),
+        WritingStyle(tempo="rasend"),
+        WritingStyle(explicitness="roh"),
+        WritingStyle(tone="düster"),  # type: ignore[arg-type]  # a text is not a list
+        WritingStyle(free="x" * (FREE_TEXT_MAX + 1)),
+    ],
+)
+def test_values_outside_the_lists_are_refused(ms: ManuscriptService, bad: WritingStyle) -> None:
+    ms.create_story(W, "Nacht", "roman")
+    ms.save_chapter(W, "nacht", 1, title="Eins")
+    with pytest.raises(InvalidInput):
+        ms.update_story(W, "nacht", writing_style=bad)
+    with pytest.raises(InvalidInput):
+        ms.save_chapter(W, "nacht", 1, writing_style=bad)
+    assert ms.get_story(W, "nacht").writing_style == WritingStyle()
+
+
+def test_unknown_genre_is_refused(ms: ManuscriptService) -> None:
+    ms.create_story(W, "Nacht", "roman")
+    with pytest.raises(InvalidInput, match="Genre"):
+        ms.update_story(W, "nacht", genres=["Western"])
+    with pytest.raises(InvalidInput):
+        ms.update_story(W, "nacht", genres="Thriller")
+
+
+def test_single_values_may_be_cleared_and_free_text_has_a_limit(ms: ManuscriptService) -> None:
+    ms.create_story(W, "Nacht", "roman")
+    ms.update_story(W, "nacht", writing_style=STYLE)
+    cleared = ms.update_story(
+        W, "nacht", writing_style=WritingStyle(tempo=" ", explicitness=None, free="x" * 1000)
+    )
+    assert cleared.writing_style.tempo is None
+    assert cleared.writing_style.explicitness is None
+    assert len(cleared.writing_style.free) == FREE_TEXT_MAX
+
+
+def test_the_lists_are_complete() -> None:
+    assert GENRES[0] == "Dark Romance" and len(GENRES) == 9
+    assert len(TONES) == 11 and len(ATMOSPHERES) == 10 and len(STYLES) == 6
+    assert TEMPOS == ("langsam", "gemessen", "zügig", "atemlos")
+    assert EXPLICITNESSES == ("angedeutet", "sinnlich", "explizit")
+
+
+@pytest.mark.parametrize(
+    "block",
+    [
+        "schreibweise: text",
+        "schreibweise:\n  tonalitaet: düster",
+        "schreibweise:\n  tempo: [langsam]",
+        "schreibweise:\n  frei: [a]",
+    ],
+)
+def test_malformed_style_in_a_file_is_reported(
+    ms: ManuscriptService, root: Path, block: str
+) -> None:
+    folder = root / "worlds/salzmark/stories/kaputt"
+    folder.mkdir(parents=True)
+    (folder / "story.md").write_text(
+        f"---\ntitel: Kaputt\nform: roman\n{block}\n---\n", encoding="utf-8"
+    )
+    with pytest.raises(InvalidInput):
+        ms.get_story(W, "kaputt")
+
+
+def test_style_missing_keys_count_as_empty(ms: ManuscriptService, root: Path) -> None:
+    folder = root / "worlds/salzmark/stories/halb"
+    folder.mkdir(parents=True)
+    (folder / "story.md").write_text(
+        "---\ntitel: Halb\nform: roman\nschreibweise:\n  stil: [knapp]\n---\n", encoding="utf-8"
+    )
+    assert ms.get_story(W, "halb").writing_style == WritingStyle(style=("knapp",))

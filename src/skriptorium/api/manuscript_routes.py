@@ -13,10 +13,32 @@ from pydantic import BaseModel
 
 from skriptorium.ai_gateway import DEFAULT_MODELS
 from skriptorium.api.context import Services, ServicesDep, current_session
-from skriptorium.manuscript import Chapter, Form, Story, SummaryStatus
+from skriptorium.manuscript import Chapter, Form, Story, SummaryStatus, WritingStyle
 from skriptorium.storage import InvalidInput, NotFound
 
 router = APIRouter(prefix="/api/worlds/{world_id}/stories", dependencies=[Depends(current_session)])
+
+
+class WritingStyleIn(BaseModel):
+    """Atmospheric writing style; the values are checked against the lists of ``manuscript``."""
+
+    tone: list[str] = []
+    atmosphere: list[str] = []
+    style: list[str] = []
+    tempo: str | None = None
+    explicitness: str | None = None
+    free: str = ""
+
+    def to_style(self) -> WritingStyle:
+        """The value type of ``manuscript``."""
+        return WritingStyle(
+            tone=tuple(self.tone),
+            atmosphere=tuple(self.atmosphere),
+            style=tuple(self.style),
+            tempo=self.tempo,
+            explicitness=self.explicitness,
+            free=self.free,
+        )
 
 
 class StoryCreate(BaseModel):
@@ -37,6 +59,10 @@ class StoryChange(BaseModel):
     controlled_characters: list[str] | None = None
     # One of ``GET /api/models``; ``null`` returns to the preset model (step 3.9, ADR-023).
     model: str | None = None
+    # Genres and the default writing style for new chapters (step 5.6, ADR-053); ``null``
+    # empties them.
+    genres: list[str] | None = None
+    writing_style: WritingStyleIn | None = None
 
 
 class SummaryText(BaseModel):
@@ -50,6 +76,9 @@ class ChapterSave(BaseModel):
 
     title: str | None = None
     text: str | None = None
+    # A style sets one for this chapter; ``null`` takes the chapter back to the default of the
+    # story (step 5.6); missing leaves it as it is.
+    writing_style: WritingStyleIn | None = None
 
 
 class ChapterSummary(BaseModel):
@@ -109,7 +138,12 @@ def update_story(world_id: str, story_id: str, body: StoryChange, found: Service
         raise InvalidInput(f"Unbekanntes Modell: {body.model}")
     if body.controlled_characters is not None:
         _check_entries(found, world_id, body.controlled_characters, guests=story.guest_links)
-    return found.manuscript.update_story(world_id, story_id, **_given(body))
+    given = _given(body)
+    if "genres" in given:
+        given["genres"] = given["genres"] or ()
+    if "writing_style" in given:
+        given["writing_style"] = _style(body.writing_style) or WritingStyle()
+    return found.manuscript.update_story(world_id, story_id, **given)
 
 
 @router.put("/{story_id}/summary")
@@ -174,7 +208,10 @@ def save_chapter(
 ) -> Chapter:
     """Save a chapter; the next free number creates a new chapter (novels only)."""
     found.canon.get_world(world_id)
-    return found.manuscript.save_chapter(world_id, story_id, number, **_given(body))
+    given = _given(body)
+    if "writing_style" in given:
+        given["writing_style"] = _style(body.writing_style)
+    return found.manuscript.save_chapter(world_id, story_id, number, **given)
 
 
 @router.post("/{story_id}/chapters/{number}/complete")
@@ -216,6 +253,10 @@ def _check_entries(
             found.canon.get_entry(world_id, entry)
         except NotFound as error:
             raise InvalidInput(f"Unbekannter Kanon-Eintrag {entry}") from error
+
+
+def _style(style: WritingStyleIn | None) -> WritingStyle | None:
+    return style.to_style() if style is not None else None
 
 
 def _given(body: BaseModel) -> dict[str, Any]:
