@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] 5.14 begonnen: externer Blick durch getrennte KI-Instanz
+
+- Entscheidungsvorlage „Externer Blick“ (Kategorie 6) mit A bezahlter Fachmann / B Verzicht / C Umfeld; Eigentümer antwortete frei: „Du mit Sub-agent“. Gedeutet und ihm offen gesagt: Das erfüllt die Vorgabe „Mensch außerhalb des Projekts“ nicht – festgehalten wird ein Verzicht auf den menschlichen Blick mit Restrisiko, ergänzt um eine neue unabhängige Prüfung (getrennte Instanz, Modell Sonnet, ohne Gesprächsverlauf; Code, Bedrohungsmodell, nur lesende Abrufe der öffentlichen Adresse, keine Anmeldung). Schwerpunkt: Änderungen seit 4.5 (5.12, 5.13, 5.21).
+
 ### 2026-10-11 – [ADR-ANGELEGT] ADR-057 Nachweis D.4 an „The Trap“
 
 - Eigentümer: Kurzfassungen Kapitel 1–3 erstellt und als geprüft gespeichert. Messung im Container (Anfrage für Kapitel 4 ohne KI gebaut; Verbrauch nur als Zahlen): Werte siehe ADR-057. Eigentümer: „Ja, mit Vermerk V.10“ → D.4 und FR-010 erledigt.

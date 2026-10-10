@@ -22,7 +22,7 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 22 von 26 erledigt, 0 in Arbeit, 2 offen, 2 verschoben (5.25 → V.13, 5.4 → V.16).**
+**Phase 5: 22 von 26 erledigt, 1 in Arbeit, 1 offen, 2 verschoben (5.25 → V.13, 5.4 → V.16).**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -39,7 +39,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | 5.11 | Seitenaufbau und Abläufe der Oberfläche neu ordnen | erledigt 2026-10-10 | – |
 | ✅ | 5.12 | Modell-Auswahl aktuell vom Anbieter | erledigt 2026-10-10 (ADR-055) | – |
 | ✅ | 5.13 | Verlauf der Anweisungen als umschaltbare Ansicht | erledigt 2026-10-11 (ADR-056) | – |
-| ⚪ | 5.14 | Go-Live-Prüfung vor v1.0.0 | offen | KI – nach 5.1–5.13 |
+| 🟠 | 5.14 | Go-Live-Prüfung vor v1.0.0 | in Arbeit – unabhängige Prüfung läuft | KI · danach du: Freigabe |
 | ✅ | 5.15 | KI schreibt nur das Verlangte, nicht bis zum bekannten Ende | erledigt | – |
 | ✅ | 5.16 | Herangezogene Kanon-Einträge anklickbar | erledigt 2026-10-11 | – |
 | ✅ | 5.17 | Leerzeichen nach der Auswahl im `@`-Menü | erledigt | – |
@@ -396,7 +396,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.14: Go-Live-Prüfung vor v1.0.0
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – Vision-Abgleich: alle Elemente erledigt oder bewusst ausgeklammert, nach D.4 (ADR-057). Stoppuhr FR-022: laut Eigentümer „problemlos zu unterbieten“, keine Messung. Externer Blick: Eigentümer wählte „Du mit Sub-agent“ – Verzicht auf den menschlichen Blick mit Restrisiko, stattdessen erneute unabhängige Prüfung durch eine getrennte KI-Instanz (anderes Modell) läuft. Offen: Befunde, ADR zum Verzicht und zur Freigabe v1.0.0, CHANGELOG
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.1–5.13 (außer 5.5), D.4
 - **Freigabepflichtig:** ja – Release-Entscheidung nach `CLAUDE.md` Abschnitt 12 (Vision-Checkpoint vor Go-Live); Verzicht auf den externen Blick nur per ADR mit Restrisiko
