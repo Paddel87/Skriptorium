@@ -29,6 +29,51 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] Testkapitel 5 und 6 in „The Trap“ gelöscht
+
+- Auf ausdrücklichen Wunsch des Eigentümers („Kannst du mir noch Kapitel 5 und 6 löschen?“). Beide leer (0 Wörter), ohne Verlauf; vorher nach `/opt/docker/skriptorium/sicherungen/` kopiert, dann über `DocumentStore.delete` gelöscht (Index mit aufgeräumt). Danach: Kapitel 1–4 mit 9.786 / 9.719 / 9.758 / 9.788 Wörtern. Eine Funktion zum Löschen von Kapiteln gibt es in der Oberfläche nicht.
+
+### 2026-10-11 – [ERLEDIGT] Abnahme 5.20
+
+- Eigentümer: „5.20 funktioniert, beide Kapitel wurden angelegt“ (in „The Trap“, jetzt Roman). Auf dem Server nachgesehen: Kapitel 05 und 06 neu, 01–04 unverändert benannt → 5.20 `[ERLEDIGT]`. Phase 5: 22 von 26 erledigt, keiner in Arbeit, 2 offen (5.14, 5.5), 2 verschoben. README-Fortschritt nachgezogen.
+
+### 2026-10-11 – [BEOBACHTUNG] Wunsch Wortanzeige im Manuskript → V.17
+
+- Eigentümer vermisst eine Anzeige, wie viel Text ein Kapitel hat. Auswahlfragen: „Nächste Ausbaustufe“ (statt sofort mit Neuplanung von Phase 5, die an der Wucherungs-Schwelle steht) und „Wörter plus Grenze“. Angelegt als V.17 mit Landeplatz 5.5.
+
+### 2026-10-11 – [BEOBACHTUNG] „The Trap“ auf Wunsch in 4 Kapitel geteilt
+
+- Eigentümer per Auswahlfrage: „Ja, 4 Kapitel“. Vorher bemerkt, dass er gerade schrieb (Kapitel umbenannt in „Kapitel 1“, 7 Minuten zuvor gespeichert) – angehalten und gebeten, zu speichern und auf allen Geräten zu schließen (sonst hätte ein alter Stand im Browser den ungeteilten Text zurückgeschrieben); Bestätigung „Ja, teilen“.
+- Sicherung: ganzer Ordner der Geschichte nach `/opt/docker/skriptorium/sicherungen/the-trap-vor-teilung-2026-10-11/` (außerhalb von `data/`, Verzeichnis 700; zusätzlich tägliche Duplicati-Sicherung).
+- Teilung im Container über `ManuscriptService`: keine Szenenmarken im Text (550 Absätze), Schnitt an den Absatzgrenzen nächst den Vierteln; Prüfung, dass die Teile mit den Trennern den Originaltext exakt ergeben. Ergebnis: Kapitel 1–4 mit 9.786 / 9.719 / 9.758 / 9.788 Wörtern, Summe 39.051 wie vorher. Neue Kapitel „Kapitel 2“–„Kapitel 4“; 1–3 abgeschlossen (damit „Kurzfassung nachholen“ erscheint), 4 in Arbeit. Verlauf (`verlauf/01.md`) bleibt bei Kapitel 1. Kein Text ausgegeben. Dateien Besitzer 10001, Rechte 600.
+
+### 2026-10-11 – [ERLEDIGT] Abnahme 5.13 und 5.16; Befunde zu 5.20 und zur Kurzfassung
+
+- Eigentümer: 5.13 „positiv“, 5.16 „ebenfalls“ → beide `[ERLEDIGT]`, FR-027 und FR-031 erledigt. Phase 5: 21 von 26 erledigt, 1 in Arbeit (5.20), 2 offen (5.14, 5.5), 2 verschoben.
+- 5.20 „Funktion nicht gefunden“: Seine Geschichte „The Trap“ war als Kurzgeschichte angelegt – „+ Kapitel“ erscheint nur bei Romanen (gewollt). Nur Kopfdaten gelesen, keine Inhalte.
+- Kurzfassung scheitert: Kapitel 1 von „The Trap“ hat ca. 38.000 Wörter (247 KB, geschätzt ca. 75.000 Token); `build_chapter_summary` lehnt ab, weil das ganze Kapitel ins Budget von 30.000 Token muss (Festlegung 3.6). Im Protokoll `POST …/summarize` 200 nach 11 ms (Fehlschlag im Feld `failure`, keine KI-Anfrage). Weiterschreiben nicht betroffen (nur letzte Seiten). „Kurzfassung speichern (geprüft)“ speichert eigenen Text ohne KI; der Knopf ist nur ohne Änderung gesperrt.
+- Entscheidung per Auswahlfrage: **Kapitel teilen** (statt Kurzfassung in Abschnitten, selbst schreiben oder später). Richtwert für den Eigentümer: Kapitel bis etwa 12.000 Wörter passen für die Kurzfassung.
+- Befund: Die Form einer Geschichte ist in der Oberfläche nur beim Anlegen wählbar (Server kann sie ändern). Eigentümer wählte „Ich stelle sie um“ (kein Knopf als eigener Schritt). Ausgeführt im Container über `ManuscriptService.update_story(form="roman")`: vorher `kurzgeschichte`, nachher `roman`, Titel gleich, 1 Kapitel; Datei weiter Besitzer 10001, Rechte 600.
+
+### 2026-10-11 – [BEOBACHTUNG] Deployment `1dd8bdb` (5.13, 5.3, 5.4 verschoben)
+
+- Auf Anweisung des Eigentümers („deploy vorbereiten, vorher pull from main“, dann Auswahlfrage „Ja, einspielen“). Vorher mit `origin/main` abgeglichen: aus anderen Sessions #108 (5.3), #109 (5.13, ADR-056), #110 (5.4 → V.16). CI auf `1dd8bdb` grün. Geprüft vor dem Einspielen: keine neuen Abhängigkeiten, kein Docker/Compose/ENV; einzige Datenänderung neue Dateien `stories/<g>/verlauf/NN.md` (entstehen erst beim Übernehmen), bestehende Dateien unberührt; Rückweg auf `bd48bed` möglich (alte Version beachtet die neuen Dateien nicht).
+- Ablauf nach Runbook Abschnitt 7 (ADR-039): `REVISION` `1dd8bdb`, Rückweg `skriptorium:vorher` = `bd48bed`; `/api/health` 200 nach ca. 63 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; danach einmal per SSH `(healthy)`, 0 Fehlerzeilen in den letzten 3 Minuten.
+- Offen: Prüfung durch den Eigentümer – 5.13, 5.16, 5.20.
+
+### 2026-10-10 – [BEOBACHTUNG] Deployment `bd48bed` (5.20, 5.16)
+
+- Auf Anweisung des Eigentümers („Einspielen“; #106 vorher nur gemergt, „Korrektur nur mergen“). Enthält 5.20 (#106) und 5.16 (#107 aus einer anderen Session). CI auf `bd48bed` grün.
+- Ablauf nach Runbook Abschnitt 7 (ADR-039): `REVISION` `bd48bed`, Rückweg `skriptorium:vorher` = `7b89102`; `/api/health` 200 nach ca. 60 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; danach einmal per SSH `(healthy)`, 0 Fehlerzeilen in den letzten 3 Minuten.
+- Offen: Prüfung durch den Eigentümer – 5.20 (zwei Kapitel schnell hintereinander anlegen) und 5.16 (herangezogene Einträge anklickbar).
+
+### 2026-10-10 – [BEOBACHTUNG] Schlüsseltausch: Skript verworfen, einzelner Befehl
+
+- Wunsch „Skript zum Ersetzen des OpenRouter-Schlüssels“ zunächst als Skript mit ADR-Vorlage, Tests und unabhängiger Prüfung umgesetzt (Branch `feat/d.18-schluessel-tauschen`, nie gepusht). Eigentümer stellte klar: gemeint war nur ein Terminalbefehl für macOS; das Skript auf seinen Wunsch verworfen (Branch gelöscht, kein ADR, kein Fahrplan-Schritt auf `main`).
+- Lehre: Bei einem Wunsch nach „Skript“ erst die Form klären (einmaliger Befehl oder gepflegtes Werkzeug), bevor der volle Ablauf für Kategorie 6 anläuft.
+- Ausgegeben: ein Befehl für das Terminal (zsh) – Schlüssel unsichtbar abfragen, per Standardeingabe über SSH auf den Server, `.env` nach `.env.vorher` sichern, neu erzeugen, auf `(healthy)` warten, im Container bei OpenRouter prüfen, Meldung ERFOLG oder FEHLER. Syntax von zsh-, bash- und Python-Teil geprüft, nicht ausgeführt. Die KI sieht den Schlüssel nicht.
+- Ausgeführt vom Eigentümer am 2026-10-10 gegen 18:53 UTC: Schlüssel eingetragen, Container neu erzeugt und gesund; im Container `GET /api/v1/key` → 200, `.env` verschieden von `.env.vorher`. „ERFOLG“ erschien erst nach gut einer Minute (Warten auf `(healthy)`, bis 120 s) – der Eigentümer hatte zunächst keine Meldung gesehen. Eigentümer hat den alten Schlüssel bei OpenRouter deaktiviert und gelöscht; danach auf seine Bestätigung `.env.vorher` auf dem Server gelöscht (nur noch `.env`, Rechte 600; Dienst `(healthy)`, `/api/health` 200).
+
 ### 2026-10-10 – [BEOBACHTUNG] 5.4 in die nächste Ausbaustufe verschoben (V.16)
 
 - Eigentümer per Auswahlfrage: 5.4 (FR-023, Kann – Datumsangaben in Zeitlinien) „in die nächste Ausbaustufe“ (Empfehlung der KI: Nutzen vor allem Übersicht für den Autor, die KI liest Zeitlinien als Text ohnehin; Phase 5 an der Wucherungs-Schwelle). Landeplatz V.16 mit Eingangskriterium „Zeitrechnung der Welt geklärt“; V-Bereich jetzt V.1–V.16. Kein ADR (Verschiebung, kein Verwerfen).
