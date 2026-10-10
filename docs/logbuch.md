@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [BEOBACHTUNG] 5.4 in die nächste Ausbaustufe verschoben (V.16)
+
+- Eigentümer per Auswahlfrage: 5.4 (FR-023, Kann – Datumsangaben in Zeitlinien) „in die nächste Ausbaustufe“ (Empfehlung der KI: Nutzen vor allem Übersicht für den Autor, die KI liest Zeitlinien als Text ohnehin; Phase 5 an der Wucherungs-Schwelle). Landeplatz V.16 mit Eingangskriterium „Zeitrechnung der Welt geklärt“; V-Bereich jetzt V.1–V.16. Kein ADR (Verschiebung, kein Verwerfen).
+- Phase 5: 19 von 26 erledigt, 3 in Arbeit (5.13, 5.16, 5.20 – Prüfung durch den Eigentümer), 2 offen (5.14, 5.5), 2 verschoben.
+
 ### 2026-10-10 – [ADR] ADR-056 und Umsetzung 5.13 Verlauf der Anweisungen
 
 - Klasse: Entscheidungs-Klasse (`claude-opus-5-5`, per `get_session` abgefragt) – Eskalations-Auslöser 1 (Datenmodell, Kategorie 4) ohne Modellwechsel erfüllt. Vorher `git ls-remote --heads origin`: kein 5.13-Branch.
