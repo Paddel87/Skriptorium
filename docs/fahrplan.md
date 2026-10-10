@@ -8,7 +8,7 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-10, nach dem Deployment `e61ccd3` (5.1, Mitlaufen aus 5.11, 5.11 Teil 3 Kanon-Seite eingespielt; Freigabe des Eigentümers „Deploy“)
+- **Stand vom:** 2026-10-10, nach dem Deployment `628f559` (5.6 Genre und Schreibweise, 5.11 Kanon in der Leiste der Geschichte eingespielt; Anweisung des Eigentümers „einspielen“)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 5.6 (Erkundung: Listenwerte entschieden, Wirkungsprobe gelaufen und wirksam, Datenmodell als Entscheidung offen); 5.11 (wieder geöffnet 2026-10-10: Kanon in der Leiste der Geschichte wie die Kanon-Seite – umgesetzt, nicht eingespielt). Am 2026-10-10 erledigt: 5.26, 5.1, 5.2, 5.21
@@ -31,12 +31,12 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⚪ | 5.3 | Lesbare Dateien – Nachweis | offen | KI |
 | ⚪ | 5.4 | Zeitlinie mit Datumsangaben im Kalender der Welt (Kann) | offen | du: umsetzen ja/nein |
 | ⚪ | 5.5 | Planung der nächsten Ausbaustufe | offen | KI – zuletzt |
-| 🟠 | 5.6 | Atmosphärische Schreibweise je Geschichte | in Arbeit – umgesetzt (ADR-053) | KI: mergen · Einspielen später · du: prüfen |
+| 🟠 | 5.6 | Atmosphärische Schreibweise je Geschichte | in Arbeit – eingespielt (ADR-053) | du: prüfen |
 | ✅ | 5.7 | Startmodell grok-4.6 | erledigt | – |
 | ✅ | 5.8 | Nahtloser Anschluss ohne Einleitung und Schlusssatz | erledigt | – |
 | ✅ | 5.9 | Kapitel öffnet am Textende | erledigt | – |
 | ✅ | 5.10 | Kosten je Vorschlag sichtbar | erledigt | – |
-| 🟠 | 5.11 | Seitenaufbau und Abläufe der Oberfläche neu ordnen | wieder in Arbeit – Kanon in der Leiste gemergt | KI: einspielen (auf Anweisung) · du: bestätigen |
+| 🟠 | 5.11 | Seitenaufbau und Abläufe der Oberfläche neu ordnen | wieder in Arbeit – Kanon in der Leiste eingespielt | du: bestätigen |
 | ⚪ | 5.12 | Modell-Auswahl aktuell vom Anbieter | offen | KI |
 | ⚪ | 5.13 | Verlauf der Anweisungen als umschaltbare Ansicht | offen | KI |
 | ⚪ | 5.14 | Go-Live-Prüfung vor v1.0.0 | offen | KI – nach 5.1–5.13 |

@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [BEOBACHTUNG] Deployment `628f559` (5.6, Kanon in der Leiste)
+
+- In der fortgesetzten Mac-Session (`claude-opus-5-5`) auf Anweisung des Eigentümers („einspielen“). Vorher mit `origin/main` abgeglichen: aus Cloud-Sessions #99 (Wirkungsprobe 5.6), #100 (5.6 umgesetzt, ADR-053), #101 (V.15). CI auf `628f559` grün. Ältere Geschichten ohne die neuen Felder werden als „keine Schreibweise“ gelesen (`test_old_files_without_style_fields_read_as_empty`) – keine Umwandlung nötig.
+- Ablauf nach Runbook Abschnitt 7 (ADR-039): `REVISION` `628f559`, Rückweg `skriptorium:vorher` = `e61ccd3`; `/api/health` 200 nach ca. 60 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; danach einmal per SSH `(healthy)`, keine Fehlerzeilen im Protokoll der letzten 3 Minuten.
+- Offen: Prüfung durch den Eigentümer – Genre und Schreibweise je Geschichte und Kapitel (5.6), Kanon in der Leiste der Geschichte (5.11).
+
 ### 2026-10-10 16:40 UTC – [BEOBACHTUNG] Kurzfassung am Smartphone mit der Anweisung verwechselt – V.15
 
 - **Befund des Eigentümers:** „Die Kapitel-Zusammenfassung verwechsle ich gerne mit der Eingabe für die KI, das muss ganz anders gemacht werden – nur als Hinweis.“
