@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 10:50 UTC – [BEOBACHTUNG] D.16 begonnen, weiter in der Session der Ausgangsmessung
+
+- **Abweichung Sessiongröße:** Der Eigentümer verlangt ausdrücklich, D.16 in dieser Session zu machen („In dieser Session machen“) – Ausnahme nach `CLAUDE.md` Abschnitt 0, vermerkt. Eine zuvor gestartete eigene Session für D.16 angehalten und archiviert (nur gelesen, nichts gepusht; ca. 2,85 $). Ebenso eine Session für E1/E2, die schon erledigt waren (ca. 0,80 $) – zuvor nicht geprüft, ob die Entscheidungen auf einem Branch lagen.
+- **Klasse:** Entscheidung (Opus 5.5), wie für D.16 empfohlen.
+- **Aufbau:** `spikes/reaktionszeit/d16.py` misst direkt bei OpenRouter (wie D.6) an der echten Schreib-Anfrage beider Testgeschichten (Anweisung 2 aus 5.26 mit `@`, „mittel“), je 3 Anfragen: grok-4.6 und grok-4.7 voll, grok-4.7 ohne Anschluss-Hinweis und Vorgaben aus 5.8–5.22, mit Denk-Deckel 1.024 Token, mit Denken aus. Größe des Kontexts allein ist laut Gegenprobe 5.26 nicht die Ursache (25.000 Token, einfache Anweisung: 4 s).
+
 ### 2026-10-10 03:40 UTC – [SESSIONENDE] Entscheidungen E1 und E2 aus 5.26 festgehalten
 
 - **Dauer:** 03:21 – 03:40 UTC, Cloud-Session (Linux).

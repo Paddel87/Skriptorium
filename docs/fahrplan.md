@@ -66,7 +66,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⚪ | D.11 | Sicherungs-Zugangsdaten außerhalb des Servers ablegen | offen | du – bis 2026-10-31 |
 | ⚪ | D.13 | Weigerungen der KI im Text erkennen – Erkundung | offen | du: Beispiele echter Sperren |
 | ⚪ | D.15 | Wechsel React Router 7 → Linie 8 | offen | KI – ab 2026-12-17 |
-| ⚪ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | offen | KI – vor 5.12 |
+| 🟠 | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | in Arbeit | KI – vor 5.12 |
 
 Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.10.
 
@@ -858,7 +858,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.16: Reaktionszeit erneut erkunden – grok-4.7 über 90 s
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-10) – Messreihe `spikes/reaktionszeit/d16.py` (5 Varianten, je 3 Anfragen an beiden Testgeschichten)
 - **Phasentyp-Kontext:** ERKUNDUNG
 - **Abhängigkeiten:** 5.26
 - **Frist:** vor 5.12 (Modell-Auswahl soll auf belastbaren Reaktionszeiten aufbauen)
