@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 12:20 UTC – [BEOBACHTUNG] Kurzfassung langer Kapitel scheitert – V.11
+
+- **Befund des Eigentümers:** „Kurzfassung nicht erstellt, der Text ist zu lang für eine Anfrage. Bis dahin nutzt die KI den Kapitelanfang. Das ist durchaus ein Problem.“
+- **Ursache:** `build_chapter_summary` nutzt das Budget der Schreib-Anfragen (30.000 Token, ADR-010) – Kapitel bis ca. 85.000 Zeichen (ca. 12.000–13.000 Wörter). Die Kapitel des Eigentümers sind „oft“ länger.
+- **Entscheidung (Auswahlfrage):** „in einer neuen Phase behandeln“ → V.11, Landeplatz 5.5; Optionen A (höhere Grenze nur für Kurzfassungen, Empfehlung), B (abschnittsweise), C (nichts ändern) dort festgehalten. Kein Schritt in Phase 5, kein Stopp Phasen-Wucherung.
+
 ### 2026-10-10 11:35 UTC – [SESSIONENDE] D.16 erledigt; 5.24, 5.26, E1/E2 gemergt
 
 - **Dauer:** seit 2026-10-09 20:53 UTC mit Pausen (eine durchgehende Cloud-Session, über der Größengrenze auf ausdrücklichen Wunsch des Eigentümers fortgesetzt).

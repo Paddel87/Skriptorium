@@ -68,7 +68,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⚪ | D.15 | Wechsel React Router 7 → Linie 8 | offen | KI – ab 2026-12-17 |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.10.
+Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.11.
 
 ---
 
@@ -254,8 +254,8 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich, nicht bloß Status-Update.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 5
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Die verschobenen Schritte V.1 bis V.10 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5; V.6 bis V.9 ergänzt 2026-10-08, Wünsche des Eigentümers; V.10 ergänzt 2026-10-10, ADR-050).
-- **Akzeptanzkriterien:** Jeder Schritt V.1–V.10 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
+- **Zu tun:** Die verschobenen Schritte V.1 bis V.11 in konkrete Schritte einer neuen Phase überführen oder per ADR verwerfen (V.4 und V.5 ergänzt beim Phasenabschluss 3: ihr Landeplatz ist 5.5; V.6 bis V.9 ergänzt 2026-10-08, Wünsche des Eigentümers; V.10 ergänzt 2026-10-10, ADR-050).
+- **Akzeptanzkriterien:** Jeder Schritt V.1–V.11 hat einen neuen `[OFFEN]`-Schritt mit ID oder einen `[VERWORFEN]`-Status mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Fahrplan, ggf. ADRs
@@ -1058,6 +1058,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine erwartet
 - **Artefakte:** ADR, Code, Tests
 - **Notizen:** Angelegt 2026-10-10; der Eigentümer stellte die Vorlage E1 zurück (ADR-050). Restrisiko bis dahin: nicht genannte Einträge gehen bei langen Kapiteln still verloren; Abhilfe im Alltag per `@`.
+
+#### V.11: Kurzfassungen langer Kapitel
+
+- **Status:** ⏸️ VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 (Eigentümer, 2026-10-10: „in einer neuen Phase behandeln“)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – Token-Budget je Anfrage (ADR-010), Kategorie 1
+- **Empfohlene Klasse:** Entscheidung – Änderung an einer NFR (Eskalations-Auslöser 1).
+- **Eingangskriterien:** 5.5
+- **Anforderungen (ab Klasse M):** FR-010
+- **Zu tun:** Befund des Eigentümers 2026-10-10: Meldung „Kurzfassung nicht erstellt, der Text ist zu lang für eine Anfrage“ – die KI nutzt dann nur den Kapitelanfang (ca. 300 Wörter). Grund: `build_chapter_summary` hat dasselbe Budget wie eine Schreib-Anfrage (30.000 Token, ADR-010, 10 % Sicherheitsabstand, 3,3 Zeichen je Token) – Kapitel bis ca. 85.000 Zeichen (ca. 12.000–13.000 Wörter). Kapitel des Eigentümers sind oft länger. Optionen der Vorlage: (A) eigene, höhere Grenze nur für Kurzfassungen (z. B. 120.000 Token, ca. 0,05–0,30 $ je Kurzfassung; Empfehlung der KI), (B) lange Kapitel abschnittsweise zusammenfassen und zusammenführen, (C) nichts ändern, Kapitel teilen. Wahl bei 5.5.
+- **Akzeptanzkriterien:** Kurzfassung eines Kapitels von mindestens 30.000 Wörtern gelingt; Kosten je Kurzfassung im Bericht; ADR.
+- **Betroffene Module:** context (bei B: api)
+- **Reifegrad-Wirkung:** NFR Token-Budget per ADR neu belegt
+- **Artefakte:** ADR, Code, Tests
+- **Notizen:** Angelegt 2026-10-10 auf Wunsch des Eigentümers (Auswahlfrage, Antwort „in einer neuen Phase behandeln“; Kapitel „oft“ über 10.000 Wörter). Restrisiko bis dahin: bei langen Kapiteln fehlt der KI der Handlungsstand nach dem Kapitelanfang; Abhilfe im Alltag: Kapitel teilen oder die Kurzfassung von Hand schreiben.
 
 ---
 
