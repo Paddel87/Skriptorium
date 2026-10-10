@@ -95,14 +95,15 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - **Kapitel abschließen:** Die KI erstellt eine Kurzfassung und schreibt die Gesamtzusammenfassung fort; beide lassen sich ansehen und ändern.
 - **In den Kanon:** Eine markierte Stelle wird zum neuen Eintrag oder ergänzt einen Eintrag – im Kanon der Welt oder nur für diese Geschichte.
 - **Als App:** Im Browser „Zum Startbildschirm“ (iPhone) bzw. „App installieren“ (Android, Chrome am Rechner) wählen – das Skriptorium öffnet dann ohne Browserleiste. Es arbeitet nur mit Netz; ohne Verbindung erscheint ein Hinweis, Texte bleiben nie auf dem Gerät.
-- **Modell und Kosten:** Das Modell wählst du unten neben der Anweisung (voreingestellt grok-4.6), die Geschichte merkt es sich. Unter jedem Vorschlag stehen Token und Kosten, unter „Konto“ die KI-Kosten des laufenden Monats.
+- **Modell und Kosten:** Das Modell wählst du unten neben der Anweisung aus deinen Favoriten (voreingestellt grok-4.6), die Geschichte merkt es sich. „Modelle verwalten …“ zeigt alle Modelle von OpenRouter mit Preis, Kontextgröße und geschätzten Kosten je Vorschlag; ein Stern nimmt eines in die Favoriten auf. Unter jedem Vorschlag stehen Token und Kosten, unter „Konto“ die KI-Kosten des laufenden Monats.
 
 ## Nächste Schritte
 
 - ✅ **5.1, 5.11:** Vorschläge ohne `@`, Chat-Aufbau mit Mitlaufen und neue Kanon-Seite mit Suche und Gliederung nach Kategorie – erledigt 2026-10-10.
 - ✅ **5.2, 5.21:** Bedienung am Smartphone und Installation als App am iPhone und Mac – erledigt 2026-10-10.
 - ✅ **5.6:** Genre und atmosphärische Schreibweise je Geschichte und Kapitel (Auswahllisten und freier Text) – erledigt 2026-10-10.
-- ⚪ **Als Nächstes:** 5.20 schnell angelegte Kapitel, 5.16 herangezogene Einträge anklickbar, 5.12 Modellauswahl vom Anbieter, 5.13 Verlauf der Anweisungen.
+- 🟠 **In Arbeit:** 5.12 Modellauswahl vom Anbieter (umgesetzt, Prüfung offen).
+- ⚪ **Als Nächstes:** 5.20 schnell angelegte Kapitel, 5.16 herangezogene Einträge anklickbar, 5.13 Verlauf der Anweisungen.
 - ✅ **D.16:** grok-4.7 denkt an echten Schreib-Anfragen 44–157 s vor, über die Einstellungen nicht zu beheben; kommt in 5.12 aus der Voreinstellung ([Bericht](docs/research/reaktionszeit-d16.md), ADR-052). Kanon-Einträge, die bei langen Kapiteln nicht mitgehen: zurückgestellt auf die nächste Ausbaustufe (V.10, ADR-050).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 

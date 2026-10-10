@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [BEOBACHTUNG] 5.12 umgesetzt, Prüfung durch den Eigentümer offen
+
+- Mockup vorher/nachher (echtes Bildschirmfoto der heutigen Auswahl, Nachher mit echten Katalogdaten) vom Eigentümer freigegeben („Passt, umbauen“).
+- Umgesetzt nach ADR-055: `ai_gateway/catalog.py` (`ModelCatalog` als Abbildung Modell → Einstellung, eine Stunde vorgehalten, nach Fehlschlag eine Minute Pause, sonst feste Liste; Vordenken zwingend → niedrigste Stufe ohne `none`, sonst aus, `DEFAULT_MODELS` gehen vor; Preise „-1“ = unbekannt). `api/favorites.py` (`system/modelle.md`, höchstens 50; ein bisheriger Favorit bleibt erlaubt, auch wenn der Katalog gerade fehlt). `GET /api/models` additiv um `favorites`, `catalog`, `catalog_available`; neu `PUT /api/models/favoriten`; Schreiben und Modell der Geschichte prüfen gegen den Katalog (die Routen laden ihn vorher, daher `async`). Oberfläche: Auswahlfeld „★ Name · Kosten“, Modell der Geschichte auch außerhalb der Favoriten, „Modelle verwalten …“ als Dialog (Suche, Anbieter, Preisgrenze, ohne Moderation, mind. 30 Tsd. Kontext, nur Favoriten; Stern speichert sofort).
+- Prüfungen: pytest 482 grün (Abdeckung 99 %, `catalog.py`, `favorites.py`, `writing_routes.py` je 100 %), mypy/ruff/bandit sauber; vitest 165 grün (`ModelManager.tsx` 100 % Zeilen); Playwright 11 grün – der e2e-Test öffnet den Dialog unabhängig davon, ob OpenRouter erreichbar ist.
+- Reibung: Der erste e2e-Lauf schlug fehl, weil `dist/ui` noch der Stand vor der Änderung war (Playwright baut die Oberfläche nicht selbst). Nach `vite build` grün. In der CI baut ein eigener Schritt vorher.
+- Beobachtung: Mit den Standardfiltern stehen nach den Favoriten kostenlose Modelle („(free)“, 0,0 ct) oben; bei OpenRouter dürfen deren Anbieter Eingaben oft speichern oder zum Training nutzen. Der Katalog zeigt das nicht an. Dem Eigentümer genannt.
+- Offen: Prüfung durch den Eigentümer; echte Anfrage mit einem nicht voreingestellten Modell (Akzeptanzkriterium, z. B. grok-4.5) in einer Cloud-Session oder nach dem Einspielen mit dem Schlüssel des Servers. Commits lokal, Push nach Freigabe.
+
 ### 2026-10-10 – [ADR-ANGELEGT] ADR-055 Modell-Katalog und Favoriten (5.12)
 
 - 5.12 begonnen. Auswahlfragen: Form „eigene Favoriten“ – zugleich „keine Favoritenliste speichern“ gewählt; Widerspruch per Rückfrage geklärt: Favoriten auf dem Server. Angaben: Preis je 1 Mio. Token, geschätzte Kosten je Vorschlag, Kontextgröße, „denkt lange“; Filter: Anbieter, Preis, ohne OpenRouter-Moderation, Mindest-Kontext. Vorschlag (Kategorien 4 und 5) freigegeben, Startfavoriten grok-4.6 und qwen3.8-max.

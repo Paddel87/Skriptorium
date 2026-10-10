@@ -6,6 +6,8 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v0.1.0)
 
+- Modelle aus dem Angebot von OpenRouter (2026-10-10, Schritt 5.12, ADR-055): Das Auswahlfeld neben der Anweisung zeigt deine Favoriten mit den geschätzten Kosten je Vorschlag. Darunter öffnet „Modelle verwalten …“ alle Modelle von OpenRouter mit Preis je 1 Mio. Token, Kontextgröße und den Hinweisen „denkt lange“, „denkt vor“, „moderiert“ und „geprüft“, dazu Suche und Filter nach Anbieter, Preis, ohne OpenRouter-Moderation und mindestens 30.000 Token Kontext. Ein Stern nimmt ein Modell in die Favoriten auf oder entfernt es. Die Favoriten liegen auf dem Server und sind auf allen Geräten gleich. `GET /api/models` liefert zusätzlich `favorites`, `catalog` und `catalog_available`; neu ist `PUT /api/models/favoriten`.
+
 - Genre und atmosphärische Schreibweise (2026-10-10, Schritt 5.6, ADR-053): Je Geschichte Genre, Tonalität, Atmosphäre, Tempo, Stil, Deutlichkeit und freie Angaben als Vorgabe; ein neues Kapitel übernimmt sie und lässt sich einzeln ändern oder auf die Vorgabe zurücksetzen. Die KI bekommt die Schreibweise mit jeder Anfrage; Kanon und Figuren-Schreibweise gehen vor. Neue, optionale Felder `genres` und `writing_style` an Geschichte und Kapitel.
 - Vorschläge für Kanon-Namen ohne `@` (2026-10-09, Schritt 5.1): Schreibst du in der Anweisung den Namen oder Alias eines Kanon-Eintrags ohne `@` („Tomas betritt die Schänke“), erscheint darunter „Meintest du: @Tomas → Tomas Rehl“. Ein Tipp macht daraus einen `@`-Verweis; ohne Tipp geht der Eintrag nicht an die KI.
 
@@ -16,6 +18,8 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 - Länge je Vorschlag wählbar (2026-10-08, Schritt 5.15): Auswahl „Länge“ im Schreib-Bereich mit kurz (etwa 60–120 Wörter), mittel (150–300, voreingestellt) und lang (400–600). Neues optionales Feld `length` im Schreib-Endpunkt.
 
 ### Geändert (nach v0.1.0)
+
+- grok-4.7 nicht mehr im Auswahlfeld (2026-10-10, Schritt 5.12, ADR-052, ADR-055): Die Start-Favoriten sind grok-4.6 und qwen3.8-max. grok-4.7 lässt sich über „Modelle verwalten …“ wieder hinzufügen. Eine Geschichte, die grok-4.7 oder ein anderes Modell außerhalb der Favoriten gewählt hat, behält es.
 
 - Kanon-Seite neu (2026-10-10, Schritt 5.11 Teil 3): Suchfeld über Name und Alias, Kategorien als Filter mit Anzahl, Liste links, der gewählte Eintrag rechts zum Lesen (mit Fett, Listen und Überschriften aus dem Text) und „Bearbeiten“ an Ort und Stelle. Jeder Eintrag hat eine eigene Adresse (`#/welt/<welt>/kanon/<eintrag>`); am Smartphone öffnet ein Eintrag über die ganze Breite, „← Liste“ führt zurück.
 - Bedienung am Smartphone (2026-10-09, Schritt 5.2): Das Formular „In den Kanon“ rückt beim Öffnen ins Bild, statt unterhalb zu erscheinen (auch am Desktop); die Knöpfe hinter „⋯“ klappen nach einer Wahl wieder zu; auf schmalen Handys passen Modell, Länge, „⋯“ und „Weiter“ in eine Zeile.
