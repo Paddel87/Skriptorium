@@ -1,0 +1,14 @@
+{
+  "geschichte": "salzmark",
+  "schritt": 6,
+  "anweisung": "Auf dem Rückweg treffe ich am Hafen Kapitän Lund vor seiner Kogge. Ich frage ihn, ob er nach Tolm ausläuft und einen Brief an Marr mitnehmen kann.",
+  "verweise": [],
+  "modell": "x-ai/grok-4.6",
+  "woerter": 76,
+  "sekunden": 17.4,
+  "token_geschaetzt": 10112,
+  "token_ein": 8652,
+  "token_aus": 767,
+  "kosten_usd": 0.02149686,
+  "finish_reason": "stop"
+}

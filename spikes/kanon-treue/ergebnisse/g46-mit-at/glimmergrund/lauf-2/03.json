@@ -1,0 +1,16 @@
+{
+  "geschichte": "glimmergrund",
+  "schritt": 3,
+  "anweisung": "Am Abend bin ich beim Direktor @Farnow zum Essen eingeladen. Ich komme zur verabredeten Uhrzeit nach der Kirchenuhr. Nach dem Essen bringt seine Frau ein Getränk für alle.",
+  "verweise": [
+    "emil-farnow"
+  ],
+  "modell": "x-ai/grok-4.6",
+  "woerter": 190,
+  "sekunden": 26.2,
+  "token_geschaetzt": 29245,
+  "token_ein": 24024,
+  "token_aus": 926,
+  "kosten_usd": 0.05287788,
+  "finish_reason": "stop"
+}

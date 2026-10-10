@@ -1,0 +1,16 @@
+{
+  "geschichte": "salzmark",
+  "schritt": 4,
+  "anweisung": "Die Schwester führt mich zur Äbtissin. Ich bitte @Mutter Sera, mir den Eintrag über meine Mutter zu zeigen.",
+  "verweise": [
+    "sera-kolb"
+  ],
+  "modell": "x-ai/grok-4.7",
+  "woerter": 204,
+  "sekunden": 97.6,
+  "token_geschaetzt": 10239,
+  "token_ein": 9776,
+  "token_aus": 7077,
+  "kosten_usd": 0.05968314,
+  "finish_reason": "stop"
+}

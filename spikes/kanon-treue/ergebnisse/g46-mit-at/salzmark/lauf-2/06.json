@@ -1,0 +1,17 @@
+{
+  "geschichte": "salzmark",
+  "schritt": 6,
+  "anweisung": "Auf dem Rückweg treffe ich am Hafen @Kapitän Lund vor seiner Kogge. Ich frage ihn, ob er nach Tolm ausläuft und einen Brief an @Ysolde Marr mitnehmen kann.",
+  "verweise": [
+    "oskar-lund",
+    "ysolde-marr"
+  ],
+  "modell": "x-ai/grok-4.6",
+  "woerter": 87,
+  "sekunden": 38.9,
+  "token_geschaetzt": 10455,
+  "token_ein": 8943,
+  "token_aus": 1613,
+  "kosten_usd": 0.02709828,
+  "finish_reason": "stop"
+}
