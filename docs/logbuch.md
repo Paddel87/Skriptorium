@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 12:55 UTC – [BEOBACHTUNG] 5.11 Teil 3 Kanon-Seite umgesetzt
+
+- **Mockup:** echte Oberfläche mit der Testwelt Glimmergrund (23 Einträge), vorher/nachher je Desktop und Smartphone, Entwurf per Playwright ins Layout eingesetzt; freigegeben („Passt so“). Auswahlfragen: Bearbeiten rechts an Ort und Stelle, Lesetext mit Fett und Listen (eigener kleiner Umsetzer `EntryText.tsx`, keine neue Bibliothek, keine HTML-Einfügung), eigene Adresse je Eintrag.
+- **Umsetzung:** `Canon.tsx` (Suche über Name und Alias, Kategorien als Filter mit Anzahl, Liste links, Eintrag rechts; am Smartphone Eintrag über die ganze Breite mit „← Liste“), Route `#/welt/<welt>/kanon/<eintrag>` in `Shell.tsx`, `canonEntryPath` in `paths.ts`, Mehrzahl der Kategorien in `api.ts`.
+- **Tests:** `vitest` 148 bestanden, gesamt 98,21 % Zeilen / 95,29 % Zweige; Playwright 10 bestanden (zwei Prüfungen auf Leseansicht und Adresse samt Neuladen umgestellt).
+- **Reibung:** „Neuer Eintrag“ reagierte bei leerer Welt nicht – ein Vergleich war beim Umbenennen des Markers stehen geblieben; vom End-to-End-Test gefunden, Komponenten-Test ergänzt. Filtergruppe und Kategorie-Feld hießen beide „Kategorie“ – Gruppe heißt jetzt „Nach Kategorie filtern“. Beim Beenden des Mockup-Servers beendete `pkill -f` die eigene Shell mit (Muster stand in der Befehlszeile) – nichts verloren.
+- **Quick-Start-Relevanz:** keine (nur `ui`, keine neue Abhängigkeit, kein Skript) – Validierung im frischen Klon nicht nötig.
+
 ### 2026-10-10 12:35 UTC – [BEOBACHTUNG] Wunsch Wortzähler – V.12
 
 - **Wunsch des Eigentümers:** im Manuskriptfeld die vorhandenen Wörter zählen.
