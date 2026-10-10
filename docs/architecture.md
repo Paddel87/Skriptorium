@@ -238,7 +238,7 @@ Angelegt im Sicherheitsgrundriss (Modus 2 Schritt 4a, 2026-09-26). Das System wi
   - **Angreifer:** automatisierte Internet-Scanner und Bots; Passwort-Rater (Credential Stuffing); opportunistische Ausnutzung ungepatchter Software. Kein gezielter Angreifer mit großen Mitteln angenommen.
   - **Bedrohungen und Gegenmaßnahmen:**
     - Passwort-Raten → selbst gewähltes Passwort ab 15 Zeichen, geprüft gegen Pwned Passwords und Kontextwörter, gehasht mit scrypt; Sperre je Absender nach 10 Fehlversuchen in 15 Minuten; Anmeldung nur über TLS; kein zweiter Faktor – begründete Abweichung von ASVS 6.3.3 (ADR-017).
-    - Sitzungsdiebstahl über eingeschleustes Skript (XSS) → Markdown-Darstellung ohne ungefiltertes HTML, Content-Security-Policy, Sitzungs-Cookie `HttpOnly`, `Secure`, `SameSite=Strict`.
+    - Sitzungsdiebstahl über eingeschleustes Skript (XSS) → keine Darstellung von ungefiltertem HTML (React maskiert, kein `dangerouslySetInnerHTML`, kein Markdown-zu-HTML), Sitzungs-Cookie `HttpOnly`, `Secure`, `SameSite=Strict`. Eine vollständige Content-Security-Policy gibt es **nicht** (nur `frame-ancestors 'none'` am Proxy) – richtiggestellt 2026-10-11 nach der unabhängigen Prüfung in 5.14; ASVS 3.4.3 ist Stufe 2 und nach ADR-006 nicht verbindlich.
     - Fremdaufrufe im Namen des Nutzers (CSRF) → `SameSite=Strict` und Prüfung der Herkunft bei ändernden Anfragen.
     - Abfluss des API-Schlüssels → nur serverseitig in Umgebungsvariablen, nie im Browser, Repo oder Log; **Ausgabengrenze am Schlüssel bei OpenRouter** begrenzt den Schaden.
     - Übernahme des Servers über ungepatchte Software → automatische Sicherheitsupdates, Firewall, SSH nur mit Schlüssel (Rubrik Host).

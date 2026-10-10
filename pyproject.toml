@@ -1,6 +1,6 @@
 [project]
 name = "skriptorium"
-version = "0.1.0"
+version = "1.0.0"
 description = "Schreibwerkstatt mit Welten als verbindlichem Kanon"
 license = "AGPL-3.0-only"
 requires-python = "==3.14.*"

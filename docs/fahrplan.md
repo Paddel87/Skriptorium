@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-10-10, nach dem Deployment `628f559` (5.6 Genre und Schreibweise, 5.11 Kanon in der Leiste der Geschichte eingespielt; Anweisung des Eigentümers „einspielen“)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner. Am 2026-10-11 erledigt: 5.20, 5.13, 5.16. Am 2026-10-10 erledigt: 5.12, 5.26, 5.1, 5.2, 5.21, 5.11, 5.6, 5.3
-- **Nächster Schritt:** 5.14 Go-Live-Prüfung vor v1.0.0, zuletzt 5.5 Planung der nächsten Ausbaustufe (V.1–V.17). Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** keiner. Am 2026-10-11 erledigt: 5.14 (v1.0.0, ADR-058), D.4 (ADR-057), 5.20, 5.13, 5.16. Am 2026-10-10 erledigt: 5.12, 5.26, 5.1, 5.2, 5.21, 5.11, 5.6, 5.3
+- **Nächster Schritt:** 5.5 Planung der nächsten Ausbaustufe (V.1–V.19) – letzter Schritt von Phase 5, danach Phasengrenze mit Vision-Abgleich und Pflichtfrage. Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -22,7 +22,7 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 22 von 26 erledigt, 0 in Arbeit, 2 offen, 2 verschoben (5.25 → V.13, 5.4 → V.16).**
+**Phase 5: 23 von 26 erledigt, 0 in Arbeit, 1 offen, 2 verschoben (5.25 → V.13, 5.4 → V.16).**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -39,7 +39,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | 5.11 | Seitenaufbau und Abläufe der Oberfläche neu ordnen | erledigt 2026-10-10 | – |
 | ✅ | 5.12 | Modell-Auswahl aktuell vom Anbieter | erledigt 2026-10-10 (ADR-055) | – |
 | ✅ | 5.13 | Verlauf der Anweisungen als umschaltbare Ansicht | erledigt 2026-10-11 (ADR-056) | – |
-| ⚪ | 5.14 | Go-Live-Prüfung vor v1.0.0 | offen | KI – nach 5.1–5.13 |
+| ✅ | 5.14 | Go-Live-Prüfung vor v1.0.0 | erledigt 2026-10-11 – v1.0.0 (ADR-058) | – |
 | ✅ | 5.15 | KI schreibt nur das Verlangte, nicht bis zum bekannten Ende | erledigt | – |
 | ✅ | 5.16 | Herangezogene Kanon-Einträge anklickbar | erledigt 2026-10-11 | – |
 | ✅ | 5.17 | Leerzeichen nach der Auswahl im `@`-Menü | erledigt | – |
@@ -60,7 +60,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⚪ | D.1 | Wechsel Node.js 24 → Node.js 26 LTS | offen | KI – ab 2026-11-05 |
 | ⚪ | D.2 | Nachprüfung TypeScript 7 | offen | KI – am 2027-01-08 |
 | ⚪ | D.3 | Nachprüfung httpx | offen | KI – am 2027-03-26 |
-| ⚪ | D.4 | Prüfung „kein Kontextverlust" beim Referenzumfang | offen | wartet, bis eine Geschichte den Referenzumfang erreicht |
+| ✅ | D.4 | Prüfung „kein Kontextverlust" beim Referenzumfang | erledigt 2026-10-11 (ADR-057, an „The Trap“) | – |
 | ⚪ | D.5 | Wechsel auf httpx2 und Nachprüfung mypy 2 | offen | KI – ab 2026-11-12 |
 | ⚪ | D.9 | Nachprüfung Unterstützung des Reverse Proxys | offen | KI – am 2026-12-28 |
 | ⚪ | D.11 | Sicherungs-Zugangsdaten außerhalb des Servers ablegen | offen | du – bis 2026-10-31 |
@@ -69,7 +69,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.17.
+Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.19.
 
 ---
 
@@ -396,7 +396,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.14: Go-Live-Prüfung vor v1.0.0
 
-- **Status:** ⚪ OFFEN
+- **Status:** ✅ ERLEDIGT (2026-10-11) – v1.0.0 freigegeben (ADR-058): Vision-Checkpoint erfüllt, Verzicht auf den menschlichen Blick mit Restrisiko, unabhängige KI-Prüfung „freigeben“; freiwillige Maßnahmen als V.18, V.19. Verlauf: 🟠 IN ARBEIT (seit 2026-10-11) – Vision-Abgleich: alle Elemente erledigt oder bewusst ausgeklammert, nach D.4 (ADR-057). Stoppuhr FR-022: laut Eigentümer „problemlos zu unterbieten“, keine Messung. Externer Blick: Eigentümer wählte „Du mit Sub-agent“ – Verzicht auf den menschlichen Blick mit Restrisiko, stattdessen erneute unabhängige Prüfung durch eine getrennte KI-Instanz (anderes Modell) läuft. Offen: Befunde, ADR zum Verzicht und zur Freigabe v1.0.0, CHANGELOG
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.1–5.13 (außer 5.5), D.4
 - **Freigabepflichtig:** ja – Release-Entscheidung nach `CLAUDE.md` Abschnitt 12 (Vision-Checkpoint vor Go-Live); Verzicht auf den externen Blick nur per ADR mit Restrisiko
@@ -660,7 +660,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.4: Prüfung „kein Kontextverlust" beim Referenzumfang
 
-- **Status:** ⚪ OFFEN
+- **Status:** ✅ ERLEDIGT (2026-10-11) – Nachweis an „The Trap“ mit Hochrechnung (ADR-057): Handlungsstand vollständig (Gesamtzusammenfassung 481 Wörter, Kurzfassungen 164/162/177), Anfrage ≤ 30.000 Token, im Betrieb ca. 23.000 Token und ca. 0,05 $ statt 125.000–140.000 Token; Einschränkung: Figuren-, Orts- und Gegenstands-Einträge gehen bei langen Kapiteln nur per `@` mit (V.10)
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** 3.6
 - **Frist:** kein Datum – Auslöser: eine Geschichte erreicht ≥ 500.000 Token (Entscheidung des Eigentümers, ADR-009)
@@ -673,7 +673,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Betroffene Module:** context
 - **Reifegrad-Wirkung:** NFR Kontexttreue Referenzumfang `[OFFEN]` → `[BELASTBAR]` oder begründeter Erkundungsbedarf
 - **Artefakte:** Messprotokoll, ADR `[ERKENNTNIS]`
-- **Notizen:** Bis dahin gilt das Kriterium als unbelegt.
+- **Notizen:** Bis dahin gilt das Kriterium als unbelegt. **Entscheidung 2026-10-11** (Eigentümer, Auswahlfrage vor 5.14): Nachweis an „The Trap“ (39.051 Wörter in 4 Kapiteln, etwa halber Referenzumfang) nach den Kurzfassungen von Kapitel 1–3, Hochrechnung auf die Referenz; Ergebnis per ADR als ausreichend festhalten.
 
 #### D.5: Wechsel auf httpx2 und Nachprüfung mypy 2
 
@@ -1195,6 +1195,40 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-11; Phase 5 steht an der Wucherungs-Schwelle, daher nicht als Phasenschritt.
+
+#### V.18: Datenschutz-Einstellung an OpenRouter senden
+
+- **Status:** ⏸️ VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 (Eigentümer, 2026-10-11: „Keine – so freigeben“, freiwillige Maßnahme aus der Prüfung in 5.14)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – Kategorie 6 (Umgang mit Texten beim Anbieter); kann die wählbaren Modelle einschränken
+- **Empfohlene Klasse:** Entscheidung – Datenschutz-Vorschlag (Eskalations-Auslöser 1); die Umsetzung danach ist Routine.
+- **Eingangskriterien:** 5.5; Entscheidung des Eigentümers
+- **Anforderungen (ab Klasse M):** keine (Befund 6 der unabhängigen Prüfung 2026-10-11)
+- **Zu tun:** Mit jeder Anfrage `provider: {"data_collection": "deny"}` senden (nur Anbieter, die Texte nicht speichern oder zum Training nutzen) oder die Einstellung im OpenRouter-Konto prüfen; Wirkung auf den Katalog (wegfallende Modelle) zeigen.
+- **Akzeptanzkriterien:** Entscheidung mit ADR; bei Umsetzung Test der Nutzlast und echte Anfrage.
+- **Betroffene Module:** ai_gateway
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ADR, ggf. Code und Tests
+- **Notizen:** Angelegt 2026-10-11 (ADR-058).
+
+#### V.19: Kopfzeilen und Fehlermeldungen härten (CSP, Einbettschutz, 422)
+
+- **Status:** ⏸️ VERSCHOBEN
+- **Landeplatz (nur VERSCHOBEN):** 5.5 (Eigentümer, 2026-10-11: „Keine – so freigeben“, freiwillige Maßnahmen aus der Prüfung in 5.14)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – Kategorie 6; nach Obergrenze (ADR-006) Stufe 2 und damit optional
+- **Empfohlene Klasse:** Entscheidung – Sicherheitsmaßnahme über dem festgelegten Niveau (Eskalations-Auslöser 1).
+- **Eingangskriterien:** 5.5; Entscheidung des Eigentümers
+- **Anforderungen (ab Klasse M):** keine (Befunde 1, 2, 4 der unabhängigen Prüfung 2026-10-11; ASVS 3.4.3, 3.4.6)
+- **Zu tun:** Content-Security-Policy (z. B. `default-src 'self'`, Stile mit `'unsafe-inline'` für CodeMirror prüfen); `frame-ancestors 'none'` auch in `_SECURITY_HEADERS` statt nur am Proxy; eigener Handler für Validierungsfehler ohne zurückgespiegelte Eingaben.
+- **Akzeptanzkriterien:** Entscheidung; bei Umsetzung Tests der Kopfzeilen, Oberfläche funktioniert mit CSP (End-to-End), Prüfung durch eine getrennte Instanz.
+- **Betroffene Module:** api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, ggf. ADR
+- **Notizen:** Angelegt 2026-10-11 (ADR-058).
 
 ---
 
