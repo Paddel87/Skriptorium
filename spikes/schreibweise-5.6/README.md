@@ -40,6 +40,32 @@ Kosten etwa 0,25 $ je Kette, zusammen ca. 3 $ (12 Ketten).
 | Glimmergrund | 10,2 (8,9–11,8) | 46,6 (44,2–49,7) | 123,7 (94,9–146,0) |
 | Salzmark | 8,7 (8,3–9,1) | 59,7 (58,5–61,9) | 115,2 (108,9–123,6) |
 
-## Ergebnisse
+## Ergebnisse (2026-10-10)
 
-Noch offen – Lauf in einer Cloud-Session.
+12 Ketten (A und B je 3 an beiden Geschichten), grok-4.6, „mittel“, Stand `a91e534` – `context` seit der Ausgangsmessung 5.24 unverändert, also gleicher Aufbau nach Regel-002. 84 Vorschläge, alle `stop`, keine leere Antwort, keine Sperre. Kosten 2,91 $. Ergebnisse unter `spikes/regel-002/ergebnisse/schreibweise-a/` und `…/schreibweise-b/`.
+
+**Stil-Kennzahlen (`stil.py`), Mittel (Spannweite):**
+
+| Kennzahl | ohne Schreibweise | A Dark Romance | B Thriller |
+|---|---|---|---|
+| Satzlänge Glimmergrund | 10,2 (8,9–11,8) | 11,8 (10,2–12,7) | 8,2 (7,0–9,1) |
+| Satzlänge Salzmark | 8,7 (8,3–9,1) | 9,2 (8,9–9,7) | 7,2 (7,0–7,4) |
+| wörtl. Rede % Glimmergrund | 46,6 (44,2–49,7) | 44,2 (43,8–44,6) | 40,9 (33,3–48,9) |
+| wörtl. Rede % Salzmark | 59,7 (58,5–61,9) | 59,3 (58,1–61,4) | 63,9 (61,2–66,3) |
+| Wörter Glimmergrund | 123,7 (94,9–146,0) | 120,3 (117,3–122,4) | 96,1 (76,4–108,3) |
+| Wörter Salzmark | 115,2 (108,9–123,6) | 128,4 (115,4–143,1) | 106,7 (88,1–142,6) |
+
+Kennzahlen aus `auswertung.py`: wörtliche Wiederholung in allen Varianten höchstens 2,7 %, Warte-Enden höchstens 1 je Kette – wie ohne Schreibweise.
+
+**Verblindete Bewertung** (getrennte Instanz, Sonnet; je Geschichte neun Ketten aus N/A/B gemischt unter K1–K9, Schlüssel `blind-schluessel.json`, erst danach aufgedeckt):
+
+- **Zuordnung: 18 von 18 richtig** (Glimmergrund 9/9, Salzmark 9/9), obwohl die Bewerterin ihre Sicherheit meist „niedrig“ oder „mittel“ nannte. A erkennbar an Bildlichkeit („als müsse sie den Satz erst salzen“), B an Verknappung („Silberschalen. Fünf.“).
+- **Kanon-Proben Glimmergrund:** 0 Verstöße in allen neun Ketten, je 5–7 Proben sichtbar eingehalten; einziger Grenzfall (Kaffeetasse vor Wendt hingestellt, nicht getrunken) in einer Kette ohne Schreibweise.
+- **Geführte Figur über die Anweisung hinaus:** Glimmergrund N 1/1/2, A 0/1/0, B 0/1/1 (meist der Inhalt der Antwort an Lenka, die Anweisung lässt ihn offen); Salzmark N 0/0/0, A 0/2/0, B 0/0/5 – der Ausreißer ist Schritt 7 („Wir streiten.“), dasselbe Muster wie in 5.24 ohne Schreibweise.
+
+**Befund:**
+
+1. **Die Schreibweise wirkt erkennbar.** Blind 18 von 18 zugeordnet. Messbar: B kürzt die Sätze in beiden Geschichten (Mittel unter der Spannweite ohne Schreibweise; in Glimmergrund berühren sich die Spannweiten knapp). A verlängert sie nur leicht, innerhalb der Streuung – A wirkt eher über Bilder als über Satzlänge, das misst `stil.py` nicht.
+2. **Kanon-Treue nicht schlechter:** 0 Verstöße mit und ohne Schreibweise.
+3. **Keine Sperren** bei „angedeutet“.
+4. **Platz im Prompt bestätigt:** direkt hinter der Figuren-Schreibweise, mit Vorrang für Kanon und geführte Figuren – so in der Probe aufgebaut.

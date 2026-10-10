@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 13:40 UTC – [BEOBACHTUNG] 5.6 Wirkungsprobe: Schreibweise wirkt, Kanon-Treue unverändert
+
+- **Lauf:** in der Cloud-Session (gültiger Schlüssel), `main` vorher abgeglichen (`a91e534`); `context` seit 5.24 unverändert – Vergleich mit `ausgang-mittel` im gleichen Aufbau (Regel-002). A (Dark Romance, poetisch) und B (Thriller, knapp) je 3 Ketten an beiden Geschichten, 2,91 $, keine Sperre.
+- **Ergebnis:** verblindet (Sonnet, Schlüssel erst danach aufgedeckt) 18 von 18 Ketten richtig zugeordnet; B kürzt die Sätze in beiden Geschichten (Glimmergrund 10,2 → 8,2, Salzmark 8,7 → 7,2 Wörter je Satz), A wirkt über Bilder; 0 Kanon-Verstöße mit und ohne Schreibweise. Bericht `spikes/schreibweise-5.6/README.md`.
+- **Nächster Teil von 5.6:** Datenmodell als `ENTSCHEIDUNG ERFORDERLICH` (Kategorie 4) mit Mockup.
+
 ### 2026-10-10 – [BEOBACHTUNG] 5.6 Erkundung begonnen
 
 - Eigentümer: „5.6 Erkundung“. Vorgeschlagen: (1) Listenwerte, (2) Wirkungsprobe nach Regel-002 vor dem Bau, (3) Platz im Prompt hinter der Figuren-Schreibweise mit Vorrang für Kanon und Figuren, (4) Datenmodell als Entscheidung mit Mockup – „Reihenfolge passt, Listen so übernehmen“ (Werte im Fahrplan 5.6). Innerhalb von 5.6, kein neuer Schritt (Phase 5 an der Wucherungs-Schwelle).

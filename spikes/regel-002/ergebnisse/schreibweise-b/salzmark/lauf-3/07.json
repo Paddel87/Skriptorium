@@ -1,0 +1,12 @@
+{
+  "geschichte": "salzmark",
+  "schritt": 7,
+  "anweisung": "Ich schlage vor, in zwei Nächten einzubrechen und die Riegel der Wachstube zu binden. Tomas will lieber Marr eine Nachricht schicken. Wir streiten.",
+  "modell": "x-ai/grok-4.6",
+  "woerter": 233,
+  "sekunden": 19.9,
+  "token_ein": 9438,
+  "token_aus": 880,
+  "kosten_usd": 0.0223938,
+  "finish_reason": "stop"
+}
