@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-10-10, nach dem Deployment `628f559` (5.6 Genre und Schreibweise, 5.11 Kanon in der Leiste der Geschichte eingespielt; Anweisung des Eigentümers „einspielen“)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner in Phase 5 – am 2026-10-10 erledigt: 5.26, 5.1, 5.2, 5.21, 5.11, 5.6; Querschnitt D.17 (CI) in Arbeit
+- **Aktiver Schritt:** keiner in Phase 5 – am 2026-10-10 erledigt: 5.26, 5.1, 5.2, 5.21, 5.11, 5.6
 - **Nächster Schritt:** 5.11 Kanon in der Leiste einspielen (auf Anweisung) und bestätigen lassen; (5.25 nach V.13 verschoben, 2026-10-10) D.16 erledigt (ADR-052: grok-4.7 in 5.12 aus der Voreinstellung), E1 zurückgestellt auf V.10 (ADR-050); danach 5.20, 5.16, 5.6, 5.12, 5.13, 5.3, 5.4, 5.14, 5.5. Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
@@ -66,6 +66,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⚪ | D.11 | Sicherungs-Zugangsdaten außerhalb des Servers ablegen | offen | du – bis 2026-10-31 |
 | ⚪ | D.13 | Weigerungen der KI im Text erkennen – Erkundung | offen | du: Beispiele echter Sperren |
 | ⚪ | D.15 | Wechsel React Router 7 → Linie 8 | offen | KI – ab 2026-12-17 |
+| ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
 Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.15.
@@ -873,6 +874,22 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** NFR Reaktionszeit `[VORLÄUFIG]` → `[BELASTBAR]`
 - **Artefakte:** Spike-Bericht, ADR, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-10 auf die Vorlage E2 aus 5.26 (ADR-051, Eigentümer: „erst wissen“). Querschnitt wie D.6, nicht Teil des Schrittplans von Phase 5.
+
+#### D.17: CI nur für `main` und fertige Pull Requests
+
+- **Status:** ✅ ERLEDIGT (2026-10-10) – #103: Push auf den Branch startete keinen Lauf, der Pull Request genau einen mit allen vier Pflicht-Checks (grün); gemergt auf Anweisung des Eigentümers (ADR-054)
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – Kategorie 7, freigegeben vom Eigentümer 2026-10-10 („A“, ADR-054)
+- **Empfohlene Klasse:** Routine – wenige Zeilen Konfiguration nach getroffener Entscheidung.
+- **Eingangskriterien:** Entscheidung des Eigentümers
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Befund 2026-10-10: Jeder Push lief die CI doppelt (Push und Pull Request), auch bei Entwürfen. Auslöser auf Push nach `main` und Pull Requests (ohne Entwürfe) beschränken.
+- **Akzeptanzkriterien:** Pull Request startet genau einen CI-Lauf mit allen vier Pflicht-Checks; Push auf den Branch allein startet keinen; nach dem Merge läuft die CI auf `main`; ADR-054.
+- **Betroffene Module:** keine (CI)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** `.github/workflows/ci.yml`, ADR, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-10 auf Wunsch des Eigentümers. Querschnitt, nicht Teil des Schrittplans von Phase 5.
 
 #### M.1: Branch-Konvention festlegen
 

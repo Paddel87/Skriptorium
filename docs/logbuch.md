@@ -43,6 +43,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - Ablauf nach Runbook Abschnitt 7 (ADR-039): `REVISION` `628f559`, Rückweg `skriptorium:vorher` = `e61ccd3`; `/api/health` 200 nach ca. 60 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; danach einmal per SSH `(healthy)`, keine Fehlerzeilen im Protokoll der letzten 3 Minuten.
 - Offen: Prüfung durch den Eigentümer – Genre und Schreibweise je Geschichte und Kapitel (5.6), Kanon in der Leiste der Geschichte (5.11).
 
+### 2026-10-10 – [ADR-ANGELEGT] ADR-054 CI nur für `main` und fertige Pull Requests (D.17)
+
+- Eigentümer: PRs mit offenen Rückfragen und späteren Nachträgen lassen die CI immer wieder laufen – „eine Frage der Wirtschaftlichkeit“; #102 auf Wunsch in einen Entwurf umgewandelt. Geprüft: Repo öffentlich (Actions-Minuten ohne Kontingent), aber jeder Push lief doppelt (Push auf alle Branches + Pull Request), auch bei Entwürfen.
+- Entscheidung per Auswahlfrage (der Eigentümer verlangte ausdrücklich das Frage-Antwort-System statt eines Textblocks): A. `[OPERATIV]` `[METHODIK]`, Kategorie 7. Arbeitsweise zusätzlich: bei offenen Prüfungen lokal committen, erst nach Freigabe pushen (im Gedächtnis der KI festgehalten). Querschnitt-Schritt D.17.
+
 ### 2026-10-10 16:40 UTC – [BEOBACHTUNG] Kurzfassung am Smartphone mit der Anweisung verwechselt – V.15
 
 - **Befund des Eigentümers:** „Die Kapitel-Zusammenfassung verwechsle ich gerne mit der Eingabe für die KI, das muss ganz anders gemacht werden – nur als Hinweis.“
