@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [ERLEDIGT] Abnahme 5.6
+
+- Eigentümer: Genre und Schreibweise vorhanden („die Funktionen sind auch vorhanden“) → 5.6 `[ERLEDIGT]`, FR-026 erledigt. Phase 5: 17 von 26 erledigt, keiner in Arbeit, 8 offen, 1 verschoben. Zusammen mit der Abnahme von 5.11 in einem Push (#102), wie mit dem Eigentümer vereinbart.
+
 ### 2026-10-10 – [ERLEDIGT] Abnahme 5.11 (Kanon in der Leiste)
 
 - Eigentümer: Kanon in der Leiste der Geschichte in der mobilen App geprüft und bestätigt („auf der Desktop-App wird es ebenso sein“) → 5.11 `[ERLEDIGT]`. Eintrag lokal, Push erst mit der Rückmeldung zu 5.6 (gebündelt, ein CI-Lauf).
