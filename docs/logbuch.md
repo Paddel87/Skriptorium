@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 01:05 UTC – [BEOBACHTUNG] Deployment `e61ccd3` (5.1, Mitlaufen, 5.11 Teil 3)
+
+- In der fortgesetzten Mac-Session vom 2026-10-09 (`claude-opus-5-5`). Auf Anweisung des Eigentümers („Deploy“). Vor dem Einspielen zweimal mit `origin/main` abgeglichen: Zwischen den Pulls kamen aus Cloud-Sessions #87 (5.24) und #88–#92 (5.26, D.16, 5.11 Teil 3, V.11, V.12) dazu; eingespielt der letzte Stand `e61ccd3`, CI grün.
+- Ablauf nach Runbook Abschnitt 7 (ADR-039): `REVISION` `e61ccd3`, Rückweg `skriptorium:vorher` = `a71cdff`; `/api/health` 200 nach ca. 60 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` und `/manifest.webmanifest` 200; danach einmal per SSH `(healthy)`.
+- Neu auf dem Server: Vorschläge ohne `@` (5.1), Mitlaufen nur am Textende (5.11), Kanon-Seite mit Suche, Filtern und Leseansicht (5.11 Teil 3). Offen: Prüfung durch den Eigentümer.
+- Nebenbei (2026-10-10): Display ging nicht in den Ruhezustand – Ursache eine Sperre „Capturing“ der Claude-App durch den offen gelassenen Browser-Bereich (Bildschirmfotos 2026-10-09); Tabs geschlossen, Sperre weg. Auf Wunsch „Wach halten, während Claude arbeitet“ in den App-Einstellungen ausgeschaltet.
+
 ### 2026-10-10 12:55 UTC – [BEOBACHTUNG] 5.11 Teil 3 Kanon-Seite umgesetzt
 
 - **Mockup:** echte Oberfläche mit der Testwelt Glimmergrund (23 Einträge), vorher/nachher je Desktop und Smartphone, Entwurf per Playwright ins Layout eingesetzt; freigegeben („Passt so“). Auswahlfragen: Bearbeiten rechts an Ort und Stelle, Lesetext mit Fett und Listen (eigener kleiner Umsetzer `EntryText.tsx`, keine neue Bibliothek, keine HTML-Einfügung), eigene Adresse je Eintrag.
