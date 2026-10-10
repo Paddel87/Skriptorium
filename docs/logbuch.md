@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] Unabhängige Prüfung vor v1.0.0 (5.14): „freigeben“
+
+- Getrennte Instanz (Sonnet, ohne Gesprächsverlauf), nur lesend: Code, `tests/api/test_security.py` (17 grün), `npm audit` (0), unangemeldete Abrufe der öffentlichen Adresse. Ohne Befund: Schutz aller Routen (auch `/api/models`, `/api/models/favoriten`, `…/instructions`), Cookie `__Host-` mit `Secure`/`HttpOnly`/`SameSite=Strict`, Sitzungen (256 Bit, Leerlauf 7 Tage, absolut 30, höchstens 5), Herkunftsprüfung, Passwortregeln und Pwned Passwords, Sperre nach Fehlversuchen, Pfadprüfung, Katalog ohne Nutzerdaten, Verlauf, Service Worker, Logs ohne Inhalte, Header, Container.
+- Befunde (alle niedrig oder Hinweis): (1) Bedrohungsmodell nannte eine Content-Security-Policy, die es nicht gibt – **Doku richtiggestellt** (`docs/architecture.md` Abschnitt 6); (2) `frame-ancestors` nur am Proxy, nicht in der Anwendung; (3) kein `Cache-Control: no-store` auf `/api` – Landeplatz V.13; (4) Standard-422-Antworten spiegeln Eingaben an den Absender zurück; (5) Sperre nur je Adresse – nach Bedrohungsmodell zulässig; (6) kein `data_collection: deny` an OpenRouter. Optionale Maßnahmen (1 als echte CSP, 2, 4, 6) dem Eigentümer vorgelegt, nicht still umgesetzt (Obergrenze `CLAUDE.md` Abschnitt 6).
+
 ### 2026-10-11 – [BEOBACHTUNG] 5.14 begonnen: externer Blick durch getrennte KI-Instanz
 
 - Entscheidungsvorlage „Externer Blick“ (Kategorie 6) mit A bezahlter Fachmann / B Verzicht / C Umfeld; Eigentümer antwortete frei: „Du mit Sub-agent“. Gedeutet und ihm offen gesagt: Das erfüllt die Vorgabe „Mensch außerhalb des Projekts“ nicht – festgehalten wird ein Verzicht auf den menschlichen Blick mit Restrisiko, ergänzt um eine neue unabhängige Prüfung (getrennte Instanz, Modell Sonnet, ohne Gesprächsverlauf; Code, Bedrohungsmodell, nur lesende Abrufe der öffentlichen Adresse, keine Anmeldung). Schwerpunkt: Änderungen seit 4.5 (5.12, 5.13, 5.21).
