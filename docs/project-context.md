@@ -292,6 +292,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 
 - **Freigabe-Entscheidungen trifft:** der Repo-Eigentümer (Paddel87).
 - **Kommunikationskanal für Freigaben:** direkt im Chat mit dem Coding-Agent; Ergebnis als ADR in `docs/decisions.md`.
+- **Form von Rückfragen:** Jede Rückfrage an den Eigentümer – auch Freigaben nach `CLAUDE.md` Abschnitt 4 – kommt mit Antworten zum Antippen (Auswahlfrage des Werkzeugs, Empfehlung zuerst); der ausführliche Block steht davor im Text. Fragen nur als Text sind unzulässig, wo das Werkzeug Auswahlfragen anbietet (Eigentümer, 2026-10-10).
 - **Reaktionszeit-Erwartung:** asynchron, keine harte Antwortzeit.
 
 <!-- ANCHOR:repository-regeln -->
