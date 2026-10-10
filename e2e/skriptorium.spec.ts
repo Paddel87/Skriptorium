@@ -371,20 +371,32 @@ test("the model of a story survives a reload; costs of the month are shown", asy
   await page.getByRole("button", { name: "Geschichte anlegen" }).click();
   await addChapter(page, "Aufbruch");
   const model = page.getByRole("combobox", { name: "Modell", exact: true });
-  // Preset since step 5.7 (ADR-044); grok-4.7 stays selectable.
+  // Preset since step 5.7 (ADR-044); qwen3.8-max is the second start favorite (ADR-055).
   await expect(model).toHaveValue("x-ai/grok-4.6");
   const saved = page.waitForResponse(
     (response) =>
       response.request().method() === "PATCH" &&
       response.url().endsWith("/stories/nebelpfad"),
   );
-  await model.selectOption("x-ai/grok-4.7");
+  await model.selectOption("qwen/qwen3.8-max-0902");
   expect((await saved).status()).toBe(200);
 
   await page.reload();
   await expect(
     page.getByRole("combobox", { name: "Modell", exact: true }),
-  ).toHaveValue("x-ai/grok-4.7");
+  ).toHaveValue("qwen/qwen3.8-max-0902");
+
+  // Step 5.12 (ADR-055): the catalog opens from the selection field, with or without network.
+  await page
+    .getByRole("combobox", { name: "Modell", exact: true })
+    .selectOption("Modelle verwalten …");
+  const manager = page.getByRole("dialog", { name: "Modelle verwalten" });
+  await expect(manager.getByText(/OpenRouter/).first()).toBeVisible();
+  await manager.getByRole("button", { name: "Fertig" }).click();
+  await expect(manager).toBeHidden();
+  await expect(
+    page.getByRole("combobox", { name: "Modell", exact: true }),
+  ).toHaveValue("qwen/qwen3.8-max-0902");
 
   await bar(page, "Konto").click();
   await expect(page.getByText(/ für \d+ Anfrage/)).toBeVisible();

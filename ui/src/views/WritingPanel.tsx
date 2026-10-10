@@ -19,8 +19,10 @@ import {
   type WriteErrorKind,
   type WriteEvent,
   type WriteLength,
+  type ModelList,
   type WriteOrder,
 } from "../api";
+import { optionLabel } from "../models";
 import {
   acceptSuggestion,
   referencedEntries,
@@ -29,6 +31,7 @@ import {
 import { loadStoryEntries } from "../storyEntries";
 import { useLoad } from "../useLoad";
 import { ErrorText } from "./Common";
+import { ModelManager } from "./ModelManager";
 import { SceneForm } from "./SceneForm";
 
 // CodeMirror is large; the instruction field is loaded with the chapter like the editor.
@@ -44,6 +47,8 @@ const NO_GUESTS: readonly GuestLink[] = [];
 
 /** Lengths of a proposal as the server names them (step 5.15). */
 const LENGTHS: readonly WriteLength[] = ["kurz", "mittel", "lang"];
+/** Value of the entry "Modelle verwalten …" in the selection field (step 5.12). */
+const MANAGE = "\u0000verwalten";
 
 /** Grey example in the empty instruction field (step 4.15); not tied to any world. */
 const EXAMPLE_INSTRUCTION =
@@ -143,12 +148,13 @@ export function WritingPanel({
   const composer = useRef<HTMLDivElement>(null);
   const instructionLabel = useId();
 
-  const offered = models.data?.models ?? [];
-  const preset =
-    storyModel !== null && offered.includes(storyModel)
-      ? storyModel
-      : models.data?.default;
+  // Favorites saved in "Modelle verwalten …" replace the loaded list (step 5.12).
+  const [savedList, setSavedList] = useState<ModelList | null>(null);
+  const [managing, setManaging] = useState(false);
+  const modelList = savedList ?? models.data;
+  const preset = storyModel ?? modelList?.default;
   const chosenModel = model ?? preset ?? "";
+  const offered = offeredModels(modelList, chosenModel);
   const busy = phase === "thinking" || phase === "writing";
 
   useEffect(() => {
@@ -444,6 +450,15 @@ export function WritingPanel({
       <div className="composer" ref={composer}>
         <div className="composer-sheet">
           <ErrorText message={models.error ?? entries.error ?? modelError} />
+          {managing && modelList !== undefined && (
+            <ModelManager
+              list={modelList}
+              onChange={setSavedList}
+              onClose={() => {
+                setManaging(false);
+              }}
+            />
+          )}
           {chapterEmpty && phase === "idle" && (
             <p className="note">
               So fängst du an: Schreib unten, was passieren soll, und klick auf
@@ -517,6 +532,10 @@ export function WritingPanel({
                 value={chosenModel}
                 onChange={(event) => {
                   const next = event.target.value;
+                  if (next === MANAGE) {
+                    setManaging(true);
+                    return;
+                  }
                   setModel(next);
                   setModelError(null);
                   onModelChange?.(next).catch((reason: unknown) => {
@@ -526,9 +545,19 @@ export function WritingPanel({
               >
                 {offered.map((id) => (
                   <option key={id} value={id}>
-                    {id}
+                    {optionLabel(
+                      modelList?.catalog.find((entry) => entry.id === id),
+                      id,
+                      modelList?.favorites.includes(id) ?? false,
+                    )}
                   </option>
                 ))}
+                {modelList !== undefined && (
+                  <>
+                    <option disabled>──────────</option>
+                    <option value={MANAGE}>Modelle verwalten …</option>
+                  </>
+                )}
               </select>
             </label>
             <label className="compact">
@@ -624,6 +653,30 @@ export function WritingPanel({
 }
 
 /** Rough height of the proposal, where the browser cannot size the field to its text. */
+/**
+ * Models of the selection field: the favorites, plus the chosen model (the story's or one just
+ * removed from the favorites) and, without favorites, the preset model (ADR-055).
+ */
+export function offeredModels(
+  list: ModelList | undefined,
+  chosen: string,
+): string[] {
+  if (list === undefined) {
+    return chosen === "" ? [] : [chosen];
+  }
+  const offered = [...list.favorites];
+  for (const id of [chosen, list.default]) {
+    if (
+      id !== "" &&
+      !offered.includes(id) &&
+      (offered.length === 0 || id === chosen)
+    ) {
+      offered.push(id);
+    }
+  }
+  return offered;
+}
+
 function rowsFor(text: string): number {
   const lines = text
     .split("\n")

@@ -2,6 +2,7 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  modelList,
   CHAPTER,
   created,
   fail,
@@ -141,7 +142,7 @@ describe("App", () => {
       "GET /api/worlds/salzmark/stories": ok([STORY]),
       "GET /api/worlds/salzmark/stories/ueberfahrt/chapters": ok([CHAPTER]),
       "GET /api/worlds/salzmark/entries": ok([]),
-      "GET /api/models": ok({ models: ["m"], default: "m" }),
+      "GET /api/models": ok(modelList(["m"])),
       "GET /api/auth/sessions": ok([]),
       "GET /api/usage": ok({
         month: "2026-10",

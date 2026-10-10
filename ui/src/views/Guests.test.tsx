@@ -5,6 +5,7 @@ import { EditorState } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  modelList,
   openStorySettings,
   CHAPTER,
   created,
@@ -49,10 +50,7 @@ afterEach(() => {
 
 function storyRoutes() {
   return {
-    "GET /api/models": ok({
-      models: ["x-ai/grok-4.7"],
-      default: "x-ai/grok-4.7",
-    }),
+    "GET /api/models": ok(modelList(["x-ai/grok-4.7"])),
     "GET /api/worlds": ok([WORLD, NEBEL]),
     "GET /api/worlds/salzmark/entries": ok([ENTRY]),
     "GET /api/worlds/nebelreich/entries": ok([KING, PALACE]),

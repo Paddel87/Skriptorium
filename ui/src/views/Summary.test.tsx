@@ -2,6 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  modelList,
   openStorySettings,
   CHAPTER,
   fail,
@@ -16,10 +17,7 @@ const BASE = "/api/worlds/salzmark/stories/ueberfahrt";
 const DONE = { ...CHAPTER, status: "abgeschlossen" as const };
 // The writing panel below the chapter loads these; answered so they add no error messages.
 const PANEL = {
-  "GET /api/models": ok({
-    models: ["x-ai/grok-4.7"],
-    default: "x-ai/grok-4.7",
-  }),
+  "GET /api/models": ok(modelList(["x-ai/grok-4.7"])),
   "GET /api/worlds/salzmark/entries": ok([]),
   // The guests section of the story page offers other worlds.
   "GET /api/worlds": ok([]),

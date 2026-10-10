@@ -2,7 +2,7 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import { useState } from "react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { CHAPTER, ENTRY, fakeApi, ok, STORY } from "../../fake-api";
+import { modelList, CHAPTER, ENTRY, fakeApi, ok, STORY } from "../../fake-api";
 import { Canon } from "./Canon";
 import { StoryPage } from "./StoryPage";
 
@@ -114,10 +114,7 @@ describe("StoryPage layout", () => {
     return fakeApi({
       "GET /api/worlds/salzmark/stories/ueberfahrt/chapters": ok(chapters),
       "GET /api/worlds/salzmark/entries": ok([ENTRY]),
-      "GET /api/models": ok({
-        models: ["x-ai/grok-4.6"],
-        default: "x-ai/grok-4.6",
-      }),
+      "GET /api/models": ok(modelList(["x-ai/grok-4.6"])),
     });
   }
 
