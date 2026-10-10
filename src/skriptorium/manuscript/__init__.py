@@ -1,9 +1,16 @@
 """Stories, chapters and story-specific settings (module ``manuscript``)."""
 
 from skriptorium.manuscript.service import (
+    ATMOSPHERES,
     CHAPTER_STATUSES,
+    EXPLICITNESSES,
     FORMS,
+    FREE_TEXT_MAX,
+    GENRES,
+    STYLES,
     SUMMARY_STATUSES,
+    TEMPOS,
+    TONES,
     Chapter,
     ChapterStatus,
     Form,
@@ -12,13 +19,21 @@ from skriptorium.manuscript.service import (
     Story,
     StoryFact,
     SummaryStatus,
+    WritingStyle,
 )
 from skriptorium.storage import AlreadyExists, InvalidInput, NotFound, StorageError
 
 __all__ = [
+    "ATMOSPHERES",
     "CHAPTER_STATUSES",
+    "EXPLICITNESSES",
     "FORMS",
+    "FREE_TEXT_MAX",
+    "GENRES",
+    "STYLES",
     "SUMMARY_STATUSES",
+    "TEMPOS",
+    "TONES",
     "AlreadyExists",
     "Chapter",
     "ChapterStatus",
@@ -31,4 +46,5 @@ __all__ = [
     "Story",
     "StoryFact",
     "SummaryStatus",
+    "WritingStyle",
 ]
