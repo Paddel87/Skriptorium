@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 02:27 UTC – [BEOBACHTUNG] Rückfragen mit Antworten zum Antippen
+
+- **Anlass:** Der Eigentümer möchte Antworten auf Rückfragen anklicken können; die Fragen dieser Session standen nur als Text (Fehler der KI, das Werkzeug bietet Auswahlfragen an).
+- **Folge:** Auf Wahl des Eigentümers dauerhaft festgehalten in `docs/project-context.md` Abschnitt 9 („Form von Rückfragen“). Eingetragen nach dem Sessionende-Eintrag – kleine Dokumentationsänderung ohne Fahrplan-Schritt, daher keine Abweichung von der Regel „Sessiongröße“.
+- **Nebenbei:** PR #87 (5.24) am 2026-10-10 gemergt (`19f6beb`); Frage des Eigentümers zum Display-Standby im Chat beantwortet (Skriptorium nutzt keine Wake-Lock-Schnittstelle).
+
 ### 2026-10-10 01:55 UTC – [SESSIONENDE] 5.26 erledigt – Kanon-Treue mit grok-4.6 und grok-4.7
 
 - **Dauer:** 00:50 – 01:55 UTC, Cloud-Session (Linux).
