@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [ERLEDIGT] Abnahme 5.13 und 5.16; Befunde zu 5.20 und zur Kurzfassung
+
+- Eigentümer: 5.13 „positiv“, 5.16 „ebenfalls“ → beide `[ERLEDIGT]`, FR-027 und FR-031 erledigt. Phase 5: 21 von 26 erledigt, 1 in Arbeit (5.20), 2 offen (5.14, 5.5), 2 verschoben.
+- 5.20 „Funktion nicht gefunden“: Seine Geschichte „The Trap“ war als Kurzgeschichte angelegt – „+ Kapitel“ erscheint nur bei Romanen (gewollt). Nur Kopfdaten gelesen, keine Inhalte.
+- Kurzfassung scheitert: Kapitel 1 von „The Trap“ hat ca. 38.000 Wörter (247 KB, geschätzt ca. 75.000 Token); `build_chapter_summary` lehnt ab, weil das ganze Kapitel ins Budget von 30.000 Token muss (Festlegung 3.6). Im Protokoll `POST …/summarize` 200 nach 11 ms (Fehlschlag im Feld `failure`, keine KI-Anfrage). Weiterschreiben nicht betroffen (nur letzte Seiten). „Kurzfassung speichern (geprüft)“ speichert eigenen Text ohne KI; der Knopf ist nur ohne Änderung gesperrt.
+- Entscheidung per Auswahlfrage: **Kapitel teilen** (statt Kurzfassung in Abschnitten, selbst schreiben oder später). Richtwert für den Eigentümer: Kapitel bis etwa 12.000 Wörter passen für die Kurzfassung.
+- Befund: Die Form einer Geschichte ist in der Oberfläche nur beim Anlegen wählbar (Server kann sie ändern). Eigentümer wählte „Ich stelle sie um“ (kein Knopf als eigener Schritt). Ausgeführt im Container über `ManuscriptService.update_story(form="roman")`: vorher `kurzgeschichte`, nachher `roman`, Titel gleich, 1 Kapitel; Datei weiter Besitzer 10001, Rechte 600.
+
 ### 2026-10-11 – [BEOBACHTUNG] Deployment `1dd8bdb` (5.13, 5.3, 5.4 verschoben)
 
 - Auf Anweisung des Eigentümers („deploy vorbereiten, vorher pull from main“, dann Auswahlfrage „Ja, einspielen“). Vorher mit `origin/main` abgeglichen: aus anderen Sessions #108 (5.3), #109 (5.13, ADR-056), #110 (5.4 → V.16). CI auf `1dd8bdb` grün. Geprüft vor dem Einspielen: keine neuen Abhängigkeiten, kein Docker/Compose/ENV; einzige Datenänderung neue Dateien `stories/<g>/verlauf/NN.md` (entstehen erst beim Übernehmen), bestehende Dateien unberührt; Rückweg auf `bd48bed` möglich (alte Version beachtet die neuen Dateien nicht).

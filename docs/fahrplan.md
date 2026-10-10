@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-10-10, nach dem Deployment `628f559` (5.6 Genre und Schreibweise, 5.11 Kanon in der Leiste der Geschichte eingespielt; Anweisung des Eigentümers „einspielen“)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 5.13 Verlauf der Anweisungen (umgesetzt, Prüfung offen); 5.16 herangezogene Einträge anklickbar (umgesetzt, Prüfung offen); 5.20 schnell angelegte Kapitel (behoben, Prüfung offen). Am 2026-10-10 erledigt: 5.12, 5.26, 5.1, 5.2, 5.21, 5.11, 5.6, 5.3
+- **Aktiver Schritt:** 5.20 schnell angelegte Kapitel (eingespielt `1dd8bdb`, Prüfung offen – „+ Kapitel“ gibt es nur bei Romanen). Am 2026-10-11 erledigt: 5.13, 5.16. Am 2026-10-10 erledigt: 5.12, 5.26, 5.1, 5.2, 5.21, 5.11, 5.6, 5.3
 - **Nächster Schritt:** Einspielen (vom Mac, auf Anweisung) und Prüfung durch den Eigentümer: 5.13, 5.16, 5.20; danach 5.14 Go-Live-Prüfung, zuletzt 5.5 (V.1–V.16). 5.4 nach V.16 und 5.25 nach V.13 verschoben (2026-10-10). Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
@@ -22,7 +22,7 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 19 von 26 erledigt, 3 in Arbeit, 2 offen, 2 verschoben (5.25 → V.13, 5.4 → V.16).**
+**Phase 5: 21 von 26 erledigt, 1 in Arbeit, 2 offen, 2 verschoben (5.25 → V.13, 5.4 → V.16).**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -38,14 +38,14 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | 5.10 | Kosten je Vorschlag sichtbar | erledigt | – |
 | ✅ | 5.11 | Seitenaufbau und Abläufe der Oberfläche neu ordnen | erledigt 2026-10-10 | – |
 | ✅ | 5.12 | Modell-Auswahl aktuell vom Anbieter | erledigt 2026-10-10 (ADR-055) | – |
-| 🟠 | 5.13 | Verlauf der Anweisungen als umschaltbare Ansicht | eingespielt (`1dd8bdb`), Prüfung offen | du: prüfen |
+| ✅ | 5.13 | Verlauf der Anweisungen als umschaltbare Ansicht | erledigt 2026-10-11 (ADR-056) | – |
 | ⚪ | 5.14 | Go-Live-Prüfung vor v1.0.0 | offen | KI – nach 5.1–5.13 |
 | ✅ | 5.15 | KI schreibt nur das Verlangte, nicht bis zum bekannten Ende | erledigt | – |
-| 🟠 | 5.16 | Herangezogene Kanon-Einträge anklickbar | eingespielt, Prüfung offen | du: prüfen |
+| ✅ | 5.16 | Herangezogene Kanon-Einträge anklickbar | erledigt 2026-10-11 | – |
 | ✅ | 5.17 | Leerzeichen nach der Auswahl im `@`-Menü | erledigt | – |
 | ✅ | 5.18 | Herangezogene Begriffe im Anweisungsfeld hervorheben | erledigt | – |
 | ✅ | 5.19 | Dunkelmodus | erledigt 2026-10-09 | – |
-| 🟠 | 5.20 | Schnell nacheinander angelegte Kapitel | eingespielt, Prüfung offen | du: prüfen |
+| 🟠 | 5.20 | Schnell nacheinander angelegte Kapitel | eingespielt, Prüfung offen (nur bei Romanen) | du: prüfen |
 | ✅ | 5.21 | Als App installierbar (PWA) | erledigt 2026-10-10 | – |
 | ✅ | 5.22 | Wiederkehrende Atmosphäre und Schlussgeste bei „lang“ | erledigt 2026-10-09 | – |
 | ✅ | 5.23 | `@`-Verweis mit Genitiv-s | erledigt und eingespielt 2026-10-09 | – |
@@ -380,7 +380,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.13: Verlauf der Anweisungen als umschaltbare Ansicht
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-10) – Datenmodell entschieden (ADR-056, Eigentümer: eigene Datei je Kapitel, nur übernommene Vorschläge, Reiter über dem Text; nach dem ersten Bildschirmstand erweitert: je Eintrag Anweisung und Text der KI wie übernommen, „Weiter“ als Eingabe, Darstellung wie im Chat). Umgesetzt: `manuscript` (`verlauf/NN.md`, `list_instructions`, `add_instruction`), `api` (`GET|POST …/chapters/{n}/instructions`), `ui` (Reiter „Manuskript | Verlauf“, haftet oben im Textbereich; Eingabe rechts, Text der KI links; Vermerk beim Übernehmen). Test: Anfrage an die KI enthält keinen Verlauf (`test_history_of_instructions_never_reaches_the_ai`); Umschalten, „Weiter“, Fehlerfall in `WritingPanel.test.tsx`. `pytest` 487, `vitest` 173, Playwright 11 grün. Offen: Merge, Einspielen, Bestätigung des Eigentümers
+- **Status:** ✅ ERLEDIGT (2026-10-11) – eingespielt (`1dd8bdb`), vom Eigentümer bestätigt („positiv“). Verlauf: 🟠 IN ARBEIT (seit 2026-10-10) – Datenmodell entschieden (ADR-056, Eigentümer: eigene Datei je Kapitel, nur übernommene Vorschläge, Reiter über dem Text; nach dem ersten Bildschirmstand erweitert: je Eintrag Anweisung und Text der KI wie übernommen, „Weiter“ als Eingabe, Darstellung wie im Chat). Umgesetzt: `manuscript` (`verlauf/NN.md`, `list_instructions`, `add_instruction`), `api` (`GET|POST …/chapters/{n}/instructions`), `ui` (Reiter „Manuskript | Verlauf“, haftet oben im Textbereich; Eingabe rechts, Text der KI links; Vermerk beim Übernehmen). Test: Anfrage an die KI enthält keinen Verlauf (`test_history_of_instructions_never_reaches_the_ai`); Umschalten, „Weiter“, Fehlerfall in `WritingPanel.test.tsx`. `pytest` 487, `vitest` 173, Playwright 11 grün. Offen: Merge, Einspielen, Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11
 - **Freigabepflichtig:** ja – neue gespeicherte Daten (Anweisungen je Kapitel, Kategorie 4)
@@ -429,7 +429,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.16: Herangezogene Kanon-Einträge anklickbar
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-10) – umgesetzt: Die Namen unter „Herangezogen“ sind Links; ein Klick öffnet die Leiste „Kanon & Geschichte“ rechts beim Reiter Kanon mit diesem Eintrag (am Smartphone über der Seite), Gast-Einträge ebenso (nur lesbar). Das Kapitel bleibt offen; Manuskript, Anweisung und Vorschlag bleiben unverändert (Test). Ohne Leiste (z. B. im Einzeltest) bleiben die Namen reiner Text. `vitest` 170, Playwright 11 grün. Offen: Merge, Einspielen, Bestätigung des Eigentümers
+- **Status:** ✅ ERLEDIGT (2026-10-11) – eingespielt (`1dd8bdb`), vom Eigentümer bestätigt („positiv“). Verlauf: 🟠 IN ARBEIT (seit 2026-10-10) – umgesetzt: Die Namen unter „Herangezogen“ sind Links; ein Klick öffnet die Leiste „Kanon & Geschichte“ rechts beim Reiter Kanon mit diesem Eintrag (am Smartphone über der Seite), Gast-Einträge ebenso (nur lesbar). Das Kapitel bleibt offen; Manuskript, Anweisung und Vorschlag bleiben unverändert (Test). Ohne Leiste (z. B. im Einzeltest) bleiben die Namen reiner Text. `vitest` 170, Playwright 11 grün. Offen: Merge, Einspielen, Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11 (neuer Seitenaufbau; Platz für die Einblendung)
 - **Freigabepflichtig:** nein – nur `ui`, liest Einträge über die vorhandene Schnittstelle
