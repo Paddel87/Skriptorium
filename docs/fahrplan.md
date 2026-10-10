@@ -38,14 +38,14 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | 5.10 | Kosten je Vorschlag sichtbar | erledigt | – |
 | ✅ | 5.11 | Seitenaufbau und Abläufe der Oberfläche neu ordnen | erledigt 2026-10-10 | – |
 | ✅ | 5.12 | Modell-Auswahl aktuell vom Anbieter | erledigt 2026-10-10 (ADR-055) | – |
-| 🟠 | 5.13 | Verlauf der Anweisungen als umschaltbare Ansicht | umgesetzt, Prüfung offen | du: prüfen |
+| 🟠 | 5.13 | Verlauf der Anweisungen als umschaltbare Ansicht | eingespielt (`1dd8bdb`), Prüfung offen | du: prüfen |
 | ⚪ | 5.14 | Go-Live-Prüfung vor v1.0.0 | offen | KI – nach 5.1–5.13 |
 | ✅ | 5.15 | KI schreibt nur das Verlangte, nicht bis zum bekannten Ende | erledigt | – |
-| 🟠 | 5.16 | Herangezogene Kanon-Einträge anklickbar | umgesetzt, Prüfung offen | du: prüfen |
+| 🟠 | 5.16 | Herangezogene Kanon-Einträge anklickbar | eingespielt, Prüfung offen | du: prüfen |
 | ✅ | 5.17 | Leerzeichen nach der Auswahl im `@`-Menü | erledigt | – |
 | ✅ | 5.18 | Herangezogene Begriffe im Anweisungsfeld hervorheben | erledigt | – |
 | ✅ | 5.19 | Dunkelmodus | erledigt 2026-10-09 | – |
-| 🟠 | 5.20 | Schnell nacheinander angelegte Kapitel | eingespielt (`bd48bed`), Prüfung offen | du: prüfen |
+| 🟠 | 5.20 | Schnell nacheinander angelegte Kapitel | eingespielt, Prüfung offen | du: prüfen |
 | ✅ | 5.21 | Als App installierbar (PWA) | erledigt 2026-10-10 | – |
 | ✅ | 5.22 | Wiederkehrende Atmosphäre und Schlussgeste bei „lang“ | erledigt 2026-10-09 | – |
 | ✅ | 5.23 | `@`-Verweis mit Genitiv-s | erledigt und eingespielt 2026-10-09 | – |

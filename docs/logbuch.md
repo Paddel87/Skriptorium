@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] Deployment `1dd8bdb` (5.13, 5.3, 5.4 verschoben)
+
+- Auf Anweisung des Eigentümers („deploy vorbereiten, vorher pull from main“, dann Auswahlfrage „Ja, einspielen“). Vorher mit `origin/main` abgeglichen: aus anderen Sessions #108 (5.3), #109 (5.13, ADR-056), #110 (5.4 → V.16). CI auf `1dd8bdb` grün. Geprüft vor dem Einspielen: keine neuen Abhängigkeiten, kein Docker/Compose/ENV; einzige Datenänderung neue Dateien `stories/<g>/verlauf/NN.md` (entstehen erst beim Übernehmen), bestehende Dateien unberührt; Rückweg auf `bd48bed` möglich (alte Version beachtet die neuen Dateien nicht).
+- Ablauf nach Runbook Abschnitt 7 (ADR-039): `REVISION` `1dd8bdb`, Rückweg `skriptorium:vorher` = `bd48bed`; `/api/health` 200 nach ca. 63 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; danach einmal per SSH `(healthy)`, 0 Fehlerzeilen in den letzten 3 Minuten.
+- Offen: Prüfung durch den Eigentümer – 5.13, 5.16, 5.20.
+
 ### 2026-10-10 – [BEOBACHTUNG] Deployment `bd48bed` (5.20, 5.16)
 
 - Auf Anweisung des Eigentümers („Einspielen“; #106 vorher nur gemergt, „Korrektur nur mergen“). Enthält 5.20 (#106) und 5.16 (#107 aus einer anderen Session). CI auf `bd48bed` grün.
