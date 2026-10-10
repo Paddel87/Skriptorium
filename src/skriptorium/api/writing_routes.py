@@ -1,13 +1,16 @@
-"""Endpoints for writing with the AI, summaries, models and consumption (steps 3.3, 3.6, 3.9).
+"""Endpoints for writing with the AI, summaries, models and consumption (steps 3.3, 3.6, 3.9, 5.12).
 
 The routes stay thin; the flow lives in :mod:`skriptorium.api.flows` (ADR-020).
 """
+
+from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from skriptorium.ai_gateway import DEFAULT_MODELS
+from skriptorium.ai_gateway import CatalogModel, ModelCatalog
+from skriptorium.ai_gateway.catalog import CHECKED_MODELS, SLOW_MODELS
 from skriptorium.api.context import ServicesDep, current_session
 from skriptorium.api.flows import (
     DEFAULT_MODEL,
@@ -24,11 +27,44 @@ from skriptorium.manuscript import Chapter, Story
 router = APIRouter(prefix="/api", dependencies=[Depends(current_session)])
 
 
+class CatalogEntry(BaseModel):
+    """One model of the catalog; prices in US dollars, ``None`` if OpenRouter names none."""
+
+    id: str
+    name: str
+    provider: str
+    # Per million tokens in and out.
+    input_price: float | None
+    output_price: float | None
+    # One proposal: 30,000 tokens in, 500 out (ADR-055).
+    estimated_cost: float | None
+    context_length: int | None
+    # Inputs are checked by OpenRouter's own moderation.
+    moderated: bool
+    # "denkt lange" (measured, ADR-052), "denkt vor" (mandatory reasoning) or ``None``.
+    thinking: Literal["lange", "vor"] | None
+    # Checked with the owner's stories (steps 5.7, 5.26).
+    checked: bool
+
+
 class ModelList(BaseModel):
-    """Models of the model order and the preset one."""
+    """The favorites, the preset model and the catalog (ADR-055).
+
+    ``models`` equals ``favorites`` and stays for older interfaces; ``catalog`` is empty and
+    ``catalog_available`` false while OpenRouter's list cannot be loaded.
+    """
 
     models: list[str]
     default: str
+    favorites: list[str]
+    catalog: list[CatalogEntry]
+    catalog_available: bool
+
+
+class FavoritesIn(BaseModel):
+    """The new favorites in the order of the selection field."""
+
+    favorites: list[str]
 
 
 class SceneIn(BaseModel):
@@ -71,13 +107,22 @@ class SummaryResult(BaseModel):
 
 
 @router.get("/models")
-def list_models() -> ModelList:
-    """The selectable models; the one chosen per story is the story's ``model`` (step 3.9)."""
-    return ModelList(models=list(DEFAULT_MODELS), default=DEFAULT_MODEL)
+async def list_models(found: ServicesDep) -> ModelList:
+    """Favorites and catalog; the model chosen per story is the story's ``model`` (step 3.9)."""
+    await found.catalog.refresh()
+    return _model_list(found.catalog, found.favorites.get())
+
+
+@router.put("/models/favoriten")
+async def set_favorites(body: FavoritesIn, found: ServicesDep) -> ModelList:
+    """Save the favorites (ADR-055); every model must be in the catalog or already a favorite."""
+    await found.catalog.refresh()
+    favorites = found.favorites.set(body.favorites, found.catalog)
+    return _model_list(found.catalog, favorites)
 
 
 @router.post("/worlds/{world_id}/stories/{story_id}/chapters/{number}/write")
-def write(
+async def write(
     world_id: str, story_id: str, number: int, body: WriteIn, found: ServicesDep
 ) -> StreamingResponse:
     """Stream a proposal for the end of the chapter as Server-Sent Events; saves nothing."""
@@ -86,6 +131,7 @@ def write(
     scene = None
     if body.scene is not None:
         scene = Scene(body.scene.place, tuple(body.scene.characters), body.scene.goal)
+    await found.catalog.refresh()
     model = body.model
     if model is None:
         found.canon.get_world(world_id)
@@ -100,7 +146,9 @@ def write(
         model,
         body.length,
     )
-    prepared = prepare_request(found.canon, found.manuscript, found.context, order)
+    prepared = prepare_request(
+        found.canon, found.manuscript, found.context, order, models=found.catalog
+    )
     return StreamingResponse(
         stream_events(found.provider, prepared, found.usage.record),
         media_type="text/event-stream",
@@ -140,4 +188,34 @@ def usage(found: ServicesDep, month: str | None = None) -> UsageOut:
         output_tokens=summed.output_tokens,
         cost_usd=summed.cost_usd,
         without_cost=summed.without_cost,
+    )
+
+
+def _model_list(catalog: ModelCatalog, favorites: list[str]) -> ModelList:
+    return ModelList(
+        models=favorites,
+        default=DEFAULT_MODEL,
+        favorites=favorites,
+        catalog=[_entry(model) for model in catalog.models()],
+        catalog_available=catalog.available,
+    )
+
+
+def _entry(model: CatalogModel) -> CatalogEntry:
+    thinking: Literal["lange", "vor"] | None = None
+    if model.id in SLOW_MODELS:
+        thinking = "lange"
+    elif model.reasoning_mandatory:
+        thinking = "vor"
+    return CatalogEntry(
+        id=model.id,
+        name=model.name,
+        provider=model.provider,
+        input_price=model.input_price,
+        output_price=model.output_price,
+        estimated_cost=model.estimated_cost,
+        context_length=model.context_length,
+        moderated=model.moderated,
+        thinking=thinking,
+        checked=model.id in CHECKED_MODELS,
     )

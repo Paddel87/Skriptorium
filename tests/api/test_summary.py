@@ -172,7 +172,7 @@ def test_chapter_without_text_or_missing_chapter(
 def test_summarize_needs_a_session_and_a_provider(client: TestClient, data_dir: Path) -> None:
     assert client.post(SUMMARIZE).status_code == 401
     client.close()
-    app = create_app(Settings(data_dir=data_dir), provider_factory=lambda: None)
+    app = create_app(Settings(data_dir=data_dir), provider_factory=lambda _: None)
     with TestClient(app, base_url=ORIGIN, headers={"Origin": ORIGIN}) as other:
         code = services_of(other).credentials.create_setup_code()
         other.post("/api/auth/setup", json={"code": code, "password": "Salzwind über der Mark 7"})

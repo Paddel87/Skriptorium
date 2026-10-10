@@ -7,6 +7,7 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import cast
 
+import httpx
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
@@ -15,6 +16,7 @@ from skriptorium.ai_gateway import (
     Completed,
     CompletionRequest,
     GatewayError,
+    ModelCatalog,
     StreamEvent,
     TextChunk,
     Usage,
@@ -109,16 +111,87 @@ def data_dir(tmp_path: Path) -> Path:
     return tmp_path / "data"
 
 
+CATALOG = {
+    "data": [
+        {
+            "id": "x-ai/grok-4.6",
+            "name": "SpaceXAI: Grok 4.6",
+            "context_length": 500000,
+            "architecture": {"output_modalities": ["text"]},
+            "pricing": {"prompt": "0.000002", "completion": "0.000006"},
+            "top_provider": {"is_moderated": False},
+            "reasoning": {"mandatory": True, "supported_efforts": ["high", "medium", "low"]},
+        },
+        {
+            "id": "x-ai/grok-4.7",
+            "name": "SpaceXAI: Grok 4.7",
+            "context_length": 500000,
+            "architecture": {"output_modalities": ["text"]},
+            "pricing": {"prompt": "0.000002", "completion": "0.000006"},
+            "top_provider": {"is_moderated": False},
+            "reasoning": {"mandatory": True, "supported_efforts": ["high", "low"]},
+        },
+        {
+            "id": "deepseek/deepseek-v3.2",
+            "name": "DeepSeek: DeepSeek V3.2",
+            "context_length": 163840,
+            "architecture": {"output_modalities": ["text"]},
+            "pricing": {"prompt": "0.000000259", "completion": "0.0000008"},
+            "top_provider": {"is_moderated": False},
+            "reasoning": {"mandatory": False},
+        },
+        {
+            "id": "openai/gpt-5",
+            "name": "OpenAI: GPT-5",
+            "context_length": 400000,
+            "architecture": {"output_modalities": ["text"]},
+            "pricing": {"prompt": "0.00000125", "completion": "0.00001"},
+            "top_provider": {"is_moderated": True},
+            "reasoning": {"mandatory": True, "supported_efforts": ["high", "low", "minimal"]},
+        },
+    ]
+}
+
+
+@dataclass
+class FakeCatalogServer:
+    """Stands in for OpenRouter's model list; ``down`` answers 503."""
+
+    down: bool = False
+    calls: int = 0
+
+    def __call__(self, request: httpx.Request) -> httpx.Response:
+        self.calls += 1
+        if self.down:
+            return httpx.Response(503)
+        return httpx.Response(200, json=CATALOG)
+
+
+@pytest.fixture
+def catalog_server() -> FakeCatalogServer:
+    return FakeCatalogServer()
+
+
+@pytest.fixture
+def catalog(catalog_server: FakeCatalogServer) -> ModelCatalog:
+    return ModelCatalog(transport=httpx.MockTransport(catalog_server))
+
+
 @pytest.fixture
 def client(
-    data_dir: Path, clock: FakeClock, breached: FakeBreached, provider: FakeProvider
+    data_dir: Path,
+    clock: FakeClock,
+    breached: FakeBreached,
+    provider: FakeProvider,
+    catalog: ModelCatalog,
 ) -> Iterator[TestClient]:
     app = create_app(
         Settings(data_dir=data_dir, ui_dir=data_dir / "no-ui"),
         hasher=cheap_hasher(),
         breached=breached,
         clock=clock,
-        provider_factory=lambda: provider,
+        provider_factory=lambda _: provider,
+        catalog=catalog,
     )
     with TestClient(app, base_url=ORIGIN, headers={"Origin": ORIGIN}) as test_client:
         yield test_client

@@ -7,7 +7,7 @@ from typing import Annotated, Final
 
 from fastapi import Depends, HTTPException, Request, status
 
-from skriptorium.ai_gateway import ModelProvider
+from skriptorium.ai_gateway import ModelCatalog, ModelProvider
 from skriptorium.api.access import (
     CredentialStore,
     FailureThrottle,
@@ -15,6 +15,7 @@ from skriptorium.api.access import (
     Session,
     SessionStore,
 )
+from skriptorium.api.favorites import Favorites
 from skriptorium.api.usage import UsageLog
 from skriptorium.canon import CanonService
 from skriptorium.context import ContextBuilder
@@ -38,6 +39,9 @@ class Services:
     # None if no provider is set up (no key); writing then answers 503.
     provider: ModelProvider | None
     usage: UsageLog
+    # Selectable models (step 5.12): fixed order plus the catalog of OpenRouter.
+    catalog: ModelCatalog
+    favorites: Favorites
 
 
 def services(request: Request) -> Services:

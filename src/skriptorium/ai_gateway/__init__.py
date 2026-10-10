@@ -3,6 +3,7 @@
 Knows messages, models and tokens - no worlds, canon or stories.
 """
 
+from skriptorium.ai_gateway.catalog import CatalogModel, ModelCatalog
 from skriptorium.ai_gateway.errors import (
     GatewayError,
     InvalidRequest,
@@ -25,11 +26,13 @@ from skriptorium.ai_gateway.provider import (
 __all__ = [
     "DEFAULT_MODELS",
     "KEY_VARIABLE",
+    "CatalogModel",
     "Completed",
     "CompletionRequest",
     "GatewayError",
     "InvalidRequest",
     "Message",
+    "ModelCatalog",
     "ModelConfig",
     "ModelProvider",
     "ModelRefused",

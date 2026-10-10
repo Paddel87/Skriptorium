@@ -383,22 +383,13 @@ def test_empty_chunks_are_not_sent(writer: TestClient, provider: FakeProvider) -
     assert [name for name, _ in events] == ["start", "text", "done"]
 
 
-def test_model_list(logged_in: TestClient) -> None:
-    response = logged_in.get("/api/models")
-
-    assert response.json() == {
-        "models": ["x-ai/grok-4.6", "x-ai/grok-4.7", "qwen/qwen3.8-max-0902"],
-        "default": "x-ai/grok-4.6",
-    }
-
-
 def test_writing_needs_a_session(client: TestClient) -> None:
     assert client.get("/api/models").status_code == 401
     assert client.post(WRITE, json={}).status_code == 401
 
 
 def test_writing_without_provider_answers_503(data_dir: Path) -> None:
-    app = create_app(Settings(data_dir=data_dir), provider_factory=lambda: None)
+    app = create_app(Settings(data_dir=data_dir), provider_factory=lambda _: None)
     with TestClient(app, base_url=ORIGIN, headers={"Origin": ORIGIN}) as client:
         code = services_of(client).credentials.create_setup_code()
         client.post("/api/auth/setup", json={"code": code, "password": "Salzwind über der Mark 7"})
