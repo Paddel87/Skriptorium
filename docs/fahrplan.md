@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-10-10, nach dem Deployment `e61ccd3` (5.1, Mitlaufen aus 5.11, 5.11 Teil 3 Kanon-Seite eingespielt; Freigabe des Eigentümers „Deploy“)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 5.11 (wieder geöffnet 2026-10-10: Kanon in der Leiste der Geschichte wie die Kanon-Seite – umgesetzt, nicht eingespielt). Am 2026-10-10 erledigt: 5.26, 5.1, 5.2, 5.21
+- **Aktiver Schritt:** 5.6 (Erkundung: Listenwerte entschieden, Wirkungsprobe vorbereitet, Lauf in einer Cloud-Session offen); 5.11 (wieder geöffnet 2026-10-10: Kanon in der Leiste der Geschichte wie die Kanon-Seite – umgesetzt, nicht eingespielt). Am 2026-10-10 erledigt: 5.26, 5.1, 5.2, 5.21
 - **Nächster Schritt:** 5.11 Kanon in der Leiste einspielen (auf Anweisung) und bestätigen lassen; (5.25 nach V.13 verschoben, 2026-10-10) D.16 erledigt (ADR-052: grok-4.7 in 5.12 aus der Voreinstellung), E1 zurückgestellt auf V.10 (ADR-050); danach 5.20, 5.16, 5.6, 5.12, 5.13, 5.3, 5.4, 5.14, 5.5. Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); D.13 vor 5.11 oder parallel. Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
@@ -22,7 +22,7 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 15 von 26 erledigt, 1 in Arbeit, 9 offen, 1 verschoben (5.25 → V.13).**
+**Phase 5: 15 von 26 erledigt, 2 in Arbeit, 8 offen, 1 verschoben (5.25 → V.13).**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -31,7 +31,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⚪ | 5.3 | Lesbare Dateien – Nachweis | offen | KI |
 | ⚪ | 5.4 | Zeitlinie mit Datumsangaben im Kalender der Welt (Kann) | offen | du: umsetzen ja/nein |
 | ⚪ | 5.5 | Planung der nächsten Ausbaustufe | offen | KI – zuletzt |
-| ⚪ | 5.6 | Atmosphärische Schreibweise je Geschichte | offen | du: Werte der Listen |
+| 🟠 | 5.6 | Atmosphärische Schreibweise je Geschichte | in Arbeit – Erkundung | Cloud-Session: Wirkungsprobe · dann du: Datenmodell entscheiden |
 | ✅ | 5.7 | Startmodell grok-4.6 | erledigt | – |
 | ✅ | 5.8 | Nahtloser Anschluss ohne Einleitung und Schlusssatz | erledigt | – |
 | ✅ | 5.9 | Kapitel öffnet am Textende | erledigt | – |
@@ -263,14 +263,15 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.6: Atmosphärische Schreibweise je Geschichte
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-10) – Erkundung der Form innerhalb des Schritts (Eigentümer: „5.6 Erkundung“, Reihenfolge bestätigt). Listenwerte übernommen (siehe „Entschieden 2026-10-10“). Wirkungsprobe vorbereitet (`spikes/schreibweise-5.6/`, Trockentest: Block direkt hinter der Figuren-Schreibweise); Lauf offen – braucht eine Cloud-Session (gültiger Schlüssel). Danach Datenmodell als `ENTSCHEIDUNG ERFORDERLICH` (Kategorie 4) mit Mockup
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 4.8, 5.11 (Platz in der neuen Oberfläche; ADR-042)
 - **Freigabepflichtig:** ja – neue Felder je Kapitel (ggf. auch je Geschichte) sind eine Datenmodelländerung (Kategorie 4); Form vor Beginn klären
 - **Empfohlene Klasse:** Entscheidung – Klärung der Form und Datenmodell-Vorschlag (Eskalations-Auslöser 1); die Umsetzung danach ist Routine.
 - **Eingangskriterien:** Form mit dem Eigentümer geklärt
 - **Anforderungen (ab Klasse M):** FR-026
-- **Zu tun:** Wunsch des Eigentümers beim Funktionstest 2026-10-08: neben der Erzählperspektive eine atmosphärische Schreibweise vorgeben. Offene Fragen vor Beginn: freier Text oder Auswahl von Bausteinen (Ton, Tempo, Satzbau) oder beides; eine Textprobe als Vorbild; je Geschichte, je Welt als Vorgabe oder je Anfrage; wo im Prompt und mit welchem Gewicht gegenüber Kanon und Figuren-Schreibweise. Antworten des Eigentümers 2026-10-08 (Logbuch 10:20 UTC): **je Kapitel** Tonalität und Atmosphäre festlegen; **Auswahllisten**, mehrere kombinierbar, weil er sich die Angaben schlecht merken kann; **freier Text bleibt zusätzlich**. Bedarf vom Eigentümer bekräftigt („auf jeden Fall“). Genres, in denen er schreibt (Grundlage für die Listen): Dark Romance, Thriller, düstere Geschichten, Dark Erotic, CNC. Entschieden 2026-10-08 (Auswahl-Fragen, Logbuch 12:10 UTC): Genre als eigene Auswahl je Geschichte, mehrfach wählbar; Tonalität und Atmosphäre als Vorgabe je Geschichte, die jedes neue Kapitel übernimmt und im Kapitel änderbar ist. Noch offen: konkrete Werte der Listen; Textprobe als Vorbild; Platz und Gewicht im Prompt; Priorität (Soll oder Muss).
+- **Zu tun:** Wunsch des Eigentümers beim Funktionstest 2026-10-08: neben der Erzählperspektive eine atmosphärische Schreibweise vorgeben. Offene Fragen vor Beginn: freier Text oder Auswahl von Bausteinen (Ton, Tempo, Satzbau) oder beides; eine Textprobe als Vorbild; je Geschichte, je Welt als Vorgabe oder je Anfrage; wo im Prompt und mit welchem Gewicht gegenüber Kanon und Figuren-Schreibweise. Antworten des Eigentümers 2026-10-08 (Logbuch 10:20 UTC): **je Kapitel** Tonalität und Atmosphäre festlegen; **Auswahllisten**, mehrere kombinierbar, weil er sich die Angaben schlecht merken kann; **freier Text bleibt zusätzlich**. Bedarf vom Eigentümer bekräftigt („auf jeden Fall“). Genres, in denen er schreibt (Grundlage für die Listen): Dark Romance, Thriller, düstere Geschichten, Dark Erotic, CNC. Entschieden 2026-10-08 (Auswahl-Fragen, Logbuch 12:10 UTC): Genre als eigene Auswahl je Geschichte, mehrfach wählbar; Tonalität und Atmosphäre als Vorgabe je Geschichte, die jedes neue Kapitel übernimmt und im Kapitel änderbar ist. Noch offen: Textprobe als Vorbild; Priorität (Soll oder Muss).
+- **Entschieden 2026-10-10 (Eigentümer: „Listen so übernehmen“, „Reihenfolge passt“):** Listen – **Genre:** Dark Romance, Dark Erotic, CNC, Thriller, Psychothriller, düstere Geschichte, Horror, Dark Fantasy, Krimi; **Tonalität:** düster, bedrückend, kalt, roh, sinnlich, zärtlich, leidenschaftlich, melancholisch, bedrohlich, nüchtern, ironisch; **Atmosphäre:** beklemmend, angespannt, unheimlich, gefährlich, schwül, intim, eisig, hoffnungslos, still, fiebrig; **Tempo:** langsam, gemessen, zügig, atemlos; **Stil:** knapp, schlicht, bildhaft, poetisch, ausführlich, dialogreich; **Deutlichkeit:** angedeutet, sinnlich, explizit. Reihenfolge der Erkundung: (1) Listenwerte, (2) Wirkungsprobe nach Regel-002 vor dem Bau, (3) Platz im Prompt direkt hinter der Figuren-Schreibweise, mit Vorrang für Kanon und geführte Figuren (Vorschlag, in der Probe so aufgebaut), (4) Datenmodell als Entscheidung mit Mockup.
 - **Akzeptanzkriterien:** nach FR-026; Schreibweise in der Oberfläche einstellbar und änderbar; Tests grün; Kanon-Treue im Probeschreiben nicht schlechter als vorher.
 - **Betroffene Module:** manuscript, context, api, ui
 - **Reifegrad-Wirkung:** keine

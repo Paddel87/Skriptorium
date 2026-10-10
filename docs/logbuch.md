@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 – [BEOBACHTUNG] 5.6 Erkundung begonnen
+
+- Eigentümer: „5.6 Erkundung“. Vorgeschlagen: (1) Listenwerte, (2) Wirkungsprobe nach Regel-002 vor dem Bau, (3) Platz im Prompt hinter der Figuren-Schreibweise mit Vorrang für Kanon und Figuren, (4) Datenmodell als Entscheidung mit Mockup – „Reihenfolge passt, Listen so übernehmen“ (Werte im Fahrplan 5.6). Innerhalb von 5.6, kein neuer Schritt (Phase 5 an der Wucherungs-Schwelle).
+- Werkzeug `spikes/schreibweise-5.6/`: `lauf.py` hängt für die Probe einen Block „Schreibweise“ an die Figuren-Schreibweise an (Produktcode unverändert) und nutzt die Ketten aus `spikes/regel-002/`; `stil.py` misst Satzlänge, Anteil wörtlicher Rede und Wörter. Trockentest: Block direkt hinter der Figuren-Schreibweise in beiden Geschichten; Ausgangswerte aus `ausgang-mittel` berechnet. Lauf offen – lokal kein gültiger Schlüssel, daher Cloud-Session.
+
 ### 2026-10-10 – [GELÖST] Kanon in der Leiste der Geschichte noch in alter Ansicht (Befund zu 5.11)
 
 - **Befund des Eigentümers:** Über die Weltseite → „Kanon“ erscheint die neue Kanon-Seite mit Gliederung nach Kategorie, in der Geschichte über „Kanon & Geschichte“ noch die alte flache Liste – „unglücklich“.
