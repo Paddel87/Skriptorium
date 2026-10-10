@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] Tag v1.0.0 und Deployment `0af840f`
+
+- Auf Anweisung des Eigentümers („112 mergen und einspielen. Vorher Markierung durchführen, 1.0.0“): #112 nach grüner CI gemergt, CI auf `main` (`0af840f`) grün; annotierter Tag `v1.0.0` auf `0af840f` gesetzt und gepusht (öffentlich sichtbar). Keine Release-Seite auf GitHub angelegt (Frage des Eigentümers dazu beantwortet).
+- Einspielen nach Runbook Abschnitt 7 (ADR-039): `REVISION` `0af840f`, Rückweg `skriptorium:vorher` = `1dd8bdb`; `/api/health` 200 nach ca. 63 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; einmal per SSH `(healthy)`, 0 Fehlerzeilen, `pyproject.toml` im Container mit `version = "1.0.0"`.
+- Beobachtung: Der Titel der Geschichte stand seit dieser Session in öffentlichen Doku-Dateien; auf Wunsch des Eigentümers überall durch „Geschichte des Eigentümers“ ersetzt (ältere Stände bleiben in der Git-Historie, ebenso drei Commit-Nachrichten).
+
 ### 2026-10-11 – [ADR-ANGELEGT] ADR-058 Freigabe v1.0.0 (5.14 erledigt)
 
 - Eigentümer zu den freiwilligen Maßnahmen: „Keine – so freigeben“. ADR-058: Vision-Checkpoint erfüllt, Verzicht auf den menschlichen Blick mit benanntem Restrisiko, unabhängige KI-Prüfung „freigeben“. Freiwillige Maßnahmen als V.18 (Datenschutz an OpenRouter) und V.19 (CSP, Einbettschutz, 422) mit Landeplatz 5.5.
@@ -43,7 +49,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 
 - Entscheidungsvorlage „Externer Blick“ (Kategorie 6) mit A bezahlter Fachmann / B Verzicht / C Umfeld; Eigentümer antwortete frei: „Du mit Sub-agent“. Gedeutet und ihm offen gesagt: Das erfüllt die Vorgabe „Mensch außerhalb des Projekts“ nicht – festgehalten wird ein Verzicht auf den menschlichen Blick mit Restrisiko, ergänzt um eine neue unabhängige Prüfung (getrennte Instanz, Modell Sonnet, ohne Gesprächsverlauf; Code, Bedrohungsmodell, nur lesende Abrufe der öffentlichen Adresse, keine Anmeldung). Schwerpunkt: Änderungen seit 4.5 (5.12, 5.13, 5.21).
 
-### 2026-10-11 – [ADR-ANGELEGT] ADR-057 Nachweis D.4 an „The Trap“
+### 2026-10-11 – [ADR-ANGELEGT] ADR-057 Nachweis D.4 an „Geschichte des Eigentümers“
 
 - Eigentümer: Kurzfassungen Kapitel 1–3 erstellt und als geprüft gespeichert. Messung im Container (Anfrage für Kapitel 4 ohne KI gebaut; Verbrauch nur als Zahlen): Werte siehe ADR-057. Eigentümer: „Ja, mit Vermerk V.10“ → D.4 und FR-010 erledigt.
 - Reibung: Die Ausgabe der Bausteine nannte auch die **Titel** der Regel- und Zeitlinien-Einträge (der Filter kannte die Bausteinarten nicht), obwohl nur Größen angekündigt waren; keine Texte. Dem Eigentümer offen gesagt. Bei solchen Abfragen künftig nur Art und Größe ausgeben.
@@ -52,31 +58,31 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 ### 2026-10-11 – [BEOBACHTUNG] Vorab-Abgleich gegen die Vision vor 5.14
 
 - Frage des Eigentümers: „Ist die Vision jetzt komplett?“ `docs/vision.md` vollständig gelesen und jedes Element gegen Fahrplan und `docs/requirements.md` geprüft. Erledigt: Kernidee und Zielbild (FR-001–004, 007–009, 011–017, 024), Szenarien 1, 3, 4, 5; Erfolgskriterien Widersprüche (FR-011), 10 Sekunden (FR-015), Figuren übergreifend (FR-016/017), 30 Minuten (FR-022, Einschätzung des Eigentümers – Stoppuhr laut Eigentümer „problemlos zu unterbieten“); harte Randbedingungen (Cloud-Modelle, Modellwechsel FR-018/025/028, Lizenz ADR-005); weiche Präferenzen (FR-019, FR-020 + 5.3, FR-032, ADR-004). Abgrenzungen unverändert (Publizieren, Bilder, Karten nicht in der ersten Version). Kann-Wünsche FR-023, FR-029, FR-030 sind keine Vision-Elemente und haben Landeplätze in V.x.
-- **Offen:** Erfolgskriterien „kein Kontextverlust“ und „günstiger pro Anfrage“ beim Referenzumfang sowie Szenario 2 (Handlungsstand aller Kapitel) – FR-010 TEILWEISE, D.4. Entscheidung des Eigentümers: Nachweis an „The Trap“ mit Hochrechnung (statt Import der alten Referenzgeschichte oder Warten). Der formale Vision-Checkpoint folgt in 5.14.
+- **Offen:** Erfolgskriterien „kein Kontextverlust“ und „günstiger pro Anfrage“ beim Referenzumfang sowie Szenario 2 (Handlungsstand aller Kapitel) – FR-010 TEILWEISE, D.4. Entscheidung des Eigentümers: Nachweis an „Geschichte des Eigentümers“ mit Hochrechnung (statt Import der alten Referenzgeschichte oder Warten). Der formale Vision-Checkpoint folgt in 5.14.
 
-### 2026-10-11 – [BEOBACHTUNG] Testkapitel 5 und 6 in „The Trap“ gelöscht
+### 2026-10-11 – [BEOBACHTUNG] Testkapitel 5 und 6 in „Geschichte des Eigentümers“ gelöscht
 
 - Auf ausdrücklichen Wunsch des Eigentümers („Kannst du mir noch Kapitel 5 und 6 löschen?“). Beide leer (0 Wörter), ohne Verlauf; vorher nach `/opt/docker/skriptorium/sicherungen/` kopiert, dann über `DocumentStore.delete` gelöscht (Index mit aufgeräumt). Danach: Kapitel 1–4 mit 9.786 / 9.719 / 9.758 / 9.788 Wörtern. Eine Funktion zum Löschen von Kapiteln gibt es in der Oberfläche nicht.
 
 ### 2026-10-11 – [ERLEDIGT] Abnahme 5.20
 
-- Eigentümer: „5.20 funktioniert, beide Kapitel wurden angelegt“ (in „The Trap“, jetzt Roman). Auf dem Server nachgesehen: Kapitel 05 und 06 neu, 01–04 unverändert benannt → 5.20 `[ERLEDIGT]`. Phase 5: 22 von 26 erledigt, keiner in Arbeit, 2 offen (5.14, 5.5), 2 verschoben. README-Fortschritt nachgezogen.
+- Eigentümer: „5.20 funktioniert, beide Kapitel wurden angelegt“ (in „Geschichte des Eigentümers“, jetzt Roman). Auf dem Server nachgesehen: Kapitel 05 und 06 neu, 01–04 unverändert benannt → 5.20 `[ERLEDIGT]`. Phase 5: 22 von 26 erledigt, keiner in Arbeit, 2 offen (5.14, 5.5), 2 verschoben. README-Fortschritt nachgezogen.
 
 ### 2026-10-11 – [BEOBACHTUNG] Wunsch Wortanzeige im Manuskript → V.17
 
 - Eigentümer vermisst eine Anzeige, wie viel Text ein Kapitel hat. Auswahlfragen: „Nächste Ausbaustufe“ (statt sofort mit Neuplanung von Phase 5, die an der Wucherungs-Schwelle steht) und „Wörter plus Grenze“. Angelegt als V.17 mit Landeplatz 5.5.
 
-### 2026-10-11 – [BEOBACHTUNG] „The Trap“ auf Wunsch in 4 Kapitel geteilt
+### 2026-10-11 – [BEOBACHTUNG] „Geschichte des Eigentümers“ auf Wunsch in 4 Kapitel geteilt
 
 - Eigentümer per Auswahlfrage: „Ja, 4 Kapitel“. Vorher bemerkt, dass er gerade schrieb (Kapitel umbenannt in „Kapitel 1“, 7 Minuten zuvor gespeichert) – angehalten und gebeten, zu speichern und auf allen Geräten zu schließen (sonst hätte ein alter Stand im Browser den ungeteilten Text zurückgeschrieben); Bestätigung „Ja, teilen“.
-- Sicherung: ganzer Ordner der Geschichte nach `/opt/docker/skriptorium/sicherungen/the-trap-vor-teilung-2026-10-11/` (außerhalb von `data/`, Verzeichnis 700; zusätzlich tägliche Duplicati-Sicherung).
+- Sicherung: ganzer Ordner der Geschichte nach `/opt/docker/skriptorium/sicherungen/` (Ordner „…-vor-teilung-2026-10-11“) (außerhalb von `data/`, Verzeichnis 700; zusätzlich tägliche Duplicati-Sicherung).
 - Teilung im Container über `ManuscriptService`: keine Szenenmarken im Text (550 Absätze), Schnitt an den Absatzgrenzen nächst den Vierteln; Prüfung, dass die Teile mit den Trennern den Originaltext exakt ergeben. Ergebnis: Kapitel 1–4 mit 9.786 / 9.719 / 9.758 / 9.788 Wörtern, Summe 39.051 wie vorher. Neue Kapitel „Kapitel 2“–„Kapitel 4“; 1–3 abgeschlossen (damit „Kurzfassung nachholen“ erscheint), 4 in Arbeit. Verlauf (`verlauf/01.md`) bleibt bei Kapitel 1. Kein Text ausgegeben. Dateien Besitzer 10001, Rechte 600.
 
 ### 2026-10-11 – [ERLEDIGT] Abnahme 5.13 und 5.16; Befunde zu 5.20 und zur Kurzfassung
 
 - Eigentümer: 5.13 „positiv“, 5.16 „ebenfalls“ → beide `[ERLEDIGT]`, FR-027 und FR-031 erledigt. Phase 5: 21 von 26 erledigt, 1 in Arbeit (5.20), 2 offen (5.14, 5.5), 2 verschoben.
-- 5.20 „Funktion nicht gefunden“: Seine Geschichte „The Trap“ war als Kurzgeschichte angelegt – „+ Kapitel“ erscheint nur bei Romanen (gewollt). Nur Kopfdaten gelesen, keine Inhalte.
-- Kurzfassung scheitert: Kapitel 1 von „The Trap“ hat ca. 38.000 Wörter (247 KB, geschätzt ca. 75.000 Token); `build_chapter_summary` lehnt ab, weil das ganze Kapitel ins Budget von 30.000 Token muss (Festlegung 3.6). Im Protokoll `POST …/summarize` 200 nach 11 ms (Fehlschlag im Feld `failure`, keine KI-Anfrage). Weiterschreiben nicht betroffen (nur letzte Seiten). „Kurzfassung speichern (geprüft)“ speichert eigenen Text ohne KI; der Knopf ist nur ohne Änderung gesperrt.
+- 5.20 „Funktion nicht gefunden“: Seine „Geschichte des Eigentümers“ war als Kurzgeschichte angelegt – „+ Kapitel“ erscheint nur bei Romanen (gewollt). Nur Kopfdaten gelesen, keine Inhalte.
+- Kurzfassung scheitert: Kapitel 1 von „Geschichte des Eigentümers“ hat ca. 38.000 Wörter (247 KB, geschätzt ca. 75.000 Token); `build_chapter_summary` lehnt ab, weil das ganze Kapitel ins Budget von 30.000 Token muss (Festlegung 3.6). Im Protokoll `POST …/summarize` 200 nach 11 ms (Fehlschlag im Feld `failure`, keine KI-Anfrage). Weiterschreiben nicht betroffen (nur letzte Seiten). „Kurzfassung speichern (geprüft)“ speichert eigenen Text ohne KI; der Knopf ist nur ohne Änderung gesperrt.
 - Entscheidung per Auswahlfrage: **Kapitel teilen** (statt Kurzfassung in Abschnitten, selbst schreiben oder später). Richtwert für den Eigentümer: Kapitel bis etwa 12.000 Wörter passen für die Kurzfassung.
 - Befund: Die Form einer Geschichte ist in der Oberfläche nur beim Anlegen wählbar (Server kann sie ändern). Eigentümer wählte „Ich stelle sie um“ (kein Knopf als eigener Schritt). Ausgeführt im Container über `ManuscriptService.update_story(form="roman")`: vorher `kurzgeschichte`, nachher `roman`, Titel gleich, 1 Kapitel; Datei weiter Besitzer 10001, Rechte 600.
 

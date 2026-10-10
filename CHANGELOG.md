@@ -6,7 +6,7 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ## [1.0.0] – 2026-10-11
 
-Erstes produktives Release (ADR-058) nach der Go-Live-Prüfung 5.14: Alle Elemente der Vision sind erledigt oder bewusst ausgeklammert (Publizieren, Bilder und Karten nicht in der ersten Version); „kein Kontextverlust“ und „günstiger pro Anfrage“ an „The Trap“ nachgewiesen (ADR-057). Auf den Blick eines Menschen von außen wurde verzichtet; stattdessen eine unabhängige Prüfung durch eine getrennte KI-Instanz (Urteil „freigeben“). Bekannte Einschränkung: Bei langen Kapiteln gehen nicht genannte Kanon-Einträge nicht mit – wichtige Einträge per `@` nennen (V.10).
+Erstes produktives Release (ADR-058) nach der Go-Live-Prüfung 5.14: Alle Elemente der Vision sind erledigt oder bewusst ausgeklammert (Publizieren, Bilder und Karten nicht in der ersten Version); „kein Kontextverlust“ und „günstiger pro Anfrage“ an „Geschichte des Eigentümers“ nachgewiesen (ADR-057). Auf den Blick eines Menschen von außen wurde verzichtet; stattdessen eine unabhängige Prüfung durch eine getrennte KI-Instanz (Urteil „freigeben“). Bekannte Einschränkung: Bei langen Kapiteln gehen nicht genannte Kanon-Einträge nicht mit – wichtige Einträge per `@` nennen (V.10).
 
 ### Hinzugefügt (1.0.0)
 

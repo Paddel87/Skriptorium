@@ -76,7 +76,7 @@ Stand 2026-10-11 (ADR-001 bis ADR-009 aus Modus 2 Schritt 5, ADR-010 aus Schritt
 | 054 | 2026-10-10 | Aktiv | OPERATIV | METHODIK | Build-Pipeline | CI nur für `main` und fertige Pull Requests |
 | 055 | 2026-10-10 | Aktiv | OPERATIV | DATENMODELL, SCHNITTSTELLE | Datenmodell, API | Modell-Katalog von OpenRouter und Favoriten auf dem Server |
 | 056 | 2026-10-10 | Aktiv | OPERATIV | DATENMODELL, SCHNITTSTELLE | Datenmodell, API | Verlauf übernommener Vorschläge (Anweisung und Text) in eigener Datei je Kapitel |
-| 057 | 2026-10-11 | Aktiv | ERKENNTNIS | PERFORMANCE | – | Kein Kontextverlust und günstigere Anfragen – Nachweis an „The Trap“ (D.4) |
+| 057 | 2026-10-11 | Aktiv | ERKENNTNIS | PERFORMANCE | – | Kein Kontextverlust und günstigere Anfragen – Nachweis an „Geschichte des Eigentümers“ (D.4) |
 | 058 | 2026-10-11 | Aktiv | STRATEGISCH | SECURITY, DEPLOYMENT | Sicherheit und Datenschutz | Freigabe v1.0.0; Verzicht auf den menschlichen Blick von außen |
 
 ### Reaktiv-Quote
@@ -1384,17 +1384,17 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
   - Betroffen: `manuscript` (Datei, lesen und ergänzen), `api` (zwei Routen), `ui` (Eintrag beim Übernehmen, Reiter „Manuskript | Verlauf“).
 - **Abgeleitete Regel:** keine
 
-#### ADR-057: Kein Kontextverlust und günstigere Anfragen – Nachweis an „The Trap“ (D.4)
+#### ADR-057: Kein Kontextverlust und günstigere Anfragen – Nachweis an „Geschichte des Eigentümers“ (D.4)
 
 - **Datum:** 2026-10-11
-- **Entscheider:** Eigentümer (Auswahlfragen: „An The Trap prüfen“, danach „Ja, mit Vermerk V.10“)
+- **Entscheider:** Eigentümer (Auswahlfragen: „An Geschichte des Eigentümers prüfen“, danach „Ja, mit Vermerk V.10“)
 - **Status:** Aktiv
 - **Tags:** `[ERKENNTNIS]` `[PERFORMANCE]`
 - **Phasentyp-Kontext:** STABILISIERUNG (D.4), Voraussetzung von 5.14
 - **Reifegrad-Wirkung:** keine
 - **Kategorie:** – (Nachweis zu den Erfolgskriterien der Vision, Abschnitt 4; ändert den Auslöser aus ADR-009)
-- **Kontext:** D.4 sollte warten, bis eine Geschichte den Referenzumfang erreicht (≥ 500.000 Token Chatverlauf, ADR-009). Vor 5.14 waren das die einzigen offenen Vision-Elemente (Erfolgskriterien „kein Kontextverlust“ und „günstiger pro Anfrage“, Szenario 2). „The Trap“ hat 39.051 Wörter (geschätzt ca. 75.000 Token Text), seit 2026-10-11 in 4 Kapiteln; Kurzfassungen 1–3 vom Eigentümer erstellt und geprüft.
-- **Entscheidung:** Der Nachweis gilt an „The Trap“ mit Hochrechnung als erbracht. Gemessen (Anfrage für Kapitel 4 im Container gebaut, ohne KI; Verbrauch aus `system/verbrauch/2026-10.md`):
+- **Kontext:** D.4 sollte warten, bis eine Geschichte den Referenzumfang erreicht (≥ 500.000 Token Chatverlauf, ADR-009). Vor 5.14 waren das die einzigen offenen Vision-Elemente (Erfolgskriterien „kein Kontextverlust“ und „günstiger pro Anfrage“, Szenario 2). „Geschichte des Eigentümers“ hat 39.051 Wörter (geschätzt ca. 75.000 Token Text), seit 2026-10-11 in 4 Kapiteln; Kurzfassungen 1–3 vom Eigentümer erstellt und geprüft.
+- **Entscheidung:** Der Nachweis gilt an „Geschichte des Eigentümers“ mit Hochrechnung als erbracht. Gemessen (Anfrage für Kapitel 4 im Container gebaut, ohne KI; Verbrauch aus `system/verbrauch/2026-10.md`):
   - Handlungsstand: Gesamtzusammenfassung (481 Wörter, Vorgabe ≤ ca. 600) und alle drei Kurzfassungen (164 / 162 / 177 Wörter, Vorgabe 150–250) gehen mit; dazu Kapitel 4 ganz und das Ende von Kapitel 3, Welt, 8 Regeln, 12 Zeitlinien-Einträge, Schreibweise. Geschätzt 29.784 von 30.000 Token.
   - Kosten: 139 Schreib-Anfragen über 20.000 Token im Oktober, im Mittel ca. 23.000 Token ein (höchstens 24.470) und ca. 0,05 $ (höchstens 0,058 $); Referenz 125.000–140.000 Token, beim gleichen Modell ca. 0,25–0,28 $ – etwa 5- bis 6-mal weniger.
   - Hochrechnung: je abgeschlossenes Kapitel ca. 350 Token Kurzfassung; 20–30 Kapitel in dieser Größe ergeben 7.000–10.000 Token, die letzten Seiten haben weiter Platz; eng erst ab ca. 60 Kapiteln.
