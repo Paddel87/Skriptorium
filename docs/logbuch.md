@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-10 15:35 UTC – [ADR-ANGELEGT] ADR-053 Datenmodell der Schreibweise (5.6)
+
+- **Entscheidung (Auswahlfragen):** A – Geschichte speichert Genre und Vorgabe, ein neues Kapitel bekommt eine eigene Kopie; Tempo und Deutlichkeit je ein Wert; Genre nur je Geschichte. Option B (Kapitel folgen der Vorgabe) „im Hinterkopf“ → V.14, Landeplatz 5.5.
+- **Nebenbei:** Drift behoben – 5.5 nannte „V.1 bis V.12“, obwohl V.13 schon bestand; jetzt V.1–V.14. PR #99 (Wirkungsprobe) gemergt (`f7e593e`).
+- **Nächstes:** Mockup der Oberfläche vorher/nachher, dann Umsetzung.
+
 ### 2026-10-10 13:40 UTC – [BEOBACHTUNG] 5.6 Wirkungsprobe: Schreibweise wirkt, Kanon-Treue unverändert
 
 - **Lauf:** in der Cloud-Session (gültiger Schlüssel), `main` vorher abgeglichen (`a91e534`); `context` seit 5.24 unverändert – Vergleich mit `ausgang-mittel` im gleichen Aufbau (Regel-002). A (Dark Romance, poetisch) und B (Thriller, knapp) je 3 Ketten an beiden Geschichten, 2,91 $, keine Sperre.
