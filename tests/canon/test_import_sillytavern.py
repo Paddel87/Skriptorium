@@ -159,7 +159,8 @@ def test_a_v3_lorebook_and_odd_entries() -> None:
     [
         (b"x" * (MAX_BYTES + 1), "größer als 10 MB"),
         (b"\xff\xfe", "kein lesbares JSON"),
-        (b"[" * 100_000 + b"]" * 100_000, "kein lesbares JSON"),
+        # Depending on the platform's stack, json either gives up (unreadable) or reads a list.
+        (b"[" * 100_000 + b"]" * 100_000, "kein lesbares JSON|Keine Figurenkarte"),
         (b"[1, 2]", "Keine Figurenkarte"),
         (b'{"spec": "chara_card_v2", "data": "x"}', "Keine Figurenkarte"),
         (b'{"spec": "lorebook_v3", "data": []}', "Keine Figurenkarte"),
