@@ -315,7 +315,7 @@ describe("Import", () => {
     const file = new File(["# Figuren\n\n## Kael\n"], "welt.md", {
       type: "text/markdown",
     });
-    await user.upload(screen.getByLabelText("Markdown-Datei"), file);
+    await user.upload(screen.getByLabelText("Datei"), file);
     await waitFor(() => {
       expect(screen.getByLabelText("oder Text einfügen")).toHaveProperty(
         "value",
@@ -343,6 +343,78 @@ describe("Import", () => {
       categories: { mira: "kultur" },
       overwrite: ["kael"],
     });
+  });
+
+  it("translates a SillyTavern card, shows what was left out and previews it", async () => {
+    const { calls } = fakeApi({
+      "POST /api/worlds/salzmark/import/sillytavern": ok({
+        markdown: "# Figuren\n\n## Mira\n",
+        not_taken_over: ["Nicht übernommen (Chat-Zubehör): Szenario."],
+      }),
+      "POST /api/worlds/salzmark/import/preview": ok(preview),
+    });
+    const user = userEvent.setup();
+    render(<Import world="salzmark" onImported={vi.fn()} />);
+    const card = new File(
+      [new Uint8Array([0x89, 0x50, 0x4e, 0x47])],
+      "Mira.PNG",
+      {
+        type: "image/png",
+      },
+    );
+    await user.upload(screen.getByLabelText("Datei"), card);
+    expect(await screen.findByText("Vorschau: 2 Einträge")).toBeDefined();
+    expect(screen.getByText("Aus „Mira.PNG“ übersetzt.")).toBeDefined();
+    expect(
+      screen.getByText("Nicht übernommen (Chat-Zubehör): Szenario."),
+    ).toBeDefined();
+    expect(screen.getByLabelText("oder Text einfügen")).toHaveProperty(
+      "value",
+      "# Figuren\n\n## Mira\n",
+    );
+    expect(calls[0]?.body).toEqual({ content: "iVBORw==" });
+    expect(calls[1]?.body).toEqual({ markdown: "# Figuren\n\n## Mira\n" });
+  });
+
+  it("shows a refused SillyTavern file and keeps the field", async () => {
+    fakeApi({
+      "POST /api/worlds/salzmark/import/sillytavern": fail(
+        422,
+        "Keine Figurenkarte und kein Lorebook aus SillyTavern",
+      ),
+    });
+    const user = userEvent.setup();
+    render(<Import world="salzmark" onImported={vi.fn()} />);
+    await user.type(screen.getByLabelText("oder Text einfügen"), "# A");
+    await user.upload(
+      screen.getByLabelText("Datei"),
+      new File(["{}"], "liste.json", { type: "application/json" }),
+    );
+    expect(await screen.findByText(/Keine Figurenkarte/)).toBeDefined();
+    expect(screen.getByLabelText("oder Text einfügen")).toHaveProperty(
+      "value",
+      "# A",
+    );
+    expect(screen.queryByRole("status")).toBeNull();
+  });
+
+  it("names the file of a translation without notes", async () => {
+    fakeApi({
+      "POST /api/worlds/salzmark/import/sillytavern": ok({
+        markdown: "# Aus SillyTavern\n\n## See\n",
+        not_taken_over: [],
+      }),
+      "POST /api/worlds/salzmark/import/preview": ok(preview),
+    });
+    const user = userEvent.setup();
+    render(<Import world="salzmark" onImported={vi.fn()} />);
+    await user.upload(
+      screen.getByLabelText("Datei"),
+      new File(["{}"], "welt.json", { type: "application/json" }),
+    );
+    expect((await screen.findByRole("status")).textContent).toBe(
+      "Aus „welt.json“ übersetzt.",
+    );
   });
 
   it("shows errors of preview and apply", async () => {
