@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] 7.1 Umbau und 7.7 Pflege umgesetzt
+
+- Zu Beginn gewarnt: 7.1 ist Routine, aktiv die Entscheidungs-Klasse; Umbau an zwei Unteragenten der Routine-Klasse (Sonnet) abgegeben, parallel an getrennten Dateien (`context` bzw. `ui`), ohne Commit-Recht. Ergebnisse selbst geprüft.
+- Ausgangsstand vorher festgehalten: 42 KI-Anfragen der Testgeschichten (Skript im Scratch, inkl. Fehlerfälle wie zu kleines Budget), 15 Bildschirmfotos.
+- Befund beim Pixelvergleich: die Kanon-Liste wich in 0,02 % der Pixel ab – der Unteragent hatte „{" "}· Aliasse“ zu einem Textstück zusammengezogen; Prettier tut das bei kürzeren Zeilen selbst. Wiederhergestellt mit getrennten Textstücken und Kommentar. Restabweichung nur am Rand der Scrollleiste im Weltenbauer (Zeitzufall).
+- Monkeypatch-Verträglichkeit: Tests und Spikes ändern `CANON_SHARE` und `_filler_parts` in `builder.py`; beide bleiben dort, dazu Aliasse für fünf private Hilfen, die Tests und Spikes importieren.
+- 7.7: `allowScripts` mit `fsevents: false` (npm-Doku `approve-scripts`/`install-scripts`, v11); im eigenen Worktree geprüft, ohne `pre-commit install` dort (Lehre aus 6.10).
+- Prüfungen: pytest 560 (99,85 %), vitest 217 (98,18 / 96,10 / 97,17 / 98,46 %), Playwright 11, ruff, mypy, bandit, eslint, tsc, prettier grün.
+
 ### 2026-10-12 – [GELÖST] Pre-Commit-Hook nach der Onboarding-Prüfung verwaist
 
 - Die Onboarding-Prüfung in 6.10 führt den Quick Start in einem frischen Worktree aus, darunter `uv run pre-commit install`. Worktrees teilen `.git/hooks`; der Hook zeigte danach auf die Python-Umgebung des Prüf-Worktrees. Nach dessen Entfernen scheiterte jeder Commit mit „`pre-commit` not found“ – zuerst unbemerkt, weil die Ausgabe nach „fail“ gefiltert war.

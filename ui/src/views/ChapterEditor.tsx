@@ -1,24 +1,15 @@
-import {
-  lazy,
-  Suspense,
-  useEffect,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react";
-import {
-  api,
-  describeError,
-  describeSummaryFailure,
-  type CanonEntry,
-  type Chapter,
-  type Story,
-} from "../api";
+import { lazy, Suspense, useState, type ReactNode } from "react";
+import { api, type CanonEntry, type Chapter, type Story } from "../api";
 import { CanonFact } from "./CanonFact";
+import { ChapterBar } from "./ChapterBar";
 import { ChapterLength } from "./ChapterLength";
 import { ChapterSummary } from "./ChapterSummary";
+import { ChapterTabs, type ChapterView } from "./ChapterTabs";
 import { ErrorText } from "./Common";
 import { InstructionHistory } from "./InstructionHistory";
+import { useCanonTake } from "./useCanonTake";
+import { useChapterCompletion } from "./useChapterCompletion";
+import { useChapterDraft } from "./useChapterDraft";
 import { WritingPanel } from "./WritingPanel";
 
 // The editor with its Markdown grammar is large; it is loaded when a chapter is opened.
@@ -65,148 +56,58 @@ export function ChapterEditor({
   /** Show an entry named under "Herangezogen" in the bar on the right (step 5.16). */
   onLookUp?: (entry: CanonEntry) => void;
 }) {
-  const [title, setTitle] = useState(chapter.title);
-  const [text, setText] = useState(chapter.text);
-  const [state, setState] = useState<"clean" | "dirty" | "saved">("clean");
-  const [error, setError] = useState<string | null>(null);
-  const [summarizing, setSummarizing] = useState(false);
-  const [summaryNote, setSummaryNote] = useState<string | null>(null);
-  // Marked text in the editor, and the passage being taken into the canon (step 3.8).
-  const [marked, setMarked] = useState("");
-  const [taking, setTaking] = useState<string | null>(null);
-  // Manuscript or the history of instructions over the text (step 5.13).
-  const [view, setView] = useState<"manuskript" | "verlauf" | "kurzfassung">(
-    "manuskript",
-  );
+  const draft = useChapterDraft(chapter, onSaved);
+  const { text, state, save } = draft;
+  const { factForm, ...canon } = useCanonTake(onCanonChanged);
+  const [view, setView] = useState<ChapterView>("manuskript");
   const [noted, setNoted] = useState(0);
   // The tab "Kurzfassung" exists once the chapter is completed or has one (steps 3.6, 6.2).
   const hasSummary =
     chapter.status === "abgeschlossen" || chapter.summary !== "";
-  const [canonNote, setCanonNote] = useState<string | null>(null);
-  // Counts canon changes, so the writing panel offers new entries in its `@` menu.
-  const [canonRevision, setCanonRevision] = useState(0);
   // Counts the moments the end of the text should come into view (steps 5.9, 5.11).
   const [ends, setEnds] = useState(0);
-  const factForm = useRef<HTMLDivElement>(null);
-
-  // The form for "In den Kanon" opens below the text; bring its top into view, so it can grow
-  // downwards while it loads the entries (step 5.2).
-  useEffect(() => {
-    if (taking !== null) {
-      factForm.current?.scrollIntoView({ block: "start" });
-    }
-  }, [taking]);
-
-  async function save(): Promise<boolean> {
-    setError(null);
-    try {
-      await api.saveChapter(chapter.world, chapter.story, chapter.number, {
-        title,
-        text,
-      });
-      setState("saved");
-      onSaved();
-      return true;
-    } catch (reason: unknown) {
-      setError(describeError(reason));
-      return false;
-    }
-  }
-
-  /** Taken-over AI text goes to the end of the chapter and is saved at once (FR-009). */
-  async function append(proposal: string) {
-    const own = text.trimEnd();
-    const next = own === "" ? proposal.trim() : `${own}\n\n${proposal.trim()}`;
-    await api.saveChapter(chapter.world, chapter.story, chapter.number, {
-      title,
-      text: next,
+  const { summarizing, summaryNote, summarize, complete } =
+    useChapterCompletion({
+      chapter,
+      dirty: state === "dirty",
+      save,
+      setError: draft.setError,
+      onStory,
+      onSaved,
+      // The new short summary is to be checked (step 6.2).
+      onSummarized: () => {
+        setView("kurzfassung");
+      },
     });
-    setText(next);
-    setState("saved");
-    onSaved();
-  }
-
-  /** Create the chapter summary and continue the overall summary (step 3.6). */
-  async function summarize() {
-    setSummarizing(true);
-    setSummaryNote(null);
-    setError(null);
-    try {
-      const result = await api.summarizeChapter(
-        chapter.world,
-        chapter.story,
-        chapter.number,
-      );
-      onStory(result.story);
-      if (result.failure !== null) {
-        setSummaryNote(describeSummaryFailure(result.failure));
-      }
-    } catch (reason: unknown) {
-      setError(describeError(reason));
-    } finally {
-      setSummarizing(false);
-      onSaved();
-    }
-  }
-
-  /** Own unsaved text is saved first; the summary follows right after. */
-  async function complete() {
-    setError(null);
-    if (state === "dirty" && !(await save())) {
-      return;
-    }
-    try {
-      await api.completeChapter(chapter.world, chapter.story, chapter.number);
-    } catch (reason: unknown) {
-      setError(describeError(reason));
-      return;
-    }
-    await summarize();
-    // The new short summary is to be checked (step 6.2).
-    setView("kurzfassung");
-  }
 
   return (
     <section
       className="chapter"
       aria-label={`Kapitel ${String(chapter.number)}`}
     >
-      <header className="chapter-bar">
-        {lead}
-        <span className="crumb">{story.title} ›</span>
-        <input
-          className="chapter-title"
-          aria-label="Kapiteltitel"
-          value={title}
-          onChange={(event) => {
-            setTitle(event.target.value);
-            setState("dirty");
-          }}
-        />
-        <span className="spacer" />
-        {state === "saved" && <span className="ok">Gespeichert.</span>}
-        <button
-          type="button"
-          onClick={() => void save()}
-          disabled={state !== "dirty"}
-        >
-          Speichern
-        </button>
-        {tools}
-      </header>
+      <ChapterBar
+        storyTitle={story.title}
+        title={draft.title}
+        onTitle={draft.editTitle}
+        saved={state === "saved"}
+        canSave={state === "dirty"}
+        onSave={() => void save()}
+        lead={lead}
+        tools={tools}
+      />
       <WritingPanel
         world={chapter.world}
         story={chapter.story}
         chapter={chapter.number}
         chapterEmpty={text.trim() === ""}
         guests={story.guest_links}
-        canonRevision={canonRevision + canonVersion}
+        canonRevision={canon.canonRevision + canonVersion}
         storyModel={story.model}
         onModelChange={async (model) => {
           onStory(await api.updateStory(story.world, story.id, { model }));
         }}
         prepare={() => (state === "dirty" ? save() : Promise.resolve(true))}
-        onAccept={append}
+        onAccept={draft.append}
         endSignal={ends}
         mode={mode}
         onLookUp={onLookUp}
@@ -217,12 +118,9 @@ export function ChapterEditor({
           <>
             <button
               type="button"
-              disabled={marked.trim() === "" || taking !== null}
+              disabled={canon.marked.trim() === "" || canon.taking !== null}
               title="Markierte Stelle in den Kanon oder nur in diese Geschichte"
-              onClick={() => {
-                setCanonNote(null);
-                setTaking(marked);
-              }}
+              onClick={canon.start}
             >
               In den Kanon
             </button>
@@ -240,42 +138,12 @@ export function ChapterEditor({
           </>
         }
       >
-        <nav className="tabs view-tabs" aria-label="Ansicht des Kapitels">
-          <button
-            type="button"
-            aria-current={view === "manuskript"}
-            onClick={() => {
-              setView("manuskript");
-            }}
-          >
-            Manuskript
-          </button>
-          <button
-            type="button"
-            aria-current={view === "verlauf"}
-            onClick={() => {
-              setView("verlauf");
-            }}
-          >
-            Verlauf
-          </button>
-          {hasSummary && (
-            <button
-              type="button"
-              aria-current={view === "kurzfassung"}
-              onClick={() => {
-                setView("kurzfassung");
-              }}
-            >
-              Kurzfassung
-              {chapter.summary_status !== "geprüft" && (
-                <span className="unchecked" title="noch nicht geprüft">
-                  <span className="sr-only"> – noch nicht geprüft</span>
-                </span>
-              )}
-            </button>
-          )}
-        </nav>
+        <ChapterTabs
+          chapter={chapter}
+          view={view}
+          hasSummary={hasSummary}
+          onView={setView}
+        />
         {view === "kurzfassung" && hasSummary && (
           <section className="card chapter-summary">
             <h3>Kurzfassung von Kapitel {chapter.number}</h3>
@@ -305,11 +173,8 @@ export function ChapterEditor({
             <ManuscriptEditor
               label="Manuskript"
               value={text}
-              onChange={(value) => {
-                setText(value);
-                setState("dirty");
-              }}
-              onSelect={setMarked}
+              onChange={draft.editText}
+              onSelect={canon.setMarked}
               onEnd={() => {
                 setEnds((value) => value + 1);
               }}
@@ -323,32 +188,25 @@ export function ChapterEditor({
             />
           </div>
         </Suspense>
-        <ErrorText message={error} />
+        <ErrorText message={draft.error} />
         {summarizing && (
           <p className="note" role="status">
             Kurzfassung wird erstellt …
           </p>
         )}
-        {canonNote !== null && (
+        {canon.canonNote !== null && (
           <p className="ok" role="status">
-            {canonNote}
+            {canon.canonNote}
           </p>
         )}
-        {taking !== null && (
+        {canon.taking !== null && (
           <div ref={factForm}>
             <CanonFact
               story={story}
-              marked={taking}
+              marked={canon.taking}
               onStory={onStory}
-              onDone={(note) => {
-                setTaking(null);
-                setCanonNote(note);
-                setCanonRevision((value) => value + 1);
-                onCanonChanged?.();
-              }}
-              onCancel={() => {
-                setTaking(null);
-              }}
+              onDone={canon.done}
+              onCancel={canon.cancel}
             />
           </div>
         )}

@@ -13,18 +13,18 @@ from collections.abc import Sequence
 from typing import Final
 
 from skriptorium.canon import CanonEntry, CanonService, InvalidInput, NotFound
-from skriptorium.context.builder import (
-    _CATEGORY_LABELS,
+from skriptorium.context.parts import (
+    CATEGORY_LABELS,
     MAX_BUDGET,
     SAFETY_MARGIN,
     BuiltContext,
     ContextTooLarge,
+    Part,
     PromptMessage,
     Role,
-    _check_budget,
-    _in_category_order,
-    _Part,
-    _render,
+    check_budget,
+    in_category_order,
+    render,
 )
 
 # Fence the interface looks for to hand a proposal to the import preview (step 6.7).
@@ -50,7 +50,7 @@ def build_worldbuilder(
         NotFound: World or a referenced entry does not exist.
         ContextTooLarge: Frame, world, entries and the latest turn do not fit the budget.
     """
-    _check_budget(budget)
+    check_budget(budget)
     if not conversation or conversation[-1][0] != "user" or not conversation[-1][1].strip():
         raise InvalidInput("Die letzte Nachricht muss vom Autor sein")
     world = canon.get_world(world_id)
@@ -63,12 +63,12 @@ def build_worldbuilder(
         if by_id[reference] not in named:
             named.append(by_id[reference])
     system = [
-        _Part("rahmen", "Rahmen", _frame(world.name)),
-        _Part("welt", world.name, f"# Welt: {world.name}\n\n{world.description}".strip()),
-        _Part("eintraege", "Einträge der Welt", _index(entries)),
-        *(_Part("verweis", entry.name, _render(entry)) for entry in named),
+        Part("rahmen", "Rahmen", _frame(world.name)),
+        Part("welt", world.name, f"# Welt: {world.name}\n\n{world.description}".strip()),
+        Part("eintraege", "Einträge der Welt", _index(entries)),
+        *(Part("verweis", entry.name, render(entry)) for entry in named),
     ]
-    turns = [_Part("gespraech", role, text.strip()) for role, text in conversation]
+    turns = [Part("gespraech", role, text.strip()) for role, text in conversation]
     capacity = math.floor(budget / SAFETY_MARGIN)
     needed = sum(part.block.tokens for part in [*system, turns[-1]])
     if needed > capacity:
@@ -104,9 +104,9 @@ def _index(entries: Sequence[CanonEntry]) -> str:
     if not entries:
         return "# Einträge der Welt\n\nNoch keine."
     lines = []
-    for entry in _in_category_order(entries):
+    for entry in in_category_order(entries):
         aliases = f"; auch: {', '.join(entry.aliases)}" if entry.aliases else ""
-        lines.append(f"- {entry.name} ({_CATEGORY_LABELS[entry.category]}{aliases})")
+        lines.append(f"- {entry.name} ({CATEGORY_LABELS[entry.category]}{aliases})")
     return "# Einträge der Welt (nur Namen)\n\n" + "\n".join(lines)
 
 
