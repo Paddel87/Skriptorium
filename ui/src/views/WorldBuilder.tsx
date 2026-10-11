@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import type { CanonEntry } from "../api";
+import { sourceLabel, withoutLinks, withoutMarks } from "../citations";
 import { lastKanonBlock } from "../kanonBlock";
-import { shortName } from "../models";
+import { formatCents, shortName, webSearchSurcharge } from "../models";
 import { ErrorText } from "./Common";
 import { ModelManager } from "./ModelManager";
 import { ModelSelect } from "./ModelSelect";
@@ -41,6 +42,11 @@ export function WorldBuilder({
   // Whether the author is at the end of the conversation; only then does the view follow it.
   const atEnd = useRef(true);
   const catalog = choice.modelList?.catalog ?? [];
+  const surcharge = formatCents(
+    webSearchSurcharge(
+      catalog.find((model) => model.id === choice.chosenModel),
+    ),
+  );
 
   useEffect(() => {
     const area = log.current;
@@ -144,7 +150,9 @@ export function WorldBuilder({
                 setWebSearch(event.target.checked);
               }}
             />
-            mit Websuche (ca. 1 ct)
+            {surcharge === null
+              ? "mit Websuche (teurer, Preis unbekannt)"
+              : `mit Websuche (ca. +${surcharge})`}
           </label>
           <span className="spacer" />
           {flow.busy && (
@@ -195,6 +203,7 @@ function Bubble({
     );
   }
   const block = canTakeOver ? lastKanonBlock(turn.content) : null;
+  const proposal = block === null ? null : withoutMarks(block);
   return (
     <div className="wb-bubble ai">
       <div className="note">
@@ -206,7 +215,9 @@ function Bubble({
           denkt nach …
         </p>
       )}
-      {turn.content !== "" && <div className="wb-text">{turn.content}</div>}
+      {turn.content !== "" && (
+        <div className="wb-text">{withoutLinks(turn.content)}</div>
+      )}
       {turn.sources.length > 0 && (
         <p className="note">
           Fundstellen:{" "}
@@ -214,7 +225,7 @@ function Bubble({
             <span key={source.url}>
               {at > 0 && " · "}
               <a href={source.url} target="_blank" rel="noreferrer noopener">
-                {source.title}
+                {sourceLabel(source)}
               </a>
             </span>
           ))}
@@ -222,13 +233,13 @@ function Bubble({
       )}
       {turn.aborted && <p className="note">Abgebrochen.</p>}
       {turn.failure !== null && <ErrorText message={turn.failure} />}
-      {block !== null && (
+      {proposal !== null && (
         <div className="row">
           <button
             type="button"
             className="primary"
             onClick={() => {
-              onTakeOver(block);
+              onTakeOver(proposal);
             }}
           >
             Als Kanon übernehmen

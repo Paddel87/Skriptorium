@@ -29,4 +29,34 @@ describe("lastKanonBlock", () => {
     expect(lastKanonBlock("```kanon\n# Figuren\n## Kael")).toBeNull();
     expect(lastKanonBlock("```kanon\n\n```")).toBeNull();
   });
+
+  it("moves headings up one level when the block starts at ##", () => {
+    const answer = [
+      "```kanon",
+      "## Gegenstände",
+      "",
+      "### Pfannhaus-Glocke",
+      "Aliasse: Siedeglocke",
+      "",
+      "#### Zweck",
+      "Signal.",
+      "```",
+    ].join("\n");
+    expect(lastKanonBlock(answer)).toBe(
+      "# Gegenstände\n\n## Pfannhaus-Glocke\nAliasse: Siedeglocke\n\n### Zweck\nSignal.",
+    );
+  });
+
+  it("keeps the levels when a group heading is there", () => {
+    const answer =
+      "```kanon\n# Gegenstände\n\n## Siedepfanne\n### Zweck\nSieden.\n```";
+    expect(lastKanonBlock(answer)).toBe(
+      "# Gegenstände\n\n## Siedepfanne\n### Zweck\nSieden.",
+    );
+  });
+
+  it("keeps the levels of entries without a group heading", () => {
+    const answer = "```kanon\n## Kael\nText.\n\n### Zweck\nX.\n```";
+    expect(lastKanonBlock(answer)).toBe("## Kael\nText.\n\n### Zweck\nX.");
+  });
 });
