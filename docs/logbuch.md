@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] 6.7 echte Probe in der Cloud-Session
+
+- Auf Anweisung des Eigentümers („6.7 testest du hier einmal in der Cloud-Umgebung“). Fortgesetzte Session weit über der Kontextgrenze (dem Eigentümer zuvor gesagt). Aufbau: Stand `38e2bba`, Oberfläche gebaut, lokaler Server mit Kopie der Salzmark (`spikes/regel-002/geschichten.py`), echter OpenRouter-Schlüssel, Chromium per Playwright (Prüfskript nur im Arbeitsbaum, danach gelöscht), grok-4.6.
+- **Ohne Websuche** („Schmugglerin, mit @Tomas Rehl verfeindet“): drei Varianten, dann genau ein ```kanon-Block (Figur mit Aliassen); passt zum Kanon (Tomas hinkt, ehemaliger Zöllner). „Als Kanon übernehmen“ → Import-Vorschau mit 1 Eintrag, Kategorie richtig; auf einer Kopie der Daten übernommen: Eintrag `liska-dorn` mit Aliassen angelegt. 1.951 Token ein, ca. 1.000 aus, ca. 0,7–1 ct, erstes Textstück 9–10 s, gesamt ca. 28 s.
+- **Mit Websuche** (Salzsiederei im Mittelalter, Gegenstand „Siedepfanne“): Sachteil mit Quellen, dann ```kanon-Block mit Zweck/Verwendung/Auswirkung → Vorschau 1 Eintrag, Kategorie Gegenstand. Rohstrom: `start`, 542 `text`, ein `quellen`-Ereignis mit 3 URLs nach dem Text, `done`.
+- **Befunde:** (1) Websuche kostet 5,9–6,5 ct je Antwort statt „ca. 1 ct“ wie am Kästchen: 18.645–21.035 Token ein statt geschätzt ca. 1.500 – die Suchergebnisse werden als Eingabe berechnet. (2) Die Fundstellen haben als Titel nur „1“, „2“, „3“ (so liefert sie der Anbieter); die Links unter der Antwort heißen deshalb nur 1 · 2 · 3. (3) Im Antworttext stehen die Verweise roh als `[[1]](https://…)`. (4) Erstes Textstück mit Websuche 18–22 s, gesamt ca. 34 s.
+- Reibung: Prüfskript zuerst mit Adresse ohne `#/` (Oberfläche nutzt HashRouter) und mit Lesen des Antwortkörpers (bei Streams nicht möglich) – Fehlversuche mit drei echten Anfragen, zusammen ca. 2 ct; Gesamtkosten der Probe ca. 15 ct. `pkill` mit einem Muster, das auch im eigenen Befehl stand, beendete die eigene Shell – künftig Prozessnummer merken.
+- Eigentümer per Auswahlfrage: alle drei Befunde in 6.7 beheben (in einer neuen Session), danach einspielen.
+
 ### 2026-10-11 – [BEOBACHTUNG] 6.7 KI-Weltenbauer umgesetzt, echte Probe offen
 
 - Server (Commit 4fd80a3): Websuche als Plugin `web` (max. 5 Treffer), Fundstellen aus `annotations` (nur http(s), höchstens 20, Länge begrenzt), Anfrage aus `context/worldbuilder.py`, Ablauf `api/flows/worldbuilder.py`, Route `POST /api/worlds/{w}/worldbuilder`, Verbrauchsart `weltenbau`. pytest 526 grün, neue Dateien 100 %.
