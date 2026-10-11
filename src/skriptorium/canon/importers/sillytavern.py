@@ -1,4 +1,5 @@
-"""Translate SillyTavern files into the Markdown import format (step 6.8, ADR-065).
+"""SillyTavern files: translate them into the Markdown import format (step 6.8, ADR-065) and
+write canon in their formats (step 6.9, ADR-066).
 
 Accepted: a character card as JSON or as PNG (tEXt chunk ``ccv3`` before ``chara``, base64 of
 UTF-8 JSON; spec V1-V3) and a lorebook as JSON (``lorebook_v3``, a card's ``character_book`` or
@@ -15,12 +16,17 @@ Rules confirmed by the owner (ADR-065):
    its first key; its keys become aliases; text from ``content``. Disabled or empty entries are
    left out and reported.
 3. ``{{char}}`` becomes the card's name; ``{{user}}`` stays and is reported.
+4. A lorebook entry written by the Skriptorium carries its category in
+   ``extensions.skriptorium.kategorie`` (ADR-066); it is taken over, and such an entry is kept
+   even without text.
 
-The text is protected against the Markdown rules of the import: headings in it move below the
-entry heading, open code fences are closed, lines that would read as a field (``Aliasse:``,
-``Kategorie:``, also inside code fences) are kept as text, and an entry whose text starts with a
-heading gets an invisible first line, so it does not turn into a group. Names that would name a
-category or yield no identifier are changed and reported.
+The text is protected against the Markdown rules of the import: headings in it move just far
+enough that the highest lands below the entry heading (level 3), keeping their distances; open
+code fences are closed; lines that would read as a field (``Aliasse:``, ``Kategorie:``, also
+inside code fences) are kept as text; and an entry whose text starts with a heading gets an
+invisible first line, so it does not turn into a group. Names that would name a category or
+yield no identifier are changed and reported. Text written by the export (ADR-066) with headings
+from level 3 on therefore comes back unchanged.
 """
 
 import base64
@@ -28,10 +34,11 @@ import binascii
 import json
 import re
 import struct
+from collections.abc import Iterable
 from dataclasses import dataclass
-from typing import Final
+from typing import Final, Protocol
 
-from skriptorium.canon.categories import category_for
+from skriptorium.canon.categories import CATEGORIES, Category, category_for
 from skriptorium.storage import InvalidInput, slugify
 
 MAX_BYTES: Final = 10 * 1024 * 1024
@@ -63,6 +70,8 @@ _FIELD_LINE: Final = re.compile(
 _KEEP_AS_TEXT: Final = "​"
 # A lorebook's entries have no category; this group heading carries none (import rule 2).
 _LOREBOOK_GROUP: Final = "Aus SillyTavern"
+# Key under a lorebook entry's ``extensions`` for what only the Skriptorium reads (ADR-066).
+_EXTENSION: Final = "skriptorium"
 
 
 @dataclass(frozen=True)
@@ -78,6 +87,7 @@ class _Entry:
     name: str
     aliases: tuple[str, ...]
     body: str
+    category: Category | None = None
 
 
 def translate_sillytavern(data: bytes) -> TranslatedMaterial:
@@ -186,7 +196,8 @@ def _lorebook(book: dict[str, object], char: str | None, notes: list[str]) -> li
             continue
         content = _text(item.get("content"))
         keys = _keys(item.get("keys", item.get("key")))
-        if not content.strip():
+        category = _own_category(item)
+        if not content.strip() and category is None:
             empty += 1
             continue
         name = _line(_text(item.get("name"))) or _line(_text(item.get("comment")))
@@ -195,7 +206,9 @@ def _lorebook(book: dict[str, object], char: str | None, notes: list[str]) -> li
         aliases = tuple(dict.fromkeys(k for k in keys if k.casefold() != name.casefold()))
         if char is not None:
             content = _replace_char(content, char)
-        entries.append(_Entry(name=name, aliases=aliases, body=_protect(content)))
+        entries.append(
+            _Entry(name=name, aliases=aliases, body=_protect(content), category=category)
+        )
     if disabled:
         notes.append(
             "1 Lorebook-Eintrag ist in SillyTavern abgeschaltet und fehlt."
@@ -241,9 +254,11 @@ def _entry_markdown(entry: _Entry) -> str:
     lines = [f"## {entry.name}"]
     if entry.aliases:
         lines.append(f"Aliasse: {', '.join(entry.aliases)}")
+    if entry.category is not None:
+        lines.append(f"Kategorie: {entry.category}")
     body = entry.body.strip("\n")
     if body:
-        if not entry.aliases and _HEADING.match(body):
+        if not entry.aliases and entry.category is None and _HEADING.match(body):
             # Without own text before a subheading the entry would become a group (import rule 2).
             lines.append(_KEEP_AS_TEXT)
         lines.append(body)
@@ -252,9 +267,11 @@ def _entry_markdown(entry: _Entry) -> str:
 
 def _protect(text: str) -> str:
     """Text that the import keeps inside its entry (see module docstring)."""
+    lines = text.replace("\r\n", "\n").split("\n")
+    shift = max(0, 3 - min(_heading_levels(lines), default=3))
     out: list[str] = []
     in_fence = False
-    for line in text.replace("\r\n", "\n").split("\n"):
+    for line in lines:
         if _FENCE.match(line):
             in_fence = not in_fence
         elif _FIELD_LINE.match(line):
@@ -263,7 +280,7 @@ def _protect(text: str) -> str:
         elif not in_fence:
             heading = _HEADING.match(line)
             if heading is not None:
-                level = min(len(heading.group(1)) + 2, 6)
+                level = min(len(heading.group(1)) + shift, 6)
                 line = "#" * level + line[len(heading.group(1)) :]
         out.append(line)
     if in_fence:
@@ -273,6 +290,18 @@ def _protect(text: str) -> str:
     while out and not out[0].strip():
         out.pop(0)
     return "\n".join(out).strip("\n")
+
+
+def _heading_levels(lines: list[str]) -> list[int]:
+    """Levels of the headings outside code fences."""
+    levels: list[int] = []
+    in_fence = False
+    for line in lines:
+        if _FENCE.match(line):
+            in_fence = not in_fence
+        elif not in_fence and (heading := _HEADING.match(line)) is not None:
+            levels.append(len(heading.group(1)))
+    return levels
 
 
 def _replace_char(text: str, name: str) -> str:
@@ -302,3 +331,115 @@ def _filled(value: object) -> bool:
     if isinstance(value, list):
         return any(isinstance(v, str) and v.strip() for v in value)
     return False
+
+
+def _own_category(item: dict[str, object]) -> Category | None:
+    """The category a lorebook entry written by the Skriptorium carries (ADR-066)."""
+    extensions = item.get("extensions")
+    own = extensions.get(_EXTENSION) if isinstance(extensions, dict) else None
+    category = own.get("kategorie") if isinstance(own, dict) else None
+    return category if category in CATEGORIES else None
+
+
+# --- Writing canon for SillyTavern (step 6.9, ADR-066) ---------------------------------------
+
+_PERSONALITY: Final = "### Wesen"
+
+
+class Exportable(Protocol):
+    """What the export needs of a canon entry (``canon.CanonEntry`` has it)."""
+
+    @property
+    def name(self) -> str: ...
+    @property
+    def category(self) -> Category: ...
+    @property
+    def aliases(self) -> tuple[str, ...]: ...
+    @property
+    def body(self) -> str: ...
+
+
+def lorebook_for(entries: Iterable[Exportable]) -> dict[str, object]:
+    """A world info file as SillyTavern writes it, one entry per canon entry."""
+    written: dict[str, object] = {}
+    for uid, entry in enumerate(entries):
+        written[str(uid)] = {
+            **_WORLD_INFO_DEFAULTS,
+            "uid": uid,
+            "key": list(dict.fromkeys([entry.name, *entry.aliases])),
+            "comment": entry.name,
+            "content": entry.body.strip("\n"),
+            "displayIndex": uid,
+            "extensions": {_EXTENSION: {"kategorie": entry.category}},
+        }
+    return {"entries": written}
+
+
+def card_for(entry: Exportable) -> dict[str, object]:
+    """A character card V2 as SillyTavern writes it, without lorebook and chat fields.
+
+    Raises:
+        InvalidInput: The entry is not a figure.
+    """
+    if entry.category != "figur":
+        raise InvalidInput("Nur Figuren lassen sich als Figurenkarte ausgeben")
+    description, _, personality = entry.body.partition(f"\n{_PERSONALITY}\n")
+    if entry.body.startswith(f"{_PERSONALITY}\n"):
+        description, personality = "", entry.body[len(_PERSONALITY) + 1 :]
+    fields = {
+        "name": entry.name,
+        "description": description.strip("\n"),
+        "personality": personality.strip("\n"),
+        "scenario": "",
+        "first_mes": "",
+        "mes_example": "",
+    }
+    return {
+        **fields,
+        "spec": "chara_card_v2",
+        "spec_version": "2.0",
+        "data": {
+            **fields,
+            "creator_notes": "",
+            "system_prompt": "",
+            "post_history_instructions": "",
+            "alternate_greetings": [],
+            "tags": [],
+            "creator": "Skriptorium",
+            "character_version": "",
+            "extensions": {},
+        },
+    }
+
+
+# Fields of a new world info entry in SillyTavern (``newWorldInfoEntryDefinition`` in
+# ``public/scripts/world-info.js``, checked 2026-10-11); SillyTavern fills missing ones too.
+_WORLD_INFO_DEFAULTS: Final[dict[str, object]] = {
+    "keysecondary": [],
+    "constant": False,
+    "vectorized": False,
+    "selective": True,
+    "selectiveLogic": 0,
+    "addMemo": True,
+    "order": 100,
+    "position": 0,
+    "disable": False,
+    "excludeRecursion": False,
+    "preventRecursion": False,
+    "delayUntilRecursion": False,
+    "probability": 100,
+    "useProbability": True,
+    "depth": 4,
+    "group": "",
+    "groupOverride": False,
+    "groupWeight": 100,
+    "scanDepth": None,
+    "caseSensitive": None,
+    "matchWholeWords": None,
+    "useGroupScoring": None,
+    "automationId": "",
+    "role": None,
+    "sticky": 0,
+    "cooldown": 0,
+    "delay": 0,
+}
