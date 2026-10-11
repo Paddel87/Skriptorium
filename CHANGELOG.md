@@ -6,6 +6,8 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v1.0.0)
 
+- Kurzfassung im eigenen Reiter (2026-10-11, Schritt 6.2): Die Kurzfassung eines Kapitels steht nicht mehr direkt über dem Anweisungsfeld, sondern im Reiter „Kurzfassung“ neben „Manuskript“ und „Verlauf“ – mit dem Hinweis, dass sie keine Anweisung ist. Ein Punkt am Reiter zeigt eine noch nicht geprüfte Kurzfassung; nach „Kapitel abschließen“ öffnet der Reiter von selbst. Der Knopf zum Bestätigen heißt jetzt „Als geprüft markieren“.
+
 - Umfang des Kapitels (2026-10-11, Schritt 6.1): Unter dem Manuskript steht laufend, wie viele Wörter das Kapitel hat. Nähert es sich der Grenze, bis zu der die KI noch eine Kurzfassung erstellen kann, erscheint gelb „Kurzfassung passt bis ca. … – bald abschließen“; darüber rot „zu lang für die Kurzfassung“. Die Grenze rechnet der Server je Kapitel aus (neu `GET …/chapters/{n}/summary-room`).
 
 ## [1.0.0] – 2026-10-11

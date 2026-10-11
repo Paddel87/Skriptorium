@@ -67,7 +67,7 @@ export function ChapterSummary({
               chapter.summary_status !== "erzeugt")
           }
         >
-          Kurzfassung speichern (geprüft)
+          Als geprüft markieren
         </button>
         <button type="button" disabled={busy} onClick={onSummarize}>
           {chapter.summary_status === "fehlt"

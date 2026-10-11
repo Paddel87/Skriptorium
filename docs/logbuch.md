@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] 6.2 Kurzfassung im eigenen Reiter umgesetzt; zwei wacklige Tests stabilisiert
+
+- Routine-Schritt auf der Entscheidungs-Klasse (genannt), nicht abgegeben (klein, viel Abstimmung). Mockup mit zwei Varianten direkt in der echten Seite nachgebaut (DOM-Änderung per Playwright, Kopie der Testdaten); Eigentümer: „A: Eigener Reiter“. Ergänzt gegenüber dem Mockup: nach „Kapitel abschließen“ öffnet der Reiter von selbst (die neue Kurzfassung ist zu prüfen).
+- Reibung beim Mockup: Variante C zuerst ohne Neuladen der Seite aufgenommen – Bild enthielt noch Variante A; wiederholt.
+- **Wacklige Tests** (nicht deterministisch, Blocker nach `CLAUDE.md` Abschnitt 6) bei Läufen der ganzen Suite gefunden: (1) `ModelChoice.test.tsx` – die Hilfsfunktion `modelSelect` wartete nur auf den Wert; das Modell der Geschichte steht vor der Modell-Liste im Feld, ein Wechsel fand dann keine Option (dieselbe Ursache, die eine andere Session am 2026-10-10 in einem einzelnen Test behoben hatte) – jetzt wartet die Hilfsfunktion auf die ganze Liste. (2) `WritingPanel.test.tsx` „follows the growing proposal …“ las die Scroll-Position, bevor das Mitlaufen im nächsten Bildaufbau lief – jetzt mit `waitFor`. Ob (2) schon vor 6.11 auftrat, ist offen (geänderte Reihenfolge der Effekte). Gegenprobe: 30 Läufe der ganzen Suite ohne Fehlschlag.
+- Prüfungen: vitest 183 (gesamt 97,86 / 95,64 / 96,84 / 98,17), Playwright 11; Bildschirmfotos am lokalen Server (Rechner und Smartphone, Reiter zu und offen).
+
 ### 2026-10-11 – [BEOBACHTUNG] 6.1 Umfang des Kapitels umgesetzt, Prüfung offen
 
 - Mockup (Vorher-Bildschirmfoto und drei Zustände, Rechner und Smartphone) freigegeben. Grenze nicht geraten: `ContextBuilder.chapter_summary_room` rechnet mit derselben Formel wie `_fitted` (Kapazität `budget / 1,1` minus übrige Bausteine, 3,3 Zeichen je Token, Trenner); Test zeigt für drei Budgets: genau `max_chars` passt, ein Zeichen mehr wird abgelehnt. Die Oberfläche rechnet Zeichen über die Zeichen je Wort des eigenen Textes in Wörter um (gerundet auf 500) und lädt die Grenze neu, wenn sich die Gesamtzusammenfassung ändert.

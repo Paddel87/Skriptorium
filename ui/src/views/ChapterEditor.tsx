@@ -75,8 +75,13 @@ export function ChapterEditor({
   const [marked, setMarked] = useState("");
   const [taking, setTaking] = useState<string | null>(null);
   // Manuscript or the history of instructions over the text (step 5.13).
-  const [view, setView] = useState<"manuskript" | "verlauf">("manuskript");
+  const [view, setView] = useState<"manuskript" | "verlauf" | "kurzfassung">(
+    "manuskript",
+  );
   const [noted, setNoted] = useState(0);
+  // The tab "Kurzfassung" exists once the chapter is completed or has one (steps 3.6, 6.2).
+  const hasSummary =
+    chapter.status === "abgeschlossen" || chapter.summary !== "";
   const [canonNote, setCanonNote] = useState<string | null>(null);
   // Counts canon changes, so the writing panel offers new entries in its `@` menu.
   const [canonRevision, setCanonRevision] = useState(0);
@@ -157,6 +162,8 @@ export function ChapterEditor({
       return;
     }
     await summarize();
+    // The new short summary is to be checked (step 6.2).
+    setView("kurzfassung");
   }
 
   return (
@@ -252,7 +259,39 @@ export function ChapterEditor({
           >
             Verlauf
           </button>
+          {hasSummary && (
+            <button
+              type="button"
+              aria-current={view === "kurzfassung"}
+              onClick={() => {
+                setView("kurzfassung");
+              }}
+            >
+              Kurzfassung
+              {chapter.summary_status !== "geprüft" && (
+                <span className="unchecked" title="noch nicht geprüft">
+                  <span className="sr-only"> – noch nicht geprüft</span>
+                </span>
+              )}
+            </button>
+          )}
         </nav>
+        {view === "kurzfassung" && hasSummary && (
+          <section className="card chapter-summary">
+            <h3>Kurzfassung von Kapitel {chapter.number}</h3>
+            <p className="note">
+              Die KI liest beim Weiterschreiben diese Kurzfassung statt des
+              vollen Kapitels. Sie ist keine Anweisung.
+            </p>
+            <ChapterSummary
+              key={`${chapter.summary_status}:${chapter.summary}`}
+              chapter={chapter}
+              busy={summarizing}
+              onSummarize={() => void summarize()}
+              onSaved={onSaved}
+            />
+          </section>
+        )}
         {view === "verlauf" && (
           <InstructionHistory
             world={chapter.world}
@@ -317,15 +356,6 @@ export function ChapterEditor({
           <p className="error" role="alert">
             {summaryNote}
           </p>
-        )}
-        {(chapter.status === "abgeschlossen" || chapter.summary !== "") && (
-          <ChapterSummary
-            key={`${chapter.summary_status}:${chapter.summary}`}
-            chapter={chapter}
-            busy={summarizing}
-            onSummarize={() => void summarize()}
-            onSaved={onSaved}
-          />
         )}
       </WritingPanel>
     </section>

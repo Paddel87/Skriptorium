@@ -24,12 +24,12 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details im Archiv [`docs/archiv/fahrplan-phase-5.md`](archiv/fahrplan-phase-5.md).
 
-**Phase 6: 1 von 12 erledigt, 1 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
+**Phase 6: 1 von 12 erledigt, 2 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | 🟠 | 6.1 | Umfang des Kapitels im Manuskript anzeigen | umgesetzt, Prüfung offen | du: prüfen |
-| ⚪ | 6.2 | Kurzfassung nicht mit der Anweisung verwechselbar | offen | KI |
+| 🟠 | 6.2 | Kurzfassung nicht mit der Anweisung verwechselbar | umgesetzt, Prüfung offen | du: prüfen |
 | ⚪ | 6.3 | Kanon-Einträge bei langen Kapiteln | offen | KI |
 | ⚪ | 6.4 | Antworten des Servers nicht im Browser-Speicher | offen | KI |
 | ⚪ | 6.5 | Datenschutz-Einstellung an OpenRouter | offen | KI |
@@ -192,7 +192,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.2: Kurzfassung des Kapitels nicht mit der Anweisung verwechselbar
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – Variante A gewählt (Mockup mit Varianten A „eigener Reiter“ und C „Karte“): Reiter „Kurzfassung“ neben „Manuskript“ und „Verlauf“, sobald das Kapitel abgeschlossen ist oder eine Kurzfassung hat; Punkt am Reiter, solange sie nicht geprüft ist; Karte mit Hinweis „Sie ist keine Anweisung“; nach „Kapitel abschließen“ öffnet der Reiter; Knopf heißt „Als geprüft markieren“. vitest 183, Playwright 11 grün. Offen: Einspielen, Bestätigung des Eigentümers am Smartphone
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11
 - **Freigabepflichtig:** nein – Umbau innerhalb von `ui`; Mockup vorher/nachher

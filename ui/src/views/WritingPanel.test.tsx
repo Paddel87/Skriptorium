@@ -596,7 +596,10 @@ describe("WritingPanel as a chat (step 5.11)", () => {
     await waitFor(() => {
       expect(proposal).toHaveProperty("value", "Der Nebel hob sich.");
     });
-    expect(area.scrollTop).toBe(1200);
+    // Following runs after the proposal is drawn; wait for it instead of reading too early.
+    await waitFor(() => {
+      expect(area.scrollTop).toBe(1200);
+    });
     feed.close();
   });
 
