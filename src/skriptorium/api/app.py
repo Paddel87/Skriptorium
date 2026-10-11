@@ -12,6 +12,7 @@ from typing import Final
 from urllib.parse import urlsplit
 
 from fastapi import FastAPI, Request, Response, status
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -49,11 +50,20 @@ from skriptorium.storage import (
 
 _SAFE_METHODS: Final = frozenset({"GET", "HEAD", "OPTIONS"})
 _HSTS: Final = "max-age=31536000; includeSubDomains"
+# Second line of defence against injected scripts (step 6.6, ASVS 3.4.3 and 3.4.6): scripts
+# only from the own origin; inline styles stay allowed for the editor (CodeMirror) and the
+# offline page; no embedding in other pages, also without the reverse proxy.
+_CONTENT_SECURITY_POLICY: Final = (
+    "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; "
+    "img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; "
+    "object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
+)
 _SECURITY_HEADERS: Final = {
     "Strict-Transport-Security": _HSTS,
     "X-Content-Type-Options": "nosniff",
     "Referrer-Policy": "no-referrer",
     "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+    "Content-Security-Policy": _CONTENT_SECURITY_POLICY,
 }
 _log = logging.getLogger("skriptorium.api")
 
@@ -185,10 +195,14 @@ async def _security_headers(request: Request, call_next: Next) -> Response:
     """Security headers on every response; no CORS headers are ever sent (ASVS 3.4.2).
 
     HSTS (ASVS 3.4.1); ``nosniff`` (3.4.4) and ``Referrer-Policy`` (3.4.5) are level 2 and,
-    like ``Permissions-Policy``, optional extras chosen by the owner (step 4.5).
+    like ``Permissions-Policy``, optional extras chosen by the owner (step 4.5); so are the
+    Content-Security-Policy (3.4.3, 3.4.6) and ``no-store`` for the API (14.3.2, step 6.4/6.6).
     """
     response = await call_next(request)
     response.headers.update(_SECURITY_HEADERS)
+    # Answers of the API carry texts; the browser keeps none of them (step 6.4, ASVS 14.3.2).
+    if request.url.path.startswith("/api/") and "cache-control" not in response.headers:
+        response.headers["Cache-Control"] = "no-store"
     return response
 
 
@@ -237,9 +251,21 @@ def _add_error_handlers(app: FastAPI) -> None:
         return JSONResponse(
             {"detail": "Interner Fehler"},
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            headers=_SECURITY_HEADERS,
+            headers={**_SECURITY_HEADERS, "Cache-Control": "no-store"},
         )
 
+    async def invalid_request(request: Request, error: Exception) -> Response:
+        # Like FastAPI's answer, but without the submitted values (step 6.6): a password sent
+        # in the wrong form must not come back. ``loc`` keeps only where (body, query, …) and
+        # the top-level field; deeper parts can be keys the author chose.
+        errors = error.errors() if isinstance(error, RequestValidationError) else []
+        detail = [
+            {"loc": list(item["loc"])[:2], "msg": item["msg"], "type": item["type"]}
+            for item in errors
+        ]
+        return JSONResponse({"detail": detail}, status_code=status.HTTP_422_UNPROCESSABLE_CONTENT)
+
+    app.add_exception_handler(RequestValidationError, invalid_request)
     app.add_exception_handler(NotFound, not_found)
     app.add_exception_handler(AlreadyExists, already_exists)
     app.add_exception_handler(InvalidInput, invalid_input)

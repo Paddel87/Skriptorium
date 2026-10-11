@@ -24,16 +24,16 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details im Archiv [`docs/archiv/fahrplan-phase-5.md`](archiv/fahrplan-phase-5.md).
 
-**Phase 6: 3 von 13 erledigt, 3 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
+**Phase 6: 3 von 13 erledigt, 6 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | 🟠 | 6.1 | Umfang des Kapitels im Manuskript anzeigen | umgesetzt, Prüfung offen | du: prüfen |
 | 🟠 | 6.2 | Kurzfassung nicht mit der Anweisung verwechselbar | umgesetzt, Prüfung offen | du: prüfen |
 | 🟠 | 6.3 | Kanon-Einträge bei langen Kapiteln | umgesetzt, Prüfung offen (ADR-062) | du: im Alltag prüfen |
-| ⚪ | 6.4 | Antworten des Servers nicht im Browser-Speicher | offen | KI |
-| ⚪ | 6.5 | Datenschutz-Einstellung an OpenRouter | offen | KI |
-| ⚪ | 6.6 | Kopfzeilen und Fehlermeldungen härten | offen | KI |
+| 🟠 | 6.4 | Antworten des Servers nicht im Browser-Speicher | umgesetzt, Einspielen offen | KI |
+| 🟠 | 6.5 | Datenschutz-Einstellung an OpenRouter | im OpenRouter-Konto (ADR-063) | du: einstellen und Bescheid geben |
+| 🟠 | 6.6 | Kopfzeilen und Fehlermeldungen härten | umgesetzt, Einspielen offen | KI |
 | ⚪ | 6.7 | KI-gestützter Weltenbauer | offen | KI |
 | ⚪ | 6.8 | Import aus SillyTavern | offen | KI |
 | ⚪ | 6.9 | Export in SillyTavern-Formate | offen | KI |
@@ -225,7 +225,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.4: Antworten des Servers nicht im Browser-Speicher
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – umgesetzt (ADR-063): `Cache-Control: no-store` für `/api/`, auch 500; Tests, unabhängig geprüft. Offen: Einspielen, Prüfung der Kopfzeilen von außen
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – Kategorie 6; optionale Maßnahme über ASVS Stufe 1 (ADR-006), vom Eigentümer gewünscht
@@ -241,7 +241,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.5: Datenschutz-Einstellung an OpenRouter
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – Eigentümer wählte C (ADR-063): kein Code, Einstellung im OpenRouter-Konto (Settings → Privacy). Offen: Bestätigung des Eigentümers, dass sie gesetzt ist
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – Kategorie 6 (Umgang mit Texten beim Anbieter); kann die wählbaren Modelle einschränken
@@ -257,7 +257,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.6: Kopfzeilen und Fehlermeldungen härten (CSP, Einbettschutz, 422)
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – umgesetzt (ADR-063): Content-Security-Policy, Validierungsfehler ohne Werte; Tests, Browser-Prüfung ohne CSP-Meldung, unabhängig geprüft (Befunde behoben). Offen: Einspielen, Prüfung der Kopfzeilen von außen
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – Kategorie 6; Stufe 2 und damit über der Obergrenze aus ADR-006 – vom Eigentümer gewünscht
