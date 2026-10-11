@@ -339,7 +339,7 @@ data/
 | Datenmodell (Abschnitt 7) | BELASTBAR | 2026-09-26 | ADR-013 (Kopffelder an Testwelt erprobt) |
 | NFR Token-Budget | BELASTBAR | 2026-09-26 | ADR-010, ADR-013 |
 | NFR Reaktionszeit (Anzeige 1 s, erstes Textstück grok-4.6 meist < 30 s / max. 45 s; grok-4.7 ohne Ziel, nicht voreingestellt) | BELASTBAR | 2026-10-10 | ADR-052 nach Erkundung D.16 (30 Anfragen an beiden Testgeschichten, `docs/research/reaktionszeit-d16.md`: grok-4.6 12–28 s); zuvor ADR-035 (D.6), zurückgestuft mit ADR-051 |
-| NFR Kontexttreue Referenzumfang | OFFEN | 2026-09-26 | Schritt D.4 (Geschichte ≥ 500.000 Token) |
+| NFR Kontexttreue Referenzumfang | VORLÄUFIG | 2026-10-11 | ADR-057 (D.4): Nachweis an der Geschichte des Eigentümers (39.051 Wörter, 4 Kapitel) mit Hochrechnung; Handlungsstand vollständig, ≤ 30.000 Token je Anfrage; Einschränkung: nicht genannte Kanon-Einträge bei langen Kapiteln (6.3). Beförderung nach 6.3 mit Messung (Regel-002) |
 | Observability: Logging | BELASTBAR | 2026-09-26 | ADR-021 |
 | Observability: Metriken (Speicherung) | BELASTBAR | 2026-09-27 | ADR-023; durch Umsetzung validiert in 3.9 (Tests, echte Läufe `spikes/modellwahl/README.md`) |
 | NFR Kanon-Treue | BELASTBAR | 2026-10-08 | Vorprüfung 1.1 (ADR-010); Probeschreiben 3.3 (0 eindeutige Widersprüche je Kapitel); 4.8 (ADR-024): erstes echtes Kapitel des Eigentümers in eigener Welt, 0 Widersprüche beim Redigieren – gemessen mit qwen3.8-max-0902, weil grok-4.7/4.6 die Inhalte sperrten; für grok-4.7 nur Test- und Glasküste-Texte (0 Widersprüche, Bewertung der KI); 5.26 (2026-10-10, Regel-002, verblindet): grok-4.6 3 eindeutige und 3 knappe Widersprüche in 12 Ketten (ca. 0,6–1,0 je Kapitel – an der Grenze), grok-4.7 0 in 6 Ketten; nicht per `@` genannte Einträge fehlen bei langen Kapiteln in der Anfrage (`docs/research/kanon-treue-grok.md`) |
@@ -348,7 +348,7 @@ data/
 | Schutzbedarf normal | BELASTBAR | 2026-09-26 | ADR-007 |
 | Host | BELASTBAR | 2026-09-28 | Schritt 4.2: Prüfung von außen (alle TCP-Ports; SSH-Passwort-Anmeldung abgelehnt), Firewall und automatische Sicherheitsupdates aktiv, Proxy auf unterstützter Linie (ADR-033); keine eigene Überwachung (ADR-034) |
 | Backups und Wiederherstellung | BELASTBAR | 2026-09-30 | Schritt 4.3: Wiederherstellung einer echten Sicherung (MEGA S4, ADR-036) auf dem Mac, 3 Dateien prüfsummengleich, Server darauf gestartet, Index neu aufgebaut; Schlüssel scheitert am fremden Bucket („Request not allowed by policy“) |
-| Secrets im Betrieb | VORLÄUFIG | 2026-09-30 | Gate 4.6: Ablageorte und Rotationswege festgehalten, Zugriff der KI entschieden (ADR-037); Schlüsseltausch unerprobt, Sicherungs-Zugangsdaten noch nur auf dem VPS (ADR-038) – Beförderung mit D.11 |
+| Secrets im Betrieb | VORLÄUFIG | 2026-09-30 | Gate 4.6: Ablageorte und Rotationswege festgehalten, Zugriff der KI entschieden (ADR-037); Schlüsseltausch am 2026-10-10 erprobt (neuer OpenRouter-Schlüssel per Befehl eingetragen und geprüft, alter gelöscht – Logbuch), Sicherungs-Zugangsdaten noch nur auf dem VPS (ADR-038) – Beförderung mit D.11 |
 | Netz (nur HTTPS von außen) | BELASTBAR | 2026-09-30 | Schritt 4.7: Prüfungen von außen – nur HTTPS (HTTP → 301), gültiges Zertifikat, kein veröffentlichter Port, `X-Forwarded-For` von außen ohne Wirkung, Sperre je echter Adresse, `frame-ancestors 'none'`; eigenes Netz Proxy–Skriptorium (ADR-030) |
 
 <!-- ANCHOR:tooling-inventar -->

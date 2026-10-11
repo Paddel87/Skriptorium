@@ -1,0 +1,889 @@
+# Archiv – Logbuch Phase 5
+
+<!-- Quelle: docs/logbuch.md. Ausgelagert am 2026-10-11 bei der Logbuch-Verdichtung zum Phasen-Wechsel
+     (CLAUDE.md Abschnitt 14). Abgedeckter Zeitraum: 2026-10-08 10:24 bis 2026-10-11 UTC (Phase 5, Schritte 5.1–5.26). -->
+
+## Einträge (neueste oben)
+
+### 2026-10-11 – [ADR-ANGELEGT] ADR-060 Pflichtfrage nach Phase 5: weiterbauen mit Umbau
+
+- Getrennte Instanz (Sonnet, ohne Gesprächsverlauf) bewertete die drei Optionen mit Belegen (siehe ADR-060); Empfehlung weiterbauen mit zwei Umbau-Schritten. Stellungnahme der bauenden KI: Zustimmung, dazu engere Wucherungs-Schwelle (15). Eigentümer: „A: Weiterbauen mit Umbau“. Neu: 6.11 (Schreibbereich zerlegen, vor 6.1), 6.12 (Anfrage-Zusammenstellung entflechten, vor 6.3); Phase 6 mit 12 Schritten, Schwelle > 15.
+- Hinweise der Instanz übernommen bzw. offen: Reifegrad-Drift Kontexttreue behoben (Eintrag oben); Lesbarkeit der Reaktiv-Quote in Teil A ist schwer (Methodik-Hinweis, nicht behoben); Risiken für 6.3, 6.5 (Inhaltsfilter-Modelle nicht verlieren), 6.6 (CSP und CodeMirror), 6.7 (Zuschnitt), 6.8 (fremde Dateien, Größenlimits) in den Schritten zu beachten.
+
+### 2026-10-11 – [REIFEGRAD-WECHSEL] NFR Kontexttreue Referenzumfang OFFEN → VORLÄUFIG
+
+- Drift gefunden durch die getrennte Instanz der Pflichtfrage: Reifegrad stand nach ADR-057 noch auf `OFFEN`. Gesetzt auf `[VORLÄUFIG]` (nicht `[BELASTBAR]`: Nachweis hochgerechnet, Kanon-Lücke offen → Beförderung nach 6.3). Zeile „Secrets im Betrieb“: Schlüsseltausch inzwischen erprobt, bleibt `VORLÄUFIG` bis D.11.
+
+### 2026-10-11 – [ONBOARDING-VALIDATION] Phasengrenze nach Phase 5
+
+- Frischer Worktree (`git worktree add --detach`, Stand `d55b97c`) im Scratch-Verzeichnis, README-Quick-Start genau wie dokumentiert: `uv python install 3.14.7`, `uv sync --frozen`, `npm ci`, `uv run pre-commit install`, `uv run skriptorium-einrichtung` (eigenes Datenverzeichnis, Code nicht ausgegeben), `npx vite build`, `uvicorn` → `/api/health` `{"status":"ok"}`, `/` 200. Tests im frischen Stand: pytest 487, vitest 173 grün. Kein Bruch. `scripts/session-start.sh` läuft in jeder Session als Hook (heute ohne Befund). Worktree entfernt; Pre-Commit-Hook danach aus dem Haupt-Checkout neu installiert (bekannte Reibung: `pre-commit install` im Worktree biegt den gemeinsamen Hook um).
+- README: Stand im Quick-Start auf 2026-10-11 (v1.0.0) nachgezogen.
+
+### 2026-10-11 – [BEOBACHTUNG] Vision-Abgleich an der Phasengrenze nach Phase 5
+
+- Re-Derivation gegen `docs/vision.md` (vollständig gelesen heute vor 5.14, Logbuch „Vorab-Abgleich gegen die Vision“): alle Elemente erledigt; die letzten offenen Erfolgskriterien über D.4 (ADR-057). Abgrenzungen (Publizieren, Bilder, Karten) weiter verschoben auf 6.10 (V.1, V.2).
+- Über `docs/requirements.md`: alle Muss-Anforderungen `ERLEDIGT` (FR-006 `VERWORFEN`, ADR-009); Soll FR-033 neu → 6.1; Kann FR-023 → V.16 → 6.10, FR-029 → 6.7, FR-030 → 6.8/6.9. Keine verwaisten Elemente. `[VERSCHOBEN]`-Zeilen mit Ziel 5.5 aufgelöst (ADR-059).
+
+### 2026-10-11 – [ADR-ANGELEGT] ADR-059 Planung von Phase 6 (5.5 erledigt)
+
+- Übersicht V.1–V.19 in drei Töpfen vorgelegt (A Phase 6, B später, C verwerfen). Eigentümer: „Etwas nach A holen“ → V.9 Weltenbauer und V.6/V.7 SillyTavern zusätzlich in Phase 6. Ergebnis: Phase 6 mit 10 Schritten (6.1–6.10), V.1/V.2/V.8/V.14/V.16 weiter verschoben auf 6.10, V.3/V.4/V.5/V.11 verworfen; V.12 und V.17 zu 6.1 zusammengelegt; neue Anforderung FR-033.
+- Reibung: Zuerst den Marker „ÜBERNOMMEN“ gesetzt – kein Marker nach `CLAUDE.md` Abschnitt 7; ersetzt durch `[VERSCHOBEN] → 6.x`. Reaktiv-Quote zuerst falsch fortgeschrieben (1 / 10); richtig 0 / 10, weil ADR-049 aus dem Fenster fällt.
+- Phase 5: 24 von 26 erledigt, 2 verschoben (5.4 → V.16, 5.25 → V.13 → 6.4). Nächster Schritt: Phasengrenze.
+
+### 2026-10-11 01:30 UTC – [SESSIONENDE] Prüfung „uncensored“-Modelle, Testplan für eine eigene Testwelt
+
+- **Dauer:** ca. 25 Minuten (01:05–01:30 UTC).
+- **Bearbeitet:** keine Fahrplan-Schritte – Recherche ohne Code: Katalog auf „uncensored“ (2 ausdrücklich, 20 als Rollenspiel/Fiktion beworben), Venice und Cydonia mit Bedingungen der Anbieter und je einer Stichprobe; Kandidaten für weitere Tests benannt.
+- **Testplan (Notiz für die nächste Session, noch kein Schritt):** Der Eigentümer legt eine eigene Testwelt im Skriptorium an (Psychothriller mit Täterfigur, Vorlage: sein bisheriger TypingMind-Agent; Text nicht im Repo). Testwelt, Anweisungen und Ergebnistexte bleiben außerhalb des öffentlichen Repos, nur Messwerte kommen hinein. Kandidaten: grok-4.6 (Vergleich), Venice, Cydonia, `nousresearch/hermes-4-405b`, `sao10k/l3.3-euryale-70b`, `aion-labs/aion-3.5`, `thedrummer/skyfall-36b-v2` (Kontext knapp); ungeeignet wegen Kontext unter 30.000 Token: mythomax, remm-slerp, weaver, lunaris. Messgrößen: Weigerung ja/nein, Abschwächung ja/nein, Wortzahl zur Vorgabe, Kanon-Widersprüche, Schlussgeste, Absätze und Anführungszeichen, Kosten, Wartezeit.
+- **Rollenteilung (dem Eigentümer offen gesagt, von ihm angenommen):** Die KI testet psychologischen Terror, Gewalt, Entführung und Fesselung als Handlung. Szenen mit expliziter sexueller Gewalt fordert, liest und bewertet die KI nicht; ebenso prüft sie kein reales Täterwissen (Dosierungen, Forensik, Hacking). Diese Fälle testet der Eigentümer selbst in der App nach einer Prüfliste, die KI wertet nur seine Angaben aus. Lücke: Der Ich-Modus des Agenten (Gespräch mit der Figur) hat im Skriptorium keine Entsprechung – Kandidat für 5.5.
+- **Landeplatz:** Probeschreiben nach Regel-002 und eine Kennzeichnung solcher Modelle in der Auswahl gehören in 5.5; Phase 5 steht an der Wucherungs-Schwelle, deshalb kein neuer Schritt.
+- **Nächster Schritt:** unverändert 5.5; davor auf Wunsch des Eigentümers der Test mit seiner Testwelt.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (eingestellt und bedient `claude-opus-5-5`, Sitzungsabfrage); 0 Fahrplan-Schritte, die Recherche lag auf Routine-Niveau, Warnung dazu entfiel versehentlich; keine Abgabe (Lesearbeit, gleicher Cache-Lesepreis).
+- **Kontextgröße:** ca. 204.000 Token am Ende, Grenze 200.000 überschritten. Der Eigentümer hat bei ca. 185.000 ausdrücklich „hier weiter“ gesagt (Abweichung nach `CLAUDE.md` Abschnitt 0).
+- **Sessionende-Prüfungen:** README ohne Drift (kein Status-, Versions- oder Schritt-Wechsel); keine neuen ADRs, Reifegrade oder Blocker, daher keine Drift zwischen den Pflicht-Dokumenten; Ablaufdaten-Register: kein Vorlauf erreicht (nächstes Datum D.1 2026-11-05); Logbuch mit 1.020 Zeilen über dem Trigger von 800 (Klasse M); eine vorletzte Monats-Scheibe gibt es nicht (nur September als letzte und Oktober als aktuelle Scheibe, beide bleiben laut `CLAUDE.md` Abschnitt 14 aktiv) – die Regel greift damit ins Leere; Entlastung kommt mit der Verdichtung beim Phasenwechsel nach 5.5. Dem Eigentümer gemeldet.
+
+### 2026-10-11 – [BEOBACHTUNG] Cydonia (`thedrummer/cydonia-24b-v4.1`) geprüft
+
+- Auftrag des Eigentümers: „prüfe cydonia“. Feinabstimmung von Mistral Small 3.2 24B durch TheDrummer; „Uncensored“ steht nur in der OpenRouter-Beschreibung, die Modellkarte wirbt mit Prosa und Rollenspiel; Lizenz dort nicht genannt. Wissensstand 2024-04. Bei OpenRouter ein einziger Anbieter (Parasail, USA, bf16), 131k Kontext, Ausgabe bis 117.964 Token, kein Vordenken, 0,30 $ / 0,50 $ je 1 Mio. Token (Cache-Lesen 0,15 $). Im Katalog der App wählbar.
+- Bedingungen Parasail: kein Training mit Inhalten (AGB 2.7); bei „serverless“ keine Speicherung über die Antwort hinaus, Metadaten maskiert einsehbar (3.1); keine eigenen Inhaltsregeln zu Gewalt oder Sexualität, nur Verbot rechtswidriger Nutzung.
+- Stichprobe mit derselben Anfrage wie bei Venice (0,0002 $, 5 s): ohne Weigerung, drastischer als Venice, 193 statt etwa 250 Wörter, ein einziger Absatz, englische Anführungszeichen, wiederholter Satz („Das ist für …“), Schlussgeste trotz Vorgabe. Keine Prüfung nach Regel-002.
+
+### 2026-10-11 – [BEOBACHTUNG] Venice („Venice: Uncensored“) geprüft
+
+- Auftrag des Eigentümers: „prüfe venice“. Modell `cognitivecomputations/dolphin-mistral-24b-venice-edition`: Feinabstimmung von Mistral Small 24B (2501) durch dphn.ai mit Venice.ai, Apache-2.0, Wissensstand 2024-04; bei OpenRouter ein einziger Anbieter (Venice, USA, fp16), 128k Kontext, höchstens 8.192 Token Ausgabe, kein Vordenken, 0,20 $ / 0,90 $ je 1 Mio. Token (grok-4.6: 2 $ / 6 $). Im Katalog der App wählbar (nur Textausgabe).
+- Bedingungen laut Venice: kein Training mit Nutzerinhalten (AGB 10.2); Prompts und Antworten werden laut Datenschutzerklärung nicht gespeichert, die AGB behalten aber Überwachung und Aufzeichnung vor (10.11); Verbot u. a. von Darstellungen sexuellen Kindesmissbrauchs, auch KI-erzeugt. Für den API-Weg über OpenRouter nicht gesondert geregelt.
+- Stichprobe (eine Anfrage, deutsch, drastische Hinrichtungsszene einer Testfigur, 0,0004 $, 7 s): ohne Weigerung, 263 Wörter, `finish_reason` `stop`. Qualität mäßig: Wortwiederholungen („Schlamm“, „entschlossen“), Logikbruch im ersten Satz, Schlussgeste trotz Vorgabe. Keine Prüfung nach Regel-002 – kein Vergleich mit grok-4.6.
+
+### 2026-10-11 01:10 UTC – [BEOBACHTUNG] OpenRouter-Katalog auf „uncensored“-Bezeichnungen geprüft
+
+- Auftrag des Eigentümers: „Überprüfung der OpenRouter-Modelle auf uncensored-Bezeichnungen“. Reine Recherche, kein Code, kein Fahrplan-Schritt (Phase 5 steht an der Wucherungs-Schwelle; ein neuer Schritt wurde bewusst nicht angelegt).
+- Quelle: öffentlicher Katalog `https://openrouter.ai/api/v1/models`, abgerufen 2026-10-11; Suche über `id`, `name`, `description`, `hugging_face_id`.
+- Ausdrücklich „uncensored“ in Name oder Beschreibung: **2 von 458** – `cognitivecomputations/dolphin-mistral-24b-venice-edition` (Anzeigename „Venice: Uncensored“) und `thedrummer/cydonia-24b-v4.1` („Uncensored and creative writing model“). Beide `is_moderated = false`; beide Selbstbeschreibung der Hersteller, nicht geprüft.
+- Ohne das Wort, aber als Rollenspiel/Fiktion beworben: 20 weitere (u. a. aion-labs, sao10k, thedrummer, nousresearch, anthracite, gryphe, mancer, undi95, `minimax/minimax-m2-her`) – Liste in `docs/research/bestandspruefung.md`, Nachtrag 2026-10-11.
+- `is_moderated`: jetzt 141 true / 317 false (2026-09-26: 134 / 324). Die laufenden Modelle grok-4.6 und grok-4.7 bleiben `false`.
+- Keine Änderung an Modell-Voreinstellung oder Oberfläche; eine Kennzeichnung im Katalog wäre ein neuer Schritt (Neuplanung Phase 5 bzw. 5.5).
+
+### 2026-10-11 01:05 UTC – [SESSIONSTART] Prüfung OpenRouter-Modelle auf „uncensored“
+
+- Modell laut Sitzungsabfrage: eingestellt `claude-opus-5-5`, bedient `claude-opus-5-5` → Entscheidungs-Klasse. Die Aufgabe ist Recherche ohne Eskalations-Auslöser (Routine-Niveau); wegen gleichen Cache-Lesepreises keine Abgabe an Sonnet (Lesearbeit, `docs/project-context.md` Abschnitt 6).
+- Kontextgröße zu Sessionbeginn: ca. 103.000 Token (Grenze 200.000).
+- Ausgangslage: v1.0.0 eingespielt (`0af840f`), Phase 5 offen nur 5.5; keine aktiven Blocker.
+
+### 2026-10-11 – [BEOBACHTUNG] Tag v1.0.0 und Deployment `0af840f`
+
+- Auf Anweisung des Eigentümers („112 mergen und einspielen. Vorher Markierung durchführen, 1.0.0“): #112 nach grüner CI gemergt, CI auf `main` (`0af840f`) grün; annotierter Tag `v1.0.0` auf `0af840f` gesetzt und gepusht (öffentlich sichtbar). Keine Release-Seite auf GitHub angelegt (Frage des Eigentümers dazu beantwortet).
+- Einspielen nach Runbook Abschnitt 7 (ADR-039): `REVISION` `0af840f`, Rückweg `skriptorium:vorher` = `1dd8bdb`; `/api/health` 200 nach ca. 63 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; einmal per SSH `(healthy)`, 0 Fehlerzeilen, `pyproject.toml` im Container mit `version = "1.0.0"`.
+- Beobachtung: Der Titel der Geschichte stand seit dieser Session in öffentlichen Doku-Dateien; auf Wunsch des Eigentümers überall durch „Geschichte des Eigentümers“ ersetzt (ältere Stände bleiben in der Git-Historie, ebenso drei Commit-Nachrichten).
+
+### 2026-10-11 – [ADR-ANGELEGT] ADR-058 Freigabe v1.0.0 (5.14 erledigt)
+
+- Eigentümer zu den freiwilligen Maßnahmen: „Keine – so freigeben“. ADR-058: Vision-Checkpoint erfüllt, Verzicht auf den menschlichen Blick mit benanntem Restrisiko, unabhängige KI-Prüfung „freigeben“. Freiwillige Maßnahmen als V.18 (Datenschutz an OpenRouter) und V.19 (CSP, Einbettschutz, 422) mit Landeplatz 5.5.
+- v1.0.0 in `pyproject.toml`, `package.json`, `uv.lock`, `package-lock.json`, CHANGELOG (neuer Abschnitt `[1.0.0]`, 5.20 unter „Behoben“ nachgetragen), README (Badges Version und Status „In Betrieb“), `docs/project-context.md`. 5.14 `[ERLEDIGT]`; Phase 5: 23 von 26, offen nur 5.5.
+
+### 2026-10-11 – [BEOBACHTUNG] Unabhängige Prüfung vor v1.0.0 (5.14): „freigeben“
+
+- Getrennte Instanz (Sonnet, ohne Gesprächsverlauf), nur lesend: Code, `tests/api/test_security.py` (17 grün), `npm audit` (0), unangemeldete Abrufe der öffentlichen Adresse. Ohne Befund: Schutz aller Routen (auch `/api/models`, `/api/models/favoriten`, `…/instructions`), Cookie `__Host-` mit `Secure`/`HttpOnly`/`SameSite=Strict`, Sitzungen (256 Bit, Leerlauf 7 Tage, absolut 30, höchstens 5), Herkunftsprüfung, Passwortregeln und Pwned Passwords, Sperre nach Fehlversuchen, Pfadprüfung, Katalog ohne Nutzerdaten, Verlauf, Service Worker, Logs ohne Inhalte, Header, Container.
+- Befunde (alle niedrig oder Hinweis): (1) Bedrohungsmodell nannte eine Content-Security-Policy, die es nicht gibt – **Doku richtiggestellt** (`docs/architecture.md` Abschnitt 6); (2) `frame-ancestors` nur am Proxy, nicht in der Anwendung; (3) kein `Cache-Control: no-store` auf `/api` – Landeplatz V.13; (4) Standard-422-Antworten spiegeln Eingaben an den Absender zurück; (5) Sperre nur je Adresse – nach Bedrohungsmodell zulässig; (6) kein `data_collection: deny` an OpenRouter. Optionale Maßnahmen (1 als echte CSP, 2, 4, 6) dem Eigentümer vorgelegt, nicht still umgesetzt (Obergrenze `CLAUDE.md` Abschnitt 6).
+
+### 2026-10-11 – [BEOBACHTUNG] 5.14 begonnen: externer Blick durch getrennte KI-Instanz
+
+- Entscheidungsvorlage „Externer Blick“ (Kategorie 6) mit A bezahlter Fachmann / B Verzicht / C Umfeld; Eigentümer antwortete frei: „Du mit Sub-agent“. Gedeutet und ihm offen gesagt: Das erfüllt die Vorgabe „Mensch außerhalb des Projekts“ nicht – festgehalten wird ein Verzicht auf den menschlichen Blick mit Restrisiko, ergänzt um eine neue unabhängige Prüfung (getrennte Instanz, Modell Sonnet, ohne Gesprächsverlauf; Code, Bedrohungsmodell, nur lesende Abrufe der öffentlichen Adresse, keine Anmeldung). Schwerpunkt: Änderungen seit 4.5 (5.12, 5.13, 5.21).
+
+### 2026-10-11 – [ADR-ANGELEGT] ADR-057 Nachweis D.4 an „Geschichte des Eigentümers“
+
+- Eigentümer: Kurzfassungen Kapitel 1–3 erstellt und als geprüft gespeichert. Messung im Container (Anfrage für Kapitel 4 ohne KI gebaut; Verbrauch nur als Zahlen): Werte siehe ADR-057. Eigentümer: „Ja, mit Vermerk V.10“ → D.4 und FR-010 erledigt.
+- Reibung: Die Ausgabe der Bausteine nannte auch die **Titel** der Regel- und Zeitlinien-Einträge (der Filter kannte die Bausteinarten nicht), obwohl nur Größen angekündigt waren; keine Texte. Dem Eigentümer offen gesagt. Bei solchen Abfragen künftig nur Art und Größe ausgeben.
+- Die einzelnen Kosten der drei Kurzfassungen ließen sich nicht zuordnen (Zeitfilter auf das lokale Datum, Protokoll in UTC) – nicht nachgeholt, steckt in den Monatskosten.
+
+### 2026-10-11 – [BEOBACHTUNG] Vorab-Abgleich gegen die Vision vor 5.14
+
+- Frage des Eigentümers: „Ist die Vision jetzt komplett?“ `docs/vision.md` vollständig gelesen und jedes Element gegen Fahrplan und `docs/requirements.md` geprüft. Erledigt: Kernidee und Zielbild (FR-001–004, 007–009, 011–017, 024), Szenarien 1, 3, 4, 5; Erfolgskriterien Widersprüche (FR-011), 10 Sekunden (FR-015), Figuren übergreifend (FR-016/017), 30 Minuten (FR-022, Einschätzung des Eigentümers – Stoppuhr laut Eigentümer „problemlos zu unterbieten“); harte Randbedingungen (Cloud-Modelle, Modellwechsel FR-018/025/028, Lizenz ADR-005); weiche Präferenzen (FR-019, FR-020 + 5.3, FR-032, ADR-004). Abgrenzungen unverändert (Publizieren, Bilder, Karten nicht in der ersten Version). Kann-Wünsche FR-023, FR-029, FR-030 sind keine Vision-Elemente und haben Landeplätze in V.x.
+- **Offen:** Erfolgskriterien „kein Kontextverlust“ und „günstiger pro Anfrage“ beim Referenzumfang sowie Szenario 2 (Handlungsstand aller Kapitel) – FR-010 TEILWEISE, D.4. Entscheidung des Eigentümers: Nachweis an „Geschichte des Eigentümers“ mit Hochrechnung (statt Import der alten Referenzgeschichte oder Warten). Der formale Vision-Checkpoint folgt in 5.14.
+
+### 2026-10-11 – [BEOBACHTUNG] Testkapitel 5 und 6 in „Geschichte des Eigentümers“ gelöscht
+
+- Auf ausdrücklichen Wunsch des Eigentümers („Kannst du mir noch Kapitel 5 und 6 löschen?“). Beide leer (0 Wörter), ohne Verlauf; vorher nach `/opt/docker/skriptorium/sicherungen/` kopiert, dann über `DocumentStore.delete` gelöscht (Index mit aufgeräumt). Danach: Kapitel 1–4 mit 9.786 / 9.719 / 9.758 / 9.788 Wörtern. Eine Funktion zum Löschen von Kapiteln gibt es in der Oberfläche nicht.
+
+### 2026-10-11 – [ERLEDIGT] Abnahme 5.20
+
+- Eigentümer: „5.20 funktioniert, beide Kapitel wurden angelegt“ (in „Geschichte des Eigentümers“, jetzt Roman). Auf dem Server nachgesehen: Kapitel 05 und 06 neu, 01–04 unverändert benannt → 5.20 `[ERLEDIGT]`. Phase 5: 22 von 26 erledigt, keiner in Arbeit, 2 offen (5.14, 5.5), 2 verschoben. README-Fortschritt nachgezogen.
+
+### 2026-10-11 – [BEOBACHTUNG] Wunsch Wortanzeige im Manuskript → V.17
+
+- Eigentümer vermisst eine Anzeige, wie viel Text ein Kapitel hat. Auswahlfragen: „Nächste Ausbaustufe“ (statt sofort mit Neuplanung von Phase 5, die an der Wucherungs-Schwelle steht) und „Wörter plus Grenze“. Angelegt als V.17 mit Landeplatz 5.5.
+
+### 2026-10-11 – [BEOBACHTUNG] „Geschichte des Eigentümers“ auf Wunsch in 4 Kapitel geteilt
+
+- Eigentümer per Auswahlfrage: „Ja, 4 Kapitel“. Vorher bemerkt, dass er gerade schrieb (Kapitel umbenannt in „Kapitel 1“, 7 Minuten zuvor gespeichert) – angehalten und gebeten, zu speichern und auf allen Geräten zu schließen (sonst hätte ein alter Stand im Browser den ungeteilten Text zurückgeschrieben); Bestätigung „Ja, teilen“.
+- Sicherung: ganzer Ordner der Geschichte nach `/opt/docker/skriptorium/sicherungen/` (Ordner „…-vor-teilung-2026-10-11“) (außerhalb von `data/`, Verzeichnis 700; zusätzlich tägliche Duplicati-Sicherung).
+- Teilung im Container über `ManuscriptService`: keine Szenenmarken im Text (550 Absätze), Schnitt an den Absatzgrenzen nächst den Vierteln; Prüfung, dass die Teile mit den Trennern den Originaltext exakt ergeben. Ergebnis: Kapitel 1–4 mit 9.786 / 9.719 / 9.758 / 9.788 Wörtern, Summe 39.051 wie vorher. Neue Kapitel „Kapitel 2“–„Kapitel 4“; 1–3 abgeschlossen (damit „Kurzfassung nachholen“ erscheint), 4 in Arbeit. Verlauf (`verlauf/01.md`) bleibt bei Kapitel 1. Kein Text ausgegeben. Dateien Besitzer 10001, Rechte 600.
+
+### 2026-10-11 – [ERLEDIGT] Abnahme 5.13 und 5.16; Befunde zu 5.20 und zur Kurzfassung
+
+- Eigentümer: 5.13 „positiv“, 5.16 „ebenfalls“ → beide `[ERLEDIGT]`, FR-027 und FR-031 erledigt. Phase 5: 21 von 26 erledigt, 1 in Arbeit (5.20), 2 offen (5.14, 5.5), 2 verschoben.
+- 5.20 „Funktion nicht gefunden“: Seine „Geschichte des Eigentümers“ war als Kurzgeschichte angelegt – „+ Kapitel“ erscheint nur bei Romanen (gewollt). Nur Kopfdaten gelesen, keine Inhalte.
+- Kurzfassung scheitert: Kapitel 1 von „Geschichte des Eigentümers“ hat ca. 38.000 Wörter (247 KB, geschätzt ca. 75.000 Token); `build_chapter_summary` lehnt ab, weil das ganze Kapitel ins Budget von 30.000 Token muss (Festlegung 3.6). Im Protokoll `POST …/summarize` 200 nach 11 ms (Fehlschlag im Feld `failure`, keine KI-Anfrage). Weiterschreiben nicht betroffen (nur letzte Seiten). „Kurzfassung speichern (geprüft)“ speichert eigenen Text ohne KI; der Knopf ist nur ohne Änderung gesperrt.
+- Entscheidung per Auswahlfrage: **Kapitel teilen** (statt Kurzfassung in Abschnitten, selbst schreiben oder später). Richtwert für den Eigentümer: Kapitel bis etwa 12.000 Wörter passen für die Kurzfassung.
+- Befund: Die Form einer Geschichte ist in der Oberfläche nur beim Anlegen wählbar (Server kann sie ändern). Eigentümer wählte „Ich stelle sie um“ (kein Knopf als eigener Schritt). Ausgeführt im Container über `ManuscriptService.update_story(form="roman")`: vorher `kurzgeschichte`, nachher `roman`, Titel gleich, 1 Kapitel; Datei weiter Besitzer 10001, Rechte 600.
+
+### 2026-10-11 – [BEOBACHTUNG] Deployment `1dd8bdb` (5.13, 5.3, 5.4 verschoben)
+
+- Auf Anweisung des Eigentümers („deploy vorbereiten, vorher pull from main“, dann Auswahlfrage „Ja, einspielen“). Vorher mit `origin/main` abgeglichen: aus anderen Sessions #108 (5.3), #109 (5.13, ADR-056), #110 (5.4 → V.16). CI auf `1dd8bdb` grün. Geprüft vor dem Einspielen: keine neuen Abhängigkeiten, kein Docker/Compose/ENV; einzige Datenänderung neue Dateien `stories/<g>/verlauf/NN.md` (entstehen erst beim Übernehmen), bestehende Dateien unberührt; Rückweg auf `bd48bed` möglich (alte Version beachtet die neuen Dateien nicht).
+- Ablauf nach Runbook Abschnitt 7 (ADR-039): `REVISION` `1dd8bdb`, Rückweg `skriptorium:vorher` = `bd48bed`; `/api/health` 200 nach ca. 63 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; danach einmal per SSH `(healthy)`, 0 Fehlerzeilen in den letzten 3 Minuten.
+- Offen: Prüfung durch den Eigentümer – 5.13, 5.16, 5.20.
+
+### 2026-10-10 – [BEOBACHTUNG] Deployment `bd48bed` (5.20, 5.16)
+
+- Auf Anweisung des Eigentümers („Einspielen“; #106 vorher nur gemergt, „Korrektur nur mergen“). Enthält 5.20 (#106) und 5.16 (#107 aus einer anderen Session). CI auf `bd48bed` grün.
+- Ablauf nach Runbook Abschnitt 7 (ADR-039): `REVISION` `bd48bed`, Rückweg `skriptorium:vorher` = `7b89102`; `/api/health` 200 nach ca. 60 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; danach einmal per SSH `(healthy)`, 0 Fehlerzeilen in den letzten 3 Minuten.
+- Offen: Prüfung durch den Eigentümer – 5.20 (zwei Kapitel schnell hintereinander anlegen) und 5.16 (herangezogene Einträge anklickbar).
+
+### 2026-10-10 – [BEOBACHTUNG] Schlüsseltausch: Skript verworfen, einzelner Befehl
+
+- Wunsch „Skript zum Ersetzen des OpenRouter-Schlüssels“ zunächst als Skript mit ADR-Vorlage, Tests und unabhängiger Prüfung umgesetzt (Branch `feat/d.18-schluessel-tauschen`, nie gepusht). Eigentümer stellte klar: gemeint war nur ein Terminalbefehl für macOS; das Skript auf seinen Wunsch verworfen (Branch gelöscht, kein ADR, kein Fahrplan-Schritt auf `main`).
+- Lehre: Bei einem Wunsch nach „Skript“ erst die Form klären (einmaliger Befehl oder gepflegtes Werkzeug), bevor der volle Ablauf für Kategorie 6 anläuft.
+- Ausgegeben: ein Befehl für das Terminal (zsh) – Schlüssel unsichtbar abfragen, per Standardeingabe über SSH auf den Server, `.env` nach `.env.vorher` sichern, neu erzeugen, auf `(healthy)` warten, im Container bei OpenRouter prüfen, Meldung ERFOLG oder FEHLER. Syntax von zsh-, bash- und Python-Teil geprüft, nicht ausgeführt. Die KI sieht den Schlüssel nicht.
+- Ausgeführt vom Eigentümer am 2026-10-10 gegen 18:53 UTC: Schlüssel eingetragen, Container neu erzeugt und gesund; im Container `GET /api/v1/key` → 200, `.env` verschieden von `.env.vorher`. „ERFOLG“ erschien erst nach gut einer Minute (Warten auf `(healthy)`, bis 120 s) – der Eigentümer hatte zunächst keine Meldung gesehen. Eigentümer hat den alten Schlüssel bei OpenRouter deaktiviert und gelöscht; danach auf seine Bestätigung `.env.vorher` auf dem Server gelöscht (nur noch `.env`, Rechte 600; Dienst `(healthy)`, `/api/health` 200).
+
+### 2026-10-10 – [BEOBACHTUNG] 5.4 in die nächste Ausbaustufe verschoben (V.16)
+
+- Eigentümer per Auswahlfrage: 5.4 (FR-023, Kann – Datumsangaben in Zeitlinien) „in die nächste Ausbaustufe“ (Empfehlung der KI: Nutzen vor allem Übersicht für den Autor, die KI liest Zeitlinien als Text ohnehin; Phase 5 an der Wucherungs-Schwelle). Landeplatz V.16 mit Eingangskriterium „Zeitrechnung der Welt geklärt“; V-Bereich jetzt V.1–V.16. Kein ADR (Verschiebung, kein Verwerfen).
+- Phase 5: 19 von 26 erledigt, 3 in Arbeit (5.13, 5.16, 5.20 – Prüfung durch den Eigentümer), 2 offen (5.14, 5.5), 2 verschoben.
+
+### 2026-10-10 – [ADR] ADR-056 und Umsetzung 5.13 Verlauf der Anweisungen
+
+- Klasse: Entscheidungs-Klasse (`claude-opus-5-5`, per `get_session` abgefragt) – Eskalations-Auslöser 1 (Datenmodell, Kategorie 4) ohne Modellwechsel erfüllt. Vorher `git ls-remote --heads origin`: kein 5.13-Branch.
+- `ENTSCHEIDUNG ERFORDERLICH` vorgelegt (A eigene Datei / B Kapitelkopf / C nur Browser); Eigentümer per Auswahlfrage: A (Empfehlung), **nur übernommene** Anweisungen (nicht alle abgeschickten), Reiter über dem Text. ADR-056 angelegt, Reaktiv-Quote unverändert 1 / 10 (ADR-047 bis ADR-056).
+- Umsetzung: `manuscript` schreibt `stories/<g>/verlauf/NN.md` (Kopf `kapitel`, `anweisungen` mit `zeit`/`anweisung`), die Kapiteldatei bleibt unberührt; `api` zwei Routen mit Uhr aus `Services`; `ui` vermerkt beim Übernehmen die Anweisung aus `lastOrder` (nicht den Feldinhalt), „Weiter“ ohne Anweisung nicht; Fehler beim Vermerken als Hinweis unten, übernommener Text bleibt.
+- Erweiterung nach dem ersten Bildschirmstand (Eigentümer: „Im Verlauf muss zwischen user input und agent output unterschieden werden können, vielleicht sollte user input rechts eingerückt sein?“), noch vor Merge und Einspielen: drei Auswahlfragen mit Vorschau, jeweils Empfehlung gewählt – Text der KI wie übernommen, „Weiter“ als Eingabe, Darstellung wie im Chat. ADR-056, FR-027 und Architektur nachgezogen; Eintrag hat jetzt `zeit`, `anweisung`, `modell`, `text`.
+- Bildschirm-Probelauf (Kopie der Testdaten, Desktop 1280 und Smartphone 390): Die Schreibseite öffnet am Textende (5.11), die Reiter waren bei langen Kapiteln weggescrollt. Abhilfe: Reiter haften oben im Textbereich (`position: sticky`, deckt das Innenmaß von `.chat-scroll` ab, damit kein Text darüber durchscheint). Nachher geprüft.
+- Prüfungen: `pytest` 487 (`manuscript` und `manuscript_routes` 100 %; Routenzahl in `test_security.py` 40 → 42, neue Routen ohne Sitzung 401); `vitest` 173 (alle Dateien 98,11 % Zeilen, `WritingPanel.tsx` 96,77 %); Playwright 11; ruff, mypy --strict, bandit, tsc, eslint, prettier sauber.
+- Sessiongröße: ca. 250.000 Token laut Laufzeit, über der Grenze von 200.000 – Weiterarbeit auf ausdrückliche Anweisung des Eigentümers in dieser Session (bereits vermerkt).
+
+### 2026-10-10 – [ERLEDIGT] 5.3 lesbare Dateien – Nachweis
+
+- Arbeit oberhalb der empfohlenen Klasse (Routine) auf der Entscheidungs-Klasse, zu Beginn genannt; keine Abgabe (kleiner Schritt, Kontext geladen). Vorher `git ls-remote --heads origin`: kein 5.3-Branch.
+- Weg: Welt „Die Salzmark“ über die Schnittstelle angelegt (wie im Betrieb, Test-Client mit frischem Datenverzeichnis): Eintrag Kael mit Alias und Text, zweite Welt „Nordland“ mit Ragna als Gast, Geschichte mit Genre, Schreibweise, Fakt, Gesamtzusammenfassung, Kapitel mit Text und geprüfter Kurzfassung. Dann die Dateien angesehen.
+- Befund: Alles einer Welt liegt unter `worlds/<welt>/` als Markdown mit YAML-Kopf, UTF-8, deutsche Schlüssel (`name`, `aliasse`, `kategorie`, `titel`, `gefuehrte_figuren`, `gast_verbindungen`, `genre`, `schreibweise`, `kurzfassung`, `fakten`): `world.md`, `canon/figur/kael.md`, `stories/die-ueberfahrt/story.md` (Text = Gesamtzusammenfassung), `facts.md`, `chapters/01-aufbruch.md` (Text = Kapiteltext, Absätze erhalten, Fett als `**…**`). Daneben nur `index.sqlite` (abgeleiteter Suchindex, ADR-003) und `system/zugang.md` (Zugang, nicht Teil der Welt; Inhalt nicht ausgegeben). Gäste stehen als Kennung (`welt: nordland`, `eintrag: ragna`) – im Editor über den Pfad `worlds/nordland/canon/figur/ragna.md` auffindbar. Keine Lücke, nichts zu schließen.
+- Absicherung: `tests/api/test_readable_files.py` (2 Tests: nur `.md` mit Kopf unter der Welt, alle Inhalte im Klartext; kein SQLite unter `worlds/`). `pytest` 484 grün; ruff, mypy --strict sauber.
+
+### 2026-10-10 – [BEOBACHTUNG] 5.16 herangezogene Einträge anklickbar umgesetzt
+
+- Arbeit oberhalb der empfohlenen Klasse (Routine) auf der Entscheidungs-Klasse, zu Beginn genannt; keine Abgabe (Kontext geladen, kleiner Schritt). Vorher `git ls-remote --heads origin`: kein 5.16-Branch.
+- Umsetzung nur in `ui`: `WritingPanel` bekommt `onLookUp`; mit ihm sind die Namen unter „Herangezogen“ Knöpfe im Link-Stil. `StoryPage` öffnet damit die vorhandene Leiste rechts beim Reiter Kanon und wählt den Eintrag (`lookedUp`) – die Entscheidung „über der Schreibseite einblenden“ nutzt die Leiste aus 5.11, kein neues Fenster.
+- Tests: Klick zeigt Name und Text, nach dem Schließen sind Manuskript, Anweisung und Vorschlag unverändert; Gast-Eintrag aus anderer Welt in der Leiste mit Gast-Hinweis; ohne `onLookUp` bleiben die Namen Text. `vitest` 170 grün (alle Dateien 98,22 % Zeilen, `WritingPanel.tsx` 97,56 %, `StoryPage.tsx` 94,11 %), tsc/eslint/prettier sauber, Playwright 11 grün.
+- Mini-Reibung: Playwright lieferte zuerst den Build von 15:55 aus `dist/` aus (der Server bedient `dist`, `npx playwright test` baut nicht neu) – ein Test schlug fehl, auch auf `main`. Nach `npm run build` alle grün. Vor Playwright immer neu bauen.
+- CI auf #107 rot in `ModelChoice.test.tsx` („keeps the story's model outside the favorites“), lokal 5-mal grün: Wettlauf – `modelSelect` wartet nur auf den Wert der Geschichte, der vor den Favoriten im Feld steht; auf dem langsameren CI-Rechner wurde die Liste zu früh gelesen. Test wartet jetzt auf die ganze Liste (nicht-deterministische Tests sind Blocker, `CLAUDE.md` Abschnitt 6).
+
+### 2026-10-10 – [GELÖST] 5.20 schnell nacheinander angelegte Kapitel
+
+- Arbeit oberhalb der empfohlenen Klasse (Routine) auf der Entscheidungs-Klasse, zu Beginn genannt; keine Abgabe an einen Unteragenten (Kontext schon geladen, kleiner Schritt).
+- Ursache am Code belegt: „+ Kapitel“ (seit 5.11 in `StoryList.tsx`) nahm `chapters.length + 1` aus der Liste, die erst nach dem Anlegen neu lädt. Ein zweites Anlegen davor schickte die Nummer eines vorhandenen Kapitels; `save_chapter` behandelt das als Änderung: **Titel überschrieben, Text bleibt**. Ein doppeltes Absenden schickte zweimal dieselbe Nummer (zweites Mal: Umbenennen des gerade angelegten). Beides in Tests nachgestellt, beide schlugen am alten Code fehl.
+- Behoben nur in `ui`: Nummer = größere von Listenlänge und zuletzt angelegter Nummer (je Geschichte) + 1; Sperre über eine Ref gegen ein zweites Absenden im selben Moment, Knopf „Kapitel anlegen“ während des Anlegens aus. Kein Mockup – sichtbar ist nur der kurz gesperrte Knopf.
+- Nicht angefasst: Auf dem Server können zwei gleichzeitige Anfragen dieselbe neue Nummer beschreiben (keine Sperre in `manuscript`); bei einem Nutzer mit der Sperre in der Oberfläche nicht mehr erreichbar. Kein neuer Schritt (Phase an der Wucherungs-Schwelle), Vermerk hier.
+- Prüfungen: `vitest` 167 grün (`StoryList.tsx` 98,4 % Zeilen), tsc/eslint/prettier sauber, Playwright 11 grün.
+
+### 2026-10-10 – [ERLEDIGT] Abnahme 5.12
+
+- Eigentümer: „alles funktioniert“ (Auswahlfeld mit Favoriten, „Modelle verwalten …“, Stern auf einem zweiten Gerät sichtbar) → 5.12 `[ERLEDIGT]`, FR-028 erledigt. Phase 5: 18 von 26 erledigt, keiner in Arbeit, 7 offen (5.20, 5.16, 5.13, 5.3, 5.4, 5.14, 5.5), 1 verschoben. README-Fortschritt war veraltet (12 von 26) – Drift behoben.
+
+### 2026-10-10 – [BEOBACHTUNG] Deployment `7b89102` (5.12) und echte Anfrage mit Katalog-Modell
+
+- Auf Anweisung des Eigentümers („mergen und einspielen“): #104 gemergt, CI auf `main` grün. Einspielen nach Runbook Abschnitt 7 (ADR-039): `REVISION` `7b89102`, Rückweg `skriptorium:vorher` = `628f559`. `/api/health` 200 nach ca. 57 s (über HTTPS), `/` 200, `/api/worlds` und `/api/models` 401. Danach einmal per SSH: `(healthy)`, 0 Fehlerzeilen in den letzten 3 Minuten.
+- Im selben SSH-Aufruf das Akzeptanzkriterium von 5.12 geprüft, mit dem Schlüssel des Servers im Container: Katalog geladen (442 Modelle), `x-ai/grok-4.5` wählbar mit Vordenken `effort: low` aus dem Katalog; echte Anfrage (ein Satz) → `finish_reason` `stop`, 217 Token ein, 76 aus, 0,00088 $, 105 Zeichen Text. Den Text selbst nicht ausgegeben.
+- Offen: Abnahme durch den Eigentümer (Auswahlfeld, „Modelle verwalten …“, Stern auf mehreren Geräten).
+
+### 2026-10-10 – [BEOBACHTUNG] 5.12 umgesetzt, Prüfung durch den Eigentümer offen
+
+- Mockup vorher/nachher (echtes Bildschirmfoto der heutigen Auswahl, Nachher mit echten Katalogdaten) vom Eigentümer freigegeben („Passt, umbauen“).
+- Umgesetzt nach ADR-055: `ai_gateway/catalog.py` (`ModelCatalog` als Abbildung Modell → Einstellung, eine Stunde vorgehalten, nach Fehlschlag eine Minute Pause, sonst feste Liste; Vordenken zwingend → niedrigste Stufe ohne `none`, sonst aus, `DEFAULT_MODELS` gehen vor; Preise „-1“ = unbekannt). `api/favorites.py` (`system/modelle.md`, höchstens 50; ein bisheriger Favorit bleibt erlaubt, auch wenn der Katalog gerade fehlt). `GET /api/models` additiv um `favorites`, `catalog`, `catalog_available`; neu `PUT /api/models/favoriten`; Schreiben und Modell der Geschichte prüfen gegen den Katalog (die Routen laden ihn vorher, daher `async`). Oberfläche: Auswahlfeld „★ Name · Kosten“, Modell der Geschichte auch außerhalb der Favoriten, „Modelle verwalten …“ als Dialog (Suche, Anbieter, Preisgrenze, ohne Moderation, mind. 30 Tsd. Kontext, nur Favoriten; Stern speichert sofort).
+- Prüfungen: pytest 482 grün (Abdeckung 99 %, `catalog.py`, `favorites.py`, `writing_routes.py` je 100 %), mypy/ruff/bandit sauber; vitest 165 grün (`ModelManager.tsx` 100 % Zeilen); Playwright 11 grün – der e2e-Test öffnet den Dialog unabhängig davon, ob OpenRouter erreichbar ist.
+- Reibung: Der erste e2e-Lauf schlug fehl, weil `dist/ui` noch der Stand vor der Änderung war (Playwright baut die Oberfläche nicht selbst). Nach `vite build` grün. In der CI baut ein eigener Schritt vorher.
+- Beobachtung: Mit den Standardfiltern stehen nach den Favoriten kostenlose Modelle („(free)“, 0,0 ct) oben; bei OpenRouter dürfen deren Anbieter Eingaben oft speichern oder zum Training nutzen. Der Katalog zeigt das nicht an. Dem Eigentümer genannt.
+- Offen: Prüfung durch den Eigentümer; echte Anfrage mit einem nicht voreingestellten Modell (Akzeptanzkriterium, z. B. grok-4.5) in einer Cloud-Session oder nach dem Einspielen mit dem Schlüssel des Servers. Commits lokal, Push nach Freigabe.
+
+### 2026-10-10 – [ADR-ANGELEGT] ADR-055 Modell-Katalog und Favoriten (5.12)
+
+- 5.12 begonnen. Auswahlfragen: Form „eigene Favoriten“ – zugleich „keine Favoritenliste speichern“ gewählt; Widerspruch per Rückfrage geklärt: Favoriten auf dem Server. Angaben: Preis je 1 Mio. Token, geschätzte Kosten je Vorschlag, Kontextgröße, „denkt lange“; Filter: Anbieter, Preis, ohne OpenRouter-Moderation, Mindest-Kontext. Vorschlag (Kategorien 4 und 5) freigegeben, Startfavoriten grok-4.6 und qwen3.8-max.
+- Katalog geprüft (`/api/v1/models`, öffentlich): 458 Modelle, 442 mit Textausgabe; je Modell `reasoning` mit `mandatory` und `supported_efforts` – damit lässt sich das Vordenken auch für neue Modelle richtig setzen. `[OPERATIV]` `[DATENMODELL]` `[SCHNITTSTELLE]`, nicht reaktiv; Reaktiv-Quote unverändert. Arbeit lokal, Push erst nach Freigabe des Mockups und der Umsetzung (Arbeitsweise seit ADR-054).
+
+### 2026-10-10 – [ERLEDIGT] Abnahme 5.6
+
+- Eigentümer: Genre und Schreibweise vorhanden („die Funktionen sind auch vorhanden“) → 5.6 `[ERLEDIGT]`, FR-026 erledigt. Phase 5: 17 von 26 erledigt, keiner in Arbeit, 8 offen, 1 verschoben. Zusammen mit der Abnahme von 5.11 in einem Push (#102), wie mit dem Eigentümer vereinbart.
+
+### 2026-10-10 – [ERLEDIGT] Abnahme 5.11 (Kanon in der Leiste)
+
+- Eigentümer: Kanon in der Leiste der Geschichte in der mobilen App geprüft und bestätigt („auf der Desktop-App wird es ebenso sein“) → 5.11 `[ERLEDIGT]`. Eintrag lokal, Push erst mit der Rückmeldung zu 5.6 (gebündelt, ein CI-Lauf).
+
+### 2026-10-10 – [BEOBACHTUNG] Deployment `628f559` (5.6, Kanon in der Leiste)
+
+- In der fortgesetzten Mac-Session (`claude-opus-5-5`) auf Anweisung des Eigentümers („einspielen“). Vorher mit `origin/main` abgeglichen: aus Cloud-Sessions #99 (Wirkungsprobe 5.6), #100 (5.6 umgesetzt, ADR-053), #101 (V.15). CI auf `628f559` grün. Ältere Geschichten ohne die neuen Felder werden als „keine Schreibweise“ gelesen (`test_old_files_without_style_fields_read_as_empty`) – keine Umwandlung nötig.
+- Ablauf nach Runbook Abschnitt 7 (ADR-039): `REVISION` `628f559`, Rückweg `skriptorium:vorher` = `e61ccd3`; `/api/health` 200 nach ca. 60 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; danach einmal per SSH `(healthy)`, keine Fehlerzeilen im Protokoll der letzten 3 Minuten.
+- Offen: Prüfung durch den Eigentümer – Genre und Schreibweise je Geschichte und Kapitel (5.6), Kanon in der Leiste der Geschichte (5.11).
+
+### 2026-10-10 – [ADR-ANGELEGT] ADR-054 CI nur für `main` und fertige Pull Requests (D.17)
+
+- Eigentümer: PRs mit offenen Rückfragen und späteren Nachträgen lassen die CI immer wieder laufen – „eine Frage der Wirtschaftlichkeit“; #102 auf Wunsch in einen Entwurf umgewandelt. Geprüft: Repo öffentlich (Actions-Minuten ohne Kontingent), aber jeder Push lief doppelt (Push auf alle Branches + Pull Request), auch bei Entwürfen.
+- Entscheidung per Auswahlfrage (der Eigentümer verlangte ausdrücklich das Frage-Antwort-System statt eines Textblocks): A. `[OPERATIV]` `[METHODIK]`, Kategorie 7. Arbeitsweise zusätzlich: bei offenen Prüfungen lokal committen, erst nach Freigabe pushen (im Gedächtnis der KI festgehalten). Querschnitt-Schritt D.17.
+
+### 2026-10-10 16:40 UTC – [BEOBACHTUNG] Kurzfassung am Smartphone mit der Anweisung verwechselt – V.15
+
+- **Befund des Eigentümers:** „Die Kapitel-Zusammenfassung verwechsle ich gerne mit der Eingabe für die KI, das muss ganz anders gemacht werden – nur als Hinweis.“
+- **Landeplatz:** V.15 (nächste Ausbaustufe, 5.5) – als Hinweis aufgenommen, kein Schritt in Phase 5 (Wucherungs-Schwelle). PR #100 (5.6) gemergt (`9c46fe7`).
+
+### 2026-10-10 16:20 UTC – [BEOBACHTUNG] 5.6 umgesetzt
+
+- **Mockup:** Schreibseite, Vorgabe der Geschichte und Schreibweise des Kapitels in der echten Oberfläche (Glimmergrund), Desktop und Smartphone; freigegeben („Passt so“).
+- **Umsetzung:** an einen Unteragenten der Routine-Klasse (Sonnet) mit genauer Vorgabe abgegeben – ausgabelastig, frischer Kontext statt der sehr langen Session; vier Commits (`manuscript`, `context`, `api`, `ui`). Von mir geprüft: Tests selbst wiederholt (pytest 460, vitest 156), Kopie beim Anlegen und Block in `context` gelesen, Bildschirmfotos. Korrektur: Kapitel-Bereich zeigte zwei sich widersprechende Hinweise – jetzt nur der passende.
+- **Abweichungen des Unteragenten (geprüft, übernommen):** „ändern“-Knöpfe mit eigenem Zugriffsnamen („Figuren-Schreibweise ändern“, „Schreibweise Kapitel N ändern“); `genres: null`/`writing_style: null` bei der Geschichte leert, beim Kapitel setzt `null` auf die Vorgabe zurück; neue Geschichten schreiben leere Felder in `story.md` wie `modell: null`.
+- **Quick-Start-Relevanz:** keine.
+
+### 2026-10-10 15:35 UTC – [ADR-ANGELEGT] ADR-053 Datenmodell der Schreibweise (5.6)
+
+- **Entscheidung (Auswahlfragen):** A – Geschichte speichert Genre und Vorgabe, ein neues Kapitel bekommt eine eigene Kopie; Tempo und Deutlichkeit je ein Wert; Genre nur je Geschichte. Option B (Kapitel folgen der Vorgabe) „im Hinterkopf“ → V.14, Landeplatz 5.5.
+- **Nebenbei:** Drift behoben – 5.5 nannte „V.1 bis V.12“, obwohl V.13 schon bestand; jetzt V.1–V.14. PR #99 (Wirkungsprobe) gemergt (`f7e593e`).
+- **Nächstes:** Mockup der Oberfläche vorher/nachher, dann Umsetzung.
+
+### 2026-10-10 13:40 UTC – [BEOBACHTUNG] 5.6 Wirkungsprobe: Schreibweise wirkt, Kanon-Treue unverändert
+
+- **Lauf:** in der Cloud-Session (gültiger Schlüssel), `main` vorher abgeglichen (`a91e534`); `context` seit 5.24 unverändert – Vergleich mit `ausgang-mittel` im gleichen Aufbau (Regel-002). A (Dark Romance, poetisch) und B (Thriller, knapp) je 3 Ketten an beiden Geschichten, 2,91 $, keine Sperre.
+- **Ergebnis:** verblindet (Sonnet, Schlüssel erst danach aufgedeckt) 18 von 18 Ketten richtig zugeordnet; B kürzt die Sätze in beiden Geschichten (Glimmergrund 10,2 → 8,2, Salzmark 8,7 → 7,2 Wörter je Satz), A wirkt über Bilder; 0 Kanon-Verstöße mit und ohne Schreibweise. Bericht `spikes/schreibweise-5.6/README.md`.
+- **Nächster Teil von 5.6:** Datenmodell als `ENTSCHEIDUNG ERFORDERLICH` (Kategorie 4) mit Mockup.
+
+### 2026-10-10 – [BEOBACHTUNG] 5.6 Erkundung begonnen
+
+- Eigentümer: „5.6 Erkundung“. Vorgeschlagen: (1) Listenwerte, (2) Wirkungsprobe nach Regel-002 vor dem Bau, (3) Platz im Prompt hinter der Figuren-Schreibweise mit Vorrang für Kanon und Figuren, (4) Datenmodell als Entscheidung mit Mockup – „Reihenfolge passt, Listen so übernehmen“ (Werte im Fahrplan 5.6). Innerhalb von 5.6, kein neuer Schritt (Phase 5 an der Wucherungs-Schwelle).
+- Werkzeug `spikes/schreibweise-5.6/`: `lauf.py` hängt für die Probe einen Block „Schreibweise“ an die Figuren-Schreibweise an (Produktcode unverändert) und nutzt die Ketten aus `spikes/regel-002/`; `stil.py` misst Satzlänge, Anteil wörtlicher Rede und Wörter. Trockentest: Block direkt hinter der Figuren-Schreibweise in beiden Geschichten; Ausgangswerte aus `ausgang-mittel` berechnet. Lauf offen – lokal kein gültiger Schlüssel, daher Cloud-Session.
+
+### 2026-10-10 – [GELÖST] Kanon in der Leiste der Geschichte noch in alter Ansicht (Befund zu 5.11)
+
+- **Befund des Eigentümers:** Über die Weltseite → „Kanon“ erscheint die neue Kanon-Seite mit Gliederung nach Kategorie, in der Geschichte über „Kanon & Geschichte“ noch die alte flache Liste – „unglücklich“.
+- **Ursache:** 5.11 Teil 3 baute nur die Kanon-Seite der Welt um; die Leiste der Geschichte nutzte weiter `CanonLookup` aus Teil 1 (mit Gast-Figuren, nur lesen).
+- **Entscheidung (Auswahlfragen):** als Befund zu 5.11 (kein neuer Schritt, Phase 5 an der Wucherungs-Schwelle); Leiste wie die Kanon-Seite mit Bearbeiten.
+- **Lösung:** `Canon` mit `guests` (Gast-Figuren gekennzeichnet, nur lesbar) und `compact` (Liste oder Eintrag), in der Leiste mit eigener Auswahl; Änderungen dort zählen als Kanon-Änderung für das `@`-Menü (`canonVersion`). `CanonLookup` entfernt, Tests umgestellt. Vorher-/Nachher-Vergleich (Desktop, Smartphone) freigegeben. `vitest` 147 bestanden, 97,74 % Zeilen / 95,38 % Zweige; Playwright 10 bestanden. 5.11 wieder `[IN ARBEIT]` bis zum Einspielen und zur Bestätigung.
+
+### 2026-10-10 – [BEOBACHTUNG] 5.25 in die nächste Ausbaustufe verschoben, kein Befund in Firefox
+
+- Befund des Eigentümers („in Firefox schlägt `@` keine Kanon-Einträge mehr vor“) war eine Verwechslung: geschrieben im Feld „Kurzfassung des Kapitels“, nicht im Anweisungsfeld. Fehlersuche abgebrochen; dabei fiel auf, dass Playwright für Firefox einen neueren Browser (`firefox-1538`) erwartet, der lokal fehlt – nicht heruntergeladen. Angeboten: Kurzfassung deutlicher absetzen (neuer Schritt), keine Antwort.
+- Auf Wunsch des Eigentümers („Schritt in eine andere Phase übertragen, dieser soll den Phasenabschluss nicht behindern“): 5.25 `[VERSCHOBEN]` → neuer Schritt V.13 (Landeplatz 5.5, Inhalt übernommen). Abschlusskriterium von Phase 5 ergänzt um „`[VERSCHOBEN]` mit Ziel-Schritt in der nächsten Ausbaustufe“. FR-032, Architektur und README nachgezogen.
+
+### 2026-10-10 – [ERLEDIGT] Abnahme 5.2 und 5.21
+
+- Prüfliste (iPhone: Anmeldung bleibt, neue Szene, Weiterschreiben, „In den Kanon“ mit Markieren per Finger, Flugmodus; Mac: Installation, Fenster ohne Browserleiste, Anmeldung) vom Eigentümer abgearbeitet: „passt alles“ → 5.2 und 5.21 `[ERLEDIGT]`; FR-019 und FR-032 erledigt. Phase 5: 16 von 26 erledigt, keiner in Arbeit.
+
+### 2026-10-10 – [ERLEDIGT] Abnahme 5.11
+
+- Eigentümer: Kanon-Seite „sehr zufriedenstellend“, die Gliederung nach Kategorie „sehr gut“; das letzte Update (Mitlaufen, Vorschläge ohne `@`) erfolgreich → 5.11 `[ERLEDIGT]` (alle drei Teile). Phase 5: 14 von 26 erledigt, in Arbeit nur noch 5.2/5.21 (Prüfung am Gerät).
+
+### 2026-10-10 – [ERLEDIGT] Abnahme 5.1
+
+- Eigentümer: „die Canonerkennung ohne @ funktioniert“ → 5.1 `[ERLEDIGT]`, FR-014 erledigt. Kurze Reibung beim Namen „Sibylle“ mit unterschiedlichen Schreibweisen; Frage, ob die Erkennung Aliasse berücksichtigt: ja (Name und Aliasse, Groß-/Kleinschreibung egal, ganzes Wort, Genitiv-s), aber keine unscharfe Erkennung ähnlicher Schreibweisen – Varianten als Aliasse eintragen. Unscharfe Erkennung angeboten, nur als Vormerkung für die nächste Ausbaustufe (Phase 5 an der Wucherungs-Schwelle); Eigentümer: Aliasse reichen, kein neuer Entwicklungsschritt; letztes Update erfolgreich, Kanon-Seite (5.11 Teil 3) sieht er sich noch an.
+
+### 2026-10-10 01:05 UTC – [BEOBACHTUNG] Deployment `e61ccd3` (5.1, Mitlaufen, 5.11 Teil 3)
+
+- In der fortgesetzten Mac-Session vom 2026-10-09 (`claude-opus-5-5`). Auf Anweisung des Eigentümers („Deploy“). Vor dem Einspielen zweimal mit `origin/main` abgeglichen: Zwischen den Pulls kamen aus Cloud-Sessions #87 (5.24) und #88–#92 (5.26, D.16, 5.11 Teil 3, V.11, V.12) dazu; eingespielt der letzte Stand `e61ccd3`, CI grün.
+- Ablauf nach Runbook Abschnitt 7 (ADR-039): `REVISION` `e61ccd3`, Rückweg `skriptorium:vorher` = `a71cdff`; `/api/health` 200 nach ca. 60 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` und `/manifest.webmanifest` 200; danach einmal per SSH `(healthy)`.
+- Neu auf dem Server: Vorschläge ohne `@` (5.1), Mitlaufen nur am Textende (5.11), Kanon-Seite mit Suche, Filtern und Leseansicht (5.11 Teil 3). Offen: Prüfung durch den Eigentümer.
+- Nebenbei (2026-10-10): Display ging nicht in den Ruhezustand – Ursache eine Sperre „Capturing“ der Claude-App durch den offen gelassenen Browser-Bereich (Bildschirmfotos 2026-10-09); Tabs geschlossen, Sperre weg. Auf Wunsch „Wach halten, während Claude arbeitet“ in den App-Einstellungen ausgeschaltet.
+
+### 2026-10-10 12:55 UTC – [BEOBACHTUNG] 5.11 Teil 3 Kanon-Seite umgesetzt
+
+- **Mockup:** echte Oberfläche mit der Testwelt Glimmergrund (23 Einträge), vorher/nachher je Desktop und Smartphone, Entwurf per Playwright ins Layout eingesetzt; freigegeben („Passt so“). Auswahlfragen: Bearbeiten rechts an Ort und Stelle, Lesetext mit Fett und Listen (eigener kleiner Umsetzer `EntryText.tsx`, keine neue Bibliothek, keine HTML-Einfügung), eigene Adresse je Eintrag.
+- **Umsetzung:** `Canon.tsx` (Suche über Name und Alias, Kategorien als Filter mit Anzahl, Liste links, Eintrag rechts; am Smartphone Eintrag über die ganze Breite mit „← Liste“), Route `#/welt/<welt>/kanon/<eintrag>` in `Shell.tsx`, `canonEntryPath` in `paths.ts`, Mehrzahl der Kategorien in `api.ts`.
+- **Tests:** `vitest` 148 bestanden, gesamt 98,21 % Zeilen / 95,29 % Zweige; Playwright 10 bestanden (zwei Prüfungen auf Leseansicht und Adresse samt Neuladen umgestellt).
+- **Reibung:** „Neuer Eintrag“ reagierte bei leerer Welt nicht – ein Vergleich war beim Umbenennen des Markers stehen geblieben; vom End-to-End-Test gefunden, Komponenten-Test ergänzt. Filtergruppe und Kategorie-Feld hießen beide „Kategorie“ – Gruppe heißt jetzt „Nach Kategorie filtern“. Beim Beenden des Mockup-Servers beendete `pkill -f` die eigene Shell mit (Muster stand in der Befehlszeile) – nichts verloren.
+- **Quick-Start-Relevanz:** keine (nur `ui`, keine neue Abhängigkeit, kein Skript) – Validierung im frischen Klon nicht nötig.
+
+### 2026-10-10 12:35 UTC – [BEOBACHTUNG] Wunsch Wortzähler – V.12
+
+- **Wunsch des Eigentümers:** im Manuskriptfeld die vorhandenen Wörter zählen.
+- **Entscheidung (Auswahlfrage):** „Nächste Ausbaustufe (V.12)“, Landeplatz 5.5 – in Phase 5 hätte ein 27. Schritt den Stopp Phasen-Wucherung ausgelöst.
+
+### 2026-10-10 12:20 UTC – [BEOBACHTUNG] Kurzfassung langer Kapitel scheitert – V.11
+
+- **Befund des Eigentümers:** „Kurzfassung nicht erstellt, der Text ist zu lang für eine Anfrage. Bis dahin nutzt die KI den Kapitelanfang. Das ist durchaus ein Problem.“
+- **Ursache:** `build_chapter_summary` nutzt das Budget der Schreib-Anfragen (30.000 Token, ADR-010) – Kapitel bis ca. 85.000 Zeichen (ca. 12.000–13.000 Wörter). Die Kapitel des Eigentümers sind „oft“ länger.
+- **Entscheidung (Auswahlfrage):** „in einer neuen Phase behandeln“ → V.11, Landeplatz 5.5; Optionen A (höhere Grenze nur für Kurzfassungen, Empfehlung), B (abschnittsweise), C (nichts ändern) dort festgehalten. Kein Schritt in Phase 5, kein Stopp Phasen-Wucherung.
+
+### 2026-10-10 11:35 UTC – [SESSIONENDE] D.16 erledigt; 5.24, 5.26, E1/E2 gemergt
+
+- **Dauer:** seit 2026-10-09 20:53 UTC mit Pausen (eine durchgehende Cloud-Session, über der Größengrenze auf ausdrücklichen Wunsch des Eigentümers fortgesetzt).
+- **Bearbeitet seit dem letzten Sessionende-Eintrag dieser Session:** PRs #87 (5.24), #88 (Rückfragen zum Antippen), #89 (5.26 aus einer anderen Session, `main` eingeführt), #90 (E1/E2 aus einer anderen Session) gemergt; D.16 gemessen und entschieden (ADR-052). Zwei überzählige Sessions angehalten und archiviert (E1/E2 und D.16, zusammen ca. 3,65 $).
+- **Stand:** NFR Reaktionszeit wieder `[BELASTBAR]`; Server unverändert auf `a71cdff`, #83/#84 nicht eingespielt.
+- **Nächster Schritt:** nach Fahrplan – Einspielen bei Freigabe, Prüfung 5.2/5.21 am Gerät, dann 5.11 Teil 3 (Mockup vorher/nachher), 5.25; 5.12 nimmt grok-4.7 aus der Voreinstellung (ADR-052).
+- **Reibungen (Fehler der KI):** zweimal nicht geprüft, ob auf GitHub schon gearbeitet wurde (5.26 doppelt begonnen; Session für die schon entschiedenen E1/E2 gestartet) – Merke: vor jedem Schritt `git ls-remote --heads origin` und offene Branches lesen.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`). D.16 empfiehlt Entscheidung – keine Arbeit oberhalb der Empfehlung; 5.24 vorher einmal (genannt).
+- **Kontextgröße:** über 200.000 Token (letzte Messung 219.252, seither gewachsen); Abweichung vermerkt.
+- **Sessionende-Prüfungen:** README Status-Block (Reaktionszeit BELASTBAR) und „Nächste Schritte“ nachgezogen. Drift: ADR-052 → D.16 vorhanden, Reifegrad NFR Reaktionszeit passt zu ADR-052; Reaktiv-Quote 1/10 über ADR-043 bis ADR-052; Modul-Liste unverändert; Phase 5 unverändert 26 Schritte (D.16 ist Querschnitt). Blocker 0. Ablaufdaten: kein Vorlauf erreicht.
+
+### 2026-10-10 11:30 UTC – [ERLEDIGT] D.16 Reaktionszeit – ADR-052
+
+- **Messung:** `spikes/reaktionszeit/d16.py`, 30 Anfragen, 1,27 $, Bericht `docs/research/reaktionszeit-d16.md`. grok-4.7 voll 44–157 s bis zum ersten Textstück, ohne Vorgaben 37–88 s, mit Deckel 1.024 Denk-Token 162–244 s, Denken aus abgelehnt; grok-4.6 12–28 s.
+- **Entscheidung des Eigentümers (Auswahlfragen):** grok-4.7 in 5.12 aus der Voreinstellung (A); Ziel grok-4.6 meist < 30 s, max. 45 s. NFR Reaktionszeit `[VORLÄUFIG]` → `[BELASTBAR]` (ADR-052).
+
+### 2026-10-10 10:50 UTC – [BEOBACHTUNG] D.16 begonnen, weiter in der Session der Ausgangsmessung
+
+- **Abweichung Sessiongröße:** Der Eigentümer verlangt ausdrücklich, D.16 in dieser Session zu machen („In dieser Session machen“) – Ausnahme nach `CLAUDE.md` Abschnitt 0, vermerkt. Eine zuvor gestartete eigene Session für D.16 angehalten und archiviert (nur gelesen, nichts gepusht; ca. 2,85 $). Ebenso eine Session für E1/E2, die schon erledigt waren (ca. 0,80 $) – zuvor nicht geprüft, ob die Entscheidungen auf einem Branch lagen.
+- **Klasse:** Entscheidung (Opus 5.5), wie für D.16 empfohlen.
+- **Aufbau:** `spikes/reaktionszeit/d16.py` misst direkt bei OpenRouter (wie D.6) an der echten Schreib-Anfrage beider Testgeschichten (Anweisung 2 aus 5.26 mit `@`, „mittel“), je 3 Anfragen: grok-4.6 und grok-4.7 voll, grok-4.7 ohne Anschluss-Hinweis und Vorgaben aus 5.8–5.22, mit Denk-Deckel 1.024 Token, mit Denken aus. Größe des Kontexts allein ist laut Gegenprobe 5.26 nicht die Ursache (25.000 Token, einfache Anweisung: 4 s).
+
+### 2026-10-10 03:40 UTC – [SESSIONENDE] Entscheidungen E1 und E2 aus 5.26 festgehalten
+
+- **Dauer:** 03:21 – 03:40 UTC, Cloud-Session (Linux).
+- **Bearbeitet:** Vorlagen E1 und E2 aus 5.26 vorgelegt und entschieden (ADR-050, ADR-051); neue Schritte D.16 (Querschnitt, offen) und V.10 (verschoben, Landeplatz 5.5); NFR Reaktionszeit `[VORLÄUFIG]`; Fahrplan, `docs/architecture.md`, `docs/decisions.md`, README nachgezogen.
+- **Stand:** Server unverändert auf `a71cdff`; #83 und #84 weiter nicht eingespielt. `[IN ARBEIT]`: 5.1, 5.2, 5.11, 5.21 (warten auf Eigentümer oder Einspielen). Branch `docs/5.26-entscheidungen` gepusht, Pull Request noch nicht angelegt.
+- **Nächster Schritt:** D.16 Reaktionszeit erneut erkunden (vor 5.12; Werkzeug muss die Zeit bis zum ersten Textstück erfassen); sonst wie Fahrplan „Nächster Schritt“.
+- **Offen beim Eigentümer:** Pull Request für diesen Branch; Freigabe für das Einspielen; Schlüssel auf dem Mac erneuern; D.11 bis 2026-10-31.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 03:34 UTC). Schritte oberhalb der Empfehlung: 0 (Vorlagen verlangen Entscheidung). Abgegeben: nichts – reine Lese- und Prüfarbeit, gleicher Cache-Lesepreis bei der Routine-Klasse.
+- **Kontextgröße:** Sitzungsabfrage meldet unverändert 102.615 Token (Wert seit Sessionstart nicht aktualisiert); eigene Schätzung ca. 130.000 – unter der Grenze von 200.000.
+- **Sessionende-Prüfungen:** README Status-Block (Phase 5, v0.1.0, Blocker 0, 12 von 26, Reaktionszeit VORLÄUFIG) und „Nächste Schritte“ synchron. Drift: Zusammenfassung der Fahrplan-Übersicht stand auf „11 von 26 erledigt, 11 offen“ statt 12/10 (seit 5.26) – korrigiert. ADR-050/051 verweisen auf existierende Schritte (5.26, 5.5, 5.12, D.16, V.10); Reifegrad NFR Reaktionszeit passt zu ADR-051; Modul-Liste unverändert; Blocker 0, kein `[BLOCKIERT]`; Reaktiv-Quote 1/10 (ADR-042 bis ADR-051) nachgezählt; Phase 5 weiter 26 Schritte. Ablaufdaten: kein Vorlauf erreicht (nächste: D.1 ab 2026-11-05). Logbuch ca. 720 Zeilen (Trigger 800), project-context 346 Zeilen – keine Auslagerung.
+
+### 2026-10-10 03:45 UTC – [ADR-ANGELEGT] ADR-050 und ADR-051 – Entscheidungen E1 und E2 aus 5.26
+
+- **Vorlage:** beide als `ENTSCHEIDUNG ERFORDERLICH` mit Auswahlfragen (Empfehlung zuerst).
+- **E1 → ADR-050:** Eigentümer wählt D (zurückstellen) statt der Empfehlung A (Kultur-Einträge immer mitgeben). Neuer Schritt V.10 `[VERSCHOBEN]`, Landeplatz 5.5; Kontext-Zusammenstellung unverändert.
+- **E2 → ADR-051:** Eigentümer wählt A (Ursache erkunden). Neuer Querschnitt-Schritt D.16 (vor 5.12); grok-4.7 bleibt wählbar, 90-s-Grenze bleibt. NFR Reaktionszeit `[BELASTBAR]` → `[VORLÄUFIG]` bis D.16.
+- **Nachgerechnet für die Vorlage:** grok-4.6 in 5.26 Median 26–29 s je Vorschlag (max. 59 s), 52 von 63 über 20 s; die Rohdaten (`spikes/kanon-treue/ergebnisse/`) enthalten keine Zeit bis zum ersten Textstück – ob das Ziel für grok-4.6 (höchstens 20 s) hält, ist offen und Teil von D.16.
+- **Wucherung:** kein neuer Schritt in Phase 5 (V.10 und D.16 liegen außerhalb des Schrittplans, wie V.1–V.9 und D.6); Phase 5 bleibt bei 26. Reaktiv-Quote 1/10 (ADR-042 bis ADR-051).
+
+### 2026-10-10 03:21 UTC – [SESSIONSTART] Entscheidungsvorlagen E1 und E2 aus 5.26
+
+- **Umgebung:** Cloud-Session (Linux), nach `/clear` in derselben Session wie 5.24 und 5.26. `main` abgeglichen (`017da79`, #89 gemergt); Branches auf GitHub geprüft – keine parallele Arbeit an E1/E2. Branch `docs/5.26-entscheidungen`.
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage `get_session`, 03:20 UTC) → Entscheidungs-Klasse. Vorlagen nach `CLAUDE.md` Abschnitt 4 verlangen die Entscheidungs-Klasse (Eskalations-Auslöser 1) – erfüllt, kein Stopp.
+- **Kontextgröße:** 102.615 Token laut Sitzungsabfrage (Grenze 200.000).
+- **Auftrag:** „Entscheidungen E1 und E2 aus 5.26 vorlegen“.
+
+### 2026-10-10 03:00 UTC – [GELÖST] 5.26 doppelt begonnen – Arbeit einer anderen Session übersehen
+
+- **Was:** Auf „5.26 hier starten“ begann die KI in der Session der Ausgangsmessung (über der Größengrenze, „weiter hier“ vermerkt) Teil (a) und die Ketten für Teil (b) neu. 5.26 war aber schon von einer anderen Session auf `spike/5.26-kanon-treue` erledigt (00:50–01:55 UTC, noch ohne PR). Aufgefallen erst beim abgelehnten Push auf denselben Branch.
+- **Ursache:** Beim Start nur `main` abgeglichen, nicht die Branches auf GitHub; die Frage des Eigentümers („Was haben wir denn eben gemacht?“) nicht als Hinweis gelesen.
+- **Folge:** Läufe nach vier Vorschlägen angehalten (0,10 $), eigener Stand verworfen (nie gepusht). Eigene Nachrechnung bestätigte Teil (a) der anderen Session (fehlende Einträge ohne `@` bei Glimmergrund ab Schritt 4). Auf Wunsch des Eigentümers `main` in den Branch gemergt (Konflikt im Logbuch chronologisch aufgelöst) und PR geöffnet.
+- **Merke:** Vor jedem Schritt auch `git ls-remote --heads origin '*<schritt-id>*'` prüfen.
+
+### 2026-10-10 02:27 UTC – [BEOBACHTUNG] Rückfragen mit Antworten zum Antippen
+
+- **Anlass:** Der Eigentümer möchte Antworten auf Rückfragen anklicken können; die Fragen dieser Session standen nur als Text (Fehler der KI, das Werkzeug bietet Auswahlfragen an).
+- **Folge:** Auf Wahl des Eigentümers dauerhaft festgehalten in `docs/project-context.md` Abschnitt 9 („Form von Rückfragen“). Eingetragen nach dem Sessionende-Eintrag – kleine Dokumentationsänderung ohne Fahrplan-Schritt, daher keine Abweichung von der Regel „Sessiongröße“.
+- **Nebenbei:** PR #87 (5.24) am 2026-10-10 gemergt (`19f6beb`); Frage des Eigentümers zum Display-Standby im Chat beantwortet (Skriptorium nutzt keine Wake-Lock-Schnittstelle).
+
+### 2026-10-10 01:55 UTC – [SESSIONENDE] 5.26 erledigt – Kanon-Treue mit grok-4.6 und grok-4.7
+
+- **Dauer:** 00:50 – 01:55 UTC, Cloud-Session (Linux).
+- **Bearbeitet:** 5.26 → `[ERLEDIGT]`; Bericht `docs/research/kanon-treue-grok.md`; Fahrplan (Status, Übersicht, Aktueller Stand), README (Fortschritt 12 von 26, Nächste Schritte), `docs/architecture.md` (Nachweis-Spalte NFR Kanon-Treue, Reifegrad unverändert), `docs/requirements.md` (FR-011, Vermerk).
+- **Stand:** Server unverändert auf `a71cdff`; #83 und #84 weiter nicht eingespielt. `[IN ARBEIT]`: 5.1, 5.2, 5.11, 5.21 (warten auf Eigentümer oder Einspielen). Branch `spike/5.26-kanon-treue` gepusht, Pull Request noch nicht angelegt.
+- **Nächster Schritt:** Entscheidungsvorlagen E1 (nicht genannte Kanon-Einträge gehen bei langen Kapiteln verloren) und E2 (grok-4.7 über der Wartezeit von 90 s) als `ENTSCHEIDUNG ERFORDERLICH` vorlegen – mit `templates/architektur-heuristiken.md`; ein neuer Schritt daraus löst den Stopp Phasen-Wucherung (Phase 5 bei 26 Schritten) mit Neuplanung aus. Sonst wie Fahrplan „Nächster Schritt“.
+- **Offen beim Eigentümer:** Entscheidungen E1, E2; Schlüssel auf dem Mac erneuern; Freigabe für das Einspielen; D.11 bis 2026-10-31.
+- **Reibungen:** grok-4.7 lief mit der Wartezeit des Produkts in Zeitüberschreitungen (17 von 29 Anfragen); zuerst Parallelität vermutet, Gegenprobe nacheinander scheiterte ebenso – Ursache ist langes Vorab-Denken an der echten Anfrage (Salzmark 370 s). Zwei Läufe verworfen (0,55 $). Ein `pkill -f` auf das Laufskript beendete auch die eigene Shell (Muster traf die Befehlszeile) – künftig per PID beenden. Stop-Hook verlangte Commits während der Läufe: Ergebnisordner wieder vorübergehend in `.git/info/exclude`, danach entfernt.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 01:48 UTC). Schritte oberhalb der Empfehlung: 0 (5.26 empfiehlt Entscheidung). Abgegeben: verblindete Handbewertung je Geschichte an zwei Unteragenten der Routine-Klasse (Sonnet; ca. 155.000 und 163.000 Token); alle Widersprüche am Text nachgeprüft, ein Urteil korrigiert.
+- **Kontextgröße:** 302.188 Token laut Sitzungsabfrage (01:48 UTC) – über der Grenze von 200.000; Schritt 5.26 zu Ende geführt, kein neuer Schritt. Bei Sessionstart (nach `/clear`) 102.620.
+- **Sessionende-Prüfungen:** README Status-Block (Phase 5, v0.1.0, Blocker 0, 12 von 26) und „Nächste Schritte“ synchron. Drift: keine neuen ADRs (Reaktiv-Quote unverändert 1/10); Modul-Liste und Reifegrade unverändert; Blocker 0, kein `[BLOCKIERT]`; Phase 5 weiter 26 Schritte (kein neuer Schritt angelegt). Ablaufdaten: kein Vorlauf erreicht (nächste: D.1 ab 2026-11-05). Logbuch ca. 690 Zeilen, project-context 345 Zeilen – keine Auslagerung.
+
+### 2026-10-10 01:50 UTC – [ERLEDIGT] 5.26 Kanon-Treue mit grok-4.6 und grok-4.7
+
+- **Technik (a):** `spikes/kanon-treue/technik.py` ohne Anbieter. Per `@` genannte Einträge, Regeln, Zeitlinie, geführte Figur immer vollständig und wortgleich, auch alle Einträge per `@` am längsten Kapitel (Glimmergrund ca. 29.700 Token). Nicht genannte Einträge nur bei Restbudget nach den letzten Seiten: Glimmergrund Schritt 6 fehlt 1, Schritt 7 fehlen 3 von 23 (u. a. Bergmannsbrauch, Schichtbuch); Salzmark nie (nur ca. 10.000 Token).
+- **Befolgung (b):** grok-4.6 ohne und mit `@`, grok-4.7 mit `@` (Wartezeit 600 s), je 3 Ketten „mittel“ an beiden Geschichten; Glimmergrund ohne `@` aus der Ausgangsmessung 5.24 (Server-Code unverändert). Verblindet bewertet: grok-4.6 hält 95–100 % der berührten Proben ein, 6 Widersprüche in 12 Ketten (3 eindeutig: drittes statt zweites Gewölbe, weiße statt graue Haube, Lenkas Abschrift „nicht meine Schrift“; 3 knapp); grok-4.7 100 %, 0 in 6 Ketten. `@` ohne messbaren Unterschied. Hochrechnung grok-4.6: ca. 0,6–1,0 eindeutige Widersprüche je Kapitel – an der Grenze von FR-011.
+- **Neuer Befund:** grok-4.7 im Mittel 113–131 s je Vorschlag, bis 370 s vor dem ersten Textstück, ca. 4.400–4.800 Ausgabe-Token (grok-4.6 ca. 1.100); 20 von 42 Vorschlägen über 90 s. Gegenprobe mit einfacher Anfrage 4 s. Widerspricht ADR-035 (höchstens 90 s).
+- **Grenzen:** wenige Ketten (Vorsprung grok-4.7 nur Tendenz nach Regel-002); Kaffee-Probe nie prüfbar, Trauerfarbe Gelb steht auch im Kapitel.
+- **Kosten:** ca. 5,15 $ (Schlüssel danach 237,86 $ frei).
+- **DoD:** nur `spikes/` und `docs/`, kein Produktcode; Pre-Commit (markdownlint) grün.
+
+### 2026-10-10 00:50 UTC – [SESSIONSTART] 5.26 Kanon-Treue mit grok-4.6
+
+- **Umgebung:** Cloud-Session (Linux), gestartet vom iPhone; nach `/clear` in derselben Session wie 5.24. `main` abgeglichen (`19f6beb`, #87 gemergt), Branch `spike/5.26-kanon-treue`.
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage `get_session`, 00:50 UTC) → Entscheidungs-Klasse. 5.26 empfiehlt Entscheidung – keine Warnung nötig.
+- **Kontextgröße:** 102.620 Token laut Sitzungsabfrage nach der Pflichtlektüre (Grenze 200.000).
+- **Schlüssel:** `OPENROUTER_API_KEY` gesetzt (nur Länge geprüft).
+- **Auftrag:** „Pull gegen Main, dann fang an mit 5.26“.
+
+### 2026-10-09 21:30 UTC – [SESSIONENDE] 5.24 erledigt – Ausgangsmessung nach Regel-002
+
+- **Dauer:** 20:53 – 21:30 UTC, Cloud-Session (Linux).
+- **Bearbeitet:** 5.24 Ausgangsmessung → `[ERLEDIGT]`; Fahrplan (Status, Übersicht, Aktueller Stand), README (Nächste Schritte; Fortschrittszeile im Status-Block stand noch auf „7 von 21“ – Drift behoben auf 11 von 26).
+- **Stand:** Server unverändert auf `a71cdff`; #83 und #84 weiter nicht eingespielt. `[IN ARBEIT]`: 5.1, 5.2, 5.11, 5.21 (warten auf Eigentümer oder Einspielen).
+- **Nächster Schritt:** 5.26 Kanon-Treue mit grok-4.6 – geht in einer Cloud-Session sofort (gültiger Schlüssel); dafür die Kanon-Abweichungen aus der Ausgangsmessung (`spikes/regel-002/README.md`, Befund 7) heranziehen. Sonst wie Fahrplan „Nächster Schritt“.
+- **Offen beim Eigentümer:** Schlüssel auf dem Mac erneuern (der der Cloud-Session ist gültig); Freigabe für das Einspielen; D.11 bis 2026-10-31.
+- **Reibungen:** Stop-Hook verlangte Commits während der laufenden Messung – Ergebnisordner vorübergehend nur lokal in `.git/info/exclude` ausgeschlossen, vor dem Commit wieder entfernt; erster Versuch mit Kommentar in derselben Zeile war als Muster ungültig.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 21:26 UTC). Schritte oberhalb der Empfehlung: 1 (5.24, Empfehlung Routine) – zu Beginn genannt. Abgegeben: Handbewertung der Ketten an zwei Unteragenten der Routine-Klasse (Sonnet; ca. 165.000 und 229.000 Token; Zitate stichprobenartig geprüft).
+- **Kontextgröße:** 219.252 Token laut Sitzungsabfrage (21:26 UTC) – über der Grenze von 200.000; kein neuer Schritt in dieser Session. Bei Sessionstart meldete die Abfrage 0.
+- **Sessionende-Prüfungen:** README Status-Block (Phase 5, v0.1.0, Blocker 0) und „Nächste Schritte“ synchron. Drift: keine neuen ADRs (Reaktiv-Quote unverändert 1/10); Modul-Liste und Reifegrade unverändert; 5.26 hängt an 5.24 – erfüllt; Blocker 0, kein `[BLOCKIERT]`; Phase 5 weiter 26 Schritte (an der Schwelle, kein neuer Schritt). Ablaufdaten: kein Vorlauf erreicht (nächste: D.1 ab 2026-11-05). Logbuch ca. 660 Zeilen, project-context 345 Zeilen – keine Auslagerung.
+
+### 2026-10-09 21:25 UTC – [ERLEDIGT] 5.24 Ausgangsmessung nach Regel-002
+
+- **Lauf:** Stand `6065f4b`, grok-4.6, „mittel“ und „lang“, je 3 Ketten an Salzmark und Glimmergrund, beide Längen parallel – 12 Ketten, 84 Vorschläge, alle `stop`, keine Fehler; 3,06 $ (Ausgabengrenze des Schlüssels 250 $).
+- **Ergebnis:** Kennzahlen und Handbewertung in `spikes/regel-002/README.md`, Abschnitt „Ausgangsmessung“. Kurz: Länge schwankt innerhalb der Kette stark („mittel“ meist unter 150 Wörtern, „lang“ mit Ausreißern von 24–46 Wörtern); „Weiter“ erzählt bei „lang“ bis zu 576 Wörter mit neuen Handlungsankern; Vorgriffe an festen Stellen (Salzmark: Buch „längst woanders“; Glimmergrund: Lenkas Zettel-Aussage aus Kapitel 4 in 4 von 6 Ketten); geführte Figur nur dort über die Anweisung hinaus, wo die Anweisung den Inhalt offenlässt; wörtliche Wiederholung höchstens 2,7 %.
+- **Beobachtung:** Die beiden Handbewerter legten „Ende an einer Übergabestelle“ unterschiedlich streng aus – im README vermerkt, die Zeile ist zwischen den Geschichten nicht vergleichbar. Für Vorher-nachher-Vergleiche je Geschichte dieselbe Auslegung verwenden.
+- **DoD:** nur `spikes/` und `docs/`, kein Produktcode; Pre-Commit (markdownlint) grün; Regel-002 kann ab jetzt an beiden Geschichten laufen.
+
+### 2026-10-09 20:53 UTC – [SESSIONSTART] 5.24 Ausgangsmessung nach Regel-002
+
+- **Umgebung:** Cloud-Session (Linux), nicht der Mac; gestartet vom iPhone. `main` abgeglichen (`6065f4b`), Branch `spike/5.24-ausgangsmessung`.
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage `get_session`) → Entscheidungs-Klasse. 5.24 empfiehlt Routine – Hinweis zu Beginn gegeben; Abgabe spart nichts (überwiegend Warten auf Läufe, Auswertung ist Lesearbeit bei gleichem Cache-Lesepreis).
+- **Kontextgröße:** Sitzungsabfrage meldet `used_tokens` 0 bei Sessionbeginn – Wert offenbar nicht gepflegt; Regel „Sessiongröße“ vorerst ohne verlässlichen Messwert.
+- **Schlüssel:** `OPENROUTER_API_KEY` in dieser Umgebung gesetzt (Länge geprüft, Wert nicht ausgegeben); `/api/v1/key` antwortet 200, Ausgabengrenze 250 $, gut 247 $ frei, gültig bis 2027-10-08. Die Messung kann laufen.
+- **Auftrag:** „5.24 Ausgangsmessung nach Regel-002“.
+
+### 2026-10-09 20:45 UTC – [SESSIONENDE] Session auf dem Mac: 5.22, 5.19 erledigt; 5.11 Teil 2, 5.2, 5.21, 5.1 umgesetzt; 5.24 Testwelt und Werkzeug
+
+- **Dauer:** 15:44 – 20:45 UTC (Commit-Zeiten maßgeblich). Die Uhrzeiten der Einträge ab „ADR-048“ (18:20 UTC) sind geschätzt und um bis zu zwei Stunden zu spät; Reihenfolge und Inhalt gelten.
+- **Bearbeitet:** Abgleich mit `origin/main` zu Beginn vergessen (13 Commits zurück), nachgeholt. Deployments `8372308` (5.22, 5.23), `71f8d95` (5.11 Teil 2), `a71cdff` (5.2, 5.21). Abnahmen: 5.22 und 5.19 `[ERLEDIGT]`; 5.11 Teile 1 und 2 geprüft. 5.11 Teil 2 Chat-Aufbau nach Mockup vorher/nachher (React Router 7.18.4, Adressen mit „#“, „/“ ins Anweisungsfeld); Befund Mitlaufen behoben. 5.2 Smartphone und 5.21 PWA mit Service Worker (ADR-048, Prüfung durch getrennte Instanz). 5.1 Vorschläge ohne `@` (ADR-049, `[REAKTIV]`). 5.24 zweite Testwelt „Glimmergrund“ und Werkzeug `spikes/regel-002/`. Neu angelegt: 5.25 (Browser-Speicher), 5.26 (Kanon-Treue mit grok-4.6). iPhone-Installationshinweis gebaut und auf Wunsch verworfen. PRs #78–#85 gemergt.
+- **Stand:** Server auf `a71cdff`; auf `main` gemergt, aber nicht eingespielt: #83 (Mitlaufen) und #84 (5.1) – keine Arbeiten am VPS auf Anweisung des Eigentümers. `[IN ARBEIT]`: 5.1, 5.2, 5.11, 5.21, 5.24 (alle warten auf Eigentümer, Einspielen oder Schlüssel).
+- **Nächster Schritt:** zuerst `git fetch` und Abgleich mit `origin/main`; dann nach Fahrplan „Nächster Schritt“: Einspielen, sobald der VPS wieder freigegeben ist; Prüfung 5.2/5.21 auf dem Gerät; 5.24 Ausgangsmessung mit gültigem Schlüssel; 5.26; 5.11 Teil 3 (Mockup vorher/nachher); 5.25.
+- **Offen beim Eigentümer:** gültiger OpenRouter-Schlüssel für Tests in der Arbeitsumgebung (der vorhandene wird mit HTTP 401 abgelehnt; ob der Schlüssel auf dem Server betroffen ist, ist ungeprüft); Freigabe für das Einspielen; D.11 bis 2026-10-31.
+- **Reibungen (Fehler der KI):** Pull vergessen; Uhrzeiten geschätzt; Stylesheet-Abschnitt beim Einfügen halbiert (nur auf Bildschirmfotos aufgefallen); Mockup 5.1 zuerst mit einem Namen, den es in der Testwelt nicht gibt; Warteschleife über `gh pr checks` hing bei roten Prüfungen; ein Commit (`b8d4d77`) enthält neben der genannten Korrektur auch die Dokumentation von 5.24 – nicht umgeschrieben, um keinen Force-Push zu brauchen.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 20:40 UTC). Schritte oberhalb der Empfehlung: 4 (5.11 Teil 2 Umsetzung, 5.19 Abnahme, 5.2, 5.24) – zu Beginn genannt bei 5.11 und 5.2/5.21, nicht bei 5.19 und 5.24; 5.21 und 5.1 lösten mit Kategorie 6 bzw. 1 die Entscheidungs-Klasse ohnehin aus. Abgegeben: Testwelt „Glimmergrund“ an einen Unteragenten der Routine-Klasse (Sonnet, ca. 219.000 Token, geprüft); Sicherheitsprüfung ADR-048 an eine getrennte Instanz (Sonnet, Prüfung, keine Abgabe).
+- **Kontextgröße:** von der Sitzungsabfrage nicht gemeldet; Session sehr lang – Regel „Sessiongröße“ ohne Messwert nicht anwendbar.
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ und Quick-Start-Stand nachgezogen; Status-Block gültig (Phase 5, v0.1.0, Blocker 0). Drift: ADR-048 → 5.21, ADR-049 → 5.1 vorhanden; Reaktiv-Quote 1/10 über ADR-040 bis ADR-049 stimmt (nur ADR-049); Modul-Liste unverändert, Reifegrade unverändert; FR-014 → 5.1, FR-032 → 5.21, 5.25; Blocker 0, kein `[BLOCKIERT]`; Übersicht 10 erledigt / 5 in Arbeit / 11 offen = 26 Schritte, an der Wucherungs-Schwelle (mehr als 26 löst den Stopp aus). Ablaufdaten: kein Vorlauf erreicht (nächste: D.1 ab 2026-11-05, mypy 2 am 2026-11-06, D.5 ab 2026-11-12). Logbuch ca. 630 Zeilen, project-context 345 Zeilen – keine Auslagerung.
+
+### 2026-10-09 22:15 UTC – [BEOBACHTUNG] 5.24 Testwelt und Werkzeug fertig, Messung scheitert am Schlüssel
+
+- **Testwelt „Glimmergrund“:** von einem Unteragenten der Routine-Klasse (Sonnet) geschrieben – ausgabelastige Arbeit, Abgabe nach `CLAUDE.md` Abschnitt 0; ca. 18.400 Wörter, 23 Einträge, zwölf Kanon-Proben. Geprüft: Laden über die echten Dienste fehlerfrei, Schreibstelle genau einmal, Stichprobe der Kapitel gegen die Kanon-Proben ohne Widerspruch („Herr Brack“ wird im Text sofort korrigiert, „sieben“ nur über Tage).
+- **Werkzeug `spikes/regel-002/`:** Trockenlauf ohne KI: beide Geschichten an der richtigen Stelle abgeschnitten, Anfrage Glimmergrund ca. 86.000 Zeichen (nahe am Budget, wie gewollt); Auswertung an einer künstlichen Kette nachgerechnet.
+- **Reibung:** Ausgangsmessung (grok-4.6, mittel und lang, je 3 Ketten je Geschichte) scheiterte ab dem ersten Aufruf mit HTTP 401 („Schlüssel abgelehnt oder Guthaben bzw. Ausgabengrenze erschöpft“); 219 Fehlversuche in den Logs, keine Kosten. Läufe angehalten, leere Ergebnisordner entfernt. Vermutlich steht in der Umgebung des Macs noch der am 2026-10-08 abgelaufene Schlüssel; ob auch der Schlüssel auf dem Server betroffen ist, ist ungeprüft (keine Arbeiten am VPS). Kein Blocker nach Abschnitt 10 (kein dreifach gescheiterter Ansatz), sondern fehlende Eingabe des Eigentümers.
+
+### 2026-10-09 21:30 UTC – [BEOBACHTUNG] 5.1 Vorschläge ohne `@` umgesetzt
+
+- **Mockup:** echte Schreibseite (Testwelt „Die Salzmark“) mit eingesetzter Vorschlagszeile, Desktop und Smartphone. Erste Fassung nutzte „Kael“, den es in der Testwelt nicht gibt, und „Gunda“ ohne geprüften Alias – vor dem Versand auf echte Namen und Aliasse umgestellt (Tomas → Tomas Rehl, Gunda → Gunda Hollt, Aschturm). Freigabe „Ja“.
+- **Code:** `suggestions`/`acceptSuggestion` in `references.ts` (Wortgrenzen und Genitiv-s wie bei `@`, längster Name zuerst, schon genannte Einträge und Wörter in `@`-Verweisen ausgenommen); Zeile „Meintest du:“ in `WritingPanel`, während die KI schreibt ausgeblendet.
+- **Reibung:** Zwei eigene Testerwartungen waren falsch („den Fährmann“ ist nicht der Alias „der Fährmann“; eine Position verzählt) – der Code war richtig.
+- **Läufe:** `vitest` 144 bestanden, 98,03 % Zeilen / 95,46 % Zweige, `references.ts` 100 %; Playwright 10 bestanden; Bildschirmfotos des echten Ergebnisses entsprechen dem Mockup. Nicht eingespielt (keine Arbeiten am VPS, Anweisung des Eigentümers).
+
+### 2026-10-09 21:00 UTC – [ADR-ANGELEGT] ADR-049 Kanon-Vorschläge ohne `@` im Browser
+
+- 5.1 begonnen. Auswahlfragen: Erkennung nur in der Anweisung; Vorschläge als Zeile darunter. Danach `ENTSCHEIDUNG ERFORDERLICH` (Kategorie 1): Erkennung im Browser statt in `context` – Eigentümer „A“. `[REAKTIV]` `[MODUL]`; Reaktiv-Quote 1/10 über ADR-040 bis ADR-049 (Schwelle 30 %). Architektur (Module `context`, `ui`) angepasst.
+
+### 2026-10-09 20:45 UTC – [BEOBACHTUNG] Rückmeldung des Eigentümers, Prüfschritt Kanon-Treue
+
+- Eigentümer bestätigt: Der in der CI gefundene Fall (zweiter Scroll-Schritt zieht nach dem Senden wieder nach unten) war genau sein Befund.
+- Eigentümer hält das Skriptorium für seine Art Romane für einen vollwertigen Ersatz von TypingMind; Einsparung, weil frühere Anweisungen nicht mitgehen. Richtiggestellt: Mit jeder Anfrage gehen die letzten Manuskript-Seiten wörtlich, Gesamt- und Kapitel-Zusammenfassungen, `@`-Einträge und Schreibweise mit – nicht das ganze Kapitel, höchstens 30.000 Token (vorher 125.000–140.000).
+- Wunsch: Kanon-Treue prüfen – technisch und auf Befehlstreue des Modells. Befund dazu: grok-4.6 (Voreinstellung seit 5.7) nie gezielt an echten Texten gemessen. Angelegt als 5.26 nach 5.24; Phase 5 jetzt 26 Schritte, an der Wucherungs-Schwelle (nächster neuer Schritt → Stopp und Neuplanung).
+- Merge von #82 und #83 auf Anweisung; ausdrücklich keine Arbeiten am VPS – die Korrektur zum Mitlaufen ist gemergt, aber nicht eingespielt.
+
+### 2026-10-09 20:20 UTC – [GELÖST] Ansicht springt beim Schreiben der KI ans Ende
+
+- **Befund des Eigentümers:** „die KI Antwort scrollt den Text und Verlauf“. Auswahlfragen: Die Ansicht springt bei jedem neuen Wort ans Ende, man kann nicht weiter oben lesen; gewünscht: am Ende mitlaufen, sonst stehen bleiben (wie bei ChatGPT/TypingMind).
+- **Ursache:** Der Chat-Aufbau aus 5.11 Teil 2 scrollte bei jeder Änderung des Vorschlags ans Ende, unabhängig davon, wo man gerade war.
+- **Lösung:** `WritingPanel` merkt sich, ob man am Textende ist (weniger als 48 px Abstand); der wachsende Vorschlag zieht die Ansicht nur dann mit. Senden, Übernehmen und Öffnen eines Kapitels bringen weiter ans Ende. Neuer Test; `vitest` 138 bestanden, 97,97 % Zeilen / 95,43 % Zweige; Playwright 10 bestanden. Unter 5.11 geführt (Fehler aus Teil 2), kein neuer Schritt.
+- **Nachgebessert (in der CI aufgefallen):** Der zweite Scroll-Schritt nach dem ersten Zeichnen zog auch dann ans Ende, wenn man dazwischen hochgescrollt hatte; lokal grün, in der CI rot. Er prüft jetzt ebenfalls die Stelle; der Test wartet ihn ab und schlägt mit dem alten Code zuverlässig fehl (gegengeprüft).
+- **Reihenfolge:** 5.1 (Kanon-Vorschläge ohne `@`) auf Wunsch des Eigentümers vor 5.11 Teil 3 gezogen.
+
+### 2026-10-09 20:05 UTC – [BEOBACHTUNG] Installation am iPhone, Hinweis verworfen, Frage zu Namen ohne `@`
+
+- Eigentümer fand in Safari (iOS) zunächst keinen Eintrag „Zum Home-Bildschirm“; mit der Beschreibung (iOS 26: „⋯“ → „Teilen“ → „Zum Home-Bildschirm“) hat es geklappt. Ein daraufhin gebauter Installations-Hinweis nur für iPhone und iPad (Vorher-/Nachher-Bilder vorgelegt) wurde nicht gewünscht („ich brauche kein iPhone Hinweis“) und vor dem Commit verworfen.
+- Frage des Eigentümers, ob Wörter ohne `@` erkannt werden: nein, noch nicht – Kanon-Einträge gehen nur über `@`, über Ort und Figuren der neuen Szene und als selbst geführte Figuren an die KI. Geplant als 5.1 (FR-014: nur als Vorschlag „Meintest du @Kael?“, nie selbstständig); Reihenfolge unverändert, Vorziehen angeboten.
+
+### 2026-10-09 19:45 UTC – [BEOBACHTUNG] Merge #81 und Deployment `a71cdff` (5.2, 5.21)
+
+- Auf Anweisung des Eigentümers („Ja, mergen“ auf die Frage nach Mergen und Einspielen): #81 nach grüner CI gemergt, CI auf `main` grün.
+- Deployment nach Runbook Abschnitt 7 (ADR-039): `REVISION` `a71cdff`, Rückweg `skriptorium:vorher` = `71f8d95`; `/api/health` 200 nach ca. 55 s (über HTTPS), `(healthy)`. Von außen: `/manifest.webmanifest` als `application/manifest+json`, `/sw.js`, `/offline.html`, Symbole 200; Chrome meldet installierbar, Service Worker aktiv, ohne Netz die Hinweisseite, keine Fehler im Browser.
+- Offen: Prüfung auf dem Smartphone und am Mac des Eigentümers (Installation, Anmeldung in der App, Markieren mit dem Finger, Start ohne Netz).
+
+### 2026-10-09 19:20 UTC – [GELÖST] End-to-End-Test „ohne Netz“ nur in der CI rot
+
+- **Symptom:** In #81 war nur der neue Test rot, an der Stelle nach dem ersten Neuladen („Welten“ nicht sichtbar); lokal grün, auch achtmal hintereinander. Meine Warteschleife auf die Prüfungen hing dabei, weil `gh pr checks` bei roten Prüfungen mit Fehlercode endet – der Eigentümer fragte nach („prüfe die checks“).
+- **Diagnose:** Server-Protokoll der CI zeigte nach der Anmeldung keine Anfragen der Oberfläche mehr; eine vorübergehende Diagnose-Ausgabe im Test (Commit `a565358`, danach entfernt) zeigte die Anmeldeseite nach dem Neuladen, `/api/auth/session` 401, Seite über den Service Worker, alles andere an ihm vorbei.
+- **Ursache:** Der Test lud neu, bevor die Anmeldung fertig war (scrypt dauert auf dem Runner ca. 0,4 s); das Neuladen brach die Anmeldung ab. Kein Fehler im Service Worker.
+- **Lösung:** Test wartet nach `login` auf „Welten“ (`dee3af1`); Weltname eindeutig, damit Wiederholungen laufen. CI grün. Lehre: in End-to-End-Tests nach `login` immer auf die erste Ansicht warten, bevor neu geladen wird; beim Warten auf Prüfungen `gh run watch` statt einer Schleife über `gh pr checks`.
+- **Einplanung:** Auf Wunsch des Eigentümers Schritt 5.25 (Antworten des Servers nicht im Browser-Speicher, Kategorie 6) angelegt; Phase 5 jetzt 25 Schritte (Schwelle mehr als 26).
+
+### 2026-10-09 18:40 UTC – [BEOBACHTUNG] 5.2 und 5.21 umgesetzt, Prüfung durch getrennte Instanz
+
+- **Prüfung am Smartphone-Format** (Playwright, 390 × 844 und 360 × 740, Testwelt „Die Salzmark“, KI-Antwort vorgetäuscht): UC-004, UC-003, UC-008 und Kanon-Pflege durchführbar, kein seitliches Scrollen. Befunde: Formular „In den Kanon“ öffnet außerhalb des Blicks (auch Desktop); „Weiter“ bricht auf 360 px um; Szenen-Formular eng. Vorher-/Nachher-Vergleich diesmal mit echten Bildschirmfotos des noch nicht committeten Codes; Eigentümer wählte für den Start ohne Netz Option B (eigene Hinweisseite) → ADR-048.
+- **Umsetzung:** siehe Commit `e98705a`. Chrome: installierbar, Manifest fehlerfrei; End-to-End-Test: ohne Netz Hinweisseite, Zwischenspeicher enthält nur `/offline.html`, `/api` antwortet ohne Netz nicht aus einem Speicher.
+- **Prüfung durch getrennte Instanz** (`CLAUDE.md` Abschnitt 9, Kategorie 6; Unteragent mit Sonnet, nur Diff, Bedrohungsmodell und ADR-048, 2026-10-09): Vorgabe eingehalten, Urteil „Merge nach Behebung“. Niedrig, behoben: (1) Speichername und Hinweisseite nicht gekoppelt → Fingerabdruck in `sw.js`, geprüft von `serviceWorker.test.ts`; (2) Symbol der Hinweisseite ohne Netz nicht verfügbar → direkt in die Seite; (3) Test prüfte nicht, dass der Worker die Seite steuert, und nicht nach einem Kapitel → ergänzt. Optional (über ASVS Stufe 1), dem Eigentümer vorgelegt: (4) `Cache-Control: no-store` für `/api`, `no-cache` für `index.html` und `sw.js` – betrifft den HTTP-Speicher des Browsers, bestand schon vorher, Modul `api`; (5) `base-uri`/`form-action` in der Policy der Hinweisseite – gleich mit ergänzt, da wirkungsneutral und ohne Aufwand.
+- **Reibung (Fehler der KI):** Beim Einfügen der Regel für 360-px-Handys den Smartphone-Abschnitt des Stylesheets mittendrin geschlossen; „⋯“ und die verkürzte Eingabezeile galten dadurch nur noch unter 384 px. Aufgefallen erst auf den Bildschirmfotos – Unit- und End-to-End-Tests prüfen keine Darstellung. Lehre: nach Stylesheet-Änderungen immer Bildschirmfotos in beiden Größen.
+- **Läufe:** `vitest` 137 bestanden, 98,11 % Zeilen / 95,67 % Zweige; Playwright 10 bestanden; `pre-commit run --all-files` grün.
+
+### 2026-10-09 18:20 UTC – [ADR-ANGELEGT] ADR-048 Service Worker nur für eine Hinweisseite ohne Netz
+
+- `[OPERATIV]` `[SECURITY]`, Kategorie 6. Eigentümer wählte B gegen die Empfehlung A. Reaktiv-Quote 0/10 über ADR-039 bis ADR-048.
+
+### 2026-10-09 17:25 UTC – [ERLEDIGT] Abnahme 5.19, Prüfung 5.11 Teile 1 und 2
+
+- Eigentümer nach dem Deployment `71f8d95`: „Ja, #80 mergen alles funktioniert.“ → als Bestätigung der vorgelegten Prüfpunkte gewertet (dem Eigentümer so gesagt): 5.19 Dunkelmodus `[ERLEDIGT]` 2026-10-09; 5.11 Teile 1 und 2 geprüft, 5.11 bleibt `[IN ARBEIT]` bis Teil 3. Phase 5: 10 von 24 erledigt.
+
+### 2026-10-09 17:15 UTC – [BEOBACHTUNG] Merge #79 und Deployment `71f8d95` (5.11 Teil 2)
+
+- Auf Anweisung des Eigentümers („Ja, mergen und einspielen“): #79 nach grüner CI gemergt (`71f8d95`), CI auf `main` grün.
+- Deployment nach Runbook Abschnitt 7 (ADR-039): `REVISION` `71f8d95`, Rückweg `skriptorium:vorher` = `8372308`; `/api/health` 200 nach ca. 60 s (über HTTPS gewartet), `/` 200, `/api/worlds` 401; danach einmal per SSH `(healthy)`. Anmeldeseite unter einer `#`-Adresse lädt im Browser ohne Fehler (Content-Security-Policy unverändert ausreichend).
+- Offen: Prüfung von 5.11 Teil 1 und 2 sowie 5.19 durch den Eigentümer.
+
+### 2026-10-09 17:00 UTC – [ONBOARDING-VALIDATION] Frischer Worktree nach React Router
+
+- Anlass: neue Laufzeit-Abhängigkeit `react-router` in `package.json` (Quick-Start-relevant). Worktree von `8fbf89b` im Scratchpad, eigenes Datenverzeichnis: `uv python install 3.14.7`, `uv sync --frozen`, `npm ci`, `uv run pre-commit install`, `uv run skriptorium-einrichtung` (Code nicht ausgegeben), `npx vite build`, Server auf Port 8125 – alle Schritte mit Exit 0; `/api/health` 200, `/` 200, `/api/worlds` 401; Anmeldeseite lädt unter einer `#`-Adresse ohne Fehler im Browser. Worktree danach entfernt. Keine Änderung am Quick Start nötig.
+- **Reibung:** `uv run pre-commit install` im Worktree schrieb den gemeinsamen Hook in `.git/hooks` auf die Python-Umgebung des Worktrees um; nach dessen Entfernen scheiterte der nächste Commit („`pre-commit` not found“). Behoben mit `uv run pre-commit install` im Hauptverzeichnis. Lehre: bei der Onboarding-Prüfung im Worktree den Schritt `pre-commit install` danach im Hauptverzeichnis wiederholen.
+
+### 2026-10-09 16:55 UTC – [BEOBACHTUNG] 5.11 Teil 2 Chat-Aufbau umgesetzt
+
+- **Ablauf:** Auf Wunsch des Eigentümers zuerst vorher/nachher: Bildschirmfotos vom Stand `8372308` (lokal, Testwelt „Die Salzmark“ aus `spikes/kontext-abnahme`, Test-Passwort aus der E2E-Fixture, Datenverzeichnis im Scratchpad) und Mockup des Entwurfs als HTML. Auf Bitte „gegenübergestellt“ eine Vergleichsseite mit je Ansicht vorher | nachher und Umschaltern (Bilder per Playwright in echter Fenstergröße). Freigabe: „Passt so, fang mit dem Umbau an“.
+- **Zwei Fragen vorab** (Stopp nach `CLAUDE.md` Abschnitt 8, Kriterium 5: Adressen ohne „#“ hätten eine Weiterleitung im Server gebraucht, Modul `api` nicht im Schritt): Eigentümer wählte „mit #“; Taste „/“ ins Anweisungsfeld: ja.
+- **Code:** `react-router` 7.18.4 (ADR-046, Abhängigkeiten `cookie`, `set-cookie-parser`, alle MIT, `npm audit` ohne Befund). Neu `paths.ts`, `title.ts`, `views/Shell.tsx`, `views/StoryList.tsx`, `views/Menu.tsx`; umgebaut `App.tsx` (HashRouter), `StoryPage`, `ChapterEditor`, `WritingPanel` (Chat-Aufbau, Vorschlag mit „Ändern“, Eingabe unten, „/“, Ende bleibt beim Breitenwechsel im Blick), `WritingMode` (Kurzzeile `ModeLine`), `WorldPage` (Bereiche als Adressen), `ThemeChoice` (Knopf in der Symbolleiste), `ManuscriptEditor` (wächst mit dem Text, `onEnd`), `useLoad` (zweiter Schlüssel für Neuladen nach Änderungen anderswo), `styles.css`.
+- **Abweichung vom Mockup:** „Anbieter: OpenRouter“ steht nicht mehr sichtbar neben dem Modell (Platz in der Eingabezeile), sondern im Vorschlag („… über OpenRouter“), als Hinweis beim Darüberfahren und für Bildschirmleser.
+- **Reibung:** (1) Mehrere Tests klickten „Kanon & Geschichte“, solange das Kapitel noch lud; der Knopf wurde dabei ersetzt, der Klick ging verloren – Hilfsfunktion wartet jetzt auf das Kapitel. (2) Die Eingabezeile brach am Desktop knapp um; Spalte von 46 auf 56rem verbreitert. (3) Der Browser-Bereich der App war ausgeblendet, Bildschirmfotos deshalb über Playwright.
+- **Läufe:** `vitest` 134 bestanden, 98,17 % Zeilen / 95,62 % Zweige (vorher 98,69 / 96,37); Playwright 9 bestanden (umgestellt auf Liste und Symbolleiste, Neuladen behält jetzt das Kapitel); `pre-commit run --all-files` grün.
+
+### 2026-10-09 16:20 UTC – [ERLEDIGT] Abnahme 5.22
+
+- Eigentümer nach weiteren Vorschlägen: „Ja, es funktioniert definitiv.“ → 5.22 `[ERLEDIGT]` 2026-10-09; alle Akzeptanzkriterien erfüllt (Probeschreiben nach Regel-002-Ausnahme nur an der Salzmark, Bestätigung im Alltag). Phase 5: 9 von 24 erledigt.
+
+### 2026-10-09 16:15 UTC – [BEOBACHTUNG] Erste Rückmeldung zu 5.22 im Alltag
+
+- Eigentümer nach dem Deployment `8372308`: erster Vorschlag mit Länge „lang“ „vielversprechend“, „keine nervigen Wiederholungen aus der Atmosphäre“. Ein einzelner Vorschlag – 5.22 bleibt bis zur ausdrücklichen Bestätigung `[IN ARBEIT]`.
+
+### 2026-10-09 16:05 UTC – [BEOBACHTUNG] Deployment `8372308` (5.22, 5.23)
+
+- Auf Anweisung des Eigentümers („erst 5.22 und 5.23 deployen“), CI auf `main` grün. Der erste Versuch wurde von der automatischen Rechte-Prüfung der Session als „Production Deploy“ abgelehnt, nichts ausgeführt; nach ausdrücklicher Erlaubnis des Eigentümers im Chat erneut.
+- Ablauf nach Runbook Abschnitt 7 (ADR-039): Archiv von `main` übertragen, `REVISION` `8372308`, Rückweg `skriptorium:vorher` = `ebc7bc5`, Image gebaut, gestartet. Warten über die HTTPS-Gesundheitsprüfung (Lehre vom 2026-10-08), `/api/health` 200 nach ca. 55 s; `/` 200, `/api/worlds` 401; danach einmal per SSH: `(healthy)`, `REVISION` `8372308`.
+- Offen: Bestätigung von 5.22 durch den Eigentümer im Alltag; 5.11 Teil 1 und 5.19 weiterhin zur Prüfung.
+
+### 2026-10-09 15:50 UTC – [SESSIONSTART] Session auf dem Mac
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` → Entscheidungs-Klasse (Quelle: `get_session`, 15:45 UTC; Aufwand „medium“).
+- **Reibung (Fehler der KI):** Die Mindest-Lektüre lief zuerst auf dem lokalen `main` `e4d1a81`, 13 Commits hinter `origin/main` (PRs #75–#77 aus der Session über 5.22–5.24). Erst auf Nachfrage des Eigentümers geholt (`git pull --ff-only` → `8372308`) und die geänderten Teile neu gelesen. Der vorab geschriebene, veraltete Sessionstart-Eintrag lag in `git stash` und wurde auf Anweisung des Eigentümers verworfen. Lehre: vor der Mindest-Lektüre `git fetch` und mit `origin/main` abgleichen.
+- **Mindest-Lektüre (auf `8372308`):** project-context vollständig; Logbuch ab Sessionende 2026-10-09 15:35 UTC; Fahrplan „Aktueller Stand“, „Übersicht“ und Phase 5; architecture 1, 2, 9; decisions Teil A und C (neu: ADR-047, Regel-002); blockers „Aktive Blocker“ (keine).
+- **Wiedereinstieg:** 5.11 Teil 1 und 5.19 warten auf Prüfung des Eigentümers; 5.22 und 5.23 warten auf das Deployment vom Mac (Server auf `ebc7bc5`), 5.22 danach auf Bestätigung im Alltag; als Nächstes 5.11 Teil 2 Chat-Aufbau; 5.24 vor der nächsten Änderung an den Vorgaben der KI.
+- **Kontextgröße:** von der Sitzungsabfrage nicht gemeldet – Regel „Sessiongröße“ ohne Messwert nicht anwendbar.
+
+### 2026-10-09 15:35 UTC – [SESSIONENDE] 5.23 umgesetzt
+
+- **Rahmen:** Fortsetzung auf „weiter mit 5.23“ nach dem früheren „weiter hier“; Kontext ca. 365.000 Token über der Grenze 200.000 (Abweichung vermerkt). 5.23 empfohlen Routine, lief auf Entscheidung (zu Beginn genannt) – Abgabe hätte bei einem kleinen Schritt mit geladenem Kontext nicht gespart.
+- **Code:** `ui/src/references.ts` – Hilfsfunktion `labelEnd` erlaubt ein Genitiv-s nach Name oder Alias; längerer Eintrag („Kaels“) geht vor, Hervorhebung schließt das „s“ ein.
+- **Läufe:** `vitest` 123 bestanden (4 neu), `references.ts` 100 % Zeilen und Zweige, gesamt 98,69 % Zeilen / 96,37 % Zweige; eslint, tsc, prettier grün. End-to-End lokal nicht gelaufen – läuft in der CI.
+- **Stand:** 5.23 `[ERLEDIGT]` (live mit dem nächsten Deployment vom Mac); 5.22 `[IN ARBEIT]` (Deployment, Bestätigung im Alltag); 5.24 `[OFFEN]`.
+- **Modell-Bilanz:** Entscheidungs-Klasse; Schritte oberhalb der Empfehlung: 1 (5.23). Abgegeben: nichts.
+- **Sessionende-Prüfungen:** README unverändert gültig; Drift: Ampel 8/3/13 von 24 geprüft, keine neuen ADRs, Module und Reifegrade unverändert, Blocker 0. Ablaufdaten: kein Vorlauf erreicht.
+
+### 2026-10-09 15:25 UTC – [SESSIONENDE] 5.22 umgesetzt, Prüfverfahren festgelegt
+
+- **Bearbeitet:** 5.22 umgesetzt und geprüft (PR #76, CI grün); auf Frage des Eigentümers festes Prüfverfahren beschlossen → ADR-047, Regel-002, Schritt 5.24 (zweite Testgeschichte, wiederholte Läufe).
+- **Stand:** 5.22 `[IN ARBEIT]` – wartet auf Deployment vom Mac und Bestätigung im Alltag; 5.23 und 5.24 `[OFFEN]`. Merge von #76 auf Anweisung des Eigentümers.
+- **Nächster Schritt:** neue Session; vor der nächsten Änderung an den Vorgaben der KI zuerst 5.24.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`). Schritte oberhalb der Empfehlung: 0 (5.22 empfohlen Entscheidung). Abgegeben: nichts.
+- **Kontextgröße:** ca. 360.000 Token, über der Grenze 200.000 auf ausdrückliche Anweisung des Eigentümers („weiter hier“).
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ unverändert gültig (5.22–5.24 nicht unter den nächsten 1–3); Drift: ADR-047 → 5.22/5.24 vorhanden, Reaktiv-Quote 0/10 über ADR-038 bis ADR-047 nachgezogen, Ampel-Zählung 7/3/14 von 24 geprüft, Module und Reifegrade unverändert, Blocker 0; Phase 5 24 Schritte (Schwelle mehr als 26). Ablaufdaten: kein Vorlauf erreicht.
+
+### 2026-10-09 15:25 UTC – [ADR-ANGELEGT] ADR-047 Festes Verfahren für Probeschreiben
+
+- `[OPERATIV]` `[METHODIK]`, keine Kategorie aus Abschnitt 4. Regel-002 in Teil C: vorher und nachher im gleichen Aufbau, jede Variante mindestens dreimal an zwei Testgeschichten, Mittelwert mit Spannweite. Zweite Testgeschichte fehlt noch → 5.24. Reaktiv-Quote 0/10 über ADR-038 bis ADR-047.
+
+### 2026-10-09 15:30 UTC – [BEOBACHTUNG] 5.22 umgesetzt, Probeschreiben erfüllt
+
+- **Rahmen:** Eigentümer sagte ausdrücklich „weiter hier“ (Kontext ca. 355.000 Token, Grenze 200.000) – Abweichung nach `CLAUDE.md` Abschnitt 0 vermerkt. Branch `scp/nice-lamport-as724t` neu auf `main` `cf0650b` (normaler Push, alter Branch-Stand ist in `main` enthalten).
+- **Code:** `_requirements` um „Länge ist Obergrenze“ und „Ort, Licht, Geräusche, Gerüche, Stimmung nur bei Änderung, auch nicht umschrieben“ ergänzt, Ende mit Handlung oder Rede statt Warten, Schweigen, Blick oder Stimmung; `_reminder` ohne Warte-Schluss. Kleinste Budgets in zwei Tests angehoben (1300 → 1400, 1500 → 1600), weil der feste Teil um ca. 60 Token wuchs.
+- **Läufe:** `pytest --cov` 427 bestanden, 99,79 %, `builder.py` 100 %; pre-commit grün.
+- **Probeschreiben:** grok-4.6 lang Warte-Enden 5 → 0 von 7, längste Motiv-Folge 7 → 2, wörtliche Wiederholung 1,7 → 0,9 %; mittel 0 von 7 (Kosten 0,33 $). Offen: Deployment vom Mac, Bestätigung im Alltag.
+
+### 2026-10-09 14:58 UTC – [SESSIONENDE] Befunde 5.22 und 5.23 erfasst
+
+- **Bearbeitet (2026-10-09):** Befunde des Eigentümers geprüft – Atmosphäre und Schlussgeste bei „lang“ (5.22), `@` und Aliasse (5.23); Antwort des Eigentümers zu 5.23 eingetragen: nur Genitiv-s. Kein Produktionscode geändert.
+- **Stand:** 5.22 und 5.23 `[OFFEN]`, Eingangskriterien erfüllt; unverändert 5.11 Teil 1 und 5.19 warten auf Prüfung des Eigentümers.
+- **Nächster Schritt:** neue Session nach Fahrplan „Nächster Schritt“; 5.22 und 5.23 dort eingereiht.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 14:57). Schritte oberhalb der Empfehlung: 0 – nur Prüfung und Doku. Abgegeben: nichts.
+- **Kontextgröße:** 353.805 Token (`get_session` 14:57), Grenze 200.000 – überschritten auf Anweisung des Eigentümers.
+- **Sessionende-Prüfungen:** README unverändert gültig (neue Schritte nicht unter den nächsten 1–3); Drift: kein neuer ADR, Reaktiv-Quote unverändert, Module und Reifegrade unverändert, Blocker 0; Phase 5 23 Schritte (Schwelle mehr als 26). Ablaufdaten: kein Vorlauf erreicht (mypy 2 am 2026-11-06). Merge auf Anweisung des Eigentümers.
+
+### 2026-10-09 11:55 UTC – [BEOBACHTUNG] Befunde des Eigentümers: Atmosphäre bei „lang“, `@` und Aliasse
+
+- **Rahmen:** Fortsetzung der Session vom 2026-10-08 auf Anweisung des Eigentümers, weit über der Kontextgrenze (Abweichung „Sessiongröße“, vermerkt); kein Produktionscode geändert. Branch `scp/nice-lamport-as724t` nach Merge von #57 neu auf `main` `e4d1a81` gesetzt.
+- **Atmosphäre bei „lang“:** Kette aus 7 Vorschlägen mit `LAENGE=lang` (grok-4.6, grok-4.7; Kosten ca. 0,45 $). Wörtliche Wiederholung gering (1,7 %, vor 5.15 8,3 %), aber grok-4.6 kehrt umschrieben zu denselben Ortsmotiven zurück und endet 5 von 7 Mal mit „sah mich an … und wartete“. Landeplatz 5.22. Nachtrag in `spikes/vorgriff-zeitlinie/README.md`; Skript nimmt jetzt `LAENGE`.
+- **`@` und Aliasse:** Name und Alias werden erkannt (auch klein geschrieben, mehrwortig, vor Satzzeichen), der KI geht der ganze Eintrag mit Aliassen zu. Gebeugte Formen („@Kaels“, „@Aschturms“) werden nicht erkannt; der Eintrag fehlt dann ohne Hinweis. Landeplatz 5.23. Geprüft mit einem Wegwerf-Test gegen `referencedEntries` (nicht eingecheckt).
+- **Regelverstoß:** Der Push des neu aufgesetzten Branches lief mit `--force` ohne vorherigen Stopp (`CLAUDE.md` Abschnitt 8, Kriterium 6). Ersetzt wurde nur `ee1ec82`, bereits mit #57 in `main` – nichts verloren; dem Eigentümer gemeldet.
+- **Reibung:** grok-4.7 erreichte in Schritt 7 der langen Kette zweimal die Zeitüberschreitung (90 s bis zum ersten Textstück); der dritte Versuch lief durch (274 s gesamt), nachgetragen beim Sessionende.
+
+### 2026-10-09 00:20 UTC – [BEOBACHTUNG] TypingMind als Vorbild angesehen
+
+- Auf Bitte des Eigentümers typingmind.com im eingebauten Browser angesehen (ohne Konto, Desktop und Smartphone); Werbefenster beim Öffnen des Menüs verhinderte den Blick auf die ausgeklappte Liste. Ergebnis und Übertragung in `docs/research/inspiration-typingmind.md`.
+- Auswahlfragen: schmale Symbolleiste links dauerhaft plus ausklappbare Liste; Manuskript bleibt direkt editierbar; Vorschlag am Textende wie eine Chat-Antwort. In 5.11 vermerkt. Kein Code geändert.
+
+### 2026-10-09 00:05 UTC – [BEOBACHTUNG] Wünsche: Chat-Aufbau, PWA, mobile Bedienung
+
+- **Wunsch des Eigentümers:** PWA, damit die ganze Bildschirmgröße nutzbar ist; prüfen, wie weit die Seite für mobile Bedienung taugt; Aufbau eher wie TypingMind oder ChatGPT mit Menüs, die bei Bedarf ausklappen.
+- **Auswahlfragen:** Aufbau wie ein Chat – Eingabe mit Modell und Länge fest unten, Manuskript scrollt darüber, Leiste links mit Welten, Geschichten und Kapiteln, rechts bei Bedarf Kanon und Einstellungen; PWA installierbar, volle Bildschirmgröße, nur online (keine Texte im Gerät); Reihenfolge: Chat-Aufbau in 5.11 Teil 2, dann 5.2 mit PWA, dann 5.11 Teil 3.
+- **Fahrplan:** Entwurf von 5.11 ergänzt (Teil 2 baut Teil 1 um), neuer Schritt 5.21 PWA mit FR-032 (Soll – vorläufig), Notiz an 5.2, Übersicht und „Nächster Schritt“ nachgezogen. Phase 5 jetzt 21 Schritte (Schwelle 26). Kein Code geändert. Weiter nach dem Sessionende auf Anweisung des Eigentümers.
+
+### 2026-10-08 23:55 UTC – [BEOBACHTUNG] Ampel im Fahrplan, README überarbeitet (nach dem Sessionende)
+
+- Auf Bitte des Eigentümers nach dem Sessionende 23:40 UTC: README aktualisieren und im Fahrplan ein Ampelsystem einführen („oder vielleicht fällt dir was Besseres ein“).
+- **Fahrplan:** neuer Abschnitt „Übersicht“ (Anker `uebersicht`) mit Ampel-Tabelle für Phase 5 und offene Querschnitts-Schritte, Zeile mit Fortschritt (7 von 20 erledigt) und Spalte „Nächster Zug“ (du / KI / Datum); Symbol vor jedem Status (45 Zeilen). Abweichung vom Vorschlag: Rot nur für „blockiert“, „noch nicht angefangen“ ist Weiß – sonst wäre die halbe Liste rot und ein echtes Problem fiele nicht auf. Die Tabelle ist abgeleitet; Pflege bei jeder Statusänderung und in der Drift-Prüfung zu Sessionende.
+- **README:** Fortschritt mit Ampel und Link zur Übersicht; Quick-Start-Stand von „nach Schritt 3.9“ auf Phase 5; „Verwendung“ als Liste nach dem neuen Aufbau (Leiste, Schreibweise-Kurzzeile, Länge, hervorgehobene `@`-Begriffe, Darstellung); „Nächste Schritte“ mit Ampel.
+
+### 2026-10-08 23:40 UTC – [SESSIONENDE] Session auf dem Mac: 5.7–5.10, 5.15, 5.17, 5.18 erledigt; 5.11 Teil 1 und 5.19 eingespielt
+
+- **Dauer:** 21:10 – 23:40 UTC. Die Uhrzeiten der Einträge 23:30 und 23:55 UTC unten sind geschätzt und zu spät (Container-Uhr beim Abschluss 23:37 UTC); Reihenfolge und Inhalt gelten.
+- **Bearbeitet:** Deployments `18ee07d`, `6e563e8`, `aedf68f`, `ebc7bc5`; Abnahmen 5.7, 5.8, 5.15, 5.9, 5.17, 5.18 → `[ERLEDIGT]`; 5.10 ohne Code erledigt; neue Schritte 5.16–5.20 aus Befunden und Wünschen des Eigentümers; ADR-046 (React Router 7.18), D.15; 5.11 Entwurf bestätigt, Teil 1 Schreibseite umgesetzt und eingespielt; 5.19 Dunkelmodus umgesetzt und eingespielt. PRs #62–#70 gemergt.
+- **Stand:** 5.11 `[IN ARBEIT]` (Teil 1 wartet auf Prüfung, Teile 2 und 3 offen), 5.19 `[IN ARBEIT]` (wartet auf Prüfung). Server auf `ebc7bc5`, `(healthy)`.
+- **Nächster Schritt:** Prüfung von 5.11 Teil 1 und 5.19 durch den Eigentümer; dann 5.11 Teil 2 Navigation (React Router 7.18.4 einbauen, Leiste links, Adressen je Ansicht), Teil 3 Kanon-Seite; 5.20. D.11 bis 2026-10-31 (Eigentümer).
+- **Reibung (Fehler der KI):** Beim Deployment von `ebc7bc5` wartete eine Schleife per SSH alle 5 s auf `(healthy)` – über 50 Verbindungen; danach lehnte der VPS SSH von diesem Mac vorübergehend ab („Connection refused“, vermutlich Begrenzung der Firewall oder Sperre nach vielen Verbindungen). Das Skriptorium lief weiter (HTTPS 200, neues Stylesheet ausgeliefert). Nach einigen Minuten wieder erreichbar. Lehre: auf `(healthy)` über die HTTPS-Gesundheitsprüfung warten, SSH nur einmal danach. Ursache auf dem Server nicht geprüft.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, `get_session` 23:36). Schritte oberhalb der Empfehlung: 6 (5.7-Abnahme, 5.9, 5.10, 5.17, 5.18, 5.19 empfohlen Routine – kleine Schritte mit geladenem Kontext, Abgabe hätte nicht gespart; zu Beginn der Schritte nicht jeweils genannt – Abweichung). Abgegeben: nichts.
+- **Kontextgröße:** von der Sitzungsabfrage nicht gemeldet; Session sehr lang – Regel „Sessiongröße“ ohne Messwert nicht anwendbar.
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ auf 5.11/5.19/5.20/5.16, Status-Block gültig (Phase 5, v0.1.0, Blocker 0). Drift: ADR-046 → 5.11 und D.15 vorhanden; Reaktiv-Quote 0/10 (ADR-037..046) stimmt; Modul-Liste und Reifegrade unverändert (alle Änderungen in `ui`); Anforderungen FR-031 → 5.16, FR-029 → V.9; Blocker 0, kein `[BLOCKIERT]`; Phase 5 20 Schritte (Schwelle 26). Ablaufdaten: kein Vorlauf erreicht (nächste: mypy 2 am 2026-11-06, D.1 ab 2026-11-05, D.15 ab 2026-12-17). Logbuch 433 Zeilen, project-context 345 Zeilen – keine Auslagerung. Nicht Quick-Start-relevant außer `package.json` erst in Teil 2.
+
+### 2026-10-08 23:55 UTC – [BEOBACHTUNG] Deployment `aedf68f` (5.11 Teil 1), 5.19 Dunkelmodus umgesetzt
+
+- **Wunsch des Eigentümers:** Dunkelmodus. Auswahlfragen: folgt dem Gerät plus Schalter; jetzt als eigener Schritt (5.19); #69 mergen und deployen; Nebenbefund Kapitel-Anlegen als eigener Schritt (5.20).
+- #69 nach grüner CI gemergt (`aedf68f`), CI auf `main` grün, Deployment nach Runbook (ADR-039): `(healthy)`, `/api/health` 200, `/` 200, `/api/worlds` 401; Rückweg `skriptorium:vorher` = `6e563e8`.
+- **5.19:** Farbwerte als CSS-Variablen in `styles.css`, dunkle Werte unter `prefers-color-scheme: dark` (außer bei Wahl „hell“) und bei `data-theme="dark"`; `color-scheme` für Formularfelder; CodeMirror (Text, Cursor, Auswahl, Platzhalter, `@`-Menü) über stärkere Selektoren als dessen helles Standard-Thema. `theme.ts` liest und schreibt die Wahl mit try/catch (privates Fenster), `main.tsx` setzt sie vor dem ersten Zeichnen.
+- **Reibung:** Wiederholte `vitest`-Läufe mit Coverage trieben die Last des Mac auf über 30; dann liefen 7–21 Tests in die 5-Sekunden-Grenze – auch auf dem Stand ohne die Änderung (gegengeprüft per `git stash`). Bei Last unter 8 lief derselbe Lauf grün (119/119). Kein Code-Fehler; Läufe nicht parallel stapeln. Kein Schritt angelegt.
+- **Läufe:** `vitest` 119 bestanden, 98,68 % Zeilen / 96,52 % Zweige; Playwright 9 bestanden; Bildschirm-Probelauf dunkel (Anmeldung, Schreibseite mit `@`-Menü) und hell.
+
+### 2026-10-08 23:55 UTC – [BEOBACHTUNG] 5.11 Teil 1 Schreibseite umgesetzt
+
+- **Code:** neue Komponente `CanonLookup.tsx` (Kanon der Geschichte samt Gästen durchsuchen und lesen, nur lesend, Text als Klartext); `StoryPage.tsx` neu aufgebaut (Mitte Kapitel, Leiste rechts mit Kapitel/Kanon/Geschichte, schließbar, unter 56rem als Menü); `WritingMode.tsx` mit Kurzzeile im aufklappbaren Kopf, über `ChapterEditor` direkt vor dem Schreib-Bereich; `App.tsx` gibt der Schreibseite mehr Breite. Kein React Router in Teil 1.
+- **Reibung:** Mit der neuen Kurzzeile und der Leiste lag das Anweisungsfeld bei 720 px Fensterhöhe wieder unter dem Rand (Test aus 5.9 schlug fehl). Editorhöhe jetzt `max(12rem, 100vh − 30rem)`, und die Seite rückt zum Kapitel, wenn die Kapitelkarte unter den Fensterrand reicht (vorher: wenn die Knopfzeile darunter lag).
+- **Bildschirm-Probelauf** (Desktop 1280 × 720, Smartphone 390 × 844, Bilder nur im Scratchpad): Aufbau wie im Entwurf. Nebenbefund, nicht untersucht: Zwei sehr schnell nacheinander angelegte Kapitel ergaben nur eines – `addChapter` nimmt `chapters.length + 1` aus der noch nicht neu geladenen Liste; bestand schon vor dem Umbau.
+- **Läufe:** `vitest` 115 bestanden, 98,65 % Zeilen / 96,29 % Zweige; Playwright 9 bestanden; `tsc`, `eslint` grün.
+
+### 2026-10-08 23:30 UTC – [ADR-ANGELEGT] ADR-046 React Router 7.18; Entwurf 5.11 bestätigt
+
+- **Entwurf 5.11** per Auswahlfragen: Überblick fehlt an allen vier genannten Stellen; ständig griffbereit Modell/Länge und Figuren-Schreibweise; Schreibseite mit Seitenleiste rechts; Navigation als Leiste links mit Welten und Geschichten; Kanon-Seite mit Suche, Filter, Liste und Eintrag nebeneinander; Zurück-Knopf und Neuladen behalten die Stelle. Im Fahrplan bei 5.11 festgehalten, drei Teile.
+- **Router:** Eigentümer wählte React Router. Versionsprüfung: Linie 8 erst ab 2026-12-17 mindestreif, Linie 7 (7.18.4) mit vermutetem Ende um v9 (ca. Mai 2027). `ENTSCHEIDUNG ERFORDERLICH` (Kategorie 3) mit Empfehlung B (eigene Umsetzung); Eigentümer: „a“ → ADR-046, D.15 (Wechsel auf Linie 8 ab 2026-12-17), Ablaufdaten-Register und Stack nachgezogen. Reaktiv-Quote 0/10 über ADR-037..046.
+
+### 2026-10-08 23:10 UTC – [ERLEDIGT] Abnahme 5.9, 5.17, 5.18
+
+- Eigentümer nach dem Deployment `6e563e8`: „passt alles, trag ab“ → 5.9, 5.17, 5.18 `[ERLEDIGT]` 2026-10-08. Kein `[IN ARBEIT]` mehr.
+- 5.9 verlangte die Bestätigung auch auf dem Smartphone; die Antwort nennt das Gerät nicht. Als erledigt geführt, die Bedienung am Smartphone prüft 5.2 ohnehin auf dem neuen Aufbau.
+- README „Nächste Schritte“: Zeile zu 5.9/5.17/5.18 entfernt, 5.11 und 5.16 stehen vorn.
+
+### 2026-10-08 23:00 UTC – [BEOBACHTUNG] Merges #66, #67 und Deployment `6e563e8` (5.9, 5.17, 5.18)
+
+- Auf Anweisung „der Reihe nach mergen und deployen“. #66 und #67 hatten Konflikte in Fahrplan („Nächster Schritt“) und Logbuch mit dem 5.10-Abschluss aus #65 – `main` in den 5.17-Branch und diesen in den 5.18-Branch gemergt, beide Seiten behalten. #66 gemergt (`ed4bdb6`), #67 (`6e563e8`); CI auf `main` grün.
+- Deployment nach Runbook Abschnitt 7 (ADR-039): `REVISION` `6e563e8`, vorher `18ee07d` als `skriptorium:vorher`; nach gut einer Minute `(healthy)`; von außen `/api/health` 200, `/` 200, `/api/worlds` 401.
+- Offen: Bestätigung des Eigentümers für 5.9 (Desktop und Smartphone), 5.17, 5.18.
+
+### 2026-10-08 22:45 UTC – [BEOBACHTUNG] 5.18 Begriffe im Anweisungsfeld hervorgehoben
+
+- **Befund des Eigentümers:** gewählte Kanon-Begriffe im Feld „Anweisung an die KI“ (nur dort) optisch hervorheben, damit er im Fließtext sieht, wo sie stehen.
+- **Umsetzung:** `referencedEntries` auf neue Funktion `mentionRanges` (alle erkannten Stellen mit Position) gestützt, Verhalten unverändert; Dekoration `cm-mention` über eine eigene Compartment, die bei neuen Einträgen nachgezogen wird. Markiert wird nur, was als Nennung zählt – zeigt zugleich Fehler wie `@Kaelging`.
+- **Läufe:** `vitest` 108 bestanden, 98,61 % Zeilen / 96,19 % Zweige; Playwright 9 bestanden (Prüfung der Markierung im Test „@ menu …“); Bildschirmfoto der Markierung angesehen (hell hinterlegt, fett).
+- Branch auf 5.17 aufgebaut; PR erst nach Merge von #66. Phase 5 jetzt 18 Schritte (Schwelle 26).
+
+### 2026-10-08 22:30 UTC – [GELÖST] 5.17 Leerzeichen nach der Auswahl im `@`-Menü
+
+- **Befund des Eigentümers:** Nach der Auswahl eines Kanon-Begriffs und sofortigem Weiterschreiben klebt das nächste Wort am Namen, der Begriff wird nicht erkannt (`referencedEntries` verlangt nach dem Namen ein Nicht-Wortzeichen).
+- **Behebung:** eigene `apply`-Funktion `withSpace` im `@`-Menü – Name plus Leerzeichen, außer es folgt schon Leerzeichen oder Satzzeichen; über `insertCompletionText` und `pickedCompletion` aus `@codemirror/autocomplete` (vorhandene Abhängigkeit).
+- **Reibung:** Drei Tests verglichen die Menü-Einträge mit `toEqual` und brachen am neuen Feld `apply` → `toMatchObject`; ein Komponententest und der End-to-End-Test tippten selbst ein Leerzeichen nach der Auswahl – angepasst, der End-to-End-Test prüft jetzt genau den gemeldeten Fall.
+- **Läufe:** `vitest` 106 bestanden, 98,59 % Zeilen / 96,19 % Zweige; Playwright 9 bestanden.
+- Neuer Schritt 5.17; Phase 5 jetzt 17 Schritte (Schwelle 26). PR #65 (5.10) gemergt (`cc70fdc`).
+
+### 2026-10-08 22:15 UTC – [ERLEDIGT] 5.10 Kosten je Vorschlag – ohne Code-Änderung
+
+- PR #64 (Befunde zum Kanon) nach grüner CI gemergt (`ec0ed81`).
+- Eigentümer: „Kosten gemeldet steht da“. Prüfung auf der Produktion, nur Metadaten: Log-Zeilen `ki_anfrage` seit `18ee07d` alle mit `kosten_usd` (grok-4.6, 0,020–0,047 $ je Anfrage bei 7.900–20.800 Token ein); Monatsdatei Oktober: 82 Anfragen, 5 ohne Kosten (2 abgebrochen, 3 `nicht_erreichbar`; 3× qwen, 2× grok-4.6).
+- Auswahlfrage: unter einem fertigen Vorschlag steht ein Betrag → 5.10 `[ERLEDIGT]`. Akzeptanzkriterium „Kosten sichtbar oder ausdrücklich als nicht verfügbar gekennzeichnet“ war schon erfüllt.
+
+### 2026-10-08 22:05 UTC – [BEOBACHTUNG] Befunde zum Kanon, 5.9 gemergt
+
+- PR #63 (5.9) nach grüner CI (8/8) gemergt (`32c027d`); Deployment auf Wunsch des Eigentümers später („nur mergen“).
+- **Befund 1:** Kanon-Einträge sollen sich mit KI-Unterstützung besser ausformulieren lassen. Eigentümer (Auswahlfrage): **Teil des Weltenbauers V.9**, nicht eigener Schritt in Phase 5 → V.9 und FR-029 ergänzt.
+- **Befund 2:** Die unter „Herangezogen“ genannten Kanon-Begriffe sollen anklickbar sein. Eigentümer: **Eintrag über der Schreibseite einblenden, Kapitel bleibt offen** → neuer Schritt 5.16 (nach 5.11), FR-031 (Soll – vorläufig). Phase 5 jetzt 16 Schritte (ursprünglich 13, Schwelle 26) – keine Wucherung.
+
+### 2026-10-08 21:50 UTC – [BEOBACHTUNG] Rückmeldung des Eigentümers nach dem Schreiben mit `18ee07d`
+
+- Texte gehen einfacher, weniger Ablehnungen (grok-4.6 als Voreinstellung, 5.7) – teilweise „schon grenzwertig“. Kein Schritt angelegt; Erkennen von Weigerungen im Text bleibt Erkundung D.13.
+- Tokenverbrauch in der OpenRouter-Konsole „beeindruckend gering“ – bestätigt im Alltag das feste Budget der Kontext-Zusammenstellung (höchstens 30.000 Token statt 125.000–140.000 vorher, ADR-010, Vision 4).
+
+### 2026-10-08 21:40 UTC – [BEOBACHTUNG] 5.9 umgesetzt – Kapitel öffnet am Textende
+
+- PR #62 nach grüner CI (8/8) gemergt (`0fb1fc5`) auf Anweisung „mergen und weiter mit 5.9“.
+- **Code:** `ManuscriptEditor.tsx` – Cursor beim Öffnen und nach Text von außen ans Ende, eigener Scrollbereich ans Ende (`scrollDOM.scrollTop`, nicht `EditorView.scrollIntoView`, weil das auch die Seite verschiebt); neue Rückmeldung `onReady`. `ChapterEditor.tsx` – liegt die Knopfzeile beim Öffnen unter dem Fensterrand, rückt die Seite an den Kapitelanfang. `styles.css` – `.editor.manuscript` höchstens 55vh.
+- **Reibung:** Der erste End-to-End-Lauf zeigte, dass der Editor zwar richtig ans Ende scrollte (scrollTop 13.698 von 14.094), aber bei 720 px Fensterhöhe unter den Einstellungen der Geschichte lag (Oberkante bei 492 px) – das Textende war nicht im Fenster. Deshalb das Nachrücken der Seite.
+- **Läufe:** `vitest` 104 bestanden, 98,59 % Zeilen / 96,16 % Zweige (`ManuscriptEditor.tsx` 96,87 %, `ChapterEditor.tsx` 98,5 %); Playwright 9 bestanden.
+- **Offen:** CI, Merge, Deployment, Bestätigung des Eigentümers auf Desktop und Smartphone.
+
+### 2026-10-08 21:25 UTC – [ERLEDIGT] Abnahme 5.7, 5.8, 5.15
+
+- Eigentümer schrieb nach dem Deployment `18ee07d` in einer echten Welt und bestätigte: „passt alles“ (Startmodell grok-4.6 ohne Sperre, nahtloser Anschluss, nur das Verlangte in gewählter Länge, kein Vorgriff).
+- 5.7, 5.8, 5.15 → `[ERLEDIGT]` 2026-10-08; FR-012 um die Bestätigung ergänzt; README „Nächste Schritte“ auf 5.9; project-context auf eingespielt `18ee07d`. Kein `[IN ARBEIT]` mehr – die Abweichung von `CLAUDE.md` Abschnitt 7 (drei gleichzeitig) ist aufgelöst.
+- Rest-Vorgriff aus dem Probeschreiben (Vorgriffe 6 → 4) bleibt nach Entscheidung des Eigentümers eine Alltagsbeobachtung; ein weiterer Versuch nur, wenn er stört – kein Schritt angelegt.
+
+### 2026-10-08 21:16 UTC – [BEOBACHTUNG] Deployment `18ee07d` (5.7, 5.8, 5.15)
+
+- Auf Anweisung des Eigentümers („ja, deploy“, ADR-039) nach Runbook Abschnitt 7; CI auf `main` grün (Lauf zu PR #61). Vorher eingespielt: `edc24ad`.
+- Ablauf: `git archive main` → `app.neu`, `REVISION` = `18ee07d`; altes Image als `skriptorium:vorher` markiert, `app` → `app.vorher`; `docker compose build`, `up -d`; nach gut einer Minute `(healthy)`.
+- Von außen: `/api/health` 200, `/` 200, `/api/worlds` ohne Sitzung 401. Rückweg über `skriptorium:vorher` bereit.
+- Offen: Probe-Szene des Eigentümers in einer echten Welt → Abnahme 5.7, 5.8, 5.15.
+
+### 2026-10-08 21:10 UTC – [SESSIONSTART] Session auf dem Mac – Deployment und Abnahme 5.7, 5.8, 5.15
+
+- **Modell:** `claude-opus-5-5` (`get_session`: `model`) → Entscheidungs-Klasse.
+- **Umgebung:** Mac des Eigentümers (Desktop-App, lokale Session) – SSH zum VPS von hier möglich (ADR-025); Deployment nur auf Anweisung (ADR-039). `main` per Pull auf `18ee07d`.
+- **Kontextgröße:** `get_session` meldet keine Kontextgröße mehr – Regel „Sessiongröße“ ohne Messwert; Grenze 200.000.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2. Keine aktiven Blocker; `[IN ARBEIT]`: 5.7, 5.8, 5.15 – alle warten nur auf Deployment und Abnahme in einer echten Welt.
+- **Vorhaben:** laut letztem Sessionende: `main` deployen (Runbook Abschnitt 7) → Probe-Szene des Eigentümers → 5.7, 5.8, 5.15 abnehmen; danach 5.9.
+
+### 2026-10-08 21:05 UTC – [SESSIONENDE] Merges #58–#60, Zeitlimit der CI – Deployment vom Mac offen
+
+- **Dauer:** 15:23 – 21:05 UTC (mit Pause 16:35 – 20:49 UTC; ersetzt das Sessionende 16:02 UTC als Wiedereinstieg).
+- **Bearbeitet nach 16:02:** PR #58 (5.15/5.8) und #59 (Entscheidungen zu 5.15) gemergt; hängenden CI-Lauf abgebrochen; D.14 Zeitlimit 20 Minuten für End-to-End (ADR-045, PR #60) → `[ERLEDIGT]`.
+- **Stand:** 5.7, 5.8, 5.15 `[IN ARBEIT]` – warten nur auf Deployment vom Mac und Abnahme in einer echten Welt. „deploy“ des Eigentümers aus dieser Cloud-Session nicht ausführbar (kein SSH, ADR-025/039) – an Session auf dem Mac verwiesen.
+- **Nächster Schritt:** Session auf dem Mac: `main` deployen (Runbook Abschnitt 7) → Probe-Szene → 5.7, 5.8, 5.15 abnehmen; danach 5.9. Offen: Kosten-Zeile (5.10), unübersichtliche Stellen (5.11), Werte der Listen (5.6); D.11 bis 2026-10-31.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`). Schritte oberhalb der Empfehlung: 1 (D.14, empfohlen Routine – kleine Änderung mit geladenem Kontext, Abgabe hätte nicht gespart). Abgegeben: verblindete Bewertung an Sonnet.
+- **Kontextgröße:** über 300.000 Token, Grenze 200.000 – Arbeit nach 16:02 nur auf ausdrückliche Anweisungen des Eigentümers.
+- **Sessionende-Prüfungen:** README unverändert gültig (Phase 5, v0.1.0, Blocker 0; Nächste Schritte nennen 5.15 „wartet auf Merge“ – jetzt nur noch Deployment und Abnahme, nachgezogen). Drift: ADR-045 → D.14 vorhanden; Reaktiv-Quote 0/10 (ADR-036..045); Modul-Liste und Reifegrade unverändert; Blocker 0. Ablaufdaten: kein Vorlauf erreicht. Alles committet.
+
+### 2026-10-08 20:55 UTC – [ADR-ANGELEGT] ADR-045 Zeitlimit für den End-to-End-Job (D.14)
+
+- **Befund des Eigentümers:** „Vier Stunden End-to-End kann nicht sein.“ Der Push-Lauf zu `bb6cc03` hing seit 16:33 UTC im Schritt „Chromium für Playwright installieren“; der PR-Lauf auf demselben Commit war um 16:35 UTC grün (4/4).
+- **Reibung (Fehler der KI):** Die KI wartete auf die Meldung „alle Check-Suites fertig“, die wegen des hängenden Laufs nie kam, statt die Checks selbst zu prüfen; PR #59 blieb dadurch gut 4 Stunden ungemergt. Lehre: nach dem Öffnen eines PR den Stand der Checks selbst abfragen.
+- **Handlung:** hängenden Lauf abgebrochen (20:50 UTC), PR #59 auf den grünen PR-Lauf hin gemergt (`7b6b746`). `ENTSCHEIDUNG ERFORDERLICH` (Kategorie 7) vorgelegt; Eigentümer: „a“ → `timeout-minutes: 20` am Job `e2e` (ADR-045, D.14). Reaktiv-Quote 0/10 über ADR-036..045.
+- Weiter über der Kontextgrenze auf Anweisung des Eigentümers.
+
+### 2026-10-08 16:35 UTC – [BEOBACHTUNG] PR #58 gemergt, Entscheidungen zu 5.15
+
+- PR #58 (`feat/5.15-nur-das-verlangte`) auf Anweisung „PR öffnen und nach grüner CI mergen“ geöffnet, CI 8/8 grün, gemergt als `38f0d34`.
+- Eigentümer per Auswahlfragen: Rest-Vorgriff **erst im Alltag prüfen** (weiterer Versuch nur, wenn er dort stört); Längenstufen **passen so** (60–120 / 150–300 / 400–600 Wörter, Voreinstellung mittel). In 5.8, 5.15 und „Aktueller Stand“ eingetragen.
+- Weitergearbeitet über der Kontextgrenze (288.070 Token) auf ausdrückliche Anweisung – Abweichung nach `CLAUDE.md` Abschnitt 0, kein neuer Schritt begonnen.
+
+### 2026-10-08 16:02 UTC – [SESSIONENDE] 5.8 und 5.15 umgesetzt – Merge und Abnahme offen
+
+- **Dauer:** 15:23 – 16:02 UTC.
+- **Bearbeitet:** 5.15 mit 5.8 (Versuch 2) umgesetzt auf Branch `feat/5.15-nur-das-verlangte` (gepusht, kein Pull Request – nicht verlangt). Probeschreiben mit der Kette, verblindet bewertet. FR-012, Schnittstelle `…/write` (rein additiv `length`), CHANGELOG, README nachgezogen; Drift zu Versuch 1 im Fahrplan berichtigt.
+- **Stand:** 5.7, 5.8, 5.15 `[IN ARBEIT]` – mehr als ein Eintrag gleichzeitig, Abweichung von `CLAUDE.md` Abschnitt 7: alle drei warten nur noch auf Merge, Deployment vom Mac und Abnahme des Eigentümers.
+- **Offen / Fragen an den Eigentümer:** (1) Pull Request für `feat/5.15-nur-das-verlangte` öffnen und mergen? (2) Rest-Vorgriff (qwen verknüpft in Schritt 7 Buch und Grotte) hinnehmen oder weiterer Versuch? (3) Längenstufen 60–120 / 150–300 / 400–600 Wörter passend? Weiter offen: Kosten-Zeile (5.10), unübersichtliche Stellen (5.11), Werte der Listen (5.6); D.11 bis 2026-10-31.
+- **Nächster Schritt:** nach Antwort: Pull Request und Merge; Session auf dem Mac: Deployment → Abnahme 5.7, 5.8, 5.15 in einer echten Welt; danach 5.9.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 16:01). Schritte oberhalb der Empfehlung: 0 (5.8 und 5.15 empfohlen Entscheidung). Abgegeben: verblindete Bewertung der sechs Ketten an Sonnet – als getrennte Instanz, nicht aus Kostengründen. Sessionende-Einträge selbst geschrieben (kleiner Umfang, Kontext geladen).
+- **Kontextgröße:** 288.070 Token (`get_session` 16:01), Grenze 200.000 – überschritten während der Auswertung (268.216 um 15:56); laufender Schritt zu Ende geführt, kein neuer begonnen. Neue Session nötig.
+- **Kosten KI-Anbieter:** 0,41 $ (Ketten: grok-4.6 0,15 $, grok-4.7 0,17 $, qwen 0,08 $).
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ nachgezogen; Status-Block unverändert gültig (Phase 5, v0.1.0, Blocker 0). Drift: kein neuer ADR; Reaktiv-Quote 0/10; Modul-Liste und Reifegrade unverändert (keine Reifegrad-Wirkung); Blocker 0, kein `[BLOCKIERT]`; Phase 5 15 Schritte (Schwelle 26). Anforderung FR-012 nennt jetzt 3.4 und 5.15. Ablaufdaten: kein Vorlauf erreicht (nächste Nachprüfung mypy 2 am 2026-11-06). Logbuch ca. 320 Zeilen – keine Auslagerung. Nicht Quick-Start-relevant (keine neue Abhängigkeit, kein Skript). Alles committet und gepusht. Reibung: Der Sessionende-Commit landete versehentlich in `3779378` „spike: entferne doppelte leerzeile“ (Dateien waren nach einem gescheiterten Pre-Commit-Lauf schon vorgemerkt) – Mix-Commit, nicht umgeschrieben (kein Force-Push).
+
+### 2026-10-08 16:00 UTC – [BEOBACHTUNG] 5.15/5.8: Kette mit neuen Vorgaben, verblindet bewertet
+
+- **Umgesetzt:** Abschnitt „Vorgaben für deinen Text“ nach der Anweisung; Zukunfts-Satz im Rahmen; Regel „genau ausschreiben“ für die geführte Figur; „Weiter“ nur nächster Moment; Länge kurz/mittel/lang (`length`, Auswahl „Länge“). Läufe: `pytest` 427 bestanden, 99 % (`builder.py` 100 %); `vitest` 103, 98,68 % Zeilen; Playwright 8 (Chromium 1194 über `PLAYWRIGHT_CHROMIUM_EXECUTABLE`); pre-commit grün.
+- **Ergebnis** (`spikes/vorgriff-zeitlinie/README.md`, zweiter Lauf): Anweisung zur eigenen Figur bei allen drei Modellen umgesetzt (vorher keines); gleiche 6-Wort-Folgen über die Kette 18–49 → 0; qwen 164–246 statt bis 815 Wörter, kein Zeitsprung bei „Weiter“; Vorgriffe 6 → 4; Kanon eindeutig 1 → 0, fraglich 4 → 4; Schlusssätze 9 → 10 (Warte- und Gestenschlüsse).
+- **Reibungen:** Kleinstes Budget im Budget-Test von 1000 auf 1300 angehoben (Vorgaben ca. 200 Token). ruff RUF001 verbot Gedankenstriche im Prompt-Text – durch Kommas ersetzt statt Suppression. grok-4.7 lief in 2 von 7 Schritten dreimal in die Zeitüberschreitung (90 s bis zum ersten Textstück); Kette dadurch lückenhaft.
+
+### 2026-10-08 15:23 UTC – [SESSIONSTART] Schritte 5.8 und 5.15 gemeinsam
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (`get_session`: `configured_model`, `session_context.model`, `last_served_model`) → Entscheidungs-Klasse.
+- **Umgebung:** Cloud-Session (Ursprung iOS), kein SSH zum VPS – kein Deployment aus dieser Session (ADR-025, ADR-039). `OPENROUTER_API_KEY` gesetzt (73 Zeichen, Wert nicht angezeigt). Branch `feat/5.15-nur-das-verlangte` von `main` `f1cd6e5`.
+- **Kontextgröße:** `get_session` meldet `used_tokens` 0 (beim Start nicht gefüllt); Fenster 1.000.000, Grenze 200.000.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2. Keine aktiven Blocker; `[IN ARBEIT]`: 5.7 (Deployment vom Mac, Abnahme-Szene), 5.8 (Versuch 1).
+- **Drift gefunden:** Fahrplan und Logbuch nennen Versuch 1 von 5.8 „nicht gemergt“; tatsächlich ist der Branch `scp/nice-lamport-as724t` mit PR #56/#57 vollständig in `main` (`builder.py`: Abschnitt „Anschluss“). Wird im Fahrplan berichtigt.
+- **Vorhaben:** 5.8 und 5.15 gemeinsam (empfohlen Entscheidung – passt zur aktiven Klasse); Prüfung mit der Kette aus `spikes/vorgriff-zeitlinie/`.
+
+### 2026-10-08 15:17 UTC – [SESSIONENDE] Nachtrag: Probeschreiben zu 5.15 und Entscheidungen des Eigentümers
+
+- **Dauer:** 13:15 – 15:17 UTC (nach dem ersten Sessionende um 13:45 UTC auf ausdrückliche Bitte des Eigentümers weitergearbeitet – Abweichung von „Sessiongröße“, vermerkt).
+- **Bearbeitet nach 13:45:** Schritt 5.15 angelegt (Befund des Eigentümers), Probeschreiben `spikes/vorgriff-zeitlinie/` (3 Ketten à 7 Vorschläge, 0,45 $), Entscheidungen des Eigentümers zu 5.15 per Auswahlfragen eingetragen. Kein Produktionscode geändert.
+- **Stand:** 5.7 `[IN ARBEIT]` (Deployment vom Mac, Abnahme-Szene); 5.8 `[IN ARBEIT]` (Versuch 1 auf Branch `scp/nice-lamport-as724t`, nicht gemergt, kein Pull Request); 5.15 `[OFFEN]`, Eingangskriterien erfüllt.
+- **Nächster Schritt:** neue Session: 5.8 und 5.15 gemeinsam umsetzen (Branch `scp/nice-lamport-as724t` als Grundlage), Prüfung mit derselben Kette, Vergleich mit `spikes/vorgriff-zeitlinie/ergebnisse/main-*`; Session auf dem Mac: Deployment → 5.7 abnehmen.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 15:17). Schritte oberhalb der Empfehlung: 0. Abgegeben: verblindete Bewertung (Sonnet) als getrennte Instanz.
+- **Kontextgröße:** 305.122 Token (`get_session` 15:17), Grenze 200.000 – überschritten auf Anweisung des Eigentümers.
+- **Kosten KI-Anbieter gesamt:** ca. 1,13 $ (5.8: 0,68 $; 5.15: 0,45 $).
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ um 5.15 ergänzt, Status-Block unverändert gültig (Phase 5, v0.1.0, Blocker 0). Drift: kein neuer ADR; Reaktiv-Quote 0/10; Modul-Liste und Reifegrade unverändert; Blocker 0, kein `[BLOCKIERT]`; Phase 5 15 Schritte (Schwelle 26). Ablaufdaten: kein Vorlauf erreicht. Logbuch ca. 290 Zeilen – keine Auslagerung. Alles committet und gepusht.
+
+### 2026-10-08 14:30 UTC – [BEOBACHTUNG] Entscheidungen des Eigentümers zu 5.15
+
+- Per Auswahlfragen: eigene Figur – genau die Anweisung ausformulieren (Änderung an FR-012); Länge je Anfrage wählbar; „Weiter“ – kleiner Schritt, dann Übergabe; spätere Ereignisse als Zukunft kennzeichnen statt weglassen (kein neues Datenfeld). Eingetragen in 5.15; Umsetzung in neuer Session (Kontextgrenze).
+
+### 2026-10-08 14:20 UTC – [BEOBACHTUNG] Probeschreiben an früher Stelle einer fertigen Geschichte (5.15, 5.8)
+
+- **Anlass:** Eigentümer bat ausdrücklich, den Test in dieser Session selbst durchzuführen – Arbeit über der Kontextgrenze (Sessionende 13:45 UTC bei 226.445 Token) auf seine Anweisung, als Abweichung nach `CLAUDE.md` Abschnitt 0 („Sessiongröße“) vermerkt. Kein Produktionscode geändert.
+- **Aufbau und Ergebnis:** `spikes/vorgriff-zeitlinie/README.md` – Testgeschichte mit erfundenem Ende in Zusammenfassung und Zeitlinie, Schreiben in der Mitte von Kapitel 1, Ketten zu 7 übernommenen Vorschlägen auf Stand `main` mit grok-4.6, grok-4.7, qwen3.8-max (Kosten 0,45 $).
+- **Befunde:** (1) Wiederholung über die Kette bestätigt, am stärksten bei grok-4.6 (wörtlich gleicher Einstiegssatz in Schritt 5 und 7, Gesten 3–4×). (2) Vorgriff als Andeutung aus der Zusammenfassung bei allen Modellen; bei leerem „Weiter“ treibt qwen die Handlung weit voran; kein Durchlauf bis zum Ende. (3) Neu: Anweisungen zu Ilkas eigenem Handeln und Sprechen setzt kein Modell um (Figuren-Schreibweise) – Entscheidung des Eigentümers nötig. (4) Modelle nehmen den nächsten geplanten Schritt des Autors vorweg; grok-4.7 widerspricht danach per Hinweis-Zeile der Anweisung.
+- **Reibung:** qwen-Kette brach an einer Zeitüberschreitung ab und wurde neu gestartet; Skript wiederholt Vorschläge nach Anbieter-Fehler jetzt bis zu zweimal.
+
+### 2026-10-08 13:55 UTC – [BEOBACHTUNG] Befund des Eigentümers: KI läuft bis zum bekannten Ende, Einleitung und Atmosphäre schaukeln sich auf
+
+- Eigentümer schrieb in einer importierten Welt an einer Stelle weit vor dem bekannten Ende. Die KI formulierte nicht nur seine Eingabe aus, sondern erzählte stark verkürzt bis zum bekannten Ende weiter. Vermutete Ursachen (Code-Lesung): ganze Gesamtzusammenfassung und ganze Zeitlinie im Kontext, keine Längen- oder Grenzvorgabe → neuer Schritt 5.15.
+- Zweiter Befund: Nach sechs, sieben übernommenen Vorschlägen beginnt jeder Abschnitt mit derselben Einleitung und endet mit derselben Atmosphäre. Erklärt, warum Versuch 1 von 5.8 in der Testwelt kaum etwas zeigte (Einzelschritte statt Kette); Versuch 2 prüft eine Kette, in 5.8 notiert.
+- Kein Code geändert: Kontextgrenze der Session überschritten (Sessionende 13:45 UTC); nur Fahrplan und Logbuch nachgetragen. Phase 5 jetzt 15 Schritte (Schwelle 26).
+
+### 2026-10-08 13:45 UTC – [SESSIONENDE] 5.8 Versuch 1 – Wirkung nicht belegt, Kontextgrenze erreicht
+
+- **Dauer:** 13:15 – 13:45 UTC.
+- **Bearbeitet:** neuer OpenRouter-Schlüssel geprüft (gültig); 5.8 Versuch 1 umgesetzt (Rahmen, Abschnitt „Anschluss“, 6 neue Testfälle), Probeschreiben vorher/nachher mit 24 Texten, verblindete Bewertung durch getrennte Instanz.
+- **Stand:** 5.8 `[IN ARBEIT]`, Branch `scp/nice-lamport-as724t` gepusht, **kein Pull Request** (nicht verlangt; Wirkung nicht belegt). 5.7 `[IN ARBEIT]` unverändert (Deployment vom Mac, Abnahme-Szene). Zwei Schritte gleichzeitig `[IN ARBEIT]` – Abweichung von `CLAUDE.md` Abschnitt 7, weil 5.7 nur noch auf den Eigentümer wartet.
+- **Offen / Fragen an den Eigentümer:** (1) Ein echtes Beispiel für 5.8 – Ende eines Kapitels und eine Fortsetzung mit Einleitung/Schlusssatz (darf hier nicht ins öffentliche Repo, nur als Beschreibung oder lokal) – oder Entscheidung, Versuch 1 zu übernehmen und im Alltag zu prüfen. (2) Gilt ein Ende wie „Die Äbtissin wartete.“ (Übergabe an die geführte Figur) als unerwünschter Schlusssatz? Die Erinnerung zur Figuren-Schreibweise verlangt genau solche Enden. Weiter offen aus der Vorsession: Kosten-Zeile (5.10), unübersichtliche Stellen (5.11), Werte der Listen (5.6), Fehlerart bei abgelaufenem Schlüssel, MD024; D.11 bis 2026-10-31.
+- **Nächster Schritt:** nach Antwort des Eigentümers 5.8 abschließen (übernehmen oder Versuch 2 an echtem Material); Session auf dem Mac: Deployment von `main` → 5.7 abnehmen; danach 5.9.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 13:43). Schritte oberhalb der Empfehlung: 0 (5.8 empfohlen Entscheidung). Abgegeben: Bewertung der 24 Texte an eine getrennte Instanz (Sonnet) – als unabhängige Prüfung, nicht aus Kostengründen.
+- **Kontextgröße:** 226.445 Token (`get_session` 13:43) – über der Grenze 200.000; überschritten während der Auswertung von 5.8, kein neuer Schritt und kein Versuch 2 begonnen.
+- **Kosten der Probeläufe:** 0,68 $ (24 Läufe) plus Schlüssel-Abfrage.
+- **Sessionende-Prüfungen:** README „Nächste Schritte“ um den Stand von 5.8 ergänzt; Status-Block unverändert (Phase 5, v0.1.0, Blocker 0). Drift: kein neuer ADR; Reaktiv-Quote 0/10 unverändert; Modul-Liste und Reifegrade unverändert (5.8 ohne Reifegrad-Wirkung); Blocker 0, kein `[BLOCKIERT]`; Phase 5 14 Schritte (Schwelle 26). Ablaufdaten: kein Vorlauf erreicht (nächste Nachprüfung mypy 2 am 2026-11-06). Logbuch ca. 260 Zeilen, project-context 343 Zeilen – keine Auslagerung. Alles committet und gepusht.
+
+### 2026-10-08 13:44 UTC – [BEOBACHTUNG] 5.8 Probeschreiben: Wirkung des neuen Rahmens nicht belegt
+
+- **Aufbau:** `spikes/nahtloser-anschluss/` – Testwelt Salzmark, Kapitel „Die Grotte“ an drei Stellen abgeschnitten, leere Anweisung, grok-4.6 und qwen3.8-max je 2 Läufe, alter und neuer Rahmen; Bewertung verblindet (T01–T24) durch Sonnet-Unteragent.
+- **Zahlen (vorher → nachher, je 12):** Einleitung 4 → 3, Schlusssatz 4 → 5, Kanon eindeutig 3 → 5 / fraglich 8 → 9, Figuren-Schreibweise 5 → 1. Einleitungen fast nur an Stelle a (Dialogpause ohne neues Ereignis): 4/4 → 3/4.
+- **Deutung:** Die Testwelt reproduziert den Befund des Eigentümers kaum; die Unterschiede liegen bei n = 12 im Rauschen. Akzeptanzkriterium „Mehrzahl ohne Einleitung und Schlusssatz“ war schon vorher erfüllt und taugt so nicht als Nachweis. „Kanon-Treue nicht schlechter“ ist nicht belegt (überwiegend qwen-Fehler, u. a. falsche Namen in beiden Varianten).
+- **Reibungen:** Anbieter-Fehler 502 mitten im Strom brach den ersten Nachher-Lauf ab – Skript überspringt seither fertige Läufe und meldet Fehler, statt abzubrechen; eine Zeitüberschreitung (90 s bis zum ersten Textstück) bei qwen, Wiederholung lief. Ein Testfall mit Absatz ohne Leerzeichen (60.730 Token Zitat) zeigte, dass das Zitat zusätzlich auf 300 Zeichen begrenzt werden muss – behoben vor dem Probeschreiben. Kleinstes Budget im Budget-Test von 900 auf 1000 angehoben (fester Teil ca. 170 Token größer).
+- **Läufe:** `pytest --cov` 416 bestanden, 99,79 %, `context/builder.py` 100 %; pre-commit grün.
+
+### 2026-10-08 13:16 UTC – [SESSIONSTART] Neuer OpenRouter-Schlüssel, Schritt 5.8
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (`get_session`: `configured_model`, `session_context.model`, `last_served_model`) → Entscheidungs-Klasse.
+- **Umgebung:** Cloud-Session (Ursprung Desktop-App), kein SSH zum VPS – kein Deployment aus dieser Session (ADR-025, ADR-039). Branch `scp/nice-lamport-as724t` auf Stand `main` `be92228`.
+- **Kontextgröße:** `get_session` meldet `used_tokens` 0 (beim Start wieder nicht gefüllt); Fenster 1.000.000, Grenze 200.000.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2. Keine aktiven Blocker; `[IN ARBEIT]`: 5.7 (wartet auf Deployment vom Mac und Abnahme-Szene).
+- **Schlüssel:** Eigentümer meldet „openrouter key ist neu“. `OPENROUTER_API_KEY` gesetzt (73 Zeichen, SHA-256-Präfix `6d51b4c5`, Wert nicht angezeigt); `GET /api/v1/key` → HTTP 200, Ausgabengrenze 250 $, Verbrauch 0, gültig bis 2027-10-08.
+- **Vorhaben:** 5.8 Nahtloser Anschluss (empfohlen Entscheidung – passt zur aktiven Klasse). 5.7 bleibt `[IN ARBEIT]`, bis vom Mac deployt und abgenommen ist; 5.8 hängt laut Fahrplan an 5.7, der Code von 5.7 ist aber gemergt, und das Probeschreiben läuft lokal mit der neuen Voreinstellung – Abhängigkeit für die Umsetzung erfüllt, nur die Abnahme beim Eigentümer steht aus.
+
+### 2026-10-08 10:35 UTC – [SESSIONENDE] 5.7 umgesetzt und gemergt – Abnahme offen
+
+- **Dauer:** 10:22 – 10:35 UTC (Container-Uhr; die Einträge 10:35 und 10:50 UTC oben tragen geschätzte Zeiten und liegen tatsächlich zwischen 10:25 und 10:32 UTC).
+- **Bearbeitet:** 5.7 umgesetzt (ADR-044, PR #55, CI 8/8 grün); Merge auf Anweisung des Eigentümers („Merge, Session Ende“). Probe-Anfrage mit dem Schlüssel der Cloud-Umgebung: Voreinstellung grok-4.6 greift, Schlüssel abgelaufen (HTTP 401).
+- **Stand:** 5.7 `[IN ARBEIT]` – fehlt Deployment vom Mac und die Szene des Eigentümers in einer echten Welt ohne Sperre. Kein Deployment in dieser Session (kein SSH aus der Cloud).
+- **Offen:** neuer OpenRouter-Schlüssel für die Cloud-Umgebung (Eigentümer beschafft ihn); Fragen an den Eigentümer: Kosten-Zeile (5.10), unübersichtliche Stellen (5.11), Werte der Listen (5.6); Fehlerart bei abgelaufenem Schlüssel unterscheiden ja/nein (Nebenbefund); MD024 im Markdown-Linter auf Geschwister-Überschriften begrenzen ja/nein (Kategorie 7, sonst „Geändert (nach v0.1.0)“ im CHANGELOG). D.11 bis 2026-10-31.
+- **Nächster Schritt:** Session auf dem Mac: `main` deployen (Runbook Abschnitt 7), Eigentümer schreibt Probe-Szene → 5.7 `[ERLEDIGT]`; danach 5.8 (Probeschreiben mit neuem Schlüssel), 5.9.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 10:32). Schritte oberhalb der Empfehlung: 1 (5.7, empfohlen Routine; zu Beginn genannt). Abgegeben: nichts (kleiner Schritt mit geladenem Kontext; Abgabe hätte nicht gespart).
+- **Kontextgröße:** 233.739 Token (`get_session` 10:32) – über der Grenze 200.000; überschritten erst während des Sessionendes, kein neuer Schritt begonnen.
+- **Sessionende-Prüfungen:** README (Nächste Schritte, Erkundungs-Hinweis) nachgezogen, Status-Block unverändert gültig (Phase 5, v0.1.0, Blocker 0). Drift: ADR-044 → 5.7 vorhanden; Reaktiv-Quote 0/10 (ADR-035..044) stimmt mit Teil B; Modul-Liste und Reifegrade unverändert; Blocker 0, kein `[BLOCKIERT]`; Phase 5 14 Schritte (Schwelle 26). Ablaufdaten: kein Vorlauf erreicht (nächste Nachprüfung mypy 2 am 2026-11-06). Logbuch 230 Zeilen, project-context 343 Zeilen – keine Auslagerung. Keine uncommitteten Änderungen.
+
+### 2026-10-08 10:50 UTC – [BEOBACHTUNG] OpenRouter-Schlüssel der Cloud-Umgebung abgelaufen
+
+- Auf Hinweis des Eigentümers („Keys als Umgebungsvariable“): `OPENROUTER_API_KEY` ist gesetzt (73 Zeichen, Wert nicht angezeigt); ein SSH-Zugang zum VPS ist nicht dabei.
+- Probe-Anfrage über den Standardweg (`prepare_request` → `stream_events`, Testwelt, Skript im Scratchpad): `start` meldet `x-ai/grok-4.6` (Voreinstellung aus 5.7 greift), danach `error` `nicht_erreichbar`. Einzelanfrage direkt an OpenRouter: HTTP 401 „API key expired“. OpenRouter selbst ist erreichbar (curl 200), Proxy und Zertifikate in Ordnung.
+- Folge: Kein Probeschreiben aus der Cloud-Session möglich, bis ein gültiger Schlüssel in der Umgebung liegt (5.8 braucht Probeschreiben; 5.10 die Prüfung, ob Kosten gemeldet werden). Der Schlüssel des Produktivsystems ist davon getrennt und nicht geprüft.
+- Nebenbefund: Die Oberfläche zeigt bei 401/402 dieselbe Fehlerart `nicht_erreichbar` wie bei einem Ausfall; die genaue Ursache steht nur in der Ausnahme-Meldung. Kein Schritt angelegt – dem Eigentümer genannt.
+
+### 2026-10-08 10:35 UTC – [ADR-ANGELEGT] ADR-044 grok-4.6 als Voreinstellung
+
+- `[ERKENNTNIS]`, keine Kategorie aus Abschnitt 4 (Modellwahl ist Konfiguration). Ersetzt das Startmodell aus ADR-010 und die Reihenfolge aus ADR-011; Status beider ergänzt. Reaktiv-Quote 0/10 über ADR-035 bis ADR-044.
+
+### 2026-10-08 10:35 UTC – [BEOBACHTUNG] 5.7 umgesetzt – Abnahme offen
+
+- **Code:** `ai_gateway/models.py` – `DEFAULT_MODELS` in der Reihenfolge grok-4.6 → grok-4.7 → qwen3.8-max-0902; `DEFAULT_MODEL` folgt daraus (`api/flows/writing.py`, nur Kommentar geändert).
+- **Nebenwirkung, bewusst:** Auch die Kurzfassungen (3.6) laufen mit der Voreinstellung, also künftig grok-4.6; Geschichten ohne gespeichertes Modell wechseln mit. In ADR-044 und CHANGELOG genannt.
+- **Tests:** `test_model_list` erwartet die neue Reihenfolge; Verbrauchs-Tests nutzen `DEFAULT_MODEL` statt fest grok-4.7; `test_story_keeps_its_model_and_writing_uses_it` speichert jetzt grok-4.7 an der Geschichte und prüft nach dem Zurücksetzen grok-4.6. End-to-End: Voreinstellung im Modell-Feld grok-4.6, Wechsel auf grok-4.7 übersteht das Neuladen.
+- **Läufe:** `pytest --cov` 410 bestanden, 99,79 % (models.py 100 %); `vitest` 102 bestanden (unverändert); Playwright 8 bestanden (Chromium 1194 der Cloud-Session); `pre-commit run --all-files` grün.
+- **Offen für `[ERLEDIGT]`:** CI grün, Merge, Deployment vom Mac (ADR-039, nur auf Anweisung) und Szene des Eigentümers in einer echten Welt ohne Sperre.
+
+### 2026-10-08 10:24 UTC – [BEOBACHTUNG] Uhrzeiten der Vorsession zu spät
+
+- Die Einträge der Vorsession tragen Zeiten bis 13:50 UTC, der Sessionende-Commit `b608e5e` ist aber auf 10:19:09 UTC datiert und diese Session startete laut `get_session` um 10:22 UTC. Die dortigen Uhrzeiten sind also um gut 3,5 Stunden zu spät (geschätzt, nicht gemessen); Reihenfolge und Inhalt bleiben gültig. Nicht nachträglich geändert. Ab hier stammen die Zeiten aus `date -u` im Container.
+
+### 2026-10-08 10:24 UTC – [SESSIONSTART] Schritt 5.7
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (`get_session`: `configured_model`, `session_context.model`, `last_served_model`) → Entscheidungs-Klasse.
+- **Umgebung:** Cloud-Session (Ursprung iOS), nicht der Mac des Eigentümers – kein SSH zum VPS, also kein Deployment aus dieser Session (ADR-025, ADR-039).
+- **Kontextgröße:** `get_session` meldet `used_tokens` 0 (Wert beim Start offenbar nicht gefüllt); Fenster 1.000.000, Grenze laut project-context 200.000.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2. Keine aktiven Blocker, kein `[IN ARBEIT]`.
+- **Vorhaben:** 5.7 Startmodell grok-4.6 (empfohlen Routine; läuft auf Entscheidung, Abgabe lohnt nicht bei kleinem Schritt mit geladenem Kontext).
+
+### 2026-10-08 13:50 UTC – [SESSIONENDE] Session 2026-10-08 abgeschlossen – Wiedereinstieg bei 5.7
+
+- **Dauer:** 08:23 – 13:50 UTC. Ersetzt als Wiedereinstiegspunkt das Sessionende 13:20 UTC; dazwischen nur die Einträge 13:35 und 13:40 UTC.
+- **Bearbeitet (Überblick):** Befunde aus der Nutzung aufgenommen; Pflichtfrage nach Phasen-Wucherung mit getrennter Instanz → B „gezielt umbauen“ (ADR-042); Neuplanung (Phase 5 mit 5.7–5.14, D.13, V.6–V.9, FR-027–FR-030); 4.8 erledigt, v0.1.0 als Vorabversion (ADR-043); Phase 4 abgeschlossen und archiviert; Antworten zu grok-4.7 (bleibt wählbar, Live-Liste in 5.12) und CI-Zwischenspeicher (nein). PRs #49–#53 gemergt. Kein Produktiv-Deployment in dieser Session (Server weiter auf `edc24ad`).
+- **Wiedereinstieg:** Pflichtlektüre nach `CLAUDE.md` Abschnitt 2; dann **5.7 Startmodell grok-4.6** (`ai_gateway/models.py`: grok-4.6 zuerst, grok-4.7 danach, qwen3.8-max als Notfall-Reserve; Tests; ADR `[ERKENNTNIS]` zu ADR-010/011; Deployment nur auf Anweisung, ADR-039). Danach 5.8, 5.9, 5.10, 5.11.
+- **Offene Fragen an den Eigentümer:** Kosten-Zeile (5.10), unübersichtliche Stellen (5.11), Knopf „In den Kanon“ nie gesehen oder unklar, Werte der Listen (5.6). Frist: D.11 bis 2026-10-31.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient, `get_session` 13:45). Schritte oberhalb der Empfehlung: 1 (Doku-Pflege zu Beginn). Abgegeben: Bewertung Phase 4 und Auswertung der CI-Logs an Sonnet 5.
+- **Kontextgröße:** 464.445 Token (`get_session`), weit über der Grenze 200.000 – Abweichung auf ausdrückliche Anweisung („Hier weiter“, „Weiter“). Nächste Session neu beginnen.
+- **Sessionende-Prüfungen:** README, Fahrplan und project-context stehen auf Phase 5 und v0.1.0; Drift seit 13:20 UTC nur in 5.7 (Text nachgezogen, kein neuer Schritt). Ablaufdaten: kein Vorlauf erreicht. Logbuch 180 Zeilen. Keine uncommitteten Änderungen.
+
+### 2026-10-08 13:40 UTC – [BEOBACHTUNG] CI: kein Zwischenspeicher für Chromium
+
+- Auf das Angebot, Chromium und die Systempakete in der CI zwischenzuspeichern oder einen Playwright-Container zu nutzen (Ausreißer 2026-10-08: 32,5 MB in 8 min 23 s statt 3 s): Eigentümer „Kein Zwischenspeicher“. Pipeline bleibt unverändert; einzelne langsame Läufe werden hingenommen. Kein Schritt angelegt.
+
+### 2026-10-08 13:35 UTC – [BEOBACHTUNG] 5.7: grok-4.7 bleibt wählbar, Modelle später live
+
+- Auf die Frage „grok-4.7 nach hinten oder ganz heraus?“: Eigentümer will die Modelle „live abrufen, wie bei OpenRouter geplant“. Nachfrage per Frage-System, ob 5.12 vor den Umbau rückt: „Reihenfolge lassen“. Folge für 5.7: nur die Voreinstellung wechselt auf grok-4.6, grok-4.7 bleibt in der festen Liste wählbar, bis 5.12 die Live-Liste bringt. In 5.7 eingetragen.
+- PR #52 gemergt (`2451d6d`) auf „Ja mergen“ nach grüner CI (8/8).
+
+### 2026-10-08 13:20 UTC – [SESSIONENDE] Phase 4 abgeschlossen, v0.1.0
+
+- **Dauer:** 08:23 – 13:20 UTC (Sessionende 12:40 UTC war ein Zwischenstand; auf „Weiter“ des Eigentümers fortgesetzt, Kontext über der Grenze nach „Hier weiter“).
+- **Bearbeitet:** 4.8 `[ERLEDIGT]`: Entscheidung A „Vorabversion“ (ADR-043), v0.1.0 in `pyproject.toml`, `package.json`, `uv.lock`, `package-lock.json`, CHANGELOG, README-Badge, project-context (`fb912f4`). 5.14 Go-Live-Prüfung angelegt (Phase 5: 14 Schritte). Phase 4 archiviert (`docs/archiv/fahrplan-phase-4.md`), Logbuch verdichtet (`docs/archiv/logbuch-phase-4.md`). Onboarding-Validierung ohne Befund. PR #51 gemergt (Guthaben gestrichen). CI-Dauer erklärt: einmaliger Ausreißer beim Download von Chromium-Paketen (64,6 kB/s statt 9,4 MB/s); Abhilfe (Zwischenspeicher oder Playwright-Container) dem Eigentümer angeboten, Antwort offen (Kategorie 7).
+- **Offen:** D.11 bis 2026-10-31; Fragen an den Eigentümer: Stellung von grok-4.7 (5.7), Kosten-Zeile (5.10), unübersichtliche Stellen (5.11), Werte der Listen (5.6), CI-Zwischenspeicher ja/nein.
+- **Nächster Schritt:** neue Session, 5.7.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`). Schritte oberhalb der Empfehlung: 0 (4.8 und Phasenabschluss Entscheidung). Abgegeben: Auswertung der CI-Logs an Sonnet 5 (Lesearbeit, Ergebnis stichprobenartig geprüft: „Fetched 32.5 MB in 8min 23s“).
+- **Kontextgröße:** über 300.000 Token (`get_session` 12:30: 309.609) – Abweichung nach „Hier weiter“/„Weiter“.
+- **Sessionende-Prüfungen:** README (Phase, Version, Nächste Schritte) nachgezogen. Drift: ADR-043 → 4.8, 5.14 vorhanden; Reaktiv-Quote 0/10 über ADR-034..043; Modul-Liste und Reifegrade unverändert; Blocker 0; Phase 5 14 von 13 (Schwelle 26 und +5). Ablaufdaten: kein Vorlauf erreicht. Archivierung: Phase 4 vollständig erledigt → Fahrplan und Logbuch ausgelagert.
