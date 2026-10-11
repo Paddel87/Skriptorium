@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] 6.8 Import aus SillyTavern umgesetzt und unabhängig geprüft
+
+- ADR-065 nach Auswahlfragen (Weg A, Beschreibung und Persönlichkeit, Schlüsselwörter als Aliasse, `{{char}}` ersetzen / `{{user}}` melden); Mockup freigegeben.
+- Formate zuerst aus Spezifikation V2/V3 und dem Lorebook-Quelltext von SillyTavern; auf Hinweis des Eigentümers („aus erster Hand“) zusätzlich der Export-Code der Karten gelesen (`charaFormatData`, `convertWorldInfoToCharacterBook`, `character-card-parser.write`): Lorebook einer Karte mit `comment`/`enabled`, Bild mit `chara` **und** `ccv3`. Testdateien folgen diesem Aufbau. Lehre: bei Fremdformaten den schreibenden Code des Herstellers lesen, nicht nur die Spezifikation.
+- Umgesetzt: `canon.importers.sillytavern` (nur Standardbibliothek), `POST /api/worlds/{id}/import/sillytavern`, ein Dateifeld der Import-Seite; Sichtprobe Desktop/Handy mit einer Karte als PNG auf einer Kopie der Testdaten: 3 Einträge angelegt.
+- **Getrennte Instanz** (Unteragent mit Sonnet, nur Diff und Bedrohungsmodell): „freigeben nach Behebung“. (1) mittel: Überschriften-Muster im Markdown-Import mit kubischem Zurückgehen (1.000 Tabs ≈ 1 s, 2.000 ≈ 8 s) – bestand schon vorher, über Dateien leichter erreichbar; ersetzt durch Anfang-Muster plus `rstrip`, 200.000 Zufallszeilen ohne Abweichung, 50.000 Leerzeichen in Millisekunden. (2) mittel/niedrig: Name ohne Buchstaben (z. B. japanische Schrift) ließ die Vorschau mit dem Namen in der Meldung scheitern – jetzt „Eintrag N“ mit Hinweis. (3) niedrig: Feldzeilen in Code-Blöcken – jetzt geschützt. (4) niedrig: Einträge wurden zur Gruppe (Text beginnt mit Überschrift, Figur „Orte“) – unsichtbare erste Zeile, Namenszusatz. Nachprüfung: alles behoben bis auf eine Umgehung mit führenden Leerzeilen – behoben. Optional, nicht umgesetzt (über dem Niveau): Größenprüfung schon im Browser; Name in der Meldung „hat keine Kategorie“ beim Übernehmen kürzen.
+- Prüfungen: pytest 553 grün (99 %, beide Importer 100 %), ruff, mypy, bandit ohne Befund; vitest 215 grün (98,14 %), Playwright 11 grün.
+- Reibung: Commit scheiterte einmal an prettier, weil die neuen JSON-Testdateien mitgeprüft werden; formatiert.
+
 ### 2026-10-11 – [ERLEDIGT] 6.3 Technik-Prüfung an der Geschichte des Eigentümers
 
 - Auf Freigabe des Eigentümers („Prüfung erlauben“) ein lesendes Skript per `docker exec` auf der Produktion: Anfrage je Kapitel ab 1.500 Wörtern mit der Anweisung „Weiter.“ ohne `@`, einmal mit `CANON_SHARE` 0,3, einmal mit 0 (Verhalten vor 6.3). Ausgabe nur Zahlen; Skript vorher auf Testdaten erprobt, nicht im Repo.

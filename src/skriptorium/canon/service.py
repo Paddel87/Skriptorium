@@ -18,7 +18,7 @@ from pathlib import PurePosixPath
 from typing import Final, cast
 
 from skriptorium.canon.categories import CATEGORIES, Category
-from skriptorium.canon.importers import parse_markdown
+from skriptorium.canon.importers import TranslatedMaterial, parse_markdown, translate_sillytavern
 from skriptorium.storage import (
     AlreadyExists,
     Document,
@@ -285,6 +285,16 @@ class CanonService:
         ]
 
     # --- import of world material (ADR-012, rules confirmed in 2.4) ------------------------
+
+    def translate_sillytavern(self, world_id: str, data: bytes) -> TranslatedMaterial:
+        """Import Markdown from a SillyTavern card or lorebook (ADR-065); nothing is stored.
+
+        Raises:
+            NotFound: The world does not exist.
+            InvalidInput: Not a SillyTavern file, broken or larger than 10 MB.
+        """
+        self.get_world(world_id)
+        return translate_sillytavern(data)
 
     def preview_import(self, world_id: str, markdown: str) -> ImportPreview:
         """Split Markdown world material into entries without storing anything.

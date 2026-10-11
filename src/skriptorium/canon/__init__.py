@@ -1,6 +1,7 @@
 """Worlds and their canon entries (module ``canon``)."""
 
 from skriptorium.canon.categories import CATEGORIES, Category
+from skriptorium.canon.importers import TranslatedMaterial
 from skriptorium.canon.service import (
     CanonEntry,
     CanonService,
@@ -23,5 +24,6 @@ __all__ = [
     "InvalidInput",
     "NotFound",
     "StorageError",
+    "TranslatedMaterial",
     "World",
 ]

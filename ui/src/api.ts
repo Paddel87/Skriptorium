@@ -55,6 +55,12 @@ export interface ImportItem {
   conflict: string | null;
 }
 
+/** Import Markdown translated from a SillyTavern file (step 6.8, ADR-065). */
+export interface TranslatedMaterial {
+  markdown: string;
+  not_taken_over: string[];
+}
+
 export interface ImportPreview {
   world: string;
   introduction: string;
@@ -589,6 +595,10 @@ export const api = {
   deleteEntry: (world: string, id: string) =>
     request("DELETE", `${worldPath(world)}/entries/${enc(id)}`),
 
+  translateSillyTavern: (world: string, content: string) =>
+    request("POST", `${worldPath(world)}/import/sillytavern`, {
+      content,
+    }) as Promise<TranslatedMaterial>,
   previewImport: (world: string, markdown: string) =>
     request("POST", `${worldPath(world)}/import/preview`, {
       markdown,

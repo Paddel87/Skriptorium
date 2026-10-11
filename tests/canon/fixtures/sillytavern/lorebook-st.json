@@ -1,0 +1,69 @@
+{
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": ["Salzsee", "der See"],
+      "keysecondary": [],
+      "comment": "Der Salzsee",
+      "content": "Flach und weiß; im Sommer trocknen die Ränder aus.",
+      "constant": false,
+      "vectorized": false,
+      "selective": true,
+      "selectiveLogic": 0,
+      "addMemo": true,
+      "order": 100,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": true,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": null,
+      "automationId": "",
+      "role": null,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0,
+      "displayIndex": 0
+    },
+    "1": {
+      "uid": 1,
+      "key": ["Orte"],
+      "keysecondary": [],
+      "comment": "",
+      "content": "Sammelbegriff, den {{char}} benutzt.",
+      "constant": true,
+      "selective": true,
+      "order": 100,
+      "position": 0,
+      "disable": false,
+      "displayIndex": 1
+    },
+    "2": {
+      "uid": 2,
+      "key": ["Leer"],
+      "keysecondary": [],
+      "comment": "Leer",
+      "content": "   ",
+      "disable": false,
+      "displayIndex": 2
+    },
+    "3": {
+      "uid": 3,
+      "key": ["Aus"],
+      "keysecondary": [],
+      "comment": "Abgeschaltet",
+      "content": "Wird nicht gebraucht.",
+      "disable": true,
+      "displayIndex": 3
+    }
+  }
+}

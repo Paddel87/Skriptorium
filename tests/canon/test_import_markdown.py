@@ -1,5 +1,7 @@
 """Tests for splitting Markdown world material (rules confirmed in step 2.4)."""
 
+import time
+
 import pytest
 
 from skriptorium.canon.categories import category_for
@@ -155,3 +157,13 @@ def test_heading_without_text_and_other_subheadings_stays_a_group() -> None:
 def test_category_heading_with_item_sections_stays_a_group() -> None:
     entries = parse_markdown("# Gegenstände\n\n### Zweck\nText.\n").entries
     assert [(e.name, e.category) for e in entries] == [("Zweck", "gegenstand")]
+
+
+def test_long_runs_of_spaces_in_a_heading_stay_fast() -> None:
+    """The closing-hash pattern backtracked cubically (review of step 6.8)."""
+    started = time.perf_counter()
+    material = parse_markdown("### a" + "\t" * 50_000 + "x\n## " + " \t" * 50_000 + "#")
+    assert time.perf_counter() - started < 1
+    assert [entry.name for entry in material.entries] == ["a" + "\t" * 50_000 + "x", "#"]
+    # A single space after the hashes, nothing behind it: no heading, as before.
+    assert parse_markdown("## ").introduction == "## \n"

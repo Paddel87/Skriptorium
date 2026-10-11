@@ -1386,3 +1386,18 @@ button.more-toggle {
   background: var(--warn-line);
   vertical-align: middle;
 }
+
+/* What the translation of a SillyTavern file left out (step 6.8). */
+.import-note {
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-line);
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.import-note ul {
+  margin: 0.25rem 0 0 1.1rem;
+  padding: 0;
+}
