@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [SESSIONENDE] 6.7 echte Probe und Behebung der Befunde
+
+- **Bearbeitet:** 6.7 – echte Probe in der Cloud-Session (#123), vier Befunde behoben (#124), beide gemergt nach grüner CI (`main` `654edd4`).
+- **Offen:** 6.7 Einspielen (nur vom Mac aus, ADR-025) und Bestätigung des Eigentümers; 6.1 und 6.2 Prüfung durch den Eigentümer; D.11 bis 2026-10-31.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, Sitzungsabfrage); 6.7 empfiehlt Entscheidung, die Behebung war Routine-Niveau – 1 Schritt oberhalb der Empfehlung, nicht abgegeben (kleine Änderung im bereits geladenen Kontext); keine Warnung zu Beginn gegeben.
+- **Kontextgröße:** ca. 420.000 Token am Ende, mehr als das Doppelte der Grenze 200.000; jeweils auf ausdrückliche Anweisung des Eigentümers („hier“, „Weiter hier“).
+- **Sessionende-Prüfungen:** README ohne Drift (Phase und Status unverändert; 6.7 noch nicht erledigt); keine neuen ADRs, Reifegrade oder Blocker; Ablaufdaten-Register ohne erreichten Vorlauf (nächstes D.1 ab 2026-11-05).
+
 ### 2026-10-11 – [GELÖST] Befunde aus der echten Probe von 6.7 behoben
 
 - Nur Oberfläche, keine Schnittstelle geändert: (1) Kästchen „mit Websuche“ nennt den Aufschlag aus dem Eingabepreis des gewählten Modells (22.000 Token mehr Eingabe plus 1 ct, `ui/src/models.ts`; bei Grok 4.6 „ca. +5,4 ct“; ohne Preis „teurer, Preis unbekannt“) statt fest „ca. 1 ct“. (2) Fundstellen ohne echten Titel als „[1] host“ (`ui/src/citations.ts`). (3) Verweise `[[1]](…)` im Text als „[1]“, im übernommenen Vorschlag entfernt.
