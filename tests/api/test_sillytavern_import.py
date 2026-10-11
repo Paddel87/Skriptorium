@@ -47,3 +47,24 @@ def test_refuses_broken_input_without_echoing_it(logged_in: TestClient) -> None:
 def test_unknown_world(logged_in: TestClient) -> None:
     response = logged_in.post(PATH, json={"content": _encoded("lorebook-st.json")})
     assert response.status_code == 404
+
+
+def test_downloads_the_world_as_lorebook_and_a_figure_as_card(logged_in: TestClient) -> None:
+    logged_in.post("/api/worlds", json={"name": "Die Salzmark", "description": ""})
+    logged_in.post(
+        "/api/worlds/die-salzmark/entries",
+        json={"category": "figur", "name": "Mira", "body": "Schmugglerin."},
+    )
+    logged_in.post("/api/worlds/die-salzmark/entries", json={"category": "ort", "name": "Kai"})
+    book = logged_in.get("/api/worlds/die-salzmark/export/sillytavern")
+    assert book.status_code == 200
+    assert book.headers["content-disposition"] == (
+        'attachment; filename="die-salzmark.lorebook.json"'
+    )
+    assert book.headers["cache-control"] == "no-store"
+    assert [e["comment"] for e in book.json()["entries"].values()] == ["Kai", "Mira"]
+    card = logged_in.get("/api/worlds/die-salzmark/entries/mira/export/sillytavern")
+    assert card.headers["content-disposition"] == 'attachment; filename="mira.card.json"'
+    assert card.json()["data"]["description"] == "Schmugglerin."
+    place = logged_in.get("/api/worlds/die-salzmark/entries/kai/export/sillytavern")
+    assert place.status_code == 422

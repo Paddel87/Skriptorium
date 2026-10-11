@@ -35,6 +35,9 @@ const HINTS: Partial<Record<Category, string>> = {
  *
  * Given `onTakeOver` (not in the compact bar), the AI world builder (step 6.7) opens where the
  * entry is shown; its proposals go to `onTakeOver` as Markdown for the import preview.
+ *
+ * Outside the compact bar the world downloads as a SillyTavern lorebook and a figure as a
+ * character card (step 6.9).
  */
 export function Canon({
   world,
@@ -124,6 +127,15 @@ export function Canon({
           >
             ✨ Weltenbauer
           </button>
+        )}
+        {!compact && (
+          <a
+            className="button"
+            href={api.lorebookPath(world)}
+            download={`${world}.lorebook.json`}
+          >
+            ⇩ Lorebook für SillyTavern
+          </a>
         )}
       </div>
       <ErrorText message={error} />
@@ -278,6 +290,17 @@ export function Canon({
                       Bearbeiten
                     </button>
                   )}
+                  {!compact &&
+                    !guest(current) &&
+                    current.category === "figur" && (
+                      <a
+                        className="button"
+                        href={api.cardPath(world, current.id)}
+                        download={`${current.id}.card.json`}
+                      >
+                        ⇩ Figurenkarte
+                      </a>
+                    )}
                 </div>
                 {guest(current) && (
                   <p className="note">

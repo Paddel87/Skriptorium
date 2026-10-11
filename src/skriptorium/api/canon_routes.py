@@ -5,6 +5,7 @@ import binascii
 from typing import Annotated, Any, Final
 
 from fastapi import APIRouter, Depends, status
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from skriptorium.api.context import ServicesDep, current_session
@@ -152,6 +153,26 @@ def find_entries(world_id: str, text: str, found: ServicesDep) -> list[CanonEntr
 def preview_import(world_id: str, body: ImportText, found: ServicesDep) -> ImportPreview:
     """Split Markdown world material into entries without storing anything."""
     return found.canon.preview_import(world_id, body.markdown)
+
+
+@router.get("/{world_id}/export/sillytavern")
+def export_lorebook(world_id: str, found: ServicesDep) -> JSONResponse:
+    """The world's canon as a SillyTavern lorebook, as a download (ADR-066)."""
+    return _download(found.canon.sillytavern_lorebook(world_id), f"{world_id}.lorebook.json")
+
+
+@router.get("/{world_id}/entries/{entry_id}/export/sillytavern")
+def export_card(world_id: str, entry_id: str, found: ServicesDep) -> JSONResponse:
+    """A figure as a SillyTavern character card, as a download (ADR-066)."""
+    card = found.canon.sillytavern_card(world_id, entry_id)
+    return _download(card, f"{entry_id}.card.json")
+
+
+def _download(content: dict[str, object], filename: str) -> JSONResponse:
+    # Identifiers consist of a-z, 0-9 and hyphens, so the file name needs no quoting.
+    return JSONResponse(
+        content, headers={"Content-Disposition": f'attachment; filename="{filename}"'}
+    )
 
 
 @router.post("/{world_id}/import/sillytavern")

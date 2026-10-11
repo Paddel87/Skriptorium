@@ -18,7 +18,13 @@ from pathlib import PurePosixPath
 from typing import Final, cast
 
 from skriptorium.canon.categories import CATEGORIES, Category
-from skriptorium.canon.importers import TranslatedMaterial, parse_markdown, translate_sillytavern
+from skriptorium.canon.importers import (
+    TranslatedMaterial,
+    card_for,
+    lorebook_for,
+    parse_markdown,
+    translate_sillytavern,
+)
 from skriptorium.storage import (
     AlreadyExists,
     Document,
@@ -295,6 +301,23 @@ class CanonService:
         """
         self.get_world(world_id)
         return translate_sillytavern(data)
+
+    def sillytavern_lorebook(self, world_id: str) -> dict[str, object]:
+        """All entries of the world as a SillyTavern lorebook (ADR-066).
+
+        Raises:
+            NotFound: The world does not exist.
+        """
+        return lorebook_for(self.list_entries(world_id))
+
+    def sillytavern_card(self, world_id: str, entry_id: str) -> dict[str, object]:
+        """A figure as a SillyTavern character card (ADR-066).
+
+        Raises:
+            NotFound: World or entry does not exist.
+            InvalidInput: The entry is not a figure.
+        """
+        return card_for(self.get_entry(world_id, entry_id))
 
     def preview_import(self, world_id: str, markdown: str) -> ImportPreview:
         """Split Markdown world material into entries without storing anything.
