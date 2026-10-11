@@ -1,10 +1,12 @@
 """ContextBuilder: precedence, budget, separation of worlds (roadmap step 3.2)."""
 
+import math
 from pathlib import Path
 from typing import Literal
 
 import pytest
 
+import skriptorium.context.builder as builder_module
 from skriptorium.canon import CanonService, InvalidInput, NotFound
 from skriptorium.context import (
     LENGTHS,
@@ -167,6 +169,57 @@ def test_named_entry_stays_when_further_canon_does_not_fit(
     assert "Hafenmeister." not in context.messages[0].content
 
 
+# --- canon before the last pages (roadmap step 6.3, ADR-062) --------------------------------
+
+
+def test_long_chapter_keeps_the_further_canon_before_the_pages(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    _, manuscripts = services
+    long_text = "\n\n".join(f"Absatz {n}: " + "Salz und Nebel. " * 40 for n in range(400))
+    manuscripts.save_chapter(WORLD, STORY, 2, text=long_text)
+
+    context = build(services)
+
+    assert labels(context, "auffuellung") == ["Tomas Rehl", "Aschturm", "Runenklinge", "Totensitte"]
+    assert "Absatz 399" in context.messages[1].content
+    assert context.estimated_tokens <= MAX_BUDGET
+
+
+def test_canon_before_the_pages_stays_within_its_share(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    canon, manuscripts = services
+    long_text = "\n\n".join(f"Absatz {n}: " + "Salz und Nebel. " * 40 for n in range(400))
+    manuscripts.save_chapter(WORLD, STORY, 2, text=long_text)
+    for n in range(60):
+        canon.create_entry(WORLD, "ort", f"Insel {n}", body="Klippen und Möwen. " * 30)
+
+    context = build(services)
+
+    further = [block for block in context.blocks if block.kind == "auffuellung"]
+    share = math.floor(MAX_BUDGET / SAFETY_MARGIN * builder_module.CANON_SHARE)
+    assert 0 < sum(block.tokens for block in further) <= share
+    assert len({block.label for block in further}) == len(further)
+    assert "Absatz 399" in context.messages[1].content
+
+
+def test_rest_of_the_canon_still_fills_after_short_pages(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    canon, _ = services
+    for n in range(60):
+        canon.create_entry(WORLD, "ort", f"Insel {n}", body="Klippen und Möwen. " * 30)
+
+    context = build(services)
+
+    further = [block for block in context.blocks if block.kind == "auffuellung"]
+    share = math.floor(MAX_BUDGET / SAFETY_MARGIN * builder_module.CANON_SHARE)
+    # Short chapter: the pages leave room, so entries beyond the share follow after them.
+    assert sum(block.tokens for block in further) > share
+    assert len({block.label for block in further}) == len(further)
+
+
 def test_other_worlds_never_appear(services: tuple[CanonService, ManuscriptService]) -> None:
     context = build(services, "runenklinge")
 
@@ -178,8 +231,12 @@ def test_other_worlds_never_appear(services: tuple[CanonService, ManuscriptServi
 
 @pytest.mark.parametrize("budget", [1400, 1600, 3000, MAX_BUDGET])
 def test_budget_is_never_exceeded(
-    services: tuple[CanonService, ManuscriptService], budget: int
+    services: tuple[CanonService, ManuscriptService],
+    budget: int,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    # Checks the last pages under pressure; the canon share (6.3) is tested on its own.
+    monkeypatch.setattr(builder_module, "CANON_SHARE", 0.0)
     canon, manuscripts = services
     long_text = "\n\n".join(f"Absatz {n}: " + "Salz und Nebel. " * 40 for n in range(400))
     manuscripts.save_chapter(WORLD, STORY, 2, text=long_text)
@@ -196,8 +253,9 @@ def test_budget_is_never_exceeded(
 
 
 def test_pages_are_whole_paragraphs_from_the_end(
-    services: tuple[CanonService, ManuscriptService],
+    services: tuple[CanonService, ManuscriptService], monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    monkeypatch.setattr(builder_module, "CANON_SHARE", 0.0)
     _, manuscripts = services
     manuscripts.save_chapter(
         WORLD, STORY, 2, text="\n\n".join(f"Absatz {n} " + "x" * 300 for n in range(20))
