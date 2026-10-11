@@ -29,6 +29,18 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [ADR-ANGELEGT] ADR-061 und Spike 6.13 vorbereitet
+
+- 6.3 vorgelegt (A Kultur immer mit, B nur anzeigen, C Kanon vor den Seiten mit Obergrenze – Empfehlung, D erst messen). Eigentümer wählte zuerst C, korrigierte dann: „wir machen erstmal D, den Spike“. ADR-061, neuer Schritt 6.13 (ERKUNDUNG); Phase 6 jetzt 13 Schritte (Schwelle > 15).
+- Spike-Aufbau geändert gegenüber dem ersten Gedanken („langes Kapitel“): Die Kapitel der Testgeschichten sind kurz (Salzmark-Schreibkapitel 539 Wörter), der Kanon geht heute fast vollständig mit; ein verlängertes Kapitel bräuchte erfundenen Text. Stattdessen gleicher Text, Auffüllung an/aus (`spikes/kanon-luecke/variante.py` ersetzt nur `_filler_parts`, möglich durch 6.12).
+- Befund ohne KI (`technik.md`): ohne Auffüllung fehlen alle Proben-Einträge außer Kontrollen (geführte Figur, Regel). Stichwortsuche: Salzmark – fünf Details nur im Kanon; Glimmergrund – alle zwölf auch im bisherigen Text (die Testgeschichte wurde mit diesen Details geschrieben). Damit misst der Spike beide Fälle.
+- Probelauf mit nachgebildetem Anbieter: Werkzeug läuft durch (7 Schritte, Ergebnisdateien), danach gelöscht. KI-Läufe brauchen eine Cloud-Session (lokaler Schlüssel ungültig).
+
+### 2026-10-11 – [ERLEDIGT] 6.12 Umbau der Anfrage-Zusammenstellung
+
+- Eigentümer wollte zunächst 6.3; nach der ersten Messung „Stopp, mein Fehler. Wir beginnen erstmal mit 6.12“ (Reihenfolge aus ADR-060). Messwerte für 6.3 aufbewahrt (nur Zahlen): Welt des Eigentümers 54 Einträge, ca. 6.360 Token Kanon gesamt (Figuren 12 / 2.295, Gegenstände 13 / 2.604, Orte 6 / 481, Kultur 3 / 167, Regeln 8 / 358, Zeitlinie 12 / 454); Anfrage für Kapitel 6: 29.780 Token, davon letzte Seiten 22.116, Kurzfassungen 5 / 1.788, Handlungsstand 1.126, Auffüllung nur 1 Eintrag (88 Token).
+- Vorher-Stand vor dem Umbau festgehalten: Skript im Scratch-Verzeichnis erzeugt alle Schreib-Anfragen (4 Budgets, 3 Verweis-Varianten, 3 Längen) für fünf Testdatensätze, darunter eigens angelegte mit Gästen, Fakten, Schreibweise und einer gelöschten geführten Gast-Figur – 864 Anfragen inkl. 180 `ContextTooLarge` mit Meldung. Umbau an einen Unteragenten der Routine-Klasse abgegeben; nachher selbst geprüft: byte-gleich (`cmp`), ruff/mypy sauber, pytest 492, `builder.py` 100 %. Kommentar an `_FIXED_SOURCES` ergänzt.
+
 ### 2026-10-11 – [BEOBACHTUNG] 6.2 Kurzfassung im eigenen Reiter umgesetzt; zwei wacklige Tests stabilisiert
 
 - Routine-Schritt auf der Entscheidungs-Klasse (genannt), nicht abgegeben (klein, viel Abstimmung). Mockup mit zwei Varianten direkt in der echten Seite nachgebaut (DOM-Änderung per Playwright, Kopie der Testdaten); Eigentümer: „A: Eigener Reiter“. Ergänzt gegenüber dem Mockup: nach „Kapitel abschließen“ öffnet der Reiter von selbst (die neue Kurzfassung ist zu prüfen).
