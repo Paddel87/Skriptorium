@@ -36,6 +36,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - Rückimport-Test über den echten Service mit allen sechs Kategorien, Aliassen, Code-Block und Gegenstand ohne Text: gleicher Kanon bis auf die bewusste Angleichung Ebene 2 → 3. Im Browser (Prüfserver mit Kopie der Testdaten): Lorebook (30 Einträge) und Karte heruntergeladen und über die Import-Seite wieder eingelesen, alle als „existiert schon“ erkannt.
 - Prüfungen: pytest 560 (99 %, SillyTavern-Modul 100 %), ruff, mypy, bandit grün; vitest 216, Playwright 11 grün.
 - Reibung: zwei Testerwartungen falsch (Reihenfolge nach Namen, abschließender Zeilenumbruch je nach Anlage) – Tests angepasst, Code unverändert.
+- Getrennte Instanz (dieselbe Sonnet-Prüfinstanz wie 6.8, nur Diff) zur geänderten Überschriften-Verschiebung und zur Kategorie-Erweiterung: „freigeben“, kein Befund; ca. 175.000 Zufallsläufe ohne Ausbruch aus dem Eintrag, Dateiname im Download-Kopf nur aus geprüften Kennungen.
 
 ### 2026-10-11 – [GELÖST] CI rot bei PR #128: tief verschachteltes JSON je nach Plattform
 
