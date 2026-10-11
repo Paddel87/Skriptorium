@@ -29,6 +29,24 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [ERLEDIGT] 6.3 Technik-Prüfung an der Geschichte des Eigentümers
+
+- Auf Freigabe des Eigentümers („Prüfung erlauben“) ein lesendes Skript per `docker exec` auf der Produktion: Anfrage je Kapitel ab 1.500 Wörtern mit der Anweisung „Weiter.“ ohne `@`, einmal mit `CANON_SHARE` 0,3, einmal mit 0 (Verhalten vor 6.3). Ausgabe nur Zahlen; Skript vorher auf Testdaten erprobt, nicht im Repo.
+- Geschichte des Eigentümers (6 Kapitel mit je 8.500–9.800 Wörtern): In den Kapiteln 1–6 gingen vorher 28, 6, 2, 0, 0, 1 der 34 nicht genannten Einträge mit; jetzt jeweils alle 34 (5.564 Token). Die Anfrage bleibt gleich groß (29.650–29.850 Token); die letzten Seiten treten 670–5.700 Token ab (z. B. Kapitel 4: 22.893 → 17.338).
+- Andere Geschichten mit langen Kapiteln (drei, je ein Kapitel): unverändert, der Kanon passte schon vorher ganz hinein.
+- 6.3 erledigt (Bestätigung des Eigentümers im Alltag plus diese Prüfung).
+
+### 2026-10-11 – [BEOBACHTUNG] Abnahme nach dem Einspielen: 6.1, 6.2, 6.5, 6.7 erledigt
+
+- Checkliste für den Eigentümer erstellt (je Schritt: wo klicken, woran erkennbar). Eigentümer: „6.1 kann abgehakt werden. Der Rest auch.“ → 6.1, 6.2, 6.7 bestätigt, 6.5 (Datenschutz im OpenRouter-Konto) gesetzt und bestätigt; 6.3 im Alltag bestätigt.
+- 6.3 Technik-Prüfung (Anfrage je langem Kapitel mit `CANON_SHARE` 0,3 gegen 0, nur Zahlen) per `docker exec` auf der Produktion vom Freigabe-Klassifikator der Laufzeitumgebung blockiert („Production Reads“). Dem Eigentümer zur Entscheidung vorgelegt.
+
+### 2026-10-11 – [GELÖST] Eingespielt: `@`-Menü im Weltenbauer (`5141d53`); SSH-Sperre durch eigene Warteschleife
+
+- Auf Anweisung („Hochladen, mergen, einspielen“, dann „merge“) PR #126 nach grüner CI gemergt und `5141d53` eingespielt. CI auf `main` lief noch; Baum identisch mit dem grün geprüften PR-Stand (`git diff` leer) – deshalb nicht abgewartet.
+- Reibung: Meine Warteschleife fragte den Zustand alle 5 s per SSH ab; der Server wies ab dem zweiten Versuch alle Verbindungen ab („Connection refused“, vermutlich Begrenzung der Firewall). Stand stattdessen über HTTPS geprüft (Gesundheitsprüfung 200, CSP voll, ausgeliefertes Bündel mit neuem Feld), danach eine einzelne SSH-Prüfung: `(healthy)`, `REVISION` `5141d53`.
+- Lehre (stand schon im Runbook-Ablauf, nicht befolgt): auf `healthy` über HTTPS warten, nur **eine** SSH-Prüfung danach.
+
 ### 2026-10-11 – [GELÖST] 6.7 Weltenbauer ohne `@`-Menü
 
 - Eigentümer nach dem Einspielen: Beim Weltenbauer werden nach `@` keine Einträge vorgeschlagen. Ursache: Das Eingabefeld war ein einfaches Textfeld; der Platzhalter versprach „Mit @ einen Eintrag nennen“, die Erkennung der `@`-Namen beim Senden lief, aber ohne Menü. Weder meine Sichtprobe noch die echte Probe tippten `@` selbst ein (die Prüfskripte füllten den Text am Stück).
