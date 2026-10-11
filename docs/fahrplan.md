@@ -35,7 +35,7 @@ Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details 
 | ✅ | 6.5 | Datenschutz-Einstellung an OpenRouter | erledigt 2026-10-11 (ADR-063) | – |
 | ✅ | 6.6 | Kopfzeilen und Fehlermeldungen härten | erledigt 2026-10-11 | – |
 | ✅ | 6.7 | KI-gestützter Weltenbauer | erledigt 2026-10-11 (ADR-064) | – |
-| 🟠 | 6.8 | Import aus SillyTavern | in Arbeit (ADR-065) | du: Mockup ansehen |
+| 🟠 | 6.8 | Import aus SillyTavern | umgesetzt und unabhängig geprüft (ADR-065) | KI: einspielen (auf deine Anweisung); du: Probe mit einer Datei aus deinem SillyTavern |
 | ⚪ | 6.9 | Export in SillyTavern-Formate | offen | KI |
 | ⚪ | 6.10 | Planung der nächsten Ausbaustufe | offen | KI |
 | ✅ | 6.11 | Umbau des Schreibbereichs (vor 6.1) | erledigt 2026-10-11 | – |
@@ -289,7 +289,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.8: Import aus SillyTavern (Character Cards und Lorebooks)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – entschieden (ADR-065): Server übersetzt in Import-Markdown; Figurenkarte: Beschreibung und Persönlichkeit; Schlüsselwörter als Aliasse; `{{char}}` ersetzen, `{{user}}` melden. Offen: Mockup, Umsetzung, Prüfung durch getrennte Instanz
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – entschieden (ADR-065): Server übersetzt in Import-Markdown; Figurenkarte: Beschreibung und Persönlichkeit; Schlüsselwörter als Aliasse; `{{char}}` ersetzen, `{{user}}` melden. Mockup freigegeben 2026-10-11 („Passt, umbauen“). Umgesetzt 2026-10-11: `canon.importers.sillytavern`, `POST /api/worlds/{id}/import/sillytavern`, ein Dateifeld der Import-Seite für Markdown und SillyTavern; Formate am Quelltext von SillyTavern geprüft (`charaFormatData`, `convertWorldInfoToCharacterBook`, `character-card-parser.write`: Bild mit `chara` und `ccv3`). Prüfung durch getrennte Instanz 2026-10-11 (Unteragent mit Sonnet, ohne Gesprächsverlauf): „freigeben nach Behebung“, 4 Befunde (2× mittel, 2× niedrig) behoben, Nachprüfung fand eine Umgehung (niedrig), ebenfalls behoben (Logbuch). Offen: Einspielen, Probe des Eigentümers mit einer echten Datei aus seinem SillyTavern
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – Eingangsformat (Kategorie 4); Einlesen fremder Dateien, PNG mit eingebettetem JSON (Kategorie 6, Prüfung durch getrennte Instanz)
