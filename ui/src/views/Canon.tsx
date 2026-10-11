@@ -11,6 +11,7 @@ import { loadStoryEntries } from "../storyEntries";
 import { useLoad } from "../useLoad";
 import { ErrorText, Field } from "./Common";
 import { EntryText } from "./EntryText";
+import { WorldBuilder } from "./WorldBuilder";
 
 /** Marks a new entry in the editing state; entry identifiers never contain a space. */
 const NEW = " new";
@@ -31,6 +32,9 @@ const HINTS: Partial<Record<Category, string>> = {
  * The same view serves the bar on the right of a story (finding of 2026-10-10 on step 5.11):
  * `compact` always shows list or entry, `guests` adds the story's guests from other worlds,
  * which can be read here but are changed in their own world.
+ *
+ * Given `onTakeOver` (not in the compact bar), the AI world builder (step 6.7) opens where the
+ * entry is shown; its proposals go to `onTakeOver` as Markdown for the import preview.
  */
 export function Canon({
   world,
@@ -39,6 +43,7 @@ export function Canon({
   guests,
   compact = false,
   onChanged,
+  onTakeOver,
 }: {
   world: string;
   /** Identifier of the entry shown on the right, or none. */
@@ -50,6 +55,8 @@ export function Canon({
   compact?: boolean;
   /** Called after an entry was created, changed or deleted. */
   onChanged?: () => void;
+  /** Opens the world builder's button; takes over a proposal (Markdown in the import format). */
+  onTakeOver?: (markdown: string) => void;
 }) {
   const load = useCallback(
     () =>
@@ -63,6 +70,11 @@ export function Canon({
   const [filter, setFilter] = useState<Category | null>(null);
   // The entry being changed, or `NEW` for a new one.
   const [editing, setEditing] = useState<string | null>(null);
+  // The world builder is open; once opened it stays, so closing and choosing an entry to read
+  // keep the conversation.
+  const [building, setBuilding] = useState(false);
+  const [builderUsed, setBuilderUsed] = useState(false);
+  const takeOver = compact ? undefined : onTakeOver;
 
   const entries = data ?? [];
   const needle = query.trim().toLocaleLowerCase("de");
@@ -77,11 +89,12 @@ export function Canon({
   const current = entries.find((entry) => entry.id === selected);
   const formFor =
     editing === NEW ? null : editing === selected ? current : undefined;
-  const detail = editing === NEW || selected !== null;
+  const detail = editing === NEW || selected !== null || building;
   const guest = (entry: CanonEntry) => entry.world !== world;
 
   function choose(entry: string | null) {
     setEditing(null);
+    setBuilding(false);
     onSelect(entry);
   }
 
@@ -92,14 +105,29 @@ export function Canon({
         <button
           type="button"
           onClick={() => {
+            setBuilding(false);
             setEditing(NEW);
           }}
         >
           Neuer Eintrag
         </button>
+        {takeOver !== undefined && (
+          <button
+            type="button"
+            className="primary"
+            aria-expanded={building}
+            onClick={() => {
+              setEditing(null);
+              setBuilding(true);
+              setBuilderUsed(true);
+            }}
+          >
+            ✨ Weltenbauer
+          </button>
+        )}
       </div>
       <ErrorText message={error} />
-      {data?.length === 0 && editing !== NEW ? (
+      {data?.length === 0 && editing !== NEW && !building ? (
         <p>Noch keine Kanon-Einträge.</p>
       ) : (
         <div
@@ -199,7 +227,19 @@ export function Canon({
             })}
           </div>
           <div className="canon-detail">
-            {detail && (
+            {takeOver !== undefined && builderUsed && (
+              <div hidden={!building}>
+                <WorldBuilder
+                  world={world}
+                  entries={entries}
+                  onTakeOver={takeOver}
+                  onClose={() => {
+                    setBuilding(false);
+                  }}
+                />
+              </div>
+            )}
+            {!building && detail && (
               <button
                 type="button"
                 className="link canon-back"
@@ -210,7 +250,7 @@ export function Canon({
                 ← Liste
               </button>
             )}
-            {formFor !== undefined ? (
+            {building ? null : formFor !== undefined ? (
               <EntryForm
                 key={formFor?.id ?? "new"}
                 world={world}

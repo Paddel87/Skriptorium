@@ -1,4 +1,4 @@
-import { useState, type SyntheticEvent } from "react";
+import { useEffect, useState, type SyntheticEvent } from "react";
 import {
   api,
   CATEGORIES,
@@ -9,20 +9,49 @@ import {
 } from "../api";
 import { ErrorText, Field } from "./Common";
 
-/** Import Markdown world material: preview, adjust categories and conflicts, take over. */
+/**
+ * Import Markdown world material: preview, adjust categories and conflicts, take over. With
+ * `initialText` (a proposal of the world builder, step 6.7) the field is filled and the preview
+ * is requested right away.
+ */
 export function Import({
   world,
   onImported,
+  initialText = "",
 }: {
   world: string;
   onImported: () => void;
+  initialText?: string;
 }) {
-  const [markdown, setMarkdown] = useState("");
+  const [markdown, setMarkdown] = useState(initialText);
   const [preview, setPreview] = useState<ImportPreview | null>(null);
   const [categories, setCategories] = useState<Record<string, Category>>({});
   const [overwrite, setOverwrite] = useState<string[]>([]);
   const [result, setResult] = useState<ImportResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // A proposal handed over by the world builder is previewed right away, once.
+  useEffect(() => {
+    if (initialText.trim() === "") {
+      return;
+    }
+    let current = true;
+    api
+      .previewImport(world, initialText)
+      .then((loaded) => {
+        if (current) {
+          setPreview(loaded);
+        }
+      })
+      .catch((reason: unknown) => {
+        if (current) {
+          setError(describeError(reason));
+        }
+      });
+    return () => {
+      current = false;
+    };
+  }, [world, initialText]);
 
   async function showPreview(event: SyntheticEvent) {
     event.preventDefault();
