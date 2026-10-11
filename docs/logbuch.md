@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [ERLEDIGT] 6.12 Umbau der Anfrage-Zusammenstellung
+
+- Eigentümer wollte zunächst 6.3; nach der ersten Messung „Stopp, mein Fehler. Wir beginnen erstmal mit 6.12“ (Reihenfolge aus ADR-060). Messwerte für 6.3 aufbewahrt (nur Zahlen): Welt des Eigentümers 54 Einträge, ca. 6.360 Token Kanon gesamt (Figuren 12 / 2.295, Gegenstände 13 / 2.604, Orte 6 / 481, Kultur 3 / 167, Regeln 8 / 358, Zeitlinie 12 / 454); Anfrage für Kapitel 6: 29.780 Token, davon letzte Seiten 22.116, Kurzfassungen 5 / 1.788, Handlungsstand 1.126, Auffüllung nur 1 Eintrag (88 Token).
+- Vorher-Stand vor dem Umbau festgehalten: Skript im Scratch-Verzeichnis erzeugt alle Schreib-Anfragen (4 Budgets, 3 Verweis-Varianten, 3 Längen) für fünf Testdatensätze, darunter eigens angelegte mit Gästen, Fakten, Schreibweise und einer gelöschten geführten Gast-Figur – 864 Anfragen inkl. 180 `ContextTooLarge` mit Meldung. Umbau an einen Unteragenten der Routine-Klasse abgegeben; nachher selbst geprüft: byte-gleich (`cmp`), ruff/mypy sauber, pytest 492, `builder.py` 100 %. Kommentar an `_FIXED_SOURCES` ergänzt.
+
 ### 2026-10-11 – [BEOBACHTUNG] 6.2 Kurzfassung im eigenen Reiter umgesetzt; zwei wacklige Tests stabilisiert
 
 - Routine-Schritt auf der Entscheidungs-Klasse (genannt), nicht abgegeben (klein, viel Abstimmung). Mockup mit zwei Varianten direkt in der echten Seite nachgebaut (DOM-Änderung per Playwright, Kopie der Testdaten); Eigentümer: „A: Eigener Reiter“. Ergänzt gegenüber dem Mockup: nach „Kapitel abschließen“ öffnet der Reiter von selbst (die neue Kurzfassung ist zu prüfen).

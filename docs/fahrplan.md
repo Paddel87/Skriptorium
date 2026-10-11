@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details im Archiv [`docs/archiv/fahrplan-phase-5.md`](archiv/fahrplan-phase-5.md).
 
-**Phase 6: 1 von 12 erledigt, 2 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
+**Phase 6: 2 von 12 erledigt, 2 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -39,7 +39,7 @@ Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details 
 | ⚪ | 6.9 | Export in SillyTavern-Formate | offen | KI |
 | ⚪ | 6.10 | Planung der nächsten Ausbaustufe | offen | KI |
 | ✅ | 6.11 | Umbau des Schreibbereichs (vor 6.1) | erledigt 2026-10-11 | – |
-| ⚪ | 6.12 | Umbau der Anfrage-Zusammenstellung (vor 6.3) | offen | KI |
+| ✅ | 6.12 | Umbau der Anfrage-Zusammenstellung (vor 6.3) | erledigt 2026-10-11 | – |
 
 **Querschnitt (offen):**
 
@@ -352,7 +352,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.12: Umbau der Anfrage-Zusammenstellung (`ContextBuilder.build()`)
 
-- **Status:** ⚪ OFFEN
+- **Status:** ✅ ERLEDIGT (2026-10-11) – `build()` von ca. 110 auf 10 Zeilen Rumpf: `_Request` (gelesene Daten, `included`, `missing`), Quellen `_FIXED_SOURCES` (Rahmen, Welt, Schreibweise, Regeln und Zeitlinie, `@`-Verweise, geführte Figuren, Fakten), dann `_story_state`, `_closing_parts`, `_remaining_room`, `_last_pages`, `_filler_parts`, `_assemble`. Vorher/nachher 864 Anfragen aus fünf Testdatensätzen (alle Bausteinarten, Gäste, Fakten, Schreibweise, fehlende Figuren, zu große Anfragen) byte-gleich; pytest 492, `builder.py` 100 %. Umbau an einen Unteragenten der Routine-Klasse abgegeben und geprüft
 - **Phasentyp-Kontext:** UMSETZUNG (Umbau ohne Verhaltensänderung)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein – Refactoring innerhalb von `context`, Reihenfolge und Schnittstellen unverändert (`CLAUDE.md` Abschnitt 5); eine Änderung der Reihenfolge selbst ist 6.3 (freigabepflichtig)
