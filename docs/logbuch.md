@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] Kapitel 4 der Geschichte des Eigentümers in 3 Kapitel geteilt
+
+- Eigentümer: Kapitel 4 „zu lang geworden“ (25.570 Wörter). Auswahlfrage „Ja, in 3 Teile“. Letztes Speichern 11:07, Geschichte laut Vorgabe gespeichert und geschlossen. Sicherung des Ordners nach `/opt/docker/skriptorium/sicherungen/` (Ordner „…-vor-teilung-k4-2026-10-11“).
+- Teilung im Container wie am Vormittag (Absatzgrenzen nächst den Dritteln, Prüfung auf exakt denselben Text): Kapitel 4/5/6 mit 8.526 / 8.489 / 8.555 Wörtern, Summe 25.570; 4 und 5 abgeschlossen, 6 in Arbeit. Kein Text ausgegeben.
+- Beobachtung: Die Wortanzeige (6.1) ist genau für diesen Fall gedacht – das Kapitel wuchs innerhalb eines Tages auf mehr als das Doppelte der Grenze.
+
 ### 2026-10-11 – [PHASEN-WECHSEL] Reflexion Phase 5 (UMSETZUNG) → Phase 6 (UMSETZUNG)
 
 - **Gelernt:** Die größten Verbesserungen kamen aus den Befunden des Eigentümers bei echter Nutzung (Einleitungs- und Schlusssätze, Scrollen, Chat-Aufbau, Smartphone), nicht aus Tests; Befunde sofort mit Code-Stelle festhalten und einordnen, dann bauen.
