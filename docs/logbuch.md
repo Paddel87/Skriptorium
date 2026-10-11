@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [ADR-ANGELEGT] ADR-060 Pflichtfrage nach Phase 5: weiterbauen mit Umbau
+
+- Getrennte Instanz (Sonnet, ohne Gesprächsverlauf) bewertete die drei Optionen mit Belegen (siehe ADR-060); Empfehlung weiterbauen mit zwei Umbau-Schritten. Stellungnahme der bauenden KI: Zustimmung, dazu engere Wucherungs-Schwelle (15). Eigentümer: „A: Weiterbauen mit Umbau“. Neu: 6.11 (Schreibbereich zerlegen, vor 6.1), 6.12 (Anfrage-Zusammenstellung entflechten, vor 6.3); Phase 6 mit 12 Schritten, Schwelle > 15.
+- Hinweise der Instanz übernommen bzw. offen: Reifegrad-Drift Kontexttreue behoben (Eintrag oben); Lesbarkeit der Reaktiv-Quote in Teil A ist schwer (Methodik-Hinweis, nicht behoben); Risiken für 6.3, 6.5 (Inhaltsfilter-Modelle nicht verlieren), 6.6 (CSP und CodeMirror), 6.7 (Zuschnitt), 6.8 (fremde Dateien, Größenlimits) in den Schritten zu beachten.
+
 ### 2026-10-11 – [REIFEGRAD-WECHSEL] NFR Kontexttreue Referenzumfang OFFEN → VORLÄUFIG
 
 - Drift gefunden durch die getrennte Instanz der Pflichtfrage: Reifegrad stand nach ADR-057 noch auf `OFFEN`. Gesetzt auf `[VORLÄUFIG]` (nicht `[BELASTBAR]`: Nachweis hochgerechnet, Kanon-Lücke offen → Beförderung nach 6.3). Zeile „Secrets im Betrieb“: Schlüsseltausch inzwischen erprobt, bleibt `VORLÄUFIG` bis D.11.

@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** keiner – Phasengrenze nach Phase 5 (Vision-Abgleich, Onboarding-Probelauf, Pflichtfrage). Am 2026-10-11 erledigt: 5.5 (ADR-059), 5.14 (v1.0.0, ADR-058), D.4 (ADR-057), 5.20, 5.13, 5.16. Am 2026-10-10 erledigt: 5.12, 5.26, 5.1, 5.2, 5.21, 5.11, 5.6, 5.3
-- **Nächster Schritt:** Phasengrenze nach Phase 5: Vision-Abgleich, Onboarding-Probelauf im frischen Worktree, Pflichtfrage „weiterbauen, umbauen oder neu aufsetzen“ mit Bewertung durch eine getrennte Instanz, Archivierung von Phase 5; danach 6.1. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** Phasengrenze nach Phase 5: Vision-Abgleich und Onboarding-Probelauf erledigt, Pflichtfrage entschieden (ADR-060: weiterbauen mit Umbau); Archivierung von Phase 5; danach 6.11 (Umbau Schreibbereich), dann 6.1. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -53,7 +53,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⏸️ | 5.25 | Antworten des Servers nicht im Browser-Speicher | verschoben → V.13 | – |
 | ✅ | 5.26 | Kanon-Treue mit grok-4.6 prüfen | erledigt 2026-10-10 | – |
 
-**Phase 6: 0 von 10 erledigt, alle offen (geplant 2026-10-11, ADR-059).**
+**Phase 6: 0 von 12 erledigt, alle offen (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -67,6 +67,8 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⚪ | 6.8 | Import aus SillyTavern | offen | KI |
 | ⚪ | 6.9 | Export in SillyTavern-Formate | offen | KI |
 | ⚪ | 6.10 | Planung der nächsten Ausbaustufe | offen | KI |
+| ⚪ | 6.11 | Umbau des Schreibbereichs (vor 6.1) | offen | KI |
+| ⚪ | 6.12 | Umbau der Anfrage-Zusammenstellung (vor 6.3) | offen | KI |
 
 **Querschnitt (offen):**
 
@@ -626,9 +628,9 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`; 6.3 (Kontext-Reihenfolge) und 6.7 (Weltenbauer) werden per ADR entschieden, bevor gebaut wird.
 
-**Ursprünglicher Schrittplan:** 10 Schritte, festgehalten am 2026-10-11 in 5.5 (ADR-059). Wucherungs-Schwelle: mehr als 20 Schritte und mindestens +5.
+**Ursprünglicher Schrittplan:** 12 Schritte, festgehalten am 2026-10-11 (10 aus 5.5, ADR-059; +6.11, +6.12 aus der Pflichtfrage vor Phasenbeginn, ADR-060). Wucherungs-Schwelle für Phase 6: mehr als 15 Schritte (ADR-060, enger als der Default aus `docs/project-context.md` Abschnitt 6); neue Wünsche während der Phase werden V-Schritte mit Landeplatz 6.10.
 
-**Reihenfolge (Eigentümer, 2026-10-11):** zuerst die kleinen Hilfen 6.1 und 6.2, dann 6.3; die Schutz-Schritte 6.4–6.6 gebündelt mit einer gemeinsamen Prüfung durch eine getrennte Instanz; dann 6.7, 6.8, 6.9; zuletzt 6.10.
+**Reihenfolge (Eigentümer, 2026-10-11; ADR-060):** 6.11 (Umbau Schreibbereich), dann die kleinen Hilfen 6.1 und 6.2; 6.12 (Umbau Anfrage-Zusammenstellung), dann 6.3; die Schutz-Schritte 6.4–6.6 gebündelt mit einer gemeinsamen Prüfung durch eine getrennte Instanz; dann 6.7, 6.8, 6.9; zuletzt 6.10.
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
@@ -791,6 +793,38 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag, ADR
 - **Notizen:** Angelegt 2026-10-11 in 5.5 (ADR-059), übernommen aus 5.5 (Landeplatz der weiter verschobenen V-Schritte).
+
+#### 6.11: Umbau des Schreibbereichs (`WritingPanel.tsx`)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (Umbau ohne sichtbare Änderung)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** nein – Refactoring innerhalb von `ui`, Schnittstellen unverändert (`CLAUDE.md` Abschnitt 5); entschieden in ADR-060
+- **Empfohlene Klasse:** Routine – klar spezifizierter Umbau mit bestehendem Testnetz.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** `ui/src/views/WritingPanel.tsx` (765 Zeilen, eine Komponente mit 23 Zuständen) in Hooks und Unterkomponenten zerlegen: Anweisung und Vorschläge ohne `@`, Szene, Modell und Länge, Vorschlagsanzeige. Verhalten unverändert; vor 6.1 und 6.2.
+- **Akzeptanzkriterien:** alle bestehenden Tests unverändert grün (vitest, Playwright); Abdeckung nicht unter dem Stand; keine Datei über ca. 300 Zeilen; Bildschirmfotos vorher/nachher gleich.
+- **Betroffene Module:** ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-11 aus der Pflichtfrage (ADR-060).
+
+#### 6.12: Umbau der Anfrage-Zusammenstellung (`ContextBuilder.build()`)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (Umbau ohne Verhaltensänderung)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** nein – Refactoring innerhalb von `context`, Reihenfolge und Schnittstellen unverändert (`CLAUDE.md` Abschnitt 5); eine Änderung der Reihenfolge selbst ist 6.3 (freigabepflichtig)
+- **Empfohlene Klasse:** Routine – klar spezifizierter Umbau mit 100 %-Testnetz.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** `ContextBuilder.build()` (ca. 110 Zeilen, `context/builder.py`) in eine geordnete Liste austauschbarer Quellen zerlegen (Rahmen, Welt, Schreibweise, Regeln und Zeitlinie, `@`-Verweise, geführte Figuren, Fakten, Handlungsstand, Seiten, Auffüllung). Vor 6.3, damit dessen Optionen vergleichbar und messbar werden.
+- **Akzeptanzkriterien:** alle bestehenden Tests unverändert grün, `context` weiter 100 %; für die Testgeschichten erzeugte Anfragen vorher und nachher byte-gleich.
+- **Betroffene Module:** context
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-11 aus der Pflichtfrage (ADR-060).
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 
