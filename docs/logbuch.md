@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [GELÖST] 6.7 Weltenbauer ohne `@`-Menü
+
+- Eigentümer nach dem Einspielen: Beim Weltenbauer werden nach `@` keine Einträge vorgeschlagen. Ursache: Das Eingabefeld war ein einfaches Textfeld; der Platzhalter versprach „Mit @ einen Eintrag nennen“, die Erkennung der `@`-Namen beim Senden lief, aber ohne Menü. Weder meine Sichtprobe noch die echte Probe tippten `@` selbst ein (die Prüfskripte füllten den Text am Stück).
+- Behoben: Der Weltenbauer nutzt jetzt `InstructionEditor` wie das Kapitel (Menü mit Namen und Aliassen, Markierung erkannter Namen). Neuer Test „offers the entries of the world after @“; Sichtprobe in Chromium (Desktop, Handy): „@Gu“ bietet Gunda, Gunda Hollt, Gundas Schänke an, Enter setzt `@Gunda`, markiert.
+- Prüfungen: eslint, prettier, tsc grün; vitest 212 (98,18 / 96,06 / 97,09 / 98,46 %, `WorldBuilder.tsx` 100 % Zeilen); Playwright 11 grün.
+- Lehre: In Sichtproben Eingaben mit Sonderfunktion (`@`) Zeichen für Zeichen tippen, nicht einfügen.
+
 ### 2026-10-11 – [GELÖST] Eingespielt: 6.1–6.4, 6.6, 6.7; Traefik überschrieb die CSP
 
 - Auf Anweisung des Eigentümers („Einspielen“) Stand `main` `5f1fa10` nach grüner CI eingespielt (Runbook Abschnitt 7): `skriptorium:vorher` getaggt, `app.vorher` angelegt, Build, `(healthy)` nach ca. einer Minute, `/api/health` 200.

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useId, useRef, useState } from "react";
 import type { CanonEntry } from "../api";
 import { sourceLabel, withoutLinks, withoutMarks } from "../citations";
 import { lastKanonBlock } from "../kanonBlock";
@@ -8,6 +8,13 @@ import { ModelManager } from "./ModelManager";
 import { ModelSelect } from "./ModelSelect";
 import { useModelChoice } from "./useModelChoice";
 import { useWorldbuilder, type Turn } from "./useWorldbuilder";
+
+// The field with the `@` menu is the one of the writing panel; it loads with its editor.
+const InstructionEditor = lazy(() =>
+  import("./InstructionEditor").then((module) => ({
+    default: module.InstructionEditor,
+  })),
+);
 
 /** The follow-up the author sends with "Andere Variante". */
 const VARIANT = "Bitte eine andere Variante.";
@@ -39,6 +46,7 @@ export function WorldBuilder({
   const [draft, setDraft] = useState("");
   const [webSearch, setWebSearch] = useState(false);
   const log = useRef<HTMLDivElement>(null);
+  const fieldLabel = useId();
   // Whether the author is at the end of the conversation; only then does the view follow it.
   const atEnd = useRef(true);
   const catalog = choice.modelList?.catalog ?? [];
@@ -121,16 +129,20 @@ export function WorldBuilder({
         />
       )}
       <div className="wb-composer">
-        <textarea
-          rows={3}
-          aria-label="Nachricht an den Weltenbauer"
-          placeholder="Was soll entstehen oder besser werden? Mit @ einen Eintrag nennen."
-          value={draft}
-          disabled={flow.busy}
-          onChange={(event) => {
-            setDraft(event.target.value);
-          }}
-        />
+        <span id={fieldLabel} className="sr-only">
+          Nachricht an den Weltenbauer
+        </span>
+        <Suspense fallback={<p>Eingabe lädt …</p>}>
+          <InstructionEditor
+            value={draft}
+            onChange={setDraft}
+            entries={entries}
+            world={world}
+            labelledBy={fieldLabel}
+            disabled={flow.busy}
+            example="Was soll entstehen oder besser werden? Mit @ einen Eintrag nennen."
+          />
+        </Suspense>
         <div className="controls">
           <ModelSelect
             offered={choice.offered}
