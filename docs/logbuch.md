@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [ADR-ANGELEGT] ADR-063 Schutz-Schritte 6.4–6.6
+
+- 6.5 vorab mit Fakten: OpenRouter kennt `data_collection: deny` und Zero Data Retention; öffentliche Liste `/api/v1/endpoints/zdr`: etwa 255 von 442 Textmodellen mit ZDR-Anbieter; Favoriten grok-4.6, grok-4.5, Venice-Edition ja, qwen3.8-max nein; für `deny` keine öffentliche Liste. Eigentümer: 6.5 „C: Im OpenRouter-Konto“ (kein Code), 6.4 und 6.6 „Ja, beide“.
+- Umgesetzt in `api/app.py`: `no-store` für `/api/` (auch 500), CSP auf jeder Antwort, Handler für Validierungsfehler ohne Werte. Browser-Prüfung am lokalen Server: keine CSP-Meldung, Editor, `@`-Menü, Service Worker, Offline-Seite in Ordnung; Playwright 11 grün.
+- Unabhängige Prüfung (getrennte Instanz, Sonnet): „freigeben“; behoben: Schlüssel in `loc` (jetzt nur Ort und oberstes Feld), `no-store` an der 500-Antwort, Doku-Drift (Bedrohungsmodell und 2.7-Zeile nannten keine bzw. eine Meta-CSP), mehr Testfälle (json_invalid, verschachtelte Schlüssel, HEAD, 500). pytest danach 503.
+
 ### 2026-10-11 – [ADR-ANGELEGT] ADR-062 Kanon vor den letzten Seiten (6.3 umgesetzt)
 
 - Nach Pull von `main`: Spike 6.13 von einer Cloud-Session ausgeführt (#119, Bericht `docs/research/kanon-luecke.md`): ohne Auffüllung 4,0 bzw. 3,3 Widersprüche je Kette statt 0 bzw. 0,7; Details nur im Kanon 1 statt 10 von 15 eingehalten; Kontrollen 100 %. Bericht gelesen, Empfehlung C übernommen.
