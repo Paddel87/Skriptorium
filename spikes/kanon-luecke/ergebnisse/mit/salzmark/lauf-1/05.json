@@ -1,0 +1,14 @@
+{
+  "geschichte": "salzmark",
+  "schritt": 5,
+  "anweisung": "(leer: Weiter)",
+  "verweise": [],
+  "modell": "x-ai/grok-4.6",
+  "woerter": 104,
+  "sekunden": 12.2,
+  "token_geschaetzt": 10288,
+  "token_ein": 8802,
+  "token_aus": 505,
+  "kosten_usd": 0.00940302,
+  "finish_reason": "stop"
+}

@@ -1,0 +1,14 @@
+{
+  "geschichte": "salzmark",
+  "schritt": 2,
+  "anweisung": "Spät am Abend sitzen Tomas und ich unten bei Gunda. Gunda stellt uns einen Krug hin. Ich frage Tomas nach seinem Bruder.",
+  "verweise": [],
+  "modell": "x-ai/grok-4.6",
+  "woerter": 98,
+  "sekunden": 28.3,
+  "token_geschaetzt": 9575,
+  "token_ein": 8203,
+  "token_aus": 1303,
+  "kosten_usd": 0.02379168,
+  "finish_reason": "stop"
+}
