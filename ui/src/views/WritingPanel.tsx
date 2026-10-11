@@ -1,39 +1,33 @@
 import {
-  Fragment,
   lazy,
   Suspense,
   useCallback,
   useEffect,
   useId,
-  useRef,
   useState,
   type ReactNode,
 } from "react";
 import {
-  api,
-  describeError,
-  describeWriteError,
-  formatCost,
-  streamWrite,
   type CanonEntry,
   type GuestLink,
-  type WriteErrorKind,
-  type WriteEvent,
   type WriteLength,
-  type ModelList,
   type WriteOrder,
 } from "../api";
-import { optionLabel } from "../models";
-import {
-  acceptSuggestion,
-  referencedEntries,
-  suggestions,
-} from "../references";
+import { referencedEntries, suggestions } from "../references";
 import { loadStoryEntries } from "../storyEntries";
 import { useLoad } from "../useLoad";
+import { ComposerControls } from "./ComposerControls";
 import { ErrorText } from "./Common";
 import { ModelManager } from "./ModelManager";
+import { ProposalBlock } from "./ProposalBlock";
+import { ReferenceNotes } from "./ReferenceNotes";
 import { SceneForm } from "./SceneForm";
+import { useChatScroll } from "./useChatScroll";
+import { useModelChoice } from "./useModelChoice";
+import { useWriteFlow } from "./useWriteFlow";
+
+export { offeredModels } from "./useModelChoice";
+export { describeUsage } from "./useWriteFlow";
 
 // CodeMirror is large; the instruction field is loaded with the chapter like the editor.
 const InstructionEditor = lazy(() =>
@@ -42,14 +36,7 @@ const InstructionEditor = lazy(() =>
   })),
 );
 
-type Phase = "idle" | "thinking" | "writing" | "review";
-
 const NO_GUESTS: readonly GuestLink[] = [];
-
-/** Lengths of a proposal as the server names them (step 5.15). */
-const LENGTHS: readonly WriteLength[] = ["kurz", "mittel", "lang"];
-/** Value of the entry "Modelle verwalten …" in the selection field (step 5.12). */
-const MANAGE = "\u0000verwalten";
 
 /** Grey example in the empty instruction field (step 4.15); not tied to any world. */
 const EXAMPLE_INSTRUCTION =
@@ -116,8 +103,8 @@ export function WritingPanel({
   /** Called after the instruction of a taken-over proposal went into the history (step 5.13). */
   onNoted?: () => void;
 }) {
-  const loadModels = useCallback(() => api.models(), []);
-  const models = useLoad(loadModels);
+  const choice = useModelChoice(storyModel, onModelChange);
+  const { modelList, chosenModel } = choice;
   const loadEntries = useCallback(
     () => loadStoryEntries(world, guests),
     [world, guests],
@@ -130,200 +117,31 @@ export function WritingPanel({
     }
   }, [canonRevision, reloadEntries]);
 
-  const [model, setModel] = useState<string | null>(null);
   const [length, setLength] = useState<WriteLength>("mittel");
   const [instruction, setInstruction] = useState("");
   const [sceneOpen, setSceneOpen] = useState(false);
   const [place, setPlace] = useState("");
   const [characters, setCharacters] = useState<string[]>([]);
   const [goal, setGoal] = useState("");
-
-  const [phase, setPhase] = useState<Phase>("idle");
-  const [proposal, setProposal] = useState("");
-  const [note, setNote] = useState<string | null>(null);
-  const [seconds, setSeconds] = useState(0);
-  const [failure, setFailure] = useState<WriteErrorKind | null>(null);
-  const [aborted, setAborted] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  // The instruction of a taken-over proposal could not be noted (step 5.13); shown below.
-  const [historyError, setHistoryError] = useState<string | null>(null);
-  const [lastOrder, setLastOrder] = useState<WriteOrder | null>(null);
-  const [usage, setUsage] = useState<Usage | null>(null);
-  const [modelError, setModelError] = useState<string | null>(null);
-  const [editing, setEditing] = useState(false);
-  const [more, setMore] = useState(false);
-  const controller = useRef<AbortController | null>(null);
-  const scroller = useRef<HTMLDivElement>(null);
-  const composer = useRef<HTMLDivElement>(null);
   const instructionLabel = useId();
 
-  // Favorites saved in "Modelle verwalten …" replace the loaded list (step 5.12).
-  const [savedList, setSavedList] = useState<ModelList | null>(null);
-  const [managing, setManaging] = useState(false);
-  const modelList = savedList ?? models.data;
-  const preset = storyModel ?? modelList?.default;
-  const chosenModel = model ?? preset ?? "";
-  const offered = offeredModels(modelList, chosenModel);
-  const busy = phase === "thinking" || phase === "writing";
-
-  useEffect(() => {
-    if (phase !== "thinking") {
-      return;
-    }
-    const started = Date.now();
-    const timer = setInterval(() => {
-      setSeconds(Math.floor((Date.now() - started) / 1000));
-    }, 250);
-    return () => {
-      clearInterval(timer);
-    };
-  }, [phase]);
-
-  useEffect(
-    () => () => {
-      controller.current?.abort();
+  const flow = useWriteFlow({
+    world,
+    story,
+    chapter,
+    prepare,
+    onAccept,
+    onNoted,
+    onTaken: () => {
+      setInstruction("");
+      setSceneOpen(false);
+      setPlace("");
+      setCharacters([]);
+      setGoal("");
     },
-    [],
-  );
-
-  // Whether the author is at the end of the text; only then does the view follow the proposal
-  // as it grows (steps 5.11, 5.21: scrolled up to read, the view stays where it is).
-  const atEnd = useRef(true);
-
-  const showEnd = useCallback(() => {
-    const area = scroller.current;
-    if (area === null) {
-      return () => undefined;
-    }
-    atEnd.current = true;
-    area.scrollTop = area.scrollHeight;
-    // The editor measures its lines after the first paint; follow once more then, unless the
-    // author has scrolled up in between.
-    const frame = requestAnimationFrame(() => {
-      if (atEnd.current) {
-        area.scrollTop = area.scrollHeight;
-      }
-    });
-    return () => {
-      cancelAnimationFrame(frame);
-    };
-  }, []);
-
-  useEffect(() => {
-    const area = scroller.current;
-    if (area === null) {
-      return;
-    }
-    const remember = () => {
-      atEnd.current =
-        area.scrollHeight - area.scrollTop - area.clientHeight < 48;
-    };
-    area.addEventListener("scroll", remember);
-    // When the width changes (bar on the right, turning the phone), the end stays in view if it
-    // was in view before.
-    const sheet = area.firstElementChild;
-    const observer =
-      sheet !== null && typeof ResizeObserver !== "undefined"
-        ? new ResizeObserver(() => {
-            if (atEnd.current) {
-              area.scrollTop = area.scrollHeight;
-            }
-          })
-        : null;
-    if (sheet !== null) {
-      observer?.observe(sheet);
-    }
-    observer?.observe(area);
-    return () => {
-      area.removeEventListener("scroll", remember);
-      observer?.disconnect();
-    };
-  }, []);
-
-  // Chapter opened, text taken over, or a new request sent: to the end of the text.
-  useEffect(() => showEnd(), [endSignal, showEnd]);
-  useEffect(() => {
-    if (phase === "thinking") {
-      return showEnd();
-    }
-  }, [phase, showEnd]);
-
-  // The proposal growing at the end: follow only while the author is at the end.
-  useEffect(() => {
-    if (atEnd.current && phase !== "idle") {
-      return showEnd();
-    }
-  }, [proposal, phase, showEnd]);
-
-  useEffect(() => {
-    function jump(event: KeyboardEvent) {
-      if (
-        event.key !== "/" ||
-        event.ctrlKey ||
-        event.metaKey ||
-        event.altKey ||
-        writable(event.target)
-      ) {
-        return;
-      }
-      const field =
-        composer.current?.querySelector<HTMLElement>(".cm-content") ?? null;
-      if (field !== null) {
-        event.preventDefault();
-        field.focus();
-      }
-    }
-    document.addEventListener("keydown", jump);
-    return () => {
-      document.removeEventListener("keydown", jump);
-    };
-  }, []);
-
-  async function send(order: WriteOrder) {
-    setHistoryError(null);
-    setEditing(false);
-    setPhase("thinking");
-    setSeconds(0);
-    setProposal("");
-    setNote(null);
-    setFailure(null);
-    setAborted(false);
-    setError(null);
-    setUsage(null);
-    setLastOrder(order);
-    if (!(await prepare())) {
-      setPhase("idle");
-      return;
-    }
-    const abort = new AbortController();
-    controller.current = abort;
-    try {
-      await streamWrite(
-        api.writePath(world, story, chapter),
-        order,
-        (event) => {
-          if (event.type === "text") {
-            setPhase("writing");
-            setProposal((text) => text + event.text);
-          } else if (event.type === "hinweis") {
-            setNote(event.text);
-          } else if (event.type === "error") {
-            setFailure(event.kind);
-          } else if (event.type === "done") {
-            setUsage(event);
-          }
-        },
-        abort.signal,
-      );
-    } catch (reason: unknown) {
-      if (!abort.signal.aborted) {
-        setError(describeError(reason));
-      }
-    } finally {
-      controller.current = null;
-      setPhase("review");
-    }
-  }
+  });
+  const { phase, busy } = flow;
+  const { scroller, composer } = useChatScroll(endSignal, phase, flow.proposal);
 
   function newOrder(): WriteOrder {
     return {
@@ -337,61 +155,6 @@ export function WritingPanel({
     };
   }
 
-  function stop() {
-    setAborted(true);
-    controller.current?.abort();
-  }
-
-  function discard() {
-    setEditing(false);
-    setPhase("idle");
-    setProposal("");
-    setNote(null);
-    setFailure(null);
-    setAborted(false);
-    setError(null);
-  }
-
-  async function accept() {
-    setError(null);
-    // What the proposal came from, for the history (step 5.13); not the field as it is now.
-    const order = lastOrder;
-    const text = proposal.trim();
-    try {
-      await onAccept(proposal);
-      setInstruction("");
-      setSceneOpen(false);
-      setPlace("");
-      setCharacters([]);
-      setGoal("");
-      discard();
-    } catch (reason: unknown) {
-      setError(describeError(reason));
-      return;
-    }
-    if (order === null) {
-      return;
-    }
-    const asked = order.instruction.trim();
-    try {
-      await api.addInstruction(world, story, chapter, {
-        instruction:
-          asked !== ""
-            ? asked
-            : (order.scene ?? null) !== null
-              ? "Neue Szene"
-              : "Weiter",
-        text,
-        model: order.model,
-      });
-      onNoted?.();
-    } catch (reason: unknown) {
-      setHistoryError(
-        `Übernommen, aber nicht im Verlauf vermerkt: ${describeError(reason)}`,
-      );
-    }
-  }
-
   const storyEntries = entries.data ?? [];
   const places = storyEntries.filter((e) => e.category === "ort");
   const figures = storyEntries.filter((e) => e.category === "figur");
@@ -400,101 +163,39 @@ export function WritingPanel({
   const shown = (entry: CanonEntry) =>
     entry.world === world ? entry.name : `${entry.name} (Gast)`;
 
-  const proposalBlock = (phase === "writing" || phase === "review") && (
-    <article className="proposal" aria-label="Vorschlag">
-      <p className="who">
-        Vorschlag der KI · {lastOrder?.model ?? chosenModel} über OpenRouter ·{" "}
-        {lastOrder?.length ?? length}
-      </p>
-      <textarea
-        aria-label="Vorschlag der KI"
-        className={editing ? "proposal-text editing" : "proposal-text"}
-        rows={rowsFor(proposal)}
-        value={proposal}
-        readOnly={phase !== "review" || !editing}
-        onChange={(event) => {
-          setProposal(event.target.value);
-        }}
-      />
-      {phase === "review" && (
-        <>
-          {aborted && <p className="note">Abgebrochen.</p>}
-          {failure !== null && (
-            <p className="error" role="alert">
-              {describeWriteError(failure)}
-              {failure === "abgelehnt" &&
-                " Wähle unten ein anderes Modell und schreibe neu."}
-            </p>
-          )}
-          <ErrorText message={error} />
-          <div className="row">
-            {proposal.trim() !== "" && (
-              <button
-                type="button"
-                className="primary"
-                onClick={() => void accept()}
-              >
-                Übernehmen
-              </button>
-            )}
-            {proposal.trim() !== "" && !editing && (
-              <button
-                type="button"
-                onClick={() => {
-                  setEditing(true);
-                }}
-              >
-                Ändern
-              </button>
-            )}
-            <button type="button" onClick={discard}>
-              Verwerfen
-            </button>
-            {lastOrder !== null && (
-              <button
-                type="button"
-                onClick={() =>
-                  void send({ ...lastOrder, model: chosenModel, length })
-                }
-              >
-                Neu schreiben mit {chosenModel}
-              </button>
-            )}
-            {usage !== null && (
-              <span className="note cost">{describeUsage(usage)}</span>
-            )}
-          </div>
-        </>
-      )}
-    </article>
-  );
-
   return (
     <section className="chat" aria-label="Schreiben mit der KI">
       <div className="chat-scroll" ref={scroller}>
         <div className="chat-sheet">
           {children}
-          {note !== null && phase !== "idle" && (
+          {flow.note !== null && phase !== "idle" && (
             <p className="note" role="note">
-              Hinweis der KI (wird nicht übernommen): {note}
+              Hinweis der KI (wird nicht übernommen): {flow.note}
             </p>
           )}
-          {proposalBlock}
+          <ProposalBlock
+            flow={flow}
+            chosenModel={chosenModel}
+            length={length}
+          />
         </div>
       </div>
       <div className="composer" ref={composer}>
         <div className="composer-sheet">
           <ErrorText
             message={
-              models.error ?? entries.error ?? modelError ?? historyError
+              choice.loadError ??
+              entries.error ??
+              choice.modelError ??
+              flow.historyError
             }
           />
-          {managing && modelList !== undefined && (
+          {choice.managing && modelList !== undefined && (
             <ModelManager
               list={modelList}
-              onChange={setSavedList}
+              onChange={choice.setSavedList}
               onClose={() => {
-                setManaging(false);
+                choice.setManaging(false);
               }}
             />
           )}
@@ -534,232 +235,37 @@ export function WritingPanel({
               />
             </Suspense>
           </div>
-          {!busy && suggested.length > 0 && (
-            <p className="note suggest">
-              {/* Names without @ are only offered (step 5.1, FR-014). */}
-              <span>Meintest du:</span>
-              {suggested.map(({ word, entry }) => (
-                <button
-                  type="button"
-                  key={entry.id}
-                  aria-label={`@${word} heranziehen`}
-                  onClick={() => {
-                    setInstruction(
-                      acceptSuggestion(instruction, storyEntries, entry),
-                    );
-                  }}
-                >
-                  @{word}
-                  {word.toLocaleLowerCase("de") !==
-                    entry.name.toLocaleLowerCase("de") && (
-                    <small> → {shown(entry)}</small>
-                  )}
-                </button>
-              ))}
-            </p>
-          )}
-          {referenced.length > 0 && (
-            <p className="note">
-              Herangezogen:{" "}
-              {onLookUp === undefined
-                ? referenced.map(shown).join(", ")
-                : referenced.map((entry, index) => (
-                    <Fragment key={entry.id}>
-                      {index > 0 && ", "}
-                      <button
-                        type="button"
-                        className="link"
-                        title="Eintrag ansehen"
-                        onClick={() => {
-                          onLookUp(entry);
-                        }}
-                      >
-                        {shown(entry)}
-                      </button>
-                    </Fragment>
-                  ))}
-            </p>
-          )}
-          <div className={more ? "controls more" : "controls"}>
-            <label className="compact" title="Anbieter: OpenRouter">
-              <span className="sr-only">Anbieter: OpenRouter</span>
-              <select
-                aria-label="Modell"
-                value={chosenModel}
-                onChange={(event) => {
-                  const next = event.target.value;
-                  if (next === MANAGE) {
-                    setManaging(true);
-                    return;
-                  }
-                  setModel(next);
-                  setModelError(null);
-                  onModelChange?.(next).catch((reason: unknown) => {
-                    setModelError(describeError(reason));
-                  });
-                }}
-              >
-                {offered.map((id) => (
-                  <option key={id} value={id}>
-                    {optionLabel(
-                      modelList?.catalog.find((entry) => entry.id === id),
-                      id,
-                      modelList?.favorites.includes(id) ?? false,
-                    )}
-                  </option>
-                ))}
-                {modelList !== undefined && (
-                  <>
-                    <option disabled>──────────</option>
-                    <option value={MANAGE}>Modelle verwalten …</option>
-                  </>
-                )}
-              </select>
-            </label>
-            <label className="compact">
-              <span className="sr-only">Länge</span>
-              <select
-                aria-label="Länge"
-                value={length}
-                disabled={busy}
-                onChange={(event) => {
-                  setLength(event.target.value as WriteLength);
-                }}
-              >
-                {LENGTHS.map((name) => (
-                  <option key={name} value={name}>
-                    {name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <button
-              type="button"
-              className="more-toggle"
-              aria-expanded={more}
-              aria-label="Weitere Knöpfe"
-              onClick={() => {
-                setMore(!more);
-              }}
-            >
-              ⋯
-            </button>
-            {/* After a choice behind "⋯" the extra buttons fold away again (step 5.2). */}
-            <span
-              className="extra"
-              onClick={(event) => {
-                if (
-                  event.target instanceof Element &&
-                  event.target.closest("button") !== null
-                ) {
-                  setMore(false);
-                }
-              }}
-            >
-              <label className="check">
-                <input
-                  type="checkbox"
-                  checked={sceneOpen}
-                  disabled={busy}
-                  onChange={(event) => {
-                    setSceneOpen(event.target.checked);
-                  }}
-                />
-                Neue Szene
-              </label>
-              {tools}
-            </span>
-            <span className="spacer" />
-            {phase === "thinking" && (
-              <span className="note" role="status">
-                denkt nach … {seconds} s
-              </span>
-            )}
-            {phase === "writing" && (
-              <span className="note" role="status">
-                schreibt …
-              </span>
-            )}
-            {busy && (
-              <button type="button" onClick={stop}>
-                Abbrechen
-              </button>
-            )}
-            <button
-              type="button"
-              className="primary"
-              aria-label={sceneOpen ? "Szene beginnen" : "Weiterschreiben"}
-              disabled={busy || chosenModel === ""}
-              onClick={() => void send(newOrder())}
-            >
-              {sceneOpen ? (
-                "Szene beginnen"
-              ) : (
-                <>
-                  <span className="wide-only">Weiterschreiben</span>
-                  <span className="narrow-only">Weiter</span>
-                </>
-              )}
-            </button>
-          </div>
+          <ReferenceNotes
+            busy={busy}
+            suggested={suggested}
+            referenced={referenced}
+            instruction={instruction}
+            storyEntries={storyEntries}
+            shown={shown}
+            onInstruction={setInstruction}
+            onLookUp={onLookUp}
+          />
+          <ComposerControls
+            offered={choice.offered}
+            modelList={modelList}
+            chosenModel={chosenModel}
+            onChooseModel={choice.choose}
+            onManageModels={() => {
+              choice.setManaging(true);
+            }}
+            length={length}
+            onLength={setLength}
+            sceneOpen={sceneOpen}
+            onSceneOpen={setSceneOpen}
+            tools={tools}
+            phase={phase}
+            seconds={flow.seconds}
+            busy={busy}
+            onStop={flow.stop}
+            onSend={() => void flow.send(newOrder())}
+          />
         </div>
       </div>
     </section>
   );
-}
-
-/** Rough height of the proposal, where the browser cannot size the field to its text. */
-/**
- * Models of the selection field: the favorites, plus the chosen model (the story's or one just
- * removed from the favorites) and, without favorites, the preset model (ADR-055).
- */
-export function offeredModels(
-  list: ModelList | undefined,
-  chosen: string,
-): string[] {
-  if (list === undefined) {
-    return chosen === "" ? [] : [chosen];
-  }
-  const offered = [...list.favorites];
-  for (const id of [chosen, list.default]) {
-    if (
-      id !== "" &&
-      !offered.includes(id) &&
-      (offered.length === 0 || id === chosen)
-    ) {
-      offered.push(id);
-    }
-  }
-  return offered;
-}
-
-function rowsFor(text: string): number {
-  const lines = text
-    .split("\n")
-    .reduce((sum, line) => sum + Math.max(1, Math.ceil(line.length / 75)), 0);
-  return Math.max(2, lines);
-}
-
-/** Whether a key press goes into a field the author is writing in. */
-function writable(target: EventTarget | null): boolean {
-  if (!(target instanceof HTMLElement)) {
-    return false;
-  }
-  return (
-    target.isContentEditable ||
-    ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName)
-  );
-}
-
-type Usage = Extract<WriteEvent, { type: "done" }>;
-
-/** Tokens and cost of one proposal (step 3.9); the provider may leave out the cost. */
-export function describeUsage(usage: Usage): string {
-  const tokens = (count: number | null) =>
-    count === null ? "?" : count.toLocaleString("de-DE");
-  const cost =
-    usage.cost_usd === null
-      ? "Kosten nicht gemeldet"
-      : `Kosten ${formatCost(usage.cost_usd)}`;
-  return `Verbrauch: ${tokens(usage.input_tokens)} Token ein, ${tokens(usage.output_tokens)} aus · ${cost}`;
 }
