@@ -1,0 +1,14 @@
+{
+  "geschichte": "glimmergrund",
+  "schritt": 6,
+  "anweisung": "Am nächsten Morgen gehe ich zu Doktor Salm ins Lazarett und bitte ihn, mir zu beschreiben, wie die geborgenen Lampen der Toten aussahen, als man sie fand.",
+  "verweise": [],
+  "modell": "x-ai/grok-4.6",
+  "woerter": 194,
+  "sekunden": 31.1,
+  "token_geschaetzt": 24124,
+  "token_ein": 19578,
+  "token_aus": 1331,
+  "kosten_usd": 0.0464805,
+  "finish_reason": "stop"
+}

@@ -1,0 +1,14 @@
+{
+  "geschichte": "glimmergrund",
+  "schritt": 2,
+  "anweisung": "Wir fahren hinauf. Im Hof lädt ein Fuhrmann aus dem Tal Fässer ab; ich frage ihn, wie lange er bis Unterwehr braucht. Dann gehe ich zu Haller ins Maschinenhaus, weil er mir noch etwas über seine Maschine erzählen wollte.",
+  "verweise": [],
+  "modell": "x-ai/grok-4.6",
+  "woerter": 233,
+  "sekunden": 23.0,
+  "token_geschaetzt": 22870,
+  "token_ein": 18545,
+  "token_aus": 984,
+  "kosten_usd": 0.04237398,
+  "finish_reason": "stop"
+}
