@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 6 – Schreiballtag, Schutz und Kanon-Werkzeuge (Umsetzung), begonnen 2026-10-11 (ADR-059, ADR-060). Fortschritt: ✅ 3 von 13 Schritten erledigt, 2 umgesetzt mit offener Prüfung – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
+- **Projektphase:** Phase 7 – Zeitlinie, Publizieren, Gestaltung und Bilder (Umsetzung), begonnen 2026-10-12 (ADR-067, ADR-068); Phase 6 abgeschlossen 2026-10-12. Fortschritt: 0 von 8 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
 - **Version:** v1.0.0 – erstes produktives Release (2026-10-11, ADR-058); davor v0.1.0 als Vorabversion (ADR-043)
 - **Status:** In Betrieb
 - **Letzte Änderung:** 2026-10-11
@@ -32,7 +32,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 
 ## Quick Start
 
-Stand 2026-10-11 (v1.0.0): Server mit Anmeldung und Oberfläche für Welten, Kanon, Import und Geschichten; Aufbau wie ein Chat mit Leiste links und eigener Adresse je Ansicht; Schreiben mit KI (Figuren-Schreibweise, `@`-Menü, wählbare Länge, Kapitel-Kurzfassungen, Gast-Figuren aus anderen Welten) mit `OPENROUTER_API_KEY`; markierte Textstellen in den Kanon übernehmen; Modell je Geschichte, Kosten je Anfrage und Monat; Hell- und Dunkelmodus; als App installierbar.
+Stand 2026-10-12 (v1.0.0 plus Phase 6): Server mit Anmeldung und Oberfläche für Welten, Kanon, Import (Markdown und SillyTavern) und Geschichten; KI-Weltenbauer; Export nach SillyTavern; Aufbau wie ein Chat mit Leiste links und eigener Adresse je Ansicht; Schreiben mit KI (Figuren-Schreibweise, `@`-Menü, wählbare Länge, Kapitel-Kurzfassungen, Gast-Figuren aus anderen Welten) mit `OPENROUTER_API_KEY`; markierte Textstellen in den Kanon übernehmen; Modell je Geschichte, Kosten je Anfrage und Monat; Darstellung hell, dunkel oder schwarz (AMOLED); als App installierbar.
 
 ### Voraussetzungen
 
@@ -86,7 +86,7 @@ Browser (ui) ──HTTP/SSE──> api ──> canon ─────┐
 Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:8000` im Browser öffnen (ohne TLS nur über `localhost`, weil das Sitzungs-Cookie `Secure` verlangt). Mit dem Einrichtungscode ein Passwort festlegen, anmelden, Welt anlegen.
 
 - **Links:** eine schmale Symbolleiste (Liste, Welten, Kanon, Import, Darstellung, Konto, Abmelden) und daneben die einklappbare Liste mit allen Welten, ihren Geschichten und den Kapiteln der offenen Geschichte, mit Suche und „+ Kapitel“, „+ Geschichte“, „+ Welt“. Am Smartphone öffnet „☰“ beides als Menü. Jede Ansicht hat eine eigene Adresse: Neuladen, Zurück und Lesezeichen bleiben an der Stelle.
-- **Welt:** Bereiche für Geschichten, Kanon (Suche über Name und Alias, Kategorien als Filter, Liste links, Eintrag rechts zum Lesen und Bearbeiten, eigene Adresse je Eintrag), Markdown-Import mit Vorschau und die Beschreibung der Welt. Passwort ändern und Sitzungen beenden unter „Konto“; „Darstellung“ wechselt zwischen wie das Gerät, hell und dunkel.
+- **Welt:** Bereiche für Geschichten, Kanon (Suche über Name und Alias, Kategorien als Filter, Liste links, Eintrag rechts zum Lesen und Bearbeiten, eigene Adresse je Eintrag), Import mit Vorschau (Markdown sowie Figurenkarten und Lorebooks aus SillyTavern), Download der Welt als Lorebook und von Figuren als Karte für SillyTavern, der KI-Weltenbauer und die Beschreibung der Welt. Passwort ändern und Sitzungen beenden unter „Konto“; „Darstellung“ wechselt zwischen wie das Gerät, hell, dunkel und schwarz (für AMOLED-Bildschirme).
 - **Schreibseite einer Geschichte:** aufgebaut wie ein Chat – das Manuskript scrollt, ein langes Kapitel öffnet am Textende, die Anweisung steht fest unten („/“ springt hinein). Oben Kapiteltitel und Speichern. „Kanon & Geschichte“ öffnet rechts eine Leiste mit dem Kanon zum Nachschlagen (Suche über Name und Alias) und den Einstellungen der Geschichte: Figuren-Schreibweise, Gäste aus anderen Welten (nur für diese Geschichte), Fakten dieser Geschichte, Gesamtzusammenfassung.
 - **Figuren-Schreibweise:** als Kurzzeile über der Anweisung (Perspektive, selbst geführte Figuren, „ändern“). Für die selbst geführten Figuren schreibt die KI keine Handlung, Rede oder Gedanken; beschreibt die Anweisung, was sie tun oder sagen, schreibt die KI genau das aus.
 - **Genre und Schreibweise:** in „Kanon & Geschichte“ unter „Geschichte“ als Knöpfe zum Antippen – Genre, Tonalität, Atmosphäre, Tempo, Stil, Deutlichkeit und freie Angaben als Vorgabe für neue Kapitel; jedes Kapitel hat seine eigene Schreibweise (Zeile „Schreibweise Kapitel N“ über der Anweisung, „ändern“). Die KI hält sie ein, Kanon und Figuren-Schreibweise gehen vor.
@@ -100,19 +100,8 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- ✅ **5.1, 5.11:** Vorschläge ohne `@`, Chat-Aufbau mit Mitlaufen und neue Kanon-Seite mit Suche und Gliederung nach Kategorie – erledigt 2026-10-10.
-- ✅ **5.2, 5.21:** Bedienung am Smartphone und Installation als App am iPhone und Mac – erledigt 2026-10-10.
-- ✅ **5.6:** Genre und atmosphärische Schreibweise je Geschichte und Kapitel (Auswahllisten und freier Text) – erledigt 2026-10-10.
-- ✅ **5.12:** Modellauswahl aus dem Angebot von OpenRouter mit eigenen Favoriten (ADR-055).
-- ✅ **5.13, 5.16, 5.20:** Verlauf der Anweisungen, herangezogene Einträge anklickbar, schnell angelegte Kapitel – erledigt 2026-10-11.
-- ✅ **5.14:** Go-Live-Prüfung – v1.0.0 freigegeben 2026-10-11 (ADR-058).
-- ✅ **5.5:** Phase 6 geplant (ADR-059).
-- ✅ **6.13:** Spike – fehlende Kanon-Einträge bei langen Kapiteln führen zu deutlich mehr Widersprüchen ([Bericht](docs/research/kanon-luecke.md)).
-- ✅ **6.4, 6.6:** Schutz der Server-Antworten (ADR-063) – eingespielt und von außen geprüft 2026-10-11.
-- ✅ **6.1, 6.2, 6.5, 6.7:** Umfang des Kapitels, Kurzfassung im eigenen Reiter, Datenschutz bei OpenRouter, KI-Weltenbauer mit Websuche (ADR-064) – erledigt 2026-10-11.
-- ✅ **6.3:** Kanon vor den letzten Seiten (ADR-062) – erledigt 2026-10-11; an der Geschichte des Eigentümers gehen bei langen Kapiteln jetzt alle Kanon-Einträge mit, vorher je nach Kapitel nur 0 bis 28 von 34.
-- ⚪ **Als Nächstes:** 6.8 und 6.9 SillyTavern-Austausch, dann 6.10 Planung der nächsten Ausbaustufe.
-- ✅ **D.16:** grok-4.7 denkt an echten Schreib-Anfragen 44–157 s vor, über die Einstellungen nicht zu beheben; kommt in 5.12 aus der Voreinstellung ([Bericht](docs/research/reaktionszeit-d16.md), ADR-052). Kanon-Einträge, die bei langen Kapiteln nicht mitgehen: zurückgestellt auf die nächste Ausbaustufe (V.10, ADR-050).
+- ✅ **Phase 6** (abgeschlossen 2026-10-12): Umfang des Kapitels, Kurzfassung im eigenen Reiter, Kanon auch bei langen Kapiteln (ADR-062), Schutz der Server-Antworten (ADR-063), KI-Weltenbauer mit Websuche (ADR-064), Austausch mit SillyTavern in beide Richtungen (ADR-065, ADR-066), Darstellung „Schwarz“. Bewertung am Phasenende: [`docs/research/bewertung-phase-6.md`](docs/research/bewertung-phase-6.md).
+- ⚪ **Als Nächstes:** 7.1 Umbau ohne sichtbare Änderung (ADR-067), dann 7.2 Zeitlinie mit Kalenderdaten; danach Schreibweise für bestehende Kapitel, Publizieren, Gestaltung der Oberfläche, Bilder und Karten (ADR-068).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).
