@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-10, nach dem Deployment `628f559` (5.6 Genre und Schreibweise, 5.11 Kanon in der Leiste der Geschichte eingespielt; Anweisung des Eigentümers „einspielen“)
-- **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
+- **Stand vom:** 2026-10-11, nach Spike 6.13 (Bericht `docs/research/kanon-luecke.md`)
+- **Laufende Phase:** Phase 6 „Schreiballtag, Schutz und Kanon-Werkzeuge“ (Phase 5 abgeschlossen 2026-10-11, ADR-060: weiterbauen mit Umbau)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner – Phasengrenze nach Phase 5 (Vision-Abgleich, Onboarding-Probelauf, Pflichtfrage). Am 2026-10-11 erledigt: 5.5 (ADR-059), 5.14 (v1.0.0, ADR-058), D.4 (ADR-057), 5.20, 5.13, 5.16. Am 2026-10-10 erledigt: 5.12, 5.26, 5.1, 5.2, 5.21, 5.11, 5.6, 5.3
-- **Nächster Schritt:** Phasengrenze nach Phase 5: Vision-Abgleich und Onboarding-Probelauf erledigt, Pflichtfrage entschieden (ADR-060: weiterbauen mit Umbau); Archivierung von Phase 5; danach 6.11 (Umbau Schreibbereich), dann 6.1. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** keiner – 6.1 und 6.2 umgesetzt, Prüfung durch den Eigentümer offen; 6.13 erledigt 2026-10-11
+- **Nächster Schritt:** 6.3 Entscheidungsvorlage mit dem Ergebnis aus 6.13 (Empfehlung C, Kategorie 1); danach 6.4–6.6. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -24,13 +24,13 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details im Archiv [`docs/archiv/fahrplan-phase-5.md`](archiv/fahrplan-phase-5.md).
 
-**Phase 6: 2 von 13 erledigt, 3 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
+**Phase 6: 3 von 13 erledigt, 2 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | 🟠 | 6.1 | Umfang des Kapitels im Manuskript anzeigen | umgesetzt, Prüfung offen | du: prüfen |
 | 🟠 | 6.2 | Kurzfassung nicht mit der Anweisung verwechselbar | umgesetzt, Prüfung offen | du: prüfen |
-| ⚪ | 6.3 | Kanon-Einträge bei langen Kapiteln | wartet auf 6.13 (ADR-061) | – |
+| ⚪ | 6.3 | Kanon-Einträge bei langen Kapiteln | offen – Spike 6.13 erledigt, Entscheidungsvorlage (Empfehlung C) | KI: Vorlage, dann du |
 | ⚪ | 6.4 | Antworten des Servers nicht im Browser-Speicher | offen | KI |
 | ⚪ | 6.5 | Datenschutz-Einstellung an OpenRouter | offen | KI |
 | ⚪ | 6.6 | Kopfzeilen und Fehlermeldungen härten | offen | KI |
@@ -40,7 +40,7 @@ Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details 
 | ⚪ | 6.10 | Planung der nächsten Ausbaustufe | offen | KI |
 | ✅ | 6.11 | Umbau des Schreibbereichs (vor 6.1) | erledigt 2026-10-11 | – |
 | ✅ | 6.12 | Umbau der Anfrage-Zusammenstellung (vor 6.3) | erledigt 2026-10-11 | – |
-| 🟠 | 6.13 | Spike: schaden fehlende Kanon-Einträge bei langen Kapiteln? | in Arbeit (ADR-061) | KI, Läufe in der Cloud |
+| ✅ | 6.13 | Spike: schaden fehlende Kanon-Einträge bei langen Kapiteln? | erledigt 2026-10-11 (`docs/research/kanon-luecke.md`) | – |
 
 **Querschnitt (offen):**
 
@@ -209,7 +209,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.3: Kanon-Einträge bei langen Kapiteln
 
-- **Status:** ⚪ OFFEN – Entscheidung vertagt bis nach dem Spike 6.13 (ADR-061)
+- **Status:** ⚪ OFFEN – Spike 6.13 erledigt (2026-10-11, Empfehlung C), Entscheidungsvorlage steht aus
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 6.12, 6.13
 - **Freigabepflichtig:** ja – Reihenfolge der Kontext-Zusammenstellung (ADR-003), Kategorie 1
@@ -369,7 +369,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.13: Spike – schaden fehlende Kanon-Einträge bei langen Kapiteln?
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-11)
+- **Status:** ✅ ERLEDIGT (2026-10-11) – Bericht `docs/research/kanon-luecke.md`: Fehlen schadet in beiden Geschichten (Widersprüche je Kette 0 → 4,0 und 0,7 → 3,3); Empfehlung für 6.3: C
 - **Phasentyp-Kontext:** ERKUNDUNG (Spike; Ergebnis als Bericht, keine Funktion)
 - **Abhängigkeiten:** 6.12
 - **Freigabepflichtig:** nein – Prüfwerkzeug unter `spikes/`; die Folgeentscheidung ist 6.3
@@ -381,7 +381,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** keine (nur `spikes/`; Lesen von `context`)
 - **Reifegrad-Wirkung:** möglicherweise – Beförderung der NFR Kontexttreue hängt an 6.3
 - **Artefakte:** Spike-Skripte, Bericht, Logbuch-Eintrag
-- **Notizen:** Angelegt 2026-10-11 (ADR-061). KI-Läufe in einer Cloud-Session (gültiger Schlüssel).
+- **Notizen:** Angelegt 2026-10-11 (ADR-061). KI-Läufe in einer Cloud-Session (gültiger Schlüssel). Gemessen wurde Auffüllung an/aus bei gleichem Text statt „Kanon vor den Seiten“ (Begründung im Bericht); Kosten 2,67 $.
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 

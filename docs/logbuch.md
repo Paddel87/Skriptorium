@@ -29,6 +29,20 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [SESSIONENDE] Spike 6.13 erledigt
+
+- **Bearbeitet:** 6.13 (ERKUNDUNG) – Läufe, verblindete Bewertung, Bericht; README-Drift behoben (Status-Block stand noch auf Phase 5 und „In Entwicklung“, älter als diese Session).
+- **Nächster Schritt:** 6.3 Entscheidungsvorlage (Empfehlung C); offen beim Eigentümer: Prüfung 6.1 und 6.2, D.11 bis 2026-10-31.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, Sitzungsabfrage); 6.13 empfiehlt Entscheidung – 0 Schritte oberhalb der Empfehlung. Abgegeben: zwei Bewertungen an getrennte Instanzen der Routine-Klasse (Sonnet, verlangt durch das Verfahren).
+- **Kontextgröße:** zu Beginn ca. 222.000 Token, über der Grenze; „Weiter hier“ des Eigentümers.
+- **Prüfungen:** markdownlint sauber; kein Produktcode geändert, daher keine Tests nötig; keine neuen ADRs, Reifegrade unverändert (NFR Kontexttreue bleibt `[VORLÄUFIG]` bis 6.3); Ablaufdaten-Register ohne erreichten Vorlauf.
+
+### 2026-10-11 – [ERLEDIGT] 6.13 Spike Kanon-Lücke
+
+- Läufe mit grok-4.6, je Variante 42 Anfragen ohne Abbruch: `mit` 1,45 $, `ohne` 1,22 $. Bewertung verblindet durch je eine getrennte Sonnet-Instanz je Geschichte; alle Widersprüche vom Coding-Agent am Text und Kanon nachgeprüft, kein Urteil geändert.
+- Ergebnis: Widersprüche je Kette Salzmark 0 → 4,0 (2–5), Glimmergrund 0,7 (0–1) → 3,3 (2–4); Salzmark „nur im Kanon“ Quote 100 % → 17 % (0–33 %), meist ausgewichen (9 N); Glimmergrund „auch im Text“ 96 % → 85 %; Kontrollen 100 % in beiden. Wirkung in beiden Geschichten außerhalb der Spannweite (Regel-002). Bericht `docs/research/kanon-luecke.md`, Empfehlung für 6.3: C (Kanon vor den Seiten mit Obergrenze); A reicht nicht, weil die meisten Widersprüche Figuren und Orte betreffen.
+- Beobachtungen: Die Zufallsreihenfolge legte in Salzmark alle `ohne`-Ketten auf K1–K3 (im Bericht als Grenze genannt). Die Bewertungen hatten Markdown-Formfehler (Leerzeilen, eine Überschriftenebene), mit `markdownlint --fix` bzw. einer Zwischenüberschrift behoben – Inhalt unverändert. Schritt-Text von 6.13 nannte noch den ersten Aufbau („Kanon vor den Seiten“); Abweichung im Bericht und in den Notizen festgehalten.
+
 ### 2026-10-11 12:47 UTC – [SESSIONSTART] Spike 6.13 ausführen (Läufe, verblindete Bewertung, Bericht)
 
 - Fortgesetzte Cloud-Session nach `git pull` (Stand `01ed910`). Modell laut Sitzungsabfrage: eingestellt und bedient `claude-opus-5-5` → Entscheidungs-Klasse; 6.13 empfiehlt Entscheidung (Läufe Routine).
