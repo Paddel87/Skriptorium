@@ -36,7 +36,7 @@ Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details 
 | ✅ | 6.6 | Kopfzeilen und Fehlermeldungen härten | erledigt 2026-10-11 | – |
 | ✅ | 6.7 | KI-gestützter Weltenbauer | erledigt 2026-10-11 (ADR-064) | – |
 | 🟠 | 6.8 | Import aus SillyTavern | umgesetzt und unabhängig geprüft (ADR-065) | KI: einspielen (auf deine Anweisung); du: Probe mit einer Datei aus deinem SillyTavern |
-| 🟠 | 6.9 | Export in SillyTavern-Formate | in Arbeit (ADR-066) | du: Mockup ansehen |
+| 🟠 | 6.9 | Export in SillyTavern-Formate | umgesetzt (ADR-066) | KI: Kurzprüfung der Import-Änderung; du: nach dem Einspielen in SillyTavern prüfen |
 | ⚪ | 6.10 | Planung der nächsten Ausbaustufe | offen | KI |
 | ✅ | 6.11 | Umbau des Schreibbereichs (vor 6.1) | erledigt 2026-10-11 | – |
 | ✅ | 6.12 | Umbau der Anfrage-Zusammenstellung (vor 6.3) | erledigt 2026-10-11 | – |
@@ -305,7 +305,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.9: Export in SillyTavern-Formate
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – entschieden (ADR-066): Welt als Lorebook (Format von SillyTavern, Kategorie in `extensions`), Figur als Karte V2 (JSON, ohne eingebettetes Lorebook). Eingangskriterium „6.8 erledigt“ formal offen (Probe des Eigentümers), Zuordnung steht. Offen: Mockup, Umsetzung
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – entschieden (ADR-066): Welt als Lorebook (Format von SillyTavern, Kategorie in `extensions`), Figur als Karte V2 (JSON, ohne eingebettetes Lorebook). Eingangskriterium „6.8 erledigt“ formal offen (Probe des Eigentümers), Zuordnung steht. Mockup freigegeben 2026-10-11. Umgesetzt 2026-10-11: `lorebook_for`, `card_for`, zwei GET-Endpunkte, Knöpfe auf der Kanon-Seite; Import verschiebt Überschriften nur so weit wie nötig (ADR-066). Rückimport-Test grün (gleicher Kanon bis auf Ebene-2-Abschnitte → Ebene 3); im Browser: Lorebook und Karte heruntergeladen und wieder eingelesen, 30 von 30 Einträgen erkannt. Offen: Kurzprüfung der Import-Änderung durch die getrennte Instanz, Einspielen, Prüfung des Eigentümers in SillyTavern
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 6.8
 - **Freigabepflichtig:** ja – Ausgabeformat als Schnittstelle (Kategorie 5)

@@ -29,6 +29,18 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] 6.9 Export nach SillyTavern umgesetzt
+
+- ADR-066 nach Auswahlfragen (Welt als Lorebook + Figur als Karte; Karte ohne eingebettetes Lorebook; JSON). Eingangskriterium „6.8 erledigt“ formal offen (Probe des Eigentümers), Zuordnung steht – im ADR vermerkt.
+- Beim Bau gefunden: Gegenstände aus der Oberfläche haben „## Zweck“ (Ebene 2); der pauschale Versatz um zwei Ebenen im Import aus 6.8 hätte beim Rückimport „#### Zweck“ ergeben. Umgestellt auf „nur so weit wie nötig“ (oberste Überschrift auf Ebene 3); Export gibt den Text unverändert aus. ADR-066 entsprechend ergänzt.
+- Rückimport-Test über den echten Service mit allen sechs Kategorien, Aliassen, Code-Block und Gegenstand ohne Text: gleicher Kanon bis auf die bewusste Angleichung Ebene 2 → 3. Im Browser (Prüfserver mit Kopie der Testdaten): Lorebook (30 Einträge) und Karte heruntergeladen und über die Import-Seite wieder eingelesen, alle als „existiert schon“ erkannt.
+- Prüfungen: pytest 560 (99 %, SillyTavern-Modul 100 %), ruff, mypy, bandit grün; vitest 216, Playwright 11 grün.
+- Reibung: zwei Testerwartungen falsch (Reihenfolge nach Namen, abschließender Zeilenumbruch je nach Anlage) – Tests angepasst, Code unverändert.
+
+### 2026-10-11 – [GELÖST] CI rot bei PR #128: tief verschachteltes JSON je nach Plattform
+
+- Test mit 100.000 verschachtelten Klammern erwartete „kein lesbares JSON“; auf Linux (CI, Python 3.14.7) liest `json` die Liste vollständig ein, die Datei wird dann als „Keine Figurenkarte“ abgelehnt. Abgelehnt ohne Inhalt in beiden Fällen; Test lässt beide Meldungen zu (Commit `c446b52`). Das Kurzprotokoll der CI (`--log-failed`) brach genau am Fehler ab; erst das vollständige Protokoll über die API zeigte die Meldung.
+
 ### 2026-10-11 – [BEOBACHTUNG] 6.8 Import aus SillyTavern umgesetzt und unabhängig geprüft
 
 - ADR-065 nach Auswahlfragen (Weg A, Beschreibung und Persönlichkeit, Schlüsselwörter als Aliasse, `{{char}}` ersetzen / `{{user}}` melden); Mockup freigegeben.
