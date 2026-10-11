@@ -1,12 +1,22 @@
-"""Endpoints for worlds, canon entries, search and Markdown import (module ``canon``)."""
+"""Endpoints for worlds, canon entries, search and import (module ``canon``)."""
 
-from typing import Any
+import base64
+import binascii
+from typing import Annotated, Any, Final
 
 from fastapi import APIRouter, Depends, status
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from skriptorium.api.context import ServicesDep, current_session
-from skriptorium.canon import CanonEntry, Category, ImportPreview, ImportResult, World
+from skriptorium.canon import (
+    CanonEntry,
+    Category,
+    ImportPreview,
+    ImportResult,
+    InvalidInput,
+    TranslatedMaterial,
+    World,
+)
 
 router = APIRouter(prefix="/api/worlds", dependencies=[Depends(current_session)])
 
@@ -49,6 +59,16 @@ class ImportText(BaseModel):
     """Markdown world material for the preview."""
 
     markdown: str
+
+
+# Base64 of the largest accepted file (10 MB, ADR-065).
+_MAX_BASE64: Final = 4 * -(-10 * 1024 * 1024 // 3)
+
+
+class SillyTavernFile(BaseModel):
+    """A SillyTavern card (PNG or JSON) or lorebook (JSON), base64-encoded."""
+
+    content: Annotated[str, Field(max_length=_MAX_BASE64)]
 
 
 class ImportApply(BaseModel):
@@ -132,6 +152,18 @@ def find_entries(world_id: str, text: str, found: ServicesDep) -> list[CanonEntr
 def preview_import(world_id: str, body: ImportText, found: ServicesDep) -> ImportPreview:
     """Split Markdown world material into entries without storing anything."""
     return found.canon.preview_import(world_id, body.markdown)
+
+
+@router.post("/{world_id}/import/sillytavern")
+def translate_sillytavern(
+    world_id: str, body: SillyTavernFile, found: ServicesDep
+) -> TranslatedMaterial:
+    """Import Markdown from a SillyTavern file (ADR-065), for the import field; stores nothing."""
+    try:
+        data = base64.b64decode(body.content, validate=True)
+    except binascii.Error, ValueError:
+        raise InvalidInput("Datei nicht lesbar übertragen") from None
+    return found.canon.translate_sillytavern(world_id, data)
 
 
 @router.post("/{world_id}/import")
