@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [ERLEDIGT] 6.8 Import aus SillyTavern
+
+- Probe des Eigentümers auf der Produktion: echte Figurenkarte (V2) importiert – „Charakter importieren geht gut. Anscheinend gibt es eine sogenannte V2-Version. Hat geklappt.“ Damit alle Akzeptanzkriterien erfüllt (ADR, Tests mit Beispieldateien nach dem Export-Code von SillyTavern, Prüfung durch getrennte Instanz, Probe).
+- Eigentümer merkt an: Figuren im Internet zu suchen ist schwierig (Nachricht brach ab; Rückfrage gestellt).
+
 ### 2026-10-12 – [ERLEDIGT] 6.14 Darstellung „Schwarz“
 
 - Eigentümer am Gerät: „6.14 passt, Schwarz sieht gut aus.“ Alle Punkte der Definition of Done erfüllt (Tests, Sichtprobe, Einspielen, Bestätigung).

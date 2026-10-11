@@ -112,7 +112,8 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - ✅ **6.1, 6.2, 6.5, 6.7:** Umfang des Kapitels, Kurzfassung im eigenen Reiter, Datenschutz bei OpenRouter, KI-Weltenbauer mit Websuche (ADR-064) – erledigt 2026-10-11.
 - ✅ **6.3:** Kanon vor den letzten Seiten (ADR-062) – erledigt 2026-10-11; an der Geschichte des Eigentümers gehen bei langen Kapiteln jetzt alle Kanon-Einträge mit, vorher je nach Kapitel nur 0 bis 28 von 34.
 - ✅ **6.14:** Darstellung „Schwarz“ für AMOLED-Bildschirme – erledigt 2026-10-12.
-- 🟠 **6.8, 6.9:** Austausch mit SillyTavern (Import und Export, ADR-065, ADR-066) – eingespielt 2026-10-12, Probe des Eigentümers offen.
+- ✅ **6.8:** Import aus SillyTavern (ADR-065) – erledigt 2026-10-12.
+- 🟠 **6.9:** Export nach SillyTavern (ADR-066) – eingespielt 2026-10-12, Probe des Eigentümers offen.
 - ⚪ **Als Nächstes:** 6.10 Planung der nächsten Ausbaustufe.
 - ✅ **D.16:** grok-4.7 denkt an echten Schreib-Anfragen 44–157 s vor, über die Einstellungen nicht zu beheben; kommt in 5.12 aus der Voreinstellung ([Bericht](docs/research/reaktionszeit-d16.md), ADR-052). Kanon-Einträge, die bei langen Kapiteln nicht mitgehen: zurückgestellt auf die nächste Ausbaustufe (V.10, ADR-050).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).

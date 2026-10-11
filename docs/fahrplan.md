@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details im Archiv [`docs/archiv/fahrplan-phase-5.md`](archiv/fahrplan-phase-5.md).
 
-**Phase 6: 11 von 14 erledigt, 2 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
+**Phase 6: 12 von 14 erledigt, 1 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -35,7 +35,7 @@ Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details 
 | ✅ | 6.5 | Datenschutz-Einstellung an OpenRouter | erledigt 2026-10-11 (ADR-063) | – |
 | ✅ | 6.6 | Kopfzeilen und Fehlermeldungen härten | erledigt 2026-10-11 | – |
 | ✅ | 6.7 | KI-gestützter Weltenbauer | erledigt 2026-10-11 (ADR-064) | – |
-| 🟠 | 6.8 | Import aus SillyTavern | eingespielt 2026-10-12 (ADR-065) | du: Probe mit einer Datei aus deinem SillyTavern |
+| ✅ | 6.8 | Import aus SillyTavern | erledigt 2026-10-12 (ADR-065) | – |
 | 🟠 | 6.9 | Export in SillyTavern-Formate | eingespielt 2026-10-12 (ADR-066) | du: in SillyTavern prüfen |
 | ⚪ | 6.10 | Planung der nächsten Ausbaustufe | offen | KI |
 | ✅ | 6.11 | Umbau des Schreibbereichs (vor 6.1) | erledigt 2026-10-11 | – |
@@ -290,7 +290,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.8: Import aus SillyTavern (Character Cards und Lorebooks)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – entschieden (ADR-065): Server übersetzt in Import-Markdown; Figurenkarte: Beschreibung und Persönlichkeit; Schlüsselwörter als Aliasse; `{{char}}` ersetzen, `{{user}}` melden. Mockup freigegeben 2026-10-11 („Passt, umbauen“). Umgesetzt 2026-10-11: `canon.importers.sillytavern`, `POST /api/worlds/{id}/import/sillytavern`, ein Dateifeld der Import-Seite für Markdown und SillyTavern; Formate am Quelltext von SillyTavern geprüft (`charaFormatData`, `convertWorldInfoToCharacterBook`, `character-card-parser.write`: Bild mit `chara` und `ccv3`). Prüfung durch getrennte Instanz 2026-10-11 (Unteragent mit Sonnet, ohne Gesprächsverlauf): „freigeben nach Behebung“, 4 Befunde (2× mittel, 2× niedrig) behoben, Nachprüfung fand eine Umgehung (niedrig), ebenfalls behoben (Logbuch). Eingespielt 2026-10-12 (`ef9a3fe`). Offen: Probe des Eigentümers mit einer echten Datei aus seinem SillyTavern
+- **Status:** ✅ ERLEDIGT (2026-10-12) – entschieden (ADR-065): Server übersetzt in Import-Markdown; Figurenkarte: Beschreibung und Persönlichkeit; Schlüsselwörter als Aliasse; `{{char}}` ersetzen, `{{user}}` melden. Mockup freigegeben 2026-10-11 („Passt, umbauen“). Umgesetzt 2026-10-11: `canon.importers.sillytavern`, `POST /api/worlds/{id}/import/sillytavern`, ein Dateifeld der Import-Seite für Markdown und SillyTavern; Formate am Quelltext von SillyTavern geprüft (`charaFormatData`, `convertWorldInfoToCharacterBook`, `character-card-parser.write`: Bild mit `chara` und `ccv3`). Prüfung durch getrennte Instanz 2026-10-11 (Unteragent mit Sonnet, ohne Gesprächsverlauf): „freigeben nach Behebung“, 4 Befunde (2× mittel, 2× niedrig) behoben, Nachprüfung fand eine Umgehung (niedrig), ebenfalls behoben (Logbuch). Eingespielt 2026-10-12 (`ef9a3fe`). Probe des Eigentümers 2026-10-12: echte Figurenkarte (V2) importiert – „Charakter importieren geht gut … hat geklappt“.
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – Eingangsformat (Kategorie 4); Einlesen fremder Dateien, PNG mit eingebettetem JSON (Kategorie 6, Prüfung durch getrennte Instanz)
