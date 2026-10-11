@@ -1,27 +1,16 @@
-import { useCallback, useState, type SyntheticEvent } from "react";
-import {
-  api,
-  CATEGORIES,
-  describeError,
-  type CanonEntry,
-  type Category,
-  type GuestLink,
-} from "../api";
+import { useCallback, useState } from "react";
+import { api, type GuestLink } from "../api";
 import { loadStoryEntries } from "../storyEntries";
 import { useLoad } from "../useLoad";
-import { ErrorText, Field } from "./Common";
-import { EntryText } from "./EntryText";
+import { CanonList } from "./CanonList";
+import { ErrorText } from "./Common";
+import { EntryArticle } from "./EntryArticle";
+import { EntryForm } from "./EntryForm";
 import { WorldBuilder } from "./WorldBuilder";
+import { useCanonSearch } from "./useCanonSearch";
 
 /** Marks a new entry in the editing state; entry identifiers never contain a space. */
 const NEW = " new";
-
-const HINTS: Partial<Record<Category, string>> = {
-  zeitlinie:
-    "Ereignisse in ihrer Reihenfolge untereinander, z. B. als nummerierte Liste.",
-  gegenstand:
-    "Abschnitte Zweck, Verwendung und Auswirkung werden bei leerem Text angelegt.",
-};
 
 /**
  * Canon entries of a world (step 5.11 part 3): search over name and aliases, categories as
@@ -69,8 +58,6 @@ export function Canon({
     [world, guests],
   );
   const { data, error, reload } = useLoad(load);
-  const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState<Category | null>(null);
   // The entry being changed, or `NEW` for a new one.
   const [editing, setEditing] = useState<string | null>(null);
   // The world builder is open; once opened it stays, so closing and choosing an entry to read
@@ -80,20 +67,11 @@ export function Canon({
   const takeOver = compact ? undefined : onTakeOver;
 
   const entries = data ?? [];
-  const needle = query.trim().toLocaleLowerCase("de");
-  const shown = entries.filter(
-    (entry) =>
-      (filter === null || entry.category === filter) &&
-      (needle === "" ||
-        [entry.name, ...entry.aliases].some((name) =>
-          name.toLocaleLowerCase("de").includes(needle),
-        )),
-  );
+  const { query, setQuery, filter, setFilter, shown } = useCanonSearch(entries);
   const current = entries.find((entry) => entry.id === selected);
   const formFor =
     editing === NEW ? null : editing === selected ? current : undefined;
   const detail = editing === NEW || selected !== null || building;
-  const guest = (entry: CanonEntry) => entry.world !== world;
 
   function choose(entry: string | null) {
     setEditing(null);
@@ -151,93 +129,18 @@ export function Canon({
             .filter((name) => name !== "")
             .join(" ")}
         >
-          <div className="canon-list">
-            <input
-              type="search"
-              aria-label="Kanon durchsuchen"
-              placeholder="Suchen: Name oder Alias"
-              value={query}
-              onChange={(event) => {
-                setQuery(event.target.value);
-              }}
-            />
-            <div
-              className="chips"
-              role="group"
-              aria-label="Nach Kategorie filtern"
-            >
-              <button
-                type="button"
-                className="chip"
-                aria-pressed={filter === null}
-                onClick={() => {
-                  setFilter(null);
-                }}
-              >
-                Alle {entries.length}
-              </button>
-              {CATEGORIES.map(({ id, plural }) => {
-                const count = entries.filter((e) => e.category === id).length;
-                return count === 0 ? null : (
-                  <button
-                    key={id}
-                    type="button"
-                    className="chip"
-                    aria-pressed={filter === id}
-                    onClick={() => {
-                      setFilter(filter === id ? null : id);
-                    }}
-                  >
-                    {plural} {count}
-                  </button>
-                );
-              })}
-            </div>
-            <p className="note">
-              {shown.length === 0 && data !== undefined
-                ? "Kein Eintrag passt."
-                : `${String(shown.length)} von ${String(entries.length)} Einträgen`}
-            </p>
-            {CATEGORIES.map(({ id, plural }) => {
-              const group = shown.filter((entry) => entry.category === id);
-              if (group.length === 0) {
-                return null;
-              }
-              return (
-                <div key={id}>
-                  <h3 className="canon-group">{plural}</h3>
-                  <ul className="canon-items">
-                    {group.map((entry) => (
-                      <li key={entry.id}>
-                        <button
-                          type="button"
-                          className="canon-item"
-                          aria-current={
-                            entry.id === selected ? "true" : undefined
-                          }
-                          onClick={() => {
-                            choose(entry.id);
-                          }}
-                        >
-                          {entry.name}
-                          {entry.aliases.length > 0 && (
-                            <small>
-                              {" "}
-                              · {entry.aliases.slice(0, 2).join(", ")}
-                            </small>
-                          )}
-                          {entry.status !== null && (
-                            <small> ({entry.status})</small>
-                          )}
-                          {guest(entry) && <small> · Gast</small>}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
+          <CanonList
+            world={world}
+            entries={entries}
+            shown={shown}
+            loaded={data !== undefined}
+            selected={selected}
+            query={query}
+            onQuery={setQuery}
+            filter={filter}
+            onFilter={setFilter}
+            onChoose={choose}
+          />
           <div className="canon-detail">
             {takeOver !== undefined && builderUsed && (
               <div hidden={!building}>
@@ -277,44 +180,14 @@ export function Canon({
                 }}
               />
             ) : current !== undefined ? (
-              <article>
-                <div className="row">
-                  <h2>{current.name}</h2>
-                  {!guest(current) && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setEditing(current.id);
-                      }}
-                    >
-                      Bearbeiten
-                    </button>
-                  )}
-                  {!compact &&
-                    !guest(current) &&
-                    current.category === "figur" && (
-                      <a
-                        className="button"
-                        href={api.cardPath(world, current.id)}
-                        download={`${current.id}.card.json`}
-                      >
-                        ⇩ Figurenkarte
-                      </a>
-                    )}
-                </div>
-                {guest(current) && (
-                  <p className="note">
-                    Gast aus einer anderen Welt – nur in deren Kanon zu ändern.
-                  </p>
-                )}
-                <p className="note">
-                  {CATEGORIES.find((c) => c.id === current.category)?.label}
-                  {current.aliases.length > 0 &&
-                    ` · Auch: ${current.aliases.join(", ")}`}
-                  {current.status !== null && ` · ${current.status}`}
-                </p>
-                <EntryText text={current.body} name={current.name} />
-              </article>
+              <EntryArticle
+                world={world}
+                current={current}
+                compact={compact}
+                onEdit={() => {
+                  setEditing(current.id);
+                }}
+              />
             ) : selected !== null && data !== undefined ? (
               <p>Eintrag nicht gefunden.</p>
             ) : (
@@ -324,145 +197,5 @@ export function Canon({
         </div>
       )}
     </section>
-  );
-}
-
-function EntryForm({
-  world,
-  entry,
-  onClose,
-}: {
-  world: string;
-  entry: CanonEntry | null;
-  /** Saved: its identifier; deleted: `null`; cancelled: nothing. */
-  onClose: (saved?: string | null) => void;
-}) {
-  const [category, setCategory] = useState<Category>(
-    entry?.category ?? "figur",
-  );
-  const [name, setName] = useState(entry?.name ?? "");
-  const [aliases, setAliases] = useState(entry?.aliases.join(", ") ?? "");
-  const [status, setStatus] = useState(entry?.status ?? "");
-  const [body, setBody] = useState(entry?.body ?? "");
-  const [error, setError] = useState<string | null>(null);
-
-  async function save(event: SyntheticEvent) {
-    event.preventDefault();
-    const values = {
-      category,
-      name,
-      aliases: aliases
-        .split(",")
-        .map((alias) => alias.trim())
-        .filter((alias) => alias !== ""),
-      status: status.trim() === "" ? null : status.trim(),
-      body,
-    };
-    try {
-      const saved =
-        entry === null
-          ? await api.createEntry(world, values)
-          : await api.updateEntry(world, entry.id, values);
-      onClose(saved.id);
-    } catch (reason: unknown) {
-      setError(describeError(reason));
-    }
-  }
-
-  async function remove() {
-    if (
-      entry === null ||
-      !window.confirm(`„${entry.name}“ wirklich löschen?`)
-    ) {
-      return;
-    }
-    try {
-      await api.deleteEntry(world, entry.id);
-      onClose(null);
-    } catch (reason: unknown) {
-      setError(describeError(reason));
-    }
-  }
-
-  return (
-    <form className="entry-form" onSubmit={(event) => void save(event)}>
-      <h2>{entry === null ? "Neuer Kanon-Eintrag" : entry.name}</h2>
-      <Field label="Kategorie">
-        <select
-          value={category}
-          onChange={(event) => {
-            setCategory(event.target.value as Category);
-          }}
-        >
-          {CATEGORIES.map(({ id, label }) => (
-            <option key={id} value={id}>
-              {label}
-            </option>
-          ))}
-        </select>
-      </Field>
-      <Field label="Name">
-        <input
-          value={name}
-          onChange={(event) => {
-            setName(event.target.value);
-          }}
-          required
-        />
-      </Field>
-      <Field label="Aliasse (durch Komma getrennt)">
-        <input
-          value={aliases}
-          onChange={(event) => {
-            setAliases(event.target.value);
-          }}
-        />
-      </Field>
-      <Field label="Status (z. B. tot, verschollen)">
-        <input
-          value={status}
-          onChange={(event) => {
-            setStatus(event.target.value);
-          }}
-        />
-      </Field>
-      <Field label="Text">
-        <textarea
-          rows={10}
-          value={body}
-          onChange={(event) => {
-            setBody(event.target.value);
-          }}
-        />
-      </Field>
-      {HINTS[category] !== undefined && (
-        <p className="note">{HINTS[category]}</p>
-      )}
-      <p className="note">
-        Hinweis: Kommentare im Dateikopf der Markdown-Datei gehen beim Speichern
-        verloren.
-      </p>
-      <ErrorText message={error} />
-      <div className="row">
-        <button type="submit">Speichern</button>
-        <button
-          type="button"
-          onClick={() => {
-            onClose();
-          }}
-        >
-          Abbrechen
-        </button>
-        {entry !== null && (
-          <button
-            type="button"
-            className="danger"
-            onClick={() => void remove()}
-          >
-            Löschen
-          </button>
-        )}
-      </div>
-    </form>
   );
 }
