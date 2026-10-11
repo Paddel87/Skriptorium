@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details im Archiv [`docs/archiv/fahrplan-phase-5.md`](archiv/fahrplan-phase-5.md).
 
-**Phase 6: 10 von 14 erledigt, 3 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
+**Phase 6: 11 von 14 erledigt, 2 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -41,7 +41,7 @@ Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details 
 | ✅ | 6.11 | Umbau des Schreibbereichs (vor 6.1) | erledigt 2026-10-11 | – |
 | ✅ | 6.12 | Umbau der Anfrage-Zusammenstellung (vor 6.3) | erledigt 2026-10-11 | – |
 | ✅ | 6.13 | Spike: schaden fehlende Kanon-Einträge bei langen Kapiteln? | erledigt 2026-10-11 (`docs/research/kanon-luecke.md`) | – |
-| 🟠 | 6.14 | Darstellung „Schwarz“ für AMOLED-Bildschirme | eingespielt 2026-10-12 | du: am Gerät prüfen |
+| ✅ | 6.14 | Darstellung „Schwarz“ für AMOLED-Bildschirme | erledigt 2026-10-12 | – |
 
 **Querschnitt (offen):**
 
@@ -338,7 +338,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.14: Darstellung „Schwarz“ für AMOLED-Bildschirme
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – Wunsch des Eigentümers („kurzfristig einen AMOLED-tauglichen Dark Mode“); Mockup mit drei Schriftfarben, gewählt: C „gedämpft warm“, als zusätzliche Stufe (Auswahlfragen 2026-10-12). Umgesetzt 2026-10-12: Stufe „Schwarz“ in `theme.ts` und `styles.css` (`data-theme="black"`), `theme-color` Schwarz für die Leiste der installierten App; vitest 217, Playwright 11 grün; Sichtprobe Desktop und Handy (Kanon, Kapitel). Eingespielt 2026-10-12 (`ef9a3fe`). Offen: Bestätigung des Eigentümers am Gerät
+- **Status:** ✅ ERLEDIGT (2026-10-12) – Wunsch des Eigentümers („kurzfristig einen AMOLED-tauglichen Dark Mode“); Mockup mit drei Schriftfarben, gewählt: C „gedämpft warm“, als zusätzliche Stufe (Auswahlfragen 2026-10-12). Umgesetzt 2026-10-12: Stufe „Schwarz“ in `theme.ts` und `styles.css` (`data-theme="black"`), `theme-color` Schwarz für die Leiste der installierten App; vitest 217, Playwright 11 grün; Sichtprobe Desktop und Handy (Kanon, Kapitel). Eingespielt 2026-10-12 (`ef9a3fe`). Vom Eigentümer am Gerät bestätigt 2026-10-12 („Schwarz sieht gut aus“).
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein – nur Oberfläche, keine Kategorie aus `CLAUDE.md` Abschnitt 4

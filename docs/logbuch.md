@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [ERLEDIGT] 6.14 Darstellung „Schwarz“
+
+- Eigentümer am Gerät: „6.14 passt, Schwarz sieht gut aus.“ Alle Punkte der Definition of Done erfüllt (Tests, Sichtprobe, Einspielen, Bestätigung).
+
 ### 2026-10-12 – [BEOBACHTUNG] Eingespielt: 6.8, 6.9, 6.14 (`ef9a3fe`)
 
 - Auf Anweisung („Hochladen, mergen, einspielen“, dann „130 auch mergen“) PR #130 nach grüner CI gemergt und `ef9a3fe` eingespielt. CI auf `main` lief noch nicht; Baum identisch mit dem grün geprüften PR-Stand (`git diff` leer).
