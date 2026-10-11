@@ -574,6 +574,12 @@ export const api = {
       "POST",
       `${storyPath(world, story)}/chapters/${String(number)}/complete`,
     ) as Promise<Chapter>,
+  /** Longest chapter text in characters whose short summary still fits (step 6.1). */
+  summaryRoom: (world: string, story: string, number: number) =>
+    request(
+      "GET",
+      `${storyPath(world, story)}/chapters/${String(number)}/summary-room`,
+    ) as Promise<{ max_chars: number }>,
   summarizeChapter: (world: string, story: string, number: number) =>
     request(
       "POST",

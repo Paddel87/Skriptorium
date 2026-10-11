@@ -318,11 +318,37 @@ class ContextBuilder:
             ContextTooLarge: The chapter does not fit the budget.
         """
         _check_budget(budget)
-        world = self._canon.get_world(world_id)
-        story = self._manuscripts.get_story(world_id, story_id)
         chapter = self._manuscripts.get_chapter(world_id, story_id, chapter_number)
         if not chapter.text.strip():
             raise InvalidInput(f"Kapitel {chapter_number} hat noch keinen Text")
+        system, user = self._chapter_summary_parts(world_id, story_id, chapter, chapter.text)
+        return _fitted(system, user, budget)
+
+    def chapter_summary_room(
+        self, world_id: str, story_id: str, chapter_number: int, budget: int = MAX_BUDGET
+    ) -> int:
+        """Longest chapter text (characters, without outer whitespace) whose short summary still
+        fits the budget (step 6.1); depends on the overall summary so far.
+
+        Raises:
+            InvalidInput: Budget outside 1-30,000.
+            NotFound: World, story or chapter does not exist.
+        """
+        _check_budget(budget)
+        chapter = self._manuscripts.get_chapter(world_id, story_id, chapter_number)
+        system, user = self._chapter_summary_parts(world_id, story_id, chapter, "")
+        others = sum(part.block.tokens for part in [*system, *user] if part.kind != "kapiteltext")
+        heading = next(part.text for part in user if part.kind == "kapiteltext")
+        capacity = math.floor(budget / SAFETY_MARGIN) - others
+        # The chapter block counts its text with the separator "\n\n" (``_Part.block``).
+        return max(0, math.floor(capacity * CHARS_PER_TOKEN) - len(heading) - 2)
+
+    def _chapter_summary_parts(
+        self, world_id: str, story_id: str, chapter: Chapter, text: str
+    ) -> tuple[list[_Part], list[_Part]]:
+        """System and user parts of the chapter summary request with ``text`` as chapter text."""
+        world = self._canon.get_world(world_id)
+        story = self._manuscripts.get_story(world_id, story_id)
         system = [_Part("rahmen", "Rahmen", _summary_frame(world.name, story.title))]
         user: list[_Part] = []
         if story.summary.strip():
@@ -337,11 +363,11 @@ class ContextBuilder:
             _Part(
                 "kapiteltext",
                 f"Kapitel {chapter.number}",
-                f"# Kapitel {chapter.number}: {chapter.title}\n\n{chapter.text.strip()}",
+                f"# Kapitel {chapter.number}: {chapter.title}\n\n{text.strip()}",
             )
         )
         user.append(_Part("anweisung", "Anweisung", _chapter_summary_instruction(chapter.number)))
-        return _fitted(system, user, budget)
+        return system, user
 
     def build_story_summary(
         self, world_id: str, story_id: str, chapter_number: int, budget: int = MAX_BUDGET

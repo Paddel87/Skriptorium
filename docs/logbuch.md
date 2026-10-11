@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] 6.1 Umfang des Kapitels umgesetzt, Prüfung offen
+
+- Mockup (Vorher-Bildschirmfoto und drei Zustände, Rechner und Smartphone) freigegeben. Grenze nicht geraten: `ContextBuilder.chapter_summary_room` rechnet mit derselben Formel wie `_fitted` (Kapazität `budget / 1,1` minus übrige Bausteine, 3,3 Zeichen je Token, Trenner); Test zeigt für drei Budgets: genau `max_chars` passt, ein Zeichen mehr wird abgelehnt. Die Oberfläche rechnet Zeichen über die Zeichen je Wort des eigenen Textes in Wörter um (gerundet auf 500) und lädt die Grenze neu, wenn sich die Gesamtzusammenfassung ändert.
+- Reibung: erst eine Linter-Ausnahme (`react-hooks/exhaustive-deps`) für das Neuladen gesetzt; durch eine Kennzahl der Gesamtzusammenfassung als `round` von `useLoad` ersetzt – keine Ausnahme im Code. Am Smartphone brach der rote Hinweis im Mockup ab; die Anzeige darf umbrechen.
+- Prüfungen: pytest 492 (`builder.py`, `manuscript_routes.py` 100 %), vitest 180 (gesamt 97,86 / 95,61 / 96,83 / 98,16, `ChapterLength.tsx` vollständig), Playwright 11; Bildschirmfotos an langen Testkapiteln (Kopie der Testdaten): 1.810 Wörter normal, 13.981 gelb („passt bis ca. 15.500“), 17.095 rot. Neue Farbwerte `--warn*` für hell und dunkel.
+
+### 2026-10-11 – [ERLEDIGT] 6.11 Umbau des Schreibbereichs
+
+- Routine-Schritt auf der Entscheidungs-Klasse begonnen (zu Beginn genannt); der Umbau selbst an einen Unteragenten der Routine-Klasse (Sonnet) abgegeben – überwiegend Ausgabe, daher Ersparnis. Ergebnis von der aktiven Klasse geprüft: tsc, eslint, prettier sauber; vitest 173 unverändert grün, Abdeckung gesamt nicht gesunken (97,82 / 95,54 / 96,79 / 98,14); Playwright 11 grün; Bildschirmfotos vorher/nachher am lokalen Server pixelgleich verglichen (4 Ansichten); Hook `useWriteFlow` durchgesehen.
+- `WritingPanel.tsx` 765 → 271 Zeilen; sieben neue Dateien, keine über 204 Zeilen. Offene Zweige in `useChatScroll.ts` (Zeilen 23, 42, 115) und `useWriteFlow.ts` (62, 147–148, 151) waren schon vorher ungetestet (Abbruch beim Verlassen, Rückfall-Scrollen) – kein neuer Bestand.
+
 ### 2026-10-11 – [BEOBACHTUNG] Kapitel 4 der Geschichte des Eigentümers in 3 Kapitel geteilt
 
 - Eigentümer: Kapitel 4 „zu lang geworden“ (25.570 Wörter). Auswahlfrage „Ja, in 3 Teile“. Letztes Speichern 11:07, Geschichte laut Vorgabe gespeichert und geschlossen. Sicherung des Ordners nach `/opt/docker/skriptorium/sicherungen/` (Ordner „…-vor-teilung-k4-2026-10-11“).

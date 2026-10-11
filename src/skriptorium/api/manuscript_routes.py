@@ -95,6 +95,12 @@ class ChapterSummary(BaseModel):
     status: SummaryStatus
 
 
+class SummaryRoom(BaseModel):
+    """Longest chapter text in characters whose short summary still fits (step 6.1)."""
+
+    max_chars: int
+
+
 class InstructionIn(BaseModel):
     """A taken-over exchange (step 5.13, ADR-056): the author's instruction ("Weiter" without
     one), the text as it went into the manuscript and the model that wrote it."""
@@ -239,6 +245,15 @@ def complete_chapter(world_id: str, story_id: str, number: int, found: ServicesD
     """Mark a chapter as completed; `…/summarize` then creates its summary (step 3.6)."""
     found.canon.get_world(world_id)
     return found.manuscript.complete_chapter(world_id, story_id, number)
+
+
+@router.get("/{story_id}/chapters/{number}/summary-room")
+def chapter_summary_room(
+    world_id: str, story_id: str, number: int, found: ServicesDep
+) -> SummaryRoom:
+    """How long the chapter may grow before its short summary no longer fits (step 6.1)."""
+    found.canon.get_world(world_id)
+    return SummaryRoom(max_chars=found.context.chapter_summary_room(world_id, story_id, number))
 
 
 @router.put("/{story_id}/chapters/{number}/summary")
