@@ -151,13 +151,21 @@ textarea {
   color: var(--text);
 }
 
-button {
+button,
+a.button {
   padding: 0.4rem 0.8rem;
   border: 1px solid var(--accent);
   border-radius: 4px;
   background: var(--button);
   color: var(--text);
   cursor: pointer;
+}
+
+/* A download that looks like a button (step 6.9). */
+a.button {
+  display: inline-block;
+  text-decoration: none;
+  line-height: normal;
 }
 
 button[aria-current="true"] {

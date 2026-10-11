@@ -595,6 +595,11 @@ export const api = {
   deleteEntry: (world: string, id: string) =>
     request("DELETE", `${worldPath(world)}/entries/${enc(id)}`),
 
+  /** Download address of the world as a SillyTavern lorebook (step 6.9). */
+  lorebookPath: (world: string) => `${worldPath(world)}/export/sillytavern`,
+  /** Download address of a figure as a SillyTavern character card (step 6.9). */
+  cardPath: (world: string, entry: string) =>
+    `${worldPath(world)}/entries/${enc(entry)}/export/sillytavern`,
   translateSillyTavern: (world: string, content: string) =>
     request("POST", `${worldPath(world)}/import/sillytavern`, {
       content,

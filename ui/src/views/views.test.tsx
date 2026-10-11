@@ -122,6 +122,35 @@ describe("Canon", () => {
     expect(screen.getByText("Kein Eintrag passt.")).toBeDefined();
   });
 
+  it("offers the world as lorebook and figures as cards for SillyTavern", async () => {
+    fakeApi({ "GET /api/worlds/salzmark/entries": ok([ENTRY, MIRA]) });
+    const user = userEvent.setup();
+    const page = render(<CanonAt />);
+    const lorebook = await screen.findByRole("link", {
+      name: "⇩ Lorebook für SillyTavern",
+    });
+    expect(lorebook.getAttribute("href")).toBe(
+      "/api/worlds/salzmark/export/sillytavern",
+    );
+    expect(lorebook.getAttribute("download")).toBe("salzmark.lorebook.json");
+    await user.click(screen.getByRole("button", { name: /Kael/ }));
+    const card = screen.getByRole("link", { name: "⇩ Figurenkarte" });
+    expect(card.getAttribute("href")).toBe(
+      "/api/worlds/salzmark/entries/kael/export/sillytavern",
+    );
+    expect(card.getAttribute("download")).toBe("kael.card.json");
+    await user.click(screen.getByRole("button", { name: "← Liste" }));
+    await user.click(screen.getByRole("button", { name: /Mira/ }));
+    expect(screen.queryByRole("link", { name: "⇩ Figurenkarte" })).toBeNull();
+    page.unmount();
+
+    render(<Canon world="salzmark" selected="kael" compact />);
+    await screen.findByRole("heading", { name: "Kael" });
+    expect(
+      screen.queryByRole("link", { name: /SillyTavern|Figurenkarte/ }),
+    ).toBeNull();
+  });
+
   it("shows the chosen entry to read, with bold, lists and headings", async () => {
     fakeApi({ "GET /api/worlds/salzmark/entries": ok([ENTRY, MIRA]) });
     const user = userEvent.setup();
