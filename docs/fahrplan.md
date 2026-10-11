@@ -24,13 +24,13 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details im Archiv [`docs/archiv/fahrplan-phase-5.md`](archiv/fahrplan-phase-5.md).
 
-**Phase 6: 2 von 12 erledigt, 2 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
+**Phase 6: 2 von 13 erledigt, 3 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | 🟠 | 6.1 | Umfang des Kapitels im Manuskript anzeigen | umgesetzt, Prüfung offen | du: prüfen |
 | 🟠 | 6.2 | Kurzfassung nicht mit der Anweisung verwechselbar | umgesetzt, Prüfung offen | du: prüfen |
-| ⚪ | 6.3 | Kanon-Einträge bei langen Kapiteln | offen | KI |
+| ⚪ | 6.3 | Kanon-Einträge bei langen Kapiteln | wartet auf 6.13 (ADR-061) | – |
 | ⚪ | 6.4 | Antworten des Servers nicht im Browser-Speicher | offen | KI |
 | ⚪ | 6.5 | Datenschutz-Einstellung an OpenRouter | offen | KI |
 | ⚪ | 6.6 | Kopfzeilen und Fehlermeldungen härten | offen | KI |
@@ -40,6 +40,7 @@ Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details 
 | ⚪ | 6.10 | Planung der nächsten Ausbaustufe | offen | KI |
 | ✅ | 6.11 | Umbau des Schreibbereichs (vor 6.1) | erledigt 2026-10-11 | – |
 | ✅ | 6.12 | Umbau der Anfrage-Zusammenstellung (vor 6.3) | erledigt 2026-10-11 | – |
+| 🟠 | 6.13 | Spike: schaden fehlende Kanon-Einträge bei langen Kapiteln? | in Arbeit (ADR-061) | KI, Läufe in der Cloud |
 
 **Querschnitt (offen):**
 
@@ -168,7 +169,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`; 6.3 (Kontext-Reihenfolge) und 6.7 (Weltenbauer) werden per ADR entschieden, bevor gebaut wird.
 
-**Ursprünglicher Schrittplan:** 12 Schritte, festgehalten am 2026-10-11 (10 aus 5.5, ADR-059; +6.11, +6.12 aus der Pflichtfrage vor Phasenbeginn, ADR-060). Wucherungs-Schwelle für Phase 6: mehr als 15 Schritte (ADR-060, enger als der Default aus `docs/project-context.md` Abschnitt 6); neue Wünsche während der Phase werden V-Schritte mit Landeplatz 6.10.
+**Ursprünglicher Schrittplan:** 12 Schritte, festgehalten am 2026-10-11 (10 aus 5.5, ADR-059; +6.11, +6.12 aus der Pflichtfrage vor Phasenbeginn, ADR-060). Stand 2026-10-11: 13 Schritte (+6.13 Spike, ADR-061). Wucherungs-Schwelle für Phase 6: mehr als 15 Schritte (ADR-060, enger als der Default aus `docs/project-context.md` Abschnitt 6); neue Wünsche während der Phase werden V-Schritte mit Landeplatz 6.10.
 
 **Reihenfolge (Eigentümer, 2026-10-11; ADR-060):** 6.11 (Umbau Schreibbereich), dann die kleinen Hilfen 6.1 und 6.2; 6.12 (Umbau Anfrage-Zusammenstellung), dann 6.3; die Schutz-Schritte 6.4–6.6 gebündelt mit einer gemeinsamen Prüfung durch eine getrennte Instanz; dann 6.7, 6.8, 6.9; zuletzt 6.10.
 
@@ -208,9 +209,9 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.3: Kanon-Einträge bei langen Kapiteln
 
-- **Status:** ⚪ OFFEN
+- **Status:** ⚪ OFFEN – Entscheidung vertagt bis nach dem Spike 6.13 (ADR-061)
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
-- **Abhängigkeiten:** keine
+- **Abhängigkeiten:** 6.12, 6.13
 - **Freigabepflichtig:** ja – Reihenfolge der Kontext-Zusammenstellung (ADR-003), Kategorie 1
 - **Empfohlene Klasse:** Entscheidung – Architektur-Vorschlag (Eskalations-Auslöser 1); die Umsetzung danach ist Routine.
 - **Eingangskriterien:** Entscheidung des Eigentümers über die Option
@@ -365,6 +366,22 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-11 aus der Pflichtfrage (ADR-060).
+
+#### 6.13: Spike – schaden fehlende Kanon-Einträge bei langen Kapiteln?
+
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11)
+- **Phasentyp-Kontext:** ERKUNDUNG (Spike; Ergebnis als Bericht, keine Funktion)
+- **Abhängigkeiten:** 6.12
+- **Freigabepflichtig:** nein – Prüfwerkzeug unter `spikes/`; die Folgeentscheidung ist 6.3
+- **Empfohlene Klasse:** Entscheidung – Bewertung, die eine Architekturentscheidung vorbereitet; die Läufe selbst sind Routine.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-011
+- **Zu tun:** An beiden Testgeschichten (Regel-002, je mindestens drei Läufe) bei langem Kapitel messen, wie oft Kanon-Details, die nur in nicht genannten Einträgen stehen, eingehalten oder verletzt werden: heutige Reihenfolge gegen „Kanon vor den Seiten mit Obergrenze“ (als Probe im Spike, Produktcode unverändert). Proben und Anweisungen ohne `@` aus 5.26 (`spikes/kanon-treue/proben.py`); vorher ohne KI zeigen, welche Einträge in beiden Varianten mitgehen.
+- **Akzeptanzkriterien:** Bericht unter `docs/research/` mit Technik-Befund (welche Einträge gehen mit) und verblindeter Bewertung (Quote eingehaltener Details, Verstöße) je Variante und Geschichte, Mittel und Spannweite; Empfehlung für 6.3.
+- **Betroffene Module:** keine (nur `spikes/`; Lesen von `context`)
+- **Reifegrad-Wirkung:** möglicherweise – Beförderung der NFR Kontexttreue hängt an 6.3
+- **Artefakte:** Spike-Skripte, Bericht, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-11 (ADR-061). KI-Läufe in einer Cloud-Session (gültiger Schlüssel).
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 
