@@ -39,7 +39,7 @@ state with its opening verbatim instead - whole paragraphs up to about 300 words
 
 import math
 from collections.abc import Iterable, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Final, Literal
 
 from skriptorium.canon import (
@@ -49,6 +49,7 @@ from skriptorium.canon import (
     Category,
     InvalidInput,
     NotFound,
+    World,
 )
 from skriptorium.manuscript import Chapter, ManuscriptService, Story
 
@@ -177,6 +178,24 @@ class _Part:
         return ContextBlock(self.kind, self.label, estimate_tokens(self.text + "\n\n"))
 
 
+@dataclass
+class _Request:
+    """What one request is built from; the sources record in ``included`` and ``missing``."""
+
+    world: World
+    story: Story
+    chapters: Sequence[Chapter]
+    current: Chapter
+    entries: Sequence[CanonEntry]
+    guests: Sequence[_Known]
+    by_id: dict[str, _Known]
+    named: Sequence[_Known]
+    # Entries already in the request (keys of ``_Known``), so no entry enters twice.
+    included: set[tuple[str, str]] = field(default_factory=set)
+    # Led characters without a canon entry.
+    missing: list[str] = field(default_factory=list)
+
+
 class ContextBuilder:
     """Builds requests from canon and manuscript; reads only, never writes."""
 
@@ -210,6 +229,19 @@ class ContextBuilder:
         _check_budget(budget)
         if not instruction.strip():
             raise InvalidInput("Anweisung fehlt")
+        request = self._load_request(world_id, story_id, chapter_number, references)
+        fixed = _fixed_parts(request)
+        state = _story_state(request.story, request.chapters, chapter_number)
+        closing = _closing_parts(request, instruction, length)
+        remaining = _remaining_room([*fixed, *state, *closing], budget)
+        pages, remaining = _last_pages(request.chapters, request.current, remaining)
+        filler = _filler_parts(request, remaining)
+        return _assemble([*fixed, *filler], [*state, *pages, *closing], request.missing)
+
+    def _load_request(
+        self, world_id: str, story_id: str, chapter_number: int, references: Sequence[str]
+    ) -> _Request:
+        """Read what the sources draw on and resolve the ``@`` references."""
         world = self._canon.get_world(world_id)
         story = self._manuscripts.get_story(world_id, story_id)
         chapters = self._manuscripts.list_chapters(world_id, story_id)
@@ -218,80 +250,7 @@ class ContextBuilder:
         guests = self._guests(story)
         by_id = {entry.id: _Known(entry) for entry in entries} | {g.entry.id: g for g in guests}
         named = [_lookup(by_id, reference) for reference in references]
-
-        fixed: list[_Part] = [
-            _Part("rahmen", "Rahmen", _frame(world.name)),
-            _Part("welt", world.name, f"# Welt: {world.name}\n\n{world.description}".strip()),
-            _Part("schreibweise", "Figuren-Schreibweise", _writing_mode(story, by_id)),
-        ]
-        atmosphere = _atmosphere(story, current)
-        if atmosphere:
-            fixed.append(_Part("schreibweise-atmo", "Schreibweise", atmosphere))
-        included: set[tuple[str, str]] = set()
-        for category in ("regel", "zeitlinie"):
-            for entry in entries:
-                if entry.category == category:
-                    fixed.append(_Part(category, entry.name, _render(entry)))
-                    included.add((entry.world, entry.id))
-        for known in named:
-            if known.key not in included:
-                fixed.append(_Part(_kind(known, "verweis"), known.entry.name, _render_known(known)))
-                included.add(known.key)
-        missing: list[str] = []
-        for character in story.controlled_characters:
-            if character not in by_id:
-                missing.append(character)
-                continue
-            known = by_id[character]
-            if known.key in included:
-                continue
-            fixed.append(
-                _Part(_kind(known, "gefuehrte-figur"), known.entry.name, _render_known(known))
-            )
-            included.add(known.key)
-        if story.facts:
-            fixed.append(_Part("fakten", "Fakten dieser Geschichte", _facts(story, by_id)))
-
-        state = _story_state(story, chapters, chapter_number)
-        instruction_part = _Part("anweisung", "Anweisung", f"# Anweisung\n\n{instruction.strip()}")
-        closing = [instruction_part, _Part("anweisung", "Vorgaben", _requirements(length))]
-        seam = _seam(current)
-        if seam:
-            closing.insert(0, _Part("anweisung", "Anschluss", seam))
-        led = _led_names(story, by_id)
-        if led:
-            closing.append(_Part("schreibweise", "Erinnerung Figuren-Schreibweise", _reminder(led)))
-        required = [*fixed, *state, *closing]
-        capacity = math.floor(budget / SAFETY_MARGIN)
-        needed = sum(part.block.tokens for part in required)
-        if needed > capacity:
-            largest = sorted((part.block for part in required), key=lambda b: -b.tokens)[:3]
-            raise ContextTooLarge(budget, math.ceil(needed * SAFETY_MARGIN), largest)
-
-        remaining = capacity - needed
-        pages, remaining = _last_pages(chapters, current, remaining)
-        filler: list[_Part] = []
-        candidates = [_Known(entry) for entry in _in_category_order(entries)]
-        candidates += sorted(guests, key=lambda g: _category_rank(g.entry))
-        for known in candidates:
-            if known.key in included:
-                continue
-            part = _Part("auffuellung", known.entry.name, _render_known(known))
-            if part.block.tokens <= remaining:
-                filler.append(part)
-                remaining -= part.block.tokens
-
-        system_parts = [*fixed, *filler]
-        user_parts = [*state, *pages, *closing]
-        system = "\n\n".join(part.text for part in system_parts)
-        user = "\n\n".join(part.text for part in user_parts)
-        blocks = tuple(part.block for part in [*system_parts, *user_parts])
-        return BuiltContext(
-            messages=(PromptMessage("system", system), PromptMessage("user", user)),
-            blocks=blocks,
-            estimated_tokens=math.ceil(sum(block.tokens for block in blocks) * SAFETY_MARGIN),
-            missing_characters=tuple(missing),
-        )
+        return _Request(world, story, chapters, current, entries, guests, by_id, named)
 
     def _guests(self, story: Story) -> list[_Known]:
         """The guest entries of ``story``; a guest whose entry or world is gone is skipped."""
@@ -401,6 +360,137 @@ class ContextBuilder:
             _Part("anweisung", "Anweisung", _story_summary_instruction(chapter.number)),
         ]
         return _fitted(system, user, budget)
+
+
+def _frame_parts(request: _Request) -> list[_Part]:
+    return [_Part("rahmen", "Rahmen", _frame(request.world.name))]
+
+
+def _world_part(request: _Request) -> list[_Part]:
+    world = request.world
+    return [_Part("welt", world.name, f"# Welt: {world.name}\n\n{world.description}".strip())]
+
+
+def _writing_mode_parts(request: _Request) -> list[_Part]:
+    parts = [
+        _Part("schreibweise", "Figuren-Schreibweise", _writing_mode(request.story, request.by_id))
+    ]
+    atmosphere = _atmosphere(request.story, request.current)
+    if atmosphere:
+        parts.append(_Part("schreibweise-atmo", "Schreibweise", atmosphere))
+    return parts
+
+
+def _rule_and_timeline_parts(request: _Request) -> list[_Part]:
+    parts: list[_Part] = []
+    for category in ("regel", "zeitlinie"):
+        for entry in request.entries:
+            if entry.category == category:
+                parts.append(_Part(category, entry.name, _render(entry)))
+                request.included.add((entry.world, entry.id))
+    return parts
+
+
+def _reference_parts(request: _Request) -> list[_Part]:
+    parts: list[_Part] = []
+    for known in request.named:
+        if known.key not in request.included:
+            parts.append(_Part(_kind(known, "verweis"), known.entry.name, _render_known(known)))
+            request.included.add(known.key)
+    return parts
+
+
+def _controlled_character_parts(request: _Request) -> list[_Part]:
+    parts: list[_Part] = []
+    for character in request.story.controlled_characters:
+        if character not in request.by_id:
+            request.missing.append(character)
+            continue
+        known = request.by_id[character]
+        if known.key in request.included:
+            continue
+        parts.append(_Part(_kind(known, "gefuehrte-figur"), known.entry.name, _render_known(known)))
+        request.included.add(known.key)
+    return parts
+
+
+def _fact_parts(request: _Request) -> list[_Part]:
+    if not request.story.facts:
+        return []
+    return [_Part("fakten", "Fakten dieser Geschichte", _facts(request.story, request.by_id))]
+
+
+# The mandatory system parts in the order of the request (precedence 1 and 2); each source
+# returns its parts and records the entries it took in ``request.included``.
+# Mandatory parts of the system message, in this order (ADR-003, step 3.2); they always go
+# along and count against the budget before the last pages and the filler (step 6.12).
+_FIXED_SOURCES: Final = (
+    _frame_parts,
+    _world_part,
+    _writing_mode_parts,
+    _rule_and_timeline_parts,
+    _reference_parts,
+    _controlled_character_parts,
+    _fact_parts,
+)
+
+
+def _fixed_parts(request: _Request) -> list[_Part]:
+    return [part for source in _FIXED_SOURCES for part in source(request)]
+
+
+def _closing_parts(request: _Request, instruction: str, length: Length) -> list[_Part]:
+    """Seam note, instruction, requirements and the reminder of the character mode."""
+    parts = [
+        _Part("anweisung", "Anweisung", f"# Anweisung\n\n{instruction.strip()}"),
+        _Part("anweisung", "Vorgaben", _requirements(length)),
+    ]
+    seam = _seam(request.current)
+    if seam:
+        parts.insert(0, _Part("anweisung", "Anschluss", seam))
+    led = _led_names(request.story, request.by_id)
+    if led:
+        parts.append(_Part("schreibweise", "Erinnerung Figuren-Schreibweise", _reminder(led)))
+    return parts
+
+
+def _remaining_room(required: Sequence[_Part], budget: int) -> int:
+    """Tokens left after the required parts; ``ContextTooLarge`` if they do not fit."""
+    capacity = math.floor(budget / SAFETY_MARGIN)
+    needed = sum(part.block.tokens for part in required)
+    if needed > capacity:
+        largest = sorted((part.block for part in required), key=lambda b: -b.tokens)[:3]
+        raise ContextTooLarge(budget, math.ceil(needed * SAFETY_MARGIN), largest)
+    return capacity - needed
+
+
+def _filler_parts(request: _Request, remaining: int) -> list[_Part]:
+    """Further entries of the world, then guests, while they fit into ``remaining``."""
+    filler: list[_Part] = []
+    candidates = [_Known(entry) for entry in _in_category_order(request.entries)]
+    candidates += sorted(request.guests, key=lambda g: _category_rank(g.entry))
+    for known in candidates:
+        if known.key in request.included:
+            continue
+        part = _Part("auffuellung", known.entry.name, _render_known(known))
+        if part.block.tokens <= remaining:
+            filler.append(part)
+            remaining -= part.block.tokens
+    return filler
+
+
+def _assemble(
+    system_parts: Sequence[_Part], user_parts: Sequence[_Part], missing: Sequence[str]
+) -> BuiltContext:
+    system = "\n\n".join(part.text for part in system_parts)
+    user = "\n\n".join(part.text for part in user_parts)
+    blocks = tuple(part.block for part in [*system_parts, *user_parts])
+    return BuiltContext(
+        messages=(PromptMessage("system", system), PromptMessage("user", user)),
+        blocks=blocks,
+        estimated_tokens=math.ceil(sum(block.tokens for block in blocks) * SAFETY_MARGIN),
+        missing_characters=tuple(missing),
+    )
 
 
 def _check_budget(budget: int) -> None:
