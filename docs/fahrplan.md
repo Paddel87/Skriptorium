@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details im Archiv [`docs/archiv/fahrplan-phase-5.md`](archiv/fahrplan-phase-5.md).
 
-**Phase 6: 10 von 13 erledigt, 1 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
+**Phase 6: 10 von 13 erledigt, 2 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -36,7 +36,7 @@ Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details 
 | ✅ | 6.6 | Kopfzeilen und Fehlermeldungen härten | erledigt 2026-10-11 | – |
 | ✅ | 6.7 | KI-gestützter Weltenbauer | erledigt 2026-10-11 (ADR-064) | – |
 | 🟠 | 6.8 | Import aus SillyTavern | umgesetzt und unabhängig geprüft (ADR-065) | KI: einspielen (auf deine Anweisung); du: Probe mit einer Datei aus deinem SillyTavern |
-| ⚪ | 6.9 | Export in SillyTavern-Formate | offen | KI |
+| 🟠 | 6.9 | Export in SillyTavern-Formate | in Arbeit (ADR-066) | du: Mockup ansehen |
 | ⚪ | 6.10 | Planung der nächsten Ausbaustufe | offen | KI |
 | ✅ | 6.11 | Umbau des Schreibbereichs (vor 6.1) | erledigt 2026-10-11 | – |
 | ✅ | 6.12 | Umbau der Anfrage-Zusammenstellung (vor 6.3) | erledigt 2026-10-11 | – |
@@ -305,7 +305,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.9: Export in SillyTavern-Formate
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – entschieden (ADR-066): Welt als Lorebook (Format von SillyTavern, Kategorie in `extensions`), Figur als Karte V2 (JSON, ohne eingebettetes Lorebook). Eingangskriterium „6.8 erledigt“ formal offen (Probe des Eigentümers), Zuordnung steht. Offen: Mockup, Umsetzung
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 6.8
 - **Freigabepflichtig:** ja – Ausgabeformat als Schnittstelle (Kategorie 5)
