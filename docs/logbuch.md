@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] Eingespielt: 6.8, 6.9, 6.14 (`ef9a3fe`)
+
+- Auf Anweisung („Hochladen, mergen, einspielen“, dann „130 auch mergen“) PR #130 nach grüner CI gemergt und `ef9a3fe` eingespielt. CI auf `main` lief noch nicht; Baum identisch mit dem grün geprüften PR-Stand (`git diff` leer).
+- Gewartet nur über HTTPS (Gesundheitsprüfung 200), ausgeliefertes Bündel und Stil mit den neuen Teilen geprüft, danach eine einzelne SSH-Abfrage: `(healthy)`, `REVISION` `ef9a3fe` – keine SSH-Sperre diesmal. Neue Endpunkte antworten ohne Anmeldung mit 401.
+- Offen: Proben des Eigentümers – 6.8 (Datei aus SillyTavern importieren), 6.9 (Lorebook/Karte in SillyTavern importieren), 6.14 (Schwarz am Gerät).
+
 ### 2026-10-12 – [BEOBACHTUNG] 6.14 Darstellung „Schwarz“ (AMOLED) umgesetzt; PR #129 gemergt
 
 - Wunsch des Eigentümers („kurzfristig einen AMOLED-tauglichen Dark Mode“). Mockup zuerst mit „Dunkel“ neben „Schwarz“; Eigentümer: „Schriftfarbe ebenfalls anpassen“ → zweites Mockup mit drei Schriftfarben, gewählt C „gedämpft warm“ (#b8b2a6) als zusätzliche Stufe.

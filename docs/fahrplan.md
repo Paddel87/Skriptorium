@@ -35,13 +35,13 @@ Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details 
 | ✅ | 6.5 | Datenschutz-Einstellung an OpenRouter | erledigt 2026-10-11 (ADR-063) | – |
 | ✅ | 6.6 | Kopfzeilen und Fehlermeldungen härten | erledigt 2026-10-11 | – |
 | ✅ | 6.7 | KI-gestützter Weltenbauer | erledigt 2026-10-11 (ADR-064) | – |
-| 🟠 | 6.8 | Import aus SillyTavern | umgesetzt und unabhängig geprüft (ADR-065) | KI: einspielen (auf deine Anweisung); du: Probe mit einer Datei aus deinem SillyTavern |
-| 🟠 | 6.9 | Export in SillyTavern-Formate | umgesetzt und geprüft (ADR-066) | KI: einspielen (auf deine Anweisung); du: in SillyTavern prüfen |
+| 🟠 | 6.8 | Import aus SillyTavern | eingespielt 2026-10-12 (ADR-065) | du: Probe mit einer Datei aus deinem SillyTavern |
+| 🟠 | 6.9 | Export in SillyTavern-Formate | eingespielt 2026-10-12 (ADR-066) | du: in SillyTavern prüfen |
 | ⚪ | 6.10 | Planung der nächsten Ausbaustufe | offen | KI |
 | ✅ | 6.11 | Umbau des Schreibbereichs (vor 6.1) | erledigt 2026-10-11 | – |
 | ✅ | 6.12 | Umbau der Anfrage-Zusammenstellung (vor 6.3) | erledigt 2026-10-11 | – |
 | ✅ | 6.13 | Spike: schaden fehlende Kanon-Einträge bei langen Kapiteln? | erledigt 2026-10-11 (`docs/research/kanon-luecke.md`) | – |
-| 🟠 | 6.14 | Darstellung „Schwarz“ für AMOLED-Bildschirme | umgesetzt | KI: einspielen (auf deine Anweisung); du: am Gerät prüfen |
+| 🟠 | 6.14 | Darstellung „Schwarz“ für AMOLED-Bildschirme | eingespielt 2026-10-12 | du: am Gerät prüfen |
 
 **Querschnitt (offen):**
 
@@ -290,7 +290,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.8: Import aus SillyTavern (Character Cards und Lorebooks)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – entschieden (ADR-065): Server übersetzt in Import-Markdown; Figurenkarte: Beschreibung und Persönlichkeit; Schlüsselwörter als Aliasse; `{{char}}` ersetzen, `{{user}}` melden. Mockup freigegeben 2026-10-11 („Passt, umbauen“). Umgesetzt 2026-10-11: `canon.importers.sillytavern`, `POST /api/worlds/{id}/import/sillytavern`, ein Dateifeld der Import-Seite für Markdown und SillyTavern; Formate am Quelltext von SillyTavern geprüft (`charaFormatData`, `convertWorldInfoToCharacterBook`, `character-card-parser.write`: Bild mit `chara` und `ccv3`). Prüfung durch getrennte Instanz 2026-10-11 (Unteragent mit Sonnet, ohne Gesprächsverlauf): „freigeben nach Behebung“, 4 Befunde (2× mittel, 2× niedrig) behoben, Nachprüfung fand eine Umgehung (niedrig), ebenfalls behoben (Logbuch). Offen: Einspielen, Probe des Eigentümers mit einer echten Datei aus seinem SillyTavern
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – entschieden (ADR-065): Server übersetzt in Import-Markdown; Figurenkarte: Beschreibung und Persönlichkeit; Schlüsselwörter als Aliasse; `{{char}}` ersetzen, `{{user}}` melden. Mockup freigegeben 2026-10-11 („Passt, umbauen“). Umgesetzt 2026-10-11: `canon.importers.sillytavern`, `POST /api/worlds/{id}/import/sillytavern`, ein Dateifeld der Import-Seite für Markdown und SillyTavern; Formate am Quelltext von SillyTavern geprüft (`charaFormatData`, `convertWorldInfoToCharacterBook`, `character-card-parser.write`: Bild mit `chara` und `ccv3`). Prüfung durch getrennte Instanz 2026-10-11 (Unteragent mit Sonnet, ohne Gesprächsverlauf): „freigeben nach Behebung“, 4 Befunde (2× mittel, 2× niedrig) behoben, Nachprüfung fand eine Umgehung (niedrig), ebenfalls behoben (Logbuch). Eingespielt 2026-10-12 (`ef9a3fe`). Offen: Probe des Eigentümers mit einer echten Datei aus seinem SillyTavern
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – Eingangsformat (Kategorie 4); Einlesen fremder Dateien, PNG mit eingebettetem JSON (Kategorie 6, Prüfung durch getrennte Instanz)
@@ -306,7 +306,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.9: Export in SillyTavern-Formate
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – entschieden (ADR-066): Welt als Lorebook (Format von SillyTavern, Kategorie in `extensions`), Figur als Karte V2 (JSON, ohne eingebettetes Lorebook). Eingangskriterium „6.8 erledigt“ formal offen (Probe des Eigentümers), Zuordnung steht. Mockup freigegeben 2026-10-11. Umgesetzt 2026-10-11: `lorebook_for`, `card_for`, zwei GET-Endpunkte, Knöpfe auf der Kanon-Seite; Import verschiebt Überschriften nur so weit wie nötig (ADR-066). Rückimport-Test grün (gleicher Kanon bis auf Ebene-2-Abschnitte → Ebene 3); im Browser: Lorebook und Karte heruntergeladen und wieder eingelesen, 30 von 30 Einträgen erkannt. Kurzprüfung der Import-Änderung durch die getrennte Instanz 2026-10-11: „freigeben“, kein Befund (u. a. 175.000 Zufallsläufe ohne Ausbruch aus dem Eintrag). Offen: Einspielen, Prüfung des Eigentümers in SillyTavern
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – entschieden (ADR-066): Welt als Lorebook (Format von SillyTavern, Kategorie in `extensions`), Figur als Karte V2 (JSON, ohne eingebettetes Lorebook). Eingangskriterium „6.8 erledigt“ formal offen (Probe des Eigentümers), Zuordnung steht. Mockup freigegeben 2026-10-11. Umgesetzt 2026-10-11: `lorebook_for`, `card_for`, zwei GET-Endpunkte, Knöpfe auf der Kanon-Seite; Import verschiebt Überschriften nur so weit wie nötig (ADR-066). Rückimport-Test grün (gleicher Kanon bis auf Ebene-2-Abschnitte → Ebene 3); im Browser: Lorebook und Karte heruntergeladen und wieder eingelesen, 30 von 30 Einträgen erkannt. Kurzprüfung der Import-Änderung durch die getrennte Instanz 2026-10-11: „freigeben“, kein Befund (u. a. 175.000 Zufallsläufe ohne Ausbruch aus dem Eintrag). Eingespielt 2026-10-12 (`ef9a3fe`). Offen: Prüfung des Eigentümers in SillyTavern
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 6.8
 - **Freigabepflichtig:** ja – Ausgabeformat als Schnittstelle (Kategorie 5)
@@ -338,7 +338,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.14: Darstellung „Schwarz“ für AMOLED-Bildschirme
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – Wunsch des Eigentümers („kurzfristig einen AMOLED-tauglichen Dark Mode“); Mockup mit drei Schriftfarben, gewählt: C „gedämpft warm“, als zusätzliche Stufe (Auswahlfragen 2026-10-12). Umgesetzt 2026-10-12: Stufe „Schwarz“ in `theme.ts` und `styles.css` (`data-theme="black"`), `theme-color` Schwarz für die Leiste der installierten App; vitest 217, Playwright 11 grün; Sichtprobe Desktop und Handy (Kanon, Kapitel). Offen: Einspielen, Bestätigung des Eigentümers am Gerät
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – Wunsch des Eigentümers („kurzfristig einen AMOLED-tauglichen Dark Mode“); Mockup mit drei Schriftfarben, gewählt: C „gedämpft warm“, als zusätzliche Stufe (Auswahlfragen 2026-10-12). Umgesetzt 2026-10-12: Stufe „Schwarz“ in `theme.ts` und `styles.css` (`data-theme="black"`), `theme-color` Schwarz für die Leiste der installierten App; vitest 217, Playwright 11 grün; Sichtprobe Desktop und Handy (Kanon, Kapitel). Eingespielt 2026-10-12 (`ef9a3fe`). Offen: Bestätigung des Eigentümers am Gerät
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein – nur Oberfläche, keine Kategorie aus `CLAUDE.md` Abschnitt 4
