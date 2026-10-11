@@ -29,6 +29,45 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 01:30 UTC – [SESSIONENDE] Prüfung „uncensored“-Modelle, Testplan für eine eigene Testwelt
+
+- **Dauer:** ca. 25 Minuten (01:05–01:30 UTC).
+- **Bearbeitet:** keine Fahrplan-Schritte – Recherche ohne Code: Katalog auf „uncensored“ (2 ausdrücklich, 20 als Rollenspiel/Fiktion beworben), Venice und Cydonia mit Bedingungen der Anbieter und je einer Stichprobe; Kandidaten für weitere Tests benannt.
+- **Testplan (Notiz für die nächste Session, noch kein Schritt):** Der Eigentümer legt eine eigene Testwelt im Skriptorium an (Psychothriller mit Täterfigur, Vorlage: sein bisheriger TypingMind-Agent; Text nicht im Repo). Testwelt, Anweisungen und Ergebnistexte bleiben außerhalb des öffentlichen Repos, nur Messwerte kommen hinein. Kandidaten: grok-4.6 (Vergleich), Venice, Cydonia, `nousresearch/hermes-4-405b`, `sao10k/l3.3-euryale-70b`, `aion-labs/aion-3.5`, `thedrummer/skyfall-36b-v2` (Kontext knapp); ungeeignet wegen Kontext unter 30.000 Token: mythomax, remm-slerp, weaver, lunaris. Messgrößen: Weigerung ja/nein, Abschwächung ja/nein, Wortzahl zur Vorgabe, Kanon-Widersprüche, Schlussgeste, Absätze und Anführungszeichen, Kosten, Wartezeit.
+- **Rollenteilung (dem Eigentümer offen gesagt, von ihm angenommen):** Die KI testet psychologischen Terror, Gewalt, Entführung und Fesselung als Handlung. Szenen mit expliziter sexueller Gewalt fordert, liest und bewertet die KI nicht; ebenso prüft sie kein reales Täterwissen (Dosierungen, Forensik, Hacking). Diese Fälle testet der Eigentümer selbst in der App nach einer Prüfliste, die KI wertet nur seine Angaben aus. Lücke: Der Ich-Modus des Agenten (Gespräch mit der Figur) hat im Skriptorium keine Entsprechung – Kandidat für 5.5.
+- **Landeplatz:** Probeschreiben nach Regel-002 und eine Kennzeichnung solcher Modelle in der Auswahl gehören in 5.5; Phase 5 steht an der Wucherungs-Schwelle, deshalb kein neuer Schritt.
+- **Nächster Schritt:** unverändert 5.5; davor auf Wunsch des Eigentümers der Test mit seiner Testwelt.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (eingestellt und bedient `claude-opus-5-5`, Sitzungsabfrage); 0 Fahrplan-Schritte, die Recherche lag auf Routine-Niveau, Warnung dazu entfiel versehentlich; keine Abgabe (Lesearbeit, gleicher Cache-Lesepreis).
+- **Kontextgröße:** ca. 204.000 Token am Ende, Grenze 200.000 überschritten. Der Eigentümer hat bei ca. 185.000 ausdrücklich „hier weiter“ gesagt (Abweichung nach `CLAUDE.md` Abschnitt 0).
+- **Sessionende-Prüfungen:** README ohne Drift (kein Status-, Versions- oder Schritt-Wechsel); keine neuen ADRs, Reifegrade oder Blocker, daher keine Drift zwischen den Pflicht-Dokumenten; Ablaufdaten-Register: kein Vorlauf erreicht (nächstes Datum D.1 2026-11-05); Logbuch mit 1.020 Zeilen über dem Trigger von 800 (Klasse M); eine vorletzte Monats-Scheibe gibt es nicht (nur September als letzte und Oktober als aktuelle Scheibe, beide bleiben laut `CLAUDE.md` Abschnitt 14 aktiv) – die Regel greift damit ins Leere; Entlastung kommt mit der Verdichtung beim Phasenwechsel nach 5.5. Dem Eigentümer gemeldet.
+
+### 2026-10-11 – [BEOBACHTUNG] Cydonia (`thedrummer/cydonia-24b-v4.1`) geprüft
+
+- Auftrag des Eigentümers: „prüfe cydonia“. Feinabstimmung von Mistral Small 3.2 24B durch TheDrummer; „Uncensored“ steht nur in der OpenRouter-Beschreibung, die Modellkarte wirbt mit Prosa und Rollenspiel; Lizenz dort nicht genannt. Wissensstand 2024-04. Bei OpenRouter ein einziger Anbieter (Parasail, USA, bf16), 131k Kontext, Ausgabe bis 117.964 Token, kein Vordenken, 0,30 $ / 0,50 $ je 1 Mio. Token (Cache-Lesen 0,15 $). Im Katalog der App wählbar.
+- Bedingungen Parasail: kein Training mit Inhalten (AGB 2.7); bei „serverless“ keine Speicherung über die Antwort hinaus, Metadaten maskiert einsehbar (3.1); keine eigenen Inhaltsregeln zu Gewalt oder Sexualität, nur Verbot rechtswidriger Nutzung.
+- Stichprobe mit derselben Anfrage wie bei Venice (0,0002 $, 5 s): ohne Weigerung, drastischer als Venice, 193 statt etwa 250 Wörter, ein einziger Absatz, englische Anführungszeichen, wiederholter Satz („Das ist für …“), Schlussgeste trotz Vorgabe. Keine Prüfung nach Regel-002.
+
+### 2026-10-11 – [BEOBACHTUNG] Venice („Venice: Uncensored“) geprüft
+
+- Auftrag des Eigentümers: „prüfe venice“. Modell `cognitivecomputations/dolphin-mistral-24b-venice-edition`: Feinabstimmung von Mistral Small 24B (2501) durch dphn.ai mit Venice.ai, Apache-2.0, Wissensstand 2024-04; bei OpenRouter ein einziger Anbieter (Venice, USA, fp16), 128k Kontext, höchstens 8.192 Token Ausgabe, kein Vordenken, 0,20 $ / 0,90 $ je 1 Mio. Token (grok-4.6: 2 $ / 6 $). Im Katalog der App wählbar (nur Textausgabe).
+- Bedingungen laut Venice: kein Training mit Nutzerinhalten (AGB 10.2); Prompts und Antworten werden laut Datenschutzerklärung nicht gespeichert, die AGB behalten aber Überwachung und Aufzeichnung vor (10.11); Verbot u. a. von Darstellungen sexuellen Kindesmissbrauchs, auch KI-erzeugt. Für den API-Weg über OpenRouter nicht gesondert geregelt.
+- Stichprobe (eine Anfrage, deutsch, drastische Hinrichtungsszene einer Testfigur, 0,0004 $, 7 s): ohne Weigerung, 263 Wörter, `finish_reason` `stop`. Qualität mäßig: Wortwiederholungen („Schlamm“, „entschlossen“), Logikbruch im ersten Satz, Schlussgeste trotz Vorgabe. Keine Prüfung nach Regel-002 – kein Vergleich mit grok-4.6.
+
+### 2026-10-11 01:10 UTC – [BEOBACHTUNG] OpenRouter-Katalog auf „uncensored“-Bezeichnungen geprüft
+
+- Auftrag des Eigentümers: „Überprüfung der OpenRouter-Modelle auf uncensored-Bezeichnungen“. Reine Recherche, kein Code, kein Fahrplan-Schritt (Phase 5 steht an der Wucherungs-Schwelle; ein neuer Schritt wurde bewusst nicht angelegt).
+- Quelle: öffentlicher Katalog `https://openrouter.ai/api/v1/models`, abgerufen 2026-10-11; Suche über `id`, `name`, `description`, `hugging_face_id`.
+- Ausdrücklich „uncensored“ in Name oder Beschreibung: **2 von 458** – `cognitivecomputations/dolphin-mistral-24b-venice-edition` (Anzeigename „Venice: Uncensored“) und `thedrummer/cydonia-24b-v4.1` („Uncensored and creative writing model“). Beide `is_moderated = false`; beide Selbstbeschreibung der Hersteller, nicht geprüft.
+- Ohne das Wort, aber als Rollenspiel/Fiktion beworben: 20 weitere (u. a. aion-labs, sao10k, thedrummer, nousresearch, anthracite, gryphe, mancer, undi95, `minimax/minimax-m2-her`) – Liste in `docs/research/bestandspruefung.md`, Nachtrag 2026-10-11.
+- `is_moderated`: jetzt 141 true / 317 false (2026-09-26: 134 / 324). Die laufenden Modelle grok-4.6 und grok-4.7 bleiben `false`.
+- Keine Änderung an Modell-Voreinstellung oder Oberfläche; eine Kennzeichnung im Katalog wäre ein neuer Schritt (Neuplanung Phase 5 bzw. 5.5).
+
+### 2026-10-11 01:05 UTC – [SESSIONSTART] Prüfung OpenRouter-Modelle auf „uncensored“
+
+- Modell laut Sitzungsabfrage: eingestellt `claude-opus-5-5`, bedient `claude-opus-5-5` → Entscheidungs-Klasse. Die Aufgabe ist Recherche ohne Eskalations-Auslöser (Routine-Niveau); wegen gleichen Cache-Lesepreises keine Abgabe an Sonnet (Lesearbeit, `docs/project-context.md` Abschnitt 6).
+- Kontextgröße zu Sessionbeginn: ca. 103.000 Token (Grenze 200.000).
+- Ausgangslage: v1.0.0 eingespielt (`0af840f`), Phase 5 offen nur 5.5; keine aktiven Blocker.
+
 ### 2026-10-11 – [BEOBACHTUNG] Tag v1.0.0 und Deployment `0af840f`
 
 - Auf Anweisung des Eigentümers („112 mergen und einspielen. Vorher Markierung durchführen, 1.0.0“): #112 nach grüner CI gemergt, CI auf `main` (`0af840f`) grün; annotierter Tag `v1.0.0` auf `0af840f` gesetzt und gepusht (öffentlich sichtbar). Keine Release-Seite auf GitHub angelegt (Frage des Eigentümers dazu beantwortet).
