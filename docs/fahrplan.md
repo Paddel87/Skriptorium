@@ -24,17 +24,17 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details im Archiv [`docs/archiv/fahrplan-phase-5.md`](archiv/fahrplan-phase-5.md).
 
-**Phase 6: 3 von 13 erledigt, 7 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
+**Phase 6: 5 von 13 erledigt, 5 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
-| 🟠 | 6.1 | Umfang des Kapitels im Manuskript anzeigen | umgesetzt, Prüfung offen | du: prüfen |
-| 🟠 | 6.2 | Kurzfassung nicht mit der Anweisung verwechselbar | umgesetzt, Prüfung offen | du: prüfen |
-| 🟠 | 6.3 | Kanon-Einträge bei langen Kapiteln | umgesetzt, Prüfung offen (ADR-062) | du: im Alltag prüfen |
-| 🟠 | 6.4 | Antworten des Servers nicht im Browser-Speicher | umgesetzt, Einspielen offen | KI |
+| 🟠 | 6.1 | Umfang des Kapitels im Manuskript anzeigen | eingespielt 2026-10-11 | du: prüfen |
+| 🟠 | 6.2 | Kurzfassung nicht mit der Anweisung verwechselbar | eingespielt 2026-10-11 | du: prüfen |
+| 🟠 | 6.3 | Kanon-Einträge bei langen Kapiteln | eingespielt 2026-10-11 (ADR-062) | KI: Technik-Prüfung an deiner Geschichte; du: im Alltag prüfen |
+| ✅ | 6.4 | Antworten des Servers nicht im Browser-Speicher | erledigt 2026-10-11 | – |
 | 🟠 | 6.5 | Datenschutz-Einstellung an OpenRouter | im OpenRouter-Konto (ADR-063) | du: einstellen und Bescheid geben |
-| 🟠 | 6.6 | Kopfzeilen und Fehlermeldungen härten | umgesetzt, Einspielen offen | KI |
-| 🟠 | 6.7 | KI-gestützter Weltenbauer | umgesetzt, echte Probe und Prüfung offen (ADR-064) | KI: echte Probe in der Cloud; du: nach dem Einspielen prüfen |
+| ✅ | 6.6 | Kopfzeilen und Fehlermeldungen härten | erledigt 2026-10-11 | – |
+| 🟠 | 6.7 | KI-gestützter Weltenbauer | eingespielt 2026-10-11 (ADR-064) | du: prüfen |
 | ⚪ | 6.8 | Import aus SillyTavern | offen | KI |
 | ⚪ | 6.9 | Export in SillyTavern-Formate | offen | KI |
 | ⚪ | 6.10 | Planung der nächsten Ausbaustufe | offen | KI |
@@ -177,7 +177,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.1: Umfang des Kapitels im Manuskript anzeigen
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – Mockup freigegeben („Passt, umbauen“); umgesetzt: `ContextBuilder.chapter_summary_room` (Platz für den Kapiteltext in der Kurzfassungs-Anfrage, exakt an der Grenze getestet), `GET …/chapters/{n}/summary-room` → `{max_chars}`, Anzeige `ChapterLength` unter dem Manuskript (Wortzahl; gelb ab 85 % des Platzes mit „passt bis ca. N“, rot darüber). pytest 492, vitest 180, Playwright 11 grün. Offen: Einspielen, Bestätigung des Eigentümers
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – Mockup freigegeben („Passt, umbauen“); umgesetzt: `ContextBuilder.chapter_summary_room` (Platz für den Kapiteltext in der Kurzfassungs-Anfrage, exakt an der Grenze getestet), `GET …/chapters/{n}/summary-room` → `{max_chars}`, Anzeige `ChapterLength` unter dem Manuskript (Wortzahl; gelb ab 85 % des Platzes mit „passt bis ca. N“, rot darüber). pytest 492, vitest 180, Playwright 11 grün. Eingespielt 2026-10-11 (`5f1fa10`). Offen: Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11
 - **Freigabepflichtig:** nein (nur Anzeige in `ui`); Mockup vorher/nachher
@@ -193,7 +193,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.2: Kurzfassung des Kapitels nicht mit der Anweisung verwechselbar
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – Variante A gewählt (Mockup mit Varianten A „eigener Reiter“ und C „Karte“): Reiter „Kurzfassung“ neben „Manuskript“ und „Verlauf“, sobald das Kapitel abgeschlossen ist oder eine Kurzfassung hat; Punkt am Reiter, solange sie nicht geprüft ist; Karte mit Hinweis „Sie ist keine Anweisung“; nach „Kapitel abschließen“ öffnet der Reiter; Knopf heißt „Als geprüft markieren“. vitest 183, Playwright 11 grün. Offen: Einspielen, Bestätigung des Eigentümers am Smartphone
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – Variante A gewählt (Mockup mit Varianten A „eigener Reiter“ und C „Karte“): Reiter „Kurzfassung“ neben „Manuskript“ und „Verlauf“, sobald das Kapitel abgeschlossen ist oder eine Kurzfassung hat; Punkt am Reiter, solange sie nicht geprüft ist; Karte mit Hinweis „Sie ist keine Anweisung“; nach „Kapitel abschließen“ öffnet der Reiter; Knopf heißt „Als geprüft markieren“. vitest 183, Playwright 11 grün. Eingespielt 2026-10-11 (`5f1fa10`). Offen: Bestätigung des Eigentümers am Smartphone
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11
 - **Freigabepflichtig:** nein – Umbau innerhalb von `ui`; Mockup vorher/nachher
@@ -209,7 +209,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.3: Kanon-Einträge bei langen Kapiteln
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – nach Spike 6.13 entschieden: C, Kanon vor den Seiten bis 30 % der Kapazität (ADR-062); umgesetzt in `ContextBuilder.build()` (`CANON_SHARE`), drei neue Tests, pytest 495, `builder.py` 100 %. Anfragen der Testgeschichten unverändert (byte-gleich). Offen: Einspielen, Technik-Prüfung an der Geschichte des Eigentümers, sein Urteil im Alltag
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – nach Spike 6.13 entschieden: C, Kanon vor den Seiten bis 30 % der Kapazität (ADR-062); umgesetzt in `ContextBuilder.build()` (`CANON_SHARE`), drei neue Tests, pytest 495, `builder.py` 100 %. Anfragen der Testgeschichten unverändert (byte-gleich). Eingespielt 2026-10-11 (`5f1fa10`). Offen: Technik-Prüfung an der Geschichte des Eigentümers, sein Urteil im Alltag
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 6.12, 6.13
 - **Freigabepflichtig:** ja – Reihenfolge der Kontext-Zusammenstellung (ADR-003), Kategorie 1
@@ -225,7 +225,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.4: Antworten des Servers nicht im Browser-Speicher
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – umgesetzt (ADR-063): `Cache-Control: no-store` für `/api/`, auch 500; Tests, unabhängig geprüft. Offen: Einspielen, Prüfung der Kopfzeilen von außen
+- **Status:** ✅ ERLEDIGT (2026-10-11) – umgesetzt (ADR-063): `Cache-Control: no-store` für `/api/`, auch 500; Tests, unabhängig geprüft. Eingespielt 2026-10-11 (`5f1fa10`); von außen geprüft: `cache-control: no-store` an `/api/health`
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – Kategorie 6; optionale Maßnahme über ASVS Stufe 1 (ADR-006), vom Eigentümer gewünscht
@@ -257,7 +257,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.6: Kopfzeilen und Fehlermeldungen härten (CSP, Einbettschutz, 422)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – umgesetzt (ADR-063): Content-Security-Policy, Validierungsfehler ohne Werte; Tests, Browser-Prüfung ohne CSP-Meldung, unabhängig geprüft (Befunde behoben). Offen: Einspielen, Prüfung der Kopfzeilen von außen
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – umgesetzt (ADR-063): Content-Security-Policy, Validierungsfehler ohne Werte; Tests, Browser-Prüfung ohne CSP-Meldung, unabhängig geprüft (Befunde behoben). Eingespielt 2026-10-11 (`5f1fa10`). Von außen kam zuerst nur `frame-ancestors 'none'` an: ein Traefik-Label in der Server-Konfiguration überschrieb die Regel der App; Label auf Freigabe des Eigentümers entfernt (Kategorie 7, Auswahlfrage). Danach volle Regel von außen bestätigt, Anmeldeseite in Chromium ohne CSP-Meldung, 422 ohne eingegebene Werte
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – Kategorie 6; Stufe 2 und damit über der Obergrenze aus ADR-006 – vom Eigentümer gewünscht
@@ -273,7 +273,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.7: KI-gestützter Weltenbauer
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – Form entschieden (ADR-064): A, Gespräch auf der Kanon-Seite, Übernahme über die Import-Vorschau, Websuche zuschaltbar. Mockup freigegeben 2026-10-11; umgesetzt 2026-10-11 (Server `POST /api/worlds/{w}/worldbuilder`, Oberfläche „✨ Weltenbauer“ auf der Kanon-Seite, „Als Kanon übernehmen“ öffnet die Import-Vorschau). Echte Probe 2026-10-11 in der Cloud-Session: ```kanon-Block eingehalten, Übernahme über die Import-Vorschau klappt, Fundstellen kommen als ein Ereignis nach dem Text; Befunde: Websuche kostet ca. 6 ct statt „ca. 1 ct“, Fundstellen nur als „1 · 2 · 3“, Verweise roh im Text (Logbuch). Eigentümer: alle drei Befunde in 6.7 beheben (Auswahlfrage 2026-10-11) – behoben 2026-10-11, dazu ein vierter aus der Nachprobe (Überschriften eine Ebene zu tief). Offen: Einspielen, Bestätigung des Eigentümers
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – Form entschieden (ADR-064): A, Gespräch auf der Kanon-Seite, Übernahme über die Import-Vorschau, Websuche zuschaltbar. Mockup freigegeben 2026-10-11; umgesetzt 2026-10-11 (Server `POST /api/worlds/{w}/worldbuilder`, Oberfläche „✨ Weltenbauer“ auf der Kanon-Seite, „Als Kanon übernehmen“ öffnet die Import-Vorschau). Echte Probe 2026-10-11 in der Cloud-Session: ```kanon-Block eingehalten, Übernahme über die Import-Vorschau klappt, Fundstellen kommen als ein Ereignis nach dem Text; Befunde: Websuche kostet ca. 6 ct statt „ca. 1 ct“, Fundstellen nur als „1 · 2 · 3“, Verweise roh im Text (Logbuch). Eigentümer: alle drei Befunde in 6.7 beheben (Auswahlfrage 2026-10-11) – behoben 2026-10-11, dazu ein vierter aus der Nachprobe (Überschriften eine Ebene zu tief). Eingespielt 2026-10-11 (`5f1fa10`). Offen: Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage und Mockup zu Beginn)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – neuer Ablauf und ggf. neue Verantwortung (Kategorien 1/2); Wissen aus dem Internet wäre eine neue externe Abhängigkeit (Kategorie 3)

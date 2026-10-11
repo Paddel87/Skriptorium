@@ -6,6 +6,8 @@ import {
   within,
 } from "@testing-library/react";
 import userEvent, { type UserEvent } from "@testing-library/user-event";
+import { currentCompletions, startCompletion } from "@codemirror/autocomplete";
+import { EditorView } from "@codemirror/view";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   catalogModel,
@@ -57,9 +59,29 @@ async function open(user: UserEvent) {
   });
 }
 
+/** The CodeMirror view of the message field, once it is loaded. */
+async function messageView(): Promise<EditorView> {
+  const content = await screen.findByLabelText("Nachricht an den Weltenbauer");
+  const view = EditorView.findFromDOM(content);
+  if (view === null) {
+    throw new Error("message field without editor");
+  }
+  return view;
+}
+
+/** What the message field holds. */
+async function message(): Promise<string> {
+  return (await messageView()).state.doc.toString();
+}
+
 async function say(user: UserEvent, text: string) {
-  const field = screen.getByLabelText("Nachricht an den Weltenbauer");
-  await user.type(field, text);
+  const view = await messageView();
+  const end = view.state.doc.length;
+  view.dispatch({
+    changes: { from: end, insert: text },
+    selection: { anchor: end + text.length },
+    userEvent: "input.type",
+  });
   await waitFor(() => {
     expect(screen.getByRole("button", { name: "Senden" })).toHaveProperty(
       "disabled",
@@ -329,11 +351,12 @@ describe("world builder (step 6.7)", () => {
 
     await say(user, "Zweite Frage.");
     await user.click(await screen.findByRole("button", { name: "Abbrechen" }));
-    const field = screen.getByLabelText("Nachricht an den Weltenbauer");
-    await waitFor(() => {
-      expect((field as HTMLTextAreaElement).value).toBe("Zweite Frage.");
+    await waitFor(async () => {
+      expect(await message()).toBe("Zweite Frage.");
     });
-    expect(screen.queryByText("Zweite Frage.", { selector: "div" })).toBeNull();
+    expect(
+      screen.queryByText("Zweite Frage.", { selector: ".wb-bubble" }),
+    ).toBeNull();
   });
 
   it("shows an error event after partial text and without any text", async () => {
@@ -356,8 +379,7 @@ describe("world builder (step 6.7)", () => {
     expect(
       await screen.findByText("Das Modell hat die Anfrage abgelehnt."),
     ).toBeDefined();
-    const field = screen.getByLabelText("Nachricht an den Weltenbauer");
-    expect((field as HTMLTextAreaElement).value).toBe("Zwei.");
+    expect(await message()).toBe("Zwei.");
 
     await user.click(screen.getByRole("button", { name: "Senden" }));
     third.close();
@@ -375,9 +397,8 @@ describe("world builder (step 6.7)", () => {
     await open(user);
     await say(user, "Viel.");
     expect(await screen.findByText("Der Kontext ist zu groß.")).toBeDefined();
-    const field = screen.getByLabelText("Nachricht an den Weltenbauer");
-    expect((field as HTMLTextAreaElement).value).toBe("Viel.");
-    expect(screen.queryByText("Viel.", { selector: "div" })).toBeNull();
+    expect(await message()).toBe("Viel.");
+    expect(screen.queryByText("Viel.", { selector: ".wb-bubble" })).toBeNull();
   });
 
   it("closes without losing the conversation and gives way to an entry", async () => {
@@ -437,11 +458,38 @@ describe("world builder (step 6.7)", () => {
     expect(screen.queryByRole("dialog")).toBeNull();
   });
 
+  it("offers the entries of the world after @ and marks a named one", async () => {
+    fakeApi(routes([]));
+    const user = userEvent.setup();
+    await open(user);
+    const view = await messageView();
+    view.dispatch({
+      changes: { from: 0, insert: "@Ka" },
+      selection: { anchor: 3 },
+      userEvent: "input.type",
+    });
+    startCompletion(view);
+    await waitFor(() => {
+      expect(currentCompletions(view.state).map((o) => o.label)).toContain(
+        "Kael",
+      );
+    });
+    view.dispatch({
+      changes: { from: 0, to: 3, insert: "@Kael fährt" },
+      userEvent: "input.type",
+    });
+    await waitFor(() => {
+      expect(document.querySelector(".cm-mention")?.textContent).toBe("@Kael");
+    });
+  });
+
   it("is available in an empty world", async () => {
     fakeApi(routes([], { "GET /api/worlds/salzmark/entries": ok([]) }));
     const user = userEvent.setup();
     await open(user);
-    expect(screen.getByLabelText("Nachricht an den Weltenbauer")).toBeDefined();
+    expect(
+      await screen.findByLabelText("Nachricht an den Weltenbauer"),
+    ).toBeDefined();
   });
 
   it("is missing in the compact canon and in the bar of a story", async () => {
