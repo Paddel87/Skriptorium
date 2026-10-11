@@ -29,6 +29,18 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 01:30 UTC – [SESSIONENDE] Prüfung „uncensored“-Modelle, Testplan für eine eigene Testwelt
+
+- **Dauer:** ca. 25 Minuten (01:05–01:30 UTC).
+- **Bearbeitet:** keine Fahrplan-Schritte – Recherche ohne Code: Katalog auf „uncensored“ (2 ausdrücklich, 20 als Rollenspiel/Fiktion beworben), Venice und Cydonia mit Bedingungen der Anbieter und je einer Stichprobe; Kandidaten für weitere Tests benannt.
+- **Testplan (Notiz für die nächste Session, noch kein Schritt):** Der Eigentümer legt eine eigene Testwelt im Skriptorium an (Psychothriller mit Täterfigur, Vorlage: sein bisheriger TypingMind-Agent; Text nicht im Repo). Testwelt, Anweisungen und Ergebnistexte bleiben außerhalb des öffentlichen Repos, nur Messwerte kommen hinein. Kandidaten: grok-4.6 (Vergleich), Venice, Cydonia, `nousresearch/hermes-4-405b`, `sao10k/l3.3-euryale-70b`, `aion-labs/aion-3.5`, `thedrummer/skyfall-36b-v2` (Kontext knapp); ungeeignet wegen Kontext unter 30.000 Token: mythomax, remm-slerp, weaver, lunaris. Messgrößen: Weigerung ja/nein, Abschwächung ja/nein, Wortzahl zur Vorgabe, Kanon-Widersprüche, Schlussgeste, Absätze und Anführungszeichen, Kosten, Wartezeit.
+- **Rollenteilung (dem Eigentümer offen gesagt, von ihm angenommen):** Die KI testet psychologischen Terror, Gewalt, Entführung und Fesselung als Handlung. Szenen mit expliziter sexueller Gewalt fordert, liest und bewertet die KI nicht; ebenso prüft sie kein reales Täterwissen (Dosierungen, Forensik, Hacking). Diese Fälle testet der Eigentümer selbst in der App nach einer Prüfliste, die KI wertet nur seine Angaben aus. Lücke: Der Ich-Modus des Agenten (Gespräch mit der Figur) hat im Skriptorium keine Entsprechung – Kandidat für 5.5.
+- **Landeplatz:** Probeschreiben nach Regel-002 und eine Kennzeichnung solcher Modelle in der Auswahl gehören in 5.5; Phase 5 steht an der Wucherungs-Schwelle, deshalb kein neuer Schritt.
+- **Nächster Schritt:** unverändert 5.5; davor auf Wunsch des Eigentümers der Test mit seiner Testwelt.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (eingestellt und bedient `claude-opus-5-5`, Sitzungsabfrage); 0 Fahrplan-Schritte, die Recherche lag auf Routine-Niveau, Warnung dazu entfiel versehentlich; keine Abgabe (Lesearbeit, gleicher Cache-Lesepreis).
+- **Kontextgröße:** ca. 204.000 Token am Ende, Grenze 200.000 überschritten. Der Eigentümer hat bei ca. 185.000 ausdrücklich „hier weiter“ gesagt (Abweichung nach `CLAUDE.md` Abschnitt 0).
+- **Sessionende-Prüfungen:** README ohne Drift (kein Status-, Versions- oder Schritt-Wechsel); keine neuen ADRs, Reifegrade oder Blocker, daher keine Drift zwischen den Pflicht-Dokumenten; Ablaufdaten-Register: kein Vorlauf erreicht (nächstes Datum D.1 2026-11-05); Logbuch mit 1.020 Zeilen über dem Trigger von 800 (Klasse M); eine vorletzte Monats-Scheibe gibt es nicht (nur September als letzte und Oktober als aktuelle Scheibe, beide bleiben laut `CLAUDE.md` Abschnitt 14 aktiv) – die Regel greift damit ins Leere; Entlastung kommt mit der Verdichtung beim Phasenwechsel nach 5.5. Dem Eigentümer gemeldet.
+
 ### 2026-10-11 – [BEOBACHTUNG] Cydonia (`thedrummer/cydonia-24b-v4.1`) geprüft
 
 - Auftrag des Eigentümers: „prüfe cydonia“. Feinabstimmung von Mistral Small 3.2 24B durch TheDrummer; „Uncensored“ steht nur in der OpenRouter-Beschreibung, die Modellkarte wirbt mit Prosa und Rollenspiel; Lizenz dort nicht genannt. Wissensstand 2024-04. Bei OpenRouter ein einziger Anbieter (Parasail, USA, bf16), 131k Kontext, Ausgabe bis 117.964 Token, kein Vordenken, 0,30 $ / 0,50 $ je 1 Mio. Token (Cache-Lesen 0,15 $). Im Katalog der App wählbar.
