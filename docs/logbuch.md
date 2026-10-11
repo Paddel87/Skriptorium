@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] Venice („Venice: Uncensored“) geprüft
+
+- Auftrag des Eigentümers: „prüfe venice“. Modell `cognitivecomputations/dolphin-mistral-24b-venice-edition`: Feinabstimmung von Mistral Small 24B (2501) durch dphn.ai mit Venice.ai, Apache-2.0, Wissensstand 2024-04; bei OpenRouter ein einziger Anbieter (Venice, USA, fp16), 128k Kontext, höchstens 8.192 Token Ausgabe, kein Vordenken, 0,20 $ / 0,90 $ je 1 Mio. Token (grok-4.6: 2 $ / 6 $). Im Katalog der App wählbar (nur Textausgabe).
+- Bedingungen laut Venice: kein Training mit Nutzerinhalten (AGB 10.2); Prompts und Antworten werden laut Datenschutzerklärung nicht gespeichert, die AGB behalten aber Überwachung und Aufzeichnung vor (10.11); Verbot u. a. von Darstellungen sexuellen Kindesmissbrauchs, auch KI-erzeugt. Für den API-Weg über OpenRouter nicht gesondert geregelt.
+- Stichprobe (eine Anfrage, deutsch, drastische Hinrichtungsszene einer Testfigur, 0,0004 $, 7 s): ohne Weigerung, 263 Wörter, `finish_reason` `stop`. Qualität mäßig: Wortwiederholungen („Schlamm“, „entschlossen“), Logikbruch im ersten Satz, Schlussgeste trotz Vorgabe. Keine Prüfung nach Regel-002 – kein Vergleich mit grok-4.6.
+
 ### 2026-10-11 01:10 UTC – [BEOBACHTUNG] OpenRouter-Katalog auf „uncensored“-Bezeichnungen geprüft
 
 - Auftrag des Eigentümers: „Überprüfung der OpenRouter-Modelle auf uncensored-Bezeichnungen“. Reine Recherche, kein Code, kein Fahrplan-Schritt (Phase 5 steht an der Wucherungs-Schwelle; ein neuer Schritt wurde bewusst nicht angelegt).
