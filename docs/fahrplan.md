@@ -24,13 +24,13 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details im Archiv [`docs/archiv/fahrplan-phase-5.md`](archiv/fahrplan-phase-5.md).
 
-**Phase 6: 3 von 13 erledigt, 2 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
+**Phase 6: 3 von 13 erledigt, 3 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | 🟠 | 6.1 | Umfang des Kapitels im Manuskript anzeigen | umgesetzt, Prüfung offen | du: prüfen |
 | 🟠 | 6.2 | Kurzfassung nicht mit der Anweisung verwechselbar | umgesetzt, Prüfung offen | du: prüfen |
-| ⚪ | 6.3 | Kanon-Einträge bei langen Kapiteln | offen – Spike 6.13 erledigt, Entscheidungsvorlage (Empfehlung C) | KI: Vorlage, dann du |
+| 🟠 | 6.3 | Kanon-Einträge bei langen Kapiteln | umgesetzt, Prüfung offen (ADR-062) | du: im Alltag prüfen |
 | ⚪ | 6.4 | Antworten des Servers nicht im Browser-Speicher | offen | KI |
 | ⚪ | 6.5 | Datenschutz-Einstellung an OpenRouter | offen | KI |
 | ⚪ | 6.6 | Kopfzeilen und Fehlermeldungen härten | offen | KI |
@@ -209,7 +209,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.3: Kanon-Einträge bei langen Kapiteln
 
-- **Status:** ⚪ OFFEN – Spike 6.13 erledigt (2026-10-11, Empfehlung C), Entscheidungsvorlage steht aus
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – nach Spike 6.13 entschieden: C, Kanon vor den Seiten bis 30 % der Kapazität (ADR-062); umgesetzt in `ContextBuilder.build()` (`CANON_SHARE`), drei neue Tests, pytest 495, `builder.py` 100 %. Anfragen der Testgeschichten unverändert (byte-gleich). Offen: Einspielen, Technik-Prüfung an der Geschichte des Eigentümers, sein Urteil im Alltag
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 6.12, 6.13
 - **Freigabepflichtig:** ja – Reihenfolge der Kontext-Zusammenstellung (ADR-003), Kategorie 1
