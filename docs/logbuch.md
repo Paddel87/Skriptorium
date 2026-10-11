@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [GELÖST] Pre-Commit-Hook nach der Onboarding-Prüfung verwaist
+
+- Die Onboarding-Prüfung in 6.10 führt den Quick Start in einem frischen Worktree aus, darunter `uv run pre-commit install`. Worktrees teilen `.git/hooks`; der Hook zeigte danach auf die Python-Umgebung des Prüf-Worktrees. Nach dessen Entfernen scheiterte jeder Commit mit „`pre-commit` not found“ – zuerst unbemerkt, weil die Ausgabe nach „fail“ gefiltert war.
+- Behoben mit `uv run pre-commit install` im Hauptverzeichnis. Lehre: nach jeder Onboarding-Prüfung im Worktree den Hook im Hauptverzeichnis neu installieren und den Commit an `git log` prüfen, nicht an gefilterter Ausgabe.
+
 ### 2026-10-12 – [PHASEN-WECHSEL] Reflexion Phase 6 (UMSETZUNG) → Phase 7 (UMSETZUNG)
 
 - **Gelernt:** Bei Fremdformaten den schreibenden Code des Herstellers lesen, nicht nur die Spezifikation (Hinweis des Eigentümers in 6.8): SillyTavern schreibt `chara` und `ccv3`, Lorebooks mit `comment`/`enabled`.
