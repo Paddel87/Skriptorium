@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [ERLEDIGT] 6.11 Umbau des Schreibbereichs
+
+- Routine-Schritt auf der Entscheidungs-Klasse begonnen (zu Beginn genannt); der Umbau selbst an einen Unteragenten der Routine-Klasse (Sonnet) abgegeben – überwiegend Ausgabe, daher Ersparnis. Ergebnis von der aktiven Klasse geprüft: tsc, eslint, prettier sauber; vitest 173 unverändert grün, Abdeckung gesamt nicht gesunken (97,82 / 95,54 / 96,79 / 98,14); Playwright 11 grün; Bildschirmfotos vorher/nachher am lokalen Server pixelgleich verglichen (4 Ansichten); Hook `useWriteFlow` durchgesehen.
+- `WritingPanel.tsx` 765 → 271 Zeilen; sieben neue Dateien, keine über 204 Zeilen. Offene Zweige in `useChatScroll.ts` (Zeilen 23, 42, 115) und `useWriteFlow.ts` (62, 147–148, 151) waren schon vorher ungetestet (Abbruch beim Verlassen, Rückfall-Scrollen) – kein neuer Bestand.
+
 ### 2026-10-11 – [BEOBACHTUNG] Kapitel 4 der Geschichte des Eigentümers in 3 Kapitel geteilt
 
 - Eigentümer: Kapitel 4 „zu lang geworden“ (25.570 Wörter). Auswahlfrage „Ja, in 3 Teile“. Letztes Speichern 11:07, Geschichte laut Vorgabe gespeichert und geschlossen. Sicherung des Ordners nach `/opt/docker/skriptorium/sicherungen/` (Ordner „…-vor-teilung-k4-2026-10-11“).

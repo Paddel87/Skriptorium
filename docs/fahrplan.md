@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details im Archiv [`docs/archiv/fahrplan-phase-5.md`](archiv/fahrplan-phase-5.md).
 
-**Phase 6: 0 von 12 erledigt, alle offen (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
+**Phase 6: 1 von 12 erledigt, 0 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -38,7 +38,7 @@ Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details 
 | ⚪ | 6.8 | Import aus SillyTavern | offen | KI |
 | ⚪ | 6.9 | Export in SillyTavern-Formate | offen | KI |
 | ⚪ | 6.10 | Planung der nächsten Ausbaustufe | offen | KI |
-| ⚪ | 6.11 | Umbau des Schreibbereichs (vor 6.1) | offen | KI |
+| ✅ | 6.11 | Umbau des Schreibbereichs (vor 6.1) | erledigt 2026-10-11 | – |
 | ⚪ | 6.12 | Umbau der Anfrage-Zusammenstellung (vor 6.3) | offen | KI |
 
 **Querschnitt (offen):**
@@ -336,7 +336,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.11: Umbau des Schreibbereichs (`WritingPanel.tsx`)
 
-- **Status:** ⚪ OFFEN
+- **Status:** ✅ ERLEDIGT (2026-10-11) – `WritingPanel.tsx` 765 → 271 Zeilen; neu `useWriteFlow.ts` (204), `useModelChoice.ts` (68), `useChatScroll.ts` (121), `ProposalBlock.tsx` (109), `ComposerControls.tsx` (144), `ModelSelect.tsx` (54), `ReferenceNotes.tsx` (78). Tests unverändert: vitest 173, Playwright 11 grün; Abdeckung 97,82 / 95,54 / 96,79 / 98,14 (vorher 97,8 / 95,32 / 96,73 / 98,11); Bildschirmfotos vorher/nachher pixelgleich (Rechner, Smartphone, mit „Neue Szene“). Umbau an einen Unteragenten der Routine-Klasse abgegeben und geprüft. Kein Einspielen nötig für die Abnahme (keine sichtbare Änderung), geht mit 6.1 auf den Server
 - **Phasentyp-Kontext:** UMSETZUNG (Umbau ohne sichtbare Änderung)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein – Refactoring innerhalb von `ui`, Schnittstellen unverändert (`CLAUDE.md` Abschnitt 5); entschieden in ADR-060
