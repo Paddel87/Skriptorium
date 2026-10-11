@@ -49,3 +49,22 @@ export function optionLabel(
   const cost = formatCents(model?.estimated_cost ?? null);
   return `${favorite ? "★ " : ""}${shortName(model, id)}${cost === null ? "" : ` · ${cost}`}`;
 }
+
+/**
+ * Extra tokens and fee of one world-builder answer with web search (step 6.7): the pages found
+ * are billed as input. Measured 2026-10-11 with grok-4.6: 17,100–22,400 tokens more input and
+ * about 0.01 $ for the search itself (three answers, logbook); the upper value, so the label does
+ * not promise too little.
+ */
+const WEB_SEARCH_TOKENS = 22_000;
+const WEB_SEARCH_FEE = 0.01;
+
+/** Estimated extra cost of web search for `model` in dollars; `null` if its price is unknown. */
+export function webSearchSurcharge(
+  model: CatalogModel | undefined,
+): number | null {
+  if (model?.input_price == null) {
+    return null;
+  }
+  return (WEB_SEARCH_TOKENS * model.input_price) / 1_000_000 + WEB_SEARCH_FEE;
+}

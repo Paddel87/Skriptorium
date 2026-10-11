@@ -184,6 +184,59 @@ describe("world builder (step 6.7)", () => {
     expect(screen.getByText(/Fundstellen:/)).toBeDefined();
   });
 
+  it("shows web marks as numbers, numbered sources by host, the surcharge, and takes over without marks", async () => {
+    const feed = sseFeed();
+    const { calls } = fakeApi(
+      routes([feed], {
+        "GET /api/models": ok(
+          modelList(["x-ai/grok-4.6"], [catalogModel("x-ai/grok-4.6")]),
+        ),
+        [PREVIEW]: ok({ world: "salzmark", introduction: "", items: [] }),
+      }),
+    );
+    const user = userEvent.setup();
+    await open(user);
+    // grok-4.6 in the catalog at 2 $ per million input tokens: 22,000 tokens and 1 ct fee.
+    expect(screen.getByLabelText("mit Websuche (ca. +5,4 ct)")).toBeDefined();
+    await say(user, "Siedepfanne?");
+    answer(
+      feed,
+      "Gesotten in Pfannen.[[1]](https://www.salz.example/a)\n```kanon\n# Gegenstände\n\n## Siedepfanne\nAus Eisen.[[1]](https://www.salz.example/a)\n```",
+      false,
+    );
+    feed.send("quellen", {
+      sources: [{ url: "https://www.salz.example/a", title: "1" }],
+    });
+    feed.send("done", {
+      input_tokens: null,
+      output_tokens: null,
+      cost_usd: null,
+      finish_reason: null,
+    });
+    feed.close();
+    expect(await screen.findByText(/Gesotten in Pfannen\.\[1\]/)).toBeDefined();
+    expect(screen.queryByText(/salz\.example\/a\)/)).toBeNull();
+    expect(
+      screen
+        .getByRole("link", { name: "[1] salz.example" })
+        .getAttribute("href"),
+    ).toBe("https://www.salz.example/a");
+    await user.click(
+      screen.getByRole("button", { name: "Als Kanon übernehmen" }),
+    );
+    await waitFor(() => {
+      expect(
+        calls.some(
+          (c) => c.method === "POST" && c.path.endsWith("import/preview"),
+        ),
+      ).toBe(true);
+    });
+    const preview = calls.find((c) => c.path.endsWith("import/preview"));
+    expect(preview?.body).toEqual({
+      markdown: "# Gegenstände\n\n## Siedepfanne\nAus Eisen.",
+    });
+  });
+
   it("offers taking over only for a kanon block and leads to the prefilled preview", async () => {
     const feed = sseFeed();
     const { calls } = fakeApi(
