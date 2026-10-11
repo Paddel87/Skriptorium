@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [ERLEDIGT] 7.1 Umbau und 7.7 Pflege
+
+- PR #132 nach grüner CI gemergt (Eigentümer: „132 mergen“). Definition of Done erfüllt; kein Einspielen für die Abnahme nötig (keine sichtbare Änderung). Phase 7: 2 von 8.
+
 ### 2026-10-12 – [BEOBACHTUNG] 7.1 Umbau und 7.7 Pflege umgesetzt
 
 - Zu Beginn gewarnt: 7.1 ist Routine, aktiv die Entscheidungs-Klasse; Umbau an zwei Unteragenten der Routine-Klasse (Sonnet) abgegeben, parallel an getrennten Dateien (`context` bzw. `ui`), ohne Commit-Recht. Ergebnisse selbst geprüft.

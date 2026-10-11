@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 7 „Zeitlinie, Publizieren, Gestaltung und Bilder“ (Phase 6 abgeschlossen 2026-10-12)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** keiner
-- **Nächster Schritt:** 7.1 Umbau (Befunde 1, 2, 4, 5 aus `docs/research/bewertung-phase-6.md`) zusammen mit 7.7; danach 7.2 Vorlage und Mockup. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** 7.2 Zeitlinie mit Kalenderdaten – Entscheidungsvorlage (Kategorie 4) und Mockup. 7.1 und 7.7 erledigt 2026-10-12. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -24,17 +24,17 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-6.md`](archiv/fahrplan-phase-6.md).
 
-**Phase 7: 0 von 8 erledigt, 2 in Arbeit (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
+**Phase 7: 2 von 8 erledigt (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
-| 🟠 | 7.1 | Umbau vor den neuen Funktionen | umgesetzt, CI offen | KI |
+| ✅ | 7.1 | Umbau vor den neuen Funktionen | erledigt 2026-10-12 | – |
 | ⚪ | 7.2 | Zeitlinie mit Kalenderdaten | offen | KI: Vorlage und Mockup |
 | ⚪ | 7.3 | Schreibweise der Geschichte wirkt auf bestehende Kapitel | offen | KI |
 | ⚪ | 7.4 | Publizieren (Satz, Export, Veröffentlichung) | offen | KI |
 | ⚪ | 7.5 | Gestaltung der Oberfläche | offen | KI |
 | ⚪ | 7.6 | Bilder und Karten | offen | KI |
-| 🟠 | 7.7 | Pflege: Warnung von `npm ci` zu `fsevents` | umgesetzt, CI offen | KI |
+| ✅ | 7.7 | Pflege: Warnung von `npm ci` zu `fsevents` | erledigt 2026-10-12 | – |
 | ⚪ | 7.8 | Planung der nächsten Ausbaustufe | offen | KI |
 
 **Querschnitt (offen):**
@@ -176,7 +176,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.1: Umbau vor den neuen Funktionen (Befunde 1, 2, 4, 5 der Bewertung)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – Ausgangsstand festgehalten: 42 KI-Anfragen der Testgeschichten (bytegleich bei Wiederholung), 15 Bildschirmfotos (14 pixelgleich bei Wiederholung); Umbau an zwei Unteragenten der Routine-Klasse abgegeben und geprüft. Ergebnis: `context/builder.py` 866 → 237 Zeilen (neu `parts.py`, `writing.py`, `summaries.py`; keine privaten Importe, kein Import zur Laufzeit); `Canon.tsx` 468 → 197, `ChapterEditor.tsx` 363 → 221 (Hooks und Teilkomponenten); `api.ts` 741 Zeilen → `ui/src/api/` mit 11 Dateien. 42 Anfragen bytegleich; 13 von 15 Bildschirmfotos pixelgleich, die zwei übrigen (Weltenbauer) nur in 6 bzw. 10 Pixeln am Rand der Scrollleiste (Zeitzufall, auch beim Ausgangsstand); pytest 560 (99,85 %, `context` 100 %), vitest 217 (98,18 %), Playwright 11 grün; keine Testdatei geändert. Offen: CI
+- **Status:** ✅ ERLEDIGT (2026-10-12) – Ausgangsstand festgehalten: 42 KI-Anfragen der Testgeschichten (bytegleich bei Wiederholung), 15 Bildschirmfotos (14 pixelgleich bei Wiederholung); Umbau an zwei Unteragenten der Routine-Klasse abgegeben und geprüft. Ergebnis: `context/builder.py` 866 → 237 Zeilen (neu `parts.py`, `writing.py`, `summaries.py`; keine privaten Importe, kein Import zur Laufzeit); `Canon.tsx` 468 → 197, `ChapterEditor.tsx` 363 → 221 (Hooks und Teilkomponenten); `api.ts` 741 Zeilen → `ui/src/api/` mit 11 Dateien. 42 Anfragen bytegleich; 13 von 15 Bildschirmfotos pixelgleich, die zwei übrigen (Weltenbauer) nur in 6 bzw. 10 Pixeln am Rand der Scrollleiste (Zeitzufall, auch beim Ausgangsstand); pytest 560 (99,85 %, `context` 100 %), vitest 217 (98,18 %), Playwright 11 grün; keine Testdatei geändert. CI grün (PR #132). Kein Einspielen nötig für die Abnahme (keine sichtbare Änderung); geht mit dem nächsten Einspielen auf den Server
 - **Phasentyp-Kontext:** UMSETZUNG (Umbau ohne sichtbare Änderung, wie 6.11/6.12)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein – Umbau innerhalb der Module, öffentliche Schnittstellen unverändert (`CLAUDE.md` Abschnitt 5)
@@ -272,7 +272,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.7: Pflege: Warnung von `npm ci` zu `fsevents` klären
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – umgesetzt: `allowScripts: {"fsevents": false}` in `package.json` (geprüft und abgelehnt; laut npm-Doku zu `approve-scripts` gewinnen `false`-Einträge); auf frischem Worktree: `npm ci` ohne Warnung, `fsevents` lädt mit mitgelieferter Binärdatei, Build und vitest 217 grün. Offen: CI
+- **Status:** ✅ ERLEDIGT (2026-10-12) – umgesetzt: `allowScripts: {"fsevents": false}` in `package.json` (geprüft und abgelehnt; laut npm-Doku zu `approve-scripts` gewinnen `false`-Einträge); auf frischem Worktree: `npm ci` ohne Warnung, `fsevents` lädt mit mitgelieferter Binärdatei, Build und vitest 217 grün. CI grün (PR #132)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** zu prüfen – Ausführen von Installationsskripten fremder Pakete erlauben wäre Kategorie 6; ausdrücklich nicht erlauben nicht

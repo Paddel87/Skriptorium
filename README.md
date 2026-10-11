@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 7 – Zeitlinie, Publizieren, Gestaltung und Bilder (Umsetzung), begonnen 2026-10-12 (ADR-067, ADR-068); Phase 6 abgeschlossen 2026-10-12. Fortschritt: 0 von 8 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
+- **Projektphase:** Phase 7 – Zeitlinie, Publizieren, Gestaltung und Bilder (Umsetzung), begonnen 2026-10-12 (ADR-067, ADR-068); Phase 6 abgeschlossen 2026-10-12. Fortschritt: 2 von 8 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
 - **Version:** v1.0.0 – erstes produktives Release (2026-10-11, ADR-058); davor v0.1.0 als Vorabversion (ADR-043)
 - **Status:** In Betrieb
 - **Letzte Änderung:** 2026-10-11
@@ -101,7 +101,8 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 ## Nächste Schritte
 
 - ✅ **Phase 6** (abgeschlossen 2026-10-12): Umfang des Kapitels, Kurzfassung im eigenen Reiter, Kanon auch bei langen Kapiteln (ADR-062), Schutz der Server-Antworten (ADR-063), KI-Weltenbauer mit Websuche (ADR-064), Austausch mit SillyTavern in beide Richtungen (ADR-065, ADR-066), Darstellung „Schwarz“. Bewertung am Phasenende: [`docs/research/bewertung-phase-6.md`](docs/research/bewertung-phase-6.md).
-- ⚪ **Als Nächstes:** 7.1 Umbau ohne sichtbare Änderung (ADR-067), dann 7.2 Zeitlinie mit Kalenderdaten; danach Schreibweise für bestehende Kapitel, Publizieren, Gestaltung der Oberfläche, Bilder und Karten (ADR-068).
+- ✅ **7.1, 7.7:** Umbau ohne sichtbare Änderung (ADR-067) und npm-Pflege – erledigt 2026-10-12.
+- ⚪ **Als Nächstes:** 7.2 Zeitlinie mit Kalenderdaten; danach Schreibweise für bestehende Kapitel, Publizieren, Gestaltung der Oberfläche, Bilder und Karten (ADR-068).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).
