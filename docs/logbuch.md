@@ -36,6 +36,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - **Mit Websuche** (Salzsiederei im Mittelalter, Gegenstand „Siedepfanne“): Sachteil mit Quellen, dann ```kanon-Block mit Zweck/Verwendung/Auswirkung → Vorschau 1 Eintrag, Kategorie Gegenstand. Rohstrom: `start`, 542 `text`, ein `quellen`-Ereignis mit 3 URLs nach dem Text, `done`.
 - **Befunde:** (1) Websuche kostet 5,9–6,5 ct je Antwort statt „ca. 1 ct“ wie am Kästchen: 18.645–21.035 Token ein statt geschätzt ca. 1.500 – die Suchergebnisse werden als Eingabe berechnet. (2) Die Fundstellen haben als Titel nur „1“, „2“, „3“ (so liefert sie der Anbieter); die Links unter der Antwort heißen deshalb nur 1 · 2 · 3. (3) Im Antworttext stehen die Verweise roh als `[[1]](https://…)`. (4) Erstes Textstück mit Websuche 18–22 s, gesamt ca. 34 s.
 - Reibung: Prüfskript zuerst mit Adresse ohne `#/` (Oberfläche nutzt HashRouter) und mit Lesen des Antwortkörpers (bei Streams nicht möglich) – Fehlversuche mit drei echten Anfragen, zusammen ca. 2 ct; Gesamtkosten der Probe ca. 15 ct. `pkill` mit einem Muster, das auch im eigenen Befehl stand, beendete die eigene Shell – künftig Prozessnummer merken.
+- Eigentümer per Auswahlfrage: alle drei Befunde in 6.7 beheben (in einer neuen Session), danach einspielen.
 
 ### 2026-10-11 – [BEOBACHTUNG] 6.7 KI-Weltenbauer umgesetzt, echte Probe offen
 
