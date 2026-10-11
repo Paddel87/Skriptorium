@@ -1,6 +1,6 @@
 /* Simple, readable layout for desktop and smartphone (FR-019 follows in 5.2). */
 /* Colours in one place (step 5.19): light by default, dark when the device asks for it or the
-   author chooses it; the author's choice ("hell"/"dunkel") wins over the device. */
+   author chooses it; the author's choice ("hell"/"dunkel"/"schwarz") wins over the device. */
 :root {
   --text: #1f2328;
   --page: #f6f5f1;
@@ -53,6 +53,32 @@
     --warn-line: #8a6a2a;
     color-scheme: dark;
   }
+}
+
+/* "Schwarz" for AMOLED screens (step 6.14): page, cards and bar true black, so the pixels stay
+   off; a subdued warm text that glares less in the dark; lines and buttons just set apart. */
+:root[data-theme="black"] {
+  --text: #b8b2a6;
+  --page: #000;
+  --surface: #000;
+  --line: #2b2822;
+  --field-line: #4a4438;
+  --accent: #c9a464;
+  --accent-text: #000;
+  --button: #14120d;
+  --link: #c9a464;
+  --muted: #8a8476;
+  --danger: #d9776c;
+  --good: #7fb87f;
+  --mention: #4a3d1c;
+  --mention-text: #e6dcc4;
+  --selection: #3a3324;
+  --veil: rgb(0 0 0 / 75%);
+  --shadow: rgb(0 0 0 / 60%);
+  --warn: #d9b060;
+  --warn-bg: #1f1808;
+  --warn-line: #6e5523;
+  color-scheme: dark;
 }
 
 :root[data-theme="dark"] {

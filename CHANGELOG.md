@@ -6,6 +6,8 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v1.0.0)
 
+- Darstellung „Schwarz“ (2026-10-12, Schritt 6.14): Die Darstellungswahl links unten hat eine vierte Stufe für AMOLED-Bildschirme – Seite, Karten und Leiste in echtem Schwarz, Schrift gedämpft warm, Linien und Knöpfe leicht abgesetzt; die Statusleiste der installierten App wird ebenfalls schwarz.
+
 - Export nach SillyTavern (2026-10-11, Schritt 6.9, ADR-066): Auf der Kanon-Seite lädt „⇩ Lorebook für SillyTavern“ alle Einträge der Welt als Lorebook (Name und Aliasse als Schlüsselwörter), und bei Figuren lädt „⇩ Figurenkarte“ die Figur als Karte (JSON; Persönlichkeit aus dem Abschnitt „Wesen“). Beide Dateien lassen sich auch wieder ins Skriptorium importieren; die Kategorie kommt dabei mit. Der Import aus SillyTavern verschiebt Überschriften im Text jetzt nur so weit wie nötig. Neu `GET /api/worlds/{id}/export/sillytavern` und `GET /api/worlds/{id}/entries/{entry}/export/sillytavern`.
 
 - Import aus SillyTavern (2026-10-11, Schritt 6.8, ADR-065): Das Dateifeld der Import-Seite nimmt neben Markdown auch Figurenkarten (PNG oder JSON) und Lorebooks (JSON) aus SillyTavern an. Die Datei wird in den Import-Text übersetzt: eine Karte wird eine Figur mit Beschreibung und Abschnitt „Wesen“, Lorebook-Einträge werden Einträge mit ihren Schlüsselwörtern als Aliasse; `{{char}}` wird zum Namen der Figur. Begrüßungen, Beispieldialoge und andere Chat-Felder bleiben weg; ein Hinweis nennt, was fehlt und wo `{{user}}` steht. In den Kanon kommt erst, was du in der Vorschau übernimmst. Neu `POST /api/worlds/{id}/import/sillytavern`.

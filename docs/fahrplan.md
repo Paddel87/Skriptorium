@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details im Archiv [`docs/archiv/fahrplan-phase-5.md`](archiv/fahrplan-phase-5.md).
 
-**Phase 6: 10 von 13 erledigt, 2 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
+**Phase 6: 10 von 14 erledigt, 3 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -41,6 +41,7 @@ Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details 
 | ✅ | 6.11 | Umbau des Schreibbereichs (vor 6.1) | erledigt 2026-10-11 | – |
 | ✅ | 6.12 | Umbau der Anfrage-Zusammenstellung (vor 6.3) | erledigt 2026-10-11 | – |
 | ✅ | 6.13 | Spike: schaden fehlende Kanon-Einträge bei langen Kapiteln? | erledigt 2026-10-11 (`docs/research/kanon-luecke.md`) | – |
+| 🟠 | 6.14 | Darstellung „Schwarz“ für AMOLED-Bildschirme | umgesetzt | KI: einspielen (auf deine Anweisung); du: am Gerät prüfen |
 
 **Querschnitt (offen):**
 
@@ -169,7 +170,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`; 6.3 (Kontext-Reihenfolge) und 6.7 (Weltenbauer) werden per ADR entschieden, bevor gebaut wird.
 
-**Ursprünglicher Schrittplan:** 12 Schritte, festgehalten am 2026-10-11 (10 aus 5.5, ADR-059; +6.11, +6.12 aus der Pflichtfrage vor Phasenbeginn, ADR-060). Stand 2026-10-11: 13 Schritte (+6.13 Spike, ADR-061). Wucherungs-Schwelle für Phase 6: mehr als 15 Schritte (ADR-060, enger als der Default aus `docs/project-context.md` Abschnitt 6); neue Wünsche während der Phase werden V-Schritte mit Landeplatz 6.10.
+**Ursprünglicher Schrittplan:** 12 Schritte, festgehalten am 2026-10-11 (10 aus 5.5, ADR-059; +6.11, +6.12 aus der Pflichtfrage vor Phasenbeginn, ADR-060). Stand 2026-10-11: 13 Schritte (+6.13 Spike, ADR-061). Stand 2026-10-12: 14 Schritte (+6.14 AMOLED, Ausnahme auf Wunsch des Eigentümers). Wucherungs-Schwelle für Phase 6: mehr als 15 Schritte (ADR-060, enger als der Default aus `docs/project-context.md` Abschnitt 6); neue Wünsche während der Phase werden V-Schritte mit Landeplatz 6.10.
 
 **Reihenfolge (Eigentümer, 2026-10-11; ADR-060):** 6.11 (Umbau Schreibbereich), dann die kleinen Hilfen 6.1 und 6.2; 6.12 (Umbau Anfrage-Zusammenstellung), dann 6.3; die Schutz-Schritte 6.4–6.6 gebündelt mit einer gemeinsamen Prüfung durch eine getrennte Instanz; dann 6.7, 6.8, 6.9; zuletzt 6.10.
 
@@ -334,6 +335,22 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag, ADR
 - **Notizen:** Angelegt 2026-10-11 in 5.5 (ADR-059), übernommen aus 5.5 (Landeplatz der weiter verschobenen V-Schritte).
+
+#### 6.14: Darstellung „Schwarz“ für AMOLED-Bildschirme
+
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – Wunsch des Eigentümers („kurzfristig einen AMOLED-tauglichen Dark Mode“); Mockup mit drei Schriftfarben, gewählt: C „gedämpft warm“, als zusätzliche Stufe (Auswahlfragen 2026-10-12). Umgesetzt 2026-10-12: Stufe „Schwarz“ in `theme.ts` und `styles.css` (`data-theme="black"`), `theme-color` Schwarz für die Leiste der installierten App; vitest 217, Playwright 11 grün; Sichtprobe Desktop und Handy (Kanon, Kapitel). Offen: Einspielen, Bestätigung des Eigentümers am Gerät
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** nein – nur Oberfläche, keine Kategorie aus `CLAUDE.md` Abschnitt 4
+- **Empfohlene Klasse:** Routine – klar spezifizierte Oberflächen-Änderung ohne Eskalations-Auslöser.
+- **Eingangskriterien:** Mockup freigegeben
+- **Anforderungen (ab Klasse M):** – (Darstellung, kein eigener Anwendungsfall; ergänzt 5.19)
+- **Zu tun:** Vierte Stufe „Schwarz“ in der Darstellungswahl (Auto → Hell → Dunkel → Schwarz): Seite, Karten und Leiste echtes Schwarz, Schrift gedämpft warm, Linien und Knöpfe leicht abgesetzt; Statusleiste der installierten App schwarz.
+- **Akzeptanzkriterien:** Tests; Sichtprobe Desktop und Handy; Eigentümer bestätigt am Gerät.
+- **Betroffene Module:** ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-12 auf Wunsch des Eigentümers als **bewusste Ausnahme** von der Regel aus ADR-060 („neue Wünsche während der Phase werden V-Schritte mit Landeplatz 6.10“) – Auswahlfrage 2026-10-12: „Jetzt als 6.14“. Phase 6 damit 14 Schritte (Wucherungs-Schwelle > 15 nicht erreicht).
 
 #### 6.11: Umbau des Schreibbereichs (`WritingPanel.tsx`)
 

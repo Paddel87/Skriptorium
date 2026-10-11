@@ -28,6 +28,22 @@ describe("theme", () => {
     expect(document.documentElement.dataset.theme).toBeUndefined();
   });
 
+  it("puts black on the root and in the bar for AMOLED screens (step 6.14)", () => {
+    const bar = () =>
+      document.head.querySelectorAll('meta[name="theme-color"]');
+    applyTheme("schwarz");
+    expect(document.documentElement.dataset.theme).toBe("black");
+    expect(bar()).toHaveLength(1);
+    expect(document.head.firstElementChild?.getAttribute("content")).toBe(
+      "#000000",
+    );
+    applyTheme("schwarz");
+    expect(bar()).toHaveLength(1);
+    applyTheme("dunkel");
+    expect(document.documentElement.dataset.theme).toBe("dark");
+    expect(bar()).toHaveLength(0);
+  });
+
   it("works without browser storage", () => {
     vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
       throw new Error("blockiert");
@@ -52,6 +68,11 @@ describe("ThemeChoice", () => {
     expect(readTheme()).toBe("dunkel");
     await user.click(
       screen.getByRole("button", { name: "Darstellung: Dunkel" }),
+    );
+    expect(document.documentElement.dataset.theme).toBe("black");
+    expect(readTheme()).toBe("schwarz");
+    await user.click(
+      screen.getByRole("button", { name: "Darstellung: Schwarz" }),
     );
     expect(document.documentElement.dataset.theme).toBeUndefined();
     expect(readTheme()).toBe("automatisch");

@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] 6.14 Darstellung „Schwarz“ (AMOLED) umgesetzt; PR #129 gemergt
+
+- Wunsch des Eigentümers („kurzfristig einen AMOLED-tauglichen Dark Mode“). Mockup zuerst mit „Dunkel“ neben „Schwarz“; Eigentümer: „Schriftfarbe ebenfalls anpassen“ → zweites Mockup mit drei Schriftfarben, gewählt C „gedämpft warm“ (#b8b2a6) als zusätzliche Stufe.
+- Regel aus ADR-060 („neue Wünsche während der Phase werden V-Schritte mit Landeplatz 6.10“) erst beim Eintragen bemerkt – Mockups waren da schon gezeigt. Dem Eigentümer vorgelegt: „Jetzt als 6.14“ als bewusste Ausnahme. Lehre: die Phasenregeln vor dem ersten Mockup prüfen, nicht erst beim Fahrplan-Eintrag.
+- Umgesetzt: `theme.ts` (Stufe `schwarz` → `data-theme="black"`, eigenes `theme-color`-Meta mit Vorrang, beim Wechsel entfernt), Farbvariablen in `styles.css`; keine fest eingetragenen Farben außerhalb der Variablen. vitest 217, Playwright 11 grün; Sichtprobe Desktop/Handy: Hintergrund `rgb(0, 0, 0)`.
+- PR #129 (6.9) auf Wunsch des Eigentümers gemergt (CI grün); 6.14 setzt auf diesem Stand auf.
+
 ### 2026-10-11 – [BEOBACHTUNG] 6.9 Export nach SillyTavern umgesetzt
 
 - ADR-066 nach Auswahlfragen (Welt als Lorebook + Figur als Karte; Karte ohne eingebettetes Lorebook; JSON). Eingangskriterium „6.8 erledigt“ formal offen (Probe des Eigentümers), Zuordnung steht – im ADR vermerkt.
