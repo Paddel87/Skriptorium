@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [GELÖST] Befunde aus der echten Probe von 6.7 behoben
+
+- Nur Oberfläche, keine Schnittstelle geändert: (1) Kästchen „mit Websuche“ nennt den Aufschlag aus dem Eingabepreis des gewählten Modells (22.000 Token mehr Eingabe plus 1 ct, `ui/src/models.ts`; bei Grok 4.6 „ca. +5,4 ct“; ohne Preis „teurer, Preis unbekannt“) statt fest „ca. 1 ct“. (2) Fundstellen ohne echten Titel als „[1] host“ (`ui/src/citations.ts`). (3) Verweise `[[1]](…)` im Text als „[1]“, im übernommenen Vorschlag entfernt.
+- **Vierter Befund bei der Nachprobe:** grok-4.6 setzte einmal den Vorschlag eine Ebene zu tief (`## Gegenstände`, `### Pfannhaus-Glocke`, `### Zweck`) – der Import machte daraus zwei Einträge („Zweck“ als eigener Gegenstand). Behoben in `ui/src/kanonBlock.ts`: ohne Überschrift der Ebene 1, aber mit einer Gruppe auf Ebene 2 wird jede Überschrift eine Ebene angehoben; Einträge ohne Gruppe bleiben unverändert.
+- Nachprobe mit echtem Schlüssel und Websuche (7,0 ct, 24.058 Token ein): Text ohne rohe Verweise, Fundstellen „[1] en.wikipedia.org · [2] de.wikipedia.org · [3] mittelalter-lexikon.de“, Übernahme ohne Verweise. Messwerte der Websuche jetzt 17.100–22.400 Token mehr Eingabe (drei Antworten). Beim ersten Öffnen direkt nach dem Serverstart war der Katalog noch nicht geladen – das Kästchen zeigte dann „Preis unbekannt“, Sekunden später den Aufschlag.
+- Prüfungen: tsc, eslint, prettier grün; vitest 211 (gesamt 98,17 / 96,06 / 97,09 / 98,46 %, neue Datei `citations.ts` 100 % Zeilen); Playwright 11 grün. Python unverändert.
+
 ### 2026-10-11 – [BEOBACHTUNG] 6.7 echte Probe in der Cloud-Session
 
 - Auf Anweisung des Eigentümers („6.7 testest du hier einmal in der Cloud-Umgebung“). Fortgesetzte Session weit über der Kontextgrenze (dem Eigentümer zuvor gesagt). Aufbau: Stand `38e2bba`, Oberfläche gebaut, lokaler Server mit Kopie der Salzmark (`spikes/regel-002/geschichten.py`), echter OpenRouter-Schlüssel, Chromium per Playwright (Prüfskript nur im Arbeitsbaum, danach gelöscht), grok-4.6.
