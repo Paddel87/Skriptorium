@@ -418,6 +418,13 @@ Muss-Abdeckung als Zählung über die 18 Muss-Anforderungen (J = ja, T = teilwei
 - `is_moderated = false`: 324 Modelle, u. a. `qwen` (54), `google` (41), `mistralai` (25), `z-ai` (18), `deepseek` (16), `openai` (14, offene Gewichte), `x-ai` (8), `moonshotai` (8), `minimax` (8), `meta-llama` (8), `nousresearch` (3), `thedrummer` (3), `sao10k` (3).
 - Darunter gelistete Feinabstimmungen, die von ihren Herstellern für Rollenspiel/Fiktion beworben werden (Einordnung der Hersteller, nicht geprüft): `thedrummer/cydonia-24b-v4.1`, `thedrummer/skyfall-36b-v2`, `thedrummer/unslopnemo-12b`, `sao10k/l3.3-euryale-70b`, `sao10k/l3.1-euryale-70b`, `anthracite-org/magnum-v4-72b`, `nousresearch/hermes-4-405b`, `nousresearch/hermes-3-llama-3.1-70b`, `nousresearch/hermes-3-llama-3.1-405b`, `cognitivecomputations/dolphin-mistral-24b-venice-edition`, `gryphe/mythomax-l2-13b`.
 
+**Nachtrag 2026-10-11 – Suche nach „uncensored“-Bezeichnungen** (gleiche Quelle, 458 Modelle; Suche über `id`, `name`, `description`, `hugging_face_id`):
+
+- Ausdrücklich „uncensored“: `cognitivecomputations/dolphin-mistral-24b-venice-edition` (Anzeigename „Venice: Uncensored“, 0,20 $ / 0,90 $ je 1 Mio. Token, 128k) und `thedrummer/cydonia-24b-v4.1` („Uncensored and creative writing model“, 0,30 $ / 0,50 $, 131k). Keine Bezeichnungen wie „abliterated“, „unfiltered“, „NSFW“ im Katalog.
+- Als Rollenspiel/Fiktion beworben, ohne „uncensored“: `aion-labs/aion-2.0`, `aion-3.0`, `aion-3.0-mini`, `aion-3.5`, `aion-3.5-mini`, `aion-rp-llama-3.1-8b`; `minimax/minimax-m2-her`; `thedrummer/skyfall-36b-v2`, `thedrummer/unslopnemo-12b`; `sao10k/l3.3-euryale-70b`, `l3.1-euryale-70b`, `l3-lunaris-8b`; `anthracite-org/magnum-v4-72b`; `nousresearch/hermes-4-405b`, `hermes-3-llama-3.1-70b`, `hermes-3-llama-3.1-405b`; `gryphe/mythomax-l2-13b`; `undi95/remm-slerp-l2-13b`; `mancer/weaver`.
+- Alle genannten `is_moderated = false`. Zählung jetzt 141 true / 317 false (2026-09-26: 134 / 324).
+- Alles Selbstbeschreibungen der Hersteller; Verhalten bei fiktionalen Inhalten und Nutzungsbedingungen der ausführenden Anbieter nicht geprüft (unverändert Punkt 5 unten).
+
 **Grenzen der Aussage:** `is_moderated = false` belegt nur, dass OpenRouter selbst nicht moderiert – nicht, dass das Modell oder der ausführende Anbieter fiktionale Inhalte ungefiltert erzeugt. Nutzungsbedingungen der Anbieter wurden nicht geprüft. Die Liste ist eine Momentaufnahme (Vision 9: Filterpolitik und Preise können sich ändern).
 
 <!-- ANCHOR:einordnung -->

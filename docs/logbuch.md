@@ -29,6 +29,21 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 01:10 UTC – [BEOBACHTUNG] OpenRouter-Katalog auf „uncensored“-Bezeichnungen geprüft
+
+- Auftrag des Eigentümers: „Überprüfung der OpenRouter-Modelle auf uncensored-Bezeichnungen“. Reine Recherche, kein Code, kein Fahrplan-Schritt (Phase 5 steht an der Wucherungs-Schwelle; ein neuer Schritt wurde bewusst nicht angelegt).
+- Quelle: öffentlicher Katalog `https://openrouter.ai/api/v1/models`, abgerufen 2026-10-11; Suche über `id`, `name`, `description`, `hugging_face_id`.
+- Ausdrücklich „uncensored“ in Name oder Beschreibung: **2 von 458** – `cognitivecomputations/dolphin-mistral-24b-venice-edition` (Anzeigename „Venice: Uncensored“) und `thedrummer/cydonia-24b-v4.1` („Uncensored and creative writing model“). Beide `is_moderated = false`; beide Selbstbeschreibung der Hersteller, nicht geprüft.
+- Ohne das Wort, aber als Rollenspiel/Fiktion beworben: 20 weitere (u. a. aion-labs, sao10k, thedrummer, nousresearch, anthracite, gryphe, mancer, undi95, `minimax/minimax-m2-her`) – Liste in `docs/research/bestandspruefung.md`, Nachtrag 2026-10-11.
+- `is_moderated`: jetzt 141 true / 317 false (2026-09-26: 134 / 324). Die laufenden Modelle grok-4.6 und grok-4.7 bleiben `false`.
+- Keine Änderung an Modell-Voreinstellung oder Oberfläche; eine Kennzeichnung im Katalog wäre ein neuer Schritt (Neuplanung Phase 5 bzw. 5.5).
+
+### 2026-10-11 01:05 UTC – [SESSIONSTART] Prüfung OpenRouter-Modelle auf „uncensored“
+
+- Modell laut Sitzungsabfrage: eingestellt `claude-opus-5-5`, bedient `claude-opus-5-5` → Entscheidungs-Klasse. Die Aufgabe ist Recherche ohne Eskalations-Auslöser (Routine-Niveau); wegen gleichen Cache-Lesepreises keine Abgabe an Sonnet (Lesearbeit, `docs/project-context.md` Abschnitt 6).
+- Kontextgröße zu Sessionbeginn: ca. 103.000 Token (Grenze 200.000).
+- Ausgangslage: v1.0.0 eingespielt (`0af840f`), Phase 5 offen nur 5.5; keine aktiven Blocker.
+
 ### 2026-10-11 – [BEOBACHTUNG] Tag v1.0.0 und Deployment `0af840f`
 
 - Auf Anweisung des Eigentümers („112 mergen und einspielen. Vorher Markierung durchführen, 1.0.0“): #112 nach grüner CI gemergt, CI auf `main` (`0af840f`) grün; annotierter Tag `v1.0.0` auf `0af840f` gesetzt und gepusht (öffentlich sichtbar). Keine Release-Seite auf GitHub angelegt (Frage des Eigentümers dazu beantwortet).
