@@ -59,7 +59,7 @@ Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details 
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 6.10): V.1, V.2, V.8, V.14, V.16. In Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 6.10): V.1, V.2, V.8, V.14, V.16, V.20 (neu 2026-10-12). In Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -1026,6 +1026,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, ggf. ADR
 - **Notizen:** Angelegt 2026-10-11 (ADR-058).
+
+#### V.20: Figurenkarten im Netz finden, ohne auf Bezahlseiten zu landen
+
+- **Status:** ⏸️ VERSCHOBEN → 6.10 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 6.10 (Eigentümer, 2026-10-12: „das Thema können wir nochmal später aufgreifen“)
+- **Phasentyp-Kontext:** offen (zuerst ERKUNDUNG: was genau fehlt)
+- **Abhängigkeiten:** 6.8
+- **Freigabepflichtig:** offen – je nach Form ggf. externe Abhängigkeit (Kategorie 3), z. B. Anbindung einer Kartensammlung oder Websuche
+- **Empfohlene Klasse:** Entscheidung – Form noch offen (Eskalations-Auslöser 1, sobald ein Vorschlag ansteht).
+- **Eingangskriterien:** Klärung mit dem Eigentümer, was er sucht und wo er landet
+- **Anforderungen (ab Klasse M):** – (Ergänzung zu FR-030)
+- **Zu tun:** Beobachtung des Eigentümers nach der Probe von 6.8: Bei der Suche nach Figurenkarten im Internet landet man auf Bezahlseiten. Bedarf und mögliche Hilfen klären (z. B. Hinweise auf freie Sammlungen, Weltenbauer als Alternative zum Suchen).
+- **Akzeptanzkriterien:** in 6.10 festzulegen
+- **Betroffene Module:** offen
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Notiz, ggf. ADR
+- **Notizen:** Angelegt 2026-10-12 nach der Probe von 6.8.
 
 ---
 

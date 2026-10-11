@@ -32,7 +32,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 ### 2026-10-12 – [ERLEDIGT] 6.8 Import aus SillyTavern
 
 - Probe des Eigentümers auf der Produktion: echte Figurenkarte (V2) importiert – „Charakter importieren geht gut. Anscheinend gibt es eine sogenannte V2-Version. Hat geklappt.“ Damit alle Akzeptanzkriterien erfüllt (ADR, Tests mit Beispieldateien nach dem Export-Code von SillyTavern, Prüfung durch getrennte Instanz, Probe).
-- Eigentümer merkt an: Figuren im Internet zu suchen ist schwierig (Nachricht brach ab; Rückfrage gestellt).
+- Eigentümer merkt an: Figuren im Internet zu suchen ist schwierig, man landet auf Bezahlseiten; „das Thema können wir nochmal später aufgreifen“ → V.20 mit Landeplatz 6.10.
 
 ### 2026-10-12 – [ERLEDIGT] 6.14 Darstellung „Schwarz“
 
