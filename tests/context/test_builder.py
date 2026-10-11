@@ -563,6 +563,37 @@ def test_chapter_summary_too_large_is_refused(
         ContextBuilder(canon, manuscripts).build_chapter_summary(WORLD, STORY, 1, budget=0)
 
 
+@pytest.mark.parametrize("budget", [30_000, 4_000, 1_234])
+def test_chapter_summary_room_is_the_exact_limit(
+    services: tuple[CanonService, ManuscriptService], budget: int
+) -> None:
+    canon, manuscripts = services
+    builder = ContextBuilder(canon, manuscripts)
+    manuscripts.save_chapter(WORLD, STORY, 3, title="Grenze", text="x")
+    room = builder.chapter_summary_room(WORLD, STORY, 3, budget=budget)
+
+    manuscripts.save_chapter(WORLD, STORY, 3, text="x" * room)
+    builder.build_chapter_summary(WORLD, STORY, 3, budget=budget)
+    manuscripts.save_chapter(WORLD, STORY, 3, text="x" * (room + 1))
+    with pytest.raises(ContextTooLarge):
+        builder.build_chapter_summary(WORLD, STORY, 3, budget=budget)
+
+
+def test_chapter_summary_room_shrinks_with_the_overall_summary(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    canon, manuscripts = services
+    builder = ContextBuilder(canon, manuscripts)
+    manuscripts.set_story_summary(WORLD, STORY, "")
+    without = builder.chapter_summary_room(WORLD, STORY, 2)
+    manuscripts.set_story_summary(WORLD, STORY, "Ilka sucht ihren Bruder. " * 200)
+
+    assert builder.chapter_summary_room(WORLD, STORY, 2) < without
+    assert builder.chapter_summary_room(WORLD, STORY, 2, budget=1) == 0
+    with pytest.raises(InvalidInput):
+        builder.chapter_summary_room(WORLD, STORY, 2, budget=0)
+
+
 def test_story_summary_request_continues_the_overall_summary(
     services: tuple[CanonService, ManuscriptService],
 ) -> None:

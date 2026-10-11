@@ -179,3 +179,18 @@ def test_summarize_needs_a_session_and_a_provider(client: TestClient, data_dir: 
         other.post("/api/auth/login", json={"password": "Salzwind über der Mark 7"})
 
         assert other.post(SUMMARIZE).status_code == 503
+
+
+def test_summary_room_tells_how_long_the_chapter_may_grow(summarizer: TestClient) -> None:
+    response = summarizer.get(f"{STORY}/chapters/1/summary-room")
+
+    assert response.status_code == 200
+    room = response.json()["max_chars"]
+    builder = services_of(summarizer).context
+    assert room == builder.chapter_summary_room("die-salzmark", "die-flut", 1)
+    assert 80_000 < room < 90_000
+    assert summarizer.get(f"{STORY}/chapters/9/summary-room").status_code == 404
+    assert (
+        summarizer.get("/api/worlds/erfunden/stories/die-flut/chapters/1/summary-room").status_code
+        == 404
+    )
