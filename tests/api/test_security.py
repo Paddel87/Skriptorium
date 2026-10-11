@@ -83,6 +83,12 @@ _EXPECTED_HEADERS = {
     "x-content-type-options": "nosniff",
     "referrer-policy": "no-referrer",
     "permissions-policy": "camera=(), microphone=(), geolocation=()",
+    # Step 6.6: scripts only from the own origin, no embedding in other pages.
+    "content-security-policy": (
+        "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; "
+        "img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; "
+        "object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
+    ),
 }
 
 
@@ -139,6 +145,96 @@ def test_security_headers_on_unexpected_server_error(tmp_path: Path) -> None:
     response = client.get("/api/kaputt")
     assert response.status_code == 500
     assert response.json() == {"detail": "Interner Fehler"}
+    _assert_security_headers(response)
+
+
+def test_api_answers_are_never_stored_by_the_browser(logged_in: TestClient) -> None:
+    """Step 6.4 (ASVS 14.3.2): answers under ``/api`` carry texts; ``no-store`` everywhere."""
+    for response in (
+        logged_in.get("/api/health"),
+        logged_in.get("/api/worlds"),
+        logged_in.get("/api/worlds/erfunden"),
+        logged_in.post("/api/worlds", json={}),
+    ):
+        assert response.headers.get_list("cache-control") == ["no-store"], response.request.url
+
+
+def test_head_and_server_errors_are_not_stored(client: TestClient, tmp_path: Path) -> None:
+    assert client.head("/api/health").headers.get("cache-control") == "no-store"
+    app = create_app(
+        Settings(data_dir=tmp_path / "data", ui_dir=tmp_path / "no-ui"),
+        hasher=cheap_hasher(),
+        breached=FakeBreached(),
+    )
+
+    @app.get("/api/kaputt-cache")
+    def broken() -> None:
+        raise RuntimeError("kaputt")
+
+    response = TestClient(app, base_url=ORIGIN, raise_server_exceptions=False).get(
+        "/api/kaputt-cache"
+    )
+    assert response.status_code == 500
+    assert response.headers.get("cache-control") == "no-store"
+
+
+def test_interface_files_keep_their_own_caching(tmp_path: Path) -> None:
+    ui = tmp_path / "ui"
+    ui.mkdir()
+    (ui / "index.html").write_text("<p>Skriptorium</p>", encoding="utf-8")
+    app = create_app(
+        Settings(data_dir=tmp_path / "data", ui_dir=ui),
+        hasher=cheap_hasher(),
+        breached=FakeBreached(),
+    )
+    response = TestClient(app, base_url=ORIGIN).get("/")
+
+    assert "no-store" not in response.headers.get("cache-control", "")
+
+
+@pytest.mark.parametrize(
+    ("body", "content_type"),
+    [
+        ('{"password": ["geheim-wort-1"]}', "application/json"),  # string_type
+        ('{"password": "geheim-wort-2"', "application/json"),  # json_invalid
+        ('{"name": "Welt", "geheim-wort-3": 1, "x": {"geheim-wort-4": []}}', "application/json"),
+    ],
+)
+def test_no_validation_error_sends_values_back(
+    logged_in: TestClient, body: str, content_type: str
+) -> None:
+    for path in ("/api/auth/login", "/api/worlds/erfunden/import/preview"):
+        response = logged_in.post(path, content=body, headers={"Content-Type": content_type})
+        assert response.status_code in (404, 422), (path, response.status_code)
+        assert "geheim-wort" not in response.text, path
+
+
+def test_nested_keys_are_not_sent_back(logged_in: TestClient) -> None:
+    logged_in.post("/api/worlds", json={"name": "Die Salzmark"})
+    response = logged_in.post(
+        "/api/worlds/die-salzmark/import/preview",
+        json={"text": "# Figuren\n\n## Kael\n", "categories": {"geheim-schluessel": "kein"}},
+    )
+
+    assert response.status_code == 422
+    assert "geheim-schluessel" not in response.text
+    assert all(len(item["loc"]) <= 2 for item in response.json()["detail"])
+
+
+def test_invalid_input_is_not_sent_back(client: TestClient) -> None:
+    """Step 6.6: a value in the wrong form (here a password) does not come back in the 422."""
+    response = client.post("/api/auth/login", json={"password": ["geheim-wort-1234567"]})
+
+    assert response.status_code == 422
+    assert "geheim-wort" not in response.text
+    detail = response.json()["detail"]
+    assert detail == [
+        {
+            "loc": ["body", "password"],
+            "msg": "Input should be a valid string",
+            "type": "string_type",
+        }
+    ]
     _assert_security_headers(response)
 
 
