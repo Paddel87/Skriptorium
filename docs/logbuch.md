@@ -29,6 +29,16 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [ONBOARDING-VALIDATION] Phasengrenze nach Phase 5
+
+- Frischer Worktree (`git worktree add --detach`, Stand `d55b97c`) im Scratch-Verzeichnis, README-Quick-Start genau wie dokumentiert: `uv python install 3.14.7`, `uv sync --frozen`, `npm ci`, `uv run pre-commit install`, `uv run skriptorium-einrichtung` (eigenes Datenverzeichnis, Code nicht ausgegeben), `npx vite build`, `uvicorn` → `/api/health` `{"status":"ok"}`, `/` 200. Tests im frischen Stand: pytest 487, vitest 173 grün. Kein Bruch. `scripts/session-start.sh` läuft in jeder Session als Hook (heute ohne Befund). Worktree entfernt; Pre-Commit-Hook danach aus dem Haupt-Checkout neu installiert (bekannte Reibung: `pre-commit install` im Worktree biegt den gemeinsamen Hook um).
+- README: Stand im Quick-Start auf 2026-10-11 (v1.0.0) nachgezogen.
+
+### 2026-10-11 – [BEOBACHTUNG] Vision-Abgleich an der Phasengrenze nach Phase 5
+
+- Re-Derivation gegen `docs/vision.md` (vollständig gelesen heute vor 5.14, Logbuch „Vorab-Abgleich gegen die Vision“): alle Elemente erledigt; die letzten offenen Erfolgskriterien über D.4 (ADR-057). Abgrenzungen (Publizieren, Bilder, Karten) weiter verschoben auf 6.10 (V.1, V.2).
+- Über `docs/requirements.md`: alle Muss-Anforderungen `ERLEDIGT` (FR-006 `VERWORFEN`, ADR-009); Soll FR-033 neu → 6.1; Kann FR-023 → V.16 → 6.10, FR-029 → 6.7, FR-030 → 6.8/6.9. Keine verwaisten Elemente. `[VERSCHOBEN]`-Zeilen mit Ziel 5.5 aufgelöst (ADR-059).
+
 ### 2026-10-11 – [ADR-ANGELEGT] ADR-059 Planung von Phase 6 (5.5 erledigt)
 
 - Übersicht V.1–V.19 in drei Töpfen vorgelegt (A Phase 6, B später, C verwerfen). Eigentümer: „Etwas nach A holen“ → V.9 Weltenbauer und V.6/V.7 SillyTavern zusätzlich in Phase 6. Ergebnis: Phase 6 mit 10 Schritten (6.1–6.10), V.1/V.2/V.8/V.14/V.16 weiter verschoben auf 6.10, V.3/V.4/V.5/V.11 verworfen; V.12 und V.17 zu 6.1 zusammengelegt; neue Anforderung FR-033.
