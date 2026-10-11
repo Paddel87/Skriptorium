@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [ERLEDIGT] 6.9 Export nach SillyTavern
+
+- Eigentümer nach Probe in SillyTavern: „6.9 funktioniert.“ FR-030 damit erledigt. Phase 6: 13 von 14, offen nur 6.10.
+
 ### 2026-10-12 – [ERLEDIGT] 6.8 Import aus SillyTavern
 
 - Probe des Eigentümers auf der Produktion: echte Figurenkarte (V2) importiert – „Charakter importieren geht gut. Anscheinend gibt es eine sogenannte V2-Version. Hat geklappt.“ Damit alle Akzeptanzkriterien erfüllt (ADR, Tests mit Beispieldateien nach dem Export-Code von SillyTavern, Prüfung durch getrennte Instanz, Probe).

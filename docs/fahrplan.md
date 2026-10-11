@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details im Archiv [`docs/archiv/fahrplan-phase-5.md`](archiv/fahrplan-phase-5.md).
 
-**Phase 6: 12 von 14 erledigt, 1 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
+**Phase 6: 13 von 14 erledigt (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -36,7 +36,7 @@ Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details 
 | ✅ | 6.6 | Kopfzeilen und Fehlermeldungen härten | erledigt 2026-10-11 | – |
 | ✅ | 6.7 | KI-gestützter Weltenbauer | erledigt 2026-10-11 (ADR-064) | – |
 | ✅ | 6.8 | Import aus SillyTavern | erledigt 2026-10-12 (ADR-065) | – |
-| 🟠 | 6.9 | Export in SillyTavern-Formate | eingespielt 2026-10-12 (ADR-066) | du: in SillyTavern prüfen |
+| ✅ | 6.9 | Export in SillyTavern-Formate | erledigt 2026-10-12 (ADR-066) | – |
 | ⚪ | 6.10 | Planung der nächsten Ausbaustufe | offen | KI |
 | ✅ | 6.11 | Umbau des Schreibbereichs (vor 6.1) | erledigt 2026-10-11 | – |
 | ✅ | 6.12 | Umbau der Anfrage-Zusammenstellung (vor 6.3) | erledigt 2026-10-11 | – |
@@ -306,7 +306,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.9: Export in SillyTavern-Formate
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – entschieden (ADR-066): Welt als Lorebook (Format von SillyTavern, Kategorie in `extensions`), Figur als Karte V2 (JSON, ohne eingebettetes Lorebook). Eingangskriterium „6.8 erledigt“ formal offen (Probe des Eigentümers), Zuordnung steht. Mockup freigegeben 2026-10-11. Umgesetzt 2026-10-11: `lorebook_for`, `card_for`, zwei GET-Endpunkte, Knöpfe auf der Kanon-Seite; Import verschiebt Überschriften nur so weit wie nötig (ADR-066). Rückimport-Test grün (gleicher Kanon bis auf Ebene-2-Abschnitte → Ebene 3); im Browser: Lorebook und Karte heruntergeladen und wieder eingelesen, 30 von 30 Einträgen erkannt. Kurzprüfung der Import-Änderung durch die getrennte Instanz 2026-10-11: „freigeben“, kein Befund (u. a. 175.000 Zufallsläufe ohne Ausbruch aus dem Eintrag). Eingespielt 2026-10-12 (`ef9a3fe`). Offen: Prüfung des Eigentümers in SillyTavern
+- **Status:** ✅ ERLEDIGT (2026-10-12) – entschieden (ADR-066): Welt als Lorebook (Format von SillyTavern, Kategorie in `extensions`), Figur als Karte V2 (JSON, ohne eingebettetes Lorebook). Eingangskriterium „6.8 erledigt“ formal offen (Probe des Eigentümers), Zuordnung steht. Mockup freigegeben 2026-10-11. Umgesetzt 2026-10-11: `lorebook_for`, `card_for`, zwei GET-Endpunkte, Knöpfe auf der Kanon-Seite; Import verschiebt Überschriften nur so weit wie nötig (ADR-066). Rückimport-Test grün (gleicher Kanon bis auf Ebene-2-Abschnitte → Ebene 3); im Browser: Lorebook und Karte heruntergeladen und wieder eingelesen, 30 von 30 Einträgen erkannt. Kurzprüfung der Import-Änderung durch die getrennte Instanz 2026-10-11: „freigeben“, kein Befund (u. a. 175.000 Zufallsläufe ohne Ausbruch aus dem Eintrag). Eingespielt 2026-10-12 (`ef9a3fe`). Eigentümer in SillyTavern bestätigt 2026-10-12 („6.9 funktioniert“).
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 6.8
 - **Freigabepflichtig:** ja – Ausgabeformat als Schnittstelle (Kategorie 5)
