@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] Abnahme nach dem Einspielen: 6.1, 6.2, 6.5, 6.7 erledigt
+
+- Checkliste für den Eigentümer erstellt (je Schritt: wo klicken, woran erkennbar). Eigentümer: „6.1 kann abgehakt werden. Der Rest auch.“ → 6.1, 6.2, 6.7 bestätigt, 6.5 (Datenschutz im OpenRouter-Konto) gesetzt und bestätigt; 6.3 im Alltag bestätigt.
+- 6.3 Technik-Prüfung (Anfrage je langem Kapitel mit `CANON_SHARE` 0,3 gegen 0, nur Zahlen) per `docker exec` auf der Produktion vom Freigabe-Klassifikator der Laufzeitumgebung blockiert („Production Reads“). Dem Eigentümer zur Entscheidung vorgelegt.
+
 ### 2026-10-11 – [GELÖST] Eingespielt: `@`-Menü im Weltenbauer (`5141d53`); SSH-Sperre durch eigene Warteschleife
 
 - Auf Anweisung („Hochladen, mergen, einspielen“, dann „merge“) PR #126 nach grüner CI gemergt und `5141d53` eingespielt. CI auf `main` lief noch; Baum identisch mit dem grün geprüften PR-Stand (`git diff` leer) – deshalb nicht abgewartet.
