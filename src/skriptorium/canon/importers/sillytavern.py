@@ -268,6 +268,10 @@ def _protect(text: str) -> str:
         out.append(line)
     if in_fence:
         out.append("```")
+    # Lines of only spaces count as no text for the import; dropping them in front lets
+    # ``_entry_markdown`` see a heading at the start.
+    while out and not out[0].strip():
+        out.pop(0)
     return "\n".join(out).strip("\n")
 
 

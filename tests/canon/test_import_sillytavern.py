@@ -214,6 +214,9 @@ def test_field_lines_inside_code_fences_stay_text() -> None:
 def test_headings_in_the_text_do_not_split_or_swallow_an_entry() -> None:
     book = {"entries": [{"comment": "Alpha", "content": "# A\nx\n# B\ny"}]}
     assert _parsed(book) == [("Alpha", None, (), f"{ZWSP}\n### A\nx\n### B\ny\n")]
+    for start in ("  \n", "\t\n", " \n\n"):
+        spaced = {"entries": [{"comment": "Alpha", "content": start + "# A\nx"}]}
+        assert _parsed(spaced) == [("Alpha", None, (), f"{ZWSP}\n### A\nx\n")]
     card = {"name": "Mira", "description": "", "personality": "Ruhig."}
     assert _parsed(card) == [("Mira", "figur", (), f"{ZWSP}\n### Wesen\nRuhig.\n")]
 
