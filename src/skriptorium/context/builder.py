@@ -35,170 +35,66 @@ Summaries (step 3.6, FR-010): ``build_chapter_summary`` asks for the short summa
 (about 150-250 words), ``build_story_summary`` for the continued overall summary (at most about
 600 words); lengths chosen by the owner. An earlier chapter without a summary enters the story
 state with its opening verbatim instead - whole paragraphs up to about 300 words.
+
+Layout of the package (step 7.1): ``parts`` holds what every request shares (budget, parts,
+rendering), ``writing`` the pieces of the writing-on request, ``summaries`` the two summary
+requests and ``worldbuilder`` the world builder's request. This module keeps the facade
+``ContextBuilder`` and the canon filler with its share (``CANON_SHARE``, ADR-062), which tests
+and spikes adjust here.
 """
 
 import math
-from collections.abc import Iterable, Sequence
-from dataclasses import dataclass, field
-from typing import Final, Literal
+from collections.abc import Sequence
+from typing import Final
 
-from skriptorium.canon import (
-    CATEGORIES,
-    CanonEntry,
-    CanonService,
-    Category,
-    InvalidInput,
-    NotFound,
-    World,
+from skriptorium.canon import CanonService, InvalidInput, NotFound
+from skriptorium.context.parts import (
+    MAX_BUDGET,
+    SAFETY_MARGIN,
+    BuiltContext,
+    Known,
+    Part,
+    Role,
+    category_rank,
+    check_budget,
+    in_category_order,
+    render,
+    render_known,
 )
-from skriptorium.manuscript import Chapter, ManuscriptService, Story
+from skriptorium.context.summaries import (
+    build_chapter_summary,
+    build_story_summary,
+    chapter_summary_room,
+)
+from skriptorium.context.worldbuilder import build_worldbuilder
+from skriptorium.context.writing import (
+    DEFAULT_LENGTH,
+    Length,
+    Request,
+    assemble,
+    closing_parts,
+    fixed_parts,
+    last_pages,
+    lookup,
+    opening,
+    remaining_room,
+    requirements,
+    seam,
+    story_state,
+    tail,
+)
+from skriptorium.manuscript import ManuscriptService, Story
 
-MAX_BUDGET: Final = 30_000
-CHARS_PER_TOKEN: Final = 3.3
-# Estimates differ from provider counts by -6 % to +8 % (step 1.1); 10 % margin keeps the
-# real count below the budget.
-SAFETY_MARGIN: Final = 1.1
 # Share of the capacity that not-named canon entries get before the last pages (step 6.3,
 # ADR-062); what does not fit there fills the rest after the pages, as before.
 CANON_SHARE: Final = 0.3
-# Words of a chapter's opening that stand in for a missing summary (owner, step 3.6).
-OPENING_WORDS: Final = 300
-# Start of the one line in which the AI tells the author how it changed an instruction that
-# contradicts the canon; ``api`` shows that line apart from the text (step 4.14).
-CONFLICT_MARKER: Final = "HINWEIS:"
-# Words of the chapter's end quoted in the note on the seam (step 5.8).
-SEAM_WORDS: Final = 30
-# Upper bound for the quote, should a paragraph have no spaces.
-SEAM_CHARS: Final = 300
 
-_CATEGORY_LABELS: Final[dict[Category, str]] = {
-    "figur": "Figur",
-    "ort": "Ort",
-    "gegenstand": "Gegenstand",
-    "zeitlinie": "Zeitlinie",
-    "regel": "Regel",
-    "kultur": "Kultur",
-}
-
-# Length of a proposal, chosen per request (owner, step 5.15).
-Length = Literal["kurz", "mittel", "lang"]
-LENGTHS: Final[dict[Length, str]] = {
-    "kurz": "etwa 60 bis 120 Wörter",
-    "mittel": "etwa 150 bis 300 Wörter",
-    "lang": "etwa 400 bis 600 Wörter",
-}
-DEFAULT_LENGTH: Final[Length] = "mittel"
-
-Role = Literal["system", "user", "assistant"]
-BlockKind = Literal[
-    "rahmen",
-    "welt",
-    "schreibweise",
-    "schreibweise-atmo",
-    "regel",
-    "zeitlinie",
-    "verweis",
-    "gefuehrte-figur",
-    "gast",
-    "fakten",
-    "handlungsstand",
-    "kurzfassung",
-    "kapitelanfang",
-    "kapiteltext",
-    "seiten",
-    "anweisung",
-    "auffuellung",
-    "eintraege",
-    "gespraech",
-]
-
-
-@dataclass(frozen=True)
-class PromptMessage:
-    """One message of the request; ``api`` turns it into an ``ai_gateway`` message."""
-
-    role: Role
-    content: str
-
-
-@dataclass(frozen=True)
-class ContextBlock:
-    """One building block in the protocol: what it is and its estimated size."""
-
-    kind: BlockKind
-    label: str
-    tokens: int
-
-
-@dataclass(frozen=True)
-class BuiltContext:
-    """The request and the protocol of its blocks."""
-
-    messages: tuple[PromptMessage, ...]
-    blocks: tuple[ContextBlock, ...]
-    estimated_tokens: int
-    missing_characters: tuple[str, ...]
-
-
-class ContextTooLarge(Exception):  # noqa: N818 - named like the error kinds of the other modules
-    """Precedence 1-3 and the instruction exceed the budget; names the largest blocks."""
-
-    def __init__(self, budget: int, needed: int, largest: Sequence[ContextBlock]) -> None:
-        names = ", ".join(f"{block.label} ({block.tokens} Token)" for block in largest)
-        super().__init__(
-            f"Der Kontext braucht ca. {needed} Token, das Budget erlaubt {budget}. "
-            f"Größte Bausteine: {names}"
-        )
-        self.budget = budget
-        self.needed = needed
-        self.largest = tuple(largest)
-
-
-@dataclass(frozen=True)
-class _Known:
-    """An entry the story may use; ``home`` names the world of a guest, else ``None``."""
-
-    entry: CanonEntry
-    home: str | None = None
-
-    @property
-    def key(self) -> tuple[str, str]:
-        return (self.entry.world, self.entry.id)
-
-
-def estimate_tokens(text: str) -> int:
-    """Estimated tokens of ``text`` (3.3 characters per token, step 1.1)."""
-    return math.ceil(len(text) / CHARS_PER_TOKEN)
-
-
-@dataclass(frozen=True)
-class _Part:
-    kind: BlockKind
-    label: str
-    text: str
-
-    @property
-    def block(self) -> ContextBlock:
-        # Counted with the separator that joins it to the next block.
-        return ContextBlock(self.kind, self.label, estimate_tokens(self.text + "\n\n"))
-
-
-@dataclass
-class _Request:
-    """What one request is built from; the sources record in ``included`` and ``missing``."""
-
-    world: World
-    story: Story
-    chapters: Sequence[Chapter]
-    current: Chapter
-    entries: Sequence[CanonEntry]
-    guests: Sequence[_Known]
-    by_id: dict[str, _Known]
-    named: Sequence[_Known]
-    # Entries already in the request (keys of ``_Known``), so no entry enters twice.
-    included: set[tuple[str, str]] = field(default_factory=set)
-    # Led characters without a canon entry.
-    missing: list[str] = field(default_factory=list)
+# Private helpers that tests and spikes reach for under these names.
+_opening = opening
+_tail = tail
+_render = render
+_requirements = requirements
+_seam = seam
 
 
 class ContextBuilder:
@@ -231,24 +127,24 @@ class ContextBuilder:
                 or among the story's guests.
             ContextTooLarge: Precedence 1-3 and the instruction do not fit the budget.
         """
-        _check_budget(budget)
+        check_budget(budget)
         if not instruction.strip():
             raise InvalidInput("Anweisung fehlt")
         request = self._load_request(world_id, story_id, chapter_number, references)
-        fixed = _fixed_parts(request)
-        state = _story_state(request.story, request.chapters, chapter_number)
-        closing = _closing_parts(request, instruction, length)
-        remaining = _remaining_room([*fixed, *state, *closing], budget)
+        fixed = fixed_parts(request)
+        state = story_state(request.story, request.chapters, chapter_number)
+        closing = closing_parts(request, instruction, length)
+        remaining = remaining_room([*fixed, *state, *closing], budget)
         canon_room = min(remaining, math.floor(budget / SAFETY_MARGIN * CANON_SHARE))
         canon = _filler_parts(request, canon_room)
         remaining -= sum(part.block.tokens for part in canon)
-        pages, remaining = _last_pages(request.chapters, request.current, remaining)
+        pages, remaining = last_pages(request.chapters, request.current, remaining)
         filler = _filler_parts(request, remaining)
-        return _assemble([*fixed, *canon, *filler], [*state, *pages, *closing], request.missing)
+        return assemble([*fixed, *canon, *filler], [*state, *pages, *closing], request.missing)
 
     def _load_request(
         self, world_id: str, story_id: str, chapter_number: int, references: Sequence[str]
-    ) -> _Request:
+    ) -> Request:
         """Read what the sources draw on and resolve the ``@`` references."""
         world = self._canon.get_world(world_id)
         story = self._manuscripts.get_story(world_id, story_id)
@@ -256,20 +152,20 @@ class ContextBuilder:
         current = self._manuscripts.get_chapter(world_id, story_id, chapter_number)
         entries = self._canon.list_entries(world_id)
         guests = self._guests(story)
-        by_id = {entry.id: _Known(entry) for entry in entries} | {g.entry.id: g for g in guests}
-        named = [_lookup(by_id, reference) for reference in references]
-        return _Request(world, story, chapters, current, entries, guests, by_id, named)
+        by_id = {entry.id: Known(entry) for entry in entries} | {g.entry.id: g for g in guests}
+        named = [lookup(by_id, reference) for reference in references]
+        return Request(world, story, chapters, current, entries, guests, by_id, named)
 
-    def _guests(self, story: Story) -> list[_Known]:
+    def _guests(self, story: Story) -> list[Known]:
         """The guest entries of ``story``; a guest whose entry or world is gone is skipped."""
-        guests: list[_Known] = []
+        guests: list[Known] = []
         for link in story.guest_links:
             try:
                 entry = self._canon.get_entry(link.world, link.entry)
                 home = self._canon.get_world(link.world).name
             except NotFound:
                 continue
-            guests.append(_Known(entry, home))
+            guests.append(Known(entry, home))
         return guests
 
     def build_worldbuilder(
@@ -281,9 +177,6 @@ class ContextBuilder:
     ) -> BuiltContext:
         """Request for the next answer of the world builder (step 6.7); see
         :func:`skriptorium.context.worldbuilder.build_worldbuilder`."""
-        # Imported here: the module builds on the helpers of this one.
-        from skriptorium.context.worldbuilder import build_worldbuilder
-
         return build_worldbuilder(self._canon, world_id, conversation, references, budget)
 
     def build_chapter_summary(
@@ -298,12 +191,9 @@ class ContextBuilder:
             NotFound: World, story or chapter does not exist.
             ContextTooLarge: The chapter does not fit the budget.
         """
-        _check_budget(budget)
-        chapter = self._manuscripts.get_chapter(world_id, story_id, chapter_number)
-        if not chapter.text.strip():
-            raise InvalidInput(f"Kapitel {chapter_number} hat noch keinen Text")
-        system, user = self._chapter_summary_parts(world_id, story_id, chapter, chapter.text)
-        return _fitted(system, user, budget)
+        return build_chapter_summary(
+            self._canon, self._manuscripts, world_id, story_id, chapter_number, budget
+        )
 
     def chapter_summary_room(
         self, world_id: str, story_id: str, chapter_number: int, budget: int = MAX_BUDGET
@@ -315,40 +205,9 @@ class ContextBuilder:
             InvalidInput: Budget outside 1-30,000.
             NotFound: World, story or chapter does not exist.
         """
-        _check_budget(budget)
-        chapter = self._manuscripts.get_chapter(world_id, story_id, chapter_number)
-        system, user = self._chapter_summary_parts(world_id, story_id, chapter, "")
-        others = sum(part.block.tokens for part in [*system, *user] if part.kind != "kapiteltext")
-        heading = next(part.text for part in user if part.kind == "kapiteltext")
-        capacity = math.floor(budget / SAFETY_MARGIN) - others
-        # The chapter block counts its text with the separator "\n\n" (``_Part.block``).
-        return max(0, math.floor(capacity * CHARS_PER_TOKEN) - len(heading) - 2)
-
-    def _chapter_summary_parts(
-        self, world_id: str, story_id: str, chapter: Chapter, text: str
-    ) -> tuple[list[_Part], list[_Part]]:
-        """System and user parts of the chapter summary request with ``text`` as chapter text."""
-        world = self._canon.get_world(world_id)
-        story = self._manuscripts.get_story(world_id, story_id)
-        system = [_Part("rahmen", "Rahmen", _summary_frame(world.name, story.title))]
-        user: list[_Part] = []
-        if story.summary.strip():
-            user.append(
-                _Part(
-                    "handlungsstand",
-                    "Gesamtzusammenfassung",
-                    f"# Handlungsstand vor diesem Kapitel\n\n{story.summary.strip()}",
-                )
-            )
-        user.append(
-            _Part(
-                "kapiteltext",
-                f"Kapitel {chapter.number}",
-                f"# Kapitel {chapter.number}: {chapter.title}\n\n{text.strip()}",
-            )
+        return chapter_summary_room(
+            self._canon, self._manuscripts, world_id, story_id, chapter_number, budget
         )
-        user.append(_Part("anweisung", "Anweisung", _chapter_summary_instruction(chapter.number)))
-        return system, user
 
     def build_story_summary(
         self, world_id: str, story_id: str, chapter_number: int, budget: int = MAX_BUDGET
@@ -360,507 +219,25 @@ class ContextBuilder:
             NotFound: World, story or chapter does not exist.
             ContextTooLarge: Overall and chapter summary do not fit the budget.
         """
-        _check_budget(budget)
-        world = self._canon.get_world(world_id)
-        story = self._manuscripts.get_story(world_id, story_id)
-        chapter = self._manuscripts.get_chapter(world_id, story_id, chapter_number)
-        if not chapter.summary.strip():
-            raise InvalidInput(f"Kapitel {chapter_number} hat noch keine Kurzfassung")
-        system = [_Part("rahmen", "Rahmen", _summary_frame(world.name, story.title))]
-        previous = story.summary.strip() or "(noch keine)"
-        user = [
-            _Part(
-                "handlungsstand",
-                "Gesamtzusammenfassung",
-                f"# Bisherige Gesamtzusammenfassung\n\n{previous}",
-            ),
-            _Part(
-                "kurzfassung",
-                f"Kapitel {chapter.number}",
-                f"# Neues Kapitel {chapter.number}: {chapter.title}\n\n{chapter.summary.strip()}",
-            ),
-            _Part("anweisung", "Anweisung", _story_summary_instruction(chapter.number)),
-        ]
-        return _fitted(system, user, budget)
+        return build_story_summary(
+            self._canon, self._manuscripts, world_id, story_id, chapter_number, budget
+        )
 
 
-def _frame_parts(request: _Request) -> list[_Part]:
-    return [_Part("rahmen", "Rahmen", _frame(request.world.name))]
-
-
-def _world_part(request: _Request) -> list[_Part]:
-    world = request.world
-    return [_Part("welt", world.name, f"# Welt: {world.name}\n\n{world.description}".strip())]
-
-
-def _writing_mode_parts(request: _Request) -> list[_Part]:
-    parts = [
-        _Part("schreibweise", "Figuren-Schreibweise", _writing_mode(request.story, request.by_id))
-    ]
-    atmosphere = _atmosphere(request.story, request.current)
-    if atmosphere:
-        parts.append(_Part("schreibweise-atmo", "Schreibweise", atmosphere))
-    return parts
-
-
-def _rule_and_timeline_parts(request: _Request) -> list[_Part]:
-    parts: list[_Part] = []
-    for category in ("regel", "zeitlinie"):
-        for entry in request.entries:
-            if entry.category == category:
-                parts.append(_Part(category, entry.name, _render(entry)))
-                request.included.add((entry.world, entry.id))
-    return parts
-
-
-def _reference_parts(request: _Request) -> list[_Part]:
-    parts: list[_Part] = []
-    for known in request.named:
-        if known.key not in request.included:
-            parts.append(_Part(_kind(known, "verweis"), known.entry.name, _render_known(known)))
-            request.included.add(known.key)
-    return parts
-
-
-def _controlled_character_parts(request: _Request) -> list[_Part]:
-    parts: list[_Part] = []
-    for character in request.story.controlled_characters:
-        if character not in request.by_id:
-            request.missing.append(character)
-            continue
-        known = request.by_id[character]
-        if known.key in request.included:
-            continue
-        parts.append(_Part(_kind(known, "gefuehrte-figur"), known.entry.name, _render_known(known)))
-        request.included.add(known.key)
-    return parts
-
-
-def _fact_parts(request: _Request) -> list[_Part]:
-    if not request.story.facts:
-        return []
-    return [_Part("fakten", "Fakten dieser Geschichte", _facts(request.story, request.by_id))]
-
-
-# The mandatory system parts in the order of the request (precedence 1 and 2); each source
-# returns its parts and records the entries it took in ``request.included``.
-# Mandatory parts of the system message, in this order (ADR-003, step 3.2); they always go
-# along and count against the budget before the last pages and the filler (step 6.12).
-_FIXED_SOURCES: Final = (
-    _frame_parts,
-    _world_part,
-    _writing_mode_parts,
-    _rule_and_timeline_parts,
-    _reference_parts,
-    _controlled_character_parts,
-    _fact_parts,
-)
-
-
-def _fixed_parts(request: _Request) -> list[_Part]:
-    return [part for source in _FIXED_SOURCES for part in source(request)]
-
-
-def _closing_parts(request: _Request, instruction: str, length: Length) -> list[_Part]:
-    """Seam note, instruction, requirements and the reminder of the character mode."""
-    parts = [
-        _Part("anweisung", "Anweisung", f"# Anweisung\n\n{instruction.strip()}"),
-        _Part("anweisung", "Vorgaben", _requirements(length)),
-    ]
-    seam = _seam(request.current)
-    if seam:
-        parts.insert(0, _Part("anweisung", "Anschluss", seam))
-    led = _led_names(request.story, request.by_id)
-    if led:
-        parts.append(_Part("schreibweise", "Erinnerung Figuren-Schreibweise", _reminder(led)))
-    return parts
-
-
-def _remaining_room(required: Sequence[_Part], budget: int) -> int:
-    """Tokens left after the required parts; ``ContextTooLarge`` if they do not fit."""
-    capacity = math.floor(budget / SAFETY_MARGIN)
-    needed = sum(part.block.tokens for part in required)
-    if needed > capacity:
-        largest = sorted((part.block for part in required), key=lambda b: -b.tokens)[:3]
-        raise ContextTooLarge(budget, math.ceil(needed * SAFETY_MARGIN), largest)
-    return capacity - needed
-
-
-def _filler_parts(request: _Request, remaining: int) -> list[_Part]:
+def _filler_parts(request: Request, remaining: int) -> list[Part]:
     """Further entries of the world, then guests, while they fit into ``remaining``.
 
     Taken entries count as included, so a second call (after the last pages) adds only the rest.
     """
-    filler: list[_Part] = []
-    candidates = [_Known(entry) for entry in _in_category_order(request.entries)]
-    candidates += sorted(request.guests, key=lambda g: _category_rank(g.entry))
+    filler: list[Part] = []
+    candidates = [Known(entry) for entry in in_category_order(request.entries)]
+    candidates += sorted(request.guests, key=lambda g: category_rank(g.entry))
     for known in candidates:
         if known.key in request.included:
             continue
-        part = _Part("auffuellung", known.entry.name, _render_known(known))
+        part = Part("auffuellung", known.entry.name, render_known(known))
         if part.block.tokens <= remaining:
             filler.append(part)
             remaining -= part.block.tokens
             request.included.add(known.key)
     return filler
-
-
-def _assemble(
-    system_parts: Sequence[_Part], user_parts: Sequence[_Part], missing: Sequence[str]
-) -> BuiltContext:
-    system = "\n\n".join(part.text for part in system_parts)
-    user = "\n\n".join(part.text for part in user_parts)
-    blocks = tuple(part.block for part in [*system_parts, *user_parts])
-    return BuiltContext(
-        messages=(PromptMessage("system", system), PromptMessage("user", user)),
-        blocks=blocks,
-        estimated_tokens=math.ceil(sum(block.tokens for block in blocks) * SAFETY_MARGIN),
-        missing_characters=tuple(missing),
-    )
-
-
-def _check_budget(budget: int) -> None:
-    if not 0 < budget <= MAX_BUDGET:
-        raise InvalidInput(f"Budget muss zwischen 1 und {MAX_BUDGET} Token liegen")
-
-
-def _fitted(system: Sequence[_Part], user: Sequence[_Part], budget: int) -> BuiltContext:
-    """A two-message request from parts that must all fit; otherwise ``ContextTooLarge``."""
-    parts = [*system, *user]
-    needed = sum(part.block.tokens for part in parts)
-    if needed > math.floor(budget / SAFETY_MARGIN):
-        largest = sorted((part.block for part in parts), key=lambda b: -b.tokens)[:3]
-        raise ContextTooLarge(budget, math.ceil(needed * SAFETY_MARGIN), largest)
-    return BuiltContext(
-        messages=(
-            PromptMessage("system", "\n\n".join(part.text for part in system)),
-            PromptMessage("user", "\n\n".join(part.text for part in user)),
-        ),
-        blocks=tuple(part.block for part in parts),
-        estimated_tokens=math.ceil(needed * SAFETY_MARGIN),
-        missing_characters=(),
-    )
-
-
-def _summary_frame(world_name: str, story_title: str) -> str:
-    """Frame of the summary requests (step 3.6)."""
-    return (
-        f"Du fasst Kapitel der Geschichte „{story_title}“ in der Welt „{world_name}“ zusammen. "
-        "Die Zusammenfassungen ersetzen beim Weiterschreiben den vollen Text früherer Kapitel; "
-        "sie müssen deshalb den Handlungsstand vollständig und genau tragen. Halte dich strikt "
-        "an den Text: Erfinde nichts hinzu, deute nichts, werte nicht."
-    )
-
-
-def _chapter_summary_instruction(number: int) -> str:
-    return (
-        f"# Anweisung\n\nFasse Kapitel {number} in 150 bis höchstens 250 Wörtern zusammen, "
-        "im Präteritum, als Fließtext ohne Überschrift. Die Grenze von 250 Wörtern gilt auch "
-        "für kurze Kapitel: Lass Nebensächliches weg. Halte fest, was geschieht und in welcher "
-        "Reihenfolge, wer beteiligt ist und wo es spielt, was sich für die Figuren ändert "
-        "(Wissen, Besitz, Verletzungen, Beziehungen, Aufenthaltsort) und welche Fragen am Ende "
-        "offen sind. Nenne Namen so, wie sie im Text stehen. Antworte nur mit der Kurzfassung."
-    )
-
-
-def _story_summary_instruction(number: int) -> str:
-    return (
-        "# Anweisung\n\nSchreibe die Gesamtzusammenfassung der Geschichte fort: Übernimm die "
-        f"bisherige Gesamtzusammenfassung und arbeite Kapitel {number} an seiner Stelle in "
-        "der Reihenfolge ein; steht es schon darin, ersetze diesen Teil. Höchstens ca. 600 "
-        "Wörter, im Präteritum, als Fließtext ohne Überschrift. Wird es mehr, verdichte ältere "
-        "Abschnitte und behalte, was für die weitere Handlung zählt: Stand der Figuren, "
-        "Besitz, Orte, offene Fragen. Antworte nur mit der Gesamtzusammenfassung."
-    )
-
-
-def _frame(world_name: str) -> str:
-    """Frame of the request, as tested in steps 1.1 and 1.5.
-
-    Conflict note since step 4.14, seamless continuation since step 5.8, the future beyond the
-    writing point since step 5.15.
-    """
-    return (
-        f"Du bist Co-Autor einer Geschichte in der Welt „{world_name}“. Der Kanon unten ist "
-        "verbindlich: Widersprich ihm nie. Erfinde nur, was der Kanon offen lässt. Die "
-        "Zeitlinie ist verbindlich: Lass keine Handlung vor einem Ereignis geschehen, das laut "
-        "Zeitlinie später liegt, wenn die Anweisung es nicht ausdrücklich verlangt. "
-        "Verlangt die Anweisung etwas, das dem Kanon widerspricht, schreibe trotzdem "
-        f"kanontreu und beginne deine Antwort mit genau einer Zeile „{CONFLICT_MARKER} …“, die "
-        "dem Autor in einem Satz sagt, was du abgewandelt hast und warum; danach folgt der "
-        "Text. Ohne Widerspruch schreibst du keine solche Zeile. Der Text selbst enthält nie "
-        "Hinweise an den Autor. Eine Fortsetzung schließt nahtlos an das Ende des Manuskripts "
-        "an: ohne Einleitung und ohne abschließenden Satz. Handlungsstand und Zeitlinie können "
-        "über die Schreibstelle hinausreichen; was nach ihr geschieht, liegt in der Zukunft und "
-        "wird weder erzählt noch angedeutet."
-    )
-
-
-def _seam(current: Chapter) -> str:
-    """Note before the instruction: go on right after the chapter's last words (step 5.8).
-
-    Continuations used to open with place and situation and to close with a summing-up sentence
-    (owner, 2026-10-08). Quoting the end makes the seam concrete. An empty chapter, or one with
-    only its heading, starts fresh: no note.
-    """
-    paragraphs = [p for p in current.text.split("\n\n") if p.strip()]
-    if not paragraphs or paragraphs[-1].lstrip().startswith("#"):
-        return ""
-    words = paragraphs[-1].split()
-    end = " ".join(words[-SEAM_WORDS:])[-SEAM_CHARS:]
-    cut = "… " if end != " ".join(words) else ""
-    return (
-        f"# Anschluss\n\nDas Manuskript endet mit: „{cut}{end}“\n\n"
-        "Setzt du fort, beginnt dein Text mit dem nächsten Satz unmittelbar nach diesen Worten, "
-        "in derselben Szene: Führe Ort, Lage und Figuren nicht neu ein und fasse nichts "
-        "zusammen. Verlangt die Anweisung eine neue Szene, beginnt sie dort."
-    )
-
-
-def _requirements(length: Length) -> str:
-    """Requirements after the instruction (steps 5.8, 5.15); they hold for every request.
-
-    Proposals ran ahead of the author up to events the summary names, and after a few
-    taken-over proposals each one opened and closed like the ones before (owner, 2026-10-08).
-    Long proposals filled up with the place's atmosphere in new words and closed with the same
-    gesture of waiting (owner, 2026-10-09; step 5.22): length is a ceiling, known surroundings
-    are described only when they change, and the end is an action or line, not a pause.
-    """
-    return (
-        "# Vorgaben für deinen Text\n\n"
-        "- Schreibe nur aus, was die Anweisung verlangt, und höre dann auf. Nimm nicht vorweg, "
-        "was der Autor als Nächstes schreiben könnte.\n"
-        f"- Länge: {LENGTHS[length]}.\n"
-        "- Die Länge ist eine Obergrenze: Gibt die Anweisung weniger her, schreibe kürzer, "
-        "statt mit Beschreibung aufzufüllen.\n"
-        "- Die Schreibstelle ist das Ende des bisherigen Manuskripts. Was Handlungsstand, "
-        "Kurzfassungen oder Zeitlinie über spätere Ereignisse sagen, liegt in der Zukunft: "
-        "Erzähle es nicht und deute es nicht an.\n"
-        "- Wiederhole keine Sätze, Bilder, Gesten und Wendungen aus den letzten "
-        "Manuskript-Seiten; finde für Wiederkehrendes neue Worte oder lass es weg.\n"
-        "- Ort, Licht, Geräusche, Gerüche und Stimmung sind bekannt: Beschreibe sie nur, wenn "
-        "sich an ihnen etwas ändert, auch nicht umschrieben.\n"
-        "- Kein abschließender, zusammenfassender oder ausblickender Satz: Dein Text hört "
-        "mitten im Geschehen auf, mit einer Handlung oder Rede einer Figur, nicht mit Warten, "
-        "Schweigen, einem Blick oder Stimmung."
-    )
-
-
-def _lookup(by_id: dict[str, _Known], reference: str) -> _Known:
-    if reference not in by_id:
-        raise NotFound(reference)
-    return by_id[reference]
-
-
-def _kind(known: _Known, own: BlockKind) -> BlockKind:
-    """Block kind of an entry in precedence 2: guests are marked as such in the protocol."""
-    return "gast" if known.home is not None else own
-
-
-def _led_names(story: Story, by_id: dict[str, _Known]) -> str:
-    """Names of the characters the author leads, joined for the rule text."""
-    return ", ".join(by_id[c].entry.name if c in by_id else c for c in story.controlled_characters)
-
-
-def _writing_mode(story: Story, by_id: dict[str, _Known]) -> str:
-    """Perspective and characters led by the author (FR-012, wording of step 3.4)."""
-    lines = [f"# Geschichte: {story.title}"]
-    if story.perspective:
-        lines.append(f"Erzählperspektive: {story.perspective}")
-    names = _led_names(story, by_id)
-    if names:
-        lines.append(
-            f"## Figuren-Schreibweise\n\n"
-            f"Der Autor führt selbst: {names}. Du führst die Welt und alle übrigen Figuren. "
-            f"Beschreibt die Anweisung, was {names} tut oder sagt, schreibst du genau das aus, "
-            "Gesagtes als wörtliche Rede, und nichts darüber hinaus. Sonst gilt für "
-            f"{names}:\n\n"
-            "- keine Handlung und keine Bewegung, auch keine kleine (nicht aufstehen, nicht "
-            "greifen, nicht nicken, nicht weitergehen);\n"
-            "- keine wörtliche oder indirekte Rede, keine Antwort, keinen Entschluss;\n"
-            "- keine Gedanken, Erinnerungen, Gefühle oder Absichten;\n"
-            "- erlaubt ist nur, was die Figur unmittelbar wahrnimmt: sehen, hören, riechen, "
-            "spüren; bei Ich-Erzählung in der ersten Person.\n\n"
-            "Beschreibe, was die übrigen Figuren und die Welt tun. Sobald die geführte Figur "
-            "handeln, sprechen oder sich entscheiden müsste, beende deinen Text an genau dieser "
-            "Stelle. Dort schreibt der Autor weiter."
-        )
-    return "\n\n".join(lines)
-
-
-def _atmosphere(story: Story, current: Chapter) -> str:
-    """Genres and atmospheric writing style of the chapter (step 5.6, ADR-053).
-
-    The chapter's own style applies; a chapter without one follows the default of the story.
-    Only lines with values; with nothing set there is no block. The block yields to the canon
-    and to the Figuren-Schreibweise, as tested in the trial of step 5.6.
-    """
-    style = current.writing_style if current.writing_style is not None else story.writing_style
-    values = [
-        ("Genre", ", ".join(story.genres)),
-        ("Tonalität", ", ".join(style.tone)),
-        ("Atmosphäre", ", ".join(style.atmosphere)),
-        ("Tempo", style.tempo or ""),
-        ("Stil", ", ".join(style.style)),
-        ("Deutlichkeit", style.explicitness or ""),
-        ("Weitere Angaben", style.free.strip()),
-    ]
-    lines = [f"- {label}: {value}" for label, value in values if value]
-    if not lines:
-        return ""
-    return (
-        "## Schreibweise\n\n"
-        + "\n".join(lines)
-        + "\n\nHalte diese Schreibweise in Wortwahl, Satzbau und Tempo ein. Sie tritt hinter den "
-        "Kanon und die Figuren-Schreibweise zurück: Widerspricht sie einem Kanon-Eintrag oder der "
-        "Führung einer Figur, gelten Kanon und Figuren-Schreibweise."
-    )
-
-
-def _reminder(names: str) -> str:
-    """Short repetition of the rule at the end of the request (steps 3.4, 5.15, 5.22)."""
-    return (
-        f"Erinnerung: {names} führt der Autor. Was die Anweisung für {names} vorgibt, schreibst "
-        "du genau aus, nicht mehr. Darüber hinaus keine Handlung, keine Rede, keinen Entschluss "
-        "und keine Gedanken, nur Wahrnehmung. Schließe nicht mit Warten oder einem Blick auf "
-        f"{names}. Ende, sobald die Figur handeln oder antworten müsste."
-    )
-
-
-def _render(entry: CanonEntry, home: str | None = None) -> str:
-    """A canon entry as Markdown; item sections and timeline events are part of the body.
-
-    A guest names its home world in the heading (step 3.7).
-    """
-    label = _CATEGORY_LABELS[entry.category]
-    if home is not None:
-        label = f"{label}, Gast aus der Welt „{home}“"
-    heading = f"## {entry.name} ({label})"
-    aliases = f"\nAuch: {', '.join(entry.aliases)}" if entry.aliases else ""
-    return f"{heading}{aliases}\n\n{entry.body.strip()}".strip()
-
-
-def _render_known(known: _Known) -> str:
-    return _render(known.entry, known.home)
-
-
-def _facts(story: Story, by_id: dict[str, _Known]) -> str:
-    lines = ["## Fakten dieser Geschichte"]
-    for fact in story.facts:
-        name = by_id[fact.entry].entry.name if fact.entry in by_id else fact.entry
-        lines.append(f"- {name}: {fact.fact}")
-    return "\n".join(lines)
-
-
-def _story_state(story: Story, chapters: Sequence[Chapter], current: int) -> list[_Part]:
-    """Precedence 3: overall summary and summaries of the chapters before ``current``.
-
-    A chapter without a summary contributes its opening verbatim until the summary is made.
-    """
-    parts: list[_Part] = []
-    if story.summary.strip():
-        parts.append(
-            _Part("handlungsstand", "Gesamtzusammenfassung", f"# Handlungsstand\n\n{story.summary}")
-        )
-    for chapter in chapters:
-        if chapter.number >= current:
-            continue
-        heading = f"## Kapitel {chapter.number}: {chapter.title}"
-        if chapter.summary.strip():
-            parts.append(
-                _Part(
-                    "kurzfassung",
-                    f"Kapitel {chapter.number}",
-                    f"{heading}\n\n{chapter.summary.strip()}",
-                )
-            )
-        elif chapter.text.strip():
-            parts.append(
-                _Part(
-                    "kapitelanfang",
-                    f"Kapitel {chapter.number} (Anfang)",
-                    f"{heading} (Kurzfassung fehlt, Anfang wörtlich)\n\n{_opening(chapter.text)}",
-                )
-            )
-    return parts
-
-
-def _opening(text: str, words: int = OPENING_WORDS) -> str:
-    """Whole paragraphs from the start up to ``words`` words; a longer first one is cut."""
-    kept: list[str] = []
-    count = 0
-    for paragraph in (p.strip() for p in text.split("\n\n") if p.strip()):
-        size = len(paragraph.split())
-        if count + size > words:
-            if not kept:
-                kept.append(" ".join(paragraph.split()[:words]) + " …")
-            break
-        kept.append(paragraph)
-        count += size
-    return "\n\n".join(kept)
-
-
-def _tail(text: str, tokens: int) -> str:
-    """The longest end of ``text`` within ``tokens``, starting at a word and marked with "…"."""
-    if estimate_tokens(text) <= tokens:
-        return text
-    marker = "… "
-    size = math.floor(tokens * CHARS_PER_TOKEN) - len(marker)
-    if size <= 0:
-        return ""
-    end = text[-size:]
-    if not text[-size - 1].isspace():
-        # cut inside a word: start after its end
-        cut = next((i for i, char in enumerate(end) if char.isspace()), None)
-        if cut is None:
-            return ""
-        end = end[cut:]
-    end = end.lstrip()
-    return marker + end if end else ""
-
-
-def _last_pages(
-    chapters: Sequence[Chapter], current: Chapter, remaining: int
-) -> tuple[list[_Part], int]:
-    """Precedence 4: text up to the end of ``current``, from the back, whole paragraphs.
-
-    If already the last paragraph does not fit - a long chapter with single line breaks only is
-    one paragraph - its end enters instead, starting at a word (step 4.1).
-    """
-    heading = "# Letzte Manuskript-Seiten (wörtlich)"
-    remaining -= estimate_tokens(heading) + 1
-    if remaining <= 0:
-        return [], 0
-    taken: list[_Part] = []
-    for chapter in reversed([c for c in chapters if c.number <= current.number]):
-        paragraphs = [p for p in chapter.text.split("\n\n") if p.strip()]
-        kept: list[str] = []
-        for paragraph in reversed(paragraphs):
-            tokens = estimate_tokens(paragraph) + 1
-            if tokens > remaining:
-                if not taken and not kept:
-                    end = _tail(paragraph, remaining - 1)
-                    if end:
-                        kept.insert(0, end)
-                        remaining -= estimate_tokens(end) + 1
-                break
-            kept.insert(0, paragraph)
-            remaining -= tokens
-        if kept:
-            taken.insert(0, _Part("seiten", f"Kapitel {chapter.number}", "\n\n".join(kept)))
-        if len(kept) < len(paragraphs):
-            break
-    if not taken:
-        return [], remaining + estimate_tokens(heading) + 1
-    first = taken[0]
-    taken[0] = _Part(first.kind, first.label, f"{heading}\n\n{first.text}")
-    return taken, remaining
-
-
-def _category_rank(entry: CanonEntry) -> tuple[int, str]:
-    """Stable order for filling: category order of the data model, then name."""
-    return (CATEGORIES.index(entry.category), entry.name.casefold())
-
-
-def _in_category_order(entries: Iterable[CanonEntry]) -> list[CanonEntry]:
-    return sorted(entries, key=_category_rank)
