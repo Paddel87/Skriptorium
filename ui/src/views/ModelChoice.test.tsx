@@ -46,8 +46,13 @@ function routes(feed: ReturnType<typeof sseFeed>) {
 
 async function modelSelect(expected: string): Promise<HTMLElement> {
   const select = await screen.findByLabelText("Modell");
+  // The story's model shows before the model list has loaded; wait for the list (its last
+  // entry), otherwise choosing another model can find no option.
   await waitFor(() => {
     expect(select).toHaveProperty("value", expected);
+    expect(
+      [...(select as HTMLSelectElement).options].map((option) => option.text),
+    ).toContain("Modelle verwalten …");
   });
   return select;
 }
