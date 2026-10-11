@@ -87,7 +87,7 @@ describe("chapter and overall summaries (step 3.6)", () => {
 
     await user.type(summary, " Allein.");
     await user.click(
-      screen.getByRole("button", { name: "Kurzfassung speichern (geprüft)" }),
+      screen.getByRole("button", { name: "Als geprüft markieren" }),
     );
     await waitFor(() => {
       expect(screen.getByText("Status: geprüft")).toBeDefined();
@@ -215,6 +215,57 @@ describe("chapter and overall summaries (step 3.6)", () => {
     expect(calls.filter((c) => c.method === "PUT").at(-1)?.body).toEqual({
       summary: "Ilka sucht Tomas.",
     });
+  });
+});
+
+describe("the short summary in its own tab (step 6.2)", () => {
+  it("has no tab while the chapter is open and has no summary", async () => {
+    fakeApi({ ...PANEL, [`GET ${BASE}/chapters`]: ok([CHAPTER]) });
+    render(<StoryPage story={STORY} />);
+
+    await screen.findByRole("button", { name: "Kapitel abschließen" });
+    expect(screen.queryByRole("button", { name: /^Kurzfassung/ })).toBeNull();
+    expect(screen.queryByLabelText("Kurzfassung des Kapitels")).toBeNull();
+  });
+
+  it("marks an unchecked summary and shows it only in its tab", async () => {
+    const created = {
+      ...DONE,
+      summary: "Ilka bricht auf.",
+      summary_status: "erzeugt" as const,
+    };
+    fakeApi({ ...PANEL, [`GET ${BASE}/chapters`]: ok([created]) });
+    const user = userEvent.setup();
+    render(<StoryPage story={STORY} />);
+
+    const tab = await screen.findByRole("button", {
+      name: /^Kurzfassung\s*– noch nicht geprüft$/,
+    });
+    expect(screen.queryByLabelText("Kurzfassung des Kapitels")).toBeNull();
+    await user.click(tab);
+
+    expect(tab.getAttribute("aria-current")).toBe("true");
+    expect(screen.getByLabelText("Kurzfassung des Kapitels")).toHaveProperty(
+      "value",
+      "Ilka bricht auf.",
+    );
+    expect(screen.getByText(/Sie ist keine Anweisung/)).toBeDefined();
+    await user.click(screen.getByRole("button", { name: "Manuskript" }));
+    expect(screen.queryByLabelText("Kurzfassung des Kapitels")).toBeNull();
+  });
+
+  it("shows no mark for a checked summary", async () => {
+    const checked = {
+      ...DONE,
+      summary: "Ilka bricht auf.",
+      summary_status: "geprüft" as const,
+    };
+    fakeApi({ ...PANEL, [`GET ${BASE}/chapters`]: ok([checked]) });
+    render(<StoryPage story={STORY} />);
+
+    expect(
+      await screen.findByRole("button", { name: "Kurzfassung" }),
+    ).toBeDefined();
   });
 });
 

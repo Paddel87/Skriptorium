@@ -1304,3 +1304,23 @@ button.more-toggle {
   background: var(--danger);
   font-weight: 600;
 }
+
+/* Short summary of the chapter in its own tab, apart from the instruction (step 6.2). */
+.chapter-summary h3 {
+  margin: 0 0 0.3rem;
+  font-size: 1.05rem;
+}
+
+.chapter-summary > .note {
+  margin: 0 0 0.6rem;
+}
+
+.view-tabs .unchecked {
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-left: 0.4rem;
+  border-radius: 50%;
+  background: var(--warn-line);
+  vertical-align: middle;
+}
