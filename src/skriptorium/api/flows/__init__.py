@@ -6,6 +6,12 @@ from skriptorium.api.flows.summary import (
     SummaryOutcome,
     summarize_chapter,
 )
+from skriptorium.api.flows.worldbuilder import (
+    Turn,
+    WorldOrder,
+    prepare_worldbuilder,
+    stream_worldbuilder,
+)
 from skriptorium.api.flows.writing import (
     CONTINUE,
     DEFAULT_MODEL,
@@ -29,9 +35,13 @@ __all__ = [
     "Scene",
     "SummaryFailure",
     "SummaryOutcome",
+    "Turn",
+    "WorldOrder",
     "WriteOrder",
     "error_kind",
     "prepare_request",
+    "prepare_worldbuilder",
     "stream_events",
+    "stream_worldbuilder",
     "summarize_chapter",
 ]

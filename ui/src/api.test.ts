@@ -1,11 +1,12 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { fail, fakeApi, noContent, ok } from "../fake-api";
+import { fail, fakeApi, noContent, ok, sseFeed } from "../fake-api";
 import {
   api,
   ApiError,
   describeError,
   request,
   setUnauthorizedHandler,
+  streamWorldbuilder,
 } from "./api";
 
 afterEach(() => {
@@ -109,5 +110,77 @@ describe("unauthorized handler", () => {
     expect(handler).toHaveBeenCalledTimes(1);
     setUnauthorizedHandler(null);
     await expect(api.worlds()).rejects.toMatchObject({ status: 401 });
+  });
+});
+
+describe("streamWorldbuilder (step 6.7)", () => {
+  const order = {
+    messages: [{ role: "user" as const, content: "Hallo" }],
+    references: [],
+    model: null,
+    web_search: false,
+  };
+
+  it("passes known events on, ignores others and cleans up sources", async () => {
+    const feed = sseFeed();
+    fakeApi({
+      "POST /api/worlds/w/worldbuilder": () => ({
+        status: 200,
+        stream: feed.stream,
+      }),
+    });
+    const events: unknown[] = [];
+    const done = streamWorldbuilder(api.worldbuilderPath("w"), order, (event) =>
+      events.push(event),
+    );
+    feed.send("ping", {});
+    feed.send("quellen", { sources: "kaputt" });
+    feed.send("quellen", {
+      sources: [{ url: "HTTP://a.example", title: "A" }, null, "x"],
+    });
+    feed.send("done", {
+      input_tokens: 1,
+      output_tokens: 2,
+      cost_usd: 0,
+      finish_reason: null,
+    });
+    feed.close();
+    await done;
+    expect(events).toEqual([
+      { type: "quellen", sources: [] },
+      { type: "quellen", sources: [{ url: "HTTP://a.example", title: "A" }] },
+      {
+        type: "done",
+        input_tokens: 1,
+        output_tokens: 2,
+        cost_usd: 0,
+        finish_reason: null,
+      },
+    ]);
+  });
+
+  it("reports a lost connection and refusals, and signals a lost session", async () => {
+    const feed = sseFeed();
+    fakeApi({
+      "POST /api/worlds/w/worldbuilder": () => ({
+        status: 200,
+        stream: feed.stream,
+      }),
+      "POST /api/worlds/x/worldbuilder": fail(401, "Anmeldung erforderlich"),
+    });
+    const events: unknown[] = [];
+    feed.close();
+    await streamWorldbuilder("/api/worlds/w/worldbuilder", order, (event) =>
+      events.push(event),
+    );
+    expect(events).toEqual([{ type: "error", kind: "verbindung" }]);
+
+    const handler = vi.fn();
+    setUnauthorizedHandler(handler);
+    await expect(
+      streamWorldbuilder("/api/worlds/x/worldbuilder", order, vi.fn()),
+    ).rejects.toMatchObject({ status: 401 });
+    expect(handler).toHaveBeenCalledOnce();
+    setUnauthorizedHandler(null);
   });
 });

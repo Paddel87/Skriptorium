@@ -1,0 +1,138 @@
+"""Requests of the world builder (roadmap step 6.7, ADR-064, FR-029).
+
+The author talks with the AI about one world to draft new canon entries or improve existing
+ones. The system message holds the frame (role, the import format for proposals), the world
+description, the names of all entries and the entries named with ``@`` in full. The
+conversation follows as messages; the latest one always goes along, older ones only as long as
+they fit the budget, newest first. Nothing is stored: proposals reach the canon only through
+the import preview in the interface.
+"""
+
+import math
+from collections.abc import Sequence
+from typing import Final
+
+from skriptorium.canon import CanonEntry, CanonService, InvalidInput, NotFound
+from skriptorium.context.builder import (
+    _CATEGORY_LABELS,
+    MAX_BUDGET,
+    SAFETY_MARGIN,
+    BuiltContext,
+    ContextTooLarge,
+    PromptMessage,
+    Role,
+    _check_budget,
+    _in_category_order,
+    _Part,
+    _render,
+)
+
+# Fence the interface looks for to hand a proposal to the import preview (step 6.7).
+PROPOSAL_FENCE: Final = "kanon"
+_GROUPS: Final = "Figuren, Orte, Gegenstände, Zeitlinie, Regeln, Kultur"
+
+
+def build_worldbuilder(
+    canon: CanonService,
+    world_id: str,
+    conversation: Sequence[tuple[Role, str]],
+    references: Sequence[str] = (),
+    budget: int = MAX_BUDGET,
+) -> BuiltContext:
+    """Build the request for the next answer of the world builder.
+
+    ``conversation`` holds the turns so far, oldest first, as ``("user" | "assistant", text)``;
+    the last turn is the author's. ``references`` are identifiers of entries of the world named
+    with ``@``.
+
+    Raises:
+        InvalidInput: Budget outside 1-30,000, no turn, or the last turn is not the author's.
+        NotFound: World or a referenced entry does not exist.
+        ContextTooLarge: Frame, world, entries and the latest turn do not fit the budget.
+    """
+    _check_budget(budget)
+    if not conversation or conversation[-1][0] != "user" or not conversation[-1][1].strip():
+        raise InvalidInput("Die letzte Nachricht muss vom Autor sein")
+    world = canon.get_world(world_id)
+    entries = canon.list_entries(world_id)
+    by_id = {entry.id: entry for entry in entries}
+    named = []
+    for reference in references:
+        if reference not in by_id:
+            raise NotFound(reference)
+        if by_id[reference] not in named:
+            named.append(by_id[reference])
+    system = [
+        _Part("rahmen", "Rahmen", _frame(world.name)),
+        _Part("welt", world.name, f"# Welt: {world.name}\n\n{world.description}".strip()),
+        _Part("eintraege", "Einträge der Welt", _index(entries)),
+        *(_Part("verweis", entry.name, _render(entry)) for entry in named),
+    ]
+    turns = [_Part("gespraech", role, text.strip()) for role, text in conversation]
+    capacity = math.floor(budget / SAFETY_MARGIN)
+    needed = sum(part.block.tokens for part in [*system, turns[-1]])
+    if needed > capacity:
+        largest = sorted((part.block for part in [*system, turns[-1]]), key=lambda b: -b.tokens)
+        raise ContextTooLarge(budget, math.ceil(needed * SAFETY_MARGIN), largest[:3])
+    remaining = capacity - needed
+    kept = [turns[-1]]
+    for part in reversed(turns[:-1]):
+        if part.block.tokens > remaining:
+            break
+        kept.insert(0, part)
+        remaining -= part.block.tokens
+    # A conversation sent to the model starts with the author.
+    while kept and kept[0].label != "user":
+        kept.pop(0)
+    messages = [PromptMessage("system", "\n\n".join(part.text for part in system))]
+    messages += [PromptMessage(_role(part.label), part.text) for part in kept]
+    blocks = tuple(part.block for part in [*system, *kept])
+    return BuiltContext(
+        messages=tuple(messages),
+        blocks=blocks,
+        estimated_tokens=math.ceil(sum(block.tokens for block in blocks) * SAFETY_MARGIN),
+        missing_characters=(),
+    )
+
+
+def _role(label: str) -> Role:
+    return "assistant" if label == "assistant" else "user"
+
+
+def _index(entries: Sequence[CanonEntry]) -> str:
+    """Names, categories and aliases of all entries, so the AI invents nothing twice."""
+    if not entries:
+        return "# Einträge der Welt\n\nNoch keine."
+    lines = []
+    for entry in _in_category_order(entries):
+        aliases = f"; auch: {', '.join(entry.aliases)}" if entry.aliases else ""
+        lines.append(f"- {entry.name} ({_CATEGORY_LABELS[entry.category]}{aliases})")
+    return "# Einträge der Welt (nur Namen)\n\n" + "\n".join(lines)
+
+
+def _frame(world_name: str) -> str:
+    """Role of the AI and the format of proposals to take over (step 6.7, ADR-064)."""
+    return (
+        f"# Rahmen\n\nDu bist Weltenbauer für die fiktive Welt „{world_name}“ des Autors. Du "
+        "hilfst ihm, Kanon-Einträge zu entwerfen und vorhandene besser auszuformulieren. Der "
+        "Autor entscheidet, was gilt: Frage nach, wenn etwas offen ist, und biete bei neuen Ideen "
+        "zwei oder drei Varianten an. Widersprich nie dem vorhandenen Kanon; fällt dir ein "
+        "Widerspruch auf, nenne ihn. Erfinde über vorhandene Einträge nichts hinzu, ohne es als "
+        "Vorschlag kenntlich zu machen. Hast du Suchergebnisse aus dem Netz, übernimm nur, was "
+        "zur Welt passt, und sag, was du übernommen hast.\n\n"
+        "# Vorschläge zur Übernahme\n\n"
+        "Schlägst du Einträge vor, die der Autor in den Kanon übernehmen kann (neu oder "
+        "überarbeitet), setze sie ans Ende deiner Antwort in genau einen Block, der mit "
+        f"```{PROPOSAL_FENCE} beginnt und mit ``` endet. Im Block gilt:\n\n"
+        f"- Gruppen-Überschriften der Ebene 1, nur diese Wörter: {_GROUPS}.\n"
+        "- Jeder Eintrag ist eine Überschrift der Ebene 2 mit seinem Namen; bei einer "
+        "Überarbeitung genau der vorhandene Name.\n"
+        "- Gibt es andere Namen, folgt direkt darunter eine Zeile `Aliasse: Name2, Name3`.\n"
+        "- Gegenstände haben immer die Unterüberschriften `### Zweck`, `### Verwendung` und "
+        "`### Auswirkung`.\n"
+        "- Sachlich, im Präsens, etwa 80 bis 250 Wörter je Eintrag; bei einer Überarbeitung der "
+        "vollständige neue Text, nicht nur die Änderung.\n"
+        "- Keine Tabellen, kein HTML.\n\n"
+        "Außerhalb des Blocks antwortest du ganz normal im Gespräch. Ohne Vorschlag zur "
+        "Übernahme gibt es keinen Block."
+    )

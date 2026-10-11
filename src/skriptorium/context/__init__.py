@@ -14,8 +14,10 @@ from skriptorium.context.builder import (
     ContextTooLarge,
     Length,
     PromptMessage,
+    Role,
     estimate_tokens,
 )
+from skriptorium.context.worldbuilder import PROPOSAL_FENCE
 
 __all__ = [
     "CHARS_PER_TOKEN",
@@ -24,6 +26,7 @@ __all__ = [
     "LENGTHS",
     "MAX_BUDGET",
     "OPENING_WORDS",
+    "PROPOSAL_FENCE",
     "SAFETY_MARGIN",
     "BuiltContext",
     "ContextBlock",
@@ -31,5 +34,6 @@ __all__ = [
     "ContextTooLarge",
     "Length",
     "PromptMessage",
+    "Role",
     "estimate_tokens",
 ]

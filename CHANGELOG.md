@@ -6,6 +6,8 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v1.0.0)
 
+- KI-Weltenbauer (2026-10-11, Schritt 6.7, ADR-064): Auf der Kanon-Seite öffnet „✨ Weltenbauer“ ein Gespräch mit der KI, um neue Figuren, Orte, Regeln, Kultur und Gegenstände zu entwerfen oder vorhandene Einträge (per `@`) besser auszuformulieren. Die KI kennt die Namen aller Einträge der Welt. Mit „mit Websuche“ zieht sie Wissen aus dem Internet heran und nennt die Fundstellen als Links (bei OpenRouter ca. 0,7 Cent zusätzlich je Anfrage). „Als Kanon übernehmen“ öffnet den Vorschlag in der Import-Vorschau; in den Kanon kommt nur, was du dort bestätigst. Neu `POST /api/worlds/{id}/worldbuilder`.
+
 - Mehr Schutz (2026-10-11, Schritte 6.4 und 6.6, ADR-063): Antworten des Servers mit Texten bleiben nicht im Zwischenspeicher des Browsers (`Cache-Control: no-store`); eine Content-Security-Policy erlaubt Skripte nur vom eigenen Server; Fehlermeldungen bei ungültigen Eingaben nennen die eingegebenen Werte nicht mehr.
 
 - Kurzfassung im eigenen Reiter (2026-10-11, Schritt 6.2): Die Kurzfassung eines Kapitels steht nicht mehr direkt über dem Anweisungsfeld, sondern im Reiter „Kurzfassung“ neben „Manuskript“ und „Verlauf“ – mit dem Hinweis, dass sie keine Anweisung ist. Ein Punkt am Reiter zeigt eine noch nicht geprüfte Kurzfassung; nach „Kapitel abschließen“ öffnet der Reiter von selbst. Der Knopf zum Bestätigen heißt jetzt „Als geprüft markieren“.

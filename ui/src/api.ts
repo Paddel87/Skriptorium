@@ -363,17 +363,94 @@ export function describeSummaryFailure(
  * aborting through `signal` rejects with the abort reason. A stream that ends without `done` or
  * `error` reports the error kind "verbindung". Nothing is saved on the server.
  */
-export async function streamWrite(
+export function streamWrite(
   path: string,
   order: WriteOrder,
   onEvent: (event: WriteEvent) => void,
+  signal?: AbortSignal,
+): Promise<void> {
+  return streamEvents(
+    path,
+    order,
+    WRITE_EVENTS,
+    { type: "error", kind: "verbindung" },
+    onEvent,
+    signal,
+  );
+}
+
+/** One turn of the conversation with the world builder (step 6.7). */
+export interface WorldbuilderMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
+/** What the author sends to the world builder; `references` are entries named with `@`. */
+export interface WorldbuilderOrder {
+  messages: WorldbuilderMessage[];
+  references: string[];
+  /** Missing model: the server's preset. */
+  model: string | null;
+  web_search: boolean;
+}
+
+/** A web page the AI's answer is based on (web search of the world builder). */
+export interface Source {
+  url: string;
+  title: string;
+}
+
+/** Events of the world builder stream; like the proposal stream plus the sources found. */
+export type WorldbuilderEvent =
+  | {
+      type: "start";
+      model: string;
+      estimated_tokens: number;
+      web_search: boolean;
+    }
+  | { type: "text"; text: string }
+  | { type: "quellen"; sources: Source[] }
+  | Extract<WriteEvent, { type: "done" | "error" }>;
+
+/**
+ * Talk to the world builder (step 6.7, ADR-064): sends the conversation and passes each event of
+ * the answer to `onEvent`. Errors and aborting behave as in `streamWrite`. Nothing is saved.
+ */
+export function streamWorldbuilder(
+  path: string,
+  order: WorldbuilderOrder,
+  onEvent: (event: WorldbuilderEvent) => void,
+  signal?: AbortSignal,
+): Promise<void> {
+  return streamEvents(
+    path,
+    order,
+    [...WRITE_EVENTS, "quellen"],
+    { type: "error", kind: "verbindung" },
+    onEvent,
+    signal,
+  );
+}
+
+const WRITE_EVENTS = ["start", "text", "hinweis", "done", "error"];
+
+/**
+ * POST a JSON body and read the answer as Server-Sent Events: each event with a name in `names`
+ * goes to `onEvent`, a stream that ends without `done` or `error` ends with `lost`.
+ */
+async function streamEvents<E extends { type: string }>(
+  path: string,
+  body: unknown,
+  names: readonly string[],
+  lost: E,
+  onEvent: (event: E) => void,
   signal?: AbortSignal,
 ): Promise<void> {
   const response = await fetch(path, {
     method: "POST",
     credentials: "same-origin",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(order),
+    body: JSON.stringify(body),
     signal,
   });
   if (!response.ok || response.body === null) {
@@ -394,21 +471,24 @@ export async function streamWrite(
     buffer += value;
     let end = buffer.indexOf("\n\n");
     while (end >= 0) {
-      const event = parseEvent(buffer.slice(0, end));
+      const event = parseEvent(buffer.slice(0, end), names);
       buffer = buffer.slice(end + 2);
       if (event !== null) {
         ended ||= event.type === "done" || event.type === "error";
-        onEvent(event);
+        onEvent(event as E);
       }
       end = buffer.indexOf("\n\n");
     }
   }
   if (!ended) {
-    onEvent({ type: "error", kind: "verbindung" });
+    onEvent(lost);
   }
 }
 
-function parseEvent(block: string): WriteEvent | null {
+function parseEvent(
+  block: string,
+  names: readonly string[],
+): { type: string } | null {
   let name = "";
   let data = "";
   for (const line of block.split("\n")) {
@@ -418,12 +498,37 @@ function parseEvent(block: string): WriteEvent | null {
       data += line.slice("data: ".length);
     }
   }
-  const types = ["start", "text", "hinweis", "done", "error"];
-  if (!types.includes(name)) {
+  if (!names.includes(name)) {
     return null;
   }
   const parsed: unknown = JSON.parse(data);
-  return { ...(isRecord(parsed) ? parsed : {}), type: name } as WriteEvent;
+  const event: Record<string, unknown> = {
+    ...(isRecord(parsed) ? parsed : {}),
+    type: name,
+  };
+  if (name === "quellen") {
+    event["sources"] = webSources(event["sources"]);
+  }
+  return { ...event, type: name };
+}
+
+/** The sources worth showing: a title and a link to a web page (http or https) only. */
+function webSources(value: unknown): Source[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+  const found: Source[] = [];
+  for (const item of value as unknown[]) {
+    if (
+      isRecord(item) &&
+      typeof item["url"] === "string" &&
+      /^https?:\/\//i.test(item["url"]) &&
+      typeof item["title"] === "string"
+    ) {
+      found.push({ url: item["url"], title: item["title"] });
+    }
+  }
+  return found;
 }
 
 const enc = encodeURIComponent;
@@ -567,6 +672,7 @@ export const api = {
       favorites,
     }) as Promise<ModelList>,
   usage: () => request("GET", "/api/usage") as Promise<MonthUsage>,
+  worldbuilderPath: (world: string) => `${worldPath(world)}/worldbuilder`,
   writePath: (world: string, story: string, number: number) =>
     `${storyPath(world, story)}/chapters/${String(number)}/write`,
   completeChapter: (world: string, story: string, number: number) =>

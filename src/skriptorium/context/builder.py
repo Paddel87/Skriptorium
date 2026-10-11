@@ -89,7 +89,7 @@ LENGTHS: Final[dict[Length, str]] = {
 }
 DEFAULT_LENGTH: Final[Length] = "mittel"
 
-Role = Literal["system", "user"]
+Role = Literal["system", "user", "assistant"]
 BlockKind = Literal[
     "rahmen",
     "welt",
@@ -108,6 +108,8 @@ BlockKind = Literal[
     "seiten",
     "anweisung",
     "auffuellung",
+    "eintraege",
+    "gespraech",
 ]
 
 
@@ -269,6 +271,20 @@ class ContextBuilder:
                 continue
             guests.append(_Known(entry, home))
         return guests
+
+    def build_worldbuilder(
+        self,
+        world_id: str,
+        conversation: Sequence[tuple[Role, str]],
+        references: Sequence[str] = (),
+        budget: int = MAX_BUDGET,
+    ) -> BuiltContext:
+        """Request for the next answer of the world builder (step 6.7); see
+        :func:`skriptorium.context.worldbuilder.build_worldbuilder`."""
+        # Imported here: the module builds on the helpers of this one.
+        from skriptorium.context.worldbuilder import build_worldbuilder
+
+        return build_worldbuilder(self._canon, world_id, conversation, references, budget)
 
     def build_chapter_summary(
         self, world_id: str, story_id: str, chapter_number: int, budget: int = MAX_BUDGET

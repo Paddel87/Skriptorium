@@ -796,6 +796,74 @@ button.more-toggle {
   padding: 0;
 }
 
+/* AI world builder (step 6.7): conversation above, composer below, in the place of the entry. */
+.wb {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.wb h3 {
+  margin: 0;
+}
+
+.wb p {
+  margin: 0;
+}
+
+.wb-head {
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.wb-log {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.wb-bubble {
+  max-width: 92%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.5rem 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+.wb-bubble.user {
+  align-self: flex-end;
+  max-width: 85%;
+  background: var(--button);
+  white-space: pre-wrap;
+}
+
+.wb-bubble.ai {
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.wb-text {
+  white-space: pre-wrap;
+}
+
+.wb-composer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.5rem;
+}
+
+.wb-composer textarea {
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+}
+
 .entry-read {
   line-height: 1.5;
 }

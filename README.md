@@ -108,7 +108,8 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - ✅ **5.14:** Go-Live-Prüfung – v1.0.0 freigegeben 2026-10-11 (ADR-058).
 - ✅ **5.5:** Phase 6 geplant (ADR-059).
 - ✅ **6.13:** Spike – fehlende Kanon-Einträge bei langen Kapiteln führen zu deutlich mehr Widersprüchen ([Bericht](docs/research/kanon-luecke.md)).
-- ⚪ **Als Nächstes:** 6.3 Kanon-Einträge bei langen Kapiteln (Entscheidung), dann Schutz-Schritte 6.4–6.6, KI-Weltenbauer, SillyTavern-Austausch.
+- 🟠 **6.1–6.4, 6.6, 6.7:** Umfang des Kapitels, Kurzfassung im eigenen Reiter, Kanon vor den letzten Seiten (ADR-062), Schutz der Server-Antworten (ADR-063), KI-Weltenbauer mit Websuche (ADR-064) – umgesetzt, Einspielen und Prüfung offen.
+- ⚪ **Als Nächstes:** 6.8 und 6.9 SillyTavern-Austausch, dann 6.10 Planung der nächsten Ausbaustufe.
 - ✅ **D.16:** grok-4.7 denkt an echten Schreib-Anfragen 44–157 s vor, über die Einstellungen nicht zu beheben; kommt in 5.12 aus der Voreinstellung ([Bericht](docs/research/reaktionszeit-d16.md), ADR-052). Kanon-Einträge, die bei langen Kapiteln nicht mitgehen: zurückgestellt auf die nächste Ausbaustufe (V.10, ADR-050).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 

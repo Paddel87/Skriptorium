@@ -29,6 +29,19 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [BEOBACHTUNG] 6.7 KI-Weltenbauer umgesetzt, echte Probe offen
+
+- Server (Commit 4fd80a3): Websuche als Plugin `web` (max. 5 Treffer), Fundstellen aus `annotations` (nur http(s), höchstens 20, Länge begrenzt), Anfrage aus `context/worldbuilder.py`, Ablauf `api/flows/worldbuilder.py`, Route `POST /api/worlds/{w}/worldbuilder`, Verbrauchsart `weltenbau`. pytest 526 grün, neue Dateien 100 %.
+- Oberfläche (Unteragent der Routine-Klasse, von mir geprüft): `WorldBuilder.tsx`, `useWorldbuilder.ts`, `kanonBlock.ts`; Kanon-Seite mit Knopf „✨ Weltenbauer“, Import nimmt den übernommenen Text entgegen und zeigt die Vorschau sofort. tsc, eslint, prettier grün; vitest 201 grün, Abdeckung 98,15/96,08/97,04/98,43 %; Playwright 11 grün.
+- Eigene Sichtprobe mit nachgebildetem Anbieter (lokal kein gültiger Schlüssel): Desktop 1280 und Handy 390 – Gespräch, Fundstelle als Link, „Als Kanon übernehmen“ → Import-Vorschau mit 1 Eintrag, Kategorie Figur. Keine Konsolenfehler außer dem erwarteten 401 der Sitzungsprüfung vor der Anmeldung.
+- Reibung: Der erste Lauf des Prüfservers hing an der Anmeldung, weil er aus dem Scratch-Verzeichnis gestartet war und die gebaute Oberfläche nicht fand; im Projektordner gestartet lief er.
+- Offen: echte Probe in einer Cloud-Session (hält das Modell den ```kanon-Block ein, wie kommen Fundstellen im Strom), Einspielen, Bestätigung des Eigentümers.
+
+### 2026-10-11 – [ADR-ANGELEGT] ADR-064 KI-Weltenbauer (6.7)
+
+- Vorlage A (Gespräch + Import), B (gespeichert), C (nur ausformulieren); Eigentümer bat um Erklärung von A, danach „A mit Websuche“. Internet: „Gleich mit“ (Kategorie 3). Grundlage: `preview_import`/`apply_import` kennen Konflikt „vorhanden“ und Überschreiben auf Wunsch.
+- OpenRouter-Doku zur Websuche gelesen (2026-10-11): Plugin `web` bzw. Endung `:online`; Exa ca. 0,007 $ je Anfrage, eigene Suche der Anbieter nach Umfang; Fundstellen als `annotations`/`url_citation`, Streaming-Format nicht dokumentiert. Meine erste Schätzung im Gespräch (ca. 2 Cent) war zu hoch – dem Eigentümer korrigiert.
+
 ### 2026-10-11 – [ADR-ANGELEGT] ADR-063 Schutz-Schritte 6.4–6.6
 
 - 6.5 vorab mit Fakten: OpenRouter kennt `data_collection: deny` und Zero Data Retention; öffentliche Liste `/api/v1/endpoints/zdr`: etwa 255 von 442 Textmodellen mit ZDR-Anbieter; Favoriten grok-4.6, grok-4.5, Venice-Edition ja, qwen3.8-max nein; für `deny` keine öffentliche Liste. Eigentümer: 6.5 „C: Im OpenRouter-Konto“ (kein Code), 6.4 und 6.6 „Ja, beide“.
