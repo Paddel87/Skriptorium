@@ -19,6 +19,7 @@ from skriptorium.ai_gateway import (
     OpenRouterProvider,
     ProviderUnavailable,
     RateLimited,
+    Source,
     StreamEvent,
     TextChunk,
     Usage,
@@ -191,6 +192,99 @@ def test_unknown_model_runs_without_reasoning() -> None:
     run(adapter, request("some/other-model"))
 
     assert recorder.payload()["reasoning"] == {"enabled": False}
+
+
+def test_web_search_is_requested_as_plugin() -> None:
+    recorder = Recorder(ok(), ok())
+    adapter, _ = provider(recorder)
+    searching = CompletionRequest(
+        model="x-ai/grok-4.6",
+        messages=[Message("user", "Wie lagert man Salz?")],
+        max_tokens=800,
+        temperature=0.8,
+        web_search=True,
+    )
+
+    run(adapter, searching)
+
+    assert recorder.payload()["plugins"] == [{"id": "web", "max_results": 5}]
+    adapter, _ = provider(recorder)
+    run(adapter)
+    assert "plugins" not in recorder.payload(1)
+
+
+def citation(url: object, title: object = "Seite") -> dict[str, object]:
+    return {"type": "url_citation", "url_citation": {"url": url, "title": title}}
+
+
+def test_sources_from_delta_and_message_are_collected_once() -> None:
+    parts: list[str | float] = [
+        text("Salz trocken lagern."),
+        data(
+            {
+                "choices": [
+                    {
+                        "delta": {
+                            "annotations": [
+                                citation("https://a.example/salz", "  Salz lagern  "),
+                                citation("javascript:alert(1)"),
+                                citation("https://b.example/" + "x" * 2001),
+                                citation(42),
+                                {"type": "url_citation"},
+                                "kaputt",
+                            ]
+                        }
+                    }
+                ]
+            }
+        ),
+        data(
+            {
+                "choices": [
+                    {
+                        "message": {
+                            "annotations": [
+                                citation("https://a.example/salz", "doppelt"),
+                                citation("http://c.example/fass", None),
+                            ]
+                        }
+                    }
+                ]
+            }
+        ),
+        data({"choices": [{"delta": {"annotations": "kaputt"}}]}),
+        data({"choices": "kaputt"}),
+        finish("stop", USAGE),
+        "data: [DONE]\n",
+    ]
+    adapter, _ = provider(Recorder(ok(parts)))
+
+    events, error = run(adapter)
+
+    assert error is None
+    done = events[-1]
+    assert isinstance(done, Completed)
+    assert done.sources == (
+        Source("https://a.example/salz", "Salz lagern"),
+        Source("http://c.example/fass", "http://c.example/fass"),
+    )
+
+
+def test_number_of_sources_is_bounded() -> None:
+    many = [citation(f"https://s.example/{n}") for n in range(30)]
+    parts: list[str | float] = [
+        text("Viel."),
+        data({"choices": [{"delta": {"annotations": many}}]}),
+        finish("stop", USAGE),
+        "data: [DONE]\n",
+    ]
+    adapter, _ = provider(Recorder(ok(parts)))
+
+    events, _ = run(adapter)
+
+    done = events[-1]
+    assert isinstance(done, Completed)
+    assert len(done.sources) == 20
 
 
 def test_excluded_providers_are_sent_as_routing_rule() -> None:

@@ -1,8 +1,8 @@
 """Consumption of the AI requests, one file per month (ADR-023, roadmap step 3.9).
 
 ``system/verbrauch/JJJJ-MM.md`` holds a header field ``anfragen``: one item per AI request with
-``zeit`` (ISO 8601, UTC), ``art`` (schreiben, kurzfassung, gesamtzusammenfassung), ``modell``,
-``ergebnis`` (``ok``, an error kind of the writing flow, ``leer`` or ``abgebrochen``),
+``zeit`` (ISO 8601, UTC), ``art`` (schreiben, kurzfassung, gesamtzusammenfassung, weltenbau),
+``modell``, ``ergebnis`` (``ok``, an error kind of the writing flow, ``leer`` or ``abgebrochen``),
 ``token_ein``, ``token_aus`` and ``kosten_usd`` (``null`` if the provider reported nothing).
 No text, no world and no story; only metadata, as in the log (ADR-021).
 """
@@ -22,7 +22,7 @@ DIRECTORY: Final = "system/verbrauch"
 _MONTH: Final = re.compile(r"\d{4}-(0[1-9]|1[0-2])")
 _log = logging.getLogger("skriptorium.api.usage")
 
-Kind = Literal["schreiben", "kurzfassung", "gesamtzusammenfassung"]
+Kind = Literal["schreiben", "kurzfassung", "gesamtzusammenfassung", "weltenbau"]
 
 
 @dataclass(frozen=True)

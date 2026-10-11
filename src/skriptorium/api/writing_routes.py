@@ -1,4 +1,5 @@
-"""Endpoints for writing with the AI, summaries, models and consumption (steps 3.3, 3.6, 3.9, 5.12).
+"""Endpoints for writing with the AI, summaries, models, the world builder and consumption
+(steps 3.3, 3.6, 3.9, 5.12, 6.7).
 
 The routes stay thin; the flow lives in :mod:`skriptorium.api.flows` (ADR-020).
 """
@@ -16,9 +17,13 @@ from skriptorium.api.flows import (
     DEFAULT_MODEL,
     Scene,
     SummaryFailure,
+    Turn,
+    WorldOrder,
     WriteOrder,
     prepare_request,
+    prepare_worldbuilder,
     stream_events,
+    stream_worldbuilder,
     summarize_chapter,
 )
 from skriptorium.context import DEFAULT_LENGTH, Length
@@ -87,6 +92,24 @@ class WriteIn(BaseModel):
     length: Length = DEFAULT_LENGTH
 
 
+class TurnIn(BaseModel):
+    """One message of the world builder's conversation."""
+
+    role: Literal["user", "assistant"]
+    content: str
+
+
+class WorldbuilderIn(BaseModel):
+    """The conversation so far, the last message the author's (step 6.7)."""
+
+    messages: list[TurnIn]
+    # Identifiers of entries of the world named with ``@`` in the last message.
+    references: list[str] = []
+    # Missing: the preset model.
+    model: str | None = None
+    web_search: bool = False
+
+
 class UsageOut(BaseModel):
     """Consumption of one month (ADR-023); ``without_cost`` requests had no reported cost."""
 
@@ -151,6 +174,29 @@ async def write(
     )
     return StreamingResponse(
         stream_events(found.provider, prepared, found.usage.record),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"},
+    )
+
+
+@router.post("/worlds/{world_id}/worldbuilder")
+async def worldbuilder(
+    world_id: str, body: WorldbuilderIn, found: ServicesDep
+) -> StreamingResponse:
+    """Stream the world builder's answer as Server-Sent Events; saves nothing (ADR-064)."""
+    if found.provider is None:
+        raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, "KI-Anbieter nicht eingerichtet")
+    await found.catalog.refresh()
+    order = WorldOrder(
+        world_id,
+        tuple(Turn(turn.role, turn.content) for turn in body.messages),
+        tuple(body.references),
+        body.model or DEFAULT_MODEL,
+        body.web_search,
+    )
+    prepared = prepare_worldbuilder(found.context, order, found.catalog)
+    return StreamingResponse(
+        stream_worldbuilder(found.provider, prepared, found.usage.record),
         media_type="text/event-stream",
         headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"},
     )

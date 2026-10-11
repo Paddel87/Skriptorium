@@ -28,6 +28,7 @@ from skriptorium.ai_gateway.models import DEFAULT_MODELS, ModelConfig, config_fo
 from skriptorium.ai_gateway.provider import (
     Completed,
     CompletionRequest,
+    Source,
     StreamEvent,
     TextChunk,
     Usage,
@@ -46,6 +47,12 @@ MAX_LINE_CHARS: Final = 1_000_000
 # Characters kept in model and provider names of the log line; others become "_" (review 3.1).
 _LOG_NAME: Final = re.compile(r"[^A-Za-z0-9._/:@+-]")
 _FILTER_HINTS: Final = ("moderation", "content_filter", "content filter", "flagged", "policy")
+# Web search (step 6.7, ADR-064): plugin of OpenRouter; results the answer may draw on.
+_WEB_RESULTS: Final = 5
+# Bounds for sources taken from the stream; longer values are cut or dropped.
+_MAX_SOURCES: Final = 20
+_MAX_URL_CHARS: Final = 2000
+_MAX_TITLE_CHARS: Final = 300
 
 _log = logging.getLogger("skriptorium.ai_gateway")
 
@@ -177,6 +184,7 @@ class OpenRouterProvider:
         deadline = time.monotonic() + self._first_chunk_timeout
         finish_reason: str | None = None
         usage = Usage(input_tokens=None, output_tokens=None, cost_usd=None)
+        sources: dict[str, Source] = {}
         while True:
             line = await _next_line(lines, deadline)
             if line is None:
@@ -196,6 +204,9 @@ class OpenRouterProvider:
                 yield TextChunk(text)
             if reason is not None:
                 finish_reason = reason
+            for source in _sources(chunk):
+                if len(sources) < _MAX_SOURCES:
+                    sources.setdefault(source.url, source)
             reported = chunk.get("usage")
             if isinstance(reported, dict):
                 usage = _usage(reported)
@@ -204,7 +215,7 @@ class OpenRouterProvider:
             raise ModelRefused("Das Modell hat die Anfrage abgelehnt (Inhaltsfilter)")
         if finish_reason is None or finish_reason == "error":
             raise ProviderUnavailable("Der Strom des Anbieters endete ohne Abschluss")
-        yield Completed(usage=usage, finish_reason=finish_reason)
+        yield Completed(usage=usage, finish_reason=finish_reason, sources=tuple(sources.values()))
 
 
 def _payload(request: CompletionRequest, config: ModelConfig) -> dict[str, object]:
@@ -220,6 +231,8 @@ def _payload(request: CompletionRequest, config: ModelConfig) -> dict[str, objec
     }
     if config.ignored_providers:
         payload["provider"] = {"ignore": list(config.ignored_providers)}
+    if request.web_search:
+        payload["plugins"] = [{"id": "web", "max_results": _WEB_RESULTS}]
     return payload
 
 
@@ -290,6 +303,35 @@ def _choice(chunk: Mapping[str, object]) -> tuple[str, str | None]:
         content if isinstance(content, str) else "",
         reason if isinstance(reason, str) else None,
     )
+
+
+def _sources(chunk: Mapping[str, object]) -> list[Source]:
+    """Web pages cited in a chunk (``annotations`` of type ``url_citation``, OpenAI schema).
+
+    OpenRouter documents them on the message; in the stream they may come with the delta or
+    the message of the first choice, so both are read. Only http(s) links are kept.
+    """
+    choices = chunk.get("choices")
+    if not isinstance(choices, list) or not choices or not isinstance(choices[0], dict):
+        return []
+    found: list[Source] = []
+    for part in ("delta", "message"):
+        holder = choices[0].get(part)
+        annotations = holder.get("annotations") if isinstance(holder, dict) else None
+        if not isinstance(annotations, list):
+            continue
+        for annotation in annotations:
+            citation = annotation.get("url_citation") if isinstance(annotation, dict) else None
+            if not isinstance(citation, dict):
+                continue
+            url, title = citation.get("url"), citation.get("title")
+            if not isinstance(url, str) or len(url) > _MAX_URL_CHARS:
+                continue
+            if not url.startswith(("https://", "http://")):
+                continue
+            text = title.strip()[:_MAX_TITLE_CHARS] if isinstance(title, str) else ""
+            found.append(Source(url=url, title=text or url))
+    return found
 
 
 def _usage(reported: Mapping[str, object]) -> Usage:

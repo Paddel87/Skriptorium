@@ -27,6 +27,16 @@ class CompletionRequest:
     messages: Sequence[Message]
     max_tokens: int
     temperature: float
+    # Let the provider search the web for this request (step 6.7, ADR-064).
+    web_search: bool = False
+
+
+@dataclass(frozen=True)
+class Source:
+    """A web page the provider's search used for the answer (step 6.7)."""
+
+    url: str
+    title: str
 
 
 @dataclass(frozen=True)
@@ -51,6 +61,8 @@ class Completed:
 
     usage: Usage
     finish_reason: str | None
+    # Web pages behind the answer, if the request searched the web (step 6.7).
+    sources: tuple[Source, ...] = ()
 
 
 StreamEvent = TextChunk | Completed
