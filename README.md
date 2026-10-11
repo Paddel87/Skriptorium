@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 5 – Alltagstauglichkeit und Soll-Anforderungen (Umsetzung), begonnen 2026-10-08 (ADR-042: gezielt umbauen). Fortschritt: ✅ 23 von 26 Schritten erledigt, ⚪ 1 offen, 2 verschoben (5.25 → V.13, 5.4 → V.16) – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
+- **Projektphase:** Phase 5 – Alltagstauglichkeit und Soll-Anforderungen (Umsetzung), begonnen 2026-10-08 (ADR-042: gezielt umbauen). Fortschritt: ✅ 24 von 26 Schritten erledigt, 2 verschoben (5.25 → V.13, 5.4 → V.16) – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
 - **Version:** v1.0.0 – erstes produktives Release (2026-10-11, ADR-058); davor v0.1.0 als Vorabversion (ADR-043)
 - **Status:** In Entwicklung
 - **Letzte Änderung:** 2026-10-08
@@ -105,7 +105,8 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - ✅ **5.12:** Modellauswahl aus dem Angebot von OpenRouter mit eigenen Favoriten (ADR-055).
 - ✅ **5.13, 5.16, 5.20:** Verlauf der Anweisungen, herangezogene Einträge anklickbar, schnell angelegte Kapitel – erledigt 2026-10-11.
 - ✅ **5.14:** Go-Live-Prüfung – v1.0.0 freigegeben 2026-10-11 (ADR-058).
-- ⚪ **Als Nächstes:** 5.5 Planung der nächsten Ausbaustufe.
+- ✅ **5.5:** Phase 6 geplant (ADR-059).
+- ⚪ **Als Nächstes:** Abschluss von Phase 5 (Vision-Abgleich, Pflichtfrage), dann Phase 6 „Schreiballtag, Schutz und Kanon-Werkzeuge“: Umfang des Kapitels, eindeutige Kurzfassung, Kanon bei langen Kapiteln, Schutz-Schritte, KI-Weltenbauer, SillyTavern-Austausch.
 - ✅ **D.16:** grok-4.7 denkt an echten Schreib-Anfragen 44–157 s vor, über die Einstellungen nicht zu beheben; kommt in 5.12 aus der Voreinstellung ([Bericht](docs/research/reaktionszeit-d16.md), ADR-052). Kanon-Einträge, die bei langen Kapiteln nicht mitgehen: zurückgestellt auf die nächste Ausbaustufe (V.10, ADR-050).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 

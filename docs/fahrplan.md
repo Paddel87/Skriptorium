@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-10-10, nach dem Deployment `628f559` (5.6 Genre und Schreibweise, 5.11 Kanon in der Leiste der Geschichte eingespielt; Anweisung des Eigentümers „einspielen“)
 - **Laufende Phase:** Phase 5 „Alltagstauglichkeit und Soll-Anforderungen" (Phase 4 abgeschlossen 2026-10-08, ADR-042: gezielt umbauen; v0.1.0 Vorabversion, ADR-043)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner. Am 2026-10-11 erledigt: 5.14 (v1.0.0, ADR-058), D.4 (ADR-057), 5.20, 5.13, 5.16. Am 2026-10-10 erledigt: 5.12, 5.26, 5.1, 5.2, 5.21, 5.11, 5.6, 5.3
-- **Nächster Schritt:** 5.5 Planung der nächsten Ausbaustufe (V.1–V.19) – letzter Schritt von Phase 5, danach Phasengrenze mit Vision-Abgleich und Pflichtfrage. Phase 5 steht mit 26 Schritten an der Wucherungs-Schwelle – ein neuer Schritt löst den Stopp mit Neuplanung aus. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** keiner – Phasengrenze nach Phase 5 (Vision-Abgleich, Onboarding-Probelauf, Pflichtfrage). Am 2026-10-11 erledigt: 5.5 (ADR-059), 5.14 (v1.0.0, ADR-058), D.4 (ADR-057), 5.20, 5.13, 5.16. Am 2026-10-10 erledigt: 5.12, 5.26, 5.1, 5.2, 5.21, 5.11, 5.6, 5.3
+- **Nächster Schritt:** Phasengrenze nach Phase 5: Vision-Abgleich, Onboarding-Probelauf im frischen Worktree, Pflichtfrage „weiterbauen, umbauen oder neu aufsetzen“ mit Bewertung durch eine getrennte Instanz, Archivierung von Phase 5; danach 6.1. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -22,7 +22,7 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-**Phase 5: 23 von 26 erledigt, 0 in Arbeit, 1 offen, 2 verschoben (5.25 → V.13, 5.4 → V.16).**
+**Phase 5: 24 von 26 erledigt, 0 in Arbeit, 0 offen, 2 verschoben (5.25 → V.13, 5.4 → V.16).**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -30,7 +30,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | 5.2 | Bedienung am Smartphone | erledigt 2026-10-10 | – |
 | ✅ | 5.3 | Lesbare Dateien – Nachweis | erledigt 2026-10-10 | – |
 | ⏸️ | 5.4 | Zeitlinie mit Datumsangaben im Kalender der Welt (Kann) | verschoben → V.16 | – |
-| ⚪ | 5.5 | Planung der nächsten Ausbaustufe | offen | KI – zuletzt |
+| ✅ | 5.5 | Planung der nächsten Ausbaustufe | erledigt 2026-10-11 (ADR-059) | – |
 | ✅ | 5.6 | Atmosphärische Schreibweise je Geschichte | erledigt 2026-10-10 | – |
 | ✅ | 5.7 | Startmodell grok-4.6 | erledigt | – |
 | ✅ | 5.8 | Nahtloser Anschluss ohne Einleitung und Schlusssatz | erledigt | – |
@@ -53,6 +53,21 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ⏸️ | 5.25 | Antworten des Servers nicht im Browser-Speicher | verschoben → V.13 | – |
 | ✅ | 5.26 | Kanon-Treue mit grok-4.6 prüfen | erledigt 2026-10-10 | – |
 
+**Phase 6: 0 von 10 erledigt, alle offen (geplant 2026-10-11, ADR-059).**
+
+| | Schritt | Titel | Status | Nächster Zug |
+|---|---|---|---|---|
+| ⚪ | 6.1 | Umfang des Kapitels im Manuskript anzeigen | offen | KI |
+| ⚪ | 6.2 | Kurzfassung nicht mit der Anweisung verwechselbar | offen | KI |
+| ⚪ | 6.3 | Kanon-Einträge bei langen Kapiteln | offen | KI |
+| ⚪ | 6.4 | Antworten des Servers nicht im Browser-Speicher | offen | KI |
+| ⚪ | 6.5 | Datenschutz-Einstellung an OpenRouter | offen | KI |
+| ⚪ | 6.6 | Kopfzeilen und Fehlermeldungen härten | offen | KI |
+| ⚪ | 6.7 | KI-gestützter Weltenbauer | offen | KI |
+| ⚪ | 6.8 | Import aus SillyTavern | offen | KI |
+| ⚪ | 6.9 | Export in SillyTavern-Formate | offen | KI |
+| ⚪ | 6.10 | Planung der nächsten Ausbaustufe | offen | KI |
+
 **Querschnitt (offen):**
 
 | | Schritt | Titel | Status | Nächster Zug |
@@ -69,7 +84,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die nächste Ausbaustufe (Landeplatz 5.5): V.1–V.19.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 6.10): V.1, V.2, V.8, V.14, V.16. In Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -248,7 +263,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 5.5: Planung der nächsten Ausbaustufe
 
-- **Status:** ⚪ OFFEN
+- **Status:** ✅ ERLEDIGT (2026-10-11) – Phase 6 mit 10 Schritten geplant, V.1, V.2, V.8, V.14, V.16 weiter verschoben auf 6.10, V.3, V.4, V.5, V.11 verworfen (ADR-059)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.1, 5.2, 5.3, 5.4
 - **Freigabepflichtig:** ja – neue Phasen sind Replanning (Fahrplan, Replanning-Historie)
@@ -603,6 +618,180 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Artefakte:** Prüfskript, Bericht, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-09 auf Wunsch des Eigentümers. Bisherige Belege der Kanon-Treue: grok-4.7 an Testtexten, qwen3.8-max am ersten echten Kapitel (4.8), je ein Lauf; grok-4.6 nie gezielt an echten Texten gemessen. Wucherungs-Prüfung: Phase 5 jetzt 26 Schritte (ursprünglich 13, Schwelle mehr als 26) – an der Grenze; der nächste neue Schritt löst den Stopp nach `CLAUDE.md` Abschnitt 8, Kriterium 9 aus.
 
+### Phase 6: Schreiballtag, Schutz und Kanon-Werkzeuge – Typ: UMSETZUNG
+
+**Ziel:** Nach v1.0.0 wird das Schreiben im Alltag bequemer (Umfang sichtbar, Kurzfassung eindeutig, Kanon auch bei langen Kapiteln), der Schutz der Texte rundet sich ab (Browser-Speicher, Datenschutz beim Anbieter, Kopfzeilen), und der Kanon lässt sich mit KI entwerfen sowie mit SillyTavern austauschen.
+
+**Abschlusskriterium:** Schritte 6.1–6.10 `[ERLEDIGT]`, `[VERWORFEN]` mit ADR oder `[VERSCHOBEN]` mit Ziel-Schritt.
+
+**Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`; 6.3 (Kontext-Reihenfolge) und 6.7 (Weltenbauer) werden per ADR entschieden, bevor gebaut wird.
+
+**Ursprünglicher Schrittplan:** 10 Schritte, festgehalten am 2026-10-11 in 5.5 (ADR-059). Wucherungs-Schwelle: mehr als 20 Schritte und mindestens +5.
+
+**Reihenfolge (Eigentümer, 2026-10-11):** zuerst die kleinen Hilfen 6.1 und 6.2, dann 6.3; die Schutz-Schritte 6.4–6.6 gebündelt mit einer gemeinsamen Prüfung durch eine getrennte Instanz; dann 6.7, 6.8, 6.9; zuletzt 6.10.
+
+**Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
+
+#### 6.1: Umfang des Kapitels im Manuskript anzeigen
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 5.11
+- **Freigabepflichtig:** nein (nur Anzeige in `ui`); Mockup vorher/nachher
+- **Empfohlene Klasse:** Routine – klar spezifizierte Anzeige mit Test.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-033
+- **Zu tun:** Wörter des Kapitels laufend anzeigen (z. B. „9.786 Wörter“); ab etwa 10.000 Wörtern Hinweis „Kurzfassung passt bis ca. 12.000 – bald abschließen“, darüber deutlich markiert. Grenze aus dem Budget der Kurzfassung ableiten (`build_chapter_summary`, 30.000 Token), nicht fest raten.
+- **Akzeptanzkriterien:** Zahl stimmt mit der Wortzählung überein (Test), Hinweis an der Schwelle (Test), Mockup freigegeben, Eigentümer bestätigt.
+- **Betroffene Module:** ui (ggf. api für die Grenze)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-11 in 5.5 (ADR-059), übernommen aus V.17 und V.12 (Wünsche 2026-10-10 und 2026-10-11, zusammengelegt).
+
+#### 6.2: Kurzfassung des Kapitels nicht mit der Anweisung verwechselbar
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 5.11
+- **Freigabepflichtig:** nein – Umbau innerhalb von `ui`; Mockup vorher/nachher
+- **Empfohlene Klasse:** Routine – Umbau in `ui` nach freigegebenem Mockup.
+- **Eingangskriterien:** Form mit dem Eigentümer geklärt (Mockup)
+- **Anforderungen (ab Klasse M):** FR-010, FR-019
+- **Zu tun:** Befund am Smartphone (2026-10-10): Feld „Kurzfassung des Kapitels“ wird mit der Eingabe für die KI verwechselt. Kurzfassung räumlich und optisch klar von der Anweisung trennen (z. B. eigener Bereich in „Kanon & Geschichte“ oder hinter „Kapitel abschließen“).
+- **Akzeptanzkriterien:** Mockup freigegeben; Tests; Eigentümer bestätigt am Smartphone.
+- **Betroffene Module:** ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-11 in 5.5 (ADR-059), übernommen aus V.15.
+
+#### 6.3: Kanon-Einträge bei langen Kapiteln
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – Reihenfolge der Kontext-Zusammenstellung (ADR-003), Kategorie 1
+- **Empfohlene Klasse:** Entscheidung – Architektur-Vorschlag (Eskalations-Auslöser 1); die Umsetzung danach ist Routine.
+- **Eingangskriterien:** Entscheidung des Eigentümers über die Option
+- **Anforderungen (ab Klasse M):** FR-011
+- **Zu tun:** Befund 5.26 (a) und D.4 (ADR-057): Nicht per `@` genannte Figuren-, Orts- und Gegenstands-Einträge gehen bei langen Kapiteln nicht mit. Optionen aus V.10: (A) Kultur-Einträge immer mitgeben, (B) anzeigen, welche Einträge nicht mitgingen, (C) an einer echten Welt messen; weitere Option: Seiten-Budget begrenzen, damit Kanon Platz behält. Vorlage nach `CLAUDE.md` Abschnitt 4, Messung nach Regel-002.
+- **Akzeptanzkriterien:** ADR; Messung vorher/nachher an beiden Testgeschichten (Regel-002); Tests grün.
+- **Betroffene Module:** context (ggf. ui)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag, ADR
+- **Notizen:** Angelegt 2026-10-11 in 5.5 (ADR-059), übernommen aus V.10 (ADR-050).
+
+#### 6.4: Antworten des Servers nicht im Browser-Speicher
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – Kategorie 6; optionale Maßnahme über ASVS Stufe 1 (ADR-006), vom Eigentümer gewünscht
+- **Empfohlene Klasse:** Entscheidung – Sicherheits- und Datenschutzentscheidung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-032
+- **Zu tun:** `Cache-Control: no-store` für alle Antworten unter `/api` (Befund 4 zu ADR-048, Befund 3 der Prüfung in 5.14).
+- **Akzeptanzkriterien:** Test der Kopfzeile; Prüfung durch eine getrennte Instanz (gemeinsam mit 6.5 und 6.6 möglich).
+- **Betroffene Module:** api
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag, ADR
+- **Notizen:** Angelegt 2026-10-11 in 5.5 (ADR-059), übernommen aus V.13 (aus 5.25).
+
+#### 6.5: Datenschutz-Einstellung an OpenRouter
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – Kategorie 6 (Umgang mit Texten beim Anbieter); kann die wählbaren Modelle einschränken
+- **Empfohlene Klasse:** Entscheidung – Datenschutz-Vorschlag (Eskalations-Auslöser 1); die Umsetzung danach ist Routine.
+- **Eingangskriterien:** Entscheidung des Eigentümers
+- **Anforderungen (ab Klasse M):** keine (Befund 6 der Prüfung in 5.14)
+- **Zu tun:** Mit jeder Anfrage `provider: {"data_collection": "deny"}` senden oder die Einstellung im OpenRouter-Konto prüfen; vorher zeigen, welche Modelle dann wegfallen.
+- **Akzeptanzkriterien:** ADR; bei Umsetzung Test der Nutzlast und echte Anfrage.
+- **Betroffene Module:** ai_gateway
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag, ADR
+- **Notizen:** Angelegt 2026-10-11 in 5.5 (ADR-059), übernommen aus V.18 (ADR-058).
+
+#### 6.6: Kopfzeilen und Fehlermeldungen härten (CSP, Einbettschutz, 422)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – Kategorie 6; Stufe 2 und damit über der Obergrenze aus ADR-006 – vom Eigentümer gewünscht
+- **Empfohlene Klasse:** Entscheidung – Sicherheitsmaßnahme über dem festgelegten Niveau (Eskalations-Auslöser 1).
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** keine (Befunde 1, 2, 4 der Prüfung in 5.14; ASVS 3.4.3, 3.4.6)
+- **Zu tun:** Content-Security-Policy (Stile für CodeMirror prüfen); `frame-ancestors 'none'` auch in `_SECURITY_HEADERS`; Handler für Validierungsfehler ohne zurückgespiegelte Eingaben.
+- **Akzeptanzkriterien:** Tests der Kopfzeilen; Oberfläche funktioniert mit CSP (End-to-End); Prüfung durch eine getrennte Instanz.
+- **Betroffene Module:** api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag, ADR
+- **Notizen:** Angelegt 2026-10-11 in 5.5 (ADR-059), übernommen aus V.19 (ADR-058).
+
+#### 6.7: KI-gestützter Weltenbauer
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage und Mockup zu Beginn)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – neuer Ablauf und ggf. neue Verantwortung (Kategorien 1/2); Wissen aus dem Internet wäre eine neue externe Abhängigkeit (Kategorie 3)
+- **Empfohlene Klasse:** Entscheidung – Architektur-Vorschlag (Eskalations-Auslöser 1); die Umsetzung danach ist Routine.
+- **Eingangskriterien:** Form und Architektur per ADR entschieden; Mockup freigegeben
+- **Anforderungen (ab Klasse M):** FR-029
+- **Zu tun:** Figuren, Orte, Regeln, Kultur und Gegenstände (mit Zweck, Verwendung, Auswirkung) im Gespräch mit der KI entwerfen; vorhandene Einträge mit KI-Unterstützung besser ausformulieren; Übernahme in den Kanon erst nach Bestätigung (wie Import-Vorschau). Vorbild: die TypingMind-Agenten-Vorlage des Eigentümers (2026-10-11). Internet-Wissen nur nach eigener Entscheidung.
+- **Akzeptanzkriterien:** ADR; Tests; echte Probe; Eigentümer bestätigt.
+- **Betroffene Module:** canon, context, api, ui (Zuschnitt per ADR)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag, ADR
+- **Notizen:** Angelegt 2026-10-11 in 5.5 (ADR-059), übernommen aus V.9.
+
+#### 6.8: Import aus SillyTavern (Character Cards und Lorebooks)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – Eingangsformat (Kategorie 4); Einlesen fremder Dateien, PNG mit eingebettetem JSON (Kategorie 6, Prüfung durch getrennte Instanz)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell- und Sicherheitsentscheidung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Zuordnung der Felder per ADR
+- **Anforderungen (ab Klasse M):** FR-030
+- **Zu tun:** Character Cards (Figur, ggf. eingebettetes Lorebook) und Lorebooks als weiteres Eingangsformat in `canon.importers`, mit Vorschau wie beim Markdown-Import; Felder für Chat-Rollenspiel bewusst weglassen.
+- **Akzeptanzkriterien:** ADR; Tests mit echten Beispieldateien; Prüfung durch eine getrennte Instanz.
+- **Betroffene Module:** canon, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag, ADR
+- **Notizen:** Angelegt 2026-10-11 in 5.5 (ADR-059), übernommen aus V.6.
+
+#### 6.9: Export in SillyTavern-Formate
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 6.8
+- **Freigabepflichtig:** ja – Ausgabeformat als Schnittstelle (Kategorie 5)
+- **Empfohlene Klasse:** Entscheidung – Schnittstellenentscheidung (Eskalations-Auslöser 1); die Umsetzung danach ist Routine.
+- **Eingangskriterien:** 6.8 erledigt (Zuordnung der Felder steht)
+- **Anforderungen (ab Klasse M):** FR-030
+- **Zu tun:** Figuren als Character Card, Welten als Lorebook ausgeben, sodass SillyTavern sie einlesen kann.
+- **Akzeptanzkriterien:** ADR; Test: Rückimport mit 6.8 ergibt denselben Kanon; Eigentümer prüft in SillyTavern.
+- **Betroffene Module:** canon, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag, ADR
+- **Notizen:** Angelegt 2026-10-11 in 5.5 (ADR-059), übernommen aus V.7.
+
+#### 6.10: Planung der nächsten Ausbaustufe
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 6.1–6.9
+- **Freigabepflichtig:** ja – neue Phasen sind Replanning
+- **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich.
+- **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 6
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Die weiter verschobenen Schritte V.1, V.2, V.8, V.14, V.16 (und neue V-Schritte) in eine neue Phase überführen oder per ADR verwerfen.
+- **Akzeptanzkriterien:** Jeder verschobene Schritt hat einen neuen Schritt mit ID oder `[VERWORFEN]` mit ADR.
+- **Betroffene Module:** keine (Planung)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag, ADR
+- **Notizen:** Angelegt 2026-10-11 in 5.5 (ADR-059), übernommen aus 5.5 (Landeplatz der weiter verschobenen V-Schritte).
+
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 
 Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, einen Auslöser oder die Planung in 5.5. Sie zählen nicht zum Schrittplan einer Phase.
@@ -910,7 +1099,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 #### V.1: Publizieren (Satz, Export, Veröffentlichung)
 
 - **Status:** ⏸️ VERSCHOBEN
-- **Landeplatz (nur VERSCHOBEN):** 5.5
+- **Landeplatz (nur VERSCHOBEN):** 5.5 – weiter verschoben 2026-10-11 auf 6.10 (ADR-059)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.5
 - **Freigabepflichtig:** ja, bei Umsetzung (neue Funktion, ggf. neue Abhängigkeiten)
@@ -927,7 +1116,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 #### V.2: Bilder und Karten
 
 - **Status:** ⏸️ VERSCHOBEN
-- **Landeplatz (nur VERSCHOBEN):** 5.5
+- **Landeplatz (nur VERSCHOBEN):** 5.5 – weiter verschoben 2026-10-11 auf 6.10 (ADR-059)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.5
 - **Freigabepflichtig:** ja, bei Umsetzung (neue Funktion, ggf. Datenmodell)
@@ -943,7 +1132,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.3: Weitere KI-Anbieter neben OpenRouter
 
-- **Status:** ⏸️ VERSCHOBEN
+- **Status:** ❌ VERWORFEN (2026-10-11, ADR-059)
 - **Landeplatz (nur VERSCHOBEN):** 5.5
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 3.1, 5.5
@@ -960,7 +1149,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.4: Import aus TypingMind (Agenten-JSON)
 
-- **Status:** ⏸️ VERSCHOBEN
+- **Status:** ❌ VERWORFEN (2026-10-11, ADR-059)
 - **Landeplatz (nur VERSCHOBEN):** 5.5 – vorgezogen, falls der 30-Minuten-Test (4.8) am Import scheitert (ADR-012)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.4
@@ -977,7 +1166,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.5: Import aus Notion (Markdown-Export mit Unterseiten)
 
-- **Status:** ⏸️ VERSCHOBEN
+- **Status:** ❌ VERWORFEN (2026-10-11, ADR-059)
 - **Landeplatz (nur VERSCHOBEN):** 5.5 – vorgezogen, falls der 30-Minuten-Test (4.8) am Import scheitert (ADR-012)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.4
@@ -994,7 +1183,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.6: Import aus SillyTavern (Character Cards und Lorebooks)
 
-- **Status:** ⏸️ VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN → 6.8 (in Phase 6 übernommen 2026-10-11, ADR-059)
 - **Landeplatz (nur VERSCHOBEN):** 5.5 – Reihenfolge und Phase legt die Neuplanung fest (Wünsche aus der Nutzung, Logbuch 2026-10-08 09:35 UTC)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.4
@@ -1011,7 +1200,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.7: Export in SillyTavern-Formate
 
-- **Status:** ⏸️ VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN → 6.9 (in Phase 6 übernommen 2026-10-11, ADR-059)
 - **Landeplatz (nur VERSCHOBEN):** 5.5 – nach V.6 (Eigentümer 2026-10-08: „Exportfunktion später“)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** V.6
@@ -1029,7 +1218,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 #### V.8: Gestaltung der Oberfläche (z. B. Material Design)
 
 - **Status:** ⏸️ VERSCHOBEN
-- **Landeplatz (nur VERSCHOBEN):** 5.5 – nach der Neuordnung von Seitenaufbau und Abläufen (5.11) (Eigentümer 2026-10-08: „Erstmal Aufbau neu, UI später“)
+- **Landeplatz (nur VERSCHOBEN):** 5.5 – nach der Neuordnung von Seitenaufbau und Abläufen (5.11) (Eigentümer 2026-10-08: „Erstmal Aufbau neu, UI später“) – weiter verschoben 2026-10-11 auf 6.10 (ADR-059)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11
 - **Freigabepflichtig:** ja, falls eine Komponenten-Bibliothek eingebunden wird (Kategorie 3, Lizenz Kategorie 8); sonst nein
@@ -1045,7 +1234,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.9: KI-gestützter Weltenbauer
 
-- **Status:** ⏸️ VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN → 6.7 (in Phase 6 übernommen 2026-10-11, ADR-059)
 - **Landeplatz (nur VERSCHOBEN):** 5.5 (ADR-042: nach dem Umbau, nicht in Phase 5)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11, 5.12
@@ -1062,7 +1251,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.10: Nicht genannte Kanon-Einträge bei langen Kapiteln
 
-- **Status:** ⏸️ VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN → 6.3 (in Phase 6 übernommen 2026-10-11, ADR-059)
 - **Landeplatz (nur VERSCHOBEN):** 5.5 (ADR-050)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.26
@@ -1079,7 +1268,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.11: Kurzfassungen langer Kapitel
 
-- **Status:** ⏸️ VERSCHOBEN
+- **Status:** ❌ VERWORFEN (2026-10-11, ADR-059)
 - **Landeplatz (nur VERSCHOBEN):** 5.5 (Eigentümer, 2026-10-10: „in einer neuen Phase behandeln“)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
@@ -1096,7 +1285,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.12: Wörter im Manuskriptfeld zählen
 
-- **Status:** ⏸️ VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN → 6.1 (in Phase 6 übernommen 2026-10-11, ADR-059)
 - **Landeplatz (nur VERSCHOBEN):** 5.5 (Eigentümer, 2026-10-10, Auswahlfrage: „Nächste Ausbaustufe“)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
@@ -1113,7 +1302,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.13: Antworten des Servers nicht im Browser-Speicher
 
-- **Status:** ⏸️ VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN → 6.4 (in Phase 6 übernommen 2026-10-11, ADR-059)
 - **Landeplatz (nur VERSCHOBEN):** 5.5 (Eigentümer, 2026-10-10: aus Phase 5 übertragen, damit der Schritt den Phasenabschluss nicht behindert; vorher 5.25)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine (5.21 erledigt)
@@ -1131,7 +1320,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 #### V.14: Schreibweise der Geschichte wirkt auf bestehende Kapitel
 
 - **Status:** ⏸️ VERSCHOBEN
-- **Landeplatz (nur VERSCHOBEN):** 5.5 (ADR-053, Eigentümer: „optional B im Hinterkopf behalten“)
+- **Landeplatz (nur VERSCHOBEN):** 5.5 (ADR-053, Eigentümer: „optional B im Hinterkopf behalten“) – weiter verschoben 2026-10-11 auf 6.10 (ADR-059)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.6
 - **Freigabepflichtig:** ja – Datenmodell (Kategorie 4)
@@ -1147,7 +1336,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.15: Kurzfassung des Kapitels nicht mit der Anweisung verwechselbar
 
-- **Status:** ⏸️ VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN → 6.2 (in Phase 6 übernommen 2026-10-11, ADR-059)
 - **Landeplatz (nur VERSCHOBEN):** 5.5 (Eigentümer, 2026-10-10: „nur als Hinweis“)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
@@ -1165,7 +1354,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 #### V.16: Zeitlinie mit Datumsangaben im Kalender der Welt (Kann)
 
 - **Status:** ⏸️ VERSCHOBEN
-- **Landeplatz (nur VERSCHOBEN):** 5.5 (Eigentümer, 2026-10-10: aus 5.4 „in die nächste Ausbaustufe“)
+- **Landeplatz (nur VERSCHOBEN):** 5.5 (Eigentümer, 2026-10-10: aus 5.4 „in die nächste Ausbaustufe“) – weiter verschoben 2026-10-11 auf 6.10 (ADR-059)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 2.3
 - **Freigabepflichtig:** ja, falls das Datenmodell erweitert wird (Kategorie 4)
@@ -1181,7 +1370,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.17: Umfang des Kapitels im Manuskript anzeigen
 
-- **Status:** ⏸️ VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN → 6.1 (in Phase 6 übernommen 2026-10-11, ADR-059)
 - **Landeplatz (nur VERSCHOBEN):** 5.5 (Eigentümer, 2026-10-11: „Nächste Ausbaustufe“)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11
@@ -1198,7 +1387,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.18: Datenschutz-Einstellung an OpenRouter senden
 
-- **Status:** ⏸️ VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN → 6.5 (in Phase 6 übernommen 2026-10-11, ADR-059)
 - **Landeplatz (nur VERSCHOBEN):** 5.5 (Eigentümer, 2026-10-11: „Keine – so freigeben“, freiwillige Maßnahme aus der Prüfung in 5.14)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
@@ -1215,7 +1404,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.19: Kopfzeilen und Fehlermeldungen härten (CSP, Einbettschutz, 422)
 
-- **Status:** ⏸️ VERSCHOBEN
+- **Status:** ⏸️ VERSCHOBEN → 6.6 (in Phase 6 übernommen 2026-10-11, ADR-059)
 - **Landeplatz (nur VERSCHOBEN):** 5.5 (Eigentümer, 2026-10-11: „Keine – so freigeben“, freiwillige Maßnahmen aus der Prüfung in 5.14)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine

@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [ADR-ANGELEGT] ADR-059 Planung von Phase 6 (5.5 erledigt)
+
+- Übersicht V.1–V.19 in drei Töpfen vorgelegt (A Phase 6, B später, C verwerfen). Eigentümer: „Etwas nach A holen“ → V.9 Weltenbauer und V.6/V.7 SillyTavern zusätzlich in Phase 6. Ergebnis: Phase 6 mit 10 Schritten (6.1–6.10), V.1/V.2/V.8/V.14/V.16 weiter verschoben auf 6.10, V.3/V.4/V.5/V.11 verworfen; V.12 und V.17 zu 6.1 zusammengelegt; neue Anforderung FR-033.
+- Reibung: Zuerst den Marker „ÜBERNOMMEN“ gesetzt – kein Marker nach `CLAUDE.md` Abschnitt 7; ersetzt durch `[VERSCHOBEN] → 6.x`. Reaktiv-Quote zuerst falsch fortgeschrieben (1 / 10); richtig 0 / 10, weil ADR-049 aus dem Fenster fällt.
+- Phase 5: 24 von 26 erledigt, 2 verschoben (5.4 → V.16, 5.25 → V.13 → 6.4). Nächster Schritt: Phasengrenze.
+
 ### 2026-10-11 01:30 UTC – [SESSIONENDE] Prüfung „uncensored“-Modelle, Testplan für eine eigene Testwelt
 
 - **Dauer:** ca. 25 Minuten (01:05–01:30 UTC).
