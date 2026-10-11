@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 12:47 UTC – [SESSIONSTART] Spike 6.13 ausführen (Läufe, verblindete Bewertung, Bericht)
+
+- Fortgesetzte Cloud-Session nach `git pull` (Stand `01ed910`). Modell laut Sitzungsabfrage: eingestellt und bedient `claude-opus-5-5` → Entscheidungs-Klasse; 6.13 empfiehlt Entscheidung (Läufe Routine).
+- Kontextgröße zu Beginn ca. 222.000 Token, über der Grenze 200.000; dem Eigentümer vorgelegt, Antwort „Weiter hier“ (Abweichung nach `CLAUDE.md` Abschnitt 0).
+- Pflichtlektüre in Auszügen neu: Fahrplan (Aktueller Stand, 6.13), ADR-061, Logbuch seit Phasenwechsel 5 → 6, aktive Blocker (keine). Schlüssel `OPENROUTER_API_KEY` vorhanden (nur Vorhandensein geprüft).
+
 ### 2026-10-11 – [ADR-ANGELEGT] ADR-061 und Spike 6.13 vorbereitet
 
 - 6.3 vorgelegt (A Kultur immer mit, B nur anzeigen, C Kanon vor den Seiten mit Obergrenze – Empfehlung, D erst messen). Eigentümer wählte zuerst C, korrigierte dann: „wir machen erstmal D, den Spike“. ADR-061, neuer Schritt 6.13 (ERKUNDUNG); Phase 6 jetzt 13 Schritte (Schwelle > 15).
