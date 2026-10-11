@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [GELÖST] Eingespielt: 6.1–6.4, 6.6, 6.7; Traefik überschrieb die CSP
+
+- Auf Anweisung des Eigentümers („Einspielen“) Stand `main` `5f1fa10` nach grüner CI eingespielt (Runbook Abschnitt 7): `skriptorium:vorher` getaggt, `app.vorher` angelegt, Build, `(healthy)` nach ca. einer Minute, `/api/health` 200.
+- Prüfung von außen: `cache-control: no-store` an `/api/` (6.4) ✓; 422 nennt nur `loc` und `msg`, keinen eingegebenen Wert (6.6) ✓. **Befund:** Die Content-Security-Policy kam draußen nur als `frame-ancestors 'none'` an, im Container voll – ein Traefik-Label (`skriptorium-headers`) in `/opt/docker/skriptorium/compose.yml` (nicht im Repo) überschrieb sie. Eigentümer per Auswahlfrage (Kategorie 7): Label entfernen. Beide Zeilen (Middleware und Verweis des Routers) entfernt, Kopie `compose.yml.vor-csp` auf dem Server, `docker compose up -d`. Danach volle Regel von außen bestätigt; Anmeldeseite in Chromium ohne CSP-Meldung (einzige Konsolenmeldung: erwartete 401 vor der Anmeldung).
+- Nebenbefund ohne Handlungsbedarf: `HEAD /api/health` liefert 404 (FastAPI beantwortet nur GET); die Überwachung nutzt GET.
+- Lehre: Kopfzeilen aus der App immer auch von außen prüfen – der Proxy kann sie ersetzen. Die unabhängige Prüfung von 6.6 sah nur den Code.
+- Offen: 6.3 Technik-Prüfung an der Geschichte des Eigentümers; Prüfung von 6.1, 6.2, 6.3, 6.7 durch den Eigentümer; 6.5 im OpenRouter-Konto.
+
 ### 2026-10-11 – [SESSIONENDE] 6.7 echte Probe und Behebung der Befunde
 
 - **Bearbeitet:** 6.7 – echte Probe in der Cloud-Session (#123), vier Befunde behoben (#124), beide gemergt nach grüner CI (`main` `654edd4`).
