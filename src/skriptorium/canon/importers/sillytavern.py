@@ -197,9 +197,17 @@ def _lorebook(book: dict[str, object], char: str | None, notes: list[str]) -> li
             content = _replace_char(content, char)
         entries.append(_Entry(name=name, aliases=aliases, body=_protect(content)))
     if disabled:
-        notes.append(f"{disabled} Lorebook-Einträge sind in SillyTavern abgeschaltet und fehlen.")
+        notes.append(
+            "1 Lorebook-Eintrag ist in SillyTavern abgeschaltet und fehlt."
+            if disabled == 1
+            else f"{disabled} Lorebook-Einträge sind in SillyTavern abgeschaltet und fehlen."
+        )
     if empty:
-        notes.append(f"{empty} Lorebook-Einträge ohne Text fehlen.")
+        notes.append(
+            "1 Lorebook-Eintrag hat keinen Text und fehlt."
+            if empty == 1
+            else f"{empty} Lorebook-Einträge haben keinen Text und fehlen."
+        )
     if char is None and any(_CHAR.search(e.body) for e in entries):
         notes.append("„{{char}}“ steht im Text, ohne dass eine Figur dazugehört.")
     return entries

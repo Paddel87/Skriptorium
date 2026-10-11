@@ -79,7 +79,7 @@ def test_a_card_becomes_a_figure_with_its_lorebook() -> None:
     assert result.not_taken_over == (
         "Nicht übernommen (Chat-Zubehör): Szenario, Begrüßung, weitere Begrüßungen, "
         "Beispieldialoge, Notizen des Erstellers, Schlagwörter.",
-        "1 Lorebook-Einträge sind in SillyTavern abgeschaltet und fehlen.",
+        "1 Lorebook-Eintrag ist in SillyTavern abgeschaltet und fehlt.",
         "„{{user}}“ steht 1-mal im Text; bitte selbst passend umschreiben.",
     )
 
@@ -128,8 +128,8 @@ def test_a_sillytavern_lorebook() -> None:
     ]
     assert parsed.not_taken_over == ()
     assert result.not_taken_over == (
-        "1 Lorebook-Einträge sind in SillyTavern abgeschaltet und fehlen.",
-        "1 Lorebook-Einträge ohne Text fehlen.",
+        "1 Lorebook-Eintrag ist in SillyTavern abgeschaltet und fehlt.",
+        "1 Lorebook-Eintrag hat keinen Text und fehlt.",
         "„{{char}}“ steht im Text, ohne dass eine Figur dazugehört.",
     )
 
@@ -175,6 +175,22 @@ def test_broken_files_are_refused_without_content(data: bytes, message: str) -> 
     with pytest.raises(InvalidInput, match=message) as raised:
         translate_sillytavern(data)
     assert "kaputt" not in str(raised.value)
+
+
+def test_counts_several_left_out_entries() -> None:
+    book = {
+        "entries": [
+            {"keys": ["a"], "content": "x"},
+            {"keys": ["b"], "content": "", "enabled": True},
+            {"keys": ["c"], "content": " "},
+            {"keys": ["d"], "content": "y", "enabled": False},
+            {"keys": ["e"], "content": "z", "disable": True},
+        ]
+    }
+    assert translate_sillytavern(json.dumps(book).encode()).not_taken_over == (
+        "2 Lorebook-Einträge sind in SillyTavern abgeschaltet und fehlen.",
+        "2 Lorebook-Einträge haben keinen Text und fehlen.",
+    )
 
 
 def test_too_many_lorebook_entries() -> None:
