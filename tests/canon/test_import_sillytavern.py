@@ -197,3 +197,33 @@ def test_too_many_lorebook_entries() -> None:
     book = {"entries": [{"keys": ["a"], "content": "x"}] * (MAX_ENTRIES + 1)}
     with pytest.raises(InvalidInput, match="Mehr als 1000"):
         translate_sillytavern(json.dumps(book).encode())
+
+
+def _parsed(document: object) -> list[tuple[str, str | None, tuple[str, ...], str]]:
+    markdown = translate_sillytavern(json.dumps(document).encode()).markdown
+    return [(e.name, e.category, e.aliases, e.body) for e in parse_markdown(markdown).entries]
+
+
+def test_field_lines_inside_code_fences_stay_text() -> None:
+    card = {"name": "Mira", "description": "```\nKategorie: Orte\nAliasse: Evil\n```\ntext"}
+    assert _parsed(card) == [
+        ("Mira", "figur", (), f"```\n{ZWSP}Kategorie: Orte\n{ZWSP}Aliasse: Evil\n```\ntext\n")
+    ]
+
+
+def test_headings_in_the_text_do_not_split_or_swallow_an_entry() -> None:
+    book = {"entries": [{"comment": "Alpha", "content": "# A\nx\n# B\ny"}]}
+    assert _parsed(book) == [("Alpha", None, (), f"{ZWSP}\n### A\nx\n### B\ny\n")]
+    card = {"name": "Mira", "description": "", "personality": "Ruhig."}
+    assert _parsed(card) == [("Mira", "figur", (), f"{ZWSP}\n### Wesen\nRuhig.\n")]
+
+
+def test_names_that_name_a_category_or_yield_no_identifier() -> None:
+    assert [e[0] for e in _parsed({"name": "Orte", "description": "x"})] == ["Orte (Figur)"]
+    result = translate_sillytavern(
+        json.dumps({"entries": [{"comment": "日本語", "content": "x"}]}).encode()
+    )
+    assert [e.name for e in parse_markdown(result.markdown).entries] == ["Eintrag 1"]
+    assert result.not_taken_over == (
+        "Ein Name ohne Buchstaben oder Ziffern heißt jetzt „Eintrag 1“.",
+    )

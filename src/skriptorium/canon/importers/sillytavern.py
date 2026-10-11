@@ -17,8 +17,10 @@ Rules confirmed by the owner (ADR-065):
 3. ``{{char}}`` becomes the card's name; ``{{user}}`` stays and is reported.
 
 The text is protected against the Markdown rules of the import: headings in it move below the
-entry heading, open code fences are closed, and lines that would read as a field
-(``Aliasse:``, ``Kategorie:``) are kept as text.
+entry heading, open code fences are closed, lines that would read as a field (``Aliasse:``,
+``Kategorie:``, also inside code fences) are kept as text, and an entry whose text starts with a
+heading gets an invisible first line, so it does not turn into a group. Names that would name a
+category or yield no identifier are changed and reported.
 """
 
 import base64
@@ -30,7 +32,7 @@ from dataclasses import dataclass
 from typing import Final
 
 from skriptorium.canon.categories import category_for
-from skriptorium.storage import InvalidInput
+from skriptorium.storage import InvalidInput, slugify
 
 MAX_BYTES: Final = 10 * 1024 * 1024
 MAX_ENTRIES: Final = 1000
@@ -155,7 +157,7 @@ def _card(document: dict[str, object]) -> dict[str, object] | None:
 
 
 def _figure(card: dict[str, object], notes: list[str]) -> _Entry:
-    name = _line(_text(card.get("name"))) or "Figur ohne Namen"
+    name = _usable(_line(_text(card.get("name"))), "Figur ohne Namen", "Figur", notes)
     nickname = _line(_text(card.get("nickname")))
     parts = [_protect(_replace_char(_text(card.get("description")), name))]
     personality = _replace_char(_text(card.get("personality")), name)
@@ -188,10 +190,8 @@ def _lorebook(book: dict[str, object], char: str | None, notes: list[str]) -> li
             empty += 1
             continue
         name = _line(_text(item.get("name"))) or _line(_text(item.get("comment")))
-        name = name or (keys[0] if keys else f"Eintrag {len(entries) + 1}")
-        if category_for(name) is not None:
-            # A heading naming a category would turn into a group (import rule 2).
-            name = f"{name} (Lorebook)"
+        name = name or (keys[0] if keys else "")
+        name = _usable(name, f"Eintrag {len(entries) + 1}", "Lorebook", notes)
         aliases = tuple(dict.fromkeys(k for k in keys if k.casefold() != name.casefold()))
         if char is not None:
             content = _replace_char(content, char)
@@ -222,12 +222,31 @@ def _markdown(figure: _Entry | None, lore: list[_Entry]) -> str:
     return "\n\n".join(blocks) + "\n"
 
 
+def _usable(name: str, fallback: str, kind: str, notes: list[str]) -> str:
+    """A name the import keeps as an entry with an identifier."""
+    if not name:
+        return fallback
+    try:
+        slugify(name)
+    except InvalidInput:
+        notes.append(f"Ein Name ohne Buchstaben oder Ziffern heißt jetzt „{fallback}“.")
+        return fallback
+    if category_for(name) is not None:
+        # A heading naming a category would turn into a group (import rule 2).
+        return f"{name} ({kind})"
+    return name
+
+
 def _entry_markdown(entry: _Entry) -> str:
     lines = [f"## {entry.name}"]
     if entry.aliases:
         lines.append(f"Aliasse: {', '.join(entry.aliases)}")
-    if entry.body.strip():
-        lines.append(entry.body.strip("\n"))
+    body = entry.body.strip("\n")
+    if body:
+        if not entry.aliases and _HEADING.match(body):
+            # Without own text before a subheading the entry would become a group (import rule 2).
+            lines.append(_KEEP_AS_TEXT)
+        lines.append(body)
     return "\n".join(lines)
 
 
@@ -238,13 +257,14 @@ def _protect(text: str) -> str:
     for line in text.replace("\r\n", "\n").split("\n"):
         if _FENCE.match(line):
             in_fence = not in_fence
+        elif _FIELD_LINE.match(line):
+            # The import reads field lines inside code fences too.
+            line = _KEEP_AS_TEXT + line
         elif not in_fence:
             heading = _HEADING.match(line)
             if heading is not None:
                 level = min(len(heading.group(1)) + 2, 6)
                 line = "#" * level + line[len(heading.group(1)) :]
-            elif _FIELD_LINE.match(line):
-                line = _KEEP_AS_TEXT + line
         out.append(line)
     if in_fence:
         out.append("```")

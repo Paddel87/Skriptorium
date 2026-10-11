@@ -22,7 +22,9 @@ from typing import Final
 
 from skriptorium.canon.categories import Category, category_for
 
-_HEADING: Final = re.compile(r"^(#{1,6})[ \t]+(.+?)[ \t]*#*[ \t]*$")
+# Only the start is a pattern; the end is cut with string operations, because a pattern for
+# the closing hashes backtracks cubically on long runs of spaces (review of step 6.8).
+_HEADING_START: Final = re.compile(r"(#{1,6})[ \t]")
 # Section titles of an item entry (FR-003); the canon module creates new items with them.
 _ITEM_SECTIONS: Final = frozenset({"zweck", "verwendung", "auswirkung"})
 _FENCE: Final = re.compile(r"^[ \t]*(```|~~~)")
@@ -68,14 +70,14 @@ def parse_markdown(text: str) -> ParsedMaterial:
     for line in text.replace("\r\n", "\n").split("\n"):
         if _FENCE.match(line):
             in_fence = not in_fence
-        heading = None if in_fence else _HEADING.match(line)
+        heading = None if in_fence else _heading(line)
         if heading is None:
             stack[-1].lines.append(line)
             continue
-        level = len(heading.group(1))
+        level, title = heading
         while stack[-1].level >= level:
             stack.pop()
-        section = _Section(level=level, title=heading.group(2).strip(), lines=[], children=[])
+        section = _Section(level=level, title=title, lines=[], children=[])
         stack[-1].children.append(section)
         stack.append(section)
 
@@ -88,6 +90,20 @@ def parse_markdown(text: str) -> ParsedMaterial:
         entries=tuple(entries),
         not_taken_over=tuple(not_taken_over),
     )
+
+
+def _heading(line: str) -> tuple[int, str] | None:
+    """Level and title of an ATX heading; closing hashes and spaces are not part of the title."""
+    start = _HEADING_START.match(line)
+    if start is None:
+        return None
+    rest = line[start.end() :]
+    if not rest:
+        return None
+    full = rest.rstrip(" \t")
+    title = full.rstrip("#").rstrip(" \t").strip()
+    # A title of hashes only keeps one of them, as before.
+    return len(start.group(1)), title or full.strip()[:1]
 
 
 def _collect(
