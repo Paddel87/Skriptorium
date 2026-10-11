@@ -34,7 +34,7 @@ Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details 
 | 🟠 | 6.4 | Antworten des Servers nicht im Browser-Speicher | umgesetzt, Einspielen offen | KI |
 | 🟠 | 6.5 | Datenschutz-Einstellung an OpenRouter | im OpenRouter-Konto (ADR-063) | du: einstellen und Bescheid geben |
 | 🟠 | 6.6 | Kopfzeilen und Fehlermeldungen härten | umgesetzt, Einspielen offen | KI |
-| 🟠 | 6.7 | KI-gestützter Weltenbauer | umgesetzt, echte Probe und Prüfung offen (ADR-064) | KI: echte Probe in der Cloud; du: nach dem Einspielen prüfen |
+| 🟠 | 6.7 | KI-gestützter Weltenbauer | umgesetzt, echte Probe bestanden, Einspielen offen (ADR-064) | KI: einspielen (auf deine Anweisung); du: danach prüfen |
 | ⚪ | 6.8 | Import aus SillyTavern | offen | KI |
 | ⚪ | 6.9 | Export in SillyTavern-Formate | offen | KI |
 | ⚪ | 6.10 | Planung der nächsten Ausbaustufe | offen | KI |
