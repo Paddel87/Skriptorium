@@ -15,6 +15,7 @@ import {
   type Story,
 } from "../api";
 import { CanonFact } from "./CanonFact";
+import { ChapterLength } from "./ChapterLength";
 import { ChapterSummary } from "./ChapterSummary";
 import { ErrorText } from "./Common";
 import { InstructionHistory } from "./InstructionHistory";
@@ -273,6 +274,13 @@ export function ChapterEditor({
               onEnd={() => {
                 setEnds((value) => value + 1);
               }}
+            />
+            <ChapterLength
+              world={chapter.world}
+              story={chapter.story}
+              chapter={chapter.number}
+              text={text}
+              summary={story.summary}
             />
           </div>
         </Suspense>
