@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details im Archiv [`docs/archiv/fahrplan-phase-5.md`](archiv/fahrplan-phase-5.md).
 
-**Phase 6: 3 von 13 erledigt, 6 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
+**Phase 6: 3 von 13 erledigt, 7 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -34,7 +34,7 @@ Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details 
 | 🟠 | 6.4 | Antworten des Servers nicht im Browser-Speicher | umgesetzt, Einspielen offen | KI |
 | 🟠 | 6.5 | Datenschutz-Einstellung an OpenRouter | im OpenRouter-Konto (ADR-063) | du: einstellen und Bescheid geben |
 | 🟠 | 6.6 | Kopfzeilen und Fehlermeldungen härten | umgesetzt, Einspielen offen | KI |
-| ⚪ | 6.7 | KI-gestützter Weltenbauer | offen | KI |
+| 🟠 | 6.7 | KI-gestützter Weltenbauer | in Arbeit (ADR-064) | du: Mockup ansehen |
 | ⚪ | 6.8 | Import aus SillyTavern | offen | KI |
 | ⚪ | 6.9 | Export in SillyTavern-Formate | offen | KI |
 | ⚪ | 6.10 | Planung der nächsten Ausbaustufe | offen | KI |
@@ -273,7 +273,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.7: KI-gestützter Weltenbauer
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – Form entschieden (ADR-064): A, Gespräch auf der Kanon-Seite, Übernahme über die Import-Vorschau, Websuche zuschaltbar. Offen: Mockup, Umsetzung
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage und Mockup zu Beginn)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – neuer Ablauf und ggf. neue Verantwortung (Kategorien 1/2); Wissen aus dem Internet wäre eine neue externe Abhängigkeit (Kategorie 3)
