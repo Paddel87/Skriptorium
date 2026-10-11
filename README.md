@@ -95,6 +95,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - **Kapitel abschließen:** Die KI erstellt eine Kurzfassung und schreibt die Gesamtzusammenfassung fort; beide lassen sich ansehen und ändern.
 - **In den Kanon:** Eine markierte Stelle wird zum neuen Eintrag oder ergänzt einen Eintrag – im Kanon der Welt oder nur für diese Geschichte.
 - **Als App:** Im Browser „Zum Startbildschirm“ (iPhone) bzw. „App installieren“ (Android, Chrome am Rechner) wählen – das Skriptorium öffnet dann ohne Browserleiste. Es arbeitet nur mit Netz; ohne Verbindung erscheint ein Hinweis, Texte bleiben nie auf dem Gerät.
+- **Umfang des Kapitels:** Unter dem Manuskript stehen die Wörter des Kapitels; kurz vor der Grenze für die Kurzfassung erscheint ein Hinweis zum Abschließen.
 - **Modell und Kosten:** Das Modell wählst du unten neben der Anweisung aus deinen Favoriten (voreingestellt grok-4.6), die Geschichte merkt es sich. „Modelle verwalten …“ zeigt alle Modelle von OpenRouter mit Preis, Kontextgröße und geschätzten Kosten je Vorschlag; ein Stern nimmt eines in die Favoriten auf. Unter jedem Vorschlag stehen Token und Kosten, unter „Konto“ die KI-Kosten des laufenden Monats.
 
 ## Nächste Schritte

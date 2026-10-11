@@ -24,11 +24,11 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details im Archiv [`docs/archiv/fahrplan-phase-5.md`](archiv/fahrplan-phase-5.md).
 
-**Phase 6: 1 von 12 erledigt, 0 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
+**Phase 6: 1 von 12 erledigt, 1 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
-| ⚪ | 6.1 | Umfang des Kapitels im Manuskript anzeigen | offen | KI |
+| 🟠 | 6.1 | Umfang des Kapitels im Manuskript anzeigen | umgesetzt, Prüfung offen | du: prüfen |
 | ⚪ | 6.2 | Kurzfassung nicht mit der Anweisung verwechselbar | offen | KI |
 | ⚪ | 6.3 | Kanon-Einträge bei langen Kapiteln | offen | KI |
 | ⚪ | 6.4 | Antworten des Servers nicht im Browser-Speicher | offen | KI |
@@ -176,7 +176,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.1: Umfang des Kapitels im Manuskript anzeigen
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – Mockup freigegeben („Passt, umbauen“); umgesetzt: `ContextBuilder.chapter_summary_room` (Platz für den Kapiteltext in der Kurzfassungs-Anfrage, exakt an der Grenze getestet), `GET …/chapters/{n}/summary-room` → `{max_chars}`, Anzeige `ChapterLength` unter dem Manuskript (Wortzahl; gelb ab 85 % des Platzes mit „passt bis ca. N“, rot darüber). pytest 492, vitest 180, Playwright 11 grün. Offen: Einspielen, Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 5.11
 - **Freigabepflichtig:** nein (nur Anzeige in `ui`); Mockup vorher/nachher
