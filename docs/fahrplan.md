@@ -34,7 +34,7 @@ Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details 
 | 🟠 | 6.4 | Antworten des Servers nicht im Browser-Speicher | umgesetzt, Einspielen offen | KI |
 | 🟠 | 6.5 | Datenschutz-Einstellung an OpenRouter | im OpenRouter-Konto (ADR-063) | du: einstellen und Bescheid geben |
 | 🟠 | 6.6 | Kopfzeilen und Fehlermeldungen härten | umgesetzt, Einspielen offen | KI |
-| 🟠 | 6.7 | KI-gestützter Weltenbauer | in Arbeit (ADR-064) | du: Mockup ansehen |
+| 🟠 | 6.7 | KI-gestützter Weltenbauer | umgesetzt, echte Probe und Prüfung offen (ADR-064) | KI: echte Probe in der Cloud; du: nach dem Einspielen prüfen |
 | ⚪ | 6.8 | Import aus SillyTavern | offen | KI |
 | ⚪ | 6.9 | Export in SillyTavern-Formate | offen | KI |
 | ⚪ | 6.10 | Planung der nächsten Ausbaustufe | offen | KI |
@@ -273,7 +273,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.7: KI-gestützter Weltenbauer
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – Form entschieden (ADR-064): A, Gespräch auf der Kanon-Seite, Übernahme über die Import-Vorschau, Websuche zuschaltbar. Offen: Mockup, Umsetzung
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – Form entschieden (ADR-064): A, Gespräch auf der Kanon-Seite, Übernahme über die Import-Vorschau, Websuche zuschaltbar. Mockup freigegeben 2026-10-11; umgesetzt 2026-10-11 (Server `POST /api/worlds/{w}/worldbuilder`, Oberfläche „✨ Weltenbauer“ auf der Kanon-Seite, „Als Kanon übernehmen“ öffnet die Import-Vorschau). Offen: echte Probe in einer Cloud-Session (Einhalten des ```kanon-Blocks, Fundstellen im Strom), Einspielen, Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage und Mockup zu Beginn)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – neuer Ablauf und ggf. neue Verantwortung (Kategorien 1/2); Wissen aus dem Internet wäre eine neue externe Abhängigkeit (Kategorie 3)
