@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [ADR-ANGELEGT] ADR-062 Kanon vor den letzten Seiten (6.3 umgesetzt)
+
+- Nach Pull von `main`: Spike 6.13 von einer Cloud-Session ausgeführt (#119, Bericht `docs/research/kanon-luecke.md`): ohne Auffüllung 4,0 bzw. 3,3 Widersprüche je Kette statt 0 bzw. 0,7; Details nur im Kanon 1 statt 10 von 15 eingehalten; Kontrollen 100 %. Bericht gelesen, Empfehlung C übernommen.
+- Vorlage 6.3 erneut mit Messwerten; Eigentümer: „C: Kanon vor den Seiten, 30 %“. Umgesetzt: `CANON_SHARE = 0.3`, `_filler_parts` zuerst bis zum Anteil vor den Seiten, danach wie bisher nach den Seiten; genommene Einträge zählen als enthalten (kein Doppel). Zwei bestehende Tests zu den Seiten bei Budget 1.400/1.600 auf `CANON_SHARE = 0` gesetzt (prüfen die Seitenlogik; bei so kleinem Budget nimmt der Anteil die Seiten weg – im Betrieb mit 30.000 Token nicht relevant); drei neue Tests (langes Kapitel, Obergrenze, Rest nach kurzen Seiten).
+- Prüfung vor einer Cloud-Messung: Für beide Testgeschichten sind alle sieben Anfragen mit neuer und alter Regel byte-gleich – Regel-002-Messung an ihnen sinnlos. Eigentümer: Abnahme „An deiner Geschichte“ (Technik-Prüfung auf dem Server nach dem Einspielen, dann sein Urteil). Abweichung von Regel-002 in ADR-062 begründet.
+- Reibung: Die Cloud-Session hatte den Status von 6.3 im Fahrplan umformuliert; mein Ersetzen schlug fehl und wurde mit dem neuen Text wiederholt (Architektur und ADR waren schon geschrieben).
+
 ### 2026-10-11 – [SESSIONENDE] Spike 6.13 erledigt
 
 - **Bearbeitet:** 6.13 (ERKUNDUNG) – Läufe, verblindete Bewertung, Bericht; README-Drift behoben (Status-Block stand noch auf Phase 5 und „In Entwicklung“, älter als diese Session).

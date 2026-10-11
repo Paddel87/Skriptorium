@@ -58,6 +58,9 @@ CHARS_PER_TOKEN: Final = 3.3
 # Estimates differ from provider counts by -6 % to +8 % (step 1.1); 10 % margin keeps the
 # real count below the budget.
 SAFETY_MARGIN: Final = 1.1
+# Share of the capacity that not-named canon entries get before the last pages (step 6.3,
+# ADR-062); what does not fit there fills the rest after the pages, as before.
+CANON_SHARE: Final = 0.3
 # Words of a chapter's opening that stand in for a missing summary (owner, step 3.6).
 OPENING_WORDS: Final = 300
 # Start of the one line in which the AI tells the author how it changed an instruction that
@@ -234,9 +237,12 @@ class ContextBuilder:
         state = _story_state(request.story, request.chapters, chapter_number)
         closing = _closing_parts(request, instruction, length)
         remaining = _remaining_room([*fixed, *state, *closing], budget)
+        canon_room = min(remaining, math.floor(budget / SAFETY_MARGIN * CANON_SHARE))
+        canon = _filler_parts(request, canon_room)
+        remaining -= sum(part.block.tokens for part in canon)
         pages, remaining = _last_pages(request.chapters, request.current, remaining)
         filler = _filler_parts(request, remaining)
-        return _assemble([*fixed, *filler], [*state, *pages, *closing], request.missing)
+        return _assemble([*fixed, *canon, *filler], [*state, *pages, *closing], request.missing)
 
     def _load_request(
         self, world_id: str, story_id: str, chapter_number: int, references: Sequence[str]
@@ -465,7 +471,10 @@ def _remaining_room(required: Sequence[_Part], budget: int) -> int:
 
 
 def _filler_parts(request: _Request, remaining: int) -> list[_Part]:
-    """Further entries of the world, then guests, while they fit into ``remaining``."""
+    """Further entries of the world, then guests, while they fit into ``remaining``.
+
+    Taken entries count as included, so a second call (after the last pages) adds only the rest.
+    """
     filler: list[_Part] = []
     candidates = [_Known(entry) for entry in _in_category_order(request.entries)]
     candidates += sorted(request.guests, key=lambda g: _category_rank(g.entry))
@@ -476,6 +485,7 @@ def _filler_parts(request: _Request, remaining: int) -> list[_Part]:
         if part.block.tokens <= remaining:
             filler.append(part)
             remaining -= part.block.tokens
+            request.included.add(known.key)
     return filler
 
 
