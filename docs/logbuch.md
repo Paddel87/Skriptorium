@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [REIFEGRAD-WECHSEL] NFR Kontexttreue Referenzumfang OFFEN → VORLÄUFIG
+
+- Drift gefunden durch die getrennte Instanz der Pflichtfrage: Reifegrad stand nach ADR-057 noch auf `OFFEN`. Gesetzt auf `[VORLÄUFIG]` (nicht `[BELASTBAR]`: Nachweis hochgerechnet, Kanon-Lücke offen → Beförderung nach 6.3). Zeile „Secrets im Betrieb“: Schlüsseltausch inzwischen erprobt, bleibt `VORLÄUFIG` bis D.11.
+
 ### 2026-10-11 – [ONBOARDING-VALIDATION] Phasengrenze nach Phase 5
 
 - Frischer Worktree (`git worktree add --detach`, Stand `d55b97c`) im Scratch-Verzeichnis, README-Quick-Start genau wie dokumentiert: `uv python install 3.14.7`, `uv sync --frozen`, `npm ci`, `uv run pre-commit install`, `uv run skriptorium-einrichtung` (eigenes Datenverzeichnis, Code nicht ausgegeben), `npx vite build`, `uvicorn` → `/api/health` `{"status":"ok"}`, `/` 200. Tests im frischen Stand: pytest 487, vitest 173 grün. Kein Bruch. `scripts/session-start.sh` läuft in jeder Session als Hook (heute ohne Befund). Worktree entfernt; Pre-Commit-Hook danach aus dem Haupt-Checkout neu installiert (bekannte Reibung: `pre-commit install` im Worktree biegt den gemeinsamen Hook um).
