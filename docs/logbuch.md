@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-11 – [ERLEDIGT] 6.3 Technik-Prüfung an der Geschichte des Eigentümers
+
+- Auf Freigabe des Eigentümers („Prüfung erlauben“) ein lesendes Skript per `docker exec` auf der Produktion: Anfrage je Kapitel ab 1.500 Wörtern mit der Anweisung „Weiter.“ ohne `@`, einmal mit `CANON_SHARE` 0,3, einmal mit 0 (Verhalten vor 6.3). Ausgabe nur Zahlen; Skript vorher auf Testdaten erprobt, nicht im Repo.
+- Geschichte des Eigentümers (6 Kapitel mit je 8.500–9.800 Wörtern): In den Kapiteln 1–6 gingen vorher 28, 6, 2, 0, 0, 1 der 34 nicht genannten Einträge mit; jetzt jeweils alle 34 (5.564 Token). Die Anfrage bleibt gleich groß (29.650–29.850 Token); die letzten Seiten treten 670–5.700 Token ab (z. B. Kapitel 4: 22.893 → 17.338).
+- Andere Geschichten mit langen Kapiteln (drei, je ein Kapitel): unverändert, der Kanon passte schon vorher ganz hinein.
+- 6.3 erledigt (Bestätigung des Eigentümers im Alltag plus diese Prüfung).
+
 ### 2026-10-11 – [BEOBACHTUNG] Abnahme nach dem Einspielen: 6.1, 6.2, 6.5, 6.7 erledigt
 
 - Checkliste für den Eigentümer erstellt (je Schritt: wo klicken, woran erkennbar). Eigentümer: „6.1 kann abgehakt werden. Der Rest auch.“ → 6.1, 6.2, 6.7 bestätigt, 6.5 (Datenschutz im OpenRouter-Konto) gesetzt und bestätigt; 6.3 im Alltag bestätigt.

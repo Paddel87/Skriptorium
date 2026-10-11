@@ -24,13 +24,13 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 5 abgeschlossen 2026-10-11 (24 von 26 erledigt, 2 verschoben) – Details im Archiv [`docs/archiv/fahrplan-phase-5.md`](archiv/fahrplan-phase-5.md).
 
-**Phase 6: 9 von 13 erledigt, 1 in Arbeit (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
+**Phase 6: 10 von 13 erledigt (geplant 2026-10-11, ADR-059, ADR-060). Reihenfolge: 6.11 → 6.1 → 6.2 → 6.12 → 6.13 → 6.3 → 6.4–6.6 → 6.7 → 6.8 → 6.9 → 6.10.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | ✅ | 6.1 | Umfang des Kapitels im Manuskript anzeigen | erledigt 2026-10-11 | – |
 | ✅ | 6.2 | Kurzfassung nicht mit der Anweisung verwechselbar | erledigt 2026-10-11 | – |
-| 🟠 | 6.3 | Kanon-Einträge bei langen Kapiteln | eingespielt, vom Eigentümer bestätigt (ADR-062) | KI: Technik-Prüfung an deiner Geschichte |
+| ✅ | 6.3 | Kanon-Einträge bei langen Kapiteln | erledigt 2026-10-11 (ADR-062) | – |
 | ✅ | 6.4 | Antworten des Servers nicht im Browser-Speicher | erledigt 2026-10-11 | – |
 | ✅ | 6.5 | Datenschutz-Einstellung an OpenRouter | erledigt 2026-10-11 (ADR-063) | – |
 | ✅ | 6.6 | Kopfzeilen und Fehlermeldungen härten | erledigt 2026-10-11 | – |
@@ -209,7 +209,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 6.3: Kanon-Einträge bei langen Kapiteln
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-11) – nach Spike 6.13 entschieden: C, Kanon vor den Seiten bis 30 % der Kapazität (ADR-062); umgesetzt in `ContextBuilder.build()` (`CANON_SHARE`), drei neue Tests, pytest 495, `builder.py` 100 %. Anfragen der Testgeschichten unverändert (byte-gleich). Eingespielt 2026-10-11 (`5f1fa10`); Eigentümer bestätigt 2026-10-11. Offen: Technik-Prüfung an der Geschichte des Eigentümers (Lesen der Produktionsdaten braucht seine Freigabe)
+- **Status:** ✅ ERLEDIGT (2026-10-11) – nach Spike 6.13 entschieden: C, Kanon vor den Seiten bis 30 % der Kapazität (ADR-062); umgesetzt in `ContextBuilder.build()` (`CANON_SHARE`), drei neue Tests, pytest 495, `builder.py` 100 %. Anfragen der Testgeschichten unverändert (byte-gleich). Eingespielt 2026-10-11 (`5f1fa10`); Eigentümer bestätigt 2026-10-11. Technik-Prüfung an der Geschichte des Eigentümers 2026-10-11 (lesend, mit seiner Freigabe): in den 6 langen Kapiteln gingen vorher 0–28 von 34 nicht genannten Einträgen mit, jetzt alle 34; Anfrage gleich groß (ca. 29.800 Token), die Seiten treten ca. 5.000 Token ab (Logbuch)
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 6.12, 6.13
 - **Freigabepflichtig:** ja – Reihenfolge der Kontext-Zusammenstellung (ADR-003), Kategorie 1
