@@ -151,7 +151,31 @@ def test_heading_without_text_and_other_subheadings_stays_a_group() -> None:
         "# Figuren\n\n## Hauptfiguren\n\n### Kael\nFährmann.\n\n### Zweck\nKein Gegenstand.\n"
     )
     entries = parse_markdown(material).entries
-    assert [e.name for e in entries] == ["Kael", "Zweck"]
+    # "Hauptfiguren" stays a group; since step 7.9 "Zweck" is a section of the entry before.
+    assert [e.name for e in entries] == ["Kael"]
+    assert entries[0].body == "Fährmann.\n\n#### Zweck\nKein Gegenstand.\n"
+
+
+def test_item_sections_beside_an_entry_belong_to_it() -> None:
+    """The world builder's model wrote the sections on the entry's level (step 7.9)."""
+    material = (
+        "# Gegenstände\n\n## Fessel\nAliasse: Acht\n\n## Zweck\nHält.\n\n## Verwendung\n"
+        "Anlegen.\n### Vorsicht\nNicht zu eng.\n\n## Auswirkung\nStarr.\n\n## Kerbe\nMesser.\n"
+    )
+    entries = parse_markdown(material).entries
+    assert [(e.name, e.category, e.aliases) for e in entries] == [
+        ("Fessel", "gegenstand", ("Acht",)),
+        ("Kerbe", "gegenstand", ()),
+    ]
+    assert entries[0].body == (
+        "### Zweck\nHält.\n\n### Verwendung\nAnlegen.\n#### Vorsicht\nNicht zu eng.\n\n"
+        "### Auswirkung\nStarr.\n"
+    )
+    # Deeper sections as asked for, and sections without an entry before them, stay as they were.
+    deep = parse_markdown("## Glocke\n### Zweck\nLäutet.\n").entries
+    assert [(e.name, e.body) for e in deep] == [("Glocke", "### Zweck\nLäutet.\n")]
+    alone = parse_markdown("# Gegenstände\n\n## Zweck\nA.\n\n## Verwendung\nB.\n").entries
+    assert [e.name for e in alone] == ["Zweck", "Verwendung"]
 
 
 def test_category_heading_with_item_sections_stays_a_group() -> None:

@@ -26,6 +26,10 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 - Umfang des Kapitels (2026-10-11, Schritt 6.1): Unter dem Manuskript steht laufend, wie viele Wörter das Kapitel hat. Nähert es sich der Grenze, bis zu der die KI noch eine Kurzfassung erstellen kann, erscheint gelb „Kurzfassung passt bis ca. … – bald abschließen“; darüber rot „zu lang für die Kurzfassung“. Die Grenze rechnet der Server je Kapitel aus (neu `GET …/chapters/{n}/summary-room`).
 
+### Behoben (nach v1.0.0)
+
+- Gegenstände aus dem Weltenbauer (2026-10-12, Schritt 7.9): Schrieb die KI „Zweck“, „Verwendung“ und „Auswirkung“ auf dieselbe Ebene wie den Gegenstand, entstanden beim Import vier Einträge. Diese Abschnitte gehören jetzt immer zum Eintrag davor – auch beim Import von Hand.
+
 ## [1.0.0] – 2026-10-11
 
 Erstes produktives Release (ADR-058) nach der Go-Live-Prüfung 5.14: Alle Elemente der Vision sind erledigt oder bewusst ausgeklammert (Publizieren, Bilder und Karten nicht in der ersten Version); „kein Kontextverlust“ und „günstiger pro Anfrage“ an „Geschichte des Eigentümers“ nachgewiesen (ADR-057). Auf den Blick eines Menschen von außen wurde verzichtet; stattdessen eine unabhängige Prüfung durch eine getrennte KI-Instanz (Urteil „freigeben“). Bekannte Einschränkung: Bei langen Kapiteln gehen nicht genannte Kanon-Einträge nicht mit – wichtige Einträge per `@` nennen (V.10).

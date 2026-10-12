@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-6.md`](archiv/fahrplan-phase-6.md).
 
-**Phase 7: 2 von 9 erledigt, 3 in Arbeit (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
+**Phase 7: 2 von 9 erledigt, 4 in Arbeit (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -36,7 +36,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ⚪ | 7.6 | Bilder und Karten | offen | KI |
 | ✅ | 7.7 | Pflege: Warnung von `npm ci` zu `fsevents` | erledigt 2026-10-12 | – |
 | ⚪ | 7.8 | Planung der nächsten Ausbaustufe | offen | KI |
-| ⚪ | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | offen | KI – nach 7.4 |
+| 🟠 | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | umgesetzt | du: im Weltenbauer prüfen nach dem Einspielen |
 
 **Querschnitt (offen):**
 
@@ -305,7 +305,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.9: Befund: Gegenstands-Abschnitte aus dem Weltenbauer
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – umgesetzt: Regel 5 im Markdown-Import (Zweck/Verwendung/Auswirkung auf der Ebene des Eintrags davor werden dessen Abschnitte, Unterabschnitte eingerückt), Beispiel im Format des Weltenbauers; Test mit der Form aus dem Bildschirmfoto; ein Test aus 4.16 an die neue Regel angepasst („Zweck“ unter einer Figur gehört jetzt zur Figur). pytest 566 grün. Offen: Einspielen, Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG (Fehlerbehebung)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein – Fehlerbehebung innerhalb von `canon` und `context`, keine Schnittstelle berührt
@@ -317,7 +317,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** canon, context
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag
-- **Notizen:** Angelegt 2026-10-12; Eigentümer: „Erst 7.4, dann beheben“. Vorgeschlagene Sofort-Hilfe `###` statt `##` half beim Eigentümer nicht („auch 3 Rautezeichen bringen nichts“); Gegenprobe mit dem Parser: mit `###` vor allen drei Abschnitten ein Eintrag, bleibt einer auf `##`, entstehen wieder zusätzliche – Ursache beim Eigentümer offen (Text länger als sichtbar? Vorschau neu geladen?). Zweite Ergänzung des Eigentümers: Rautezeichen vor den drei Abschnitten ganz entfernt (nur die Überschrift des Gegenstands bleibt) führt zum gewünschten Ergebnis. Die Abhilfe soll unabhängig von der Ebene greifen; beim Beheben die echte Ausgabe des Weltenbauers nachstellen und klären, warum `###` beim Eigentümer nicht half.
+- **Notizen:** Angelegt 2026-10-12; Eigentümer: „Erst 7.4, dann beheben“. Vorgeschlagene Sofort-Hilfe `###` statt `##` half beim Eigentümer nicht („auch 3 Rautezeichen bringen nichts“); Gegenprobe mit dem Parser: mit `###` vor allen drei Abschnitten ein Eintrag, bleibt einer auf `##`, entstehen wieder zusätzliche – Nachgestellt 2026-10-12 im Browser mit dem Stand ohne Korrektur: alle drei auf `###` → ein Eintrag; nur „Zweck“ auf `###` → drei Einträge. Wahrscheinliche Ursache: Das Import-Feld zeigt nur die ersten Zeilen, „Verwendung“ und „Auswirkung“ standen außer Sicht. Zweite Ergänzung des Eigentümers: Rautezeichen vor den drei Abschnitten ganz entfernt (nur die Überschrift des Gegenstands bleibt) führt zum gewünschten Ergebnis. Die Abhilfe soll unabhängig von der Ebene greifen; beim Beheben die echte Ausgabe des Weltenbauers nachstellen und klären, warum `###` beim Eigentümer nicht half.
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 
