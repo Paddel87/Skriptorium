@@ -32,6 +32,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 ### 2026-10-12 – [ADR-ANGELEGT] ADR-076 Bilder vorerst über OpenRouter (7.12)
 
 - Eigentümer nach der Erkundung (fal.ai, Replicate, Runware): „wir bleiben vorerst bei OpenRouter, weitere Anbieter in einer späteren Phase“. ADR-076; weitere Anbieter als V.24 mit Landeplatz 7.8; Erkundung umbenannt zu „Bildanbieter für 7.12“. Zweig umbenannt zu `docs/7.12-bildanbieter-erkundung` (Wunsch des Eigentümers, Namen nachziehen).
+- Aufgeräumt (Freigabe des Eigentümers): 28 lokale und 72 entfernte Zweige gelöscht, alle per `merge-base --is-ancestor` als vollständig in `main` enthalten geprüft; darunter der lokale Zweig mit einem Geschichtentitel im Namen. Auf GitHub bleibt nur `main`. Erkundungsdatei umbenannt zu `docs/research/bildanbieter.md`.
 
 ### 2026-10-12 – [BEOBACHTUNG] 7.12: Erkundung fal.ai
 
