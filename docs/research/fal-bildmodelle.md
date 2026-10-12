@@ -54,3 +54,25 @@ Stand 2026-10-12. Anlass: Vorschlag des Eigentümers, Bilder in 7.12 über fal.a
 Empfehlung: fal.ai und Replicate per Probe vergleichen (Eigentümer im Playground, kleines festes Guthaben), bei fal zusätzlich die Freischaltung erfragen; 7.12 mit austauschbarem Anbieter bauen.
 
 Quellen: <https://replicate.com/docs/topics/predictions/safety-checking>, <https://fal.ai/docs/documentation/model-apis/model-arguments>, <https://help.runware.ai/articles/5571280435-is-there-a-way-to-filter-out-nsfw-content>, <https://runware.ai/docs/models/content-safety.md>, <https://docs.novelai.net/en/subscription>, Vergleichsseiten <https://www.digitalapplied.com/blog/ai-image-generation-api-pricing-comparison-2026>, <https://www.teamday.ai/blog/ai-image-video-api-providers-comparison-2026>.
+
+## Replicate im Detail (Auftrag des Eigentümers, 2026-10-12)
+
+Vorgabe des Eigentümers: **pornografische Inhalte sind nicht geplant.** Die Filterfrage betrifft damit vor allem Fehlalarme bei düsteren, aber nicht expliziten Motiven (Horror, Gewalt angedeutet, Waffen, Blut, Figuren in Not).
+
+- **Modelle:** Kollektion „text-to-image“ mit vielen offiziellen Modellen: FLUX (dev, schnell, pro, 1.1 pro/Ultra, Kontext, FLUX.2 pro/flex/max/klein), Seedream 3–5, Google Imagen 3/4 und Nano Banana, OpenAI GPT Image 1.5/2, Grok Imagine, Qwen Image, HiDream, Z-Image, Wan, Hunyuan Image 3, Ideogram V2/V3, Recraft V3/V4 (davon SVG-Varianten ausschließen), Stable Diffusion 3.5, Leonardo Lucid Origin, Luma Photon, MiniMax. Die Modell-API braucht einen Schlüssel (401 ohne).
+- **Filter-Schalter je Modell** (aus den öffentlichen Schema-Seiten, selbst gelesen):
+
+| Art | Voreinstellung | Modelle |
+|---|---|---|
+| `disable_safety_checker` (an/aus), kein Hinweis auf Freischaltung | Prüfung an | FLUX dev/schnell/dev-lora, FLUX.2 klein, Seedream 4.5, Qwen Image, Hunyuan Image 3, SDXL |
+| `safety_tolerance` (Stufe) | 2 | FLUX pro, 1.1 pro, 1.1 Ultra (1–6), Kontext pro (0–6), FLUX.2 pro/flex/max (1–5) |
+| `safety_filter_level` | „block_only_high“ (lockerste Stufe) | Nano Banana Pro, Imagen 4, Imagen 4 Ultra |
+| `moderation` | „auto“, wahlweise „low“ | GPT Image 1.5 und 2 |
+| kein Schalter | – | Seedream 4 und 5 lite, Nano Banana, Nano Banana 2, Grok Imagine, SD 3.5, HiDream, Wan 2.2, Ideogram, Recraft, Leonardo, Luma, MiniMax |
+
+- **Kosten:** nach Rechenzeit bzw. je Bild; Beispiele von der Preisseite: FLUX schnell 0,003 $, FLUX dev 0,025 $, FLUX 1.1 pro 0,04 $, Recraft V3 0,04 $, Ideogram V3 Quality 0,09 $ je Bild. **Vorab-Guthaben** möglich, automatisches Nachladen abschaltbar; bei leerem Guthaben startet keine neue Arbeit (selten überzieht eine laufende Anfrage, der Rest wird am Monatsende belastet). Guthaben gilt ein Jahr, nicht erstattbar. Fehlgeschlagene Läufe kosten meist nichts.
+- **Nutzungsbedingungen (Abschnitt 2.7):** verboten u. a. nicht einvernehmliche Nacktheit und illegale Pornografie, jede Ausbeutung Minderjähriger, Verherrlichung von Gewalt und Terror, **„extreme gore“ wie Zerstückelung, Verstümmelung, Folter**, Belästigung und Nachahmung echter Personen ohne Einwilligung. Replicate überwacht erzeugte Inhalte nicht (8.6); Verantwortung beim Kunden.
+- **Daten:** Eingaben und Ausgaben gehören dem Kunden (5.1); Replicate erhält eine Lizenz zum Verarbeiten, auch für vom Kunden gewünschte abgeleitete Modelle (5.2); anonymisierte Nutzungsdaten gehören Replicate (5.3). Aufbewahrungsfristen nennt die Bedingung nicht (Verweis auf die Datenschutzerklärung). Sitz San Francisco, kalifornisches Recht, Schiedsverfahren.
+- **Einschätzung:** Ohne pornografische Absicht genügen die Filter-Regler meist; Replicate erlaubt das Abschalten bei offenen Modellen ohne Freischaltung (fal: mit Freischaltung). Grenze für die Geschichten des Eigentümers: Folter- und Verstümmelungsmotive sind laut Bedingungen verboten, unabhängig vom Filter.
+
+Quellen: <https://replicate.com/collections/text-to-image>, Schema-Seiten `https://replicate.com/<modell>/api/schema` (selbst gelesen), <https://replicate.com/pricing>, <https://replicate.com/docs/topics/billing>, <https://replicate.com/docs/topics/billing/prepaid-credit>, <https://replicate.com/docs/topics/predictions/safety-checking>, <https://replicate.com/terms>.
