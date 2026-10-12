@@ -1650,6 +1650,7 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Vision-Frage, die entschied:** „Brauchst du die Ereignisse einzeln – oder reicht dir eine übersichtliche, sortierte Ansicht deiner Liste?“ → die Ansicht reicht.
 - **Konfidenz zum Zeitpunkt:** hoch – Format aus der echten Testwelt, nur Darstellung. Umkehrbarkeit billig; B und C bleiben möglich.
 - **Konsequenzen:** keine Änderung an `canon`, `context` oder `api`; FR-023 erfüllt, sobald der Eigentümer bestätigt.
+- **Nachsteuerung 2026-10-12 (Eigentümer: „Ich finde die Funktion nicht“, dann „Ja, so anpassen“, Mockup „Passt, umbauen“):** Lesende Prüfung der Produktion (mit Erlaubnis, nur Zahlen): die Welt mit Zeitlinie führt 12 Einträge der Kategorie Zeitlinie, jeder „Jahr – Ereignis“ im Namen und ein kurzer Satz als Text – keine Liste. Die Vorlage war nur an der Testwelt abgeleitet (Fehler der KI). Ergänzt: Mit dem Filter „Zeitlinie“ zeigt die Kanon-Seite alle Zeitlinien-Einträge der Welt als einen Zeitstrahl (Datum aus dem Namen vor „–“, „-“ oder „:“, sortiert wie oben; ohne Zahl am Ende), Umschalter „Liste“, Tipp öffnet den Eintrag, „+ Ereignis“ legt einen Eintrag „Jahr – Titel“ an. Der Zeitstrahl innerhalb eines Eintrags erscheint nur noch, wenn er eine Ereignisliste enthält. Weiterhin kein Datenmodell berührt.
 - **Abgeleitete Regel:** keine
 
 ---

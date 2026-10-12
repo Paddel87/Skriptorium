@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [GELÖST] 7.2 Zeitstrahl passte nicht zur Form des Eigentümers
+
+- Eigentümer: „Ich finde die Funktion nicht.“ Mit seiner Erlaubnis lesend auf der Produktion gezählt (nur Zahlen und Formen): vier Welten ohne Zeitlinie, eine Welt mit 12 Einträgen der Kategorie Zeitlinie, alle Namen „Zahl – Wörter“, Texte 6–15 Wörter, keine Listen; in einer Welt ein Regel-Eintrag mit Ereigniszeilen.
+- Ursache: Vorlage und Umsetzung nur an der Testwelt (eine Liste in einem Eintrag) abgeleitet. Lehre: Bei Darstellungen bestehender Daten vor der Vorlage die echte Form zählen (mit Erlaubnis, nur Zahlen).
+- Nachgesteuert (ADR-069, Mockup freigegeben): Zeitstrahl über alle Zeitlinien-Einträge der Welt; „+ Ereignis“ legt Einträge in seiner Form an; Listen-Einträge erscheinen dort als „N Ereignisse als Liste“. Sichtprobe Desktop/Handy (schwarz) an einer Kopie der Testwelt.
+
 ### 2026-10-12 – [ERLEDIGT] 7.9 Gegenstands-Abschnitte
 
 - Eigentümer: „Der Weltenbauer funktioniert jetzt hundertprozentig und er ist einfach nur genial.“ Phase 7: 3 von 9.
