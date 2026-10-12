@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [ADR-ANGELEGT] ADR-074 Bilder einmal beschreiben lassen (7.13)
+
+- PR #143 (7.10) nach grüner CI gemergt (Wahl „Nur hochladen und mergen“). Eigentümer wählt 7.13 als Nächstes (vor 7.11/7.12). Vorlage: Bildteile in `Message`, Ablauf wie Weltenbauer, nur Modelle mit Bildlesen – freigegeben; Karten-Text in die Weltbeschreibung; Mitschicken beim Schreiben als neuer Schritt 7.15. Phase 7 jetzt 15 Schritte. Echte Probe nur in Cloud-Sitzung oder nach dem Einspielen (lokaler Schlüssel ungültig).
+
 ### 2026-10-12 – [BEOBACHTUNG] 7.10 Karten der Welt umgesetzt
 
 - Mockup (vorher/nachher, Reiter „Karten“) freigegeben. Umgesetzt: `karten` im Kopf von `world.md`, Ordner `karten/` (beim Bau statt `bilder/` gewählt, damit ein Eintrag „karte“ nie eine Karte als Bild führen kann – in ADR-073 vermerkt), vier Routen, `WorldMaps.tsx` mit Kacheln, Hinzufügen (Name aus dem Dateinamen vorbelegt), großer Ansicht mit `@panzoom/panzoom` (＋/−/⤢, Mausrad, zwei Finger), Umbenennen, Entfernen; höchstens 20 Karten je Welt.
