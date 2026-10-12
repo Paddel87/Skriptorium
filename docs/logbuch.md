@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [BEOBACHTUNG] Eindruck des Eigentümers; Idee „wandernde Figuren“ (V.26)
+
+- Eigentümer: Die neuen Funktionen „funktionieren alle auch relativ gut“. Abhaken von 7.6–7.16 bewusst erst nach seinen Proben (Wahl „Noch nicht“).
+- Grundsatzgedanke: Figuren sollen ohne Bezug auf eine Welt beschrieben sein, in andere Welten wandern können, dort realistisch eingepasst werden, und ihre Erlebnisse sollen in den Kern zurückwandern. Als V.26 festgehalten, nicht entschieden; Planung in 7.8 zusammen mit V.25.
+
 ### 2026-10-13 – [BEOBACHTUNG] Eingespielt: Abschnitt „Aussehen“ (`8296931`)
 
 - PR #149 (V.25) auf „merge“ nach grüner CI gemergt (zwei Anläufe, Prüfungen liefen noch; automatisches Mergen bewusst nicht eingeschaltet, da nicht ausdrücklich verlangt).
