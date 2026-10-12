@@ -34,7 +34,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - Ursache: Die Anweisung verlangte schon `### Zweck` usw.; grok-4.6 schrieb trotzdem `## Zweck` (Ebene des Eintrags). 6.7 hatte nur die zu tiefe Form abgefangen (`kanonBlock.ts`).
 - Abhilfe im Import selbst (Regel 5 in `canon/importers/markdown.py`): Abschnitte Zweck/Verwendung/Auswirkung neben einem Eintrag werden dessen Abschnitte – gilt für Weltenbauer und Import von Hand. Dazu ein Beispiel im Format der Weltenbauer-Anweisung.
 - Ein Test aus 4.16 erwartete „Zweck“ unter „Hauptfiguren“ als eigenen Eintrag; jetzt gehört er zur Figur davor – bewusste Änderung.
-- Offen: warum `###` beim Eigentümer nicht half (Parser-Gegenprobe ergab einen Eintrag); mit Regel 5 spielt das keine Rolle mehr.
+- Auf Bitte des Eigentümers („prüfen“) nachgestellt: Weltenbauer mit nachgebildeter fehlerhafter Antwort, Stand `main` ohne Korrektur, Ablauf über die Oberfläche. Übernommen → 4 Einträge; alle drei auf `###` → 1 Eintrag; nur „Zweck“ auf `###` → 3 Einträge. Wahrscheinliche Ursache: das Import-Feld zeigt nur die ersten Zeilen, „Verwendung“ und „Auswirkung“ lagen außer Sicht. Lehre: Sofort-Hilfen so formulieren, dass sie auch bei verdecktem Text greifen (z. B. „jede Zeile, die mit `## Zweck`, `## Verwendung` oder `## Auswirkung` beginnt“). Prüf-Worktree ohne `pre-commit install`.
 
 ### 2026-10-12 – [BEOBACHTUNG] 7.4 E-Book umgesetzt; Befund 7.9 aufgenommen
 
