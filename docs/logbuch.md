@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [ADR-ANGELEGT] ADR-078 Abschnitt „Aussehen“ bei Figuren (7.16)
+
+- Befund des Eigentümers nach dem Einspielen: Bildbeschreibung für Figuren enthielt Verhalten und Charakter. Ursache: Vorbelegung nimmt ohne Abschnitt/Zeile „Aussehen“ den Anfang des ganzen Eintrags. Eigentümer schlug selbst eine Trennung der äußeren Merkmale vor; gewählt: Abschnitt „Aussehen“, Knopf „Aussehen herauslösen“, sofort als 7.16. Phase 7 jetzt 16 Schritte (Schwelle erreicht). Import-Probe: `### Aussehen` unter dem Namen landet im Eintrag, `## Aussehen` daneben würde ein eigener Eintrag – wird mit angehängt.
+
 ### 2026-10-12 – [BEOBACHTUNG] Eingespielt: Bilder, Karten, Titelbild, Bilder erzeugen und beschreiben (`eb44949`)
 
 - Auf Anweisung („einspielen“) `main` mit 7.6, 7.10, 7.11, 7.12, 7.13 eingespielt (Weg nach Runbook: `app.vorher` und `skriptorium:vorher` als Rückweg). HTTPS `/api/health` 200 nach 60 s, neues Bündel ausgeliefert, `/api/images/models` ohne Anmeldung 401; eine SSH-Abfrage: `(healthy)`, `REVISION` `eb44949`, keine Fehler im Protokoll der ersten Minuten.
