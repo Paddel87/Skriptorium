@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [ADR-ANGELEGT] ADR-076 Bilder vorerst über OpenRouter (7.12)
+
+- Eigentümer nach der Erkundung (fal.ai, Replicate, Runware): „wir bleiben vorerst bei OpenRouter, weitere Anbieter in einer späteren Phase“. ADR-076; weitere Anbieter als V.24 mit Landeplatz 7.8; Erkundung umbenannt zu „Bildanbieter für 7.12“. Zweig umbenannt zu `docs/7.12-bildanbieter-erkundung` (Wunsch des Eigentümers, Namen nachziehen).
+
 ### 2026-10-12 – [BEOBACHTUNG] 7.12: Erkundung fal.ai
 
 - PR #145 (7.11) auf „merge“ nach grüner CI gemergt. Eigentümer zu 7.12: „vielleicht lässt sich fal.ai einbinden“; nach Vergleich mit OpenRouter Auftrag, erst Modelle und Filter-Schalter zu prüfen. Ergebnis in `docs/research/fal-bildmodelle.md`: 203 aktive Text-zu-Bild-Modelle per API; 165 mit Schalter `enable_safety_checker` (meist an), 18 mit Stufe `safety_tolerance`, 7 standardmäßig aus, 20 ohne Schalter. Preise je Modell nur mit Schlüssel abrufbar. Entscheidung des Eigentümers steht aus.

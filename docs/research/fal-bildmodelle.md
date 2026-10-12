@@ -1,4 +1,6 @@
-# Erkundung: Bildmodelle bei fal.ai und ihre Filter-Schalter (Schritt 7.12)
+# Erkundung: Bildanbieter für Schritt 7.12 (fal.ai, Replicate, Runware)
+
+> **Ergebnis (ADR-076, 2026-10-12):** 7.12 bleibt vorerst bei OpenRouter; weitere Bildanbieter später (V.24, Landeplatz 7.8). Die Befunde unten sind für diese spätere Phase festgehalten.
 
 Stand 2026-10-12. Anlass: Vorschlag des Eigentümers, Bilder in 7.12 über fal.ai statt OpenRouter zu erzeugen; Auftrag: „prüfen, welche Modelle mit API bei fal.ai verfügbar sind und wo sich Filter abschalten lassen“.
 
