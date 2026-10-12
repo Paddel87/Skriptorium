@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [BEOBACHTUNG] Eingespielt: Abschnitt „Aussehen“ (`8296931`)
+
+- PR #149 (V.25) auf „merge“ nach grüner CI gemergt (zwei Anläufe, Prüfungen liefen noch; automatisches Mergen bewusst nicht eingeschaltet, da nicht ausdrücklich verlangt).
+- Auf Anweisung („einspielen“) `main` mit 7.16 eingespielt (Rückweg wie im Runbook). HTTPS `/api/health` 200 nach 60 s, neue Route ohne Anmeldung 401; eine SSH-Abfrage: `(healthy)`, `REVISION` `8296931`, keine Fehler im Protokoll. Offen: Probe des Eigentümers an einer echten Figur.
+
 ### 2026-10-12 – [BEOBACHTUNG] PR #148 gemergt; Idee „Verweise zwischen Kanon-Einträgen“ (V.25)
 
 - PR #148 (7.16) auf „merge“ nach grüner CI gemergt, noch nicht eingespielt.
