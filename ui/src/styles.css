@@ -1536,3 +1536,197 @@ button.more-toggle {
   grid-column: 1 / -1;
   justify-self: start;
 }
+
+/* Appearance "Buch" (step 7.5, direction C): calm, little frame, the manuscript as a page of
+   a book in the middle; controls held back - quiet text buttons, one dark main button. */
+:root {
+  --page: #efeae0;
+  --surface: #fffdf8;
+  --line: #ddd5c6;
+  --button: transparent;
+  --sheet-shadow: 0 1px 2px rgb(0 0 0 / 8%), 0 8px 24px rgb(0 0 0 / 6%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --button: transparent;
+    --sheet-shadow: 0 1px 2px rgb(0 0 0 / 40%);
+  }
+}
+
+:root[data-theme="dark"],
+:root[data-theme="black"] {
+  --button: transparent;
+  --sheet-shadow: 0 1px 2px rgb(0 0 0 / 40%);
+}
+
+:root[data-theme="black"] {
+  --sheet-shadow: none;
+}
+
+.card {
+  border-color: transparent;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
+}
+
+/* Buttons quiet: a thin line, no fill; the main action in ink. */
+button,
+a.button {
+  border-color: var(--line);
+  color: var(--text);
+}
+
+/* Without weight of its own, so marks like a chosen entry stay visible under the mouse. */
+:where(button:hover:not(:disabled), a.button:hover) {
+  background: var(--surface);
+}
+
+button.primary {
+  border-color: var(--text);
+  background: var(--text);
+  color: var(--page);
+}
+
+button.primary:hover:not(:disabled) {
+  background: var(--text);
+  opacity: 0.9;
+}
+
+button.ghost {
+  border-color: transparent;
+  background: none;
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+button.ghost:disabled {
+  color: var(--muted);
+  text-decoration: none;
+  opacity: 0.6;
+}
+
+/* Tabs as text with an underline, not as filled buttons. */
+.tabs {
+  gap: 1.1rem;
+}
+
+.tabs button,
+.tabs a.tab {
+  padding: 0.3rem 0.1rem;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: none;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.tabs button[aria-current="true"],
+.tabs a.tab[aria-current="page"] {
+  border-bottom-color: var(--accent);
+  background: none;
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* The bar on the left: icons on the page colour, no frame; labels only on small screens. */
+.rail {
+  background: var(--page);
+}
+
+.rail-button {
+  border: none;
+  color: var(--muted);
+}
+
+.rail-button .symbol {
+  color: inherit;
+}
+
+.rail-button[aria-pressed="true"],
+.rail-button:hover:not(:disabled) {
+  background: none;
+  color: var(--text);
+}
+
+@media (min-width: 56.01rem) {
+  .rail .rail-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .rail {
+    gap: 0.75rem;
+    border-right-color: transparent;
+  }
+}
+
+.tree.chapters a[aria-current="true"] {
+  border-left: 2px solid var(--accent);
+  border-radius: 0;
+  background: none;
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* The manuscript as a page in a book typeface at a comfortable line length. */
+.editor.manuscript {
+  max-width: 46rem;
+  margin: 0 auto;
+  border: none;
+  border-radius: 2px;
+  box-shadow: var(--sheet-shadow);
+}
+
+.editor.manuscript .cm-scroller {
+  font-family:
+    "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia,
+    serif;
+  font-size: 1.1rem;
+  line-height: 1.75;
+}
+
+.editor.manuscript .cm-content {
+  max-width: 35rem;
+  margin: 0 auto;
+  padding: 1.75rem 1rem;
+}
+
+/* The instruction as a line to write on, in the typeface of the page. */
+.editor.instruction {
+  border: none;
+  border-bottom: 1px solid var(--field-line);
+  border-radius: 0;
+  background: transparent;
+}
+
+.editor.instruction .cm-editor {
+  background: transparent;
+}
+
+.editor.instruction .cm-scroller {
+  font-family: system-ui, sans-serif;
+}
+
+input.chapter-title {
+  font-family: "Iowan Old Style", Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+/* Line icons of the bar on the left and of the small screen's buttons. */
+.icon {
+  width: 1.3rem;
+  height: 1.3rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: middle;
+}

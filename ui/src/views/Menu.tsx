@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+import { Icon } from "./Icons";
 
 /** Opens the menu on small screens; views put it into their own top line. */
 export const MenuContext = createContext<() => void>(() => undefined);
@@ -13,7 +14,7 @@ export function MenuButton() {
       aria-label="Menü"
       onClick={open}
     >
-      ☰
+      <Icon name="list" />
     </button>
   );
 }

@@ -12,6 +12,7 @@ import { StorySummary } from "./StorySummary";
 import { StoryEpub } from "./StoryEpub";
 import { ModeLine, WritingMode } from "./WritingMode";
 import { ChapterStyle, StoryStyle, StyleLine } from "./WritingStyle";
+import { Icon } from "./Icons";
 
 type SideTab = "kanon" | "geschichte";
 
@@ -56,7 +57,7 @@ export function StoryPage({
   const sideToggle = (
     <button
       type="button"
-      className={side ? "primary side-toggle" : "side-toggle"}
+      className={side ? "primary side-toggle" : "ghost side-toggle"}
       aria-label="Kanon & Geschichte"
       aria-expanded={side}
       aria-controls="story-side"
@@ -66,7 +67,7 @@ export function StoryPage({
     >
       <span className="wide-only">Kanon &amp; Geschichte</span>
       <span className="narrow-only" aria-hidden="true">
-        📖
+        <Icon name="canon" />
       </span>
     </button>
   );

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { applyTheme, readTheme, saveTheme, THEMES, type Theme } from "../theme";
+import { Icon } from "./Icons";
 
 /**
  * Choice of appearance in the bar on the left (steps 5.19, 5.11, 6.14): each click moves on from
@@ -23,9 +24,11 @@ export function ThemeChoice() {
       }}
     >
       <span aria-hidden="true" className="symbol">
-        ◐
+        <Icon name="theme" />
       </span>
-      {label === "Automatisch" ? "Auto" : label}
+      <span className="rail-label">
+        {label === "Automatisch" ? "Auto" : label}
+      </span>
     </button>
   );
 }

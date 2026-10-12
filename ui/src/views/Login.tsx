@@ -45,7 +45,7 @@ export function Login({
         />
       </Field>
       <ErrorText message={error} />
-      <button type="submit" disabled={busy}>
+      <button type="submit" className="primary" disabled={busy}>
         Anmelden
       </button>
       {onSetup !== undefined && (

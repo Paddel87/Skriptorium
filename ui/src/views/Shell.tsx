@@ -25,6 +25,7 @@ import { StoryPage } from "./StoryPage";
 import { ThemeChoice } from "./ThemeChoice";
 import { WorldPage } from "./WorldPage";
 import { Worlds } from "./Worlds";
+import { Icon } from "./Icons";
 
 const AREAS: readonly WorldArea[] = [
   "geschichten",
@@ -94,7 +95,7 @@ export function Shell({ onLogout }: { onLogout: () => void }) {
           <div className="side-nav">
             <nav className="rail" aria-label="Bereiche">
               <RailButton
-                symbol="☰"
+                symbol={<Icon name="list" />}
                 label="Liste"
                 pressed={listOpen}
                 className="list-toggle"
@@ -103,14 +104,14 @@ export function Shell({ onLogout }: { onLogout: () => void }) {
                 }}
               />
               <RailButton
-                symbol="🌍"
+                symbol={<Icon name="worlds" />}
                 label="Welten"
                 onClick={() => {
                   go("/");
                 }}
               />
               <RailButton
-                symbol="📖"
+                symbol={<Icon name="canon" />}
                 label="Kanon"
                 disabled={lastWorld === undefined}
                 onClick={() => {
@@ -120,7 +121,7 @@ export function Shell({ onLogout }: { onLogout: () => void }) {
                 }}
               />
               <RailButton
-                symbol="⤓"
+                symbol={<Icon name="import" />}
                 label="Import"
                 disabled={lastWorld === undefined}
                 onClick={() => {
@@ -132,13 +133,17 @@ export function Shell({ onLogout }: { onLogout: () => void }) {
               <span className="spacer" />
               <ThemeChoice />
               <RailButton
-                symbol="⚙"
+                symbol={<Icon name="account" />}
                 label="Konto"
                 onClick={() => {
                   go("/konto");
                 }}
               />
-              <RailButton symbol="⏻" label="Abmelden" onClick={onLogout} />
+              <RailButton
+                symbol={<Icon name="logout" />}
+                label="Abmelden"
+                onClick={onLogout}
+              />
             </nav>
             <div className="list-pane">
               <button
@@ -217,12 +222,13 @@ function RailButton({
       }
       aria-pressed={pressed}
       disabled={disabled}
+      title={label}
       onClick={onClick}
     >
       <span aria-hidden="true" className="symbol">
         {symbol}
       </span>
-      {label}
+      <span className="rail-label">{label}</span>
     </button>
   );
 }

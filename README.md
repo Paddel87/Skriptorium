@@ -105,7 +105,8 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - ✅ **7.2:** Zeitlinie als Zeitstrahl (ADR-069) – erledigt 2026-10-12.
 - ✅ **7.3:** Schreibweise folgt der Geschichte (ADR-070) – erledigt 2026-10-12.
 - ✅ **7.4:** Geschichte als E-Book (ADR-071) – erledigt 2026-10-12.
-- ⚪ **Als Nächstes:** 7.5 Gestaltung der Oberfläche, dann 7.6 Bilder und Karten (ADR-068).
+- 🟠 **7.5:** Aussehen „Buch“ – umgesetzt, Prüfung offen.
+- ⚪ **Als Nächstes:** 7.6 Bilder und Karten (ADR-068).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).
