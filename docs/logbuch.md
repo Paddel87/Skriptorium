@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] 7.6 gemergt; Richtung für 7.13 gewählt
+
+- PR #142 nach grüner CI gemergt (Wahl „Nur hochladen und mergen“), noch nicht eingespielt. Korrektur: In einer Antwort davor stand fälschlich, 7.6 sei schon gemergt – dem Eigentümer richtiggestellt.
+- Erklärt, wie Bilder abgelegt und Einträgen zugeordnet werden; Sicherung laut Runbook (ganzes `data/` ohne Index) – Beleg im Protokoll nach dem Einspielen und dem ersten echten Bild.
+- 7.10 erklärt (Karten auf Weltebene, Zoom; offene Fragen: Ort in der Oberfläche, höhere Pixelgrenze für Karten, Markierungen als eigener Schritt).
+- Eigentümer zu 7.13: Die KI soll Karten kennen, aber Bilder nicht bei jeder Eingabe mitschicken (Kosten). Gewählt: „Einmal beschreiben“ – KI beschreibt ein Bild einmal, Übernahme als Kanon-Text; direktes Mitschicken nur als Ausnahme auf Knopfdruck. In 7.13 eingetragen; ADR folgt beim Bau.
+
 ### 2026-10-12 – [BEOBACHTUNG] 7.6 Bilder an Kanon-Einträgen umgesetzt; getrennte Prüfung
 
 - Mockup erst mit einem Bild je Eintrag; Eigentümer: „Mehrere Bilder je Eintrag“. Zweites Mockup mit Galerie (Hauptbild, Vorschaubilder, große Ansicht mit Blättern, „Zum Hauptbild machen“, „Entfernen“) – „Passt, umbauen“. Nachtrag in ADR-072.

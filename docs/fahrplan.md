@@ -33,14 +33,14 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ✅ | 7.3 | Schreibweise der Geschichte wirkt auf bestehende Kapitel | erledigt 2026-10-12 (ADR-070) | – |
 | ✅ | 7.4 | Publizieren (Satz, Export, Veröffentlichung) | erledigt 2026-10-12 (ADR-071) | – |
 | ✅ | 7.5 | Gestaltung der Oberfläche | erledigt 2026-10-12 (Richtung C „Buch“) | – |
-| 🟠 | 7.6 | Bildablage, Hochladen und Bilder an Kanon-Einträgen | umgesetzt, geprüft (ADR-072) | du: PR freigeben, nach dem Einspielen ausprobieren |
+| 🟠 | 7.6 | Bildablage, Hochladen und Bilder an Kanon-Einträgen | gemergt (ADR-072, PR #142) | du: „einspielen“, dann ausprobieren |
 | ✅ | 7.7 | Pflege: Warnung von `npm ci` zu `fsevents` | erledigt 2026-10-12 | – |
 | ⚪ | 7.8 | Planung der nächsten Ausbaustufe | offen | KI |
 | ✅ | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | erledigt 2026-10-12 | – |
 | ⚪ | 7.10 | Karten der Welt | offen (nach 7.6) | KI |
 | ⚪ | 7.11 | Bilder in Geschichten | offen (nach 7.6) | KI |
 | ⚪ | 7.12 | Bilder von der KI erzeugen | offen (nach 7.6) | KI |
-| ⚪ | 7.13 | Die KI kennt Bilder (zuschaltbar) | offen (nach 7.6) | KI |
+| ⚪ | 7.13 | Die KI kennt Bilder (einmal beschreiben, Bild nur auf Knopfdruck) | offen (nach 7.6) | KI |
 
 **Querschnitt (offen):**
 
@@ -261,7 +261,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.6: Bildablage, Hochladen und Bilder an Kanon-Einträgen
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – Erkundung `docs/research/bilder-erkundung.md`; entschieden (ADR-072): Ablage im Datenverzeichnis, fünf Teilschritte (7.6, 7.10–7.13). Mockup: Galerie je Eintrag (Wahl des Eigentümers, Nachtrag ADR-072). Umgesetzt und getrennt geprüft (2026-10-12, keine Befunde hoch/mittel). Offen: PR, Einspielen, Bestätigung des Eigentümers; Sicherung erfasst `bilder/` nach dem Einspielen prüfen
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – Erkundung `docs/research/bilder-erkundung.md`; entschieden (ADR-072): Ablage im Datenverzeichnis, fünf Teilschritte (7.6, 7.10–7.13). Mockup: Galerie je Eintrag (Wahl des Eigentümers, Nachtrag ADR-072). Umgesetzt und getrennt geprüft (2026-10-12, keine Befunde hoch/mittel), gemergt (PR #142). Offen: Einspielen, Bestätigung des Eigentümers; Sicherung erfasst `bilder/` nach dem Einspielen prüfen
 - **Phasentyp-Kontext:** UMSETZUNG (mit Erkundung und Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 7.5
 - **Freigabepflichtig:** ja – Ablage von Bilddateien (Kategorie 4, ggf. Architektur Kategorie 1), Hochladen fremder Dateien (Kategorie 6, Prüfung durch getrennte Instanz), ggf. Bilderzeugung (Kategorie 3)
@@ -384,12 +384,12 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Empfohlene Klasse:** Entscheidung – Architektur der Anfrage (Eskalations-Auslöser 1).
 - **Eingangskriterien:** 7.6 erledigt
 - **Anforderungen (ab Klasse M):** FR-035
-- **Zu tun:** Je Anfrage zuschaltbar: Bilder der per `@` genannten Einträge gehen als Bildteile an Modelle, die Bilder lesen; Kosten vorher sichtbar.
-- **Akzeptanzkriterien:** ADR; Tests; echte Probe; Eigentümer bestätigt.
+- **Zu tun:** Hauptweg (Wahl des Eigentümers 2026-10-12, „Einmal beschreiben“): „Von der KI beschreiben lassen“ an einem Bild oder einer Karte – die KI sieht das Bild genau einmal, schreibt eine Beschreibung (bei Karten: Lage, Entfernungen, Nachbarschaften), der Eigentümer prüft und übernimmt sie wie beim Weltenbauer als Kanon-Text; danach kennt die KI das Bild bei jeder Anfrage nur über diesen Text. Ausnahme: je Anfrage zuschaltbar gehen Bilder der per `@` genannten Einträge als Bildteile an Modelle, die Bilder lesen; Kosten vorher sichtbar. Nie automatisch bei jeder Anfrage.
+- **Akzeptanzkriterien:** ADR; Tests; echte Probe mit gemessenen Token je Bild; Eigentümer bestätigt.
 - **Betroffene Module:** context, ai_gateway, api, ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag, ggf. ADR
-- **Notizen:** Angelegt 2026-10-12 aus dem Zuschnitt von 7.6 (ADR-072).
+- **Notizen:** Angelegt 2026-10-12 aus dem Zuschnitt von 7.6 (ADR-072). Anlass der Wahl: Bilder bei jeder Eingabe mitzuschicken treibt die Kosten (Schätzung 1.000–3.000 Token je Bild bei rund 17.000 Token je Anfrage; in 7.13 messen); die Karte soll der Stimmigkeit dienen, nicht jede Anfrage verteuern.
 
 #### D.1: Wechsel Node.js 24 → Node.js 26 LTS
 
