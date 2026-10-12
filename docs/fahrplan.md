@@ -317,7 +317,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** canon, context
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag
-- **Notizen:** Angelegt 2026-10-12; Eigentümer: „Erst 7.4, dann beheben“. Bis dahin Sofort-Hilfe: im Textfeld `###` statt `##` vor den drei Abschnitten.
+- **Notizen:** Angelegt 2026-10-12; Eigentümer: „Erst 7.4, dann beheben“. Vorgeschlagene Sofort-Hilfe `###` statt `##` half beim Eigentümer nicht („auch 3 Rautezeichen bringen nichts“); Gegenprobe mit dem Parser: mit `###` vor allen drei Abschnitten ein Eintrag, bleibt einer auf `##`, entstehen wieder zusätzliche – Ursache beim Eigentümer offen (Text länger als sichtbar? Vorschau neu geladen?). Die Abhilfe soll unabhängig von der Ebene greifen; beim Beheben die echte Ausgabe des Weltenbauers nachstellen.
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 
