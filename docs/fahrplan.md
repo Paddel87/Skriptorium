@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 7 „Zeitlinie, Publizieren, Gestaltung und Bilder“ (Phase 6 abgeschlossen 2026-10-12)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** keiner
-- **Nächster Schritt:** 7.6 Bilder und Karten – zuerst Erkundung der Ablage von Bilddateien, dann Vorlage. 7.1–7.5, 7.7, 7.9 erledigt 2026-10-12. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** 7.6 Bilder an Kanon-Einträgen – umgesetzt und getrennt geprüft; PR und Einspielen auf Anweisung, dann 7.10 Karten. 7.1–7.5, 7.7, 7.9 erledigt 2026-10-12. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -33,7 +33,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ✅ | 7.3 | Schreibweise der Geschichte wirkt auf bestehende Kapitel | erledigt 2026-10-12 (ADR-070) | – |
 | ✅ | 7.4 | Publizieren (Satz, Export, Veröffentlichung) | erledigt 2026-10-12 (ADR-071) | – |
 | ✅ | 7.5 | Gestaltung der Oberfläche | erledigt 2026-10-12 (Richtung C „Buch“) | – |
-| 🟠 | 7.6 | Bildablage, Hochladen und Bilder an Kanon-Einträgen | in Arbeit (ADR-072) | du: Mockup ansehen |
+| 🟠 | 7.6 | Bildablage, Hochladen und Bilder an Kanon-Einträgen | umgesetzt, geprüft (ADR-072) | du: PR freigeben, nach dem Einspielen ausprobieren |
 | ✅ | 7.7 | Pflege: Warnung von `npm ci` zu `fsevents` | erledigt 2026-10-12 | – |
 | ⚪ | 7.8 | Planung der nächsten Ausbaustufe | offen | KI |
 | ✅ | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | erledigt 2026-10-12 | – |
@@ -261,7 +261,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.6: Bildablage, Hochladen und Bilder an Kanon-Einträgen
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – Erkundung `docs/research/bilder-erkundung.md`; entschieden (ADR-072): Ablage im Datenverzeichnis, fünf Teilschritte (7.6, 7.10–7.13). Offen: Mockup, Umsetzung, Prüfung durch getrennte Instanz
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – Erkundung `docs/research/bilder-erkundung.md`; entschieden (ADR-072): Ablage im Datenverzeichnis, fünf Teilschritte (7.6, 7.10–7.13). Mockup: Galerie je Eintrag (Wahl des Eigentümers, Nachtrag ADR-072). Umgesetzt und getrennt geprüft (2026-10-12, keine Befunde hoch/mittel). Offen: PR, Einspielen, Bestätigung des Eigentümers; Sicherung erfasst `bilder/` nach dem Einspielen prüfen
 - **Phasentyp-Kontext:** UMSETZUNG (mit Erkundung und Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 7.5
 - **Freigabepflichtig:** ja – Ablage von Bilddateien (Kategorie 4, ggf. Architektur Kategorie 1), Hochladen fremder Dateien (Kategorie 6, Prüfung durch getrennte Instanz), ggf. Bilderzeugung (Kategorie 3)

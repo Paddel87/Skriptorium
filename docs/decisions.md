@@ -1721,6 +1721,7 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Vision-Frage, die entschied:** „Sollen deine Bilder wie deine Texte auf deinem Server liegen – oder bei einem fremden Dienst?“ → auf dem eigenen Server.
 - **Konfidenz zum Zeitpunkt:** hoch für Ablage und Hochladen; mittel für 7.12 (Filter und Kosten erst bei Proben). Umkehrbarkeit billig für die Ablage.
 - **Konsequenzen:** Phase 7 wächst auf 13 Schritte (Schwelle mehr als 16); Bedrohungsmodell um „hochgeladene Dateien“ ergänzen.
+- **Nachtrag 2026-10-12 (Mockup 7.6, Wahl des Eigentümers „Mehrere Bilder je Eintrag“):** Ein Kanon-Eintrag führt eine kleine Galerie: Kopffeld `bilder` als Liste, das erste ist das Hauptbild, höchstens 12 je Eintrag; Dateinamen erzeugt der Server (Kennung des Eintrags plus Zufallsteil). Unabhängige Prüfung durch getrennte Instanz (Sonnet, 2026-10-12): keine Befunde hoch oder mittel; zwei niedrige behoben (Namen an den Eintrag gebunden, Löschen bei kaputter Liste), einer als Restrisiko hingenommen (gleichzeitiges Hochladen im selben Eintrag aus zwei Tabs kann eine verwaiste Datei hinterlassen – Muster wie im übrigen Projekt, nur der Eigentümer betroffen), zwei optionale über dem Niveau nicht umgesetzt (Größengrenze des Anfragekörpers am Proxy; JSON-Prüfung auch ohne `Content-Length`).
 - **Abgeleitete Regel:** keine
 
 ---

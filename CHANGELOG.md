@@ -6,6 +6,8 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v1.0.0)
 
+- Bilder an Kanon-Einträgen (2026-10-12, Schritt 7.6, ADR-072): Jeder Eintrag kann eine kleine Galerie haben – „＋“ fügt ein Bild hinzu, das erste steht groß über dem Text, die weiteren als Vorschau darunter. Ein Tipp zeigt ein Bild groß, mit Blättern, „Zum Hauptbild machen“ und „Entfernen“. Fotos werden vor dem Hochladen im Browser verkleinert; Ortsdaten und andere Angaben aus dem Foto verlassen dein Gerät nicht. Erlaubt sind PNG, JPEG und WebP, höchstens 12 Bilder je Eintrag. Die Bilder liegen bei den Welt-Dateien auf deinem Server und kommen mit in die Sicherung. Neu `POST/GET/DELETE /api/worlds/{id}/entries/{entry}/images…`.
+
 - Neues Aussehen „Buch“ (2026-10-12, Schritt 7.5): ruhige Papierfläche mit wenig Rahmen; das Manuskript steht als helle Seite in Buchschrift in der Mitte, die Anweisung als Schreiblinie darunter. Die Leiste links zeigt einheitliche Linien-Symbole statt Emojis, Knöpfe sind zurückgenommen, die Hauptaktion (z. B. „Weiterschreiben“) steht dunkel hervor, Reiter erscheinen als unterstrichener Text. Hell, Dunkel und Schwarz bleiben.
 
 - E-Book (2026-10-12, Schritt 7.4, ADR-071): Im Reiter „Geschichte“ der Leiste lädt „⇩ EPUB herunterladen“ die Geschichte als E-Book mit Titelseite, Inhaltsverzeichnis und allen Kapiteln – auf Wunsch nur die abgeschlossenen, mit Autorname auf der Titelseite. Kursiv, fett, Überschriften und Szenenwechsel werden übernommen. Neu `POST /api/worlds/{id}/stories/{story}/export/epub`.
