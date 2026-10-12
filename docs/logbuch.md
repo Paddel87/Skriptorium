@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [ADR-ANGELEGT] ADR-073 Karten der Welt (7.10)
+
+- Auswahlfragen: eigener Reiter „Karten“, bis 6.000 Pixel, Markierungen später (neu 7.14), fertige Bibliothek. Kandidaten aus der npm-Registry geprüft und auf Nachfrage in Alltagssprache erklärt; Wahl `@panzoom/panzoom` 4.6.2. Karten im Kopf von `world.md`, Grenze 12 MB. Phase 7 jetzt 14 Schritte. 7.6 steht zugleich noch auf IN ARBEIT, weil nur das Einspielen aussteht.
+
 ### 2026-10-12 – [BEOBACHTUNG] 7.6 gemergt; Richtung für 7.13 gewählt
 
 - PR #142 nach grüner CI gemergt (Wahl „Nur hochladen und mergen“), noch nicht eingespielt. Korrektur: In einer Antwort davor stand fälschlich, 7.6 sei schon gemergt – dem Eigentümer richtiggestellt.

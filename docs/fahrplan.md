@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-6.md`](archiv/fahrplan-phase-6.md).
 
-**Phase 7: 7 von 13 erledigt, 1 in Arbeit (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
+**Phase 7: 7 von 14 erledigt, 2 in Arbeit (7.6 wartet nur aufs Einspielen) (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -37,10 +37,11 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ✅ | 7.7 | Pflege: Warnung von `npm ci` zu `fsevents` | erledigt 2026-10-12 | – |
 | ⚪ | 7.8 | Planung der nächsten Ausbaustufe | offen | KI |
 | ✅ | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | erledigt 2026-10-12 | – |
-| ⚪ | 7.10 | Karten der Welt | offen (nach 7.6) | KI |
+| 🟠 | 7.10 | Karten der Welt | in Arbeit (ADR-073) | du: Mockup ansehen |
 | ⚪ | 7.11 | Bilder in Geschichten | offen (nach 7.6) | KI |
 | ⚪ | 7.12 | Bilder von der KI erzeugen | offen (nach 7.6) | KI |
 | ⚪ | 7.13 | Die KI kennt Bilder (einmal beschreiben, Bild nur auf Knopfdruck) | offen (nach 7.6) | KI |
+| ⚪ | 7.14 | Markierungen auf Karten → Kanon-Eintrag | offen (nach 7.10) | KI |
 
 **Querschnitt (offen):**
 
@@ -173,7 +174,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`; Datenmodell-Erweiterungen (7.2, 7.3, 7.6) und neue Abhängigkeiten (7.4, 7.5) werden per ADR entschieden, bevor gebaut wird; 7.6 (Ablage von Bilddateien) kann die Architektur von `storage` erweitern und braucht dann eine Erkundung vor dem Bau.
 
-**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-10-12 (ADR-067, ADR-068). Stand 2026-10-12: 9 Schritte (+7.9 Befund aus dem Alltag); 13 Schritte (+7.10–7.13 aus dem Zuschnitt von 7.6, ADR-072). Wucherungs-Schwelle: Default aus `docs/project-context.md` Abschnitt 6 (Faktor 2 und mindestens 5 zusätzliche Schritte, also mehr als 16); neue Wünsche während der Phase werden V-Schritte mit Landeplatz 7.8 – Ausnahmen nur auf ausdrücklichen Wunsch des Eigentümers (wie 6.14).
+**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-10-12 (ADR-067, ADR-068). Stand 2026-10-12: 9 Schritte (+7.9 Befund aus dem Alltag); 13 Schritte (+7.10–7.13 aus dem Zuschnitt von 7.6, ADR-072); 14 Schritte (+7.14 aus der Vorlage zu 7.10, ADR-073). Wucherungs-Schwelle: Default aus `docs/project-context.md` Abschnitt 6 (Faktor 2 und mindestens 5 zusätzliche Schritte, also mehr als 16); neue Wünsche während der Phase werden V-Schritte mit Landeplatz 7.8 – Ausnahmen nur auf ausdrücklichen Wunsch des Eigentümers (wie 6.14).
 
 **Reihenfolge (Eigentümer, 2026-10-12; ADR-068, ADR-072):** 7.1 Umbau (mit 7.7), dann 7.2 Zeitlinie, 7.3 Schreibweise, 7.4 Publizieren, 7.5 Gestaltung, 7.6 Bilder an Kanon-Einträgen, 7.10 Karten, 7.11 Bilder in Geschichten, 7.12 KI-Bilder, 7.13 KI kennt Bilder; zuletzt 7.8.
 
@@ -329,15 +330,15 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.10: Karten der Welt
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-073): eigener Reiter „Karten“, bis 6.000 Pixel und 12 MB, Zoom mit `@panzoom/panzoom` 4.6.2, Karten im Kopf der Welt; Markierungen → 7.14. Offen: Mockup, Umsetzung, Prüfung durch getrennte Instanz
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage bzw. Mockup zu Beginn)
 - **Abhängigkeiten:** 7.6
-- **Freigabepflichtig:** ja – Datenmodell (Karten je Welt, Kategorie 4); Mockup
+- **Freigabepflichtig:** ja – Datenmodell (Karten je Welt, Kategorie 4), neue Abhängigkeit (Kategorie 3), höhere Größengrenze (Kategorie 6, Prüfung durch getrennte Instanz); Mockup
 - **Empfohlene Klasse:** Routine – baut auf der Ablage aus 7.6 auf; Vorlage nur, falls neue Fragen.
 - **Eingangskriterien:** 7.6 erledigt
 - **Anforderungen (ab Klasse M):** FR-035
 - **Zu tun:** Eine oder mehrere Karten je Welt hochladen, groß ansehen und zoomen (auch am Handy).
-- **Akzeptanzkriterien:** Tests; Mockup freigegeben; Eigentümer bestätigt.
+- **Akzeptanzkriterien:** ADR-073; Tests; Mockup freigegeben; Prüfung durch eine getrennte Instanz; Eigentümer bestätigt.
 - **Betroffene Module:** canon, api, ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag, ggf. ADR
@@ -390,6 +391,22 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag, ggf. ADR
 - **Notizen:** Angelegt 2026-10-12 aus dem Zuschnitt von 7.6 (ADR-072). Anlass der Wahl: Bilder bei jeder Eingabe mitzuschicken treibt die Kosten (Schätzung 1.000–3.000 Token je Bild bei rund 17.000 Token je Anfrage; in 7.13 messen); die Karte soll der Stimmigkeit dienen, nicht jede Anfrage verteuern.
+
+#### 7.14: Markierungen auf Karten mit Verweis auf Kanon-Einträge
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage und Mockup zu Beginn)
+- **Abhängigkeiten:** 7.10
+- **Freigabepflichtig:** ja – Datenmodell (Markierungen je Karte, Kategorie 4); Mockup
+- **Empfohlene Klasse:** Entscheidung – Datenmodell (Eskalations-Auslöser 1).
+- **Eingangskriterien:** 7.10 erledigt
+- **Anforderungen (ab Klasse M):** FR-035
+- **Zu tun:** Auf einer Karte Punkte setzen, die zu einem Kanon-Eintrag führen (z. B. Punkt auf einem Ort → dessen Eintrag); setzen, verschieben, entfernen; ein Tipp öffnet den Eintrag.
+- **Akzeptanzkriterien:** ADR; Tests; Mockup freigegeben; Eigentümer bestätigt.
+- **Betroffene Module:** canon, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag, ADR
+- **Notizen:** Angelegt 2026-10-12 aus der Vorlage zu 7.10 (Wahl des Eigentümers „Später als eigener Schritt“, ADR-073).
 
 #### D.1: Wechsel Node.js 24 → Node.js 26 LTS
 
