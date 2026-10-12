@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [ERLEDIGT] 7.4 E-Book
+
+- Eigentümer: „gefunden, alles ok“. FR-034 erledigt. Ort des Abschnitts bleibt; Auffindbarkeit als Punkt für 7.5 vermerkt. Phase 7: 6 von 9 (offen 7.5, 7.6, 7.8).
+
 ### 2026-10-12 – [ERLEDIGT] 7.3 Schreibweise; Befund EPUB nicht auffindbar
 
 - Eigentümer: „Das scheint bisher alles zu passen.“ 7.3 erledigt. Phase 7: 5 von 9.
