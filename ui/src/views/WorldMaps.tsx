@@ -9,6 +9,7 @@ import {
 import { api, describeError, type World, type WorldMap } from "../api";
 import { base64, MAP_SIDE, shrinkImage } from "../files";
 import { ErrorText } from "./Common";
+import { ImageDescription, withSection } from "./ImageDescription";
 
 /** As many maps as the server keeps per world (`MAX_MAPS_PER_WORLD`). */
 const MAX_MAPS = 20;
@@ -16,7 +17,7 @@ const MAX_MAPS = 20;
 /**
  * The maps of a world (step 7.10, ADR-073): tiles with their names, "＋ Karte hinzufügen" asks
  * for a file and a name. A tap opens the map large with zoom (two fingers, mouse wheel, ＋ / −)
- * and panning, renaming and removing.
+ * and panning, renaming, removing and "Von der KI beschreiben lassen" (step 7.13).
  */
 export function WorldMaps({
   world,
@@ -76,7 +77,7 @@ export function WorldMaps({
       )}
       {open !== undefined && (
         <MapViewer
-          world={world.id}
+          world={world}
           map={open}
           onChanged={onChanged}
           onClose={() => {
@@ -173,7 +174,7 @@ function MapViewer({
   onChanged,
   onClose,
 }: {
-  world: string;
+  world: World;
   map: WorldMap;
   onChanged: (world: World) => void;
   onClose: () => void;
@@ -182,6 +183,7 @@ function MapViewer({
   const content = useRef<HTMLImageElement>(null);
   const zoom = useRef<PanzoomObject | null>(null);
   const [renaming, setRenaming] = useState(false);
+  const [describing, setDescribing] = useState(false);
   const [name, setName] = useState(map.name);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -204,7 +206,11 @@ function MapViewer({
 
   useEffect(() => {
     function key(event: KeyboardEvent) {
-      if (event.key === "Escape") {
+      // Escape in a field (a name, a description) leaves the field, not the map.
+      const field =
+        event.target instanceof HTMLTextAreaElement ||
+        event.target instanceof HTMLInputElement;
+      if (event.key === "Escape" && !field) {
         onClose();
       }
     }
@@ -240,7 +246,7 @@ function MapViewer({
         <div className="map-stage" ref={stage}>
           <img
             ref={content}
-            src={api.mapPath(world, map.file)}
+            src={api.mapPath(world.id, map.file)}
             alt={map.name}
           />
           <div className="map-zoom">
@@ -273,7 +279,7 @@ function MapViewer({
             onSubmit={(event) => {
               event.preventDefault();
               void change(() =>
-                api.renameMap(world, map.file, name.trim()),
+                api.renameMap(world.id, map.file, name.trim()),
               ).then((done) => {
                 if (done) {
                   setRenaming(false);
@@ -324,7 +330,7 @@ function MapViewer({
               disabled={busy}
               onClick={() => {
                 if (window.confirm(`Karte „${map.name}“ wirklich entfernen?`)) {
-                  void change(() => api.removeMap(world, map.file)).then(
+                  void change(() => api.removeMap(world.id, map.file)).then(
                     (done) => {
                       if (done) {
                         onClose();
@@ -336,6 +342,16 @@ function MapViewer({
             >
               Entfernen
             </button>
+            <button
+              type="button"
+              className="ghost"
+              disabled={busy}
+              onClick={() => {
+                setDescribing(true);
+              }}
+            >
+              ✨ Von der KI beschreiben lassen
+            </button>
             <span className="image-viewer-gap" />
             <button type="button" className="ghost" onClick={onClose}>
               Schließen
@@ -343,6 +359,29 @@ function MapViewer({
           </div>
         )}
         <ErrorText message={error} />
+        {describing && (
+          <ImageDescription
+            title={`Geografie – ${map.name}`}
+            path={api.describeMapPath(world.id, map.file)}
+            takeOverLabel="In die Weltbeschreibung übernehmen"
+            onTakeOver={async (text) => {
+              // The current description, in case it changed elsewhere meanwhile.
+              const fresh = (await api.worlds()).find((w) => w.id === world.id);
+              onChanged(
+                await api.updateWorld(world.id, {
+                  description: withSection(
+                    fresh?.description ?? world.description,
+                    `Geografie – ${map.name}`,
+                    text,
+                  ),
+                }),
+              );
+            }}
+            onClose={() => {
+              setDescribing(false);
+            }}
+          />
+        )}
         <p className="map-viewer-hint">
           Zwei Finger oder Mausrad zum Zoomen, ziehen zum Verschieben.
         </p>

@@ -9,6 +9,7 @@
 
 import { accountApi } from "./account";
 import { canonApi } from "./canon";
+import { describeApi } from "./describe";
 import { manuscriptApi } from "./manuscript";
 import { modelsApi } from "./models";
 import { transferApi } from "./transfer";
@@ -51,6 +52,8 @@ export type {
   TranslatedMaterial,
 } from "./transfer";
 export type { Source } from "./stream";
+export { streamDescription } from "./describe";
+export type { DescribeEvent } from "./describe";
 export { streamWorldbuilder } from "./worldbuilder";
 export type {
   WorldbuilderEvent,
@@ -69,6 +72,7 @@ export type {
 export const api = {
   ...accountApi,
   ...canonApi,
+  ...describeApi,
   ...transferApi,
   ...manuscriptApi,
   ...modelsApi,

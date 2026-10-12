@@ -12,6 +12,7 @@ from skriptorium.ai_gateway import (
     DEFAULT_MODELS,
     Completed,
     CompletionRequest,
+    ImagePart,
     InvalidRequest,
     Message,
     ModelConfig,
@@ -211,6 +212,34 @@ def test_web_search_is_requested_as_plugin() -> None:
     adapter, _ = provider(recorder)
     run(adapter)
     assert "plugins" not in recorder.payload(1)
+
+
+def test_images_go_as_parts_of_their_message() -> None:
+    """Step 7.13 (ADR-074): text first, then each image as a data URL; others stay plain."""
+    recorder = Recorder(ok())
+    adapter, _ = provider(recorder)
+    looking = CompletionRequest(
+        model="x-ai/grok-4.6",
+        messages=[
+            Message("system", "Beschreibe."),
+            Message("user", "Gunda", images=(ImagePart("image/webp", b"RIFF"),)),
+        ],
+        max_tokens=800,
+        temperature=0.8,
+    )
+
+    run(adapter, looking)
+
+    assert recorder.payload()["messages"] == [
+        {"role": "system", "content": "Beschreibe."},
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "Gunda"},
+                {"type": "image_url", "image_url": {"url": "data:image/webp;base64,UklGRg=="}},
+            ],
+        },
+    ]
 
 
 def citation(url: object, title: object = "Seite") -> dict[str, object]:

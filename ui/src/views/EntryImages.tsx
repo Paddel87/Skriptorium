@@ -1,7 +1,14 @@
-import { useEffect, useRef, useState, type ChangeEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type ReactNode,
+} from "react";
 import { api, describeError, type CanonEntry } from "../api";
 import { base64, shrinkImage } from "../files";
 import { ErrorText } from "./Common";
+import { ImageDescription, withSection } from "./ImageDescription";
 
 /** As many images as the server keeps per entry (`MAX_IMAGES_PER_ENTRY`). */
 const MAX_IMAGES = 12;
@@ -9,8 +16,8 @@ const MAX_IMAGES = 12;
 /**
  * The images of a canon entry (step 7.6, ADR-072): the first is the main image, large above the
  * text; the others follow as small previews, "＋" adds one. A tap shows an image large, with
- * browsing, "Zum Hauptbild machen" and "Entfernen". Without `editable` (guests, the compact bar)
- * the images are only shown.
+ * browsing, "Zum Hauptbild machen", "Entfernen" and "Von der KI beschreiben lassen" (step 7.13).
+ * Without `editable` (guests, the compact bar) the images are only shown.
  */
 export function EntryImages({
   entry,
@@ -22,6 +29,7 @@ export function EntryImages({
   onChanged: (entry: CanonEntry) => void;
 }) {
   const [shown, setShown] = useState<number | null>(null);
+  const [describing, setDescribing] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const picker = useRef<HTMLInputElement>(null);
@@ -128,10 +136,15 @@ export function EntryImages({
           source={source}
           editable={editable}
           busy={busy}
-          onMove={setShown}
+          onMove={(at) => {
+            setShown(at);
+            setDescribing(null);
+          }}
           onClose={() => {
             setShown(null);
+            setDescribing(null);
           }}
+          onDescribe={setDescribing}
           onMain={(image) =>
             void change(() =>
               api.setMainImage(entry.world, entry.id, image),
@@ -150,10 +163,32 @@ export function EntryImages({
             ).then((done) => {
               if (done) {
                 setShown(images.length > 1 ? Math.max(0, shown - 1) : null);
+                setDescribing(null);
               }
             });
           }}
-        />
+        >
+          {describing !== null && (
+            <ImageDescription
+              key={describing}
+              title={`Aussehen von ${entry.name}`}
+              path={api.describeImagePath(entry.world, entry.id, describing)}
+              takeOverLabel="Übernehmen als „Aussehen“"
+              onTakeOver={async (text) => {
+                // The current text, in case it changed elsewhere meanwhile.
+                const fresh = await api.entry(entry.world, entry.id);
+                onChanged(
+                  await api.updateEntry(entry.world, entry.id, {
+                    body: withSection(fresh.body, "Aussehen", text),
+                  }),
+                );
+              }}
+              onClose={() => {
+                setDescribing(null);
+              }}
+            />
+          )}
+        </ImageViewer>
       )}
     </div>
   );
@@ -171,6 +206,8 @@ function ImageViewer({
   onClose,
   onMain,
   onRemove,
+  onDescribe,
+  children,
 }: {
   name: string;
   images: readonly string[];
@@ -182,6 +219,9 @@ function ImageViewer({
   onClose: () => void;
   onMain: (image: string) => void;
   onRemove: (image: string) => void;
+  onDescribe: (image: string) => void;
+  /** Shown under the bar: the description of the image (step 7.13). */
+  children?: ReactNode;
 }) {
   const close = useRef<HTMLButtonElement>(null);
   const image = images[at] ?? "";
@@ -194,6 +234,15 @@ function ImageViewer({
 
   useEffect(() => {
     function key(event: KeyboardEvent) {
+      const target = event.target;
+      const typing =
+        target instanceof HTMLTextAreaElement ||
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLSelectElement;
+      // Keys in a field (the description) stay in the field.
+      if (typing) {
+        return;
+      }
       if (event.key === "Escape") {
         onClose();
       } else if (event.key === "ArrowLeft" && count > 1) {
@@ -218,7 +267,11 @@ function ImageViewer({
       }}
     >
       <div
-        className="image-viewer"
+        className={
+          children === undefined || children === false || children === null
+            ? "image-viewer"
+            : "image-viewer describing"
+        }
         role="dialog"
         aria-modal="true"
         aria-label={label}
@@ -246,6 +299,18 @@ function ImageViewer({
                 nächstes ›
               </button>
             </>
+          )}
+          {editable && (
+            <button
+              type="button"
+              className="ghost"
+              disabled={busy}
+              onClick={() => {
+                onDescribe(image);
+              }}
+            >
+              ✨ Von der KI beschreiben lassen
+            </button>
           )}
           <span className="image-viewer-gap" />
           {editable && at > 0 && (
@@ -276,6 +341,7 @@ function ImageViewer({
             Schließen
           </button>
         </div>
+        {children}
       </div>
     </div>
   );

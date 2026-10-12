@@ -7,6 +7,7 @@ or the key.
 """
 
 import asyncio
+import base64
 import json
 import logging
 import os
@@ -28,6 +29,7 @@ from skriptorium.ai_gateway.models import DEFAULT_MODELS, ModelConfig, config_fo
 from skriptorium.ai_gateway.provider import (
     Completed,
     CompletionRequest,
+    Message,
     Source,
     StreamEvent,
     TextChunk,
@@ -218,11 +220,24 @@ class OpenRouterProvider:
         yield Completed(usage=usage, finish_reason=finish_reason, sources=tuple(sources.values()))
 
 
+def _message(message: Message) -> dict[str, object]:
+    """One message; with images as a list of a text part and image parts (data URLs)."""
+    if not message.images:
+        return {"role": message.role, "content": message.content}
+    parts: list[dict[str, object]] = [{"type": "text", "text": message.content}]
+    for image in message.images:
+        encoded = base64.b64encode(image.data).decode("ascii")
+        parts.append(
+            {"type": "image_url", "image_url": {"url": f"data:{image.media_type};base64,{encoded}"}}
+        )
+    return {"role": message.role, "content": parts}
+
+
 def _payload(request: CompletionRequest, config: ModelConfig) -> dict[str, object]:
     """Request body; reasoning and exclusions come from the model configuration."""
     payload: dict[str, object] = {
         "model": request.model,
-        "messages": [{"role": m.role, "content": m.content} for m in request.messages],
+        "messages": [_message(m) for m in request.messages],
         "stream": True,
         "max_tokens": request.max_tokens,
         "temperature": request.temperature,

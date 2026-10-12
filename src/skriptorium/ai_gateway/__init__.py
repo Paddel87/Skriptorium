@@ -16,6 +16,7 @@ from skriptorium.ai_gateway.openrouter import KEY_VARIABLE, OpenRouterProvider
 from skriptorium.ai_gateway.provider import (
     Completed,
     CompletionRequest,
+    ImagePart,
     Message,
     ModelProvider,
     Source,
@@ -31,6 +32,7 @@ __all__ = [
     "Completed",
     "CompletionRequest",
     "GatewayError",
+    "ImagePart",
     "InvalidRequest",
     "Message",
     "ModelCatalog",

@@ -12,16 +12,19 @@ from pydantic import BaseModel
 
 from skriptorium.ai_gateway import CatalogModel, ModelCatalog
 from skriptorium.ai_gateway.catalog import CHECKED_MODELS, SLOW_MODELS
-from skriptorium.api.context import ServicesDep, current_session
+from skriptorium.api.context import Services, ServicesDep, current_session
 from skriptorium.api.flows import (
     DEFAULT_MODEL,
+    DescribeOrder,
     Scene,
     SummaryFailure,
     Turn,
     WorldOrder,
     WriteOrder,
+    prepare_description,
     prepare_request,
     prepare_worldbuilder,
+    stream_answer,
     stream_events,
     stream_worldbuilder,
     summarize_chapter,
@@ -50,6 +53,8 @@ class CatalogEntry(BaseModel):
     thinking: Literal["lange", "vor"] | None
     # Checked with the owner's stories (steps 5.7, 5.26).
     checked: bool
+    # Accepts images, for "Von der KI beschreiben lassen" (step 7.13).
+    reads_images: bool
 
 
 class ModelList(BaseModel):
@@ -108,6 +113,12 @@ class WorldbuilderIn(BaseModel):
     # Missing: the preset model.
     model: str | None = None
     web_search: bool = False
+
+
+class DescribeIn(BaseModel):
+    """The model that describes the image (step 7.13); it must read images."""
+
+    model: str
 
 
 class UsageOut(BaseModel):
@@ -202,6 +213,35 @@ async def worldbuilder(
     )
 
 
+@router.post("/worlds/{world_id}/entries/{entry_id}/images/{image}/describe")
+async def describe_entry_image(
+    world_id: str, entry_id: str, image: str, body: DescribeIn, found: ServicesDep
+) -> StreamingResponse:
+    """Stream a description of an image of a canon entry; saves nothing (ADR-074)."""
+    order = DescribeOrder(world_id, body.model, entry=entry_id, image=image)
+    return await _describe(order, found)
+
+
+@router.post("/worlds/{world_id}/maps/{file}/describe")
+async def describe_map(
+    world_id: str, file: str, body: DescribeIn, found: ServicesDep
+) -> StreamingResponse:
+    """Stream a description of a map of a world; saves nothing (ADR-074)."""
+    return await _describe(DescribeOrder(world_id, body.model, map_file=file), found)
+
+
+async def _describe(order: DescribeOrder, found: Services) -> StreamingResponse:
+    if found.provider is None:
+        raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, "KI-Anbieter nicht eingerichtet")
+    await found.catalog.refresh()
+    prepared = prepare_description(found.canon, found.context, found.catalog, order)
+    return StreamingResponse(
+        stream_answer(found.provider, prepared, "bildbeschreibung", found.usage.record),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"},
+    )
+
+
 @router.post("/worlds/{world_id}/stories/{story_id}/chapters/{number}/summarize")
 async def summarize(world_id: str, story_id: str, number: int, found: ServicesDep) -> SummaryResult:
     """Create the chapter's short summary and continue the overall summary (FR-010).
@@ -264,4 +304,5 @@ def _entry(model: CatalogModel) -> CatalogEntry:
         moderated=model.moderated,
         thinking=thinking,
         checked=model.id in CHECKED_MODELS,
+        reads_images=model.reads_images,
     )

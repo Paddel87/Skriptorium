@@ -204,6 +204,7 @@ export function catalogModel(
     moderated: false,
     thinking: null,
     checked: false,
+    reads_images: false,
     ...changes,
   };
 }
