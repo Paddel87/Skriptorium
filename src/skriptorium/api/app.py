@@ -18,12 +18,21 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from skriptorium.ai_gateway import (
+    ImageCatalog,
+    ImageProvider,
     ModelCatalog,
     ModelProvider,
+    OpenRouterImageProvider,
     OpenRouterProvider,
     ProviderUnavailable,
 )
-from skriptorium.api import auth_routes, canon_routes, manuscript_routes, writing_routes
+from skriptorium.api import (
+    auth_routes,
+    canon_routes,
+    image_routes,
+    manuscript_routes,
+    writing_routes,
+)
 from skriptorium.api.access import (
     CredentialStore,
     FailureThrottle,
@@ -69,6 +78,7 @@ _log = logging.getLogger("skriptorium.api")
 
 Clock = Callable[[], datetime]
 ProviderFactory = Callable[[ModelCatalog], ModelProvider | None]
+ImageProviderFactory = Callable[[ImageCatalog], ImageProvider | None]
 
 
 class Health(BaseModel):
@@ -85,6 +95,8 @@ def create_app(
     clock: Clock | None = None,
     provider_factory: ProviderFactory | None = None,
     catalog: ModelCatalog | None = None,
+    image_provider_factory: ImageProviderFactory | None = None,
+    image_catalog: ImageCatalog | None = None,
 ) -> FastAPI:
     """Build the FastAPI application.
 
@@ -97,6 +109,9 @@ def create_app(
             if missing. Without a key the server runs, writing answers 503. Gets the catalog,
             whose reasoning settings the provider uses.
         catalog: Selectable models; the catalog of OpenRouter if missing (step 5.12).
+        image_provider_factory: Creates the image provider (step 7.12); OpenRouter with the key
+            from the environment if missing, ``None`` without a key.
+        image_catalog: Image models; OpenRouter's list if missing.
     """
     _configure_logging()
     settings = settings or Settings.from_environment()
@@ -106,13 +121,16 @@ def create_app(
     manuscript = ManuscriptService(store)
     catalog = catalog or ModelCatalog()
     provider = (provider_factory or _provider_from_environment)(catalog)
+    image_catalog = image_catalog or ImageCatalog()
+    images = (image_provider_factory or _images_from_environment)(image_catalog)
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         yield
-        close = getattr(provider, "aclose", None)
-        if close is not None:
-            await close()
+        for client in (provider, images):
+            close = getattr(client, "aclose", None)
+            if close is not None:
+                await close()
 
     app = FastAPI(
         title="Skriptorium", docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan
@@ -130,6 +148,8 @@ def create_app(
         usage=UsageLog(store, now),
         catalog=catalog,
         favorites=Favorites(store),
+        image_catalog=image_catalog,
+        images=images,
     )
 
     @app.get("/api/health")
@@ -142,6 +162,7 @@ def create_app(
     app.include_router(canon_routes.router)
     app.include_router(manuscript_routes.router)
     app.include_router(writing_routes.router)
+    app.include_router(image_routes.router)
     _add_error_handlers(app)
     app.middleware("http")(_origin_check)
     app.middleware("http")(_security_headers)
@@ -160,6 +181,14 @@ def _provider_from_environment(catalog: ModelCatalog) -> ModelProvider | None:
         return OpenRouterProvider.from_environment(models=catalog)
     except ProviderUnavailable:
         _log.warning("ki-anbieter nicht eingerichtet schluessel=fehlt")
+        return None
+
+
+def _images_from_environment(catalog: ImageCatalog) -> ImageProvider | None:
+    """Image generation through OpenRouter; ``None`` if the key is missing."""
+    try:
+        return OpenRouterImageProvider.from_environment(catalog)
+    except ProviderUnavailable:
         return None
 
 

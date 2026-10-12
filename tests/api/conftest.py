@@ -16,6 +16,9 @@ from skriptorium.ai_gateway import (
     Completed,
     CompletionRequest,
     GatewayError,
+    GeneratedImage,
+    ImageCatalog,
+    ImageOrder,
     ModelCatalog,
     StreamEvent,
     TextChunk,
@@ -25,6 +28,7 @@ from skriptorium.api import create_app
 from skriptorium.api.access import PasswordHasher, PwnedUnavailable
 from skriptorium.api.context import Services
 from skriptorium.api.settings import Settings
+from tests.image_samples import png
 
 # 24 characters, no context word
 PASSWORD = "Salzwind über der Mark 7"  # noqa: S105 - test data, not a secret
@@ -177,6 +181,84 @@ def catalog(catalog_server: FakeCatalogServer) -> ModelCatalog:
     return ModelCatalog(transport=httpx.MockTransport(catalog_server))
 
 
+IMAGE_MODELS = {
+    "data": [
+        {
+            "id": "black-forest-labs/flux.2-pro",
+            "name": "Black Forest Labs: FLUX.2 Pro",
+            "supported_parameters": {"aspect_ratio": {"type": "enum", "values": ["1:1", "2:3"]}},
+        },
+        {
+            "id": "bytedance-seed/seedream-4.5",
+            "name": "ByteDance Seed: Seedream 4.5",
+            "supported_parameters": {},
+        },
+        {
+            "id": "recraft/recraft-v4-vector",
+            "name": "Recraft: Recraft V4 Vector",
+            "supported_parameters": {"output_format": {"type": "enum", "values": ["svg"]}},
+        },
+    ]
+}
+IMAGE_ENDPOINTS = {
+    "black-forest-labs/flux.2-pro": {
+        "endpoints": [
+            {
+                "provider_slug": "black-forest-labs",
+                "allowed_passthrough_parameters": ["steps", "safety_tolerance"],
+                "pricing": [{"billable": "output_image", "unit": "megapixel", "cost_usd": 0.03}],
+            }
+        ]
+    },
+    "bytedance-seed/seedream-4.5": {
+        "endpoints": [
+            {
+                "provider_slug": "seed",
+                "allowed_passthrough_parameters": [],
+                "pricing": [{"unit": "image", "cost_usd": 0.04}],
+            }
+        ]
+    },
+}
+
+
+def fake_image_server(request: httpx.Request) -> httpx.Response:
+    """OpenRouter's lists of image models and their providers."""
+    path = request.url.path.removeprefix("/api/v1/images/models")
+    if path == "":
+        return httpx.Response(200, json=IMAGE_MODELS)
+    model = path.strip("/").removesuffix("/endpoints")
+    if model in IMAGE_ENDPOINTS:
+        return httpx.Response(200, json=IMAGE_ENDPOINTS[model])
+    return httpx.Response(404)
+
+
+@dataclass
+class FakeImages:
+    """Stands in for the image provider: returns ``image`` or raises ``error``."""
+
+    name: str = "fake"
+    image: bytes = b""
+    media_type: str = "image/png"
+    cost: float | None = 0.03
+    error: GatewayError | None = None
+    orders: list[ImageOrder] = field(default_factory=list)
+
+    async def generate(self, order: ImageOrder) -> GeneratedImage:
+        self.orders.append(order)
+        if self.error is not None:
+            raise self.error
+        return GeneratedImage(self.image, self.media_type, self.cost)
+
+    async def aclose(self) -> None:
+        pass
+
+
+@pytest.fixture
+def images() -> FakeImages:
+    return FakeImages(image=png(1024, 1536))
+
+
 @pytest.fixture
 def client(
     data_dir: Path,
@@ -184,6 +266,7 @@ def client(
     breached: FakeBreached,
     provider: FakeProvider,
     catalog: ModelCatalog,
+    images: FakeImages,
 ) -> Iterator[TestClient]:
     app = create_app(
         Settings(data_dir=data_dir, ui_dir=data_dir / "no-ui"),
@@ -192,6 +275,8 @@ def client(
         clock=clock,
         provider_factory=lambda _: provider,
         catalog=catalog,
+        image_provider_factory=lambda _: images,
+        image_catalog=ImageCatalog(transport=httpx.MockTransport(fake_image_server)),
     )
     with TestClient(app, base_url=ORIGIN, headers={"Origin": ORIGIN}) as test_client:
         yield test_client

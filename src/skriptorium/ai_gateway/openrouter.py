@@ -166,7 +166,7 @@ class OpenRouterProvider:
                     if response.status_code == httpx.codes.TOO_MANY_REQUESTS and attempt == 0:
                         delay = _retry_after(response.headers)
                     else:
-                        _check_status(response.status_code)
+                        check_status(response.status_code)
                         async for event in self._events(response, outcome, start):
                             yield event
                         return
@@ -381,7 +381,7 @@ def _raise_for_stream_error(chunk: Mapping[str, object]) -> None:
     raise ProviderUnavailable(f"Fehler im Strom des Anbieters (Code {code})")
 
 
-def _check_status(status: int) -> None:
+def check_status(status: int) -> None:
     """Map an HTTP status before the stream to an error kind (OpenRouter error codes)."""
     if status == httpx.codes.OK:
         return

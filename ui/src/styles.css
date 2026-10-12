@@ -2022,3 +2022,85 @@ button.story-cover-add {
   background: transparent;
   color: var(--link);
 }
+
+/* "Hochladen" or "✨ Erzeugen" after a "＋" (step 7.12). */
+.add-choice {
+  display: inline-flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  box-shadow: 0 4px 14px var(--shadow);
+}
+
+.add-choice button {
+  width: auto;
+  height: auto;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+}
+
+.add-choice button + button {
+  border-top: 1px solid var(--line);
+}
+
+/* "Bild erzeugen" (step 7.12): description, format, model, preview. */
+.image-generate {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 32rem;
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.image-generate h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.image-generate .note {
+  margin: 0;
+}
+
+.image-generate-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.image-generate-formats {
+  display: flex;
+  overflow: hidden;
+  align-self: flex-start;
+  border: 1px solid var(--field-line);
+  border-radius: 4px;
+}
+
+.image-generate-formats button {
+  padding: 0.25rem 0.7rem;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+}
+
+.image-generate-formats button.chosen {
+  background: var(--text);
+  color: var(--page);
+}
+
+.image-generate-preview {
+  max-width: 100%;
+  max-height: 24rem;
+  align-self: flex-start;
+  border-radius: 4px;
+}
