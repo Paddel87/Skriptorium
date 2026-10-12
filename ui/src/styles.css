@@ -1991,3 +1991,34 @@ input.chapter-title {
   max-height: 35vh;
   align-self: center;
 }
+
+/* Cover of a story (step 7.11): portrait, at the top of the story bar. */
+.story-cover-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+
+.story-cover-row img {
+  width: 7.5rem;
+  max-height: 12rem;
+  object-fit: cover;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px var(--shadow);
+}
+
+.story-cover-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+button.story-cover-add {
+  width: 7.5rem;
+  aspect-ratio: 1 / 1.6;
+  border: 1px dashed var(--field-line);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--link);
+}

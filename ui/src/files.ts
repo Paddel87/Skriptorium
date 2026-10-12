@@ -49,12 +49,13 @@ export function scaledSize(
 
 /**
  * The image drawn anew at most `limit` pixels wide or high, as WebP (JPEG where the
- * browser cannot write WebP). Drawing anew drops everything but the pixels: location, camera
+ * browser cannot write WebP, or always with `asJpeg`, e.g. for covers every e-book reader shows). Drawing anew drops everything but the pixels: location, camera
  * and other metadata of photos never leave the device.
  */
 export async function shrinkImage(
   file: Blob,
   limit: number = IMAGE_SIDE,
+  asJpeg = false,
 ): Promise<Blob> {
   let bitmap: ImageBitmap;
   try {
@@ -72,7 +73,7 @@ export async function shrinkImage(
       throw new Error("Bild konnte nicht verkleinert werden.");
     }
     context.drawImage(bitmap, 0, 0, size.width, size.height);
-    const webp = await encoded(canvas, "image/webp", 0.85);
+    const webp = asJpeg ? null : await encoded(canvas, "image/webp", 0.85);
     if (webp?.type === "image/webp") {
       return webp;
     }

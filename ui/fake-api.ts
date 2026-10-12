@@ -145,6 +145,7 @@ export const STORY = {
   summary: "",
   model: null as string | null,
   genres: [] as string[],
+  cover: null as string | null,
   writing_style: {
     tone: [] as string[],
     atmosphere: [] as string[],

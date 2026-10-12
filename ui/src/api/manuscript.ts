@@ -51,6 +51,8 @@ export interface Story {
   /** Genres and the default writing style that new chapters copy (step 5.6). */
   genres: string[];
   writing_style: WritingStyle;
+  /** File name of the cover (step 7.11); `null` without one. */
+  cover: string | null;
 }
 
 export interface Chapter {
@@ -104,6 +106,15 @@ export function describeSummaryFailure(
 
 export const manuscriptApi = {
   /** The story as an EPUB file (step 7.4); the author is only written into the file. */
+  /** Address of the story's cover; the file name in the query makes a new cover load anew. */
+  coverPath: (story: Story) =>
+    `${storyPath(story.world, story.id)}/cover?v=${encodeURIComponent(story.cover ?? "")}`,
+  setCover: (world: string, story: string, content: string) =>
+    request("POST", `${storyPath(world, story)}/cover`, {
+      content,
+    }) as Promise<Story>,
+  removeCover: (world: string, story: string) =>
+    request("DELETE", `${storyPath(world, story)}/cover`) as Promise<Story>,
   exportEpub: (
     world: string,
     story: string,
