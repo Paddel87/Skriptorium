@@ -24,12 +24,12 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-6.md`](archiv/fahrplan-phase-6.md).
 
-**Phase 7: 3 von 9 erledigt, 3 in Arbeit (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
+**Phase 7: 4 von 9 erledigt, 2 in Arbeit (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | ✅ | 7.1 | Umbau vor den neuen Funktionen | erledigt 2026-10-12 | – |
-| 🟠 | 7.2 | Zeitlinie mit Kalenderdaten | nachgesteuert, eingespielt 2026-10-12 (ADR-069) | du: prüfen |
+| ✅ | 7.2 | Zeitlinie mit Kalenderdaten | erledigt 2026-10-12 (ADR-069) | – |
 | 🟠 | 7.3 | Schreibweise der Geschichte wirkt auf bestehende Kapitel | eingespielt 2026-10-12 (ADR-070) | du: prüfen |
 | 🟠 | 7.4 | Publizieren (Satz, Export, Veröffentlichung) | eingespielt 2026-10-12 (ADR-071) | du: EPUB in einem Reader öffnen |
 | ⚪ | 7.5 | Gestaltung der Oberfläche | offen | KI |
@@ -193,7 +193,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.2: Zeitlinie mit Kalenderdaten
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-069): A, Zeitstrahl aus dem Text, nur die Ansicht sortiert; Mockup freigegeben. Umgesetzt: `ui/src/timeline.ts`, `TimelineView.tsx`, Anzeige in `EntryArticle`; vitest 226 (98,24 %), Playwright 11 grün; Sichtprobe Desktop (hell) und Handy (schwarz) an der Testwelt, „+ Ereignis“ 403 an der richtigen Stelle in der Datei. Eingespielt 2026-10-12 (`2d3a4f0`). Eigentümer fand die Funktion nicht – seine Zeitlinie ist eine Folge von Einträgen „Jahr – Ereignis“ (lesend gezählt, nur Zahlen). Nachgesteuert (ADR-069, Mockup freigegeben): Zeitstrahl über alle Zeitlinien-Einträge der Welt beim Filter „Zeitlinie“, „+ Ereignis“ legt Eintrag an; `WorldTimeline.tsx`, `entryEvent`/`worldEvents` in `timeline.ts`; vitest 233, Playwright 11 grün. Eingespielt 2026-10-12 (`0fbc61b`). Offen: Bestätigung des Eigentümers
+- **Status:** ✅ ERLEDIGT (2026-10-12) – entschieden (ADR-069): A, Zeitstrahl aus dem Text, nur die Ansicht sortiert; Mockup freigegeben. Umgesetzt: `ui/src/timeline.ts`, `TimelineView.tsx`, Anzeige in `EntryArticle`; vitest 226 (98,24 %), Playwright 11 grün; Sichtprobe Desktop (hell) und Handy (schwarz) an der Testwelt, „+ Ereignis“ 403 an der richtigen Stelle in der Datei. Eingespielt 2026-10-12 (`2d3a4f0`). Eigentümer fand die Funktion nicht – seine Zeitlinie ist eine Folge von Einträgen „Jahr – Ereignis“ (lesend gezählt, nur Zahlen). Nachgesteuert (ADR-069, Mockup freigegeben): Zeitstrahl über alle Zeitlinien-Einträge der Welt beim Filter „Zeitlinie“, „+ Ereignis“ legt Eintrag an; `WorldTimeline.tsx`, `entryEvent`/`worldEvents` in `timeline.ts`; vitest 233, Playwright 11 grün. Eingespielt 2026-10-12 (`0fbc61b`). Vom Eigentümer bestätigt 2026-10-12 („Alles da“).
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 7.1
 - **Freigabepflichtig:** ja – Datenmodell (Kategorie 4): optionales Datum an Zeitlinien-Einträgen
