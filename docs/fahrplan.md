@@ -24,18 +24,19 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-6.md`](archiv/fahrplan-phase-6.md).
 
-**Phase 7: 2 von 8 erledigt, 2 in Arbeit (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
+**Phase 7: 2 von 9 erledigt, 3 in Arbeit (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | ✅ | 7.1 | Umbau vor den neuen Funktionen | erledigt 2026-10-12 | – |
 | 🟠 | 7.2 | Zeitlinie mit Kalenderdaten | umgesetzt (ADR-069) | du: prüfen nach dem Einspielen |
 | 🟠 | 7.3 | Schreibweise der Geschichte wirkt auf bestehende Kapitel | umgesetzt (ADR-070) | du: prüfen nach dem Einspielen |
-| ⚪ | 7.4 | Publizieren (Satz, Export, Veröffentlichung) | offen | KI |
+| 🟠 | 7.4 | Publizieren (Satz, Export, Veröffentlichung) | in Arbeit (ADR-071) | KI |
 | ⚪ | 7.5 | Gestaltung der Oberfläche | offen | KI |
 | ⚪ | 7.6 | Bilder und Karten | offen | KI |
 | ✅ | 7.7 | Pflege: Warnung von `npm ci` zu `fsevents` | erledigt 2026-10-12 | – |
 | ⚪ | 7.8 | Planung der nächsten Ausbaustufe | offen | KI |
+| ⚪ | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | offen | KI – nach 7.4 |
 
 **Querschnitt (offen):**
 
@@ -53,7 +54,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 7.8): V.20. In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 7.8): V.20, V.21 (neu 2026-10-12). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -168,7 +169,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`; Datenmodell-Erweiterungen (7.2, 7.3, 7.6) und neue Abhängigkeiten (7.4, 7.5) werden per ADR entschieden, bevor gebaut wird; 7.6 (Ablage von Bilddateien) kann die Architektur von `storage` erweitern und braucht dann eine Erkundung vor dem Bau.
 
-**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-10-12 (ADR-067, ADR-068). Wucherungs-Schwelle: Default aus `docs/project-context.md` Abschnitt 6 (Faktor 2 und mindestens 5 zusätzliche Schritte, also mehr als 16); neue Wünsche während der Phase werden V-Schritte mit Landeplatz 7.8 – Ausnahmen nur auf ausdrücklichen Wunsch des Eigentümers (wie 6.14).
+**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-10-12 (ADR-067, ADR-068). Stand 2026-10-12: 9 Schritte (+7.9 Befund aus dem Alltag). Wucherungs-Schwelle: Default aus `docs/project-context.md` Abschnitt 6 (Faktor 2 und mindestens 5 zusätzliche Schritte, also mehr als 16); neue Wünsche während der Phase werden V-Schritte mit Landeplatz 7.8 – Ausnahmen nur auf ausdrücklichen Wunsch des Eigentümers (wie 6.14).
 
 **Reihenfolge (Eigentümer, 2026-10-12; ADR-068):** 7.1 Umbau (mit 7.7), dann 7.2 Zeitlinie, 7.3 Schreibweise, 7.4 Publizieren, 7.5 Gestaltung, 7.6 Bilder und Karten; zuletzt 7.8.
 
@@ -224,7 +225,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.4: Publizieren (Satz, Export, Veröffentlichung)
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-071): EPUB, alle Kapitel mit Wahl „nur abgeschlossene“, Veröffentlichung → V.21; Mockup freigegeben
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 7.3
 - **Freigabepflichtig:** ja – Ausgabeformat (Kategorie 5), ggf. neue Abhängigkeit für den Satz (Kategorie 3)
@@ -300,7 +301,23 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Logbuch-Eintrag, ADR
-- **Notizen:** Angelegt 2026-10-12 (ADR-068); Landeplatz von V.20.
+- **Notizen:** Angelegt 2026-10-12 (ADR-068); Landeplatz von V.20 und V.21.
+
+#### 7.9: Befund: Gegenstands-Abschnitte aus dem Weltenbauer
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (Fehlerbehebung)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** nein – Fehlerbehebung innerhalb von `canon` und `context`, keine Schnittstelle berührt
+- **Empfohlene Klasse:** Routine – klar beschriebener Fehler mit bekannter Abhilfe.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-003, FR-029
+- **Zu tun:** Befund des Eigentümers (2026-10-12, Bildschirmfoto): Der Weltenbauer schrieb einen Gegenstand mit `## Zweck`, `## Verwendung`, `## Auswirkung` auf derselben Ebene wie `## Name`; der Import machte daraus vier Einträge. 6.7 hatte nur den umgekehrten Fall (eine Ebene zu tief) abgefangen. Abhilfe: Überschriften „Zweck“, „Verwendung“, „Auswirkung“ beginnen nie einen eigenen Eintrag, sondern gehören zum Eintrag davor (Markdown-Import); Anweisung an die KI im Weltenbauer schärfen.
+- **Akzeptanzkriterien:** Test mit genau dieser Form; Eigentümer bestätigt im Weltenbauer.
+- **Betroffene Module:** canon, context
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-12; Eigentümer: „Erst 7.4, dann beheben“. Bis dahin Sofort-Hilfe: im Textfeld `###` statt `##` vor den drei Abschnitten.
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 
@@ -928,6 +945,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, ggf. ADR
 - **Notizen:** Angelegt 2026-10-11 (ADR-058).
+
+#### V.21: Veröffentlichung (öffentlicher Link zum Lesen)
+
+- **Status:** ⏸️ VERSCHOBEN → 7.8 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 7.8 (Eigentümer 2026-10-12 in 7.4: „Als V-Schritt vormerken“, ADR-071)
+- **Phasentyp-Kontext:** offen
+- **Abhängigkeiten:** 7.4
+- **Freigabepflichtig:** ja – öffentlicher Zugang ohne Anmeldung (Kategorie 6), Architektur (Kategorie 1)
+- **Empfohlene Klasse:** Entscheidung – Sicherheits- und Architekturentscheidung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Bedarf des Eigentümers geklärt
+- **Anforderungen (ab Klasse M):** – (Teil von Vision 5 „Veröffentlichung“)
+- **Zu tun:** Eine Geschichte für andere lesbar machen, z. B. über einen geheimen Link; Schutz der übrigen Daten, Widerruf, Bedrohungsmodell ergänzen.
+- **Akzeptanzkriterien:** in 7.8 festzulegen
+- **Betroffene Module:** offen
+- **Reifegrad-Wirkung:** offen
+- **Artefakte:** ADR
+- **Notizen:** Angelegt 2026-10-12 in 7.4 (ADR-071).
 
 #### V.20: Figurenkarten im Netz finden, ohne auf Bezahlseiten zu landen
 
