@@ -6,6 +6,8 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v1.0.0)
 
+- Zeitstrahl (2026-10-12, Schritt 7.2, ADR-069): Zeitlinien-Einträge erscheinen auf der Kanon-Seite als Zeitstrahl, nach dem Jahr sortiert; Ereignisse ohne Jahr stehen markiert am Ende. „als Text“ zeigt den Eintrag wie bisher. Mit „+ Ereignis“ trägst du Datum und Ereignis ein, die Zeile landet an der passenden Stelle der Liste. Die Datei und das, was die KI liest, bleiben unverändert.
+
 - Darstellung „Schwarz“ (2026-10-12, Schritt 6.14): Die Darstellungswahl links unten hat eine vierte Stufe für AMOLED-Bildschirme – Seite, Karten und Leiste in echtem Schwarz, Schrift gedämpft warm, Linien und Knöpfe leicht abgesetzt; die Statusleiste der installierten App wird ebenfalls schwarz.
 
 - Export nach SillyTavern (2026-10-11, Schritt 6.9, ADR-066): Auf der Kanon-Seite lädt „⇩ Lorebook für SillyTavern“ alle Einträge der Welt als Lorebook (Name und Aliasse als Schlüsselwörter), und bei Figuren lädt „⇩ Figurenkarte“ die Figur als Karte (JSON; Persönlichkeit aus dem Abschnitt „Wesen“). Beide Dateien lassen sich auch wieder ins Skriptorium importieren; die Kategorie kommt dabei mit. Der Import aus SillyTavern verschiebt Überschriften im Text jetzt nur so weit wie nötig. Neu `GET /api/worlds/{id}/export/sillytavern` und `GET /api/worlds/{id}/entries/{entry}/export/sillytavern`.
