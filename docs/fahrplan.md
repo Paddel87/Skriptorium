@@ -363,7 +363,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.12: Bilder von der KI erzeugen
 
-- **Status:** ⚪ OFFEN – Erkundung der Anbieter erledigt (`docs/research/fal-bildmodelle.md`); entschieden (ADR-076): vorerst OpenRouter, Anbieter austauschbar halten; weitere Anbieter → V.24. Offen: Vorlage (Modelle, Kosten), Mockup, Umsetzung
+- **Status:** ⚪ OFFEN – Erkundung der Anbieter erledigt (`docs/research/bildanbieter.md`); entschieden (ADR-076): vorerst OpenRouter, Anbieter austauschbar halten; weitere Anbieter → V.24. Offen: Vorlage (Modelle, Kosten), Mockup, Umsetzung
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage bzw. Mockup zu Beginn)
 - **Abhängigkeiten:** 7.6
 - **Freigabepflichtig:** ja – Bildmodelle über OpenRouter (Kategorie 3), neuer Endpunkt (Kategorie 5); SVG nicht übernehmen
@@ -1092,7 +1092,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Empfohlene Klasse:** Entscheidung – neuer Dienst (Eskalations-Auslöser 1).
 - **Eingangskriterien:** Erfahrungen mit 7.12 über OpenRouter; Probe des Eigentümers beim gewählten Anbieter
 - **Anforderungen (ab Klasse M):** FR-035, FR-025
-- **Zu tun:** Einen zweiten Bildanbieter als Adapter anbinden; Kandidaten und Befunde in `docs/research/fal-bildmodelle.md` (Runware vorne, dann Replicate, fal.ai).
+- **Zu tun:** Einen zweiten Bildanbieter als Adapter anbinden; Kandidaten und Befunde in `docs/research/bildanbieter.md` (Runware vorne, dann Replicate, fal.ai).
 - **Akzeptanzkriterien:** in 7.8 festzulegen
 - **Betroffene Module:** ai_gateway, api, ui (voraussichtlich)
 - **Reifegrad-Wirkung:** keine (voraussichtlich)

@@ -1806,11 +1806,11 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
 - **Phasentyp-Kontext:** UMSETZUNG (Phase 7, Schritt 7.12 – Erkundung vor der Vorlage)
 - **Reifegrad-Wirkung:** keine
 - **Kategorie:** Externe Dienste (Kategorie 3) – bewusst kein neuer Dienst
-- **Kontext:** Vorschlag des Eigentümers, fal.ai einzubinden; Erkundung `docs/research/fal-bildmodelle.md` mit fal.ai, Replicate und Runware (Modelle, Filter-Schalter, Kosten, Bedingungen, Daten). Vorgabe des Eigentümers: pornografische Inhalte sind nicht geplant – die Filterfrage betrifft Fehlalarme bei düsteren Motiven.
+- **Kontext:** Vorschlag des Eigentümers, fal.ai einzubinden; Erkundung `docs/research/bildanbieter.md` mit fal.ai, Replicate und Runware (Modelle, Filter-Schalter, Kosten, Bedingungen, Daten). Vorgabe des Eigentümers: pornografische Inhalte sind nicht geplant – die Filterfrage betrifft Fehlalarme bei düsteren Motiven.
 - **Entscheidung:**
   - 7.12 nutzt OpenRouter (vorhandener Schlüssel, Ausgabengrenze, eine Rechnung); die Software ist darauf ausgelegt.
   - Weitere Bildanbieter (Runware, Replicate, fal.ai) als Wunsch V.24 mit Landeplatz 7.8; 7.12 hält den Anbieter austauschbar (Adapter wie bei den Textmodellen, FR-025), damit ein Wechsel keinen Umbau braucht.
-  - Erkenntnisse der Erkundung bleiben in `docs/research/fal-bildmodelle.md` für die spätere Phase: Runware (England, Rechenzentren u. a. in Deutschland, keine Langzeitspeicherung, kein Gore-Verbot für Erwachsene, kostenlose Probe) vorne; Replicate solide (feste Preise, Folter-/Verstümmelungsmotive verboten); fal.ai (Abschalten der Prüfung meist nur mit Freischaltung).
+  - Erkenntnisse der Erkundung bleiben in `docs/research/bildanbieter.md` für die spätere Phase: Runware (England, Rechenzentren u. a. in Deutschland, keine Langzeitspeicherung, kein Gore-Verbot für Erwachsene, kostenlose Probe) vorne; Replicate solide (feste Preise, Folter-/Verstümmelungsmotive verboten); fal.ai (Abschalten der Prüfung meist nur mit Freischaltung).
   - Verworfen für jetzt: sofortige Anbindung eines zweiten Anbieters (weiteres Konto, Schlüssel, Regeln; erst nach Erfahrungen mit OpenRouter).
 - **Vision-Frage, die entschied:** „Lieber erst mit dem vorhandenen Anbieter Erfahrungen sammeln – oder gleich einen zweiten Dienst einbinden?“ → erst vorhandener Anbieter.
 - **Konfidenz zum Zeitpunkt:** hoch für die Bauweise; mittel für die Filter der OpenRouter-Bildmodelle (echte Probe in 7.12). Umkehrbarkeit billig.
