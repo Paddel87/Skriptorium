@@ -35,6 +35,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - Erklärt, wie Bilder abgelegt und Einträgen zugeordnet werden; Sicherung laut Runbook (ganzes `data/` ohne Index) – Beleg im Protokoll nach dem Einspielen und dem ersten echten Bild.
 - 7.10 erklärt (Karten auf Weltebene, Zoom; offene Fragen: Ort in der Oberfläche, höhere Pixelgrenze für Karten, Markierungen als eigener Schritt).
 - Eigentümer zu 7.13: Die KI soll Karten kennen, aber Bilder nicht bei jeder Eingabe mitschicken (Kosten). Gewählt: „Einmal beschreiben“ – KI beschreibt ein Bild einmal, Übernahme als Kanon-Text; direktes Mitschicken nur als Ausnahme auf Knopfdruck. In 7.13 eingetragen; ADR folgt beim Bau.
+- Eigentümer ergänzt: Für Figuren soll die Beschreibung aus dem Bild das Aussehen liefern (Abschnitt „Aussehen“) – in 7.13 eingetragen.
 
 ### 2026-10-12 – [BEOBACHTUNG] 7.6 Bilder an Kanon-Einträgen umgesetzt; getrennte Prüfung
 
