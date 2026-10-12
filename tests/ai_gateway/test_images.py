@@ -39,6 +39,7 @@ MODELS = {
             "supported_parameters": {"output_format": {"type": "enum", "values": ["png", "svg"]}},
         },
         {"id": "ohne-anbieter", "name": "kaputt"},
+        {"id": "a/../../x?y", "name": "verbogen"},
         "kein Eintrag",
     ]
 }
@@ -152,6 +153,7 @@ def test_fixed_filter_settings_per_provider() -> None:
     flux = ImageEndpoint("black-forest-labs", frozenset({"safety_tolerance"}), None)
     assert filter_options("black-forest-labs/flux.2-pro", flux) == {"safety_tolerance": 5}
     assert filter_options("black-forest-labs/flux-3-image", flux) == {"safety_tolerance": 4}
+    assert filter_options("black-forest-labs/flux.3-pro", flux) == {"safety_tolerance": 4}
     gpt = ImageEndpoint("openai", frozenset({"moderation"}), None)
     assert filter_options("openai/gpt-image-2", gpt) == {"moderation": "low"}
     assert filter_options("seed/x", ImageEndpoint("seed", frozenset(), None)) == {}
@@ -233,3 +235,14 @@ def test_needs_a_key() -> None:
     with pytest.raises(ProviderUnavailable):
         OpenRouterImageProvider.from_environment(ImageCatalog(), {})
     assert "sk-" not in repr(OpenRouterImageProvider(KEY, ImageCatalog()))
+
+
+def test_a_cost_that_is_not_a_number_is_dropped() -> None:
+    answer = httpx.Response(
+        200,
+        content=b'{"data": [{"b64_json": "iVBORw==", "media_type": "image/png"}],'
+        b' "usage": {"cost": NaN}}',
+        headers={"content-type": "application/json"},
+    )
+    adapter, _, _ = setup(answer)
+    assert asyncio.run(adapter.generate(order())).cost_usd is None

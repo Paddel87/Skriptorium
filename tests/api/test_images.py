@@ -89,6 +89,8 @@ def test_invalid_orders(logged_in: TestClient, images: FakeImages) -> None:
     unknown = {**ORDER, "model": "recraft/recraft-v4-vector"}
     assert logged_in.post("/api/images/generate", json=unknown).status_code == 422
     assert logged_in.post("/api/images/generate", json={**ORDER, "prompt": ""}).status_code == 422
+    blank = {**ORDER, "prompt": "   "}
+    assert logged_in.post("/api/images/generate", json=blank).status_code == 422
     long = {**ORDER, "prompt": "x" * 4001}
     assert logged_in.post("/api/images/generate", json=long).status_code == 422
     odd = {**ORDER, "aspect_ratio": "7:1"}

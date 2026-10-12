@@ -1838,7 +1838,7 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
   - Verworfen: Filter als Einstellung oder je Bild (mehr Oberfläche, Schutzniveau nur per ADR); Speichern auf dem Server ohne Browser-Verkleinerung (doppelte Prüfwege).
 - **Vision-Frage, die entschied:** „Soll das Skriptorium Bilder für deine Figuren, Karten und Umschläge auch selbst erzeugen können – mit Vorschau, bevor etwas gespeichert wird?“ → ja.
 - **Konfidenz zum Zeitpunkt:** hoch für die Bauweise; mittel für Filter und Kosten (echte Probe nach dem Einspielen oder in einer Cloud-Sitzung). Umkehrbarkeit billig.
-- **Konsequenzen:** Prüfung durch eine getrennte Instanz vor dem Einspielen.
+- **Konsequenzen:** Prüfung durch eine getrennte Instanz vor dem Einspielen. Ergebnis (Sonnet, 2026-10-12): keine Befunde hoch oder mittel. Behoben: Kosten nur, wenn endlich und nicht negativ (NaN brach sonst die Antwort); Modellkennungen aus dem Katalog nur nach festem Muster in Adressen; Bildbeschreibung aus Leerzeichen abgelehnt; FLUX.3-Erkennung robuster. Optional, nicht umgesetzt: Größengrenze schon beim Laden der Antwort (OpenRouter vertrauenswürdig, Speichergrenze des Containers), Kennzeichnung unklarer Kosten bei Zeitüberschreitung, Begrenzung paralleler Aufrufe und Gesamtzeit (Ausgabengrenze am Schlüssel).
 - **Abgeleitete Regel:** keine
 
 ---

@@ -7,6 +7,7 @@ an hour and leaves out vector models, whose SVG output may carry scripts.
 """
 
 import logging
+import re
 import time
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
@@ -19,6 +20,8 @@ DEFAULT_IMAGE_MODEL: Final = "black-forest-labs/flux.2-pro"
 _KEEP_SECONDS: Final = 3600.0
 _RETRY_SECONDS: Final = 60.0
 _TIMEOUT_SECONDS: Final = 10.0
+# Identifiers as OpenRouter forms them; anything else is never put into an address.
+_MODEL_ID: Final = re.compile(r"[a-z0-9._-]+/[a-z0-9._:-]+")
 
 _log = logging.getLogger("skriptorium.ai_gateway")
 
@@ -175,7 +178,7 @@ def _models(body: object) -> dict[str, ImageModel]:
 def _model(item: Mapping[str, object]) -> ImageModel | None:
     """One image model; ``None`` without identifier or if it can deliver vector graphics."""
     model_id = item.get("id")
-    if not isinstance(model_id, str) or "/" not in model_id:
+    if not isinstance(model_id, str) or not _MODEL_ID.fullmatch(model_id):
         return None
     parameters = _mapping(item.get("supported_parameters"))
     formats = _values(parameters.get("output_format"))

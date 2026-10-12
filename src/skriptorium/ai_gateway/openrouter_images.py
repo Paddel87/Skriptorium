@@ -9,7 +9,9 @@ configurable (ADR-077): FLUX ``safety_tolerance`` 5 (FLUX.3 at most 4), GPT Imag
 import base64
 import binascii
 import logging
+import math
 import os
+import re
 import time
 from collections.abc import Mapping
 from typing import Final
@@ -30,6 +32,7 @@ MAX_PROMPT_CHARS: Final = 4000
 SAFETY_TOLERANCE: Final = 5
 SAFETY_TOLERANCE_FLUX_3: Final = 4
 MODERATION: Final = "low"
+_FLUX_3: Final = re.compile(r"flux[.-]3")
 
 _log = logging.getLogger("skriptorium.ai_gateway")
 
@@ -128,7 +131,7 @@ def filter_options(model: str, endpoint: ImageEndpoint) -> dict[str, object]:
     options: dict[str, object] = {}
     if "safety_tolerance" in endpoint.passthrough:
         options["safety_tolerance"] = (
-            SAFETY_TOLERANCE_FLUX_3 if "flux-3" in model else SAFETY_TOLERANCE
+            SAFETY_TOLERANCE_FLUX_3 if _FLUX_3.search(model) else SAFETY_TOLERANCE
         )
     if "moderation" in endpoint.passthrough:
         options["moderation"] = MODERATION
@@ -177,5 +180,10 @@ def _image(response: httpx.Response) -> GeneratedImage:
     return GeneratedImage(
         data=image,
         media_type=media_type if isinstance(media_type, str) else "",
-        cost_usd=float(cost) if isinstance(cost, int | float) else None,
+        # Only a finite, non-negative cost counts; NaN or Infinity would break the answer and sums.
+        cost_usd=(
+            float(cost)
+            if isinstance(cost, int | float) and math.isfinite(cost) and cost >= 0
+            else None
+        ),
     )

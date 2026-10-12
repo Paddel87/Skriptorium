@@ -10,7 +10,7 @@ import base64
 from typing import Annotated, Final, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from skriptorium.ai_gateway import (
     DEFAULT_IMAGE_MODEL,
@@ -64,6 +64,13 @@ class GenerateIn(BaseModel):
     prompt: Annotated[str, Field(min_length=1, max_length=4000)]
     aspect_ratio: AspectRatio = "1:1"
 
+    @field_validator("prompt")
+    @classmethod
+    def _not_blank(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("Bildbeschreibung fehlt")
+        return value.strip()
+
 
 class GeneratedOut(BaseModel):
     """The generated image for the preview, base64-encoded, with the reported cost."""
@@ -106,7 +113,7 @@ async def generate_image(body: GenerateIn, found: ServicesDep) -> GeneratedOut:
     await found.image_catalog.refresh()
     if body.model not in found.image_catalog:
         raise InvalidInput(f"Unbekanntes Bildmodell: {body.model}")
-    order = ImageOrder(body.model, body.prompt.strip(), body.aspect_ratio)
+    order = ImageOrder(body.model, body.prompt, body.aspect_ratio)
     try:
         image = await found.images.generate(order)
     except GatewayError as error:

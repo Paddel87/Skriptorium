@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] 7.12 Bilder erzeugen umgesetzt
+
+- Mockup freigegeben. Umgesetzt: `ai_gateway/images.py` (Bildanbieter-Schnittstelle, Katalog ohne Vektor-Modelle, Preise und durchreichbare Parameter je Anbieter, eine Stunde gemerkt), `openrouter_images.py` (Filter fest: FLUX 5, FLUX.3 4, GPT Image „low“; 502 = nicht fertig erzeugt, kostet nichts), `api/image_routes.py` (Modelle, Preis, Erzeugen; Prüfung des gelieferten Bildes am Dateikopf, Medientyp aus den Bytes), Oberfläche `ImageGenerate.tsx`, Vorbelegung `imagePrompts.ts`, Auswahl „Bild hochladen / ✨ Bild erzeugen“ in Galerie und Titelbild, „✨ Karte erzeugen“ im Karten-Formular.
+- Reibung: Vorbelegung nahm bei den Figuren des Eigentümers den ganzen Eintrag, weil das Aussehen als Zeile „**Aussehen:** …“ steht, nicht als Abschnitt – Zeilen mit dieser Kennzeichnung werden jetzt erkannt. Zwei React-Regeln (setState im Effekt) mit gemerktem Preis je Modell und Startzeit gelöst. Mein Schein-Bildanbieter für die Sichtprobe hatte selbst einen Fehler („Interner Fehler“ im Test) – im Testskript behoben, nicht im Skriptorium.
+- Sichtprobe mit Schein-Anbieter: Vorbelegung aus „Aussehen“, Preis „ca. 0,03 $ je Bild (1 Megapixel)“, Wartezeit, Vorschau mit Kosten, Übernahme in die Galerie (als WebP verkleinert). KI-Anfragen beim Schreiben byte-gleich.
+- Prüfungen: pytest 698, vitest 264, Playwright 11, alle Werkzeuge grün. Echte Probe (Filter, Kosten) erst nach dem Einspielen oder in einer Cloud-Sitzung.
+- Getrennte Instanz (Sonnet): keine Befunde hoch/mittel; behoben: Kosten NaN/Infinity verworfen, Modellkennungen nach Muster, leere Bildbeschreibung abgelehnt, FLUX.3-Erkennung (pytest 699). Rest in ADR-077.
+
 ### 2026-10-12 – [ADR-ANGELEGT] ADR-077 Bilder erzeugen (7.12)
 
 - PR #146 (Erkundung) nach grüner CI gemergt. OpenRouter-Bildschnittstelle geprüft: `POST /api/v1/images`, 59 Modelle, Preise je Endpunkt, durchreichbare Filterparameter (`safety_tolerance` bei FLUX, `moderation` bei GPT Image). Eigentümer unterbrach die Vorlage mit der Frage „Filterkonfiguration oder hardcoded?“ – nach Erklärung „Fest im Code“; danach Vorlage freigegeben: FLUX.2 Pro Standard, Filter Stufe 5, Vorlage aus dem Kanon.
