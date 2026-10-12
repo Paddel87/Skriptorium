@@ -29,6 +29,24 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [ERLEDIGT] 7.4 E-Book
+
+- Eigentümer: „gefunden, alles ok“. FR-034 erledigt. Ort des Abschnitts bleibt; Auffindbarkeit als Punkt für 7.5 vermerkt. Phase 7: 6 von 9 (offen 7.5, 7.6, 7.8).
+
+### 2026-10-12 – [ERLEDIGT] 7.3 Schreibweise; Befund EPUB nicht auffindbar
+
+- Eigentümer: „Das scheint bisher alles zu passen.“ 7.3 erledigt. Phase 7: 5 von 9.
+- „Aber EPUB finde ich nicht“: Abschnitt steht ganz unten im Reiter „Geschichte“ der Leiste, unter einer langen Gesamtzusammenfassung – schlechte Platzwahl. Ort mit dem Eigentümer klären.
+
+### 2026-10-12 – [ERLEDIGT] 7.2 Zeitstrahl
+
+- Eigentümer nach dem Einspielen von `0fbc61b`: „Alles da“. FR-023 erledigt. Phase 7: 4 von 9.
+
+### 2026-10-12 – [BEOBACHTUNG] Eingespielt: Zeitstrahl der Welt (`0fbc61b`); Verbrauch im Alltag
+
+- Auf Anweisung („Einspielen“); CI auf `main` grün. HTTPS 200, Bündel mit „Zeitstrahl der Welt“, eine SSH-Abfrage: `(healthy)`, `REVISION` `0fbc61b`.
+- Eigentümer meldet den Verbrauch des Monats: 16,03 $ für 457 Anfragen, 7.777.403 Token ein, 473.527 aus – im Mittel rund 17.000 Token Eingabe und 3,5 Cent je Anfrage. Gegen 125.000–140.000 Token je Anfrage mit TypingMind (Vision 2) etwa ein Siebtel bis Achtel; grob hochgerechnet ca. 120 $ bei gleichem Modell. Erfolgskriterium „günstiger pro Anfrage“ (Vision 4) im Alltag bestätigt.
+
 ### 2026-10-12 – [GELÖST] 7.2 Zeitstrahl passte nicht zur Form des Eigentümers
 
 - Eigentümer: „Ich finde die Funktion nicht.“ Mit seiner Erlaubnis lesend auf der Produktion gezählt (nur Zahlen und Formen): vier Welten ohne Zeitlinie, eine Welt mit 12 Einträgen der Kategorie Zeitlinie, alle Namen „Zahl – Wörter“, Texte 6–15 Wörter, keine Listen; in einer Welt ein Regel-Eintrag mit Ereigniszeilen.
