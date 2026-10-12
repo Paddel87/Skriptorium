@@ -43,7 +43,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | 🟠 | 7.13 | Die KI kennt Bilder (einmal beschreiben) | gemergt (ADR-074, PR #144) | du: „einspielen“, dann echte Probe |
 | ⚪ | 7.14 | Markierungen auf Karten → Kanon-Eintrag | offen (nach 7.10) | KI |
 | ⚪ | 7.15 | Bilder beim Schreiben auf Knopfdruck mitschicken | offen (nach 7.13, nur auf Wunsch) | du: nach 7.13 entscheiden |
-| 🟠 | 7.16 | Fester Abschnitt „Aussehen“ bei Figuren | in Arbeit (ADR-078) | du: Mockup ansehen |
+| 🟠 | 7.16 | Fester Abschnitt „Aussehen“ bei Figuren | umgesetzt (ADR-078) | du: PR freigeben |
 
 **Querschnitt (offen):**
 
@@ -428,7 +428,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.16: Fester Abschnitt „Aussehen“ bei Figuren; Aussehen herauslösen
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-078). Offen: Mockup, Umsetzung, Bestätigung des Eigentümers
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-078); Mockup freigegeben; umgesetzt 2026-10-12. Offen: PR, Einspielen, Bestätigung des Eigentümers (an einer echten Figur)
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage und Mockup)
 - **Abhängigkeiten:** 7.12
 - **Freigabepflichtig:** ja – Datenmodell-Konvention (Kategorie 4), neuer Ablauf und geänderte Anweisung des Weltenbauers (Kategorie 1)

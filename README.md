@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 7 – Zeitlinie, Publizieren, Gestaltung und Bilder (Umsetzung), begonnen 2026-10-12 (ADR-067, ADR-068); Phase 6 abgeschlossen 2026-10-12. Fortschritt: 7 von 15 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
+- **Projektphase:** Phase 7 – Zeitlinie, Publizieren, Gestaltung und Bilder (Umsetzung), begonnen 2026-10-12 (ADR-067, ADR-068); Phase 6 abgeschlossen 2026-10-12. Fortschritt: 7 von 16 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
 - **Version:** v1.0.0 – erstes produktives Release (2026-10-11, ADR-058); davor v0.1.0 als Vorabversion (ADR-043)
 - **Status:** In Betrieb
 - **Letzte Änderung:** 2026-10-11
@@ -111,6 +111,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - 🟠 **7.13:** Bilder und Karten einmal von der KI beschreiben lassen – umgesetzt (ADR-074).
 - 🟠 **7.11:** Titelbild der Geschichte, auch im E-Book – umgesetzt (ADR-075).
 - 🟠 **7.12:** Bilder von der KI erzeugen (über OpenRouter) – umgesetzt (ADR-077).
+- 🟠 **7.16:** Abschnitt „Aussehen“ bei Figuren, „Aussehen herauslösen“ – umgesetzt (ADR-078).
 - ⚪ **Danach:** 7.14 Markierungen auf Karten, 7.15 nur auf Wunsch, dann 7.8 Planung.
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 

@@ -6,6 +6,8 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v1.0.0)
 
+- Abschnitt „Aussehen“ bei Figuren (2026-10-12, Schritt 7.16, ADR-078): Neue Figuren beginnen mit dem Abschnitt „Aussehen“, der Weltenbauer schreibt ihn mit. Bei Figuren ohne diesen Abschnitt steht „✨ Aussehen herauslösen“: Die KI liest den Eintrag einmal und schlägt nur das Äußere vor; du änderst und übernimmst, der übrige Text bleibt. „Bild erzeugen“ nimmt bei Figuren nur noch das Aussehen. Neu `POST /api/worlds/{id}/entries/{entry}/appearance`.
+
 - Bilder von der KI erzeugen (2026-10-12, Schritt 7.12, ADR-077): Beim „＋“ in der Galerie und beim Titelbild wählst du „Bild hochladen“ oder „✨ Bild erzeugen“, bei Karten „✨ Karte erzeugen“. Die Bildbeschreibung ist aus dem Kanon vorausgefüllt (Aussehen der Figur, Weltbeschreibung, Zusammenfassung) und änderbar; du wählst Format und Modell (voreingestellt FLUX.2 Pro) und siehst den Preis vorher. „Erzeugen“ zeigt eine Vorschau mit den echten Kosten – gespeichert wird erst bei „Übernehmen“. Abgelehnte oder fehlgeschlagene Bilder kosten nichts. Im Verbrauch erscheint das als „Bilderzeugung“. Neu `GET /api/images/models`, `GET /api/images/price`, `POST /api/images/generate`.
 
 - Titelbild der Geschichte (2026-10-12, Schritt 7.11, ADR-075): Oben im Reiter „Geschichte“ der Leiste fügst du ein Titelbild hinzu, änderst oder entfernst es (am besten Hochformat). Im E-Book erscheint es als Umschlag in der Bibliothek des Readers und als erste Seite. Neu `POST/GET/DELETE /api/worlds/{id}/stories/{story}/cover`.

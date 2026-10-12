@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] 7.16 Abschnitt „Aussehen“ umgesetzt
+
+- Mockup freigegeben. Umgesetzt: Vorlage „## Aussehen“ für neue Figuren; Weltenbauer-Regel `### Aussehen`; Import hängt „Aussehen“ an die Figur (auch als einzige Unterüberschrift); `context/appearance.py`, Ablauf und Route „Aussehen herauslösen“ (Temperatur 0,2, Antwort „KEIN AUSSEHEN“ ohne Angaben); `AppearanceExtract.tsx` mit Knopf nur bei Figuren ohne Aussehen; Bilderzeugung bei Figuren nur aus dem Aussehen, sonst Name plus Hinweis.
+- KI-Anfragen: nur die des Weltenbauers geändert (gewollt), Schreiben und übrige byte-gleich zum Stand vor 7.6.
+- Sichtprobe im Browser nicht möglich (Öffnen der lokalen Seite im Browser-Fenster abgelehnt); Abdeckung über Tests (vitest 267, pytest 706, Playwright 11). Keine Kategorie-6-Änderung (Eintragstext geht beim Schreiben ohnehin an den Anbieter) – keine getrennte Prüfung nötig.
+
 ### 2026-10-12 – [ADR-ANGELEGT] ADR-078 Abschnitt „Aussehen“ bei Figuren (7.16)
 
 - Befund des Eigentümers nach dem Einspielen: Bildbeschreibung für Figuren enthielt Verhalten und Charakter. Ursache: Vorbelegung nimmt ohne Abschnitt/Zeile „Aussehen“ den Anfang des ganzen Eintrags. Eigentümer schlug selbst eine Trennung der äußeren Merkmale vor; gewählt: Abschnitt „Aussehen“, Knopf „Aussehen herauslösen“, sofort als 7.16. Phase 7 jetzt 16 Schritte (Schwelle erreicht). Import-Probe: `### Aussehen` unter dem Namen landet im Eintrag, `## Aussehen` daneben würde ein eigener Eintrag – wird mit angehängt.
