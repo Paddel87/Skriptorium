@@ -103,7 +103,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - ✅ **Phase 6** (abgeschlossen 2026-10-12): Umfang des Kapitels, Kurzfassung im eigenen Reiter, Kanon auch bei langen Kapiteln (ADR-062), Schutz der Server-Antworten (ADR-063), KI-Weltenbauer mit Websuche (ADR-064), Austausch mit SillyTavern in beide Richtungen (ADR-065, ADR-066), Darstellung „Schwarz“. Bewertung am Phasenende: [`docs/research/bewertung-phase-6.md`](docs/research/bewertung-phase-6.md).
 - ✅ **7.1, 7.7:** Umbau ohne sichtbare Änderung (ADR-067) und npm-Pflege – erledigt 2026-10-12.
 - 🟠 **7.2:** Zeitlinie als Zeitstrahl (ADR-069) – umgesetzt, Prüfung offen.
-- ⚪ **Als Nächstes:** danach Schreibweise für bestehende Kapitel, Publizieren, Gestaltung der Oberfläche, Bilder und Karten (ADR-068).
+- ⚪ **Als Nächstes:** 7.3 Schreibweise für bestehende Kapitel, dann Publizieren, Gestaltung der Oberfläche, Bilder und Karten (ADR-068).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).
