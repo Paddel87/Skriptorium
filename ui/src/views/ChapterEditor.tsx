@@ -118,6 +118,7 @@ export function ChapterEditor({
           <>
             <button
               type="button"
+              className="ghost"
               disabled={canon.marked.trim() === "" || canon.taking !== null}
               title="Markierte Stelle in den Kanon oder nur in diese Geschichte"
               onClick={canon.start}
@@ -129,6 +130,7 @@ export function ChapterEditor({
             ) : (
               <button
                 type="button"
+                className="ghost"
                 disabled={summarizing}
                 onClick={() => void complete()}
               >
