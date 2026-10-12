@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] 7.12: Erkundung fal.ai
+
+- PR #145 (7.11) auf „merge“ nach grüner CI gemergt. Eigentümer zu 7.12: „vielleicht lässt sich fal.ai einbinden“; nach Vergleich mit OpenRouter Auftrag, erst Modelle und Filter-Schalter zu prüfen. Ergebnis in `docs/research/fal-bildmodelle.md`: 203 aktive Text-zu-Bild-Modelle per API; 165 mit Schalter `enable_safety_checker` (meist an), 18 mit Stufe `safety_tolerance`, 7 standardmäßig aus, 20 ohne Schalter. Preise je Modell nur mit Schlüssel abrufbar. Entscheidung des Eigentümers steht aus.
+
 ### 2026-10-12 – [BEOBACHTUNG] 7.11 Titelbild umgesetzt
 
 - Mockup (vorher/nachher, Titelbild oben im Reiter „Geschichte“ – Lehre aus 7.4) freigegeben. Umgesetzt: `Story.cover`, Ablage im Ordner der Geschichte, ein neues ersetzt das alte; drei Routen; `StoryCover.tsx`; `shrinkImage(…, asJpeg)` für Titelbilder; E-Book mit `cover-image`, `meta name="cover"`, Umschlagseite vor der Titelseite, Bild unkomprimiert im ZIP; ohne Titelbild unverändert (Test).
