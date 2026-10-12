@@ -1,10 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
+  entryEvent,
+  eventEntryName,
   sortedEvents,
   sortKey,
   timelineEvents,
   withEvent,
   withoutEvents,
+  worldEvents,
 } from "./timeline";
 
 const SALZMARK = `# Zeitlinie (n. d. F. = nach der Flut)
@@ -96,6 +99,69 @@ describe("timeline (step 7.2)", () => {
     expect(withEvent("", "1", "Anfang.")).toBe("- **1:** Anfang.\n");
     expect(withEvent("# Zeitlinie\n\n", " **3** ", "Zwei\nZeilen  hier ")).toBe(
       "# Zeitlinie\n\n- **3:** Zwei Zeilen hier\n",
+    );
+  });
+
+  it("reads date and title from the name of one event per entry (the owner's form)", () => {
+    expect(
+      entryEvent({
+        id: "a",
+        name: "1999 – Der große Brand",
+        body: "Feuer.\n\nWest.",
+      }),
+    ).toEqual({
+      id: "a",
+      date: "1999",
+      title: "Der große Brand",
+      text: "Feuer. West.",
+      key: 1999,
+    });
+    expect(entryEvent({ id: "b", name: "1999 - Brand", body: "" }).title).toBe(
+      "Brand",
+    );
+    expect(
+      entryEvent({
+        id: "l",
+        name: "Chronik",
+        body: "# Zeit\n\n- **1:** A.\n- **2:** B.\n- C.\n",
+      }).text,
+    ).toBe("2 Ereignisse als Liste");
+    const long = entryEvent({
+      id: "m",
+      name: "5 – Lang",
+      body: `## Kopf\n**Fett** ${"wort ".repeat(60)}`,
+    });
+    expect(long.text.startsWith("Kopf Fett wort")).toBe(true);
+    expect(long.text.endsWith(" …")).toBe(true);
+    expect(long.text.length).toBeLessThanOrEqual(202);
+    expect(entryEvent({ id: "c", name: "Jahr 7: Krönung", body: "" }).key).toBe(
+      7,
+    );
+    expect(
+      entryEvent({ id: "d", name: "Die Gründung", body: "" }),
+    ).toMatchObject({
+      date: null,
+      title: "Die Gründung",
+      key: null,
+    });
+    expect(
+      entryEvent({ id: "e", name: "Vor der Flut – Festland", body: "" }),
+    ).toMatchObject({
+      date: null,
+      title: "Vor der Flut – Festland",
+    });
+  });
+
+  it("sorts the world's events and names a new one", () => {
+    const events = worldEvents([
+      { id: "c", name: "2011 – Wiedereröffnung", body: "" },
+      { id: "x", name: "Irgendwann", body: "" },
+      { id: "a", name: "1987 – Gründung", body: "" },
+      { id: "b", name: "1999 – Brand", body: "" },
+    ]);
+    expect(events.map((event) => event.id)).toEqual(["a", "b", "c", "x"]);
+    expect(eventEntryName(" 2015 ", "  Neues \n Jahr ")).toBe(
+      "2015 – Neues Jahr",
     );
   });
 });

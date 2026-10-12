@@ -210,7 +210,7 @@ describe("Canon", () => {
       name: "Zeitlinie",
       category: "zeitlinie" as const,
       aliases: [],
-      body: "",
+      body: "- **0:** Flut.\n",
     };
     fakeApi({
       "GET /api/worlds/salzmark/entries": ok([TIMELINE]),
@@ -226,6 +226,102 @@ describe("Canon", () => {
     await user.click(screen.getByRole("button", { name: "+ Ereignis" }));
     expect(await screen.findByText("Speichern fehlgeschlagen")).toBeDefined();
     expect(screen.getByLabelText("Datum")).toHaveProperty("value", "1");
+  });
+
+  it("shows the world's timeline entries as one time line (step 7.2, owner's form)", async () => {
+    const event = (id: string, name: string, body: string) => ({
+      ...ENTRY,
+      id,
+      name,
+      body,
+      aliases: [],
+      category: "zeitlinie" as const,
+    });
+    const NEW = event("2015-neubau", "2015 – Neubau", "Ein Neubau.\n");
+    const { calls } = fakeApi({
+      "GET /api/worlds/salzmark/entries": ok([
+        ENTRY,
+        event("2011-wieder", "2011 – Wiedereröffnung", "Der Westflügel.\n"),
+        event("1987-gruendung", "1987 – Gründung", "Die Akademie.\n"),
+        event("irgendwann", "Irgendwann", ""),
+      ]),
+      "POST /api/worlds/salzmark/entries": created(NEW),
+    });
+    const user = userEvent.setup();
+    const page = render(<CanonAt />);
+    await user.click(
+      await screen.findByRole("button", { name: "Zeitlinie 3" }),
+    );
+    const line = screen.getByRole("list", { name: "Zeitstrahl der Welt" });
+    expect(
+      within(line)
+        .getAllByRole("listitem")
+        .map((item) => item.textContent),
+    ).toEqual([
+      "1987GründungDie Akademie.",
+      "2011WiedereröffnungDer Westflügel.",
+      "ohne JahrIrgendwann",
+    ]);
+    await user.click(within(line).getByRole("button", { name: "Gründung" }));
+    expect(
+      screen.getByRole("heading", { name: "1987 – Gründung" }),
+    ).toBeDefined();
+    // A single event reads as text, without the time line of one entry.
+    expect(screen.queryByRole("list", { name: "Zeitstrahl" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "als Text" })).toBeNull();
+
+    await user.type(screen.getByLabelText("Jahr"), "2015");
+    await user.type(screen.getByLabelText("Titel"), "Neubau");
+    await user.type(screen.getByLabelText("Was geschah?"), " Ein Neubau. ");
+    await user.click(screen.getByRole("button", { name: "+ Ereignis" }));
+    await waitFor(() => {
+      expect(calls.some((call) => call.method === "POST")).toBe(true);
+    });
+    expect(calls.find((call) => call.method === "POST")?.body).toEqual({
+      category: "zeitlinie",
+      name: "2015 – Neubau",
+      aliases: [],
+      status: null,
+      body: "Ein Neubau.\n",
+    });
+    await user.click(screen.getByRole("button", { name: "Liste" }));
+    expect(
+      screen.queryByRole("list", { name: "Zeitstrahl der Welt" }),
+    ).toBeNull();
+    expect(screen.getByRole("button", { name: /Irgendwann/ })).toBeDefined();
+    await user.click(screen.getByRole("button", { name: "Zeitstrahl" }));
+    expect(
+      screen.getByRole("list", { name: "Zeitstrahl der Welt" }),
+    ).toBeDefined();
+    page.unmount();
+
+    render(<Canon world="salzmark" compact />);
+    await user.click(
+      await screen.findByRole("button", { name: "Zeitlinie 3" }),
+    );
+    expect(
+      screen.getByRole("list", { name: "Zeitstrahl der Welt" }),
+    ).toBeDefined();
+    expect(screen.queryByRole("button", { name: "+ Ereignis" })).toBeNull();
+  });
+
+  it("shows when creating an event entry fails", async () => {
+    fakeApi({
+      "GET /api/worlds/salzmark/entries": ok([
+        { ...ENTRY, id: "z", name: "1 – A", category: "zeitlinie" as const },
+      ]),
+      "POST /api/worlds/salzmark/entries": fail(422, "Name schon vergeben"),
+    });
+    const user = userEvent.setup();
+    render(<CanonAt />);
+    await user.click(
+      await screen.findByRole("button", { name: "Zeitlinie 1" }),
+    );
+    await user.type(screen.getByLabelText("Jahr"), "1");
+    await user.type(screen.getByLabelText("Titel"), "A");
+    await user.click(screen.getByRole("button", { name: "+ Ereignis" }));
+    expect(await screen.findByText("Name schon vergeben")).toBeDefined();
+    expect(screen.getByLabelText("Titel")).toHaveProperty("value", "A");
   });
 
   it("shows the chosen entry to read, with bold, lists and headings", async () => {

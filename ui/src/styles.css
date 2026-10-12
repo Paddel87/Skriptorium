@@ -1502,3 +1502,37 @@ button.more-toggle {
     gap: 0.4rem;
   }
 }
+
+/* The world's timeline entries as one time line (step 7.2): title as a link, text below. */
+.timeline-world li {
+  grid-template-columns: 5.5rem 1fr;
+}
+
+.timeline-world li.chosen {
+  background: var(--selection);
+  border-radius: 4px;
+}
+
+.timeline-title {
+  font-weight: 600;
+  text-align: left;
+}
+
+.timeline-text {
+  display: block;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.timeline-add-entry {
+  grid-template-columns: 5.5rem 1fr;
+}
+
+.timeline-add-entry textarea {
+  grid-column: 1 / -1;
+}
+
+.timeline-add-entry button {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
