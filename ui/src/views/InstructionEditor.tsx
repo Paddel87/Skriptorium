@@ -8,7 +8,13 @@ import {
 } from "@codemirror/autocomplete";
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { Compartment, EditorState } from "@codemirror/state";
-import { Decoration, EditorView, keymap, placeholder } from "@codemirror/view";
+import {
+  Decoration,
+  drawSelection,
+  EditorView,
+  keymap,
+  placeholder,
+} from "@codemirror/view";
 import { useEffect, useRef } from "react";
 import { CATEGORIES, type CanonEntry } from "../api";
 import { mentionRanges, menuItems } from "../references";
@@ -78,6 +84,9 @@ export function InstructionEditor({
             icons: false,
           }),
           EditorView.lineWrapping,
+          // The editor draws the cursor itself: the browser's own cursor sat above and left of
+          // the example text in the empty field (owner's finding after step 7.5).
+          drawSelection(),
           placeholder(initialExample.current),
           editable.current.of(EditorView.editable.of(!initialDisabled.current)),
           marks.current.of(mentionMarks(initialEntries.current)),

@@ -38,9 +38,12 @@ const InstructionEditor = lazy(() =>
 
 const NO_GUESTS: readonly GuestLink[] = [];
 
-/** Grey example in the empty instruction field (step 4.15); not tied to any world. */
+/**
+ * Grey example in the empty instruction field (step 4.15); not tied to any world. Since the
+ * owner's finding after step 7.5 it explains the field instead of giving a story's example.
+ */
 const EXAMPLE_INSTRUCTION =
-  "z. B. Eine Fremde betritt am Abend die Schänke und fragt nach dem Fährmann.";
+  "Was soll als Nächstes geschehen? Leer lassen = einfach weiterschreiben. Mit @ holst du Figuren, Orte und mehr aus dem Kanon dazu.";
 
 /**
  * Writing in turns with the AI (step 3.3, FR-008, FR-009): send an instruction or start a new
