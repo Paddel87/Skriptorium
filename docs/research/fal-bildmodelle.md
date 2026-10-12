@@ -38,3 +38,19 @@ Stand 2026-10-12. Anlass: Vorschlag des Eigentümers, Bilder in 7.12 über fal.a
 - Lizenz der Gewichte: „Pony License“ mit Einschränkungen für eigene Inferenzdienste und große Firmen; die Einschränkungen gelten nicht bei Nutzung über kommerzielle APIs der Anbieter wie fal.
 - Bei fal: Sicherheitsprüfung standardmäßig aus, Abschalten aber nur mit Freischaltung des Kontos wirksam (siehe oben). Parameter u. a. 40 Schritte, Bildgröße `square_hd`, Ausgabe JPEG.
 - Quellen: Modellkarte <https://huggingface.co/AriaVale2/pony-v7-base>, Civitai <https://civitai.com/models/1901521/pony-v7-base>, AuraFlow-Beschreibung <https://comfyui.nomadoor.net/en/basic-workflows/auraflow/>, fal-Schema `fal-ai/pony-v7` (selbst abgefragt).
+
+## Anbieter im Überblick (Nachfrage des Eigentümers, 2026-10-12)
+
+| Anbieter | Eignung | Filter (laut eigener Doku) | Kosten | Anmerkung |
+|---|---|---|---|---|
+| fal.ai | gut | Prüfung voreingestellt an; Abschalten bei vielen Modellen nur mit Freischaltung des Kontos, sonst schwarze Bilder; 18 Modelle mit Stufen-Regler | Vorab-Guthaben, je Bild/Megapixel | 203 Text-zu-Bild-Modelle |
+| Replicate | gut | Prüfung für SDXL/FLUX und Abwandlungen nur im Web fest an; per API abschaltbar, keine Freischaltung erwähnt | je Bild bzw. Rechenzeit | größter Katalog; Inhaltsregeln in den Nutzungsbedingungen prüfen |
+| Runware | möglich | Prüfung per `safety.checkContent` in der Anfrage; Regeln für Erwachseneninhalte nicht gefunden | laut Drittseiten sehr günstig | Regeln unklar |
+| OpenRouter | einfach, eng | große Bildmodelle mit strengen Filtern | vorhandener Schlüssel | 12 Bildmodelle im Katalog |
+| Hersteller direkt | eher nicht | eigene Filter, teils Stufen | je Bild | je Hersteller ein Konto |
+| NovelAI | nicht geeignet | locker, Anime | Abo mit Anlas | keine öffentliche Bild-API gefunden |
+| eigene Grafikkarte | nicht geeignet | keine | Miete | VPS ohne Grafikkarte, hoher Betriebsaufwand |
+
+Empfehlung: fal.ai und Replicate per Probe vergleichen (Eigentümer im Playground, kleines festes Guthaben), bei fal zusätzlich die Freischaltung erfragen; 7.12 mit austauschbarem Anbieter bauen.
+
+Quellen: <https://replicate.com/docs/topics/predictions/safety-checking>, <https://fal.ai/docs/documentation/model-apis/model-arguments>, <https://help.runware.ai/articles/5571280435-is-there-a-way-to-filter-out-nsfw-content>, <https://runware.ai/docs/models/content-safety.md>, <https://docs.novelai.net/en/subscription>, Vergleichsseiten <https://www.digitalapplied.com/blog/ai-image-generation-api-pricing-comparison-2026>, <https://www.teamday.ai/blog/ai-image-video-api-providers-comparison-2026>.
