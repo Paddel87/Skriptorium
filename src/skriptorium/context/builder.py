@@ -48,6 +48,7 @@ from collections.abc import Sequence
 from typing import Final
 
 from skriptorium.canon import CanonService, InvalidInput, NotFound
+from skriptorium.context.describe import build_entry_image_description, build_map_description
 from skriptorium.context.parts import (
     MAX_BUDGET,
     SAFETY_MARGIN,
@@ -178,6 +179,20 @@ class ContextBuilder:
         """Request for the next answer of the world builder (step 6.7); see
         :func:`skriptorium.context.worldbuilder.build_worldbuilder`."""
         return build_worldbuilder(self._canon, world_id, conversation, references, budget)
+
+    def build_entry_image_description(
+        self, world_id: str, entry_id: str, image: str, budget: int = MAX_BUDGET
+    ) -> BuiltContext:
+        """Request to describe an image of a canon entry once (step 7.13); see
+        :func:`skriptorium.context.describe.build_entry_image_description`."""
+        return build_entry_image_description(self._canon, world_id, entry_id, image, budget)
+
+    def build_map_description(
+        self, world_id: str, file: str, budget: int = MAX_BUDGET
+    ) -> BuiltContext:
+        """Request to describe a map of a world once (step 7.13); see
+        :func:`skriptorium.context.describe.build_map_description`."""
+        return build_map_description(self._canon, world_id, file, budget)
 
     def build_chapter_summary(
         self, world_id: str, story_id: str, chapter_number: int, budget: int = MAX_BUDGET

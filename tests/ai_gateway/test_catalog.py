@@ -118,6 +118,32 @@ def test_only_models_with_text_output_are_kept() -> None:
     assert [entry.id for entry in found.models()] == ["x-ai/grok-4.6"]
 
 
+def test_knows_which_models_read_images() -> None:
+    """Step 7.13 (ADR-074): images among the inputs of the catalog entry."""
+    server = Server(
+        models=[
+            model(
+                "a/sieht",
+                architecture={"input_modalities": ["text", "image"], "output_modalities": ["text"]},
+            ),
+            model(
+                "a/blind",
+                architecture={"input_modalities": ["text"], "output_modalities": ["text"]},
+            ),
+            GROK,
+        ]
+    )
+    found = catalog(server)
+
+    asyncio.run(found.refresh())
+
+    assert found.reads_images("a/sieht")
+    assert not found.reads_images("a/blind")
+    assert not found.reads_images("x-ai/grok-4.6")  # no input list given
+    assert not found.reads_images("fehlt/ganz")
+    assert {m.id: m.reads_images for m in found.models()}["a/sieht"] is True
+
+
 def test_unknown_or_negative_prices_and_missing_fields() -> None:
     server = Server(
         models=[

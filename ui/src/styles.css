@@ -1743,7 +1743,9 @@ input.chapter-title {
   margin: 0.5rem 0 1rem;
 }
 
-.entry-images button {
+/* Only the images themselves are bare buttons; the viewer's controls keep their look. */
+.entry-image-main,
+.entry-image-thumbs button {
   padding: 0;
   border: none;
   background: transparent;
@@ -1787,7 +1789,7 @@ input.chapter-title {
   outline-offset: 2px;
 }
 
-.entry-images button.entry-image-add {
+.entry-image-thumbs button.entry-image-add {
   border: 1px dashed var(--field-line);
   color: var(--link);
   font-size: 1.4rem;
@@ -1949,4 +1951,43 @@ input.chapter-title {
   margin: 0.4rem 0 0;
   font-size: 0.8rem;
   opacity: 0.8;
+}
+
+/* "Von der KI beschreiben lassen" (step 7.13): on the light surface inside the dark viewer. */
+.image-description {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 55vh;
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  overflow-y: auto;
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.image-description h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.image-description-model {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.image-description textarea {
+  font-family: "Iowan Old Style", Georgia, serif;
+}
+
+.image-description .note {
+  margin: 0;
+}
+
+/* While the description is open, the image makes room for it. */
+.image-viewer.describing img {
+  max-height: 35vh;
+  align-self: center;
 }

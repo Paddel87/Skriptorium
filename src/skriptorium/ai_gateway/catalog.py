@@ -50,6 +50,8 @@ class CatalogModel:
     moderated: bool
     reasoning_mandatory: bool
     lowest_effort: str | None
+    # Accepts images as input (step 7.13, ADR-074).
+    reads_images: bool = False
 
     @property
     def estimated_cost(self) -> float | None:
@@ -121,6 +123,11 @@ class ModelCatalog(Mapping[str, ModelConfig]):
         self._loaded_at = now
         _log.info("modell-katalog geladen modelle=%d", len(models))
 
+    def reads_images(self, model: str) -> bool:
+        """Whether the catalog lists images among the inputs of ``model``; ``False`` if unknown."""
+        found = self._models.get(model)
+        return found is not None and found.reads_images
+
     def __getitem__(self, model: str) -> ModelConfig:
         """Proven setting from the fixed order, otherwise the one derived from the catalog."""
         if model in self._known:
@@ -187,6 +194,7 @@ def _model(item: dict[str, object]) -> CatalogModel | None:
         reasoning_mandatory=reasoning.get("mandatory") is True,
         # OpenRouter lists the efforts from highest to lowest.
         lowest_effort=efforts[-1] if efforts else None,
+        reads_images="image" in _list(architecture.get("input_modalities")),
     )
 
 

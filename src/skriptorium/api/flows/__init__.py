@@ -1,5 +1,6 @@
 """Flows across module boundaries, kept out of the routes (ADR-020)."""
 
+from skriptorium.api.flows.describe import DescribeOrder, prepare_description
 from skriptorium.api.flows.summary import (
     SUMMARY_TEMPERATURE,
     SummaryFailure,
@@ -10,6 +11,7 @@ from skriptorium.api.flows.worldbuilder import (
     Turn,
     WorldOrder,
     prepare_worldbuilder,
+    stream_answer,
     stream_worldbuilder,
 )
 from skriptorium.api.flows.writing import (
@@ -31,6 +33,7 @@ __all__ = [
     "MAX_OUTPUT_TOKENS",
     "SUMMARY_TEMPERATURE",
     "TEMPERATURE",
+    "DescribeOrder",
     "PreparedRequest",
     "Scene",
     "SummaryFailure",
@@ -39,8 +42,10 @@ __all__ = [
     "WorldOrder",
     "WriteOrder",
     "error_kind",
+    "prepare_description",
     "prepare_request",
     "prepare_worldbuilder",
+    "stream_answer",
     "stream_events",
     "stream_worldbuilder",
     "summarize_chapter",

@@ -12,11 +12,20 @@ Role = Literal["system", "user", "assistant"]
 
 
 @dataclass(frozen=True)
+class ImagePart:
+    """An image sent with a message (step 7.13, ADR-074): its media type and bytes."""
+
+    media_type: str
+    data: bytes
+
+
+@dataclass(frozen=True)
 class Message:
-    """One message of a request."""
+    """One message of a request; ``images`` only where a flow asks for it (ADR-074)."""
 
     role: Role
     content: str
+    images: tuple[ImagePart, ...] = ()
 
 
 @dataclass(frozen=True)

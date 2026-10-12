@@ -35,6 +35,8 @@ export interface CatalogModel {
   thinking: "lange" | "vor" | null;
   /** Checked with the owner's stories. */
   checked: boolean;
+  /** Accepts images, for "Von der KI beschreiben lassen" (step 7.13). */
+  reads_images: boolean;
 }
 
 /** Favorites, the preset model and the catalog (ADR-055). */

@@ -88,10 +88,23 @@ def prepare_worldbuilder(
 async def stream_worldbuilder(
     provider: ModelProvider, prepared: PreparedRequest, record: UsageRecorder | None = None
 ) -> AsyncIterator[str]:
-    """Stream the answer as Server-Sent Events.
+    """Stream the answer as Server-Sent Events, counted as ``weltenbau``; see
+    :func:`stream_answer`."""
+    async for event in stream_answer(provider, prepared, "weltenbau", record):
+        yield event
+
+
+async def stream_answer(
+    provider: ModelProvider,
+    prepared: PreparedRequest,
+    kind: Kind,
+    record: UsageRecorder | None = None,
+) -> AsyncIterator[str]:
+    """Stream an answer that is shown to the author, not stored, as Server-Sent Events.
 
     Events: ``start`` (model, estimated tokens, web search), ``text`` per chunk, at most one
-    ``quellen`` (web pages behind the answer), then ``done`` (usage) or ``error`` (kind).
+    ``quellen`` (web pages behind the answer), then ``done`` (usage) or ``error`` (kind). The
+    request is counted as ``kind`` when the stream ends.
     """
     completion = prepared.completion
     yield _event(
@@ -130,7 +143,7 @@ async def stream_worldbuilder(
         if close is not None:
             await close()
         if record is not None:
-            record("weltenbau", completion.model, usage, outcome)
+            record(kind, completion.model, usage, outcome)
 
 
 def _sources(event: Completed) -> Sequence[Mapping[str, str]]:

@@ -36,8 +36,10 @@ def test_model_list_has_start_favorites_and_catalog(logged_in: TestClient) -> No
         "moderated": False,
         "thinking": "vor",
         "checked": True,
+        "reads_images": True,
     }
     deepseek, gpt = body["catalog"][0], body["catalog"][1]
+    assert deepseek["reads_images"] is False
     assert (deepseek["thinking"], deepseek["checked"], deepseek["moderated"]) == (
         None,
         False,
