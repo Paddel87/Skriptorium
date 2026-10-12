@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] 7.10 Karten der Welt umgesetzt
+
+- Mockup (vorher/nachher, Reiter „Karten“) freigegeben. Umgesetzt: `karten` im Kopf von `world.md`, Ordner `karten/` (beim Bau statt `bilder/` gewählt, damit ein Eintrag „karte“ nie eine Karte als Bild führen kann – in ADR-073 vermerkt), vier Routen, `WorldMaps.tsx` mit Kacheln, Hinzufügen (Name aus dem Dateinamen vorbelegt), großer Ansicht mit `@panzoom/panzoom` (＋/−/⤢, Mausrad, zwei Finger), Umbenennen, Entfernen; höchstens 20 Karten je Welt.
+- Befund: Safari auf iPhone/iPad zeichnet nichts auf Zeichenflächen über 16,7 Mio. Pixel. `scaledSize` hält Karten deshalb zusätzlich unter 16 Mio. Pixeln; Probe: 7.000×5.000-PNG → 4.732×3.380 WebP (54 KB). Folge: eine Karte 6.000×4.000 wird ca. 4.898×3.265 – dem Eigentümer zu sagen.
+- Reibung: `@panzoom/panzoom` meldet `"type": "module"`, sein `main` ist eine UMD-Datei ohne Export unter Node – in vitest „default is not a function“. Build (nutzt `module`) unberührt; Test-Umleitung in `vite.config.ts`.
+- Reibung: am Handy (375 px) rutschte der fünfte Reiter in eine zweite Zeile; Abstand der Reiter unter 30rem auf 0,75rem.
+- Sichtprobe: Zoom bis Faktor 9, Verschieben, Ortsnamen gestochen scharf, Handy-Format. KI-Anfragen byte-gleich zum Stand vor 7.6.
+- Prüfungen: pytest 643, vitest 248, Playwright 11, ruff, mypy, bandit, eslint, tsc, prettier grün; `npm audit` 0.
+- Getrennte Instanz (Sonnet, nur Diff und Bedrohungsmodell): keine Befunde hoch/mittel. Behoben: Steuer- und Richtungszeichen im Kartennamen abgelehnt (pytest 646). Hingenommen bzw. optional: siehe ADR-073. Eigene Testläufe diesmal erst nach Ende der Prüfung (Lehre aus 7.6).
+- Eigentümer zur Pixelgrenze: „So passt es, auf jedem Gerät.“
+
 ### 2026-10-12 – [ADR-ANGELEGT] ADR-073 Karten der Welt (7.10)
 
 - Auswahlfragen: eigener Reiter „Karten“, bis 6.000 Pixel, Markierungen später (neu 7.14), fertige Bibliothek. Kandidaten aus der npm-Registry geprüft und auf Nachfrage in Alltagssprache erklärt; Wahl `@panzoom/panzoom` 4.6.2. Karten im Kopf von `world.md`, Grenze 12 MB. Phase 7 jetzt 14 Schritte. 7.6 steht zugleich noch auf IN ARBEIT, weil nur das Einspielen aussteht.

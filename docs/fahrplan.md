@@ -37,7 +37,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ✅ | 7.7 | Pflege: Warnung von `npm ci` zu `fsevents` | erledigt 2026-10-12 | – |
 | ⚪ | 7.8 | Planung der nächsten Ausbaustufe | offen | KI |
 | ✅ | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | erledigt 2026-10-12 | – |
-| 🟠 | 7.10 | Karten der Welt | in Arbeit (ADR-073) | du: Mockup ansehen |
+| 🟠 | 7.10 | Karten der Welt | umgesetzt, geprüft (ADR-073) | du: PR freigeben |
 | ⚪ | 7.11 | Bilder in Geschichten | offen (nach 7.6) | KI |
 | ⚪ | 7.12 | Bilder von der KI erzeugen | offen (nach 7.6) | KI |
 | ⚪ | 7.13 | Die KI kennt Bilder (einmal beschreiben, Bild nur auf Knopfdruck) | offen (nach 7.6) | KI |
@@ -330,7 +330,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.10: Karten der Welt
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-073): eigener Reiter „Karten“, bis 6.000 Pixel und 12 MB, Zoom mit `@panzoom/panzoom` 4.6.2, Karten im Kopf der Welt; Markierungen → 7.14. Offen: Mockup, Umsetzung, Prüfung durch getrennte Instanz
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-073): eigener Reiter „Karten“, bis 6.000 Pixel und 12 MB, Zoom mit `@panzoom/panzoom` 4.6.2, Karten im Kopf der Welt; Markierungen → 7.14. Mockup freigegeben („Passt, umbauen“); umgesetzt 2026-10-12. Getrennt geprüft (keine Befunde hoch/mittel, einer behoben); Pixelgrenze für iPhone vom Eigentümer bestätigt. Offen: PR, Einspielen, Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage bzw. Mockup zu Beginn)
 - **Abhängigkeiten:** 7.6
 - **Freigabepflichtig:** ja – Datenmodell (Karten je Welt, Kategorie 4), neue Abhängigkeit (Kategorie 3), höhere Größengrenze (Kategorie 6, Prüfung durch getrennte Instanz); Mockup

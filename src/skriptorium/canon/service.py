@@ -55,6 +55,8 @@ _MAPS = "karten"
 MAX_MAPS_PER_WORLD: Final = 20
 _MAP_FILE = re.compile(r"karte-[0-9a-f]{12}\.(?:png|jpg|webp)")
 _MAP_NAME_LENGTH = 200
+# Control characters (line breaks included) and the marks that turn the writing direction.
+_MAP_NAME_REFUSED = re.compile(r"[\x00-\x1f\x7f-\x9f\u200e\u200f\u202a-\u202e\u2066-\u2069]")
 _ITEM_TEMPLATE = "## Zweck\n\n## Verwendung\n\n## Auswirkung\n"
 MAX_IMAGES_PER_ENTRY: Final = 12
 # Names of image files as this module creates them; nothing else is ever read or served.
@@ -656,6 +658,8 @@ def _map_name(name: str) -> str:
     clean = _required_text(name, "Name der Karte")
     if len(clean) > _MAP_NAME_LENGTH:
         raise InvalidInput(f"Name der Karte ist länger als {_MAP_NAME_LENGTH} Zeichen")
+    if _MAP_NAME_REFUSED.search(clean):
+        raise InvalidInput("Name der Karte enthält Steuerzeichen")
     return clean
 
 

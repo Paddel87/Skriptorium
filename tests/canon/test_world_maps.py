@@ -50,7 +50,9 @@ def test_maps_may_be_larger_than_entry_images(canon: CanonService) -> None:
         canon.add_world_map(WORLD, "Zu schwer", png() + b"\x00" * MAX_MAP_BYTES)
 
 
-@pytest.mark.parametrize("name", ["", "   ", "x" * 201])
+@pytest.mark.parametrize(
+    "name", ["", "   ", "x" * 201, "Karte\nZwei", "A\x00B", "Karte \u202eetrak"]
+)
 def test_a_map_needs_a_name(canon: CanonService, root: Path, name: str) -> None:
     with pytest.raises(InvalidInput):
         canon.add_world_map(WORLD, name, png())
