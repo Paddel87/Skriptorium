@@ -8,6 +8,7 @@ import {
   type ImportResult,
   type TranslatedMaterial,
 } from "../api";
+import { base64 } from "../files";
 import { ErrorText, Field } from "./Common";
 
 /** Files from SillyTavern: character cards (PNG, JSON) and lorebooks (JSON), step 6.8. */
@@ -233,14 +234,4 @@ export function Import({
       )}
     </section>
   );
-}
-
-/** The file's bytes as base64, for the JSON body. */
-async function base64(file: File): Promise<string> {
-  const bytes = new Uint8Array(await file.arrayBuffer());
-  let binary = "";
-  for (let at = 0; at < bytes.length; at += 0x8000) {
-    binary += String.fromCharCode(...bytes.subarray(at, at + 0x8000));
-  }
-  return btoa(binary);
 }

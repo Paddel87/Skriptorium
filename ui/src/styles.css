@@ -1730,3 +1730,100 @@ input.chapter-title {
   stroke-linejoin: round;
   vertical-align: middle;
 }
+
+/* Images of a canon entry (step 7.6): main image above the text, previews below, "＋" adds. */
+.entry-images {
+  margin: 0.5rem 0 1rem;
+}
+
+.entry-images button {
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.entry-image-main {
+  display: block;
+  max-width: min(20rem, 100%);
+}
+
+.entry-image-main img {
+  display: block;
+  max-width: 100%;
+  max-height: 24rem;
+  border-radius: 4px;
+}
+
+.entry-image-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.entry-image-thumbs button {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 4px;
+}
+
+.entry-image-thumbs img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.entry-image-thumbs button.chosen {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.entry-images button.entry-image-add {
+  border: 1px dashed var(--field-line);
+  color: var(--link);
+  font-size: 1.4rem;
+}
+
+.entry-image-note {
+  margin: 0.4rem 0 0;
+}
+
+/* One image large over the page, on a dark veil in every colour scheme. */
+.image-viewer-veil {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgb(0 0 0 / 92%);
+}
+
+.image-viewer {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.image-viewer img {
+  max-width: 100%;
+  max-height: calc(100vh - 6rem);
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.image-viewer-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  margin-top: 0.6rem;
+}
+
+.image-viewer-bar button.ghost {
+  color: #fff8e8;
+}
+
+.image-viewer-gap {
+  flex: 1;
+}

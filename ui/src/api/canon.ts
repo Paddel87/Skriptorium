@@ -34,7 +34,15 @@ export interface CanonEntry {
   aliases: string[];
   status: string | null;
   body: string;
+  /** File names of the entry's images; the first is the main image (step 7.6). */
+  images: string[];
 }
+
+/** Fields of an entry the author writes in the form; images change through their own calls. */
+export type EntryFields = Omit<CanonEntry, "world" | "id" | "images">;
+
+const entryPath = (world: string, id: string) =>
+  `${worldPath(world)}/entries/${enc(id)}`;
 
 export const canonApi = {
   worlds: () => request("GET", "/api/worlds") as Promise<World[]>,
@@ -52,17 +60,13 @@ export const canonApi = {
       "GET",
       `${worldPath(world)}/entries/${enc(id)}`,
     ) as Promise<CanonEntry>,
-  createEntry: (world: string, entry: Omit<CanonEntry, "world" | "id">) =>
+  createEntry: (world: string, entry: EntryFields) =>
     request(
       "POST",
       `${worldPath(world)}/entries`,
       entry,
     ) as Promise<CanonEntry>,
-  updateEntry: (
-    world: string,
-    id: string,
-    change: Partial<Omit<CanonEntry, "world" | "id">>,
-  ) =>
+  updateEntry: (world: string, id: string, change: Partial<EntryFields>) =>
     request(
       "PATCH",
       `${worldPath(world)}/entries/${enc(id)}`,
@@ -70,4 +74,23 @@ export const canonApi = {
     ) as Promise<CanonEntry>,
   deleteEntry: (world: string, id: string) =>
     request("DELETE", `${worldPath(world)}/entries/${enc(id)}`),
+
+  /** Address of one image of an entry, for `<img src>` (step 7.6, ADR-072). */
+  imagePath: (world: string, id: string, image: string) =>
+    `${entryPath(world, id)}/images/${enc(image)}`,
+  /** Adds an image, sent as base64 in JSON like every other body. */
+  addImage: (world: string, id: string, content: string) =>
+    request("POST", `${entryPath(world, id)}/images`, {
+      content,
+    }) as Promise<CanonEntry>,
+  removeImage: (world: string, id: string, image: string) =>
+    request(
+      "DELETE",
+      `${entryPath(world, id)}/images/${enc(image)}`,
+    ) as Promise<CanonEntry>,
+  setMainImage: (world: string, id: string, image: string) =>
+    request(
+      "POST",
+      `${entryPath(world, id)}/images/${enc(image)}/main`,
+    ) as Promise<CanonEntry>,
 };

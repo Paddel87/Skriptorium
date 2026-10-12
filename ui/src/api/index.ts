@@ -23,7 +23,7 @@ export {
 } from "./core";
 export type { SessionInfo } from "./account";
 export { CATEGORIES } from "./canon";
-export type { CanonEntry, Category, World } from "./canon";
+export type { CanonEntry, Category, EntryFields, World } from "./canon";
 export { FORMS, describeSummaryFailure } from "./manuscript";
 export type {
   Chapter,

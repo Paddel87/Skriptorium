@@ -16,6 +16,7 @@ function entry(id: string, name: string, aliases: string[] = []): CanonEntry {
     name,
     aliases,
     status: null,
+    images: [],
     body: "",
   };
 }

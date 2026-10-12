@@ -130,6 +130,7 @@ export const ENTRY = {
   aliases: ["der Fährmann"],
   status: null,
   body: "Fährt über den See.",
+  images: [] as string[],
 };
 export const STORY = {
   world: "salzmark",

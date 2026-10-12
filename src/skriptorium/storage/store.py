@@ -3,7 +3,8 @@
 Paths are relative POSIX paths below the data directory, e.g.
 ``worlds/salzmark/canon/figur/kael.md``. Documents below ``worlds/<world>/`` are indexed
 for that world by name (header ``name`` or ``titel``, else the file stem), aliases (header
-``aliasse``) and full text.
+``aliasse``) and full text. Image files (PNG, JPEG, WebP; step 7.6, ADR-072) live in the same
+tree with the same path checks; they are not indexed.
 """
 
 import contextlib
@@ -18,6 +19,7 @@ from typing import Literal
 from skriptorium.storage import frontmatter
 from skriptorium.storage.errors import AlreadyExists, InvalidInput, NotFound, StorageError
 from skriptorium.storage.frontmatter import HeaderValue
+from skriptorium.storage.images import IMAGE_SUFFIXES, MEDIA_TYPES, inspect_image
 
 SearchMode = Literal["name", "fulltext"]
 
@@ -107,7 +109,7 @@ class DocumentStore:
         text = frontmatter.render(header, body)
         try:
             file.parent.mkdir(parents=True, exist_ok=True)
-            _write_atomically(file, text)
+            _write_atomically(file, text.encode("utf-8"))
         except OSError as error:
             raise StorageError(f"{path}: {error}") from error
         document = Document(path=path, header=dict(header), body=body)
@@ -132,6 +134,56 @@ class DocumentStore:
             raise StorageError(f"{path}: {error}") from error
         with self._connect() as connection:
             _remove_from_index(connection, path)
+
+    def write_image(self, path: str, data: bytes) -> None:
+        """Store a new image file atomically; nothing is indexed.
+
+        The content must be a PNG, JPEG or WebP image whose format matches the ending of
+        ``path`` (``.png``, ``.jpg``, ``.webp``).
+
+        Raises:
+            AlreadyExists: A file exists at ``path``.
+            InvalidInput: Bad path, another format, or an image that is too large.
+            StorageError: Writing failed; nothing is left behind.
+        """
+        file = self._image_file(path)
+        if IMAGE_SUFFIXES[inspect_image(data).kind] != file.suffix:
+            raise InvalidInput("Endung passt nicht zum Bildformat")
+        if file.exists():
+            raise AlreadyExists(path)
+        try:
+            file.parent.mkdir(parents=True, exist_ok=True)
+            _write_atomically(file, data)
+        except OSError as error:
+            raise StorageError(f"{path}: {error}") from error
+
+    def read_image(self, path: str) -> tuple[bytes, str]:
+        """Read an image file; returns its bytes and media type.
+
+        Raises:
+            NotFound: No image at ``path``.
+            InvalidInput: Bad path.
+        """
+        file = self._image_file(path)
+        if not file.is_file():
+            raise NotFound(path)
+        return file.read_bytes(), MEDIA_TYPES[file.suffix]
+
+    def delete_image(self, path: str) -> None:
+        """Delete an image file.
+
+        Raises:
+            NotFound: No image at ``path``.
+            InvalidInput: Bad path.
+            StorageError: Deleting failed.
+        """
+        file = self._image_file(path)
+        if not file.is_file():
+            raise NotFound(path)
+        try:
+            file.unlink()
+        except OSError as error:
+            raise StorageError(f"{path}: {error}") from error
 
     def list_paths(self, prefix: str = "") -> list[str]:
         """List the paths of all documents below ``prefix``, sorted.
@@ -232,6 +284,12 @@ class DocumentStore:
             raise InvalidInput(f"Pfad muss auf {_SUFFIX} enden: {path!r}")
         return self._root.joinpath(*relative.parts)
 
+    def _image_file(self, path: str) -> Path:
+        relative = _checked(path)
+        if relative.suffix not in MEDIA_TYPES:
+            raise InvalidInput(f"Pfad muss auf .png, .jpg oder .webp enden: {path!r}")
+        return self._root.joinpath(*relative.parts)
+
     def _directory(self, prefix: str) -> Path:
         if not prefix:
             return self._root
@@ -252,14 +310,14 @@ def _checked(path: str) -> PurePosixPath:
     return relative
 
 
-def _write_atomically(file: Path, text: str) -> None:
-    """Write ``text`` to a temporary file in the same directory, then replace ``file``."""
+def _write_atomically(file: Path, data: bytes) -> None:
+    """Write ``data`` to a temporary file in the same directory, then replace ``file``."""
     descriptor, temporary = tempfile.mkstemp(
         dir=file.parent, prefix=f".{file.name}.", suffix=".tmp"
     )
     try:
-        with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as handle:
-            handle.write(text)
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(data)
             handle.flush()
             os.fsync(handle.fileno())
         os.replace(temporary, file)

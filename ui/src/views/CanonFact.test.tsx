@@ -26,6 +26,7 @@ const KING = {
   name: "Nebelkönig",
   aliases: ["König"],
   status: null,
+  images: [],
   body: "Trägt eine Krone aus Reif.",
 };
 const LINK = { world: "nebelreich", entry: "nebelkoenig" };
