@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [ERLEDIGT] 7.5 Aussehen „Buch“
+
+- Eigentümer: „Sieht gut aus“ und nach der Korrektur „Der Cursor ist richtig ausgerichtet und der Text passt auch.“ Phase 7: 7 von 9 (offen 7.6, 7.8).
+
 ### 2026-10-12 – [BEOBACHTUNG] Eingespielt: Cursor und Beispieltext (`592deb0`)
 
 - Auf Anweisung („einspielen“) PR #141 nach grüner CI gemergt; Baum identisch mit dem PR-Stand. HTTPS 200, Bündel mit neuem Beispieltext, eine SSH-Abfrage: `(healthy)`, `REVISION` `592deb0`. Offen: Bestätigung von 7.5 durch den Eigentümer.
