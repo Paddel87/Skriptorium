@@ -61,7 +61,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 7.8): V.20, V.21, V.22, V.23, V.24 (neu 2026-10-12). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 7.8): V.20, V.21, V.22, V.23, V.24, V.25 (neu 2026-10-12). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -1115,6 +1115,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine (voraussichtlich)
 - **Artefakte:** ADR
 - **Notizen:** Angelegt 2026-10-12 aus der Erkundung zu 7.12.
+
+#### V.25: Verweise zwischen Kanon-Einträgen; ortsgebundene Regeln
+
+- **Status:** ⏸️ VERSCHOBEN → 7.8 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 7.8 (Eigentümer 2026-10-12: „Als V-Schritt vormerken“; Phase 7 an der Wucherungs-Schwelle)
+- **Phasentyp-Kontext:** vermutlich zuerst ERKUNDUNG (Probe: Wirkung auf Budget und Kanon-Treue)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – Anfrage-Zusammenstellung (Kategorie 1), ggf. Datenmodell (Kategorie 4)
+- **Empfohlene Klasse:** Entscheidung – Architektur der Anfrage (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Bedarf und Form in 7.8 klären
+- **Anforderungen (ab Klasse M):** – (Ergänzung zu den Anforderungen der Kontext-Zusammenstellung)
+- **Zu tun:** Idee des Eigentümers: Kanon-Einträge verweisen auf andere (z. B. eine Regel, die nur an einem Ort gilt); kommt ein Eintrag in den Kontext, kommen seine verwiesenen Einträge mit; der Weltenbauer verteilt einen Sachverhalt auf mehrere Einträge und verknüpft sie. Vorschlag (A): `@Name` im Text eines Eintrags, eine Stufe tief, im Rahmen des Budgets; optional ortsgebundene Regeln (nur im Kontext, wenn der verwiesene Ort es ist) statt „alle Regeln immer“. Verworfene Varianten zur Prüfung: Feld „Verbunden mit“ (B), automatische Namenserkennung (C).
+- **Akzeptanzkriterien:** in 7.8 festzulegen
+- **Betroffene Module:** context, canon, ui (voraussichtlich)
+- **Reifegrad-Wirkung:** keine (voraussichtlich)
+- **Artefakte:** ADR, Spike
+- **Notizen:** Angelegt 2026-10-12. Stand heute: alle Regeln und Zeitlinien gehen immer mit (Vorrang 1), `@`-Einträge vollständig (Vorrang 2), übrige Einträge füllen auf (ADR-062); der Weltenbauer kann schon mehrere Einträge verschiedener Kategorien in einem Vorschlag anlegen, verknüpft sie aber nicht.
 
 #### V.21: Veröffentlichung (öffentlicher Link zum Lesen)
 
