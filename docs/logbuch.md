@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] 7.3 Schreibweise folgt der Geschichte umgesetzt
+
+- Befund vor der Vorlage: Kapitel ohne eigene Schreibweise folgten schon der Vorgabe (ADR-053); nur die Kopie beim Anlegen verhinderte das Mitziehen.
+- `ManuscriptService` gegliedert (Befund 3, ADR-067) durch einen Unteragenten der Routine-Klasse; selbst geprüft: Anfragen bytegleich, keine privaten Importe zwischen den Teilen, 100 % Abdeckung.
+- Eigentümer: A ganz oder gar nicht (ADR-070); Mockup der Hinweistexte freigegeben. Neue Kapitel ohne Kopie; Kapitel mit genau der alten Vorgabe folgen beim Ändern der Vorgabe – vorhandene Kopien auf dem Server lösen sich so ohne Skript auf.
+- Reibung: neuer Test mit Tempo „schnell“ – nicht in der Liste (`langsam`, `gemessen`, `zügig`, `atemlos`); korrigiert.
+- Prüfungen: pytest 561 (99,85 %, `manuscript` 100 %), vitest 226, Playwright 11, ruff, mypy, bandit, eslint, tsc, prettier grün.
+
 ### 2026-10-12 – [BEOBACHTUNG] 7.2 Zeitstrahl umgesetzt
 
 - Vorlage nach Blick in die echte Testwelt: Zeitlinie ist ein Eintrag mit Liste „**Datum:** Ereignis“. Eigentümer: A (Zeitstrahl aus dem Text), nur Ansicht sortiert (ADR-069) – kein Datenmodell, keine Änderung der KI-Anfrage.

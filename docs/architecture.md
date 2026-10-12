@@ -72,6 +72,7 @@ graph LR
 - **Verantwortung:** Geschichten je Welt (Roman mit Kapiteln, Kurzgeschichte, Fragment), Manuskript-Text, Kapitel-Kurzfassungen und Gesamtzusammenfassung, Einstellungen der Figuren-Schreibweise je Geschichte (welche Figuren der Autor führt, Erzählperspektive), Gast-Verbindungen zu Einträgen anderer Welten und geschichtenbezogene Fakten (FR-007, FR-009, FR-012, FR-016, FR-017, FR-024).
 - **Nicht-Verantwortung:** kein Erzeugen von Text oder Zusammenfassungen (→ `ai_gateway`, gesteuert über `api`); kein Welt-Kanon (→ `canon`).
 - **Öffentliche Schnittstellen:** `ManuscriptService` (Abschnitt 4)
+- **Interne Struktur (seit 7.3, ADR-067):** Fassade `ManuscriptService` in `service.py`; `models`, `layout`, `validation`, `headers`, `chapters`, `stories`, `extras`.
 - **Abhängigkeiten (andere Module):** `storage`
 - **Offene Fragen:** keine. Geklärt in 1.4 (2026-09-26): keine Markierung, wer welchen Absatz schrieb – FR-009 verlangt nur, dass übernommener, geänderter oder verworfener KI-Text im selben Manuskript landet; der Manuskript-Text ist ein fortlaufender Markdown-Text (einfachste Lösung, erweiterbar per Markierung, falls später nötig).
 
