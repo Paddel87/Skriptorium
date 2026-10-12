@@ -187,6 +187,10 @@ export function Canon({
                 onEdit={() => {
                   setEditing(current.id);
                 }}
+                onSaved={() => {
+                  reload();
+                  onChanged?.();
+                }}
               />
             ) : selected !== null && data !== undefined ? (
               <p>Eintrag nicht gefunden.</p>
