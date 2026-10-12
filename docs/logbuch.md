@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] Eingespielt: Cursor und Beispieltext (`592deb0`)
+
+- Auf Anweisung („einspielen“) PR #141 nach grüner CI gemergt; Baum identisch mit dem PR-Stand. HTTPS 200, Bündel mit neuem Beispieltext, eine SSH-Abfrage: `(healthy)`, `REVISION` `592deb0`. Offen: Bestätigung von 7.5 durch den Eigentümer.
+
 ### 2026-10-12 – [GELÖST] Cursor im Anweisungsfeld; Beispieltext
 
 - Befund des Eigentümers nach dem Einspielen von „Buch“: Cursor im leeren Anweisungsfeld oberhalb und leicht außerhalb, Beispieltext zu speziell.
