@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-6.md`](archiv/fahrplan-phase-6.md).
 
-**Phase 7: 7 von 15 erledigt, 4 in Arbeit (7.6, 7.10, 7.13 warten nur aufs Einspielen) (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
+**Phase 7: 7 von 15 erledigt, 4 in Arbeit (7.6, 7.10, 7.11, 7.13 warten nur aufs Einspielen) (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -38,8 +38,8 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ⚪ | 7.8 | Planung der nächsten Ausbaustufe | offen | KI |
 | ✅ | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | erledigt 2026-10-12 | – |
 | 🟠 | 7.10 | Karten der Welt | gemergt (ADR-073, PR #143) | du: „einspielen“, dann ausprobieren |
-| 🟠 | 7.11 | Titelbild der Geschichte (auch im E-Book) | umgesetzt, geprüft (ADR-075) | du: PR freigeben |
-| ⚪ | 7.12 | Bilder von der KI erzeugen | offen (nach 7.6) | KI |
+| 🟠 | 7.11 | Titelbild der Geschichte (auch im E-Book) | gemergt (ADR-075, PR #145) | du: „einspielen“, E-Book im Reader prüfen |
+| ⚪ | 7.12 | Bilder von der KI erzeugen (über OpenRouter) | offen – Erkundung erledigt (ADR-076) | KI: Vorlage |
 | 🟠 | 7.13 | Die KI kennt Bilder (einmal beschreiben) | gemergt (ADR-074, PR #144) | du: „einspielen“, dann echte Probe |
 | ⚪ | 7.14 | Markierungen auf Karten → Kanon-Eintrag | offen (nach 7.10) | KI |
 | ⚪ | 7.15 | Bilder beim Schreiben auf Knopfdruck mitschicken | offen (nach 7.13, nur auf Wunsch) | du: nach 7.13 entscheiden |
@@ -60,7 +60,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 7.8): V.20, V.21, V.22, V.23 (neu 2026-10-12). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 7.8): V.20, V.21, V.22, V.23, V.24 (neu 2026-10-12). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -363,7 +363,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.12: Bilder von der KI erzeugen
 
-- **Status:** ⚪ OFFEN
+- **Status:** ⚪ OFFEN – Erkundung der Anbieter erledigt (`docs/research/bildanbieter.md`); entschieden (ADR-076): vorerst OpenRouter, Anbieter austauschbar halten; weitere Anbieter → V.24. Offen: Vorlage (Modelle, Kosten), Mockup, Umsetzung
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage bzw. Mockup zu Beginn)
 - **Abhängigkeiten:** 7.6
 - **Freigabepflichtig:** ja – Bildmodelle über OpenRouter (Kategorie 3), neuer Endpunkt (Kategorie 5); SVG nicht übernehmen
@@ -375,7 +375,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Betroffene Module:** ai_gateway, api, ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag, ggf. ADR
-- **Notizen:** Angelegt 2026-10-12 aus dem Zuschnitt von 7.6 (ADR-072).
+- **Notizen:** Angelegt 2026-10-12 aus dem Zuschnitt von 7.6 (ADR-072). Vorgabe des Eigentümers: pornografische Inhalte sind nicht geplant.
 
 #### 7.13: Die KI kennt Bilder (zuschaltbar)
 
@@ -1081,6 +1081,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine (voraussichtlich)
 - **Artefakte:** ADR
 - **Notizen:** Angelegt 2026-10-12, war in 7.11 als „ggf.“ vorgesehen.
+
+#### V.24: Weitere Bildanbieter (Runware, Replicate, fal.ai)
+
+- **Status:** ⏸️ VERSCHOBEN → 7.8 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 7.8 (Eigentümer 2026-10-12: „weitere Anbieter in einer späteren Phase … später mehr Diversität“, ADR-076)
+- **Phasentyp-Kontext:** offen
+- **Abhängigkeiten:** 7.12
+- **Freigabepflichtig:** ja – neuer externer Dienst (Kategorie 3), Schlüssel im Betrieb (Kategorie 6)
+- **Empfohlene Klasse:** Entscheidung – neuer Dienst (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Erfahrungen mit 7.12 über OpenRouter; Probe des Eigentümers beim gewählten Anbieter
+- **Anforderungen (ab Klasse M):** FR-035, FR-025
+- **Zu tun:** Einen zweiten Bildanbieter als Adapter anbinden; Kandidaten und Befunde in `docs/research/bildanbieter.md` (Runware vorne, dann Replicate, fal.ai).
+- **Akzeptanzkriterien:** in 7.8 festzulegen
+- **Betroffene Module:** ai_gateway, api, ui (voraussichtlich)
+- **Reifegrad-Wirkung:** keine (voraussichtlich)
+- **Artefakte:** ADR
+- **Notizen:** Angelegt 2026-10-12 aus der Erkundung zu 7.12.
 
 #### V.21: Veröffentlichung (öffentlicher Link zum Lesen)
 

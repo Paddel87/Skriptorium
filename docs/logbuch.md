@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [ADR-ANGELEGT] ADR-076 Bilder vorerst über OpenRouter (7.12)
+
+- Eigentümer nach der Erkundung (fal.ai, Replicate, Runware): „wir bleiben vorerst bei OpenRouter, weitere Anbieter in einer späteren Phase“. ADR-076; weitere Anbieter als V.24 mit Landeplatz 7.8; Erkundung umbenannt zu „Bildanbieter für 7.12“. Zweig umbenannt zu `docs/7.12-bildanbieter-erkundung` (Wunsch des Eigentümers, Namen nachziehen).
+- Aufgeräumt (Freigabe des Eigentümers): 28 lokale und 72 entfernte Zweige gelöscht, alle per `merge-base --is-ancestor` als vollständig in `main` enthalten geprüft; darunter der lokale Zweig mit einem Geschichtentitel im Namen. Auf GitHub bleibt nur `main`. Erkundungsdatei umbenannt zu `docs/research/bildanbieter.md`.
+
+### 2026-10-12 – [BEOBACHTUNG] 7.12: Erkundung fal.ai
+
+- PR #145 (7.11) auf „merge“ nach grüner CI gemergt. Eigentümer zu 7.12: „vielleicht lässt sich fal.ai einbinden“; nach Vergleich mit OpenRouter Auftrag, erst Modelle und Filter-Schalter zu prüfen. Ergebnis in `docs/research/bildanbieter.md`: 203 aktive Text-zu-Bild-Modelle per API; 165 mit Schalter `enable_safety_checker` (meist an), 18 mit Stufe `safety_tolerance`, 7 standardmäßig aus, 20 ohne Schalter. Preise je Modell nur mit Schlüssel abrufbar. Entscheidung des Eigentümers steht aus.
+- Nachträge: Abschalten der Prüfung bei fal meist nur mit Freischaltung des Kontos (Feldbeschreibung bei 138 Modellen); Pony V7; Anbieter-Überblick; Replicate im Detail. Eigentümer: „pornographische Inhalte sind nicht geplant“ – Filterfrage betrifft Fehlalarme bei düsteren Motiven; Replicate verbietet laut Bedingungen Folter- und Verstümmelungsmotive.
+- Runware einbezogen (Wunsch des Eigentümers): britische Firma, Rechenzentren u. a. in Deutschland, keine Langzeitspeicherung der Ausgaben, kein Gore-Verbot für Erwachsene, Guthaben ohne Verfall, ca. 1.000 Bilder kostenlos zur Probe; Doku uneinheitlich (`checkContent`/`checkNSFW`), keine feste Preisliste.
+
 ### 2026-10-12 – [BEOBACHTUNG] 7.11 Titelbild umgesetzt
 
 - Mockup (vorher/nachher, Titelbild oben im Reiter „Geschichte“ – Lehre aus 7.4) freigegeben. Umgesetzt: `Story.cover`, Ablage im Ordner der Geschichte, ein neues ersetzt das alte; drei Routen; `StoryCover.tsx`; `shrinkImage(…, asJpeg)` für Titelbilder; E-Book mit `cover-image`, `meta name="cover"`, Umschlagseite vor der Titelseite, Bild unkomprimiert im ZIP; ohne Titelbild unverändert (Test).
