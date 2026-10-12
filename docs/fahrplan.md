@@ -24,13 +24,13 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-6.md`](archiv/fahrplan-phase-6.md).
 
-**Phase 7: 4 von 9 erledigt, 2 in Arbeit (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
+**Phase 7: 5 von 9 erledigt, 1 in Arbeit (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | ✅ | 7.1 | Umbau vor den neuen Funktionen | erledigt 2026-10-12 | – |
 | ✅ | 7.2 | Zeitlinie mit Kalenderdaten | erledigt 2026-10-12 (ADR-069) | – |
-| 🟠 | 7.3 | Schreibweise der Geschichte wirkt auf bestehende Kapitel | eingespielt 2026-10-12 (ADR-070) | du: prüfen |
+| ✅ | 7.3 | Schreibweise der Geschichte wirkt auf bestehende Kapitel | erledigt 2026-10-12 (ADR-070) | – |
 | 🟠 | 7.4 | Publizieren (Satz, Export, Veröffentlichung) | eingespielt 2026-10-12 (ADR-071) | du: EPUB in einem Reader öffnen |
 | ⚪ | 7.5 | Gestaltung der Oberfläche | offen | KI |
 | ⚪ | 7.6 | Bilder und Karten | offen | KI |
@@ -209,7 +209,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.3: Schreibweise der Geschichte wirkt auf bestehende Kapitel
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – `ManuscriptService` gegliedert (868 → 311 Zeilen Fassade plus sieben Dateien; Unteragent der Routine-Klasse, geprüft: Anfragen bytegleich, 100 % Abdeckung). Entschieden (ADR-070): A ganz oder gar nicht; Mockup der Hinweistexte freigegeben. Umgesetzt: neue Kapitel ohne Kopie, unveränderte Kopien folgen beim Ändern der Vorgabe; pytest 561 (100 % `manuscript`), vitest 226, Playwright 11 grün. Eingespielt 2026-10-12 (`2d3a4f0`). Offen: Bestätigung des Eigentümers
+- **Status:** ✅ ERLEDIGT (2026-10-12) – `ManuscriptService` gegliedert (868 → 311 Zeilen Fassade plus sieben Dateien; Unteragent der Routine-Klasse, geprüft: Anfragen bytegleich, 100 % Abdeckung). Entschieden (ADR-070): A ganz oder gar nicht; Mockup der Hinweistexte freigegeben. Umgesetzt: neue Kapitel ohne Kopie, unveränderte Kopien folgen beim Ändern der Vorgabe; pytest 561 (100 % `manuscript`), vitest 226, Playwright 11 grün. Eingespielt 2026-10-12 (`2d3a4f0`). Vom Eigentümer bestätigt 2026-10-12 („Das scheint bisher alles zu passen“).
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 7.1
 - **Freigabepflichtig:** ja – Datenmodell (Kategorie 4): Kapitel speichern nur Abweichungen; Übergang für Kapitel mit eigener Kopie

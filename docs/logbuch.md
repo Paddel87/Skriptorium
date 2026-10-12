@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [ERLEDIGT] 7.3 Schreibweise; Befund EPUB nicht auffindbar
+
+- Eigentümer: „Das scheint bisher alles zu passen.“ 7.3 erledigt. Phase 7: 5 von 9.
+- „Aber EPUB finde ich nicht“: Abschnitt steht ganz unten im Reiter „Geschichte“ der Leiste, unter einer langen Gesamtzusammenfassung – schlechte Platzwahl. Ort mit dem Eigentümer klären.
+
 ### 2026-10-12 – [ERLEDIGT] 7.2 Zeitstrahl
 
 - Eigentümer nach dem Einspielen von `0fbc61b`: „Alles da“. FR-023 erledigt. Phase 7: 4 von 9.
