@@ -1769,7 +1769,7 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
   - Verworfen: Bilder bei jeder Anfrage mitschicken (Kosten); Beschreibung ohne Prüfung direkt speichern (Kanon bleibt in der Hand des Autors).
 - **Vision-Frage, die entschied:** „Soll die KI dein Bild jedes Mal neu ansehen – oder einmal, und danach weiß sie es aus deinem Text?“ → einmal.
 - **Konfidenz zum Zeitpunkt:** hoch für die Bauweise; mittel für Filter und Kosten der Bildmodelle (echte Probe in einer Cloud-Sitzung oder nach dem Einspielen, weil der Schlüssel lokal nicht gilt). Umkehrbarkeit billig.
-- **Konsequenzen:** Phase 7 wächst auf 15 Schritte (Schwelle mehr als 16).
+- **Konsequenzen:** Phase 7 wächst auf 15 Schritte (Schwelle mehr als 16). Unabhängige Prüfung durch getrennte Instanz (Sonnet, 2026-10-12; vorsorglich, weil Fotos echter Menschen an den Anbieter gehen können): keine Befunde hoch oder mittel; Bilder nur im neuen Ablauf, Modellprüfung schließt bei fehlendem Katalog ab, Ausgabe nur als Text. Behoben: Übernahme lädt Eintrag bzw. Welt vorher neu (Änderungen aus einem zweiten Fenster gehen nicht verloren). Hingenommen: Schätzung im `start`-Ereignis zählt das Bild nicht (die Oberfläche zeigt sie nicht an); abgebrochene Anfragen ohne gemeldete Kosten (Muster wie beim Weltenbauer, Ausgabengrenze am Schlüssel). Optional, nicht umgesetzt: Ratenbegrenzung, Hinweis zu Fotos echter Menschen vor dem Knopf.
 - **Abgeleitete Regel:** keine
 
 ---

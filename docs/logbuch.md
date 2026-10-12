@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] 7.13 Bilder einmal beschreiben umgesetzt
+
+- Mockup (vorher/nachher) freigegeben. Umgesetzt: `ImagePart` an `Message`, Bildteil im OpenRouter-Adapter; `reads_images` im Katalog; Anweisungen in `context/describe.py` (Figur: Aussehen; andere Einträge: Erscheinung; Karte: Geografie mit Himmelsrichtungen, Beschriftungen genau übernehmen; „nur Sichtbares, nichts erfinden“; der Text des Eintrags geht bewusst nicht mit); Ablauf `flows/describe.py` (Temperatur 0,3, bis 1.500 Token aus); `stream_answer` aus dem Weltenbauer verallgemeinert; Oberfläche `ImageDescription.tsx` in den großen Ansichten von Bild und Karte.
+- Sichtprobe mit Test-Anbieter: Grok 4.6 vorgewählt, rund 300 Modelle lesen Bilder → Auswahl gruppiert („Deine Favoriten“ zuerst); Bild wird kleiner, solange die Beschreibung offen ist.
+- Reibung: die Stilregel `.entry-images button` aus 7.6 machte den Knopf „Übernehmen“ in der Galerie durchsichtig – auf die Bildknöpfe selbst eingegrenzt. Pfeiltasten im Beschreibungsfeld hätten Bilder umgeblättert, Escape die Ansicht geschlossen – Tasten in Feldern bleiben jetzt im Feld.
+- KI-Anfragen beim Schreiben byte-gleich. Prüfungen: pytest 657, vitest 254, Playwright 11, alle Werkzeuge grün.
+- Echte Probe (Kosten je Bild, Filter) steht aus: lokaler Schlüssel ungültig – nach dem Einspielen oder in einer Cloud-Sitzung.
+- Getrennte Instanz (Sonnet, vorsorglich): keine Befunde hoch/mittel. Behoben: Übernahme lädt den aktuellen Stand vorher neu. Rest in ADR-074.
+
 ### 2026-10-12 – [ADR-ANGELEGT] ADR-074 Bilder einmal beschreiben lassen (7.13)
 
 - PR #143 (7.10) nach grüner CI gemergt (Wahl „Nur hochladen und mergen“). Eigentümer wählt 7.13 als Nächstes (vor 7.11/7.12). Vorlage: Bildteile in `Message`, Ablauf wie Weltenbauer, nur Modelle mit Bildlesen – freigegeben; Karten-Text in die Weltbeschreibung; Mitschicken beim Schreiben als neuer Schritt 7.15. Phase 7 jetzt 15 Schritte. Echte Probe nur in Cloud-Sitzung oder nach dem Einspielen (lokaler Schlüssel ungültig).

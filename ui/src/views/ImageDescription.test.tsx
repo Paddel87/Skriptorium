@@ -144,6 +144,10 @@ describe("describing an image once (step 7.13)", () => {
     const { calls } = fakeApi({
       "GET /api/models": MODELS,
       [`POST ${PATH}`]: () => ({ status: 200, stream: feed.stream }),
+      "GET /api/worlds/salzmark/entries/kael": ok({
+        ...entry,
+        body: "Anderswo geändert.",
+      }),
       "PATCH /api/worlds/salzmark/entries/kael": ok({ ...entry, body: "neu" }),
     });
     const changed = vi.fn();
@@ -173,7 +177,7 @@ describe("describing an image once (step 7.13)", () => {
       expect(changed).toHaveBeenCalled();
     });
     expect(calls.at(-1)?.body).toEqual({
-      body: "Fährt über den See.\n\n## Aussehen\n\nWettergegerbt.\n",
+      body: "Anderswo geändert.\n\n## Aussehen\n\nWettergegerbt.\n",
     });
   });
 
@@ -190,6 +194,7 @@ describe("describing an image once (step 7.13)", () => {
           status: 200,
           stream: feed.stream,
         }),
+      "GET /api/worlds": ok([{ ...world, description: "Salz, neu" }]),
       "PATCH /api/worlds/salzmark": ok(world),
     });
     const user = userEvent.setup();
@@ -218,7 +223,7 @@ describe("describing an image once (step 7.13)", () => {
     await waitFor(() => {
       expect(calls.at(-1)?.body).toEqual({
         description:
-          "Salz\n\n## Geografie – Seekarte\n\nGrauhang liegt im Süden.\n",
+          "Salz, neu\n\n## Geografie – Seekarte\n\nGrauhang liegt im Süden.\n",
       });
     });
   });

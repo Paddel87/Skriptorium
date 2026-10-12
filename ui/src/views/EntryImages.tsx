@@ -175,9 +175,11 @@ export function EntryImages({
               path={api.describeImagePath(entry.world, entry.id, describing)}
               takeOverLabel="Übernehmen als „Aussehen“"
               onTakeOver={async (text) => {
+                // The current text, in case it changed elsewhere meanwhile.
+                const fresh = await api.entry(entry.world, entry.id);
                 onChanged(
                   await api.updateEntry(entry.world, entry.id, {
-                    body: withSection(entry.body, "Aussehen", text),
+                    body: withSection(fresh.body, "Aussehen", text),
                   }),
                 );
               }}

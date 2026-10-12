@@ -365,10 +365,12 @@ function MapViewer({
             path={api.describeMapPath(world.id, map.file)}
             takeOverLabel="In die Weltbeschreibung übernehmen"
             onTakeOver={async (text) => {
+              // The current description, in case it changed elsewhere meanwhile.
+              const fresh = (await api.worlds()).find((w) => w.id === world.id);
               onChanged(
                 await api.updateWorld(world.id, {
                   description: withSection(
-                    world.description,
+                    fresh?.description ?? world.description,
                     `Geografie – ${map.name}`,
                     text,
                   ),

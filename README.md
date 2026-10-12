@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 7 – Zeitlinie, Publizieren, Gestaltung und Bilder (Umsetzung), begonnen 2026-10-12 (ADR-067, ADR-068); Phase 6 abgeschlossen 2026-10-12. Fortschritt: 7 von 14 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
+- **Projektphase:** Phase 7 – Zeitlinie, Publizieren, Gestaltung und Bilder (Umsetzung), begonnen 2026-10-12 (ADR-067, ADR-068); Phase 6 abgeschlossen 2026-10-12. Fortschritt: 7 von 15 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
 - **Version:** v1.0.0 – erstes produktives Release (2026-10-11, ADR-058); davor v0.1.0 als Vorabversion (ADR-043)
 - **Status:** In Betrieb
 - **Letzte Änderung:** 2026-10-11
@@ -108,7 +108,8 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - ✅ **7.5:** Aussehen „Buch“ – erledigt 2026-10-12.
 - 🟠 **7.6:** Bilder an Kanon-Einträgen (Galerie je Eintrag) – umgesetzt und getrennt geprüft, Einspielen steht aus (ADR-072).
 - 🟠 **7.10:** Karten der Welt mit Zoom – umgesetzt und getrennt geprüft, Einspielen steht aus (ADR-073).
-- ⚪ **Danach:** 7.11 Bilder in Geschichten, 7.12 KI-Bilder, 7.13 KI kennt Bilder, 7.14 Markierungen auf Karten.
+- 🟠 **7.13:** Bilder und Karten einmal von der KI beschreiben lassen – umgesetzt (ADR-074).
+- ⚪ **Danach:** 7.11 Bilder in Geschichten, 7.12 KI-Bilder, 7.14 Markierungen auf Karten, 7.15 nur auf Wunsch.
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).

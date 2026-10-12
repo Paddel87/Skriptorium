@@ -40,7 +40,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | 🟠 | 7.10 | Karten der Welt | gemergt (ADR-073, PR #143) | du: „einspielen“, dann ausprobieren |
 | ⚪ | 7.11 | Bilder in Geschichten | offen (nach 7.6) | KI |
 | ⚪ | 7.12 | Bilder von der KI erzeugen | offen (nach 7.6) | KI |
-| 🟠 | 7.13 | Die KI kennt Bilder (einmal beschreiben) | in Arbeit (ADR-074) | du: Mockup ansehen |
+| 🟠 | 7.13 | Die KI kennt Bilder (einmal beschreiben) | umgesetzt, geprüft (ADR-074) | du: PR freigeben |
 | ⚪ | 7.14 | Markierungen auf Karten → Kanon-Eintrag | offen (nach 7.10) | KI |
 | ⚪ | 7.15 | Bilder beim Schreiben auf Knopfdruck mitschicken | offen (nach 7.13, nur auf Wunsch) | du: nach 7.13 entscheiden |
 
@@ -379,7 +379,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.13: Die KI kennt Bilder (zuschaltbar)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-074): Bild nur auf Knopfdruck einmal an ein Modell mit Bildlesen, Ablauf wie Weltenbauer; Einträge → Abschnitt „Aussehen“, Karten → „Geografie – Name der Karte“ in der Weltbeschreibung; Mitschicken beim Schreiben → 7.15. Offen: Mockup, Umsetzung, echte Probe
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-074): Bild nur auf Knopfdruck einmal an ein Modell mit Bildlesen, Ablauf wie Weltenbauer; Einträge → Abschnitt „Aussehen“, Karten → „Geografie – Name der Karte“ in der Weltbeschreibung; Mitschicken beim Schreiben → 7.15. Mockup freigegeben; umgesetzt 2026-10-12. Getrennt geprüft (keine Befunde hoch/mittel, einer behoben). Offen: PR, Einspielen, echte Probe (Kosten je Bild, Filter), Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage bzw. Mockup zu Beginn)
 - **Abhängigkeiten:** 7.6, 7.10
 - **Freigabepflichtig:** ja – Anfrage-Zusammenstellung und KI-Anbindung (Kategorie 1)
