@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] PR #148 gemergt; Idee „Verweise zwischen Kanon-Einträgen“ (V.25)
+
+- PR #148 (7.16) auf „merge“ nach grüner CI gemergt, noch nicht eingespielt.
+- Zwischenfrage des Eigentümers: Einträge, die auf andere verweisen (Regel nur an einem Ort; Weltenbauer verteilt Sachverhalte). Erklärt: alle Regeln gehen heute ohnehin immer mit (Vorrang 1), verknüpft wird nichts. Vorschlag `@`-Verweise im Kanon, eine Stufe tief, optional ortsgebundene Regeln. Eigentümer: „Als V-Schritt vormerken“ → V.25, Landeplatz 7.8.
+
 ### 2026-10-12 – [BEOBACHTUNG] 7.16 Abschnitt „Aussehen“ umgesetzt
 
 - Mockup freigegeben. Umgesetzt: Vorlage „## Aussehen“ für neue Figuren; Weltenbauer-Regel `### Aussehen`; Import hängt „Aussehen“ an die Figur (auch als einzige Unterüberschrift); `context/appearance.py`, Ablauf und Route „Aussehen herauslösen“ (Temperatur 0,2, Antwort „KEIN AUSSEHEN“ ohne Angaben); `AppearanceExtract.tsx` mit Knopf nur bei Figuren ohne Aussehen; Bilderzeugung bei Figuren nur aus dem Aussehen, sonst Name plus Hinweis.
