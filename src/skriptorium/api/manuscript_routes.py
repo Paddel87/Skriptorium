@@ -5,6 +5,8 @@ on ``canon``: the world exists, and referenced canon entries exist in the world 
 into the story as guests.
 """
 
+import base64
+import binascii
 from collections.abc import Iterable
 from typing import Annotated, Any
 
@@ -20,7 +22,7 @@ from skriptorium.manuscript import (
     SummaryStatus,
     WritingStyle,
 )
-from skriptorium.storage import InvalidInput, NotFound
+from skriptorium.storage import MAX_IMAGE_BYTES, InvalidInput, NotFound
 
 router = APIRouter(prefix="/api/worlds/{world_id}/stories", dependencies=[Depends(current_session)])
 
@@ -341,3 +343,32 @@ def export_epub(world_id: str, story_id: str, body: EpubOrder, found: ServicesDe
         media_type="application/epub+zip",
         headers={"Content-Disposition": f'attachment; filename="{story_id}.epub"'},
     )
+
+
+class CoverFile(BaseModel):
+    """A cover image (PNG, JPEG or WebP), base64-encoded; the browser shrinks it first."""
+
+    content: Annotated[str, Field(max_length=4 * -(-MAX_IMAGE_BYTES // 3))]
+
+
+@router.post("/{story_id}/cover")
+def set_cover(world_id: str, story_id: str, body: CoverFile, found: ServicesDep) -> Story:
+    """Give the story a cover; it replaces the previous one (step 7.11, ADR-075)."""
+    try:
+        data = base64.b64decode(body.content, validate=True)
+    except binascii.Error, ValueError:
+        raise InvalidInput("Datei nicht lesbar übertragen") from None
+    return found.manuscript.set_story_cover(world_id, story_id, data)
+
+
+@router.get("/{story_id}/cover")
+def get_cover(world_id: str, story_id: str, found: ServicesDep) -> Response:
+    """The story's cover, with the media type of its checked format."""
+    data, media_type = found.manuscript.story_cover(world_id, story_id)
+    return Response(data, media_type=media_type)
+
+
+@router.delete("/{story_id}/cover")
+def remove_cover(world_id: str, story_id: str, found: ServicesDep) -> Story:
+    """Remove the story's cover and delete it."""
+    return found.manuscript.remove_story_cover(world_id, story_id)

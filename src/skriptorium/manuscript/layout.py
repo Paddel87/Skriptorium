@@ -1,5 +1,6 @@
 """Paths of the manuscript files below the data directory (docs/architecture.md section 7)."""
 
+import re
 from pathlib import PurePosixPath
 from typing import Final
 
@@ -10,6 +11,9 @@ STORY_FILE: Final = "story.md"
 FACTS_FILE: Final = "facts.md"
 CHAPTERS: Final = "chapters"
 HISTORY: Final = "verlauf"
+COVER_KEY: Final = "titelbild"
+# Names of cover files as this module creates them; nothing else is ever read or served.
+COVER_FILE: Final = re.compile(r"titelbild-[0-9a-f]{12}\.(?:png|jpg|webp)")
 
 
 def story_dir(world_id: str, story_id: str) -> str:
@@ -26,6 +30,10 @@ def facts_path(world_id: str, story_id: str) -> str:
 
 def history_path(world_id: str, story_id: str, number: int) -> str:
     return f"{story_dir(world_id, story_id)}/{HISTORY}/{number:02d}.md"
+
+
+def cover_path(world_id: str, story_id: str, file: str) -> str:
+    return f"{story_dir(world_id, story_id)}/{file}"
 
 
 def chapter_number(path: str) -> int | None:

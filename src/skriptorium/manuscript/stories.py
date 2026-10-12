@@ -1,11 +1,20 @@
 """Story files: listing, creating and changing a story with its settings and summary."""
 
+import contextlib
+import secrets
 from collections.abc import Sequence
 from pathlib import PurePosixPath
 
 from skriptorium.manuscript.chapters import ChapterStore
 from skriptorium.manuscript.headers import facts_from, story_from, story_header
-from skriptorium.manuscript.layout import STORY_FILE, facts_path, story_dir, story_path
+from skriptorium.manuscript.layout import (
+    COVER_KEY,
+    STORY_FILE,
+    cover_path,
+    facts_path,
+    story_dir,
+    story_path,
+)
 from skriptorium.manuscript.models import (
     GENRES,
     KEEP,
@@ -22,7 +31,16 @@ from skriptorium.manuscript.validation import (
     clean_references,
     required_text,
 )
-from skriptorium.storage import DocumentStore, InvalidInput, checked_identifier, slugify
+from skriptorium.storage import (
+    IMAGE_SUFFIXES,
+    Document,
+    DocumentStore,
+    InvalidInput,
+    NotFound,
+    checked_identifier,
+    inspect_image,
+    slugify,
+)
 
 
 class StoryStore:
@@ -130,6 +148,55 @@ class StoryStore:
                         changed, chapter.number, title=KEEP, text=KEEP, writing_style=None
                     )
         return changed
+
+    def set_story_cover(self, world_id: str, story_id: str, data: bytes) -> Story:
+        """Store a cover for the story; it replaces the previous one, whose file is deleted."""
+        path = story_path(world_id, story_id)
+        document = self._store.read(path)
+        previous = self.get_story(world_id, story_id).cover
+        file = f"titelbild-{secrets.token_hex(6)}{IMAGE_SUFFIXES[inspect_image(data).kind]}"
+        self._store.write_image(cover_path(world_id, story_id, file), data)
+        try:
+            updated = self._write_cover(document, file, world_id, story_id)
+        except BaseException:
+            self._delete_cover_file(world_id, story_id, file)
+            raise
+        if previous is not None:
+            self._delete_cover_file(world_id, story_id, previous)
+        return updated
+
+    def story_cover(self, world_id: str, story_id: str) -> tuple[bytes, str]:
+        """The bytes and media type of the story's cover."""
+        cover = self.get_story(world_id, story_id).cover
+        if cover is None:
+            raise NotFound(f"{world_id}/{story_id}/{COVER_KEY}")
+        return self._store.read_image(cover_path(world_id, story_id, cover))
+
+    def remove_story_cover(self, world_id: str, story_id: str) -> Story:
+        """Remove the story's cover and delete its file."""
+        cover = self.get_story(world_id, story_id).cover
+        if cover is None:
+            raise NotFound(f"{world_id}/{story_id}/{COVER_KEY}")
+        document = self._store.read(story_path(world_id, story_id))
+        updated = self._write_cover(document, None, world_id, story_id)
+        self._delete_cover_file(world_id, story_id, cover)
+        return updated
+
+    def _write_cover(
+        self, document: Document, file: str | None, world_id: str, story_id: str
+    ) -> Story:
+        header = dict(document.header)
+        if file is None:
+            header.pop(COVER_KEY, None)
+        else:
+            header[COVER_KEY] = file
+        self._store.write(document.path, header, document.body)
+        return self.get_story(world_id, story_id)
+
+    def _delete_cover_file(self, world_id: str, story_id: str, file: str) -> None:
+        # A file already gone (deleted by hand) is not an error; the story no longer names it.
+        with contextlib.suppress(NotFound):
+            self._store.delete_image(cover_path(world_id, story_id, file))
 
     def set_story_summary(self, world_id: str, story_id: str, summary: str) -> Story:
         """Set the overall summary of a story."""

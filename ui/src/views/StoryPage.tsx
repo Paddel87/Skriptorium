@@ -9,6 +9,7 @@ import { Facts } from "./Facts";
 import { Guests } from "./Guests";
 import { MenuButton } from "./Menu";
 import { StorySummary } from "./StorySummary";
+import { StoryCover } from "./StoryCover";
 import { StoryEpub } from "./StoryEpub";
 import { ModeLine, WritingMode } from "./WritingMode";
 import { ChapterStyle, StoryStyle, StyleLine } from "./WritingStyle";
@@ -188,6 +189,7 @@ export function StoryPage({
             />
           ) : (
             <div className="stack">
+              <StoryCover story={story} onSaved={setStory} />
               <WritingMode
                 key={modeRound}
                 story={story}

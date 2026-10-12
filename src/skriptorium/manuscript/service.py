@@ -10,6 +10,7 @@ Layout below the data directory (docs/architecture.md section 7)::
                                                          kurzfassung_status, schreibweise
                                                          (optional, ADR-053); body: text
     worlds/<world>/stories/<story>/facts.md              fakten: list of eintrag and fakt
+    worlds/<world>/stories/<story>/titelbild-<r>.<e>     cover (story header titelbild, ADR-075)
 
 A novel (``roman``) has any number of chapters; a short story or fragment has exactly one,
 created with the story, because the data model keeps all manuscript text in chapter files.
@@ -22,6 +23,7 @@ The service is a facade: the work is done by ``StoryStore`` (``stories``), ``Cha
 ``headers``, the checks of caller input in ``validation``.
 """
 
+import contextlib
 from collections.abc import Sequence
 from datetime import datetime
 
@@ -53,7 +55,7 @@ from skriptorium.manuscript.models import (
 )
 from skriptorium.manuscript.stories import StoryStore
 from skriptorium.manuscript.validation import checked_chapter_style
-from skriptorium.storage import DocumentStore, InvalidInput
+from skriptorium.storage import DocumentStore, InvalidInput, NotFound
 
 __all__ = [
     "ATMOSPHERES",
@@ -252,7 +254,37 @@ class ManuscriptService:
                 if only_completed
                 else "Die Geschichte hat keine Kapitel"
             )
-        return epub_for(story, chapters, author, modified)
+        cover = None
+        if story.cover is not None:
+            # A cover file gone missing (deleted by hand) must not stop the book.
+            with contextlib.suppress(NotFound):
+                cover = self._stories.story_cover(world_id, story_id)
+        return epub_for(story, chapters, author, modified, cover=cover)
+
+    def set_story_cover(self, world_id: str, story_id: str, data: bytes) -> Story:
+        """Store a cover for the story (step 7.11, ADR-075); it replaces the previous one.
+
+        Raises:
+            NotFound: The story does not exist.
+            InvalidInput: Not a PNG, JPEG or WebP image, or too large.
+        """
+        return self._stories.set_story_cover(world_id, story_id, data)
+
+    def story_cover(self, world_id: str, story_id: str) -> tuple[bytes, str]:
+        """The bytes and media type of the story's cover.
+
+        Raises:
+            NotFound: The story does not exist or has no cover.
+        """
+        return self._stories.story_cover(world_id, story_id)
+
+    def remove_story_cover(self, world_id: str, story_id: str) -> Story:
+        """Remove the story's cover and delete its file.
+
+        Raises:
+            NotFound: The story does not exist or has no cover.
+        """
+        return self._stories.remove_story_cover(world_id, story_id)
 
     def get_chapter(self, world_id: str, story_id: str, number: int) -> Chapter:
         """One chapter.

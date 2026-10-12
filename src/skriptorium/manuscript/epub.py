@@ -35,13 +35,27 @@ p { margin: 0; text-indent: 1.2em; }
 h2 + p, h3 + p, p.break + p { text-indent: 0; }
 p.break { text-align: center; margin: 1em 0; text-indent: 0; }
 p.author { text-align: center; text-indent: 0; margin-top: 1em; }
+section.cover { text-align: center; margin: 0; }
+section.cover img { max-width: 100%; max-height: 100vh; }
 """
+# File endings of the cover image in the book, by media type (step 7.11).
+_COVER_ENDINGS: Final = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp"}
 
 
 def epub_for(
-    story: Story, chapters: Sequence[Chapter], author: str | None, modified: datetime
+    story: Story,
+    chapters: Sequence[Chapter],
+    author: str | None,
+    modified: datetime,
+    *,
+    cover: tuple[bytes, str] | None = None,
 ) -> bytes:
-    """The EPUB file of ``story`` with ``chapters`` in their order; ``modified`` stamps it."""
+    """The EPUB file of ``story`` with ``chapters`` in their order; ``modified`` stamps it.
+
+    ``cover`` (bytes and media type, step 7.11) becomes the book's cover image and a cover page
+    before the title page; without it the book is unchanged.
+    """
+    cover_name = None if cover is None else f"umschlag{_COVER_ENDINGS[cover[1]]}"
     title = _clean(story.title)
     writer = _clean(author or "").strip() or None
     stamp = modified.astimezone(UTC).replace(microsecond=0)
@@ -52,12 +66,14 @@ def epub_for(
     heads = [f"{chapter.number}. {_clean(chapter.title)}" for chapter in chapters]
     files: list[tuple[str, str]] = [
         ("META-INF/container.xml", _CONTAINER),
-        ("OEBPS/content.opf", _package(title, writer, identifier, stamp, names)),
+        ("OEBPS/content.opf", _package(title, writer, identifier, stamp, names, cover_name, cover)),
         ("OEBPS/nav.xhtml", _nav(title, names, heads)),
         ("OEBPS/toc.ncx", _ncx(title, identifier, names, heads)),
         ("OEBPS/style.css", _STYLE),
         ("OEBPS/titel.xhtml", _title_page(title, writer)),
     ]
+    if cover_name is not None:
+        files.insert(0, ("OEBPS/umschlag.xhtml", _cover_page(title, cover_name)))
     for name, head, chapter in zip(names, heads, chapters, strict=True):
         files.append(
             (f"OEBPS/{name}", _document(head, f"<h2>{_escape(head)}</h2>\n{_body(chapter.text)}"))
@@ -70,6 +86,11 @@ def epub_for(
         for name, content in files:
             book.writestr(
                 zipfile.ZipInfo(name, when), content.encode("utf-8"), zipfile.ZIP_DEFLATED
+            )
+        if cover is not None and cover_name is not None:
+            # Images are compressed already.
+            book.writestr(
+                zipfile.ZipInfo(f"OEBPS/{cover_name}", when), cover[0], zipfile.ZIP_STORED
             )
     return buffer.getvalue()
 
@@ -131,6 +152,14 @@ def _document(title: str, body: str) -> str:
 """
 
 
+def _cover_page(title: str, image: str) -> str:
+    return _document(
+        title,
+        f'<section epub:type="cover" class="cover"><img src="{image}" alt="{_escape(title)}"/>'
+        "</section>",
+    )
+
+
 def _title_page(title: str, author: str | None) -> str:
     byline = f'\n<p class="author">{_escape(author)}</p>' if author else ""
     return _document(title, f"<h1>{_escape(title)}</h1>{byline}")
@@ -165,9 +194,25 @@ def _ncx(title: str, identifier: str, names: Sequence[str], heads: Sequence[str]
 
 
 def _package(
-    title: str, author: str | None, identifier: str, stamp: datetime, names: Sequence[str]
+    title: str,
+    author: str | None,
+    identifier: str,
+    stamp: datetime,
+    names: Sequence[str],
+    cover_name: str | None = None,
+    cover: tuple[bytes, str] | None = None,
 ) -> str:
     creator = f"\n<dc:creator>{_escape(author)}</dc:creator>" if author else ""
+    cover_meta = cover_items = cover_spine = ""
+    if cover_name is not None and cover is not None:
+        # EPUB 3 marks the image as ``cover-image``; older readers look for ``meta name=cover``.
+        cover_meta = '\n<meta name="cover" content="umschlag-bild"/>'
+        cover_items = (
+            f'<item id="umschlag-bild" href="{cover_name}" media-type="{cover[1]}" '
+            'properties="cover-image"/>\n'
+            '<item id="umschlag" href="umschlag.xhtml" media-type="application/xhtml+xml"/>\n'
+        )
+        cover_spine = '<itemref idref="umschlag"/>\n'
     chapters = "\n".join(
         f'<item id="k{index}" href="{name}" media-type="application/xhtml+xml"/>'
         for index, name in enumerate(names, start=1)
@@ -179,17 +224,17 @@ def _package(
 <dc:identifier id="id">{_escape(identifier)}</dc:identifier>
 <dc:title>{_escape(title)}</dc:title>
 <dc:language>de</dc:language>{creator}
-<meta property="dcterms:modified">{stamp.strftime("%Y-%m-%dT%H:%M:%SZ")}</meta>
+<meta property="dcterms:modified">{stamp.strftime("%Y-%m-%dT%H:%M:%SZ")}</meta>{cover_meta}
 </metadata>
 <manifest>
 <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
 <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
 <item id="css" href="style.css" media-type="text/css"/>
-<item id="titel" href="titel.xhtml" media-type="application/xhtml+xml"/>
+{cover_items}<item id="titel" href="titel.xhtml" media-type="application/xhtml+xml"/>
 {chapters}
 </manifest>
 <spine toc="ncx">
-<itemref idref="titel"/>
+{cover_spine}<itemref idref="titel"/>
 <itemref idref="nav"/>
 {spine}
 </spine>

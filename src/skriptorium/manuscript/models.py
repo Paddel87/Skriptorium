@@ -131,6 +131,8 @@ class Story:
     # Genres and the default writing style that new chapters copy (step 5.6, ADR-053).
     genres: tuple[str, ...] = ()
     writing_style: WritingStyle = WritingStyle()
+    # File name of the cover in the story's folder (step 7.11, ADR-075); ``None`` without one.
+    cover: str | None = None
 
 
 @dataclass(frozen=True)
