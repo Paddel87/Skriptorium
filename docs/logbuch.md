@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [GELÖST] Cursor im Anweisungsfeld; Beispieltext
+
+- Befund des Eigentümers nach dem Einspielen von „Buch“: Cursor im leeren Anweisungsfeld oberhalb und leicht außerhalb, Beispieltext zu speziell.
+- Ursache: Das Feld nutzte den Cursor des Browsers; in einer leeren Zeile mit dem Beispieltext (Platzhalter von CodeMirror) setzt der Browser ihn an den Rand dieses Blocks. Weder Headless- noch sichtbares Chromium zeichnen den blinkenden Cursor ins Foto – deshalb über die Geometrie geprüft. Behoben mit `drawSelection()`: Cursor jetzt 0,6 px vor dem Beispieltext, mittig auf der Zeile, auch am Handy in Schwarz.
+- Beispieltext nach Auswahl des Eigentümers: erklärt leer lassen und `@`.
+
 ### 2026-10-12 – [BEOBACHTUNG] Eingespielt: Aussehen „Buch“ (`07ff5f8`)
 
 - Auf Anweisung („weiter“) PR #140 nach grüner CI gemergt; Baum identisch mit dem PR-Stand. HTTPS 200, Stil mit den neuen Regeln ausgeliefert, eine SSH-Abfrage: `(healthy)`, `REVISION` `07ff5f8`. Offen: Eindruck des Eigentümers im Alltag.

@@ -30,6 +30,7 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Behoben (nach v1.0.0)
 
+- Cursor im Anweisungsfeld (2026-10-12): Im leeren Feld saß der Cursor über und links neben dem grauen Beispieltext; jetzt steht er an der richtigen Stelle. Der Beispieltext erklärt das Feld: leer lassen zum Weiterschreiben, `@` für Kanon-Einträge.
 - Gegenstände aus dem Weltenbauer (2026-10-12, Schritt 7.9): Schrieb die KI „Zweck“, „Verwendung“ und „Auswirkung“ auf dieselbe Ebene wie den Gegenstand, entstanden beim Import vier Einträge. Diese Abschnitte gehören jetzt immer zum Eintrag davor – auch beim Import von Hand.
 
 ## [1.0.0] – 2026-10-11

@@ -253,7 +253,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag, ggf. ADR
-- **Notizen:** Angelegt 2026-10-12 (ADR-068), übernommen aus V.8. Vor 7.6, damit die Bild-Ansichten gleich im neuen Aussehen entstehen. Mitnehmen aus 7.4: Abschnitte am Ende langer Leisten werden übersehen (E-Book-Export ganz unten im Reiter „Geschichte“).
+- **Notizen:** Angelegt 2026-10-12 (ADR-068), übernommen aus V.8. Befund des Eigentümers nach dem Einspielen von „Buch“ (2026-10-12): Cursor im leeren Anweisungsfeld über und links neben dem Beispieltext; Beispieltext zu speziell. Behoben: `drawSelection` im Anweisungsfeld (gemessen: Cursor 0,6 px vor dem Beispieltext, mittig auf der Zeile), Beispieltext „Was soll als Nächstes geschehen? Leer lassen = einfach weiterschreiben. Mit @ holst du Figuren, Orte und mehr aus dem Kanon dazu.“ (Wahl des Eigentümers). Vor 7.6, damit die Bild-Ansichten gleich im neuen Aussehen entstehen. Mitnehmen aus 7.4: Abschnitte am Ende langer Leisten werden übersehen (E-Book-Export ganz unten im Reiter „Geschichte“).
 
 #### 7.6: Bilder und Karten
 
