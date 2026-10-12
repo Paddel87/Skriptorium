@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] 7.5 Aussehen „Buch“ umgesetzt
+
+- Ausgangsstand fotografiert; Befunde: Manuskript in Schreibmaschinenschrift (Vorgabe von CodeMirror), Knöpfe kaum unterscheidbar, Emojis als Symbole. Mockup mit drei Richtungen; Eigentümer wählte A, Buchschrift.
+- Während des Baus von A: „Stopp“ – ein abgelehnter Werkzeugaufruf hatte seine Dateiänderungen schon geschrieben (Textknöpfe im Kapitel, A-Regeln); offen gemeldet, A-Regeln durch C ersetzt. Eigentümer: C „Buch – ruhig, wenig Rahmen“, Buchschrift.
+- Umgesetzt mit eigenem CSS (keine Bibliothek): Papierfläche, Manuskript als Seite (Lesebreite ca. 35rem), Anweisung als Linie, Linien-Symbole (`Icons.tsx`), Beschriftung der Leiste am Desktop nur für Screenreader und als `title`, zurückgenommene Knöpfe, dunkle Hauptschaltfläche (auch „Anmelden“), Reiter unterstrichen.
+- Reibung: neue Hover-Regel für Knöpfe überdeckte die Markierung des gewählten Kanon-Eintrags unter der Maus – mit `:where()` ohne eigene Gewichtung behoben.
+- Prüfungen: vitest 233, Playwright 11, eslint, tsc, prettier grün; Sichtprobe Desktop hell/dunkel/schwarz, Handy, Anmeldung.
+
 ### 2026-10-12 – [ERLEDIGT] 7.4 E-Book
 
 - Eigentümer: „gefunden, alles ok“. FR-034 erledigt. Ort des Abschnitts bleibt; Auffindbarkeit als Punkt für 7.5 vermerkt. Phase 7: 6 von 9 (offen 7.5, 7.6, 7.8).
