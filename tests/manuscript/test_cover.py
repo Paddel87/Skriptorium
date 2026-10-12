@@ -112,3 +112,11 @@ def test_the_ebook_without_cover_stays_as_before(ms: ManuscriptService) -> None:
     book = zipfile.ZipFile(BytesIO(data))
     assert not any("umschlag" in name for name in book.namelist())
     assert b"cover" not in book.read("OEBPS/content.opf")
+
+
+def test_a_missing_cover_file_does_not_stop_the_ebook(ms: ManuscriptService, root: Path) -> None:
+    cover = ms.set_story_cover(W, S, jpeg()).cover
+    assert cover is not None
+    (root / "worlds" / W / "stories" / S / cover).unlink()
+    data = ms.epub(W, S, author=None, only_completed=False, modified=WHEN)
+    assert not any("umschlag" in n for n in zipfile.ZipFile(BytesIO(data)).namelist())

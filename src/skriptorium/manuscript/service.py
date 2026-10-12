@@ -23,6 +23,7 @@ The service is a facade: the work is done by ``StoryStore`` (``stories``), ``Cha
 ``headers``, the checks of caller input in ``validation``.
 """
 
+import contextlib
 from collections.abc import Sequence
 from datetime import datetime
 
@@ -54,7 +55,7 @@ from skriptorium.manuscript.models import (
 )
 from skriptorium.manuscript.stories import StoryStore
 from skriptorium.manuscript.validation import checked_chapter_style
-from skriptorium.storage import DocumentStore, InvalidInput
+from skriptorium.storage import DocumentStore, InvalidInput, NotFound
 
 __all__ = [
     "ATMOSPHERES",
@@ -253,7 +254,11 @@ class ManuscriptService:
                 if only_completed
                 else "Die Geschichte hat keine Kapitel"
             )
-        cover = self._stories.story_cover(world_id, story_id) if story.cover else None
+        cover = None
+        if story.cover is not None:
+            # A cover file gone missing (deleted by hand) must not stop the book.
+            with contextlib.suppress(NotFound):
+                cover = self._stories.story_cover(world_id, story_id)
         return epub_for(story, chapters, author, modified, cover=cover)
 
     def set_story_cover(self, world_id: str, story_id: str, data: bytes) -> Story:

@@ -1792,7 +1792,7 @@ Alle Einträge ADR-001 bis ADR-009 entstanden in Modus 2 (Projektinitialisierung
   - Bilder im Manuskript: nicht in 7.11, Wunsch V.23 mit Landeplatz 7.8.
 - **Vision-Frage, die entschied:** „Soll dein E-Book im Reader mit deinem Umschlag erscheinen?“ → ja.
 - **Konfidenz zum Zeitpunkt:** hoch. Umkehrbarkeit billig.
-- **Konsequenzen:** Prüfung durch eine getrennte Instanz vor dem Einspielen.
+- **Konsequenzen:** Prüfung durch eine getrennte Instanz vor dem Einspielen. Ergebnis (Sonnet, 2026-10-12): keine Befunde hoch oder mittel; behoben: fehlt die Titelbild-Datei, entsteht das E-Book ohne Umschlag statt eines Fehlers; optional, nicht umgesetzt: Sperre gegen gleichzeitiges Hochladen, Umgang mit scheiterndem Löschen der alten Datei (Muster wie bei Bildern und Karten).
 - **Abgeleitete Regel:** keine
 
 ---

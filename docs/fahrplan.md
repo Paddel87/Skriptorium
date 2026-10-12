@@ -38,7 +38,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ⚪ | 7.8 | Planung der nächsten Ausbaustufe | offen | KI |
 | ✅ | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | erledigt 2026-10-12 | – |
 | 🟠 | 7.10 | Karten der Welt | gemergt (ADR-073, PR #143) | du: „einspielen“, dann ausprobieren |
-| 🟠 | 7.11 | Titelbild der Geschichte (auch im E-Book) | in Arbeit (ADR-075) | du: Mockup ansehen |
+| 🟠 | 7.11 | Titelbild der Geschichte (auch im E-Book) | umgesetzt, geprüft (ADR-075) | du: PR freigeben |
 | ⚪ | 7.12 | Bilder von der KI erzeugen | offen (nach 7.6) | KI |
 | 🟠 | 7.13 | Die KI kennt Bilder (einmal beschreiben) | gemergt (ADR-074, PR #144) | du: „einspielen“, dann echte Probe |
 | ⚪ | 7.14 | Markierungen auf Karten → Kanon-Eintrag | offen (nach 7.10) | KI |
@@ -347,7 +347,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.11: Bilder in Geschichten
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-075): Titelbild im Ordner der Geschichte, JPEG, Umschlag im E-Book, Anzeige im Reiter „Geschichte“; Bilder im Manuskript → V.23. Offen: Mockup, Umsetzung, getrennte Prüfung
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-075): Titelbild im Ordner der Geschichte, JPEG, Umschlag im E-Book, Anzeige im Reiter „Geschichte“; Bilder im Manuskript → V.23. Mockup freigegeben; umgesetzt 2026-10-12. Getrennt geprüft (keine Befunde hoch/mittel, einer behoben). Offen: PR, Einspielen, E-Book im Reader prüfen (Eigentümer)
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage bzw. Mockup zu Beginn)
 - **Abhängigkeiten:** 7.6
 - **Freigabepflichtig:** ja – Datenmodell (Titelbild je Geschichte, Kategorie 4); Mockup

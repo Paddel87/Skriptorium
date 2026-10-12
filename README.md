@@ -109,7 +109,8 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - 🟠 **7.6:** Bilder an Kanon-Einträgen (Galerie je Eintrag) – umgesetzt und getrennt geprüft, Einspielen steht aus (ADR-072).
 - 🟠 **7.10:** Karten der Welt mit Zoom – umgesetzt und getrennt geprüft, Einspielen steht aus (ADR-073).
 - 🟠 **7.13:** Bilder und Karten einmal von der KI beschreiben lassen – umgesetzt (ADR-074).
-- ⚪ **Danach:** 7.11 Bilder in Geschichten, 7.12 KI-Bilder, 7.14 Markierungen auf Karten, 7.15 nur auf Wunsch.
+- 🟠 **7.11:** Titelbild der Geschichte, auch im E-Book – umgesetzt (ADR-075).
+- ⚪ **Danach:** 7.12 KI-Bilder, 7.14 Markierungen auf Karten, 7.15 nur auf Wunsch.
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).
