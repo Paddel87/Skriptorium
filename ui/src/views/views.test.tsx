@@ -151,6 +151,83 @@ describe("Canon", () => {
     ).toBeNull();
   });
 
+  it("shows a timeline as a time line and adds an event at its place (step 7.2)", async () => {
+    const TIMELINE = {
+      ...ENTRY,
+      id: "zeitlinie",
+      name: "Zeitlinie",
+      category: "zeitlinie" as const,
+      aliases: [],
+      body: "# Zeitlinie (n. d. F.)\n\n- **0:** Flut.\n- **401:** Hedda ertrinkt.\n- **399:** Drach wird Vogt.\n- Irgendwann: Feuer erlischt.\n",
+    };
+    const { calls } = fakeApi({
+      "GET /api/worlds/salzmark/entries": ok([TIMELINE]),
+      "PATCH /api/worlds/salzmark/entries/zeitlinie": ok(TIMELINE),
+    });
+    const user = userEvent.setup();
+    const page = render(<CanonAt start="zeitlinie" />);
+    const line = await screen.findByRole("list", { name: "Zeitstrahl" });
+    expect(
+      within(line)
+        .getAllByRole("listitem")
+        .map((item) => item.textContent),
+    ).toEqual([
+      "0Flut.",
+      "399Drach wird Vogt.",
+      "401Hedda ertrinkt.",
+      "ohne JahrIrgendwann: Feuer erlischt.",
+    ]);
+    expect(
+      screen.getByRole("heading", { name: "Zeitlinie (n. d. F.)" }),
+    ).toBeDefined();
+    await user.click(screen.getByRole("button", { name: "als Text" }));
+    expect(screen.queryByRole("list", { name: "Zeitstrahl" })).toBeNull();
+    expect(screen.getByText("401:").tagName).toBe("STRONG");
+    await user.click(screen.getByRole("button", { name: "Zeitstrahl" }));
+
+    const add = screen.getByRole("button", { name: "+ Ereignis" });
+    expect(add).toHaveProperty("disabled", true);
+    await user.type(screen.getByLabelText("Datum"), "400");
+    await user.type(screen.getByLabelText("Ereignis"), "Sturm.");
+    await user.click(add);
+    await waitFor(() => {
+      expect(screen.getByLabelText("Datum")).toHaveProperty("value", "");
+    });
+    expect(calls.find((call) => call.method === "PATCH")?.body).toEqual({
+      body: "# Zeitlinie (n. d. F.)\n\n- **0:** Flut.\n- **400:** Sturm.\n- **401:** Hedda ertrinkt.\n- **399:** Drach wird Vogt.\n- Irgendwann: Feuer erlischt.\n",
+    });
+    page.unmount();
+
+    render(<Canon world="salzmark" selected="zeitlinie" compact />);
+    await screen.findByRole("list", { name: "Zeitstrahl" });
+    expect(screen.queryByRole("button", { name: "+ Ereignis" })).toBeNull();
+  });
+
+  it("shows when adding an event fails", async () => {
+    const TIMELINE = {
+      ...ENTRY,
+      id: "zeitlinie",
+      name: "Zeitlinie",
+      category: "zeitlinie" as const,
+      aliases: [],
+      body: "",
+    };
+    fakeApi({
+      "GET /api/worlds/salzmark/entries": ok([TIMELINE]),
+      "PATCH /api/worlds/salzmark/entries/zeitlinie": fail(
+        500,
+        "Speichern fehlgeschlagen",
+      ),
+    });
+    const user = userEvent.setup();
+    render(<CanonAt start="zeitlinie" />);
+    await user.type(await screen.findByLabelText("Datum"), "1");
+    await user.type(screen.getByLabelText("Ereignis"), "Anfang.");
+    await user.click(screen.getByRole("button", { name: "+ Ereignis" }));
+    expect(await screen.findByText("Speichern fehlgeschlagen")).toBeDefined();
+    expect(screen.getByLabelText("Datum")).toHaveProperty("value", "1");
+  });
+
   it("shows the chosen entry to read, with bold, lists and headings", async () => {
     fakeApi({ "GET /api/worlds/salzmark/entries": ok([ENTRY, MIRA]) });
     const user = userEvent.setup();

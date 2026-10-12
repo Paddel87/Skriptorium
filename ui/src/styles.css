@@ -1435,3 +1435,70 @@ button.more-toggle {
   margin: 0.25rem 0 0 1.1rem;
   padding: 0;
 }
+
+/* A timeline entry as a time line (step 7.2): date left, event right, a dot on the line. */
+.timeline-switch {
+  margin: 0 0 0.5rem;
+}
+
+.timeline-events {
+  list-style: none;
+  /* Room on the left for the dots on the line. */
+  margin: 0.5rem 0 0 6px;
+  padding: 0;
+  border-left: 2px solid var(--accent);
+}
+
+.timeline-events li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 8.5rem 1fr;
+  gap: 0.6rem;
+  padding: 0.3rem 0 0.3rem 0.9rem;
+}
+
+.timeline-events li::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 0.75rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.timeline-date {
+  font-weight: 700;
+  color: var(--link);
+  font-variant-numeric: tabular-nums;
+}
+
+.timeline-events li.loose::before {
+  background: var(--warn-line);
+}
+
+.timeline-events li.loose .timeline-date {
+  color: var(--muted);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.timeline-add {
+  display: grid;
+  grid-template-columns: 9rem 1fr auto;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 500px) {
+  .timeline-events li,
+  .timeline-add {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .timeline-add {
+    gap: 0.4rem;
+  }
+}

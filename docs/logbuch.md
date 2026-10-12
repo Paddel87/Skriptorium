@@ -29,6 +29,16 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] 7.2 Zeitstrahl umgesetzt
+
+- Vorlage nach Blick in die echte Testwelt: Zeitlinie ist ein Eintrag mit Liste „**Datum:** Ereignis“. Eigentümer: A (Zeitstrahl aus dem Text), nur Ansicht sortiert (ADR-069) – kein Datenmodell, keine Änderung der KI-Anfrage.
+- Umgesetzt in `ui/src/timeline.ts` (Erkennen, Sortieren nach erster ganzer Zahl, Einfügen vor dem ersten späteren Ereignis) und `TimelineView.tsx`. Sichtprobe: Punkte zuerst links abgeschnitten, Platzhalter zu breit – Linie eingerückt, Datumsspalte verbreitert.
+- Prüfungen: vitest 226 (98,24 / 95,67 / 97,26 / 98,51 %; `timeline.ts` Zeilen 100 %, Zweige 76 % durch Rückfälle für Regex-Gruppen), Playwright 11, eslint, tsc, prettier grün.
+
+### 2026-10-12 – [ERLEDIGT] 7.1 Umbau und 7.7 Pflege
+
+- PR #132 nach grüner CI gemergt (Eigentümer: „132 mergen“). Definition of Done erfüllt; kein Einspielen für die Abnahme nötig (keine sichtbare Änderung). Phase 7: 2 von 8.
+
 ### 2026-10-12 – [BEOBACHTUNG] 7.1 Umbau und 7.7 Pflege umgesetzt
 
 - Zu Beginn gewarnt: 7.1 ist Routine, aktiv die Entscheidungs-Klasse; Umbau an zwei Unteragenten der Routine-Klasse (Sonnet) abgegeben, parallel an getrennten Dateien (`context` bzw. `ui`), ohne Commit-Recht. Ergebnisse selbst geprüft.
