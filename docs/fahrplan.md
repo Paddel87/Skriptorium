@@ -24,19 +24,19 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-6.md`](archiv/fahrplan-phase-6.md).
 
-**Phase 7: 2 von 9 erledigt, 4 in Arbeit (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
+**Phase 7: 3 von 9 erledigt, 3 in Arbeit (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | ✅ | 7.1 | Umbau vor den neuen Funktionen | erledigt 2026-10-12 | – |
-| 🟠 | 7.2 | Zeitlinie mit Kalenderdaten | umgesetzt (ADR-069) | du: prüfen nach dem Einspielen |
-| 🟠 | 7.3 | Schreibweise der Geschichte wirkt auf bestehende Kapitel | umgesetzt (ADR-070) | du: prüfen nach dem Einspielen |
-| 🟠 | 7.4 | Publizieren (Satz, Export, Veröffentlichung) | umgesetzt (ADR-071) | du: EPUB in einem Reader öffnen |
+| 🟠 | 7.2 | Zeitlinie mit Kalenderdaten | eingespielt 2026-10-12 (ADR-069) | du: prüfen |
+| 🟠 | 7.3 | Schreibweise der Geschichte wirkt auf bestehende Kapitel | eingespielt 2026-10-12 (ADR-070) | du: prüfen |
+| 🟠 | 7.4 | Publizieren (Satz, Export, Veröffentlichung) | eingespielt 2026-10-12 (ADR-071) | du: EPUB in einem Reader öffnen |
 | ⚪ | 7.5 | Gestaltung der Oberfläche | offen | KI |
 | ⚪ | 7.6 | Bilder und Karten | offen | KI |
 | ✅ | 7.7 | Pflege: Warnung von `npm ci` zu `fsevents` | erledigt 2026-10-12 | – |
 | ⚪ | 7.8 | Planung der nächsten Ausbaustufe | offen | KI |
-| 🟠 | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | umgesetzt | du: im Weltenbauer prüfen nach dem Einspielen |
+| ✅ | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | erledigt 2026-10-12 | – |
 
 **Querschnitt (offen):**
 
@@ -54,7 +54,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 7.8): V.20, V.21 (neu 2026-10-12). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 7.8): V.20, V.21, V.22 (neu 2026-10-12). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -193,7 +193,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.2: Zeitlinie mit Kalenderdaten
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-069): A, Zeitstrahl aus dem Text, nur die Ansicht sortiert; Mockup freigegeben. Umgesetzt: `ui/src/timeline.ts`, `TimelineView.tsx`, Anzeige in `EntryArticle`; vitest 226 (98,24 %), Playwright 11 grün; Sichtprobe Desktop (hell) und Handy (schwarz) an der Testwelt, „+ Ereignis“ 403 an der richtigen Stelle in der Datei. Offen: Einspielen, Bestätigung des Eigentümers
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-069): A, Zeitstrahl aus dem Text, nur die Ansicht sortiert; Mockup freigegeben. Umgesetzt: `ui/src/timeline.ts`, `TimelineView.tsx`, Anzeige in `EntryArticle`; vitest 226 (98,24 %), Playwright 11 grün; Sichtprobe Desktop (hell) und Handy (schwarz) an der Testwelt, „+ Ereignis“ 403 an der richtigen Stelle in der Datei. Eingespielt 2026-10-12 (`2d3a4f0`). Offen: Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 7.1
 - **Freigabepflichtig:** ja – Datenmodell (Kategorie 4): optionales Datum an Zeitlinien-Einträgen
@@ -209,7 +209,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.3: Schreibweise der Geschichte wirkt auf bestehende Kapitel
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – `ManuscriptService` gegliedert (868 → 311 Zeilen Fassade plus sieben Dateien; Unteragent der Routine-Klasse, geprüft: Anfragen bytegleich, 100 % Abdeckung). Entschieden (ADR-070): A ganz oder gar nicht; Mockup der Hinweistexte freigegeben. Umgesetzt: neue Kapitel ohne Kopie, unveränderte Kopien folgen beim Ändern der Vorgabe; pytest 561 (100 % `manuscript`), vitest 226, Playwright 11 grün. Offen: Einspielen, Bestätigung des Eigentümers
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – `ManuscriptService` gegliedert (868 → 311 Zeilen Fassade plus sieben Dateien; Unteragent der Routine-Klasse, geprüft: Anfragen bytegleich, 100 % Abdeckung). Entschieden (ADR-070): A ganz oder gar nicht; Mockup der Hinweistexte freigegeben. Umgesetzt: neue Kapitel ohne Kopie, unveränderte Kopien folgen beim Ändern der Vorgabe; pytest 561 (100 % `manuscript`), vitest 226, Playwright 11 grün. Eingespielt 2026-10-12 (`2d3a4f0`). Offen: Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 7.1
 - **Freigabepflichtig:** ja – Datenmodell (Kategorie 4): Kapitel speichern nur Abweichungen; Übergang für Kapitel mit eigener Kopie
@@ -225,7 +225,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.4: Publizieren (Satz, Export, Veröffentlichung)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-071): EPUB, alle Kapitel mit Wahl „nur abgeschlossene“, Veröffentlichung → V.21; Mockup freigegeben. Umgesetzt: `manuscript/epub.py` (EPUB 3 plus `toc.ncx`, Standardbibliothek, alles maskiert), `POST …/stories/{story}/export/epub`, Abschnitt „Als E-Book ausgeben“; pytest 565 (`epub.py` 100 %), vitest 229, Playwright 11 grün; im Browser mit der CSP des Servers heruntergeladen, Aufbau geprüft (mimetype zuerst und ungepackt, XML wohlgeformt). Kein `epubcheck` (kein Java). Offen: Öffnen in einem echten Reader durch den Eigentümer, Einspielen
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-071): EPUB, alle Kapitel mit Wahl „nur abgeschlossene“, Veröffentlichung → V.21; Mockup freigegeben. Umgesetzt: `manuscript/epub.py` (EPUB 3 plus `toc.ncx`, Standardbibliothek, alles maskiert), `POST …/stories/{story}/export/epub`, Abschnitt „Als E-Book ausgeben“; pytest 565 (`epub.py` 100 %), vitest 229, Playwright 11 grün; im Browser mit der CSP des Servers heruntergeladen, Aufbau geprüft (mimetype zuerst und ungepackt, XML wohlgeformt). Kein `epubcheck` (kein Java). Eingespielt 2026-10-12 (`2d3a4f0`). Offen: Öffnen in einem echten Reader durch den Eigentümer
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 7.3
 - **Freigabepflichtig:** ja – Ausgabeformat (Kategorie 5), ggf. neue Abhängigkeit für den Satz (Kategorie 3)
@@ -301,11 +301,11 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Logbuch-Eintrag, ADR
-- **Notizen:** Angelegt 2026-10-12 (ADR-068); Landeplatz von V.20 und V.21.
+- **Notizen:** Angelegt 2026-10-12 (ADR-068); Landeplatz von V.20, V.21 und V.22.
 
 #### 7.9: Befund: Gegenstands-Abschnitte aus dem Weltenbauer
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – umgesetzt: Regel 5 im Markdown-Import (Zweck/Verwendung/Auswirkung auf der Ebene des Eintrags davor werden dessen Abschnitte, Unterabschnitte eingerückt), Beispiel im Format des Weltenbauers; Test mit der Form aus dem Bildschirmfoto; ein Test aus 4.16 an die neue Regel angepasst („Zweck“ unter einer Figur gehört jetzt zur Figur). pytest 566 grün. Offen: Einspielen, Bestätigung des Eigentümers
+- **Status:** ✅ ERLEDIGT (2026-10-12) – umgesetzt: Regel 5 im Markdown-Import (Zweck/Verwendung/Auswirkung auf der Ebene des Eintrags davor werden dessen Abschnitte, Unterabschnitte eingerückt), Beispiel im Format des Weltenbauers; Test mit der Form aus dem Bildschirmfoto; ein Test aus 4.16 an die neue Regel angepasst („Zweck“ unter einer Figur gehört jetzt zur Figur). pytest 566 grün. Eingespielt 2026-10-12 (`2d3a4f0`). Vom Eigentümer bestätigt 2026-10-12 („Der Weltenbauer funktioniert jetzt hundertprozentig“).
 - **Phasentyp-Kontext:** UMSETZUNG (Fehlerbehebung)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein – Fehlerbehebung innerhalb von `canon` und `context`, keine Schnittstelle berührt
@@ -945,6 +945,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, ggf. ADR
 - **Notizen:** Angelegt 2026-10-11 (ADR-058).
+
+#### V.22: Weltenbauer aus dem Manuskript – Kanon-Eintrag aus vorhandenen Textstellen
+
+- **Status:** ⏸️ VERSCHOBEN → 7.8 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 7.8 (Eigentümer 2026-10-12: „Vielleicht mal für später“)
+- **Phasentyp-Kontext:** offen (vermutlich zuerst ERKUNDUNG: Auswahl der Fundstellen bei vielen Auftritten)
+- **Abhängigkeiten:** 6.7
+- **Freigabepflichtig:** ja – neuer Ablauf (Kategorie 1), ggf. Erweiterung der Anfrage-Zusammenstellung
+- **Empfohlene Klasse:** Entscheidung – Architektur der Anfrage (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Bedarf und Form mit dem Eigentümer klären
+- **Anforderungen (ab Klasse M):** – (Ergänzung zu FR-029)
+- **Zu tun:** Aus einem Manuskript, in dem sich eine Figur oder ein Gegenstand über viele Seiten aufgebaut hat, nachträglich einen Kanon-Eintrag entwerfen lassen. Idee: Fundstellen über Namen und Aliasse aus allen Kapiteln suchen, mit Kurzfassungen an die KI geben, Übernahme über die Import-Vorschau wie beim Weltenbauer. Offen: Auswahl, wenn die Fundstellen das Budget übersteigen (erste Auftritte und Wendepunkte, mehrere Durchgänge).
+- **Akzeptanzkriterien:** in 7.8 festzulegen
+- **Betroffene Module:** context, api, ui (voraussichtlich)
+- **Reifegrad-Wirkung:** keine (voraussichtlich)
+- **Artefakte:** ADR, ggf. Spike
+- **Notizen:** Angelegt 2026-10-12 auf Wunsch des Eigentümers; erste Einschätzung: mittlerer Aufwand, baut auf dem Weltenbauer auf.
 
 #### V.21: Veröffentlichung (öffentlicher Link zum Lesen)
 
