@@ -140,6 +140,12 @@ export function Canon({
             filter={filter}
             onFilter={setFilter}
             onChoose={choose}
+            editable={!compact}
+            onCreated={(entry) => {
+              reload();
+              onChanged?.();
+              choose(entry.id);
+            }}
           />
           <div className="canon-detail">
             {takeOver !== undefined && builderUsed && (
