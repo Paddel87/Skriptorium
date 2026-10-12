@@ -53,9 +53,10 @@ class ChapterStore:
                 raise InvalidInput("Ein neues Kapitel braucht einen Titel")
             new_text = "" if isinstance(text, Keep) else text
             clean = required_text(title, "Kapiteltitel")
+            # A new chapter follows the story's default until it gets a style of its own
+            # (step 7.3, ADR-070); it no longer copies the default.
             if isinstance(writing_style, Keep):
-                inherited = story.writing_style
-                writing_style = inherited if inherited != WritingStyle() else None
+                writing_style = None
             return self.write_chapter(
                 story.world,
                 story.id,

@@ -143,8 +143,9 @@ class ManuscriptService:
         genres or the default writing style (step 5.6).
 
         Which models exist is known to ``api``, not here; ``model`` is stored as given
-        (blank or ``None`` clears it). A new default style applies to chapters created
-        afterwards; existing chapters keep theirs (ADR-053).
+        (blank or ``None`` clears it). A new default style applies to every chapter
+        without a style of its own; chapters whose style equals the old default follow from
+        then on, chapters changed on their own keep theirs (ADR-070).
 
         Raises:
             NotFound: The story does not exist.
@@ -242,8 +243,8 @@ class ManuscriptService:
     ) -> Chapter:
         """Save a chapter; the next free number creates a new chapter (novels only).
 
-        A new chapter copies the default writing style of the story unless that is empty
-        (step 5.6, ADR-053). ``writing_style=None`` takes an existing chapter back to the
+        A new chapter follows the default writing style of the story (steps 5.6, 7.3;
+        ADR-053, ADR-070). ``writing_style=None`` takes an existing chapter back to the
         default of the story; a style sets one of its own.
 
         Raises:

@@ -324,16 +324,30 @@ def test_story_style_is_saved_and_read(ms: ManuscriptService, root: Path) -> Non
     assert ms.update_story(W, "nacht", title="Nacht II").writing_style == STYLE
 
 
-def test_new_chapter_copies_the_default_of_the_story(ms: ManuscriptService) -> None:
+def test_new_chapter_follows_the_default_of_the_story(ms: ManuscriptService) -> None:
     ms.create_story(W, "Nacht", "roman")
-    ms.save_chapter(W, "nacht", 1, title="Vor der Vorgabe")
     ms.update_story(W, "nacht", writing_style=STYLE)
-    second = ms.save_chapter(W, "nacht", 2, title="Nach der Vorgabe")
-    assert second.writing_style == STYLE
-    assert ms.get_chapter(W, "nacht", 1).writing_style is None
-    # A later change of the default does not reach existing chapters (ADR-053).
+    chapter = ms.save_chapter(W, "nacht", 1, title="Nach der Vorgabe")
+    # No copy any more (step 7.3, ADR-070): the chapter follows a later default.
+    assert chapter.writing_style is None
+
+
+def test_changed_default_reaches_unchanged_copies_only(ms: ManuscriptService) -> None:
+    ms.create_story(W, "Nacht", "roman")
+    ms.update_story(W, "nacht", writing_style=STYLE)
+    # Copies as chapters got them before step 7.3, one of them changed on its own.
+    ms.save_chapter(W, "nacht", 1, title="Kopie", writing_style=STYLE)
+    own = WritingStyle(tempo="atemlos")
+    ms.save_chapter(W, "nacht", 2, title="Eigen", writing_style=own)
+    ms.save_chapter(W, "nacht", 3, title="Folgt")
+    # Another setting of the story leaves the chapters alone.
+    ms.update_story(W, "nacht", title="Nacht der Flut")
+    assert ms.get_chapter(W, "nacht", 1).writing_style == STYLE
     ms.update_story(W, "nacht", writing_style=WritingStyle(tempo="langsam"))
-    assert ms.get_chapter(W, "nacht", 2).writing_style == STYLE
+    assert ms.get_chapter(W, "nacht", 1).writing_style is None
+    assert ms.get_chapter(W, "nacht", 2).writing_style == own
+    assert ms.get_chapter(W, "nacht", 3).writing_style is None
+    assert ms.get_chapter(W, "nacht", 1).title == "Kopie"
 
 
 def test_empty_default_gives_new_chapter_no_style(ms: ManuscriptService, root: Path) -> None:

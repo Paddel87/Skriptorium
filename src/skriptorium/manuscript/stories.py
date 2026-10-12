@@ -6,7 +6,15 @@ from pathlib import PurePosixPath
 from skriptorium.manuscript.chapters import ChapterStore
 from skriptorium.manuscript.headers import facts_from, story_from, story_header
 from skriptorium.manuscript.layout import STORY_FILE, facts_path, story_dir, story_path
-from skriptorium.manuscript.models import GENRES, Form, Keep, Story, StoryFact, WritingStyle
+from skriptorium.manuscript.models import (
+    GENRES,
+    KEEP,
+    Form,
+    Keep,
+    Story,
+    StoryFact,
+    WritingStyle,
+)
 from skriptorium.manuscript.validation import (
     checked_choices,
     checked_form,
@@ -88,7 +96,11 @@ class StoryStore:
         genres: Sequence[str] | Keep,
         writing_style: WritingStyle | Keep,
     ) -> Story:
-        """Change the settings of a story; ``KEEP`` leaves a field as it is."""
+        """Change the settings of a story; ``KEEP`` leaves a field as it is.
+
+        A changed default style is followed by the chapters whose own style equals the old
+        default - copies from before step 7.3 that were never changed (ADR-070).
+        """
         story = self.get_story(world_id, story_id)
         new_form = story.form if isinstance(form, Keep) else checked_form(form)
         if new_form != "roman" and len(self._chapters.list_chapters(world_id, story_id)) > 1:
@@ -110,7 +122,14 @@ class StoryStore:
             else checked_style(writing_style),
         )
         self._store.write(document.path, header, document.body)
-        return self.get_story(world_id, story_id)
+        changed = self.get_story(world_id, story_id)
+        if changed.writing_style != story.writing_style:
+            for chapter in self._chapters.list_chapters(world_id, story_id):
+                if chapter.writing_style == story.writing_style:
+                    self._chapters.save_chapter(
+                        changed, chapter.number, title=KEEP, text=KEEP, writing_style=None
+                    )
+        return changed
 
     def set_story_summary(self, world_id: str, story_id: str, summary: str) -> Story:
         """Set the overall summary of a story."""
