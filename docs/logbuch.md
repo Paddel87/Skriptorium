@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [ADR-ANGELEGT] ADR-077 Bilder erzeugen (7.12)
+
+- PR #146 (Erkundung) nach grüner CI gemergt. OpenRouter-Bildschnittstelle geprüft: `POST /api/v1/images`, 59 Modelle, Preise je Endpunkt, durchreichbare Filterparameter (`safety_tolerance` bei FLUX, `moderation` bei GPT Image). Eigentümer unterbrach die Vorlage mit der Frage „Filterkonfiguration oder hardcoded?“ – nach Erklärung „Fest im Code“; danach Vorlage freigegeben: FLUX.2 Pro Standard, Filter Stufe 5, Vorlage aus dem Kanon.
+
 ### 2026-10-12 – [ADR-ANGELEGT] ADR-076 Bilder vorerst über OpenRouter (7.12)
 
 - Eigentümer nach der Erkundung (fal.ai, Replicate, Runware): „wir bleiben vorerst bei OpenRouter, weitere Anbieter in einer späteren Phase“. ADR-076; weitere Anbieter als V.24 mit Landeplatz 7.8; Erkundung umbenannt zu „Bildanbieter für 7.12“. Zweig umbenannt zu `docs/7.12-bildanbieter-erkundung` (Wunsch des Eigentümers, Namen nachziehen).
