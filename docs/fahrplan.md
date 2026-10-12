@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-6.md`](archiv/fahrplan-phase-6.md).
 
-**Phase 7: 7 von 9 erledigt (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
+**Phase 7: 7 von 13 erledigt, 1 in Arbeit (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -33,10 +33,14 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ✅ | 7.3 | Schreibweise der Geschichte wirkt auf bestehende Kapitel | erledigt 2026-10-12 (ADR-070) | – |
 | ✅ | 7.4 | Publizieren (Satz, Export, Veröffentlichung) | erledigt 2026-10-12 (ADR-071) | – |
 | ✅ | 7.5 | Gestaltung der Oberfläche | erledigt 2026-10-12 (Richtung C „Buch“) | – |
-| ⚪ | 7.6 | Bilder und Karten | offen | KI |
+| 🟠 | 7.6 | Bildablage, Hochladen und Bilder an Kanon-Einträgen | in Arbeit (ADR-072) | du: Mockup ansehen |
 | ✅ | 7.7 | Pflege: Warnung von `npm ci` zu `fsevents` | erledigt 2026-10-12 | – |
 | ⚪ | 7.8 | Planung der nächsten Ausbaustufe | offen | KI |
 | ✅ | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | erledigt 2026-10-12 | – |
+| ⚪ | 7.10 | Karten der Welt | offen (nach 7.6) | KI |
+| ⚪ | 7.11 | Bilder in Geschichten | offen (nach 7.6) | KI |
+| ⚪ | 7.12 | Bilder von der KI erzeugen | offen (nach 7.6) | KI |
+| ⚪ | 7.13 | Die KI kennt Bilder (zuschaltbar) | offen (nach 7.6) | KI |
 
 **Querschnitt (offen):**
 
@@ -169,9 +173,9 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`; Datenmodell-Erweiterungen (7.2, 7.3, 7.6) und neue Abhängigkeiten (7.4, 7.5) werden per ADR entschieden, bevor gebaut wird; 7.6 (Ablage von Bilddateien) kann die Architektur von `storage` erweitern und braucht dann eine Erkundung vor dem Bau.
 
-**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-10-12 (ADR-067, ADR-068). Stand 2026-10-12: 9 Schritte (+7.9 Befund aus dem Alltag). Wucherungs-Schwelle: Default aus `docs/project-context.md` Abschnitt 6 (Faktor 2 und mindestens 5 zusätzliche Schritte, also mehr als 16); neue Wünsche während der Phase werden V-Schritte mit Landeplatz 7.8 – Ausnahmen nur auf ausdrücklichen Wunsch des Eigentümers (wie 6.14).
+**Ursprünglicher Schrittplan:** 8 Schritte, festgehalten am 2026-10-12 (ADR-067, ADR-068). Stand 2026-10-12: 9 Schritte (+7.9 Befund aus dem Alltag); 13 Schritte (+7.10–7.13 aus dem Zuschnitt von 7.6, ADR-072). Wucherungs-Schwelle: Default aus `docs/project-context.md` Abschnitt 6 (Faktor 2 und mindestens 5 zusätzliche Schritte, also mehr als 16); neue Wünsche während der Phase werden V-Schritte mit Landeplatz 7.8 – Ausnahmen nur auf ausdrücklichen Wunsch des Eigentümers (wie 6.14).
 
-**Reihenfolge (Eigentümer, 2026-10-12; ADR-068):** 7.1 Umbau (mit 7.7), dann 7.2 Zeitlinie, 7.3 Schreibweise, 7.4 Publizieren, 7.5 Gestaltung, 7.6 Bilder und Karten; zuletzt 7.8.
+**Reihenfolge (Eigentümer, 2026-10-12; ADR-068, ADR-072):** 7.1 Umbau (mit 7.7), dann 7.2 Zeitlinie, 7.3 Schreibweise, 7.4 Publizieren, 7.5 Gestaltung, 7.6 Bilder an Kanon-Einträgen, 7.10 Karten, 7.11 Bilder in Geschichten, 7.12 KI-Bilder, 7.13 KI kennt Bilder; zuletzt 7.8.
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
@@ -255,9 +259,9 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Artefakte:** Code, Tests, Logbuch-Eintrag, ggf. ADR
 - **Notizen:** Angelegt 2026-10-12 (ADR-068), übernommen aus V.8. Befund des Eigentümers nach dem Einspielen von „Buch“ (2026-10-12): Cursor im leeren Anweisungsfeld über und links neben dem Beispieltext; Beispieltext zu speziell. Behoben: `drawSelection` im Anweisungsfeld (gemessen: Cursor 0,6 px vor dem Beispieltext, mittig auf der Zeile), Beispieltext „Was soll als Nächstes geschehen? Leer lassen = einfach weiterschreiben. Mit @ holst du Figuren, Orte und mehr aus dem Kanon dazu.“ (Wahl des Eigentümers). Vor 7.6, damit die Bild-Ansichten gleich im neuen Aussehen entstehen. Mitnehmen aus 7.4: Abschnitte am Ende langer Leisten werden übersehen (E-Book-Export ganz unten im Reiter „Geschichte“).
 
-#### 7.6: Bilder und Karten
+#### 7.6: Bildablage, Hochladen und Bilder an Kanon-Einträgen
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – Erkundung `docs/research/bilder-erkundung.md`; entschieden (ADR-072): Ablage im Datenverzeichnis, fünf Teilschritte (7.6, 7.10–7.13). Offen: Mockup, Umsetzung, Prüfung durch getrennte Instanz
 - **Phasentyp-Kontext:** UMSETZUNG (mit Erkundung und Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 7.5
 - **Freigabepflichtig:** ja – Ablage von Bilddateien (Kategorie 4, ggf. Architektur Kategorie 1), Hochladen fremder Dateien (Kategorie 6, Prüfung durch getrennte Instanz), ggf. Bilderzeugung (Kategorie 3)
@@ -322,6 +326,70 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 
 Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, einen Auslöser oder die Planung in 5.5. Sie zählen nicht zum Schrittplan einer Phase.
+
+#### 7.10: Karten der Welt
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage bzw. Mockup zu Beginn)
+- **Abhängigkeiten:** 7.6
+- **Freigabepflichtig:** ja – Datenmodell (Karten je Welt, Kategorie 4); Mockup
+- **Empfohlene Klasse:** Routine – baut auf der Ablage aus 7.6 auf; Vorlage nur, falls neue Fragen.
+- **Eingangskriterien:** 7.6 erledigt
+- **Anforderungen (ab Klasse M):** FR-035
+- **Zu tun:** Eine oder mehrere Karten je Welt hochladen, groß ansehen und zoomen (auch am Handy).
+- **Akzeptanzkriterien:** Tests; Mockup freigegeben; Eigentümer bestätigt.
+- **Betroffene Module:** canon, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag, ggf. ADR
+- **Notizen:** Angelegt 2026-10-12 aus dem Zuschnitt von 7.6 (ADR-072).
+
+#### 7.11: Bilder in Geschichten
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage bzw. Mockup zu Beginn)
+- **Abhängigkeiten:** 7.6
+- **Freigabepflichtig:** ja – Datenmodell (Titelbild je Geschichte, Kategorie 4); Mockup
+- **Empfohlene Klasse:** Routine – baut auf 7.6 und 7.4 auf.
+- **Eingangskriterien:** 7.6 erledigt
+- **Anforderungen (ab Klasse M):** FR-035
+- **Zu tun:** Titelbild je Geschichte, auch im E-Book (7.4); ggf. Bilder im Manuskript nach Vorlage.
+- **Akzeptanzkriterien:** Tests; E-Book mit Titelbild öffnet sich im Reader; Eigentümer bestätigt.
+- **Betroffene Module:** manuscript, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag, ggf. ADR
+- **Notizen:** Angelegt 2026-10-12 aus dem Zuschnitt von 7.6 (ADR-072).
+
+#### 7.12: Bilder von der KI erzeugen
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage bzw. Mockup zu Beginn)
+- **Abhängigkeiten:** 7.6
+- **Freigabepflichtig:** ja – Bildmodelle über OpenRouter (Kategorie 3), neuer Endpunkt (Kategorie 5); SVG nicht übernehmen
+- **Empfohlene Klasse:** Entscheidung – neue externe Fähigkeit mit Kosten und Filtern (Eskalations-Auslöser 1).
+- **Eingangskriterien:** 7.6 erledigt
+- **Anforderungen (ab Klasse M):** FR-035
+- **Zu tun:** Bild zu einem Eintrag, einer Karte oder einem Titelbild von einem Bildmodell erzeugen lassen; Modellwahl, Kosten vorher sichtbar, Übernahme erst nach Bestätigung.
+- **Akzeptanzkriterien:** ADR; Tests; echte Probe in einer Cloud-Session; Eigentümer bestätigt.
+- **Betroffene Module:** ai_gateway, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag, ggf. ADR
+- **Notizen:** Angelegt 2026-10-12 aus dem Zuschnitt von 7.6 (ADR-072).
+
+#### 7.13: Die KI kennt Bilder (zuschaltbar)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage bzw. Mockup zu Beginn)
+- **Abhängigkeiten:** 7.6
+- **Freigabepflichtig:** ja – Anfrage-Zusammenstellung und KI-Anbindung (Kategorie 1)
+- **Empfohlene Klasse:** Entscheidung – Architektur der Anfrage (Eskalations-Auslöser 1).
+- **Eingangskriterien:** 7.6 erledigt
+- **Anforderungen (ab Klasse M):** FR-035
+- **Zu tun:** Je Anfrage zuschaltbar: Bilder der per `@` genannten Einträge gehen als Bildteile an Modelle, die Bilder lesen; Kosten vorher sichtbar.
+- **Akzeptanzkriterien:** ADR; Tests; echte Probe; Eigentümer bestätigt.
+- **Betroffene Module:** context, ai_gateway, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag, ggf. ADR
+- **Notizen:** Angelegt 2026-10-12 aus dem Zuschnitt von 7.6 (ADR-072).
 
 #### D.1: Wechsel Node.js 24 → Node.js 26 LTS
 

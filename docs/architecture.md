@@ -102,6 +102,7 @@ graph LR
 - **Verantwortung:** Lesen und atomares Schreiben der Markdown-Dateien mit YAML-Kopf (Frontmatter) im Datenverzeichnis; Pflege des SQLite-Suchindex (Namen, Aliasse, Volltext) und dessen vollständiger Neuaufbau aus den Dateien.
 - **Nicht-Verantwortung:** keine Fachregeln. Die Dateien sind die Quelle der Wahrheit; der Index enthält nichts, was nicht aus den Dateien wiederherstellbar ist.
 - **Öffentliche Schnittstellen:** `DocumentStore` (Abschnitt 4)
+- **Bildablage (seit 7.6, ADR-072) `[BELASTBAR]`:** Bilddateien (PNG, JPEG, WebP) im Datenverzeichnis der Welt unter `bilder/`, mit Pfadprüfung, festen Endungen und atomarem Schreiben wie die Markdown-Ablage; nicht im Suchindex; von der Sicherung erfasst.
 - **Abhängigkeiten (extern):** Python-Standardbibliothek (`sqlite3`); PyYAML 6.0 (ADR-016), gelesen mit strengem sicherem Lader
 
 ### Modul: api [BELASTBAR]
