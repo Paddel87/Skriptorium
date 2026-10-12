@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [ERLEDIGT] 7.9 Gegenstands-Abschnitte
+
+- Eigentümer: „Der Weltenbauer funktioniert jetzt hundertprozentig und er ist einfach nur genial.“ Phase 7: 3 von 9.
+
 ### 2026-10-12 – [BEOBACHTUNG] Eingespielt: 7.1–7.4, 7.7, 7.9 (`2d3a4f0`)
 
 - Auf Anweisung („einspielen“). CI auf `main` lief noch; Baum identisch mit dem grün geprüften PR-Stand #136 (`git diff` leer). Gewartet über HTTPS (200), Bündel mit neuen Teilen, EPUB-Endpunkt ohne Anmeldung 401, eine SSH-Abfrage: `(healthy)`, `REVISION` `2d3a4f0`.

@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-6.md`](archiv/fahrplan-phase-6.md).
 
-**Phase 7: 2 von 9 erledigt, 4 in Arbeit (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
+**Phase 7: 3 von 9 erledigt, 3 in Arbeit (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -36,7 +36,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ⚪ | 7.6 | Bilder und Karten | offen | KI |
 | ✅ | 7.7 | Pflege: Warnung von `npm ci` zu `fsevents` | erledigt 2026-10-12 | – |
 | ⚪ | 7.8 | Planung der nächsten Ausbaustufe | offen | KI |
-| 🟠 | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | eingespielt 2026-10-12 | du: im Weltenbauer prüfen |
+| ✅ | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | erledigt 2026-10-12 | – |
 
 **Querschnitt (offen):**
 
@@ -305,7 +305,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.9: Befund: Gegenstands-Abschnitte aus dem Weltenbauer
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – umgesetzt: Regel 5 im Markdown-Import (Zweck/Verwendung/Auswirkung auf der Ebene des Eintrags davor werden dessen Abschnitte, Unterabschnitte eingerückt), Beispiel im Format des Weltenbauers; Test mit der Form aus dem Bildschirmfoto; ein Test aus 4.16 an die neue Regel angepasst („Zweck“ unter einer Figur gehört jetzt zur Figur). pytest 566 grün. Eingespielt 2026-10-12 (`2d3a4f0`). Offen: Bestätigung des Eigentümers
+- **Status:** ✅ ERLEDIGT (2026-10-12) – umgesetzt: Regel 5 im Markdown-Import (Zweck/Verwendung/Auswirkung auf der Ebene des Eintrags davor werden dessen Abschnitte, Unterabschnitte eingerückt), Beispiel im Format des Weltenbauers; Test mit der Form aus dem Bildschirmfoto; ein Test aus 4.16 an die neue Regel angepasst („Zweck“ unter einer Figur gehört jetzt zur Figur). pytest 566 grün. Eingespielt 2026-10-12 (`2d3a4f0`). Vom Eigentümer bestätigt 2026-10-12 („Der Weltenbauer funktioniert jetzt hundertprozentig“).
 - **Phasentyp-Kontext:** UMSETZUNG (Fehlerbehebung)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein – Fehlerbehebung innerhalb von `canon` und `context`, keine Schnittstelle berührt
