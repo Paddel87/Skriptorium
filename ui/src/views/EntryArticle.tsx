@@ -1,4 +1,5 @@
 import { api, CATEGORIES, type CanonEntry } from "../api";
+import { EntryImages } from "./EntryImages";
 import { EntryText } from "./EntryText";
 import { timelineEvents } from "../timeline";
 import { TimelineView } from "./TimelineView";
@@ -7,7 +8,8 @@ import { TimelineView } from "./TimelineView";
  * A canon entry to read. Guests (entries of another world) cannot be changed here; the
  * character card download is offered outside the compact bar (step 6.9). A timeline entry
  * holding a list of dated events reads as a time line, with "+ Ereignis" outside the compact
- * bar (step 7.2); a timeline entry for a single event reads as text.
+ * bar (step 7.2); a timeline entry for a single event reads as text. The entry's images stand
+ * above the text; they are changed outside the compact bar (step 7.6).
  */
 export function EntryArticle({
   world,
@@ -20,7 +22,7 @@ export function EntryArticle({
   current: CanonEntry;
   compact: boolean;
   onEdit: () => void;
-  /** Called after the entry was changed here (an event added to a timeline). */
+  /** Called after the entry was changed here (an event added to a timeline, an image). */
   onSaved: () => void;
 }) {
   const guest = current.world !== world;
@@ -58,6 +60,13 @@ export function EntryArticle({
         {current.aliases.length > 0 && ` · Auch: ${current.aliases.join(", ")}`}
         {current.status !== null && ` · ${current.status}`}
       </p>
+      <EntryImages
+        entry={current}
+        editable={!compact && !guest}
+        onChanged={() => {
+          onSaved();
+        }}
+      />
       {current.category === "zeitlinie" &&
       timelineEvents(current.body).some((event) => event.date !== null) ? (
         <TimelineView

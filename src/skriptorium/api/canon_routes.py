@@ -5,7 +5,7 @@ import binascii
 from typing import Annotated, Any, Final
 
 from fastapi import APIRouter, Depends, status
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel, Field
 
 from skriptorium.api.context import ServicesDep, current_session
@@ -18,6 +18,7 @@ from skriptorium.canon import (
     TranslatedMaterial,
     World,
 )
+from skriptorium.storage import MAX_IMAGE_BYTES
 
 router = APIRouter(prefix="/api/worlds", dependencies=[Depends(current_session)])
 
@@ -70,6 +71,12 @@ class SillyTavernFile(BaseModel):
     """A SillyTavern card (PNG or JSON) or lorebook (JSON), base64-encoded."""
 
     content: Annotated[str, Field(max_length=_MAX_BASE64)]
+
+
+class ImageFile(BaseModel):
+    """An image (PNG, JPEG or WebP), base64-encoded; the browser shrinks it first (ADR-072)."""
+
+    content: Annotated[str, Field(max_length=4 * -(-MAX_IMAGE_BYTES // 3))]
 
 
 class ImportApply(BaseModel):
@@ -143,6 +150,33 @@ def delete_entry(world_id: str, entry_id: str, found: ServicesDep) -> None:
     found.canon.delete_entry(world_id, entry_id)
 
 
+@router.post("/{world_id}/entries/{entry_id}/images", status_code=status.HTTP_201_CREATED)
+def add_entry_image(
+    world_id: str, entry_id: str, body: ImageFile, found: ServicesDep
+) -> CanonEntry:
+    """Add an image to a canon entry (step 7.6, ADR-072)."""
+    return found.canon.add_entry_image(world_id, entry_id, _decoded(body.content))
+
+
+@router.get("/{world_id}/entries/{entry_id}/images/{image}")
+def get_entry_image(world_id: str, entry_id: str, image: str, found: ServicesDep) -> Response:
+    """One image of a canon entry, with the media type of its checked format."""
+    data, media_type = found.canon.entry_image(world_id, entry_id, image)
+    return Response(data, media_type=media_type)
+
+
+@router.delete("/{world_id}/entries/{entry_id}/images/{image}")
+def remove_entry_image(world_id: str, entry_id: str, image: str, found: ServicesDep) -> CanonEntry:
+    """Remove an image from a canon entry and delete it."""
+    return found.canon.remove_entry_image(world_id, entry_id, image)
+
+
+@router.post("/{world_id}/entries/{entry_id}/images/{image}/main")
+def set_main_image(world_id: str, entry_id: str, image: str, found: ServicesDep) -> CanonEntry:
+    """Make an image the main image of its canon entry."""
+    return found.canon.set_main_image(world_id, entry_id, image)
+
+
 @router.get("/{world_id}/search")
 def find_entries(world_id: str, text: str, found: ServicesDep) -> list[CanonEntry]:
     """Entries whose name or alias starts with ``text`` (``@`` menu)."""
@@ -180,11 +214,7 @@ def translate_sillytavern(
     world_id: str, body: SillyTavernFile, found: ServicesDep
 ) -> TranslatedMaterial:
     """Import Markdown from a SillyTavern file (ADR-065), for the import field; stores nothing."""
-    try:
-        data = base64.b64decode(body.content, validate=True)
-    except binascii.Error, ValueError:
-        raise InvalidInput("Datei nicht lesbar übertragen") from None
-    return found.canon.translate_sillytavern(world_id, data)
+    return found.canon.translate_sillytavern(world_id, _decoded(body.content))
 
 
 @router.post("/{world_id}/import")
@@ -196,6 +226,13 @@ def apply_import(world_id: str, body: ImportApply, found: ServicesDep) -> Import
         categories=body.categories,
         overwrite=set(body.overwrite),
     )
+
+
+def _decoded(content: str) -> bytes:
+    try:
+        return base64.b64decode(content, validate=True)
+    except binascii.Error, ValueError:
+        raise InvalidInput("Datei nicht lesbar übertragen") from None
 
 
 def _given(body: BaseModel) -> dict[str, Any]:

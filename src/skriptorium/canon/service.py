@@ -3,7 +3,9 @@
 Layout below the data directory (docs/architecture.md section 7)::
 
     worlds/<world>/world.md                          name; body: description and ground rules
-    worlds/<world>/canon/<category>/<entry>.md       name, aliasse, kategorie, optional status
+    worlds/<world>/canon/<category>/<entry>.md       name, aliasse, kategorie, optional status,
+                                                     optional bilder (first = main image)
+    worlds/<world>/bilder/<entry>-<random>.<ending>  images of the entries (step 7.6, ADR-072)
 
 Identifiers are derived from names (lower case, umlauts transliterated, words joined by
 hyphens) and are the file names. An entry identifier is unique within its world across all
@@ -11,6 +13,9 @@ categories. The timeline of a world is kept as entries of category ``zeitlinie``
 lists the events in order, as in the test world of step 1.1.
 """
 
+import contextlib
+import re
+import secrets
 from collections.abc import Mapping, Sequence, Set
 from dataclasses import dataclass
 from enum import Enum
@@ -26,6 +31,7 @@ from skriptorium.canon.importers import (
     translate_sillytavern,
 )
 from skriptorium.storage import (
+    IMAGE_SUFFIXES,
     AlreadyExists,
     Document,
     DocumentStore,
@@ -33,13 +39,18 @@ from skriptorium.storage import (
     InvalidInput,
     NotFound,
     checked_identifier,
+    inspect_image,
     slugify,
 )
 
 _WORLDS = "worlds"
 _WORLD_FILE = "world.md"
 _CANON = "canon"
+_IMAGES = "bilder"
 _ITEM_TEMPLATE = "## Zweck\n\n## Verwendung\n\n## Auswirkung\n"
+MAX_IMAGES_PER_ENTRY: Final = 12
+# Names of image files as this module creates them; nothing else is ever read or served.
+_IMAGE_NAME = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\.(?:png|jpg|webp)")
 
 
 class _Keep(Enum):
@@ -71,6 +82,8 @@ class CanonEntry:
     aliases: tuple[str, ...]
     status: str | None
     body: str
+    images: tuple[str, ...] = ()
+    """File names of the entry's images; the first is the main image (step 7.6)."""
 
 
 @dataclass(frozen=True)
@@ -270,12 +283,97 @@ class CanonService:
         return _entry_from(updated)
 
     def delete_entry(self, world_id: str, entry_id: str) -> None:
-        """Delete a canon entry.
+        """Delete a canon entry together with its images.
 
         Raises:
             NotFound: The world or the entry does not exist.
         """
-        self._store.delete(self._entry_path(world_id, entry_id))
+        path = self._entry_path(world_id, entry_id)
+        document = self._store.read(path)
+        # Read leniently: an entry whose image list was broken by hand can still be deleted;
+        # only names that pass the check are deleted with it.
+        try:
+            images = _images_of(document)
+        except InvalidInput:
+            images = ()
+        self._store.delete(path)
+        for image in images:
+            self._delete_image_file(world_id, image)
+
+    # --- images of canon entries (step 7.6, ADR-072) ------------------------------------
+
+    def add_entry_image(self, world_id: str, entry_id: str, data: bytes) -> CanonEntry:
+        """Store an image and append it to the entry; the first image is the main image.
+
+        Raises:
+            NotFound: The world or the entry does not exist.
+            InvalidInput: Not a PNG, JPEG or WebP image, too large, or the entry already has
+                :data:`MAX_IMAGES_PER_ENTRY` images.
+        """
+        path = self._entry_path(world_id, entry_id)
+        document = self._store.read(path)
+        current = _entry_from(document)
+        if len(current.images) >= MAX_IMAGES_PER_ENTRY:
+            raise InvalidInput(f"Höchstens {MAX_IMAGES_PER_ENTRY} Bilder je Eintrag")
+        suffix = IMAGE_SUFFIXES[inspect_image(data).kind]
+        name = f"{_image_prefix(entry_id)}{secrets.token_hex(6)}{suffix}"
+        self._store.write_image(_image_path(world_id, name), data)
+        try:
+            return self._write_images(document, [*current.images, name])
+        except BaseException:
+            self._delete_image_file(world_id, name)
+            raise
+
+    def entry_image(self, world_id: str, entry_id: str, image: str) -> tuple[bytes, str]:
+        """The bytes and media type of one image of an entry.
+
+        Raises:
+            NotFound: World, entry or image (at this entry) does not exist.
+        """
+        if image not in self.get_entry(world_id, entry_id).images:
+            raise NotFound(f"{world_id}/{entry_id}/{_IMAGES}")
+        return self._store.read_image(_image_path(world_id, image))
+
+    def remove_entry_image(self, world_id: str, entry_id: str, image: str) -> CanonEntry:
+        """Remove an image from the entry and delete its file.
+
+        Raises:
+            NotFound: World, entry or image (at this entry) does not exist.
+        """
+        document = self._store.read(self._entry_path(world_id, entry_id))
+        images = list(_entry_from(document).images)
+        if image not in images:
+            raise NotFound(f"{world_id}/{entry_id}/{_IMAGES}")
+        images.remove(image)
+        updated = self._write_images(document, images)
+        self._delete_image_file(world_id, image)
+        return updated
+
+    def set_main_image(self, world_id: str, entry_id: str, image: str) -> CanonEntry:
+        """Make one of the entry's images its main image (first place).
+
+        Raises:
+            NotFound: World, entry or image (at this entry) does not exist.
+        """
+        document = self._store.read(self._entry_path(world_id, entry_id))
+        images = list(_entry_from(document).images)
+        if image not in images:
+            raise NotFound(f"{world_id}/{entry_id}/{_IMAGES}")
+        images.remove(image)
+        return self._write_images(document, [image, *images])
+
+    def _write_images(self, document: Document, images: list[str]) -> CanonEntry:
+        header = dict(document.header)
+        if images:
+            header[_IMAGES] = list[HeaderValue](images)
+        else:
+            header.pop(_IMAGES, None)
+        return _entry_from(self._store.write(document.path, header, document.body))
+
+    def _delete_image_file(self, world_id: str, image: str) -> None:
+        # A file already gone (deleted by hand) is not an error; the entry no longer names it.
+        with contextlib.suppress(NotFound):
+            self._store.delete_image(_image_path(world_id, image))
 
     def find_entries(self, world_id: str, text: str) -> list[CanonEntry]:
         """Entries of a world whose name or alias starts with ``text`` (``@`` menu).
@@ -464,6 +562,10 @@ def _entry_path(world_id: str, category: Category, entry_id: str) -> str:
     return f"{_WORLDS}/{checked_identifier(world_id)}/{_CANON}/{category}/{entry_id}.md"
 
 
+def _image_path(world_id: str, image: str) -> str:
+    return f"{_WORLDS}/{checked_identifier(world_id)}/{_IMAGES}/{image}"
+
+
 def _is_entry_path(path: str) -> bool:
     parts = PurePosixPath(path).parts
     return len(parts) == 5 and parts[2] == _CANON and parts[3] in CATEGORIES
@@ -511,7 +613,24 @@ def _entry_from(document: Document) -> CanonEntry:
         aliases=tuple(cast("list[str]", raw_aliases)),
         status=_header_text(document, "status", required=False),
         body=document.body,
+        images=_images_of(document),
     )
+
+
+def _image_prefix(entry_id: str) -> str:
+    """Start of the file names of an entry's images; ties each file to one entry."""
+    return f"{entry_id[:60].rstrip('-')}-"
+
+
+def _images_of(document: Document) -> tuple[str, ...]:
+    value = document.header.get(_IMAGES, [])
+    prefix = _image_prefix(PurePosixPath(document.path).stem)
+    if not isinstance(value, list) or not all(
+        isinstance(name, str) and _IMAGE_NAME.fullmatch(name) and name.startswith(prefix)
+        for name in value
+    ):
+        raise InvalidInput(f"{document.path}: bilder muss eine Liste von Bilddateinamen sein")
+    return tuple(cast("list[str]", value))
 
 
 def _header_text(document: Document, key: str, *, required: bool) -> str | None:

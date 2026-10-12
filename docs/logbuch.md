@@ -29,6 +29,24 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] 7.6 Bilder an Kanon-Einträgen umgesetzt; getrennte Prüfung
+
+- Mockup erst mit einem Bild je Eintrag; Eigentümer: „Mehrere Bilder je Eintrag“. Zweites Mockup mit Galerie (Hauptbild, Vorschaubilder, große Ansicht mit Blättern, „Zum Hauptbild machen“, „Entfernen“) – „Passt, umbauen“. Nachtrag in ADR-072.
+- Umgesetzt: Bildablage in `storage` (`images.py`: PNG/JPEG/WebP am Dateikopf, kein SVG, 5 MB, 4096 px; `write_image`/`read_image`/`delete_image`, atomar, nie überschreibend); Kopffeld `bilder` am Eintrag (höchstens 12, Namen an die Kennung gebunden); vier Routen; Galerie `EntryImages.tsx`; Verkleinern im Browser (`files.ts`, 2.000 px, WebP, sonst JPEG mit weißem Grund).
+- Sichtprobe lokal mit Testdaten: 3.000×4.000-JPEG, 4.000×2.500-PNG (7,3 MB) und 1.200×1.200 hochgeladen → 1.500×2.000, 2.000×1.250, 1.200×1.200 als WebP (10–16 KB); Hauptbild-Wechsel, Escape schließt. Hintergrund der großen Ansicht danach dunkler (92 %), weil der Seitentext durchschien.
+- KI-Anfragen unverändert: Vergleichsskript vor/nach (42 Anfragen) byte-gleich – Bilder gehen erst mit 7.13 an die KI.
+- Getrennte Instanz (Sonnet, nur Diff und Bedrohungsmodell, 2026-10-12): keine Befunde hoch/mittel; Fuzz-Lauf 300.000 Köpfe ohne Absturz. Behoben: Namen an den Eintrag gebunden (Befund 3), Löschen trotz kaputter Liste (Befund 2). Hingenommen: verwaiste Datei bei gleichzeitigem Hochladen aus zwei Tabs (Befund 1). Optional, nicht umgesetzt: Größengrenze am Proxy, JSON-Prüfung ohne `Content-Length`.
+- Reibung: Ein Testlauf mit Abdeckungsmessung zeigte 3 bzw. 12 Fehler (u. a. `TooManyRedirects` bei `/api/health`), während die Prüfinstanz gleichzeitig Tests im selben Repo ausführte; danach drei Läufe in Folge grün (621, dann 623). Kein Fehler im Code gefunden – Ursache vermutlich gleichzeitige Läufe; künftig Prüfinstanz und eigene Testläufe nicht überlappen lassen.
+- Prüfungen: pytest 623, Abdeckung `storage/images.py` 90 %, `store.py` 98 %, `canon/service.py` 99 %, `canon_routes.py` 100 %; vitest 241 (`EntryImages.tsx` 87 %, `files.ts` 26 % – Canvas fehlt in jsdom, im Browser geprüft); Playwright 11; ruff, mypy, bandit, eslint, tsc, prettier grün.
+
+### 2026-10-12 – [ERLEDIGT] 7.5 Aussehen „Buch“
+
+- Eigentümer: „Sieht gut aus“ und nach der Korrektur „Der Cursor ist richtig ausgerichtet und der Text passt auch.“ Phase 7: 7 von 9 (offen 7.6, 7.8).
+
+### 2026-10-12 – [BEOBACHTUNG] Eingespielt: Cursor und Beispieltext (`592deb0`)
+
+- Auf Anweisung („einspielen“) PR #141 nach grüner CI gemergt; Baum identisch mit dem PR-Stand. HTTPS 200, Bündel mit neuem Beispieltext, eine SSH-Abfrage: `(healthy)`, `REVISION` `592deb0`. Offen: Bestätigung von 7.5 durch den Eigentümer.
+
 ### 2026-10-12 – [GELÖST] Cursor im Anweisungsfeld; Beispieltext
 
 - Befund des Eigentümers nach dem Einspielen von „Buch“: Cursor im leeren Anweisungsfeld oberhalb und leicht außerhalb, Beispieltext zu speziell.
