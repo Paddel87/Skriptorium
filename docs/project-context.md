@@ -48,6 +48,7 @@ Auswahl nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15, „Versi
   - PyYAML 6.0 (6.0.3, gepinnt `<7`) — Verifiziert: 2026-09-26, Quelle: PyPI; Dateikopf in `storage` (ADR-016)
   - React Router 7.18 (7.18.4, gepinnt `<7.19`) — Verifiziert: 2026-10-08, Quelle: npm-Registry, remix.run-Blog zu v8; Linie 8 erst ab 2026-12-17 mindestreif (ADR-046, D.15)
   - CodeMirror 6 (@codemirror/state 6.7.6, view 6.43.13, autocomplete 6.20.3, lang-markdown 6.5.2) — Verifiziert: 2026-09-26, Quelle: npm-Registry
+  - @panzoom/panzoom 4.6 (4.6.2), MIT, ohne weitere Pakete — Zoom der Karten (ADR-073); Verifiziert: 2026-10-12, Quelle: npm-Registry
 - **Datenbank / Speicher:** Markdown-Dateien mit YAML-Kopf als Quelle der Wahrheit; SQLite (in Python enthalten, Version folgt Python 3.14) als abgeleiteter, jederzeit neu aufbaubarer Suchindex – ADR-003
 - **Laufzeitumgebung:** Node.js 24 LTS (24.21.0) nur für Build und Entwicklung der Oberfläche — Verifiziert: 2026-09-26, Quelle: nodejs.org, Release-Plan `schedule.json`. Betrieb: Python 3.14 mit uvicorn auf einem VPS (ADR-006), vorhandener netcup-VPS (ADR-025)
 - **Package Manager:** uv 0.12 (0.12.19) für Python; npm 11 (11.19.0, mit Node 24 gebündelt) für die Oberfläche — Verifiziert: 2026-09-26, Quelle: PyPI, nodejs.org

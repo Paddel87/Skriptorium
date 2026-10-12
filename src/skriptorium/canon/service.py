@@ -2,7 +2,9 @@
 
 Layout below the data directory (docs/architecture.md section 7)::
 
-    worlds/<world>/world.md                          name; body: description and ground rules
+    worlds/<world>/world.md                          name, optional karten (name, datei); body:
+                                                     description and ground rules
+    worlds/<world>/karten/karte-<random>.<ending>    maps of the world (step 7.10, ADR-073)
     worlds/<world>/canon/<category>/<entry>.md       name, aliasse, kategorie, optional status,
                                                      optional bilder (first = main image)
     worlds/<world>/bilder/<entry>-<random>.<ending>  images of the entries (step 7.6, ADR-072)
@@ -32,6 +34,8 @@ from skriptorium.canon.importers import (
 )
 from skriptorium.storage import (
     IMAGE_SUFFIXES,
+    MAX_MAP_BYTES,
+    MAX_MAP_SIDE,
     AlreadyExists,
     Document,
     DocumentStore,
@@ -47,6 +51,12 @@ _WORLDS = "worlds"
 _WORLD_FILE = "world.md"
 _CANON = "canon"
 _IMAGES = "bilder"
+_MAPS = "karten"
+MAX_MAPS_PER_WORLD: Final = 20
+_MAP_FILE = re.compile(r"karte-[0-9a-f]{12}\.(?:png|jpg|webp)")
+_MAP_NAME_LENGTH = 200
+# Control characters (line breaks included) and the marks that turn the writing direction.
+_MAP_NAME_REFUSED = re.compile(r"[\x00-\x1f\x7f-\x9f\u200e\u200f\u202a-\u202e\u2066-\u2069]")
 _ITEM_TEMPLATE = "## Zweck\n\n## Verwendung\n\n## Auswirkung\n"
 MAX_IMAGES_PER_ENTRY: Final = 12
 # Names of image files as this module creates them; nothing else is ever read or served.
@@ -63,12 +73,22 @@ KEEP: Final = _Keep.KEEP
 
 
 @dataclass(frozen=True)
+class WorldMap:
+    """A map of a world (step 7.10): the author's name for it and its file."""
+
+    name: str
+    file: str
+
+
+@dataclass(frozen=True)
 class World:
     """A world: its identifier, name and description with ground rules."""
 
     id: str
     name: str
     description: str
+    maps: tuple[WorldMap, ...] = ()
+    """The world's maps in the order they were added."""
 
 
 @dataclass(frozen=True)
@@ -183,6 +203,82 @@ class CanonService:
             header["name"] = _required_text(name, "Name der Welt")
         body = document.body if isinstance(description, _Keep) else description
         return _world_from(self._store.write(path, header, body))
+
+    # --- maps of a world (step 7.10, ADR-073) -----------------------------------------------
+
+    def add_world_map(self, world_id: str, name: str, data: bytes) -> World:
+        """Store a map (up to 6,000 pixels per side and 12 MB) and add it to the world.
+
+        Raises:
+            NotFound: The world does not exist.
+            InvalidInput: Empty or too long name, not a PNG, JPEG or WebP image, too large,
+                or the world already has :data:`MAX_MAPS_PER_WORLD` maps.
+        """
+        document = self._store.read(_world_path(world_id))
+        maps = list(_world_from(document).maps)
+        clean_name = _map_name(name)
+        if len(maps) >= MAX_MAPS_PER_WORLD:
+            raise InvalidInput(f"Höchstens {MAX_MAPS_PER_WORLD} Karten je Welt")
+        kind = inspect_image(data, max_bytes=MAX_MAP_BYTES, max_side=MAX_MAP_SIDE).kind
+        file = f"karte-{secrets.token_hex(6)}{IMAGE_SUFFIXES[kind]}"
+        self._store.write_image(
+            _map_path(world_id, file), data, max_bytes=MAX_MAP_BYTES, max_side=MAX_MAP_SIDE
+        )
+        try:
+            return self._write_maps(document, [*maps, WorldMap(clean_name, file)])
+        except BaseException:
+            self._delete_map_file(world_id, file)
+            raise
+
+    def world_map(self, world_id: str, file: str) -> tuple[bytes, str]:
+        """The bytes and media type of one map of the world.
+
+        Raises:
+            NotFound: The world or the map does not exist.
+        """
+        if file not in {m.file for m in self.get_world(world_id).maps}:
+            raise NotFound(f"{world_id}/{_MAPS}")
+        return self._store.read_image(_map_path(world_id, file))
+
+    def rename_world_map(self, world_id: str, file: str, name: str) -> World:
+        """Give a map of the world another name.
+
+        Raises:
+            NotFound: The world or the map does not exist.
+            InvalidInput: Empty or too long name.
+        """
+        document = self._store.read(_world_path(world_id))
+        maps = list(_world_from(document).maps)
+        clean_name = _map_name(name)
+        at = _map_index(maps, world_id, file)
+        maps[at] = WorldMap(clean_name, file)
+        return self._write_maps(document, maps)
+
+    def remove_world_map(self, world_id: str, file: str) -> World:
+        """Remove a map from the world and delete its file.
+
+        Raises:
+            NotFound: The world or the map does not exist.
+        """
+        document = self._store.read(_world_path(world_id))
+        maps = list(_world_from(document).maps)
+        del maps[_map_index(maps, world_id, file)]
+        updated = self._write_maps(document, maps)
+        self._delete_map_file(world_id, file)
+        return updated
+
+    def _write_maps(self, document: Document, maps: list[WorldMap]) -> World:
+        header = dict(document.header)
+        if maps:
+            header[_MAPS] = list[HeaderValue]({"name": m.name, "datei": m.file} for m in maps)
+        else:
+            header.pop(_MAPS, None)
+        return _world_from(self._store.write(document.path, header, document.body))
+
+    def _delete_map_file(self, world_id: str, file: str) -> None:
+        # A file already gone (deleted by hand) is not an error; the world no longer names it.
+        with contextlib.suppress(NotFound):
+            self._store.delete_image(_map_path(world_id, file))
 
     # --- canon entries --------------------------------------------------------------------
 
@@ -554,6 +650,26 @@ def _clean_aliases(aliases: Sequence[str]) -> list[str]:
     return [_required_text(alias, "Alias") for alias in aliases]
 
 
+def _map_path(world_id: str, file: str) -> str:
+    return f"{_WORLDS}/{checked_identifier(world_id)}/{_MAPS}/{file}"
+
+
+def _map_name(name: str) -> str:
+    clean = _required_text(name, "Name der Karte")
+    if len(clean) > _MAP_NAME_LENGTH:
+        raise InvalidInput(f"Name der Karte ist länger als {_MAP_NAME_LENGTH} Zeichen")
+    if _MAP_NAME_REFUSED.search(clean):
+        raise InvalidInput("Name der Karte enthält Steuerzeichen")
+    return clean
+
+
+def _map_index(maps: list[WorldMap], world_id: str, file: str) -> int:
+    for at, world_map in enumerate(maps):
+        if world_map.file == file:
+            return at
+    raise NotFound(f"{world_id}/{_MAPS}")
+
+
 def _world_path(world_id: str) -> str:
     return f"{_WORLDS}/{checked_identifier(world_id)}/{_WORLD_FILE}"
 
@@ -593,7 +709,28 @@ def _entry_header(
 def _world_from(document: Document) -> World:
     parts = PurePosixPath(document.path).parts
     name = _header_text(document, "name", required=True)
-    return World(id=parts[1], name=name or parts[1], description=document.body)
+    return World(
+        id=parts[1], name=name or parts[1], description=document.body, maps=_maps_of(document)
+    )
+
+
+def _maps_of(document: Document) -> tuple[WorldMap, ...]:
+    value = document.header.get(_MAPS, [])
+    if not isinstance(value, list):
+        raise InvalidInput(f"{document.path}: karten muss eine Liste sein")
+    maps: list[WorldMap] = []
+    for item in value:
+        name = item.get("name") if isinstance(item, dict) else None
+        file = item.get("datei") if isinstance(item, dict) else None
+        if not (
+            isinstance(name, str)
+            and name.strip()
+            and isinstance(file, str)
+            and _MAP_FILE.fullmatch(file)
+        ):
+            raise InvalidInput(f"{document.path}: karten braucht je Karte name und datei")
+        maps.append(WorldMap(name.strip(), file))
+    return tuple(maps)
 
 
 def _entry_from(document: Document) -> CanonEntry:

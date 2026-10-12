@@ -45,6 +45,11 @@ export default defineConfig({
     root: ".",
     environment: "jsdom",
     setupFiles: ["ui/test-setup.ts"],
+    // @panzoom/panzoom declares "type": "module" but its "main" is a UMD file that exports
+    // nothing under Node; the build uses its "module" entry, the tests the same file.
+    alias: {
+      "@panzoom/panzoom": "@panzoom/panzoom/dist/panzoom.es.js",
+    },
     include: ["ui/**/*.test.ts", "ui/**/*.test.tsx"],
     coverage: {
       provider: "v8",

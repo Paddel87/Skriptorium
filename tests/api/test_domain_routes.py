@@ -37,7 +37,12 @@ def test_worlds(logged_in: TestClient) -> None:
     assert world == "die-salzmark"
     assert [w["id"] for w in logged_in.get("/api/worlds").json()] == [world]
     changed = logged_in.patch(f"/api/worlds/{world}", json={"description": "Neu"})
-    assert changed.json() == {"id": world, "name": "Die Salzmark", "description": "Neu"}
+    assert changed.json() == {
+        "id": world,
+        "name": "Die Salzmark",
+        "description": "Neu",
+        "maps": [],
+    }
     assert logged_in.get(f"/api/worlds/{world}").json()["description"] == "Neu"
     assert logged_in.post("/api/worlds", json={"name": "Die Salzmark"}).status_code == 409
     assert logged_in.post("/api/worlds", json={"name": "  "}).status_code == 422

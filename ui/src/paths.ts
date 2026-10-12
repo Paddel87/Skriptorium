@@ -6,7 +6,8 @@ import { createContext, useContext } from "react";
  */
 
 /** Areas of a world; each has its own address. */
-export type WorldArea = "geschichten" | "kanon" | "import" | "beschreibung";
+export type WorldArea =
+  "geschichten" | "kanon" | "karten" | "import" | "beschreibung";
 
 export function worldPath(world: string, area: WorldArea = "geschichten") {
   return `/welt/${encodeURIComponent(world)}/${area}`;

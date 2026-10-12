@@ -121,6 +121,7 @@ export const WORLD = {
   id: "salzmark",
   name: "Die Salzmark",
   description: "Salz",
+  maps: [] as { name: string; file: string }[],
 };
 export const ENTRY = {
   world: "salzmark",
