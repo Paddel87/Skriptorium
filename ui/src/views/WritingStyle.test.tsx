@@ -142,7 +142,7 @@ describe("genre and style of the story (step 5.6)", () => {
     expect(save).toHaveProperty("disabled", true);
     expect(
       within(story).getByText(
-        "Vorgabe für neue Kapitel; schon angelegte Kapitel behalten ihre eigene Schreibweise.",
+        "Gilt für alle Kapitel ohne eigene Schreibweise – auch für die schon angelegten. Kapitel, in denen du die Schreibweise einzeln geändert hast, behalten ihre Fassung.",
       ),
     ).toBeDefined();
 
@@ -230,10 +230,10 @@ describe("style of one chapter (step 5.6)", () => {
     const chapter = section("Schreibweise dieses Kapitels (Kapitel 1)");
 
     expect(
-      within(chapter).queryByText(/hier nur für dieses Kapitel geändert/),
+      within(chapter).queryByText(/Eigene Schreibweise nur für dieses Kapitel/),
     ).toBeNull();
     expect(
-      within(chapter).getByText(/keine eigene Schreibweise/),
+      within(chapter).getByText(/folgt der Vorgabe der Geschichte/),
     ).toBeDefined();
     expect(
       within(chapter)
@@ -269,9 +269,11 @@ describe("style of one chapter (step 5.6)", () => {
     render(<StoryPage story={{ ...STORY, writing_style: DEFAULT }} />);
     await openStorySettings(user);
     const chapter = section("Schreibweise dieses Kapitels (Kapitel 1)");
-    expect(within(chapter).queryByText(/keine eigene Schreibweise/)).toBeNull();
     expect(
-      within(chapter).getByText(/hier nur für dieses Kapitel geändert/),
+      within(chapter).queryByText(/folgt der Vorgabe der Geschichte/),
+    ).toBeNull();
+    expect(
+      within(chapter).getByText(/Eigene Schreibweise nur für dieses Kapitel/),
     ).toBeDefined();
     expect(
       within(chapter)

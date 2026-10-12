@@ -64,7 +64,8 @@ def test_new_chapter_takes_the_default_and_can_be_reset(logged_in: TestClient) -
     base = _story(logged_in)
     logged_in.patch(base, json={"writing_style": STYLE})
     created = logged_in.put(f"{base}/chapters/1", json={"title": "Eins"})
-    assert created.json()["writing_style"] == STYLE
+    # A new chapter follows the default instead of copying it (step 7.3, ADR-070).
+    assert created.json()["writing_style"] is None
     own = {**EMPTY, "tone": ["zärtlich"]}
     changed = logged_in.put(f"{base}/chapters/1", json={"writing_style": own})
     assert changed.json()["writing_style"] == own

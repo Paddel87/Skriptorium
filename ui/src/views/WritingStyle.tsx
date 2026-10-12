@@ -275,8 +275,9 @@ export function StoryStyle({
     <section className="style-section" aria-labelledby={heading}>
       <h3 id={heading}>Genre und Schreibweise der Geschichte</h3>
       <p className="note">
-        Vorgabe für neue Kapitel; schon angelegte Kapitel behalten ihre eigene
-        Schreibweise.
+        Gilt für alle Kapitel ohne eigene Schreibweise – auch für die schon
+        angelegten. Kapitel, in denen du die Schreibweise einzeln geändert hast,
+        behalten ihre Fassung.
       </p>
       <form className="stack" onSubmit={(event) => void save(event)}>
         <Choice
@@ -367,13 +368,14 @@ export function ChapterStyle({
       {/* One note: the chapter either has its own style or follows the story. */}
       {chapter.writing_style === null ? (
         <p className="note">
-          Dieses Kapitel hat keine eigene Schreibweise; es gilt die Vorgabe der
-          Geschichte.
+          Dieses Kapitel folgt der Vorgabe der Geschichte. Änderst du hier
+          etwas, gilt ab dann deine Fassung nur für dieses Kapitel.
         </p>
       ) : (
         <p className="note">
-          Beim Anlegen aus der Vorgabe der Geschichte übernommen; hier nur für
-          dieses Kapitel geändert.
+          Eigene Schreibweise nur für dieses Kapitel; Änderungen der Vorgabe
+          wirken hier nicht. „Vorgabe der Geschichte übernehmen“ lässt das
+          Kapitel wieder folgen.
         </p>
       )}
       <form
