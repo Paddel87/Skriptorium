@@ -58,6 +58,8 @@ _MAP_NAME_LENGTH = 200
 # Control characters (line breaks included) and the marks that turn the writing direction.
 _MAP_NAME_REFUSED = re.compile(r"[\x00-\x1f\x7f-\x9f\u200e\u200f\u202a-\u202e\u2066-\u2069]")
 _ITEM_TEMPLATE = "## Zweck\n\n## Verwendung\n\n## Auswirkung\n"
+# The looks of a figure stand in a section of their own (step 7.16, ADR-078).
+_FIGURE_TEMPLATE = "## Aussehen\n"
 MAX_IMAGES_PER_ENTRY: Final = 12
 # Names of image files as this module creates them; nothing else is ever read or served.
 _IMAGE_NAME = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\.(?:png|jpg|webp)")
@@ -321,7 +323,8 @@ class CanonService:
         """Create a canon entry; its identifier is derived from ``name``.
 
         A new entry of category ``gegenstand`` without body gets the sections Zweck,
-        Verwendung and Auswirkung (FR-003).
+        Verwendung and Auswirkung (FR-003); a new figure without body the section Aussehen
+        (step 7.16, ADR-078).
 
         Raises:
             NotFound: The world does not exist.
@@ -336,6 +339,8 @@ class CanonService:
             raise AlreadyExists(f"{world_id}/{entry_id}")
         if checked == "gegenstand" and not body.strip():
             body = _ITEM_TEMPLATE
+        elif checked == "figur" and not body.strip():
+            body = _FIGURE_TEMPLATE
         header = _entry_header({}, clean_name, _clean_aliases(aliases), checked, status)
         document = self._store.write(
             _entry_path(world_id, checked, entry_id), header, body, create=True

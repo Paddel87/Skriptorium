@@ -1,4 +1,7 @@
 import { api, CATEGORIES, type CanonEntry } from "../api";
+import { useState } from "react";
+import { appearanceOf } from "../imagePrompts";
+import { AppearanceExtract } from "./AppearanceExtract";
 import { EntryImages } from "./EntryImages";
 import { EntryText } from "./EntryText";
 import { timelineEvents } from "../timeline";
@@ -67,6 +70,14 @@ export function EntryArticle({
           onSaved();
         }}
       />
+      {!compact && !guest && current.category === "figur" && (
+        <AppearanceButton
+          entry={current}
+          onChanged={() => {
+            onSaved();
+          }}
+        />
+      )}
       {current.category === "zeitlinie" &&
       timelineEvents(current.body).some((event) => event.date !== null) ? (
         <TimelineView
@@ -78,5 +89,44 @@ export function EntryArticle({
         <EntryText text={current.body} name={current.name} />
       )}
     </article>
+  );
+}
+
+/**
+ * "✨ Aussehen herauslösen" for a figure without a section "Aussehen" (step 7.16, ADR-078);
+ * hidden once the entry names its looks.
+ */
+function AppearanceButton({
+  entry,
+  onChanged,
+}: {
+  entry: CanonEntry;
+  onChanged: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+  if (!open && appearanceOf(entry.body) !== null) {
+    return null;
+  }
+  return open ? (
+    <AppearanceExtract
+      entry={entry}
+      onChanged={onChanged}
+      onClose={() => {
+        setOpen(false);
+      }}
+    />
+  ) : (
+    <p className="row appearance-hint">
+      <button
+        type="button"
+        className="ghost"
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
+        ✨ Aussehen herauslösen
+      </button>
+      <span className="note">– noch kein Abschnitt „Aussehen“</span>
+    </p>
   );
 }

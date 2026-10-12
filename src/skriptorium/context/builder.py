@@ -48,6 +48,7 @@ from collections.abc import Sequence
 from typing import Final
 
 from skriptorium.canon import CanonService, InvalidInput, NotFound
+from skriptorium.context.appearance import build_appearance
 from skriptorium.context.describe import build_entry_image_description, build_map_description
 from skriptorium.context.parts import (
     MAX_BUDGET,
@@ -186,6 +187,13 @@ class ContextBuilder:
         """Request to describe an image of a canon entry once (step 7.13); see
         :func:`skriptorium.context.describe.build_entry_image_description`."""
         return build_entry_image_description(self._canon, world_id, entry_id, image, budget)
+
+    def build_appearance(
+        self, world_id: str, entry_id: str, budget: int = MAX_BUDGET
+    ) -> BuiltContext:
+        """Request to write out the looks of a figure from its entry (step 7.16); see
+        :func:`skriptorium.context.appearance.build_appearance`."""
+        return build_appearance(self._canon, world_id, entry_id, budget)
 
     def build_map_description(
         self, world_id: str, file: str, budget: int = MAX_BUDGET

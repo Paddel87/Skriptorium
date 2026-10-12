@@ -1,5 +1,6 @@
 """Flows across module boundaries, kept out of the routes (ADR-020)."""
 
+from skriptorium.api.flows.appearance import prepare_appearance
 from skriptorium.api.flows.describe import DescribeOrder, prepare_description
 from skriptorium.api.flows.summary import (
     SUMMARY_TEMPERATURE,
@@ -42,6 +43,7 @@ __all__ = [
     "WorldOrder",
     "WriteOrder",
     "error_kind",
+    "prepare_appearance",
     "prepare_description",
     "prepare_request",
     "prepare_worldbuilder",

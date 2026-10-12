@@ -3,7 +3,7 @@ import { ENTRY, STORY, WORLD } from "../fake-api";
 import { coverPrompt, entryPrompt, mapPrompt } from "./imagePrompts";
 
 describe("starting texts for generated images (step 7.12)", () => {
-  it("takes a figure's section Aussehen, else the start of the entry", () => {
+  it("takes only a figure's looks; other entries by the start of their text (7.16)", () => {
     const figure = {
       ...ENTRY,
       name: "Gunda",
@@ -12,7 +12,15 @@ describe("starting texts for generated images (step 7.12)", () => {
     expect(entryPrompt(figure)).toBe("Gunda: Kräftig, ergrautes Haar.");
     expect(
       entryPrompt({ ...ENTRY, body: "# Kael\n\nFährt über den *See*." }),
-    ).toBe("Kael: Fährt über den See.");
+    ).toBe("Kael");
+    expect(
+      entryPrompt({
+        ...ENTRY,
+        category: "ort",
+        name: "Kai",
+        body: "# Kai\n\nNasse *Bohlen*.",
+      }),
+    ).toBe("Kai: Nasse Bohlen.");
     expect(entryPrompt({ ...ENTRY, body: "" })).toBe("Kael");
     const listed = {
       ...ENTRY,
@@ -24,7 +32,7 @@ describe("starting texts for generated images (step 7.12)", () => {
 
   it("cuts long texts at a sentence", () => {
     const long = "Ein Satz über den Hafen. ".repeat(60);
-    const prompt = entryPrompt({ ...ENTRY, body: long });
+    const prompt = entryPrompt({ ...ENTRY, category: "ort", body: long });
     expect(prompt.length).toBeLessThan(720);
     expect(prompt.endsWith(".")).toBe(true);
   });

@@ -29,6 +29,21 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] 7.16 Abschnitt „Aussehen“ umgesetzt
+
+- Mockup freigegeben. Umgesetzt: Vorlage „## Aussehen“ für neue Figuren; Weltenbauer-Regel `### Aussehen`; Import hängt „Aussehen“ an die Figur (auch als einzige Unterüberschrift); `context/appearance.py`, Ablauf und Route „Aussehen herauslösen“ (Temperatur 0,2, Antwort „KEIN AUSSEHEN“ ohne Angaben); `AppearanceExtract.tsx` mit Knopf nur bei Figuren ohne Aussehen; Bilderzeugung bei Figuren nur aus dem Aussehen, sonst Name plus Hinweis.
+- KI-Anfragen: nur die des Weltenbauers geändert (gewollt), Schreiben und übrige byte-gleich zum Stand vor 7.6.
+- Sichtprobe im Browser nicht möglich (Öffnen der lokalen Seite im Browser-Fenster abgelehnt); Abdeckung über Tests (vitest 267, pytest 706, Playwright 11). Keine Kategorie-6-Änderung (Eintragstext geht beim Schreiben ohnehin an den Anbieter) – keine getrennte Prüfung nötig.
+
+### 2026-10-12 – [ADR-ANGELEGT] ADR-078 Abschnitt „Aussehen“ bei Figuren (7.16)
+
+- Befund des Eigentümers nach dem Einspielen: Bildbeschreibung für Figuren enthielt Verhalten und Charakter. Ursache: Vorbelegung nimmt ohne Abschnitt/Zeile „Aussehen“ den Anfang des ganzen Eintrags. Eigentümer schlug selbst eine Trennung der äußeren Merkmale vor; gewählt: Abschnitt „Aussehen“, Knopf „Aussehen herauslösen“, sofort als 7.16. Phase 7 jetzt 16 Schritte (Schwelle erreicht). Import-Probe: `### Aussehen` unter dem Namen landet im Eintrag, `## Aussehen` daneben würde ein eigener Eintrag – wird mit angehängt.
+
+### 2026-10-12 – [BEOBACHTUNG] Eingespielt: Bilder, Karten, Titelbild, Bilder erzeugen und beschreiben (`eb44949`)
+
+- Auf Anweisung („einspielen“) `main` mit 7.6, 7.10, 7.11, 7.12, 7.13 eingespielt (Weg nach Runbook: `app.vorher` und `skriptorium:vorher` als Rückweg). HTTPS `/api/health` 200 nach 60 s, neues Bündel ausgeliefert, `/api/images/models` ohne Anmeldung 401; eine SSH-Abfrage: `(healthy)`, `REVISION` `eb44949`, keine Fehler im Protokoll der ersten Minuten.
+- Offen: Ausprobieren durch den Eigentümer; echte Proben (Kosten je erzeugtem Bild und je Beschreibung, Filter bei den Figuren des Eigentümers, Umschlag im E-Book-Reader); Beleg, dass die nächtliche Sicherung `bilder/`, `karten/` und Titelbilder erfasst (nach dem ersten Bild und dem nächsten Sicherungslauf, Protokoll lesen mit Erlaubnis des Eigentümers).
+
 ### 2026-10-12 – [BEOBACHTUNG] 7.12 Bilder erzeugen umgesetzt
 
 - Mockup freigegeben. Umgesetzt: `ai_gateway/images.py` (Bildanbieter-Schnittstelle, Katalog ohne Vektor-Modelle, Preise und durchreichbare Parameter je Anbieter, eine Stunde gemerkt), `openrouter_images.py` (Filter fest: FLUX 5, FLUX.3 4, GPT Image „low“; 502 = nicht fertig erzeugt, kostet nichts), `api/image_routes.py` (Modelle, Preis, Erzeugen; Prüfung des gelieferten Bildes am Dateikopf, Medientyp aus den Bytes), Oberfläche `ImageGenerate.tsx`, Vorbelegung `imagePrompts.ts`, Auswahl „Bild hochladen / ✨ Bild erzeugen“ in Galerie und Titelbild, „✨ Karte erzeugen“ im Karten-Formular.

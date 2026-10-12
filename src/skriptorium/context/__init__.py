@@ -1,5 +1,6 @@
 """Assembly of AI requests under a token budget (module ``context``); reads, never writes."""
 
+from skriptorium.context.appearance import NO_APPEARANCE
 from skriptorium.context.builder import ContextBuilder
 from skriptorium.context.parts import (
     CHARS_PER_TOKEN,
@@ -27,6 +28,7 @@ __all__ = [
     "DEFAULT_LENGTH",
     "LENGTHS",
     "MAX_BUDGET",
+    "NO_APPEARANCE",
     "OPENING_WORDS",
     "PROPOSAL_FENCE",
     "SAFETY_MARGIN",
