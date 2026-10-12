@@ -19,6 +19,7 @@ Stand 2026-10-12. Anlass: Vorschlag des Eigentümers, Bilder in 7.12 über fal.a
 
 ## Einschränkungen (wichtig für die Entscheidung)
 
+- **Abschalten braucht eine Freischaltung durch fal (Nachtrag 2026-10-12).** Bei 138 der 165 Modelle mit An/Aus-Schalter steht in der Feldbeschreibung: „Disabling it requires account authorization; unauthorized requests are always checked.“ Ohne Freischaltung des Kontos prüft fal also immer – auch bei Pony V7, dessen Voreinstellung „aus“ ist. Wie man die Freischaltung bekommt, ist in der öffentlichen Doku nicht beschrieben; vermutlich über den Support von fal. Die Stufen-Regler (`safety_tolerance`) tragen diesen Hinweis nicht.
 - **Ein Schalter im Schema heißt nicht „ungefiltert“.** Bei geschlossenen Modellen (GPT Image, Grok Imagine, Nano Banana/Gemini, Seedream, FLUX pro) steuert der Schalter nur zusätzliche Prüfungen; der Hersteller filtert dahinter weiter. Wirklich frei steuerbar ist es am ehesten bei offenen Modellen, die fal selbst betreibt (FLUX.1 [dev]/[schnell], FLUX.2 [dev]/klein, SDXL, SD 3.5, HiDream, Qwen Image, Z-Image, Wan 2.2, Pony V7).
 - **Plattformregeln gelten immer:** fal verbietet Erwachseneninhalte nicht pauschal, untersagt aber u. a. Darstellungen Minderjähriger und sexuelle Darstellungen echter Personen ohne Einwilligung; fal prüft zusätzlich automatisch (Trust & Safety, Acceptable Use Policy).
 - **Vektor-Modelle** (Recraft „text-to-vector“) liefern SVG – nach ADR-072 nicht übernehmen.
@@ -30,3 +31,10 @@ Stand 2026-10-12. Anlass: Vorschlag des Eigentümers, Bilder in 7.12 über fal.a
 - fal Pricing-Doku: <https://fal.ai/docs/documentation/model-apis/pricing>
 - fal Acceptable Use Policy: <https://fal.ai/legal/acceptable-use-policy>
 - fal Trust & Safety: <https://fal.ai/legal/trust-and-safety>
+
+## Pony V7 (Nachfrage des Eigentümers)
+
+- Feinabstimmung auf der Grundlage AuraFlow (von fal entwickelt, Apache-2.0); Nachfolger von Pony Diffusion V6 XL; auf Figuren ausgerichtet, vor allem Anime-, Comic- und Furry-Stile, laut Drittquelle auch realistisch. Gesichter und kleine Details können je nach Stil leiden (Modellkarte), V7.1 ist angekündigt.
+- Lizenz der Gewichte: „Pony License“ mit Einschränkungen für eigene Inferenzdienste und große Firmen; die Einschränkungen gelten nicht bei Nutzung über kommerzielle APIs der Anbieter wie fal.
+- Bei fal: Sicherheitsprüfung standardmäßig aus, Abschalten aber nur mit Freischaltung des Kontos wirksam (siehe oben). Parameter u. a. 40 Schritte, Bildgröße `square_hd`, Ausgabe JPEG.
+- Quellen: Modellkarte <https://huggingface.co/AriaVale2/pony-v7-base>, Civitai <https://civitai.com/models/1901521/pony-v7-base>, AuraFlow-Beschreibung <https://comfyui.nomadoor.net/en/basic-workflows/auraflow/>, fal-Schema `fal-ai/pony-v7` (selbst abgefragt).
