@@ -33,6 +33,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 
 - PR #145 (7.11) auf „merge“ nach grüner CI gemergt. Eigentümer zu 7.12: „vielleicht lässt sich fal.ai einbinden“; nach Vergleich mit OpenRouter Auftrag, erst Modelle und Filter-Schalter zu prüfen. Ergebnis in `docs/research/fal-bildmodelle.md`: 203 aktive Text-zu-Bild-Modelle per API; 165 mit Schalter `enable_safety_checker` (meist an), 18 mit Stufe `safety_tolerance`, 7 standardmäßig aus, 20 ohne Schalter. Preise je Modell nur mit Schlüssel abrufbar. Entscheidung des Eigentümers steht aus.
 - Nachträge: Abschalten der Prüfung bei fal meist nur mit Freischaltung des Kontos (Feldbeschreibung bei 138 Modellen); Pony V7; Anbieter-Überblick; Replicate im Detail. Eigentümer: „pornographische Inhalte sind nicht geplant“ – Filterfrage betrifft Fehlalarme bei düsteren Motiven; Replicate verbietet laut Bedingungen Folter- und Verstümmelungsmotive.
+- Runware einbezogen (Wunsch des Eigentümers): britische Firma, Rechenzentren u. a. in Deutschland, keine Langzeitspeicherung der Ausgaben, kein Gore-Verbot für Erwachsene, Guthaben ohne Verfall, ca. 1.000 Bilder kostenlos zur Probe; Doku uneinheitlich (`checkContent`/`checkNSFW`), keine feste Preisliste.
 
 ### 2026-10-12 – [BEOBACHTUNG] 7.11 Titelbild umgesetzt
 
