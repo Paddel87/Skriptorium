@@ -1,0 +1,37 @@
+"""Taking out the looks of a figure over the API (step 7.16, ADR-078)."""
+
+from pathlib import Path
+
+from fastapi.testclient import TestClient
+
+from tests.api.conftest import FakeProvider
+from tests.api.test_writing import _events, writer
+
+__all__ = ["writer"]
+
+URL = "/api/worlds/die-salzmark/entries/kael/appearance"
+
+
+def test_streams_the_looks_and_saves_nothing(
+    writer: TestClient, provider: FakeProvider, data_dir: Path
+) -> None:
+    before = writer.get("/api/worlds/die-salzmark/entries/kael").json()
+
+    response = writer.post(URL, json={})
+
+    assert response.status_code == 200, response.text
+    assert [name for name, _ in _events(response.text)] == ["start", "text", "text", "done"]
+    system, user = provider.requests[0].messages
+    assert "äußeres Erscheinungsbild" in system.content
+    assert "Kael" in user.content
+    assert provider.requests[0].temperature == 0.2
+    assert writer.get("/api/worlds/die-salzmark/entries/kael").json() == before
+    text = next((data_dir / "system" / "verbrauch").glob("*.md")).read_text(encoding="utf-8")
+    assert "art: aussehen" in text
+
+
+def test_unknown_model_and_entry(writer: TestClient, provider: FakeProvider) -> None:
+    assert writer.post(URL, json={"model": "gibt/es-nicht"}).status_code == 422
+    missing = writer.post("/api/worlds/die-salzmark/entries/niemand/appearance", json={})
+    assert missing.status_code == 404
+    assert provider.requests == []

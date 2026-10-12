@@ -35,4 +35,7 @@ export const describeApi = {
     `${worldPath(world)}/entries/${enc(entry)}/images/${enc(image)}/describe`,
   describeMapPath: (world: string, file: string) =>
     `${worldPath(world)}/maps/${enc(file)}/describe`,
+  /** Stream of "Aussehen herauslösen" (step 7.16); takes `{model}` like a description. */
+  appearancePath: (world: string, entry: string) =>
+    `${worldPath(world)}/entries/${enc(entry)}/appearance`,
 };

@@ -191,3 +191,13 @@ def test_long_runs_of_spaces_in_a_heading_stay_fast() -> None:
     assert [entry.name for entry in material.entries] == ["a" + "\t" * 50_000 + "x", "#"]
     # A single space after the hashes, nothing behind it: no heading, as before.
     assert parse_markdown("## ").introduction == "## \n"
+
+
+def test_a_section_aussehen_beside_a_figure_belongs_to_it() -> None:
+    """Step 7.16 (ADR-078): rule 5 also for the figure section Aussehen."""
+    beside = parse_markdown("# Figuren\n\n## Kael\nFährt.\n\n## Aussehen\nHager.\n")
+    assert [(e.name, e.body) for e in beside.entries] == [
+        ("Kael", "Fährt.\n\n### Aussehen\nHager.\n")
+    ]
+    only = parse_markdown("# Figuren\n\n## Kael\n### Aussehen\nHager.\n")
+    assert [e.name for e in only.entries] == ["Kael"]

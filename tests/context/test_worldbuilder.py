@@ -127,3 +127,10 @@ def test_unknown_world_reference_or_budget(builder: ContextBuilder) -> None:
         builder.build_worldbuilder(WORLD, [("user", "x")], budget=0)
     with pytest.raises(ContextTooLarge):
         builder.build_worldbuilder(WORLD, [("user", "Wort " * 5000)], budget=2000)
+
+
+def test_figures_are_proposed_with_the_section_aussehen(builder: ContextBuilder) -> None:
+    """Step 7.16 (ADR-078): the frame asks for `### Aussehen` with only the visible."""
+    system = builder.build_worldbuilder(WORLD, [("user", "Eine Figur")]).messages[0].content
+    assert "Figuren haben immer die Unterüberschrift `### Aussehen`" in system
+    assert "nur das Äußere" in system

@@ -25,6 +25,7 @@ export function ImageGenerate({
   initialPrompt,
   initialFormat,
   takeOverLabel = "Übernehmen",
+  hint = null,
   onTakeOver,
   onClose,
 }: {
@@ -32,6 +33,8 @@ export function ImageGenerate({
   initialPrompt: string;
   initialFormat: AspectRatio;
   takeOverLabel?: string;
+  /** A note above the description, e.g. that a figure has no looks yet (step 7.16). */
+  hint?: string | null;
   onTakeOver: (image: Blob) => Promise<void>;
   onClose: () => void;
 }) {
@@ -164,6 +167,7 @@ export function ImageGenerate({
       )}
       {result === null ? (
         <>
+          {hint !== null && <p className="note">{hint}</p>}
           <label className="image-generate-field">
             Bildbeschreibung (änderbar)
             <textarea

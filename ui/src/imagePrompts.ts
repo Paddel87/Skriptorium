@@ -7,14 +7,19 @@ import type { CanonEntry, Story, World } from "./api";
 const LIMIT = 700;
 
 /**
- * A figure by its section "## Aussehen" or its line "**Aussehen:** …", any other entry by the
- * start of its text.
+ * A figure only by its looks (section "Aussehen" or line "**Aussehen:** …", step 7.16) – without
+ * them just the name; any other entry by the start of its text.
  */
 export function entryPrompt(entry: CanonEntry): string {
-  const looks =
-    section(entry.body, "Aussehen") ?? labelled(entry.body, "Aussehen");
-  const text = looks ?? entry.body;
-  return joined(entry.name, text);
+  if (entry.category === "figur") {
+    return joined(entry.name, appearanceOf(entry.body) ?? "");
+  }
+  return joined(entry.name, entry.body);
+}
+
+/** The looks written in an entry (section or labelled line), or `null` (step 7.16). */
+export function appearanceOf(body: string): string | null {
+  return section(body, "Aussehen") ?? labelled(body, "Aussehen");
 }
 
 /** A map of the world, drawn from the world's description. */

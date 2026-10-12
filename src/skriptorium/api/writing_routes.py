@@ -21,6 +21,7 @@ from skriptorium.api.flows import (
     Turn,
     WorldOrder,
     WriteOrder,
+    prepare_appearance,
     prepare_description,
     prepare_request,
     prepare_worldbuilder,
@@ -119,6 +120,12 @@ class DescribeIn(BaseModel):
     """The model that describes the image (step 7.13); it must read images."""
 
     model: str
+
+
+class AppearanceIn(BaseModel):
+    """The model that takes out the looks (step 7.16); missing: the preset model."""
+
+    model: str | None = None
 
 
 class UsageOut(BaseModel):
@@ -220,6 +227,24 @@ async def describe_entry_image(
     """Stream a description of an image of a canon entry; saves nothing (ADR-074)."""
     order = DescribeOrder(world_id, body.model, entry=entry_id, image=image)
     return await _describe(order, found)
+
+
+@router.post("/worlds/{world_id}/entries/{entry_id}/appearance")
+async def appearance(
+    world_id: str, entry_id: str, body: AppearanceIn, found: ServicesDep
+) -> StreamingResponse:
+    """Stream the looks of a figure taken out of its entry; saves nothing (ADR-078)."""
+    if found.provider is None:
+        raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, "KI-Anbieter nicht eingerichtet")
+    await found.catalog.refresh()
+    prepared = prepare_appearance(
+        found.context, world_id, entry_id, body.model or DEFAULT_MODEL, found.catalog
+    )
+    return StreamingResponse(
+        stream_answer(found.provider, prepared, "aussehen", found.usage.record),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"},
+    )
 
 
 @router.post("/worlds/{world_id}/maps/{file}/describe")

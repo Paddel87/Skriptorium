@@ -8,7 +8,7 @@ import {
 import { api, describeError, type CanonEntry } from "../api";
 import { base64, shrinkImage } from "../files";
 import { ErrorText } from "./Common";
-import { entryPrompt } from "../imagePrompts";
+import { appearanceOf, entryPrompt } from "../imagePrompts";
 import { ImageDescription, withSection } from "./ImageDescription";
 import { ImageGenerate } from "./ImageGenerate";
 
@@ -163,6 +163,11 @@ export function EntryImages({
         <ImageGenerate
           title={`Bild erzeugen – ${entry.name}`}
           initialPrompt={entryPrompt(entry)}
+          hint={
+            entry.category === "figur" && appearanceOf(entry.body) === null
+              ? "Diese Figur hat noch kein „Aussehen“ – im Eintrag „✨ Aussehen herauslösen“ oder beschreibe sie hier selbst."
+              : null
+          }
           initialFormat={entry.category === "figur" ? "2:3" : "3:2"}
           onTakeOver={async (image) => {
             onChanged(

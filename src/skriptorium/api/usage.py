@@ -29,6 +29,7 @@ Kind = Literal[
     "weltenbau",
     "bildbeschreibung",
     "bilderzeugung",
+    "aussehen",
 ]
 
 
