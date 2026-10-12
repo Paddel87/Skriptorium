@@ -114,7 +114,16 @@ def test_a_missing_image_file_does_not_block_removal(canon: CanonService, root: 
     assert canon.remove_entry_image(WORLD, "gunda-hollt", image).images == ()
 
 
-@pytest.mark.parametrize("value", ['"bild.png"', "\n  - ../world.md", "\n  - bild.svg", "\n  - 3"])
+@pytest.mark.parametrize(
+    "value",
+    [
+        '"bild.png"',
+        "\n  - ../world.md",
+        "\n  - gunda-hollt-a.svg",
+        "\n  - 3",
+        "\n  - grauhang-0a1b.png",  # another entry's image
+    ],
+)
 def test_refuses_a_hand_written_image_list_that_is_not_one(
     canon: CanonService, root: Path, value: str
 ) -> None:
@@ -122,3 +131,14 @@ def test_refuses_a_hand_written_image_list_that_is_not_one(
     path.write_text(f"---\nname: Gunda Hollt\nkategorie: figur\nbilder: {value}\n---\nWirtin.\n")
     with pytest.raises(InvalidInput, match="bilder"):
         canon.get_entry(WORLD, "gunda-hollt")
+
+
+def test_an_entry_with_a_broken_image_list_can_still_be_deleted(
+    canon: CanonService, root: Path
+) -> None:
+    (image,) = canon.add_entry_image(WORLD, "gunda-hollt", png()).images
+    path = root / "worlds" / WORLD / "canon" / "figur" / "gunda-hollt.md"
+    path.write_text("---\nname: Gunda Hollt\nkategorie: figur\nbilder: kaputt\n---\n")
+    canon.delete_entry(WORLD, "gunda-hollt")
+    assert not path.exists()
+    assert (root / "worlds" / WORLD / "bilder" / image).exists()

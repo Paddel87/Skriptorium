@@ -289,7 +289,13 @@ class CanonService:
             NotFound: The world or the entry does not exist.
         """
         path = self._entry_path(world_id, entry_id)
-        images = _entry_from(self._store.read(path)).images
+        document = self._store.read(path)
+        # Read leniently: an entry whose image list was broken by hand can still be deleted;
+        # only names that pass the check are deleted with it.
+        try:
+            images = _images_of(document)
+        except InvalidInput:
+            images = ()
         self._store.delete(path)
         for image in images:
             self._delete_image_file(world_id, image)
@@ -310,7 +316,7 @@ class CanonService:
         if len(current.images) >= MAX_IMAGES_PER_ENTRY:
             raise InvalidInput(f"Höchstens {MAX_IMAGES_PER_ENTRY} Bilder je Eintrag")
         suffix = IMAGE_SUFFIXES[inspect_image(data).kind]
-        name = f"{entry_id[:60].rstrip('-')}-{secrets.token_hex(6)}{suffix}"
+        name = f"{_image_prefix(entry_id)}{secrets.token_hex(6)}{suffix}"
         self._store.write_image(_image_path(world_id, name), data)
         try:
             return self._write_images(document, [*current.images, name])
@@ -611,10 +617,17 @@ def _entry_from(document: Document) -> CanonEntry:
     )
 
 
+def _image_prefix(entry_id: str) -> str:
+    """Start of the file names of an entry's images; ties each file to one entry."""
+    return f"{entry_id[:60].rstrip('-')}-"
+
+
 def _images_of(document: Document) -> tuple[str, ...]:
     value = document.header.get(_IMAGES, [])
+    prefix = _image_prefix(PurePosixPath(document.path).stem)
     if not isinstance(value, list) or not all(
-        isinstance(name, str) and _IMAGE_NAME.fullmatch(name) for name in value
+        isinstance(name, str) and _IMAGE_NAME.fullmatch(name) and name.startswith(prefix)
+        for name in value
     ):
         raise InvalidInput(f"{document.path}: bilder muss eine Liste von Bilddateinamen sein")
     return tuple(cast("list[str]", value))
