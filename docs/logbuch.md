@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [BEOBACHTUNG] Befund Weltenbauer: Gespräch weg nach „Als Kanon übernehmen“ (V.27)
+
+- Ursache: Übernahme navigiert in den Reiter „Import“, die Kanon-Seite samt Weltenbauer wird geschlossen, das Gespräch lag nur im Zustand der Komponente. Neuer Schritt 7.17 hätte die Wucherungs-Schwelle von Phase 7 überschritten (Neuplanung nötig); Eigentümer wählt „Als V.27 vormerken“ – in 7.8 als einer der ersten Schritte der nächsten Ausbaustufe vorschlagen.
+
 ### 2026-10-13 – [BEOBACHTUNG] Eindruck des Eigentümers; Idee „wandernde Figuren“ (V.26)
 
 - Eigentümer: Die neuen Funktionen „funktionieren alle auch relativ gut“. Abhaken von 7.6–7.16 bewusst erst nach seinen Proben (Wahl „Noch nicht“).
