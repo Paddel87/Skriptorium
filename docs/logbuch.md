@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [ADR-ANGELEGT] ADR-075 Titelbild der Geschichte (7.11)
+
+- PR #144 (7.13) auf „merge“ nach grüner CI gemergt. 7.11: Eigentümer wählt „Nur Titelbild“, „Hochladen“, „In der Geschichte“; Vorlage freigegeben (JPEG wegen älterer Reader, Umschlag im E-Book). Bilder im Manuskript als V.23 mit Landeplatz 7.8 (Regel „Keine Verschiebung ohne Landeplatz“).
+
 ### 2026-10-12 – [BEOBACHTUNG] 7.13 Bilder einmal beschreiben umgesetzt
 
 - Mockup (vorher/nachher) freigegeben. Umgesetzt: `ImagePart` an `Message`, Bildteil im OpenRouter-Adapter; `reads_images` im Katalog; Anweisungen in `context/describe.py` (Figur: Aussehen; andere Einträge: Erscheinung; Karte: Geografie mit Himmelsrichtungen, Beschriftungen genau übernehmen; „nur Sichtbares, nichts erfinden“; der Text des Eintrags geht bewusst nicht mit); Ablauf `flows/describe.py` (Temperatur 0,3, bis 1.500 Token aus); `stream_answer` aus dem Weltenbauer verallgemeinert; Oberfläche `ImageDescription.tsx` in den großen Ansichten von Bild und Karte.
