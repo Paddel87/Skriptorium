@@ -12,17 +12,19 @@ import { Canon } from "./Canon";
 import { ErrorText, Field } from "./Common";
 import { Import } from "./Import";
 import { Stories } from "./Stories";
+import { WorldMaps } from "./WorldMaps";
 
 const AREAS: readonly { id: WorldArea; label: string }[] = [
   { id: "geschichten", label: "Geschichten" },
   { id: "kanon", label: "Kanon" },
+  { id: "karten", label: "Karten" },
   { id: "import", label: "Import" },
   { id: "beschreibung", label: "Welt" },
 ];
 
 /**
  * A world with its areas, each under its own address: stories, canon (and each canon entry),
- * import, description.
+ * maps (step 7.10), import, description.
  */
 export function WorldPage({
   world,
@@ -82,6 +84,9 @@ export function WorldPage({
             );
           }}
         />
+      )}
+      {area === "karten" && (
+        <WorldMaps world={current} onChanged={setCurrent} />
       )}
       {area === "import" && (
         <Import

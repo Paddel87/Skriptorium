@@ -9,6 +9,14 @@ describe("files for upload (step 7.6)", () => {
     expect(scaledSize(9000, 2)).toEqual({ width: 2000, height: 1 });
   });
 
+  it("keeps large maps within what a canvas on iPhone can hold (step 7.10)", () => {
+    expect(scaledSize(6000, 2000, 6000)).toEqual({ width: 6000, height: 2000 });
+    const { width, height } = scaledSize(6000, 4500, 6000);
+    expect(width * height).toBeLessThanOrEqual(16_000_000);
+    expect(width / height).toBeCloseTo(6000 / 4500, 2);
+    expect(scaledSize(12000, 9000, 6000).width).toBeLessThanOrEqual(6000);
+  });
+
   it("encodes bytes as base64", async () => {
     expect(await base64(new Blob(["Salz"]))).toBe("U2Fseg==");
   });

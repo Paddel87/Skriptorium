@@ -18,7 +18,7 @@ from skriptorium.canon import (
     TranslatedMaterial,
     World,
 )
-from skriptorium.storage import MAX_IMAGE_BYTES
+from skriptorium.storage import MAX_IMAGE_BYTES, MAX_MAP_BYTES
 
 router = APIRouter(prefix="/api/worlds", dependencies=[Depends(current_session)])
 
@@ -79,6 +79,19 @@ class ImageFile(BaseModel):
     content: Annotated[str, Field(max_length=4 * -(-MAX_IMAGE_BYTES // 3))]
 
 
+class MapFile(BaseModel):
+    """A new map of a world: its name and the image, base64-encoded (step 7.10, ADR-073)."""
+
+    name: str
+    content: Annotated[str, Field(max_length=4 * -(-MAX_MAP_BYTES // 3))]
+
+
+class MapChange(BaseModel):
+    """A new name for a map."""
+
+    name: str
+
+
 class ImportApply(BaseModel):
     """Markdown world material to take over, with the author's choices from the preview."""
 
@@ -109,6 +122,31 @@ def get_world(world_id: str, found: ServicesDep) -> World:
 def update_world(world_id: str, body: WorldChange, found: ServicesDep) -> World:
     """Change name or description of a world."""
     return found.canon.update_world(world_id, **_given(body))
+
+
+@router.post("/{world_id}/maps", status_code=status.HTTP_201_CREATED)
+def add_world_map(world_id: str, body: MapFile, found: ServicesDep) -> World:
+    """Add a map to a world (step 7.10, ADR-073)."""
+    return found.canon.add_world_map(world_id, body.name, _decoded(body.content))
+
+
+@router.get("/{world_id}/maps/{file}")
+def get_world_map(world_id: str, file: str, found: ServicesDep) -> Response:
+    """One map of a world, with the media type of its checked format."""
+    data, media_type = found.canon.world_map(world_id, file)
+    return Response(data, media_type=media_type)
+
+
+@router.patch("/{world_id}/maps/{file}")
+def rename_world_map(world_id: str, file: str, body: MapChange, found: ServicesDep) -> World:
+    """Give a map another name."""
+    return found.canon.rename_world_map(world_id, file, body.name)
+
+
+@router.delete("/{world_id}/maps/{file}")
+def remove_world_map(world_id: str, file: str, found: ServicesDep) -> World:
+    """Remove a map from a world and delete it."""
+    return found.canon.remove_world_map(world_id, file)
 
 
 @router.get("/{world_id}/entries")

@@ -10,6 +10,8 @@ from skriptorium.storage.identifiers import checked_identifier, slugify
 from skriptorium.storage.images import (
     IMAGE_SUFFIXES,
     MAX_IMAGE_BYTES,
+    MAX_MAP_BYTES,
+    MAX_MAP_SIDE,
     ImageInfo,
     ImageKind,
     inspect_image,
@@ -19,6 +21,8 @@ from skriptorium.storage.store import Document, DocumentStore, SearchHit, Search
 __all__ = [
     "IMAGE_SUFFIXES",
     "MAX_IMAGE_BYTES",
+    "MAX_MAP_BYTES",
+    "MAX_MAP_SIDE",
     "AlreadyExists",
     "Document",
     "DocumentStore",

@@ -19,7 +19,13 @@ from typing import Literal
 from skriptorium.storage import frontmatter
 from skriptorium.storage.errors import AlreadyExists, InvalidInput, NotFound, StorageError
 from skriptorium.storage.frontmatter import HeaderValue
-from skriptorium.storage.images import IMAGE_SUFFIXES, MEDIA_TYPES, inspect_image
+from skriptorium.storage.images import (
+    IMAGE_SUFFIXES,
+    MAX_IMAGE_BYTES,
+    MAX_IMAGE_SIDE,
+    MEDIA_TYPES,
+    inspect_image,
+)
 
 SearchMode = Literal["name", "fulltext"]
 
@@ -135,11 +141,18 @@ class DocumentStore:
         with self._connect() as connection:
             _remove_from_index(connection, path)
 
-    def write_image(self, path: str, data: bytes) -> None:
+    def write_image(
+        self,
+        path: str,
+        data: bytes,
+        *,
+        max_bytes: int = MAX_IMAGE_BYTES,
+        max_side: int = MAX_IMAGE_SIDE,
+    ) -> None:
         """Store a new image file atomically; nothing is indexed.
 
         The content must be a PNG, JPEG or WebP image whose format matches the ending of
-        ``path`` (``.png``, ``.jpg``, ``.webp``).
+        ``path`` (``.png``, ``.jpg``, ``.webp``), within ``max_bytes`` and ``max_side``.
 
         Raises:
             AlreadyExists: A file exists at ``path``.
@@ -147,7 +160,8 @@ class DocumentStore:
             StorageError: Writing failed; nothing is left behind.
         """
         file = self._image_file(path)
-        if IMAGE_SUFFIXES[inspect_image(data).kind] != file.suffix:
+        kind = inspect_image(data, max_bytes=max_bytes, max_side=max_side).kind
+        if IMAGE_SUFFIXES[kind] != file.suffix:
             raise InvalidInput("Endung passt nicht zum Bildformat")
         if file.exists():
             raise AlreadyExists(path)

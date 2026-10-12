@@ -20,10 +20,17 @@ export const CATEGORIES: readonly {
   { id: "kultur", label: "Kultur", plural: "Kultur" },
 ];
 
+/** A map of a world (step 7.10): the author's name for it and its file. */
+export interface WorldMap {
+  name: string;
+  file: string;
+}
+
 export interface World {
   id: string;
   name: string;
   description: string;
+  maps: WorldMap[];
 }
 
 export interface CanonEntry {
@@ -74,6 +81,24 @@ export const canonApi = {
     ) as Promise<CanonEntry>,
   deleteEntry: (world: string, id: string) =>
     request("DELETE", `${worldPath(world)}/entries/${enc(id)}`),
+
+  /** Address of one map of a world, for `<img src>` (step 7.10, ADR-073). */
+  mapPath: (world: string, file: string) =>
+    `${worldPath(world)}/maps/${enc(file)}`,
+  addMap: (world: string, name: string, content: string) =>
+    request("POST", `${worldPath(world)}/maps`, {
+      name,
+      content,
+    }) as Promise<World>,
+  renameMap: (world: string, file: string, name: string) =>
+    request("PATCH", `${worldPath(world)}/maps/${enc(file)}`, {
+      name,
+    }) as Promise<World>,
+  removeMap: (world: string, file: string) =>
+    request(
+      "DELETE",
+      `${worldPath(world)}/maps/${enc(file)}`,
+    ) as Promise<World>,
 
   /** Address of one image of an entry, for `<img src>` (step 7.6, ADR-072). */
   imagePath: (world: string, id: string, image: string) =>

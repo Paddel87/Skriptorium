@@ -30,6 +30,7 @@ import { Icon } from "./Icons";
 const AREAS: readonly WorldArea[] = [
   "geschichten",
   "kanon",
+  "karten",
   "import",
   "beschreibung",
 ];

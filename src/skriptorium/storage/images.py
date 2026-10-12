@@ -18,6 +18,12 @@ MAX_IMAGE_BYTES: Final = 5 * 1024 * 1024
 MAX_IMAGE_SIDE: Final = 4096
 """Longest accepted side in pixels."""
 
+MAX_MAP_BYTES: Final = 12 * 1024 * 1024
+"""Largest accepted map of a world (step 7.10, ADR-073)."""
+
+MAX_MAP_SIDE: Final = 6000
+"""Longest accepted side of a map in pixels."""
+
 IMAGE_SUFFIXES: Final[dict[ImageKind, str]] = {"png": ".png", "jpeg": ".jpg", "webp": ".webp"}
 MEDIA_TYPES: Final[dict[str, str]] = {
     ".png": "image/png",
@@ -44,15 +50,17 @@ class ImageInfo:
     height: int
 
 
-def inspect_image(data: bytes) -> ImageInfo:
+def inspect_image(
+    data: bytes, *, max_bytes: int = MAX_IMAGE_BYTES, max_side: int = MAX_IMAGE_SIDE
+) -> ImageInfo:
     """Recognise a PNG, JPEG or WebP image and read its size from the header.
 
     Raises:
-        InvalidInput: Too large, another format, a broken header, or a side of zero or above
-            :data:`MAX_IMAGE_SIDE` pixels.
+        InvalidInput: Larger than ``max_bytes``, another format, a broken header, or a side of
+            zero or above ``max_side`` pixels.
     """
-    if len(data) > MAX_IMAGE_BYTES:
-        raise InvalidInput("Das Bild ist größer als 5 MB")
+    if len(data) > max_bytes:
+        raise InvalidInput(f"Das Bild ist größer als {max_bytes // (1024 * 1024)} MB")
     if data.startswith(_PNG_SIGNATURE):
         info = _png(data)
     elif data.startswith(b"\xff\xd8\xff"):
@@ -61,8 +69,8 @@ def inspect_image(data: bytes) -> ImageInfo:
         info = _webp(data)
     else:
         raise InvalidInput("Nur Bilder im Format PNG, JPEG oder WebP")
-    if not (0 < info.width <= MAX_IMAGE_SIDE and 0 < info.height <= MAX_IMAGE_SIDE):
-        raise InvalidInput(f"Bildgröße nicht erlaubt (höchstens {MAX_IMAGE_SIDE} Pixel je Seite)")
+    if not (0 < info.width <= max_side and 0 < info.height <= max_side):
+        raise InvalidInput(f"Bildgröße nicht erlaubt (höchstens {max_side} Pixel je Seite)")
     return info
 
 

@@ -9,6 +9,7 @@ from skriptorium.canon.service import (
     ImportPreview,
     ImportResult,
     World,
+    WorldMap,
 )
 from skriptorium.storage import AlreadyExists, InvalidInput, NotFound, StorageError
 
@@ -26,4 +27,5 @@ __all__ = [
     "StorageError",
     "TranslatedMaterial",
     "World",
+    "WorldMap",
 ]
