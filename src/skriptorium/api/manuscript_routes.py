@@ -6,10 +6,10 @@ into the story as guests.
 """
 
 from collections.abc import Iterable
-from typing import Any
+from typing import Annotated, Any
 
-from fastapi import APIRouter, Depends, status
-from pydantic import BaseModel
+from fastapi import APIRouter, Depends, Response, status
+from pydantic import BaseModel, Field
 
 from skriptorium.api.context import Services, ServicesDep, current_session
 from skriptorium.manuscript import (
@@ -316,3 +316,28 @@ def _style(style: WritingStyleIn | None) -> WritingStyle | None:
 def _given(body: BaseModel) -> dict[str, Any]:
     """The fields the client actually sent; the others stay unchanged."""
     return body.model_dump(exclude_unset=True)
+
+
+class EpubOrder(BaseModel):
+    """What goes into the EPUB of a story (step 7.4, ADR-071); the author is not stored."""
+
+    author: Annotated[str | None, Field(max_length=200)] = None
+    only_completed: bool = False
+
+
+@router.post("/{story_id}/export/epub")
+def export_epub(world_id: str, story_id: str, body: EpubOrder, found: ServicesDep) -> Response:
+    """The story as an EPUB file, as a download."""
+    book = found.manuscript.epub(
+        world_id,
+        story_id,
+        author=body.author,
+        only_completed=body.only_completed,
+        modified=found.clock(),
+    )
+    # Identifiers consist of a-z, 0-9 and hyphens, so the file name needs no quoting.
+    return Response(
+        book,
+        media_type="application/epub+zip",
+        headers={"Content-Disposition": f'attachment; filename="{story_id}.epub"'},
+    )

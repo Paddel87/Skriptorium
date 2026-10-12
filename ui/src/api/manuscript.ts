@@ -1,6 +1,6 @@
 /** Stories, chapters, summaries and instruction notes of a world. */
 
-import { request } from "./core";
+import { request, requestFile } from "./core";
 import { enc, storyPath, worldPath } from "./paths";
 import { describeWriteError } from "./writing";
 import type { WriteErrorKind } from "./writing";
@@ -103,6 +103,12 @@ export function describeSummaryFailure(
 }
 
 export const manuscriptApi = {
+  /** The story as an EPUB file (step 7.4); the author is only written into the file. */
+  exportEpub: (
+    world: string,
+    story: string,
+    order: { author: string | null; only_completed: boolean },
+  ) => requestFile("POST", `${storyPath(world, story)}/export/epub`, order),
   stories: (world: string) =>
     request("GET", `${worldPath(world)}/stories`) as Promise<Story[]>,
   createStory: (

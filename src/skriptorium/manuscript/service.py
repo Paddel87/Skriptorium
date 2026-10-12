@@ -23,8 +23,10 @@ The service is a facade: the work is done by ``StoryStore`` (``stories``), ``Cha
 """
 
 from collections.abc import Sequence
+from datetime import datetime
 
 from skriptorium.manuscript.chapters import ChapterStore
+from skriptorium.manuscript.epub import epub_for
 from skriptorium.manuscript.extras import StoryExtras
 from skriptorium.manuscript.models import (
     ATMOSPHERES,
@@ -51,7 +53,7 @@ from skriptorium.manuscript.models import (
 )
 from skriptorium.manuscript.stories import StoryStore
 from skriptorium.manuscript.validation import checked_chapter_style
-from skriptorium.storage import DocumentStore
+from skriptorium.storage import DocumentStore, InvalidInput
 
 __all__ = [
     "ATMOSPHERES",
@@ -222,6 +224,35 @@ class ManuscriptService:
             NotFound: The story does not exist.
         """
         return self._chapters.list_chapters(world_id, story_id)
+
+    def epub(
+        self,
+        world_id: str,
+        story_id: str,
+        *,
+        author: str | None,
+        only_completed: bool,
+        modified: datetime,
+    ) -> bytes:
+        """The story as an EPUB file (step 7.4, ADR-071); ``author`` goes on the title page.
+
+        Raises:
+            NotFound: The story does not exist.
+            InvalidInput: There is no chapter to put in (or none completed).
+        """
+        story = self._stories.get_story(world_id, story_id)
+        chapters = [
+            chapter
+            for chapter in self._chapters.list_chapters(world_id, story_id)
+            if not only_completed or chapter.status == "abgeschlossen"
+        ]
+        if not chapters:
+            raise InvalidInput(
+                "Kein abgeschlossenes Kapitel"
+                if only_completed
+                else "Die Geschichte hat keine Kapitel"
+            )
+        return epub_for(story, chapters, author, modified)
 
     def get_chapter(self, world_id: str, story_id: str, number: int) -> Chapter:
         """One chapter.

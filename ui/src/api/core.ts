@@ -52,6 +52,28 @@ export async function request(
   return data;
 }
 
+/** Send one request whose answer is a file (step 7.4); errors as in `request`. */
+export async function requestFile(
+  method: Method,
+  path: string,
+  body: unknown,
+): Promise<Blob> {
+  const response = await fetch(path, {
+    method,
+    credentials: "same-origin",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) {
+    if (response.status === 401) {
+      unauthorizedHandler?.();
+    }
+    const data: unknown = await response.json().catch(() => null);
+    throw errorFrom(response.status, data);
+  }
+  return response.blob();
+}
+
 export function errorFrom(status: number, data: unknown): ApiError {
   const detail = isRecord(data) ? data.detail : undefined;
   if (typeof detail === "string") {

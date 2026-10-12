@@ -111,6 +111,24 @@ describe("unauthorized handler", () => {
     setUnauthorizedHandler(null);
     await expect(api.worlds()).rejects.toMatchObject({ status: 401 });
   });
+
+  it("downloads a file and reports a lost session there too (step 7.4)", async () => {
+    const handler = vi.fn();
+    setUnauthorizedHandler(handler);
+    const path = "POST /api/worlds/w/stories/s/export/epub";
+    fakeApi({ [path]: ok("EPUB") });
+    const book = await api.exportEpub("w", "s", {
+      author: null,
+      only_completed: false,
+    });
+    expect(await book.text()).toBe('"EPUB"');
+    fakeApi({ [path]: fail(401, "Anmeldung erforderlich") });
+    await expect(
+      api.exportEpub("w", "s", { author: null, only_completed: false }),
+    ).rejects.toMatchObject({ status: 401, message: "Anmeldung erforderlich" });
+    expect(handler).toHaveBeenCalledTimes(1);
+    setUnauthorizedHandler(null);
+  });
 });
 
 describe("streamWorldbuilder (step 6.7)", () => {
