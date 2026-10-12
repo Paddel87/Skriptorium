@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] Eingespielt: Aussehen „Buch“ (`07ff5f8`)
+
+- Auf Anweisung („weiter“) PR #140 nach grüner CI gemergt; Baum identisch mit dem PR-Stand. HTTPS 200, Stil mit den neuen Regeln ausgeliefert, eine SSH-Abfrage: `(healthy)`, `REVISION` `07ff5f8`. Offen: Eindruck des Eigentümers im Alltag.
+
 ### 2026-10-12 – [BEOBACHTUNG] 7.5 Aussehen „Buch“ umgesetzt
 
 - Ausgangsstand fotografiert; Befunde: Manuskript in Schreibmaschinenschrift (Vorgabe von CodeMirror), Knöpfe kaum unterscheidbar, Emojis als Symbole. Mockup mit drei Richtungen; Eigentümer wählte A, Buchschrift.
