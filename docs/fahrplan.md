@@ -31,7 +31,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ✅ | 7.1 | Umbau vor den neuen Funktionen | erledigt 2026-10-12 | – |
 | 🟠 | 7.2 | Zeitlinie mit Kalenderdaten | umgesetzt (ADR-069) | du: prüfen nach dem Einspielen |
 | 🟠 | 7.3 | Schreibweise der Geschichte wirkt auf bestehende Kapitel | umgesetzt (ADR-070) | du: prüfen nach dem Einspielen |
-| 🟠 | 7.4 | Publizieren (Satz, Export, Veröffentlichung) | in Arbeit (ADR-071) | KI |
+| 🟠 | 7.4 | Publizieren (Satz, Export, Veröffentlichung) | umgesetzt (ADR-071) | du: EPUB in einem Reader öffnen |
 | ⚪ | 7.5 | Gestaltung der Oberfläche | offen | KI |
 | ⚪ | 7.6 | Bilder und Karten | offen | KI |
 | ✅ | 7.7 | Pflege: Warnung von `npm ci` zu `fsevents` | erledigt 2026-10-12 | – |
@@ -225,7 +225,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.4: Publizieren (Satz, Export, Veröffentlichung)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-071): EPUB, alle Kapitel mit Wahl „nur abgeschlossene“, Veröffentlichung → V.21; Mockup freigegeben
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-071): EPUB, alle Kapitel mit Wahl „nur abgeschlossene“, Veröffentlichung → V.21; Mockup freigegeben. Umgesetzt: `manuscript/epub.py` (EPUB 3 plus `toc.ncx`, Standardbibliothek, alles maskiert), `POST …/stories/{story}/export/epub`, Abschnitt „Als E-Book ausgeben“; pytest 565 (`epub.py` 100 %), vitest 229, Playwright 11 grün; im Browser mit der CSP des Servers heruntergeladen, Aufbau geprüft (mimetype zuerst und ungepackt, XML wohlgeformt). Kein `epubcheck` (kein Java). Offen: Öffnen in einem echten Reader durch den Eigentümer, Einspielen
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 7.3
 - **Freigabepflichtig:** ja – Ausgabeformat (Kategorie 5), ggf. neue Abhängigkeit für den Satz (Kategorie 3)

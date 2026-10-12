@@ -6,6 +6,8 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v1.0.0)
 
+- E-Book (2026-10-12, Schritt 7.4, ADR-071): Im Reiter „Geschichte“ der Leiste lädt „⇩ EPUB herunterladen“ die Geschichte als E-Book mit Titelseite, Inhaltsverzeichnis und allen Kapiteln – auf Wunsch nur die abgeschlossenen, mit Autorname auf der Titelseite. Kursiv, fett, Überschriften und Szenenwechsel werden übernommen. Neu `POST /api/worlds/{id}/stories/{story}/export/epub`.
+
 - Schreibweise folgt der Geschichte (2026-10-12, Schritt 7.3, ADR-070): Neue Kapitel übernehmen die Schreibweise der Geschichte nicht mehr als Kopie, sondern folgen ihr. Änderst du die Vorgabe der Geschichte, ziehen alle Kapitel mit, die du nie einzeln geändert hast; Kapitel mit eigener Fassung behalten sie. „Vorgabe der Geschichte übernehmen“ lässt ein Kapitel wieder folgen.
 
 - Zeitstrahl (2026-10-12, Schritt 7.2, ADR-069): Zeitlinien-Einträge erscheinen auf der Kanon-Seite als Zeitstrahl, nach dem Jahr sortiert; Ereignisse ohne Jahr stehen markiert am Ende. „als Text“ zeigt den Eintrag wie bisher. Mit „+ Ereignis“ trägst du Datum und Ereignis ein, die Zeile landet an der passenden Stelle der Liste. Die Datei und das, was die KI liest, bleiben unverändert.

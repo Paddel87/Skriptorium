@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] 7.4 E-Book umgesetzt; Befund 7.9 aufgenommen
+
+- Eigentümer: EPUB (nicht Word/PDF), alle Kapitel mit Wahl „nur abgeschlossene“, Veröffentlichung → V.21 (ADR-071); Mockup freigegeben.
+- Während 7.4 meldete der Eigentümer einen Fehler im Weltenbauer: Gegenstand mit `## Zweck` usw. → vier Einträge. Als 7.9 angelegt („Erst 7.4, dann beheben“). Seine Ergänzungen: `###` half bei ihm nicht, ganz ohne Rautezeichen schon; Gegenprobe am Parser: mit `###` vor allen drei Abschnitten ein Eintrag – Ursache bei ihm offen, wird in 7.9 an echter Weltenbauer-Ausgabe geklärt.
+- Umgesetzt: `manuscript/epub.py` (EPUB 3 plus `toc.ncx`, nur Standardbibliothek; Markdown → maskiertes XHTML; Steuerzeichen außerhalb XML entfernt), Endpunkt mit Autor im Inhalt statt in der Adresse, Abschnitt in der Leiste. Kein `epubcheck` (kein Java; neue Abhängigkeit vermieden) – Tests prüfen Aufbau, Abnahme im echten Reader. Test-EPUB der Testwelt an den Eigentümer geschickt.
+- Reibung: ruff S314 für `xml.etree` in Tests – eine Hilfsfunktion mit begründeter Ausnahme statt fünf Unterdrückungen.
+- Prüfungen: pytest 565 (99,85 %), vitest 229 (98,22 %), Playwright 11, ruff, mypy, bandit, eslint, tsc, prettier grün.
+
 ### 2026-10-12 – [BEOBACHTUNG] 7.3 Schreibweise folgt der Geschichte umgesetzt
 
 - Befund vor der Vorlage: Kapitel ohne eigene Schreibweise folgten schon der Vorgabe (ADR-053); nur die Kopie beim Anlegen verhinderte das Mitziehen.
