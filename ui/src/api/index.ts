@@ -10,6 +10,7 @@
 import { accountApi } from "./account";
 import { canonApi } from "./canon";
 import { describeApi } from "./describe";
+import { imagesApi } from "./images";
 import { manuscriptApi } from "./manuscript";
 import { modelsApi } from "./models";
 import { transferApi } from "./transfer";
@@ -53,6 +54,12 @@ export type {
 } from "./transfer";
 export type { Source } from "./stream";
 export { streamDescription } from "./describe";
+export type {
+  AspectRatio,
+  GeneratedImage,
+  ImageModelList,
+  ImagePrice,
+} from "./images";
 export type { DescribeEvent } from "./describe";
 export { streamWorldbuilder } from "./worldbuilder";
 export type {
@@ -73,6 +80,7 @@ export const api = {
   ...accountApi,
   ...canonApi,
   ...describeApi,
+  ...imagesApi,
   ...transferApi,
   ...manuscriptApi,
   ...modelsApi,

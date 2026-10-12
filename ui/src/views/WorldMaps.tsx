@@ -9,7 +9,9 @@ import {
 import { api, describeError, type World, type WorldMap } from "../api";
 import { base64, MAP_SIDE, shrinkImage } from "../files";
 import { ErrorText } from "./Common";
+import { mapPrompt } from "../imagePrompts";
 import { ImageDescription, withSection } from "./ImageDescription";
+import { ImageGenerate } from "./ImageGenerate";
 
 /** As many maps as the server keeps per world (`MAX_MAPS_PER_WORLD`). */
 const MAX_MAPS = 20;
@@ -66,7 +68,7 @@ export function WorldMaps({
       </div>
       {adding && (
         <AddMap
-          world={world.id}
+          world={world}
           onDone={(saved) => {
             setAdding(false);
             if (saved !== null) {
@@ -94,10 +96,13 @@ function AddMap({
   world,
   onDone,
 }: {
-  world: string;
+  world: World;
   onDone: (saved: World | null) => void;
 }) {
-  const [file, setFile] = useState<File | null>(null);
+  // A chosen file or a generated map (step 7.12); both go the same checked way.
+  const [file, setFile] = useState<Blob | null>(null);
+  const [generated, setGenerated] = useState(false);
+  const [generating, setGenerating] = useState(false);
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -105,6 +110,7 @@ function AddMap({
   function choose(event: ChangeEvent<HTMLInputElement>) {
     const chosen = event.target.files?.[0] ?? null;
     setFile(chosen);
+    setGenerated(false);
     if (chosen !== null && name.trim() === "") {
       setName(chosen.name.replace(/\.[^.]*$/, ""));
     }
@@ -119,7 +125,7 @@ function AddMap({
     setError(null);
     try {
       const content = await base64(await shrinkImage(file, MAP_SIDE));
-      onDone(await api.addMap(world, name.trim(), content));
+      onDone(await api.addMap(world.id, name.trim(), content));
     } catch (reason: unknown) {
       setError(describeError(reason));
       setBusy(false);
@@ -132,6 +138,38 @@ function AddMap({
         Datei
         <input type="file" accept="image/*" onChange={choose} />
       </label>
+      <div className="row">
+        <button
+          type="button"
+          className="ghost"
+          disabled={busy}
+          onClick={() => {
+            setGenerating(true);
+          }}
+        >
+          ✨ Karte erzeugen
+        </button>
+        {generated && <span className="note">Erzeugte Karte ist bereit.</span>}
+      </div>
+      {generating && (
+        <ImageGenerate
+          title="Karte erzeugen"
+          initialPrompt={mapPrompt(world, name)}
+          initialFormat="3:2"
+          takeOverLabel="Für diese Karte verwenden"
+          onTakeOver={(image) => {
+            setFile(image);
+            setGenerated(true);
+            if (name.trim() === "") {
+              setName(world.name);
+            }
+            return Promise.resolve();
+          }}
+          onClose={() => {
+            setGenerating(false);
+          }}
+        />
+      )}
       <label>
         Name
         <input

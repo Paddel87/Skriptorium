@@ -11,8 +11,18 @@ from skriptorium.ai_gateway.errors import (
     ProviderUnavailable,
     RateLimited,
 )
+from skriptorium.ai_gateway.images import (
+    DEFAULT_IMAGE_MODEL,
+    GeneratedImage,
+    ImageCatalog,
+    ImageModel,
+    ImageOrder,
+    ImagePrice,
+    ImageProvider,
+)
 from skriptorium.ai_gateway.models import DEFAULT_MODELS, ModelConfig, config_for
 from skriptorium.ai_gateway.openrouter import KEY_VARIABLE, OpenRouterProvider
+from skriptorium.ai_gateway.openrouter_images import OpenRouterImageProvider
 from skriptorium.ai_gateway.provider import (
     Completed,
     CompletionRequest,
@@ -26,19 +36,27 @@ from skriptorium.ai_gateway.provider import (
 )
 
 __all__ = [
+    "DEFAULT_IMAGE_MODEL",
     "DEFAULT_MODELS",
     "KEY_VARIABLE",
     "CatalogModel",
     "Completed",
     "CompletionRequest",
     "GatewayError",
+    "GeneratedImage",
+    "ImageCatalog",
+    "ImageModel",
+    "ImageOrder",
     "ImagePart",
+    "ImagePrice",
+    "ImageProvider",
     "InvalidRequest",
     "Message",
     "ModelCatalog",
     "ModelConfig",
     "ModelProvider",
     "ModelRefused",
+    "OpenRouterImageProvider",
     "OpenRouterProvider",
     "ProviderUnavailable",
     "RateLimited",

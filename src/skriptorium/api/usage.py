@@ -22,7 +22,14 @@ DIRECTORY: Final = "system/verbrauch"
 _MONTH: Final = re.compile(r"\d{4}-(0[1-9]|1[0-2])")
 _log = logging.getLogger("skriptorium.api.usage")
 
-Kind = Literal["schreiben", "kurzfassung", "gesamtzusammenfassung", "weltenbau", "bildbeschreibung"]
+Kind = Literal[
+    "schreiben",
+    "kurzfassung",
+    "gesamtzusammenfassung",
+    "weltenbau",
+    "bildbeschreibung",
+    "bilderzeugung",
+]
 
 
 @dataclass(frozen=True)

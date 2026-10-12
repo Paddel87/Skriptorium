@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-6.md`](archiv/fahrplan-phase-6.md).
 
-**Phase 7: 7 von 15 erledigt, 4 in Arbeit (7.6, 7.10, 7.11, 7.13 warten nur aufs Einspielen) (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
+**Phase 7: 7 von 15 erledigt, 5 in Arbeit (7.6, 7.10, 7.11, 7.13 warten nur aufs Einspielen) (geplant 2026-10-12, ADR-067, ADR-068). Reihenfolge: 7.1 (+7.7) → 7.2 → 7.3 → 7.4 → 7.5 → 7.6 → 7.8.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -39,7 +39,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ✅ | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | erledigt 2026-10-12 | – |
 | 🟠 | 7.10 | Karten der Welt | gemergt (ADR-073, PR #143) | du: „einspielen“, dann ausprobieren |
 | 🟠 | 7.11 | Titelbild der Geschichte (auch im E-Book) | gemergt (ADR-075, PR #145) | du: „einspielen“, E-Book im Reader prüfen |
-| ⚪ | 7.12 | Bilder von der KI erzeugen (über OpenRouter) | offen – Erkundung erledigt (ADR-076) | KI: Vorlage |
+| 🟠 | 7.12 | Bilder von der KI erzeugen (über OpenRouter) | umgesetzt, geprüft (ADR-076, ADR-077) | du: PR freigeben |
 | 🟠 | 7.13 | Die KI kennt Bilder (einmal beschreiben) | gemergt (ADR-074, PR #144) | du: „einspielen“, dann echte Probe |
 | ⚪ | 7.14 | Markierungen auf Karten → Kanon-Eintrag | offen (nach 7.10) | KI |
 | ⚪ | 7.15 | Bilder beim Schreiben auf Knopfdruck mitschicken | offen (nach 7.13, nur auf Wunsch) | du: nach 7.13 entscheiden |
@@ -363,7 +363,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.12: Bilder von der KI erzeugen
 
-- **Status:** ⚪ OFFEN – Erkundung der Anbieter erledigt (`docs/research/bildanbieter.md`); entschieden (ADR-076): vorerst OpenRouter, Anbieter austauschbar halten; weitere Anbieter → V.24. Offen: Vorlage (Modelle, Kosten), Mockup, Umsetzung
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-076, ADR-077): OpenRouter, „✨ Erzeugen“ neben „Hochladen“, Vorschau mit Kosten, Übernahme über den Upload-Weg, Filter fest im Code (FLUX Stufe 5, GPT Image „low“), Standard FLUX.2 Pro, Vorlage aus dem Kanon. Mockup freigegeben; umgesetzt 2026-10-12. Getrennt geprüft (keine Befunde hoch/mittel, vier kleine behoben). Offen: PR, Einspielen, echte Probe (Filter, Kosten)
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage bzw. Mockup zu Beginn)
 - **Abhängigkeiten:** 7.6
 - **Freigabepflichtig:** ja – Bildmodelle über OpenRouter (Kategorie 3), neuer Endpunkt (Kategorie 5); SVG nicht übernehmen

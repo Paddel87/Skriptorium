@@ -8,7 +8,9 @@ import {
 import { api, describeError, type CanonEntry } from "../api";
 import { base64, shrinkImage } from "../files";
 import { ErrorText } from "./Common";
+import { entryPrompt } from "../imagePrompts";
 import { ImageDescription, withSection } from "./ImageDescription";
+import { ImageGenerate } from "./ImageGenerate";
 
 /** As many images as the server keeps per entry (`MAX_IMAGES_PER_ENTRY`). */
 const MAX_IMAGES = 12;
@@ -30,6 +32,8 @@ export function EntryImages({
 }) {
   const [shown, setShown] = useState<number | null>(null);
   const [describing, setDescribing] = useState<string | null>(null);
+  const [choosing, setChoosing] = useState(false);
+  const [generating, setGenerating] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const picker = useRef<HTMLInputElement>(null);
@@ -103,11 +107,38 @@ export function EntryImages({
               className="entry-image-add"
               aria-label="Bild hinzufügen"
               title="Bild hinzufügen"
+              aria-expanded={choosing}
               disabled={busy}
-              onClick={() => picker.current?.click()}
+              onClick={() => {
+                setChoosing((open) => !open);
+              }}
             >
               ＋
             </button>
+          )}
+          {choosing && (
+            <div className="add-choice" role="menu">
+              <button
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  setChoosing(false);
+                  picker.current?.click();
+                }}
+              >
+                Bild hochladen
+              </button>
+              <button
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  setChoosing(false);
+                  setGenerating(true);
+                }}
+              >
+                ✨ Bild erzeugen
+              </button>
+            </div>
           )}
         </div>
       )}
@@ -128,6 +159,25 @@ export function EntryImages({
             : `${String(images.length)} ${images.length === 1 ? "Bild" : "Bilder"} · Tipp auf ein Bild zeigt es groß`}
       </p>
       <ErrorText message={error} />
+      {generating && (
+        <ImageGenerate
+          title={`Bild erzeugen – ${entry.name}`}
+          initialPrompt={entryPrompt(entry)}
+          initialFormat={entry.category === "figur" ? "2:3" : "3:2"}
+          onTakeOver={async (image) => {
+            onChanged(
+              await api.addImage(
+                entry.world,
+                entry.id,
+                await base64(await shrinkImage(image)),
+              ),
+            );
+          }}
+          onClose={() => {
+            setGenerating(false);
+          }}
+        />
+      )}
       {shown !== null && images[shown] !== undefined && (
         <ImageViewer
           name={entry.name}

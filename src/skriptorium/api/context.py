@@ -7,7 +7,7 @@ from typing import Annotated, Final
 
 from fastapi import Depends, HTTPException, Request, status
 
-from skriptorium.ai_gateway import ModelCatalog, ModelProvider
+from skriptorium.ai_gateway import ImageCatalog, ImageProvider, ModelCatalog, ModelProvider
 from skriptorium.api.access import (
     CredentialStore,
     FailureThrottle,
@@ -42,6 +42,9 @@ class Services:
     # Selectable models (step 5.12): fixed order plus the catalog of OpenRouter.
     catalog: ModelCatalog
     favorites: Favorites
+    # Image models and their provider (step 7.12, ADR-077); None without a key.
+    image_catalog: ImageCatalog
+    images: ImageProvider | None
 
 
 def services(request: Request) -> Services:
