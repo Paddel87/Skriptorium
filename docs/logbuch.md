@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] Eingespielt: Bilder, Karten, Titelbild, Bilder erzeugen und beschreiben (`eb44949`)
+
+- Auf Anweisung („einspielen“) `main` mit 7.6, 7.10, 7.11, 7.12, 7.13 eingespielt (Weg nach Runbook: `app.vorher` und `skriptorium:vorher` als Rückweg). HTTPS `/api/health` 200 nach 60 s, neues Bündel ausgeliefert, `/api/images/models` ohne Anmeldung 401; eine SSH-Abfrage: `(healthy)`, `REVISION` `eb44949`, keine Fehler im Protokoll der ersten Minuten.
+- Offen: Ausprobieren durch den Eigentümer; echte Proben (Kosten je erzeugtem Bild und je Beschreibung, Filter bei den Figuren des Eigentümers, Umschlag im E-Book-Reader); Beleg, dass die nächtliche Sicherung `bilder/`, `karten/` und Titelbilder erfasst (nach dem ersten Bild und dem nächsten Sicherungslauf, Protokoll lesen mit Erlaubnis des Eigentümers).
+
 ### 2026-10-12 – [BEOBACHTUNG] 7.12 Bilder erzeugen umgesetzt
 
 - Mockup freigegeben. Umgesetzt: `ai_gateway/images.py` (Bildanbieter-Schnittstelle, Katalog ohne Vektor-Modelle, Preise und durchreichbare Parameter je Anbieter, eine Stunde gemerkt), `openrouter_images.py` (Filter fest: FLUX 5, FLUX.3 4, GPT Image „low“; 502 = nicht fertig erzeugt, kostet nichts), `api/image_routes.py` (Modelle, Preis, Erzeugen; Prüfung des gelieferten Bildes am Dateikopf, Medientyp aus den Bytes), Oberfläche `ImageGenerate.tsx`, Vorbelegung `imagePrompts.ts`, Auswahl „Bild hochladen / ✨ Bild erzeugen“ in Galerie und Titelbild, „✨ Karte erzeugen“ im Karten-Formular.
