@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-12 – [BEOBACHTUNG] Eingespielt: 7.1–7.4, 7.7, 7.9 (`2d3a4f0`)
+
+- Auf Anweisung („einspielen“). CI auf `main` lief noch; Baum identisch mit dem grün geprüften PR-Stand #136 (`git diff` leer). Gewartet über HTTPS (200), Bündel mit neuen Teilen, EPUB-Endpunkt ohne Anmeldung 401, eine SSH-Abfrage: `(healthy)`, `REVISION` `2d3a4f0`.
+- Offen: Proben des Eigentümers – 7.2 Zeitstrahl, 7.3 Schreibweise, 7.4 EPUB im Reader, 7.9 Gegenstand im Weltenbauer.
+
 ### 2026-10-12 – [GELÖST] 7.9 Gegenstands-Abschnitte aus dem Weltenbauer
 
 - Ursache: Die Anweisung verlangte schon `### Zweck` usw.; grok-4.6 schrieb trotzdem `## Zweck` (Ebene des Eintrags). 6.7 hatte nur die zu tiefe Form abgefangen (`kanonBlock.ts`).

@@ -29,14 +29,14 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | ✅ | 7.1 | Umbau vor den neuen Funktionen | erledigt 2026-10-12 | – |
-| 🟠 | 7.2 | Zeitlinie mit Kalenderdaten | umgesetzt (ADR-069) | du: prüfen nach dem Einspielen |
-| 🟠 | 7.3 | Schreibweise der Geschichte wirkt auf bestehende Kapitel | umgesetzt (ADR-070) | du: prüfen nach dem Einspielen |
-| 🟠 | 7.4 | Publizieren (Satz, Export, Veröffentlichung) | umgesetzt (ADR-071) | du: EPUB in einem Reader öffnen |
+| 🟠 | 7.2 | Zeitlinie mit Kalenderdaten | eingespielt 2026-10-12 (ADR-069) | du: prüfen |
+| 🟠 | 7.3 | Schreibweise der Geschichte wirkt auf bestehende Kapitel | eingespielt 2026-10-12 (ADR-070) | du: prüfen |
+| 🟠 | 7.4 | Publizieren (Satz, Export, Veröffentlichung) | eingespielt 2026-10-12 (ADR-071) | du: EPUB in einem Reader öffnen |
 | ⚪ | 7.5 | Gestaltung der Oberfläche | offen | KI |
 | ⚪ | 7.6 | Bilder und Karten | offen | KI |
 | ✅ | 7.7 | Pflege: Warnung von `npm ci` zu `fsevents` | erledigt 2026-10-12 | – |
 | ⚪ | 7.8 | Planung der nächsten Ausbaustufe | offen | KI |
-| 🟠 | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | umgesetzt | du: im Weltenbauer prüfen nach dem Einspielen |
+| 🟠 | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | eingespielt 2026-10-12 | du: im Weltenbauer prüfen |
 
 **Querschnitt (offen):**
 
@@ -193,7 +193,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.2: Zeitlinie mit Kalenderdaten
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-069): A, Zeitstrahl aus dem Text, nur die Ansicht sortiert; Mockup freigegeben. Umgesetzt: `ui/src/timeline.ts`, `TimelineView.tsx`, Anzeige in `EntryArticle`; vitest 226 (98,24 %), Playwright 11 grün; Sichtprobe Desktop (hell) und Handy (schwarz) an der Testwelt, „+ Ereignis“ 403 an der richtigen Stelle in der Datei. Offen: Einspielen, Bestätigung des Eigentümers
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-069): A, Zeitstrahl aus dem Text, nur die Ansicht sortiert; Mockup freigegeben. Umgesetzt: `ui/src/timeline.ts`, `TimelineView.tsx`, Anzeige in `EntryArticle`; vitest 226 (98,24 %), Playwright 11 grün; Sichtprobe Desktop (hell) und Handy (schwarz) an der Testwelt, „+ Ereignis“ 403 an der richtigen Stelle in der Datei. Eingespielt 2026-10-12 (`2d3a4f0`). Offen: Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 7.1
 - **Freigabepflichtig:** ja – Datenmodell (Kategorie 4): optionales Datum an Zeitlinien-Einträgen
@@ -209,7 +209,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.3: Schreibweise der Geschichte wirkt auf bestehende Kapitel
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – `ManuscriptService` gegliedert (868 → 311 Zeilen Fassade plus sieben Dateien; Unteragent der Routine-Klasse, geprüft: Anfragen bytegleich, 100 % Abdeckung). Entschieden (ADR-070): A ganz oder gar nicht; Mockup der Hinweistexte freigegeben. Umgesetzt: neue Kapitel ohne Kopie, unveränderte Kopien folgen beim Ändern der Vorgabe; pytest 561 (100 % `manuscript`), vitest 226, Playwright 11 grün. Offen: Einspielen, Bestätigung des Eigentümers
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – `ManuscriptService` gegliedert (868 → 311 Zeilen Fassade plus sieben Dateien; Unteragent der Routine-Klasse, geprüft: Anfragen bytegleich, 100 % Abdeckung). Entschieden (ADR-070): A ganz oder gar nicht; Mockup der Hinweistexte freigegeben. Umgesetzt: neue Kapitel ohne Kopie, unveränderte Kopien folgen beim Ändern der Vorgabe; pytest 561 (100 % `manuscript`), vitest 226, Playwright 11 grün. Eingespielt 2026-10-12 (`2d3a4f0`). Offen: Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 7.1
 - **Freigabepflichtig:** ja – Datenmodell (Kategorie 4): Kapitel speichern nur Abweichungen; Übergang für Kapitel mit eigener Kopie
@@ -225,7 +225,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.4: Publizieren (Satz, Export, Veröffentlichung)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-071): EPUB, alle Kapitel mit Wahl „nur abgeschlossene“, Veröffentlichung → V.21; Mockup freigegeben. Umgesetzt: `manuscript/epub.py` (EPUB 3 plus `toc.ncx`, Standardbibliothek, alles maskiert), `POST …/stories/{story}/export/epub`, Abschnitt „Als E-Book ausgeben“; pytest 565 (`epub.py` 100 %), vitest 229, Playwright 11 grün; im Browser mit der CSP des Servers heruntergeladen, Aufbau geprüft (mimetype zuerst und ungepackt, XML wohlgeformt). Kein `epubcheck` (kein Java). Offen: Öffnen in einem echten Reader durch den Eigentümer, Einspielen
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-071): EPUB, alle Kapitel mit Wahl „nur abgeschlossene“, Veröffentlichung → V.21; Mockup freigegeben. Umgesetzt: `manuscript/epub.py` (EPUB 3 plus `toc.ncx`, Standardbibliothek, alles maskiert), `POST …/stories/{story}/export/epub`, Abschnitt „Als E-Book ausgeben“; pytest 565 (`epub.py` 100 %), vitest 229, Playwright 11 grün; im Browser mit der CSP des Servers heruntergeladen, Aufbau geprüft (mimetype zuerst und ungepackt, XML wohlgeformt). Kein `epubcheck` (kein Java). Eingespielt 2026-10-12 (`2d3a4f0`). Offen: Öffnen in einem echten Reader durch den Eigentümer
 - **Phasentyp-Kontext:** UMSETZUNG (mit Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 7.3
 - **Freigabepflichtig:** ja – Ausgabeformat (Kategorie 5), ggf. neue Abhängigkeit für den Satz (Kategorie 3)
@@ -305,7 +305,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.9: Befund: Gegenstands-Abschnitte aus dem Weltenbauer
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – umgesetzt: Regel 5 im Markdown-Import (Zweck/Verwendung/Auswirkung auf der Ebene des Eintrags davor werden dessen Abschnitte, Unterabschnitte eingerückt), Beispiel im Format des Weltenbauers; Test mit der Form aus dem Bildschirmfoto; ein Test aus 4.16 an die neue Regel angepasst („Zweck“ unter einer Figur gehört jetzt zur Figur). pytest 566 grün. Offen: Einspielen, Bestätigung des Eigentümers
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – umgesetzt: Regel 5 im Markdown-Import (Zweck/Verwendung/Auswirkung auf der Ebene des Eintrags davor werden dessen Abschnitte, Unterabschnitte eingerückt), Beispiel im Format des Weltenbauers; Test mit der Form aus dem Bildschirmfoto; ein Test aus 4.16 an die neue Regel angepasst („Zweck“ unter einer Figur gehört jetzt zur Figur). pytest 566 grün. Eingespielt 2026-10-12 (`2d3a4f0`). Offen: Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG (Fehlerbehebung)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein – Fehlerbehebung innerhalb von `canon` und `context`, keine Schnittstelle berührt
