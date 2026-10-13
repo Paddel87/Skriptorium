@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [ERLEDIGT] 8.5 Bildvorlagen (ADR-084)
+
+- Mockup vorher/nachher; Eigentümer wählte für Orte/Gegenstände und Karten die Empfehlung, beim Titelbild „Titel + Genre + Atmosphäre“ statt der empfohlenen Zusammenfassung. Hinweis gegeben: Genres wie „Dark Erotic“/„CNC“ stehen dann wörtlich in der Vorbelegung; Filter bleibt fest (ADR-077), Text wird vor dem Erzeugen gezeigt.
+- Kleine Änderung selbst umgesetzt (kein Unteragent – weniger Aufwand als ein Auftrag): `entryPrompt`, `mapPrompt`, `coverPrompt` in `ui/src/imagePrompts.ts`; drei neue Tests. vitest 382 grün.
+
 ### 2026-10-13 – [ERLEDIGT] 8.4 Übernehmen ersetzt Abschnitte (ADR-083)
 
 - Vorlage mit Mockup (vorher/nachher); Eigentümer wählte alle Empfehlungen: Rückfrage, Vorlage „Aussehen“ + „Wesen und Geschichte“, Geografie beim Entfernen nachfragen, beim Umbenennen mitziehen.

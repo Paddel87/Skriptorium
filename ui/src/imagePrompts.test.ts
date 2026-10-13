@@ -59,15 +59,63 @@ describe("starting texts for generated images (step 7.12)", () => {
     expect(prompt.endsWith(".")).toBe(true);
   });
 
-  it("draws maps from the world and covers from the story", () => {
+  it("takes the looks of places and items, else the start of their text (step 8.5)", () => {
+    const place = { ...ENTRY, category: "ort" as const, name: "Hafenstadt" };
     expect(
-      mapPrompt({ ...WORLD, description: "Sieben Inseln." }, "Seekarte"),
-    ).toBe(
+      entryPrompt({
+        ...place,
+        body: "Gegründet 412 vom Rat.\n\n## Aussehen\n\nWeiße Kalkhäuser am Hang.\n",
+      }),
+    ).toBe("Hafenstadt: Weiße Kalkhäuser am Hang.");
+    expect(
+      entryPrompt({
+        ...place,
+        body: "Gegründet 412 vom Rat.\n\n## Aussehen\n\n## Geschichte\nAlt.",
+      }),
+    ).toBe("Hafenstadt: Gegründet 412 vom Rat. Alt.");
+  });
+
+  it("draws a map only from its own geography, else just the title (step 8.5)", () => {
+    const world = {
+      ...WORLD,
+      description:
+        "Magie hängt am Salz.\n\n## Geografie – Bergland\n\nGipfel im Osten.\n\n## Geografie – Seekarte\n\nSieben Inseln.\n",
+    };
+    expect(mapPrompt(world, "Seekarte")).toBe(
       "Landkarte von Seekarte (Die Salzmark), gezeichnet im Stil einer Fantasy-Karte: Sieben Inseln.",
     );
-    expect(mapPrompt(WORLD, " ")).toContain("Landkarte von Die Salzmark");
-    expect(coverPrompt({ ...STORY, summary: "Eine Überfahrt im Nebel." })).toBe(
-      "Buchumschlag zu „Die Überfahrt“, ohne Schrift: Eine Überfahrt im Nebel.",
+    expect(mapPrompt(world, "Flusskarte")).toBe(
+      "Landkarte von Flusskarte (Die Salzmark), gezeichnet im Stil einer Fantasy-Karte",
+    );
+    expect(mapPrompt(world, " ")).toBe(
+      "Landkarte von Die Salzmark, gezeichnet im Stil einer Fantasy-Karte",
+    );
+  });
+
+  it("draws a cover from title, genres and atmosphere, never from the plot (step 8.5)", () => {
+    const story = { ...STORY, summary: "Kael verrät seinen Bruder." };
+    expect(coverPrompt(story)).toBe(
+      "Buchumschlag zu „Die Überfahrt“, ohne Schrift",
+    );
+    expect(
+      coverPrompt({
+        ...story,
+        genres: ["Fantasy", "Abenteuer"],
+        writing_style: {
+          ...story.writing_style,
+          atmosphere: ["neblig", "unheimlich"],
+        },
+      }),
+    ).toBe(
+      "Buchumschlag zu „Die Überfahrt“, ohne Schrift: Genre: Fantasy, Abenteuer. Atmosphäre: neblig, unheimlich.",
+    );
+    expect(
+      coverPrompt({
+        ...story,
+        writing_style: { ...story.writing_style, atmosphere: ["neblig"] },
+      }),
+    ).toBe(
+      "Buchumschlag zu „Die Überfahrt“, ohne Schrift: Atmosphäre: neblig.",
     );
   });
 });
