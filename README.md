@@ -23,16 +23,16 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 7 – Zeitlinie, Publizieren, Gestaltung und Bilder (Umsetzung), begonnen 2026-10-12 (ADR-067, ADR-068); Phase 6 abgeschlossen 2026-10-12. Fortschritt: 7 von 16 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
+- **Projektphase:** Phase 8 – Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung (Umsetzung), begonnen 2026-10-13 (ADR-080, ADR-081); Phase 7 abgeschlossen 2026-10-13. Fortschritt: 0 von 13 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
 - **Version:** v1.0.0 – erstes produktives Release (2026-10-11, ADR-058); davor v0.1.0 als Vorabversion (ADR-043)
 - **Status:** In Betrieb
-- **Letzte Änderung:** 2026-10-11
+- **Letzte Änderung:** 2026-10-13
 - **Architektur-Reife:** Module, Schnittstellen, Datenmodell und Token-Budget BELASTBAR (ADR-013); Reaktionszeit BELASTBAR (grok-4.6 erstes Textstück meist unter 30 s, ADR-052; grok-4.7 denkt zu lange vor und kommt in 5.12 aus der Voreinstellung); Kanon-Treue BELASTBAR (erstes echtes Kapitel des Eigentümers in 4.8: 0 Widersprüche, mit qwen3.8-max); Sicherheitsniveau und Schutzbedarf BELASTBAR (ADR-006, ADR-007); Observability BELASTBAR (Log-Zeile und Monatskosten, ADR-021, ADR-023); Bedrohungsmodell BELASTBAR (Prüfung 4.5); Host BELASTBAR (4.2); Netz BELASTBAR (Prüfungen von außen, 4.7); Backups BELASTBAR (4.3); Secrets im Betrieb VORLÄUFIG (Gate 4.6, BELASTBAR mit D.11)
 - **Aktive Blocker:** 0
 
 ## Quick Start
 
-Stand 2026-10-13 (v1.0.0 plus Phase 6 und Teilen von Phase 7): Server mit Anmeldung und Oberfläche für Welten, Kanon, Import (Markdown und SillyTavern) und Geschichten; KI-Weltenbauer; Export nach SillyTavern; Aufbau wie ein Chat mit Leiste links und eigener Adresse je Ansicht; Schreiben mit KI (Figuren-Schreibweise, `@`-Menü, wählbare Länge, Kapitel-Kurzfassungen, Gast-Figuren aus anderen Welten) mit `OPENROUTER_API_KEY`; markierte Textstellen in den Kanon übernehmen; Modell je Geschichte, Kosten je Anfrage und Monat; Darstellung hell, dunkel oder schwarz (AMOLED); als App installierbar. Aus Phase 7: Zeitstrahl, E-Book mit Titelbild, Aussehen „Buch“, Bilder an Kanon-Einträgen, Karten mit Zoom und Markierungen, Bilder von der KI erzeugen und beschreiben lassen.
+Stand 2026-10-13 (v1.0.0 plus Phasen 6 und 7): Server mit Anmeldung und Oberfläche für Welten, Kanon, Import (Markdown und SillyTavern) und Geschichten; KI-Weltenbauer; Export nach SillyTavern; Aufbau wie ein Chat mit Leiste links und eigener Adresse je Ansicht; Schreiben mit KI (Figuren-Schreibweise, `@`-Menü, wählbare Länge, Kapitel-Kurzfassungen, Gast-Figuren aus anderen Welten) mit `OPENROUTER_API_KEY`; markierte Textstellen in den Kanon übernehmen; Modell je Geschichte, Kosten je Anfrage und Monat; Darstellung hell, dunkel oder schwarz (AMOLED); als App installierbar. Aus Phase 7: Zeitstrahl, E-Book mit Titelbild, Aussehen „Buch“, Bilder an Kanon-Einträgen, Karten mit Zoom und Markierungen, Bilder von der KI erzeugen und beschreiben lassen.
 
 ### Voraussetzungen
 
@@ -100,15 +100,10 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- ✅ **Phase 6** (abgeschlossen 2026-10-12): Umfang des Kapitels, Kurzfassung im eigenen Reiter, Kanon auch bei langen Kapiteln (ADR-062), Schutz der Server-Antworten (ADR-063), KI-Weltenbauer mit Websuche (ADR-064), Austausch mit SillyTavern in beide Richtungen (ADR-065, ADR-066), Darstellung „Schwarz“. Bewertung am Phasenende: [`docs/research/bewertung-phase-6.md`](docs/research/bewertung-phase-6.md).
-- ✅ **7.1, 7.7:** Umbau ohne sichtbare Änderung (ADR-067) und npm-Pflege – erledigt 2026-10-12.
-- ✅ **7.2:** Zeitlinie als Zeitstrahl (ADR-069) – erledigt 2026-10-12.
-- ✅ **7.3:** Schreibweise folgt der Geschichte (ADR-070) – erledigt 2026-10-12.
-- ✅ **7.4:** Geschichte als E-Book (ADR-071) – erledigt 2026-10-12.
-- ✅ **7.5:** Aussehen „Buch“ – erledigt 2026-10-12.
-- 🟠 **7.6, 7.10–7.14, 7.16:** Bilder an Kanon-Einträgen, Karten mit Zoom und Markierungen, Titelbild, Bilder erzeugen und beschreiben lassen, Abschnitt „Aussehen“ (ADR-072 bis ADR-079) – eingespielt, deine Bestätigung steht aus.
-- ⚪ **Danach:** 7.15 nur auf Wunsch, dann 7.8 Planung.
-- ✅ **D.18:** Prüfung der Datentrennung je KI-Bereich – Welten, Geschichten und Gäste sauber getrennt; doppelte Abschnitte „Aussehen“/„Geografie“ und Bildvorlagen aus dem ganzen Text als V.29–V.31 vorgemerkt ([Bericht](docs/research/datentrennung-ki-bereiche.md)) – erledigt 2026-10-13.
+- ✅ **Phase 7** (abgeschlossen 2026-10-13): Zeitstrahl (ADR-069), Schreibweise folgt der Geschichte (ADR-070), E-Book mit Titelbild (ADR-071, ADR-075), Aussehen „Buch“, Bilder an Kanon-Einträgen, Karten mit Zoom und Markierungen, Bilder erzeugen und beschreiben lassen, Abschnitt „Aussehen“ (ADR-072 bis ADR-079). Bewertung am Phasenende: [`docs/research/bewertung-phase-7.md`](docs/research/bewertung-phase-7.md).
+- ⚪ **8.1–8.3:** Umbau ohne sichtbare Änderung – Kanon-Dienst und Kartenansicht aufteilen, fehlende Tests, höhere Mindestwerte (ADR-080).
+- ⚪ **8.4–8.7:** Befunde der Datentrennung beheben – keine doppelten Abschnitte „Aussehen“/„Geografie“, passende Bildvorlagen, Kurzfassung nur mit dem Stand davor, Weltenbauer mit Regeln ([Bericht](docs/research/datentrennung-ki-bereiche.md)).
+- ⚪ **8.8–8.12:** Weltenbauer behält das Gespräch und arbeitet aus dem Manuskript, Zeitlinie mit Datum und Uhrzeit, Verweise zwischen Kanon-Einträgen, Erkundung „wandernde Figuren“ (ADR-081).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).
