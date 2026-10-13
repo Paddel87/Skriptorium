@@ -2,7 +2,8 @@
 
 The author talks with the AI about one world to draft new canon entries or improve existing
 ones. The system message holds the frame (role, the import format for proposals), the world
-description, the names of all entries and the entries named with ``@`` in full. The
+description, the names of all entries, the rules and the timeline in full (step 8.7, ADR-086,
+as when writing) and the entries named with ``@`` in full. The
 conversation follows as messages; the latest one always goes along, older ones only as long as
 they fit the budget, newest first. Nothing is stored: proposals reach the canon only through
 the import preview in the interface.
@@ -62,11 +63,21 @@ def build_worldbuilder(
             raise NotFound(reference)
         if by_id[reference] not in named:
             named.append(by_id[reference])
+    # Rules and timeline always go along in full, as when writing (step 8.7, ADR-086); an
+    # entry named with "@" that is one of them is not repeated.
+    laws: list[Part] = []
+    in_laws: list[CanonEntry] = []
+    for kind in ("regel", "zeitlinie"):
+        for entry in in_category_order(entries):
+            if entry.category == kind:
+                laws.append(Part(kind, entry.name, render(entry)))
+                in_laws.append(entry)
     system = [
         Part("rahmen", "Rahmen", _frame(world.name)),
         Part("welt", world.name, f"# Welt: {world.name}\n\n{world.description}".strip()),
         Part("eintraege", "Einträge der Welt", _index(entries)),
-        *(Part("verweis", entry.name, render(entry)) for entry in named),
+        *laws,
+        *(Part("verweis", entry.name, render(entry)) for entry in named if entry not in in_laws),
     ]
     turns = [Part("gespraech", role, text.strip()) for role, text in conversation]
     capacity = math.floor(budget / SAFETY_MARGIN)

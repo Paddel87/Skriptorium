@@ -29,6 +29,21 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [ERLEDIGT] 8.7 Weltenbauer mit Regeln und Zeitlinie (ADR-086)
+
+- Messung auf dem Server mit einer SSH-Abfrage (nur Größen je Welt, anonym nummeriert; kein Inhalt gelesen): Regeln und Zeitlinie 1,3–7,1 KB je Welt, ca. 400–2.100 Token. Preis grok-4.6 laut OpenRouter-Katalog 2 $ / 6 $ je 1 Mio. Token. Eigentümer wählte A.
+- Umsetzung selbst: Teile `regel`/`zeitlinie` im Weltenbauer wie beim Schreiben; mypy verlangte eine Schleife über feste Literale statt `entry.category` als Bausteinart. Test: Wortlaut einmal, fremde Welt nicht, Reihenfolge der Bausteine.
+
+### 2026-10-13 – [ERLEDIGT] 8.6 Kurzfassung nur mit dem Stand davor (ADR-085)
+
+- Eigentümer wählte A. Selbst umgesetzt in `context/summaries.py`: Teil „handlungsstand“ aus den Kurzfassungen der Kapitel davor, gefüllt nach Kapiteltext, Rahmen und Anweisung; älteste fallen zuerst weg. Drei bestehende Tests prüften das alte Verhalten und wurden umgestellt (u. a. `test_summary.py`: Gesamtzusammenfassung jetzt ausdrücklich nicht in der Kapitel-Anfrage), drei neue.
+- Reibung: ruff RUF002 an einem Gedankenstrich im Docstring; ein neuer Test setzte das Budget so klein, dass schon die Anfrage ohne Vorgeschichte nicht passte (200 → 320 Token).
+
+### 2026-10-13 – [ERLEDIGT] 8.5 Bildvorlagen (ADR-084)
+
+- Mockup vorher/nachher; Eigentümer wählte für Orte/Gegenstände und Karten die Empfehlung, beim Titelbild „Titel + Genre + Atmosphäre“ statt der empfohlenen Zusammenfassung. Hinweis gegeben: Genres wie „Dark Erotic“/„CNC“ stehen dann wörtlich in der Vorbelegung; Filter bleibt fest (ADR-077), Text wird vor dem Erzeugen gezeigt.
+- Kleine Änderung selbst umgesetzt (kein Unteragent – weniger Aufwand als ein Auftrag): `entryPrompt`, `mapPrompt`, `coverPrompt` in `ui/src/imagePrompts.ts`; drei neue Tests. vitest 382 grün.
+
 ### 2026-10-13 – [ERLEDIGT] 8.4 Übernehmen ersetzt Abschnitte (ADR-083)
 
 - Vorlage mit Mockup (vorher/nachher); Eigentümer wählte alle Empfehlungen: Rückfrage, Vorlage „Aussehen“ + „Wesen und Geschichte“, Geografie beim Entfernen nachfragen, beim Umbenennen mitziehen.

@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 8 – Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung (Umsetzung), begonnen 2026-10-13 (ADR-080, ADR-081); Phase 7 abgeschlossen 2026-10-13. Fortschritt: 4 von 13 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
+- **Projektphase:** Phase 8 – Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung (Umsetzung), begonnen 2026-10-13 (ADR-080, ADR-081); Phase 7 abgeschlossen 2026-10-13. Fortschritt: 7 von 13 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
 - **Version:** v1.0.0 – erstes produktives Release (2026-10-11, ADR-058); davor v0.1.0 als Vorabversion (ADR-043)
 - **Status:** In Betrieb
 - **Letzte Änderung:** 2026-10-13
@@ -103,7 +103,9 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - ✅ **Phase 7** (abgeschlossen 2026-10-13): Zeitstrahl (ADR-069), Schreibweise folgt der Geschichte (ADR-070), E-Book mit Titelbild (ADR-071, ADR-075), Aussehen „Buch“, Bilder an Kanon-Einträgen, Karten mit Zoom und Markierungen, Bilder erzeugen und beschreiben lassen, Abschnitt „Aussehen“ (ADR-072 bis ADR-079). Bewertung am Phasenende: [`docs/research/bewertung-phase-7.md`](docs/research/bewertung-phase-7.md).
 - ✅ **8.1–8.3:** Umbau ohne sichtbare Änderung – Kanon-Dienst und Kartenansicht aufgeteilt, fehlende Tests, höhere Mindestwerte (ADR-080, ADR-082) – erledigt 2026-10-13.
 - ✅ **8.4:** Übernehmen ersetzt Abschnitte statt sie zu verdoppeln, neue Vorlage für Figuren (ADR-083) – erledigt 2026-10-13, noch nicht eingespielt.
-- ⚪ **8.5–8.7:** Befunde der Datentrennung beheben – passende Bildvorlagen, Kurzfassung nur mit dem Stand davor, Weltenbauer mit Regeln ([Bericht](docs/research/datentrennung-ki-bereiche.md)).
+- ✅ **8.5:** Passendere Vorlagen für „Bild erzeugen“ (ADR-084) – erledigt 2026-10-13, noch nicht eingespielt.
+- ✅ **8.6:** Kapitel-Kurzfassung nur mit dem Stand davor (ADR-085) – erledigt 2026-10-13, noch nicht eingespielt.
+- ✅ **8.7:** Weltenbauer kennt Regeln und Zeitlinie im Wortlaut (ADR-086) – erledigt 2026-10-13, noch nicht eingespielt.
 - ⚪ **8.8–8.12:** Weltenbauer behält das Gespräch und arbeitet aus dem Manuskript, Zeitlinie mit Datum und Uhrzeit, Verweise zwischen Kanon-Einträgen, Erkundung „wandernde Figuren“ (ADR-081).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 

@@ -57,7 +57,10 @@ def build_chapter_summary(
 ) -> BuiltContext:
     """Build the request for the short summary of ``chapter_number`` (step 3.6).
 
-    The overall summary so far comes along so that names and threads stay consistent.
+    The short summaries of the chapters before it come along so that names and threads stay
+    consistent: only the state before this chapter, never later ones (step 8.6, ADR-085). The
+    chapter text has priority; the newest earlier summaries fill the room that is left, the
+    oldest fall away first.
 
     Raises:
         InvalidInput: Budget outside 1-30,000 or the chapter has no text.
@@ -68,9 +71,11 @@ def build_chapter_summary(
     chapter = manuscripts.get_chapter(world_id, story_id, chapter_number)
     if not chapter.text.strip():
         raise InvalidInput(f"Kapitel {chapter_number} hat noch keinen Text")
-    system, user = _chapter_summary_parts(
-        canon, manuscripts, world_id, story_id, chapter, chapter.text
-    )
+    system, user = _chapter_summary_parts(canon, manuscripts, world_id, story_id, chapter)
+    used = sum(part.block.tokens for part in [*system, *user])
+    state = _state_before(manuscripts, world_id, story_id, chapter.number, budget, used)
+    if state is not None:
+        user.insert(0, state)
     return fitted(system, user, budget)
 
 
@@ -83,7 +88,8 @@ def chapter_summary_room(
     budget: int = MAX_BUDGET,
 ) -> int:
     """Longest chapter text (characters, without outer whitespace) whose short summary still
-    fits the budget (step 6.1); depends on the overall summary so far.
+    fits the budget (step 6.1). The summaries of earlier chapters only fill the room that is
+    left (step 8.6), so they do not shorten it.
 
     Raises:
         InvalidInput: Budget outside 1-30,000.
@@ -105,21 +111,15 @@ def _chapter_summary_parts(
     world_id: str,
     story_id: str,
     chapter: Chapter,
-    text: str,
+    text: str | None = None,
 ) -> tuple[list[Part], list[Part]]:
-    """System and user parts of the chapter summary request with ``text`` as chapter text."""
+    """System and user parts of the chapter summary request without the state before it;
+    ``text`` replaces the chapter text (``None``: the chapter's own)."""
     world = canon.get_world(world_id)
     story = manuscripts.get_story(world_id, story_id)
     system = [Part("rahmen", "Rahmen", _summary_frame(world.name, story.title))]
+    text = chapter.text if text is None else text
     user: list[Part] = []
-    if story.summary.strip():
-        user.append(
-            Part(
-                "handlungsstand",
-                "Gesamtzusammenfassung",
-                f"# Handlungsstand vor diesem Kapitel\n\n{story.summary.strip()}",
-            )
-        )
     user.append(
         Part(
             "kapiteltext",
@@ -129,6 +129,42 @@ def _chapter_summary_parts(
     )
     user.append(Part("anweisung", "Anweisung", _chapter_summary_instruction(chapter.number)))
     return system, user
+
+
+def _state_before(
+    manuscripts: ManuscriptService,
+    world_id: str,
+    story_id: str,
+    number: int,
+    budget: int,
+    used: int,
+) -> Part | None:
+    """The short summaries of the chapters before ``number`` that fit next to ``used`` tokens,
+    newest first kept; ``None`` if there is none or none fits (step 8.6, ADR-085)."""
+    earlier = [
+        chapter
+        for chapter in manuscripts.list_chapters(world_id, story_id)
+        if chapter.number < number and chapter.summary.strip()
+    ]
+    room = math.floor(budget / SAFETY_MARGIN) - used
+    while earlier:
+        part = _state_part(earlier)
+        if part.block.tokens <= room:
+            return part
+        earlier = earlier[1:]
+    return None
+
+
+def _state_part(chapters: list[Chapter]) -> Part:
+    sections = "\n\n".join(
+        f"## Kapitel {chapter.number}: {chapter.title}\n\n{chapter.summary.strip()}"
+        for chapter in chapters
+    )
+    return Part(
+        "handlungsstand",
+        f"Kurzfassungen bis Kapitel {chapters[-1].number}",
+        f"# Handlungsstand vor diesem Kapitel\n\n{sections}",
+    )
 
 
 def build_story_summary(

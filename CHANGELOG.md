@@ -6,6 +6,12 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v1.0.0)
 
+- Weltenbauer kennt die Regeln der Welt (2026-10-13, Schritt 8.7, ADR-086): Regeln und Zeitlinie gehen jetzt immer im Wortlaut mit, wie beim Schreiben – der Weltenbauer kann Vorschläge gegen die Gesetze deiner Welt erkennen. Kostet je Antwort höchstens etwa 0,4 Cent mehr.
+
+- Kapitel-Kurzfassungen ohne Blick in die Zukunft (2026-10-13, Schritt 8.6, ADR-085): Die KI bekommt für die Kurzfassung eines Kapitels nur die Kurzfassungen der Kapitel davor, nicht mehr die Gesamtzusammenfassung – auch beim nachträglichen Neu-Erzeugen eines frühen Kapitels kommt nichts aus späteren Kapiteln hinein. Die Längengrenze eines Kapitels hängt nicht mehr von der Länge der übrigen Geschichte ab.
+
+- Passendere Vorlagen für „Bild erzeugen“ (2026-10-13, Schritt 8.5, ADR-084): Bei Orten und Gegenständen steht der Abschnitt „Aussehen“ im Textfeld, wenn es ihn gibt; bei Karten nur die Geografie genau dieser Karte (sonst nur der Titel), nie mehr die ganze Weltbeschreibung; beim Titelbild Titel, Genres und Atmosphäre statt der Handlung.
+
 - Übernehmen ohne doppelte Abschnitte (2026-10-13, Schritt 8.4, ADR-083): Steht unter „Aussehen“ bzw. „Geografie – Name der Karte“ schon Text, fragt das Skriptorium beim Übernehmen „Ersetzen / Darunter ergänzen / Abbrechen“ und zeigt den bisherigen Text; ein leerer Abschnitt wird einfach gefüllt. Beim Entfernen einer Karte fragt es, ob ihre Geografie aus der Weltbeschreibung mit entfernt wird; beim Umbenennen zieht die Überschrift mit. Neue Figuren beginnen mit „Aussehen“ und „Wesen und Geschichte“ – was du frei schreibst, landet nicht mehr im Aussehen. „Bild erzeugen“ überspringt einen leeren Abschnitt „Aussehen“. „Aussehen herauslösen“ gibt es nur bei Figuren.
 
 - Markierungen auf Karten (2026-10-13, Schritt 7.14, ADR-079): In der großen Ansicht einer Karte setzt „Markieren“ Punkte – auf die Karte tippen, den Eintrag aus der Liste wählen, „Setzen“. Punkte lassen sich in diesem Modus ziehen, entfernen oder einem anderen Eintrag geben; „Fertig“ beendet ihn. Sonst zeigt ein Tipp auf einen Punkt den Namen, ein Tipp auf den Namen öffnet den Eintrag. Punkte bleiben beim Zoomen gleich groß und an ihrer Stelle. Wird ein Eintrag gelöscht, verschwinden seine Punkte. Die KI sieht die Punkte nicht. Neu `PUT /api/worlds/{id}/maps/{datei}/markers`.

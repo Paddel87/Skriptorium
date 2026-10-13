@@ -8,14 +8,17 @@ import { readSection } from "./sections";
 const LIMIT = 700;
 
 /**
- * A figure only by its looks (section "Aussehen" – the first one with text, up to the next heading of the same or a higher level – or line "**Aussehen:** …", step 7.16) – without
- * them just the name; any other entry by the start of its text.
+ * A figure only by its looks (section "Aussehen" – the first one with text, up to the next
+ * heading of the same or a higher level – or line "**Aussehen:** …", step 7.16) – without them
+ * just the name; any other entry by its looks too, else by the start of its text (step 8.5,
+ * ADR-084).
  */
 export function entryPrompt(entry: CanonEntry): string {
+  const looks = appearanceOf(entry.body);
   if (entry.category === "figur") {
-    return joined(entry.name, appearanceOf(entry.body) ?? "");
+    return joined(entry.name, looks ?? "");
   }
-  return joined(entry.name, entry.body);
+  return joined(entry.name, looks ?? entry.body);
 }
 
 /** The looks written in an entry (section or labelled line), or `null` (step 7.16). */
@@ -23,21 +26,38 @@ export function appearanceOf(body: string): string | null {
   return readSection(body, "Aussehen") ?? labelled(body, "Aussehen");
 }
 
-/** A map of the world, drawn from the world's description. */
+/**
+ * A map of the world, drawn from the section "Geografie – <name>" of the world's description;
+ * without it just the title (step 8.5, ADR-084) – never the rest of the description, which may
+ * hold the geography of another map.
+ */
 export function mapPrompt(world: World, name: string): string {
   const title =
     name.trim() === "" ? world.name : `${name.trim()} (${world.name})`;
+  const geography =
+    name.trim() === ""
+      ? null
+      : readSection(world.description, `Geografie – ${name.trim()}`);
   return joined(
     `Landkarte von ${title}, gezeichnet im Stil einer Fantasy-Karte`,
-    world.description,
+    geography ?? "",
   );
 }
 
-/** A cover from the title and the overall summary. */
+/**
+ * A cover from the title, the genres and the atmosphere of the story's writing style – without
+ * the plot (step 8.5, ADR-084).
+ */
 export function coverPrompt(story: Story): string {
+  const parts = [
+    story.genres.length > 0 ? `Genre: ${story.genres.join(", ")}.` : "",
+    story.writing_style.atmosphere.length > 0
+      ? `Atmosphäre: ${story.writing_style.atmosphere.join(", ")}.`
+      : "",
+  ].filter((part) => part !== "");
   return joined(
     `Buchumschlag zu „${story.title}“, ohne Schrift`,
-    story.summary,
+    parts.join(" "),
   );
 }
 
