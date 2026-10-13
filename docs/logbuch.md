@@ -29,6 +29,16 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [ONBOARDING-VALIDATION] Phasengrenze Phase 7 (7.8)
+
+- Frischer Worktree von `main` (`f96aa16`) im Scratchpad: Quick Start der README genau wie dokumentiert (`uv python install`, `uv sync --frozen`, `npm ci`, `skriptorium-einrichtung`, `npx vite build`, `uvicorn`) → `/api/health` `{"status":"ok"}`; `scripts/session-start.sh` ohne Fehler. `npm ci` ohne Warnung. Keine Befunde; Worktree danach entfernt.
+
+### 2026-10-13 – [BEOBACHTUNG] 7.8 begonnen; Bestätigungen; Vision-Abgleich
+
+- Eigentümer bestätigt 7.6, 7.10, 7.11, 7.12, 7.13, 7.14, 7.16 als ausprobiert und funktionierend → erledigt. Antwort „Something else“ ohne Text mit angekreuzt – nachgefragt, als Bestätigung aller gewertet.
+- 7.15 auf Wahl des Eigentümers verschoben → 7.8 (nächste Ausbaustufe). Phase 7: 14 von 16 erledigt, 7.8 in Arbeit.
+- **Vision-Abgleich an der Phasengrenze** (gegen `docs/vision.md` und `docs/requirements.md`): alle Muss-Anforderungen erledigt (FR-006 verworfen, ADR-009); FR-035 von „teilweise“ auf erledigt (7.6, 7.10, 7.11, 7.14). Vision Abschnitt 5 „Publizieren, Bilder und Karten“: Satz und Export erledigt (7.4), Veröffentlichung → V.21, Bilder im Manuskript → V.23; Risiko „manuelle Kanon-Pflege“ (Vision 9) → V.22; alle `[VERSCHOBEN]`-Schritte (7.15, V.20–V.32) zeigen auf 7.8 und werden dort aufgelöst. Keine verwaisten Elemente.
+
 ### 2026-10-13 12:05 UTC – [BEOBACHTUNG] Eingespielt: Markierungen auf Karten (`27506c2`)
 
 - Auf Anweisung des Eigentümers: Stand `main` `27506c2` (CI grün) nach Runbook Abschnitt 7 übertragen, gebaut, gestartet; Rückweg-Image `skriptorium:vorher` = `8296931`. `/api/health` 200 nach ca. 60 s (nur HTTPS abgefragt), danach eine SSH-Prüfung: `healthy`, `REVISION` `27506c2`.

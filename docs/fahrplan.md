@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-13, 7.14 eingespielt (`27506c2`); Zählung auf dem Server: keine doppelten Abschnitte
+- **Stand vom:** 2026-10-13, Phase 7: 14 von 16 erledigt (Bestätigungen des Eigentümers), 7.15 verschoben → 7.8; 7.8 in Arbeit
 - **Laufende Phase:** Phase 7 „Zeitlinie, Publizieren, Gestaltung und Bilder“ (Phase 6 abgeschlossen 2026-10-12)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 7.14 Markierungen auf Karten – eingespielt 2026-10-13, wartet auf Bestätigung
-- **Nächster Schritt:** Eigentümer: 7.14 ausprobieren. V.29 bleibt bei 7.8 (Eigentümer 2026-10-13; Zählung auf dem Server: 0 doppelte Abschnitte). Danach 7.15 (nur auf Wunsch) und 7.8. 7.6, 7.10–7.13 und 7.16 eingespielt, warten auf die Bestätigung des Eigentümers. 7.1–7.5, 7.7, 7.9 erledigt 2026-10-12. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** 7.8 Planung der nächsten Ausbaustufe – Vision-Abgleich und Onboarding-Prüfung bestanden; Pflichtfrage mit getrennter Instanz läuft
+- **Nächster Schritt:** 7.8: Pflichtfrage vorlegen (ADR), dann Phase 8 aus 7.15 und V.20–V.32 planen (ADR). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-6.md`](archiv/fahrplan-phase-6.md).
 
-**Phase 7: 7 von 16 erledigt; 7.6, 7.10–7.14, 7.16 eingespielt und warten auf Bestätigung.**
+**Phase 7: 14 von 16 erledigt; 7.15 verschoben → 7.8; 7.8 in Arbeit.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -33,17 +33,17 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ✅ | 7.3 | Schreibweise der Geschichte wirkt auf bestehende Kapitel | erledigt 2026-10-12 (ADR-070) | – |
 | ✅ | 7.4 | Publizieren (Satz, Export, Veröffentlichung) | erledigt 2026-10-12 (ADR-071) | – |
 | ✅ | 7.5 | Gestaltung der Oberfläche | erledigt 2026-10-12 (Richtung C „Buch“) | – |
-| 🟠 | 7.6 | Bildablage, Hochladen und Bilder an Kanon-Einträgen | gemergt (ADR-072, PR #142) | du: „einspielen“, dann ausprobieren |
+| ✅ | 7.6 | Bildablage, Hochladen und Bilder an Kanon-Einträgen | erledigt 2026-10-13 (ADR-072, PR #142) | – |
 | ✅ | 7.7 | Pflege: Warnung von `npm ci` zu `fsevents` | erledigt 2026-10-12 | – |
-| ⚪ | 7.8 | Planung der nächsten Ausbaustufe | offen | KI |
+| 🟠 | 7.8 | Planung der nächsten Ausbaustufe | in Arbeit seit 2026-10-13 | KI |
 | ✅ | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | erledigt 2026-10-12 | – |
-| 🟠 | 7.10 | Karten der Welt | gemergt (ADR-073, PR #143) | du: „einspielen“, dann ausprobieren |
-| 🟠 | 7.11 | Titelbild der Geschichte (auch im E-Book) | gemergt (ADR-075, PR #145) | du: „einspielen“, E-Book im Reader prüfen |
-| 🟠 | 7.12 | Bilder von der KI erzeugen (über OpenRouter) | eingespielt (ADR-076, ADR-077, PR #147) | du: ausprobieren (Kosten, Filter) |
-| 🟠 | 7.13 | Die KI kennt Bilder (einmal beschreiben) | gemergt (ADR-074, PR #144) | du: „einspielen“, dann echte Probe |
-| 🟠 | 7.14 | Markierungen auf Karten → Kanon-Eintrag | eingespielt (ADR-079, PR #151) | du: ausprobieren |
-| ⚪ | 7.15 | Bilder beim Schreiben auf Knopfdruck mitschicken | offen (nach 7.13, nur auf Wunsch) | du: nach 7.13 entscheiden |
-| 🟠 | 7.16 | Fester Abschnitt „Aussehen“ bei Figuren | eingespielt (ADR-078, PR #148) | du: an einer echten Figur ausprobieren |
+| ✅ | 7.10 | Karten der Welt | erledigt 2026-10-13 (ADR-073, PR #143) | – |
+| ✅ | 7.11 | Titelbild der Geschichte (auch im E-Book) | erledigt 2026-10-13 (ADR-075, PR #145) | – |
+| ✅ | 7.12 | Bilder von der KI erzeugen (über OpenRouter) | erledigt 2026-10-13 (ADR-076, ADR-077, PR #147) | – |
+| ✅ | 7.13 | Die KI kennt Bilder (einmal beschreiben) | erledigt 2026-10-13 (ADR-074, PR #144) | – |
+| ✅ | 7.14 | Markierungen auf Karten → Kanon-Eintrag | erledigt 2026-10-13 (ADR-079, PR #151) | – |
+| ⏸️ | 7.15 | Bilder beim Schreiben auf Knopfdruck mitschicken | verschoben → 7.8 | – |
+| ✅ | 7.16 | Fester Abschnitt „Aussehen“ bei Figuren | erledigt 2026-10-13 (ADR-078, PR #148) | – |
 
 **Querschnitt (offen):**
 
@@ -265,7 +265,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.6: Bildablage, Hochladen und Bilder an Kanon-Einträgen
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – Erkundung `docs/research/bilder-erkundung.md`; entschieden (ADR-072): Ablage im Datenverzeichnis, fünf Teilschritte (7.6, 7.10–7.13). Mockup: Galerie je Eintrag (Wahl des Eigentümers, Nachtrag ADR-072). Umgesetzt und getrennt geprüft (2026-10-12, keine Befunde hoch/mittel), gemergt (PR #142). Offen: Einspielen, Bestätigung des Eigentümers; Sicherung erfasst `bilder/` nach dem Einspielen prüfen
+- **Status:** ✅ ERLEDIGT (2026-10-13, vom Eigentümer bestätigt; begonnen 2026-10-12) – Erkundung `docs/research/bilder-erkundung.md`; entschieden (ADR-072): Ablage im Datenverzeichnis, fünf Teilschritte (7.6, 7.10–7.13). Mockup: Galerie je Eintrag (Wahl des Eigentümers, Nachtrag ADR-072). Umgesetzt und getrennt geprüft (2026-10-12, keine Befunde hoch/mittel), gemergt (PR #142). Eingespielt, vom Eigentümer am 2026-10-13 bestätigt.
 - **Phasentyp-Kontext:** UMSETZUNG (mit Erkundung und Entscheidungsvorlage zu Beginn)
 - **Abhängigkeiten:** 7.5
 - **Freigabepflichtig:** ja – Ablage von Bilddateien (Kategorie 4, ggf. Architektur Kategorie 1), Hochladen fremder Dateien (Kategorie 6, Prüfung durch getrennte Instanz), ggf. Bilderzeugung (Kategorie 3)
@@ -297,14 +297,14 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 7.8: Planung der nächsten Ausbaustufe
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-13) – Eingangskriterien: 7.1–7.7, 7.9–7.14, 7.16 erledigt, 7.15 verschoben; als Nächstes Vision-Abgleich, Onboarding-Prüfung, Pflichtfrage mit getrennter Instanz, dann Planung von Phase 8
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 7.1–7.7
 - **Freigabepflichtig:** ja – neue Phasen sind Replanning
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 7
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Die weiter verschobenen V-Schritte (V.20 und neue) in eine neue Phase überführen oder per ADR verwerfen.
+- **Zu tun:** Die weiter verschobenen V-Schritte (V.20 und neue) und 7.15 in eine neue Phase überführen oder per ADR verwerfen.
 - **Akzeptanzkriterien:** Jeder verschobene Schritt hat einen neuen Schritt mit ID oder `[VERWORFEN]` mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
@@ -333,7 +333,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.10: Karten der Welt
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-073): eigener Reiter „Karten“, bis 6.000 Pixel und 12 MB, Zoom mit `@panzoom/panzoom` 4.6.2, Karten im Kopf der Welt; Markierungen → 7.14. Mockup freigegeben („Passt, umbauen“); umgesetzt 2026-10-12. Getrennt geprüft (keine Befunde hoch/mittel, einer behoben); Pixelgrenze für iPhone vom Eigentümer bestätigt. Offen: PR, Einspielen, Bestätigung des Eigentümers
+- **Status:** ✅ ERLEDIGT (2026-10-13, vom Eigentümer bestätigt; begonnen 2026-10-12) – entschieden (ADR-073): eigener Reiter „Karten“, bis 6.000 Pixel und 12 MB, Zoom mit `@panzoom/panzoom` 4.6.2, Karten im Kopf der Welt; Markierungen → 7.14. Mockup freigegeben („Passt, umbauen“); umgesetzt 2026-10-12. Getrennt geprüft (keine Befunde hoch/mittel, einer behoben); Pixelgrenze für iPhone vom Eigentümer bestätigt. Eingespielt, vom Eigentümer am 2026-10-13 bestätigt.
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage bzw. Mockup zu Beginn)
 - **Abhängigkeiten:** 7.6
 - **Freigabepflichtig:** ja – Datenmodell (Karten je Welt, Kategorie 4), neue Abhängigkeit (Kategorie 3), höhere Größengrenze (Kategorie 6, Prüfung durch getrennte Instanz); Mockup
@@ -349,7 +349,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.11: Bilder in Geschichten
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-075): Titelbild im Ordner der Geschichte, JPEG, Umschlag im E-Book, Anzeige im Reiter „Geschichte“; Bilder im Manuskript → V.23. Mockup freigegeben; umgesetzt 2026-10-12. Getrennt geprüft (keine Befunde hoch/mittel, einer behoben). Offen: PR, Einspielen, E-Book im Reader prüfen (Eigentümer)
+- **Status:** ✅ ERLEDIGT (2026-10-13, vom Eigentümer bestätigt; begonnen 2026-10-12) – entschieden (ADR-075): Titelbild im Ordner der Geschichte, JPEG, Umschlag im E-Book, Anzeige im Reiter „Geschichte“; Bilder im Manuskript → V.23. Mockup freigegeben; umgesetzt 2026-10-12. Getrennt geprüft (keine Befunde hoch/mittel, einer behoben). Eingespielt, vom Eigentümer am 2026-10-13 bestätigt.
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage bzw. Mockup zu Beginn)
 - **Abhängigkeiten:** 7.6
 - **Freigabepflichtig:** ja – Datenmodell (Titelbild je Geschichte, Kategorie 4); Mockup
@@ -365,7 +365,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.12: Bilder von der KI erzeugen
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-076, ADR-077): OpenRouter, „✨ Erzeugen“ neben „Hochladen“, Vorschau mit Kosten, Übernahme über den Upload-Weg, Filter fest im Code (FLUX Stufe 5, GPT Image „low“), Standard FLUX.2 Pro, Vorlage aus dem Kanon. Mockup freigegeben; umgesetzt 2026-10-12. Getrennt geprüft (keine Befunde hoch/mittel, vier kleine behoben). Offen: PR, Einspielen, echte Probe (Filter, Kosten)
+- **Status:** ✅ ERLEDIGT (2026-10-13, vom Eigentümer bestätigt; begonnen 2026-10-12) – entschieden (ADR-076, ADR-077): OpenRouter, „✨ Erzeugen“ neben „Hochladen“, Vorschau mit Kosten, Übernahme über den Upload-Weg, Filter fest im Code (FLUX Stufe 5, GPT Image „low“), Standard FLUX.2 Pro, Vorlage aus dem Kanon. Mockup freigegeben; umgesetzt 2026-10-12. Getrennt geprüft (keine Befunde hoch/mittel, vier kleine behoben). Eingespielt, vom Eigentümer am 2026-10-13 bestätigt.
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage bzw. Mockup zu Beginn)
 - **Abhängigkeiten:** 7.6
 - **Freigabepflichtig:** ja – Bildmodelle über OpenRouter (Kategorie 3), neuer Endpunkt (Kategorie 5); SVG nicht übernehmen
@@ -381,7 +381,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.13: Die KI kennt Bilder (zuschaltbar)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-074): Bild nur auf Knopfdruck einmal an ein Modell mit Bildlesen, Ablauf wie Weltenbauer; Einträge → Abschnitt „Aussehen“, Karten → „Geografie – Name der Karte“ in der Weltbeschreibung; Mitschicken beim Schreiben → 7.15. Mockup freigegeben; umgesetzt 2026-10-12. Getrennt geprüft (keine Befunde hoch/mittel, einer behoben). Offen: PR, Einspielen, echte Probe (Kosten je Bild, Filter), Bestätigung des Eigentümers
+- **Status:** ✅ ERLEDIGT (2026-10-13, vom Eigentümer bestätigt; begonnen 2026-10-12) – entschieden (ADR-074): Bild nur auf Knopfdruck einmal an ein Modell mit Bildlesen, Ablauf wie Weltenbauer; Einträge → Abschnitt „Aussehen“, Karten → „Geografie – Name der Karte“ in der Weltbeschreibung; Mitschicken beim Schreiben → 7.15. Mockup freigegeben; umgesetzt 2026-10-12. Getrennt geprüft (keine Befunde hoch/mittel, einer behoben). Eingespielt, vom Eigentümer am 2026-10-13 bestätigt.
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage bzw. Mockup zu Beginn)
 - **Abhängigkeiten:** 7.6, 7.10
 - **Freigabepflichtig:** ja – Anfrage-Zusammenstellung und KI-Anbindung (Kategorie 1)
@@ -397,7 +397,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.14: Markierungen auf Karten mit Verweis auf Kanon-Einträge
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-13) – entschieden (ADR-079): Markierungen an der Karte im Kopf von `world.md` (`marken`: Eintrag, x, y als Anteil), Setzen im Modus „Markieren“, nur Punkte (erster Tipp Name, zweiter öffnet den Eintrag), Löschen eines Eintrags entfernt seine Markierungen. Mockup (Vorher, Ansicht, Modus „Markieren“, Handy) freigegeben. Umgesetzt (2026-10-13): `MapMarker` und `set_map_markers` in `canon`, `delete_entry` entfernt Markierungen, `PUT …/maps/{datei}/markers`; Oberfläche `MapMarkers.tsx` und große Ansicht in `WorldMaps.tsx` (Kartenfläche in der Form des Bildes, misst bei Größenänderung neu; Punkte gleich groß bei jedem Zoom; Name am Rand zur Mitte hin). pytest 734, vitest 273, Playwright 11 grün; Sichtprobe Desktop und Handy an einem lokalen Testserver (Setzen, Ziehen, Entfernen, Tipp auf den Namen öffnet den Eintrag, Zoom). Keine Änderung der Kategorie 6 (keine Anmeldung, keine Dateien, keine Secrets) – keine getrennte Prüfung. Gemergt nach grüner CI (PR #151, `d54938b`). Eingespielt 2026-10-13 (Stand `27506c2`, vom Mac). Offen: Bestätigung des Eigentümers
+- **Status:** ✅ ERLEDIGT (2026-10-13, vom Eigentümer bestätigt; begonnen 2026-10-13) – entschieden (ADR-079): Markierungen an der Karte im Kopf von `world.md` (`marken`: Eintrag, x, y als Anteil), Setzen im Modus „Markieren“, nur Punkte (erster Tipp Name, zweiter öffnet den Eintrag), Löschen eines Eintrags entfernt seine Markierungen. Mockup (Vorher, Ansicht, Modus „Markieren“, Handy) freigegeben. Umgesetzt (2026-10-13): `MapMarker` und `set_map_markers` in `canon`, `delete_entry` entfernt Markierungen, `PUT …/maps/{datei}/markers`; Oberfläche `MapMarkers.tsx` und große Ansicht in `WorldMaps.tsx` (Kartenfläche in der Form des Bildes, misst bei Größenänderung neu; Punkte gleich groß bei jedem Zoom; Name am Rand zur Mitte hin). pytest 734, vitest 273, Playwright 11 grün; Sichtprobe Desktop und Handy an einem lokalen Testserver (Setzen, Ziehen, Entfernen, Tipp auf den Namen öffnet den Eintrag, Zoom). Keine Änderung der Kategorie 6 (keine Anmeldung, keine Dateien, keine Secrets) – keine getrennte Prüfung. Gemergt nach grüner CI (PR #151, `d54938b`). Eingespielt 2026-10-13 (Stand `27506c2`, vom Mac). Eingespielt, vom Eigentümer am 2026-10-13 bestätigt.
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage und Mockup zu Beginn)
 - **Abhängigkeiten:** 7.10
 - **Freigabepflichtig:** ja – Datenmodell (Markierungen je Karte, Kategorie 4); Mockup
@@ -413,7 +413,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.15: Bilder beim Schreiben auf Knopfdruck mitschicken
 
-- **Status:** ⚪ OFFEN
+- **Status:** ⏸️ VERSCHOBEN → 7.8 (Eigentümer, 2026-10-13: in die nächste Ausbaustufe)
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** 7.13
 - **Freigabepflichtig:** ja – Anfrage-Zusammenstellung (Kategorie 1)
@@ -429,7 +429,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.16: Fester Abschnitt „Aussehen“ bei Figuren; Aussehen herauslösen
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-12) – entschieden (ADR-078); Mockup freigegeben; umgesetzt 2026-10-12. Offen: PR, Einspielen, Bestätigung des Eigentümers (an einer echten Figur)
+- **Status:** ✅ ERLEDIGT (2026-10-13, vom Eigentümer bestätigt; begonnen 2026-10-12) – entschieden (ADR-078); Mockup freigegeben; umgesetzt 2026-10-12. Eingespielt, vom Eigentümer am 2026-10-13 bestätigt.
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage und Mockup)
 - **Abhängigkeiten:** 7.12
 - **Freigabepflichtig:** ja – Datenmodell-Konvention (Kategorie 4), neuer Ablauf und geänderte Anweisung des Weltenbauers (Kategorie 1)
