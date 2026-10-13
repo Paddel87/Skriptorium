@@ -25,7 +25,8 @@ export function ImageDescription({
   /** Address of the description stream of this image. */
   path: string;
   takeOverLabel: string;
-  onTakeOver: (text: string) => Promise<void>;
+  /** Resolves to `false` when the author cancelled: nothing was taken over, the dialog stays. */
+  onTakeOver: (text: string) => Promise<boolean>;
   onClose: () => void;
 }) {
   const [models, setModels] = useState<CatalogModel[] | null>(null);
@@ -101,7 +102,10 @@ export function ImageDescription({
     setSaving(true);
     setError(null);
     try {
-      await onTakeOver(text.trim());
+      if (!(await onTakeOver(text.trim()))) {
+        setSaving(false);
+        return;
+      }
       onClose();
     } catch (reason: unknown) {
       setError(describeError(reason));
@@ -216,15 +220,4 @@ function groups(
     { label: "Deine Favoriten", entries: chosen },
     { label: "Weitere Modelle, die Bilder lesen", entries: others },
   ].filter((group) => group.entries.length > 0);
-}
-
-/** `body` with a new section at its end, separated by a blank line. */
-export function withSection(
-  body: string,
-  heading: string,
-  text: string,
-): string {
-  const before = body.trimEnd();
-  const section = `## ${heading}\n\n${text.trim()}\n`;
-  return before === "" ? section : `${before}\n\n${section}`;
 }

@@ -50,3 +50,19 @@ def test_an_entry_too_large_for_the_budget_is_refused(
     assert response.status_code == 422
     assert "Eintrag (" in response.json()["detail"]
     assert provider.requests == []
+
+
+def test_an_entry_that_is_not_a_figure_is_refused(
+    writer: TestClient, provider: FakeProvider
+) -> None:
+    """Step 8.4 (ADR-083, D.18 B6): the request is refused before anything is sent."""
+    writer.post(
+        "/api/worlds/die-salzmark/entries",
+        json={"category": "ort", "name": "Karst", "body": "Hafenstadt am Salz."},
+    )
+
+    response = writer.post("/api/worlds/die-salzmark/entries/karst/appearance", json={})
+
+    assert response.status_code == 422
+    assert "nur bei Figuren" in response.json()["detail"]
+    assert provider.requests == []

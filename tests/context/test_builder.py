@@ -7,7 +7,7 @@ from typing import Literal
 import pytest
 
 import skriptorium.context.builder as builder_module
-from skriptorium.canon import CanonService, InvalidInput, NotFound
+from skriptorium.canon import CanonService, InvalidInput, MapMarker, NotFound
 from skriptorium.context import (
     LENGTHS,
     MAX_BUDGET,
@@ -19,6 +19,7 @@ from skriptorium.context import (
 )
 from skriptorium.manuscript import ManuscriptService, WritingStyle
 from skriptorium.storage import DocumentStore
+from tests.image_samples import png
 
 WORLD = "die-salzmark"
 OTHER = "nebelreich"
@@ -227,6 +228,29 @@ def test_other_worlds_never_appear(services: tuple[CanonService, ManuscriptServi
     assert "Nebel" not in text
     with pytest.raises(NotFound):
         build(services, "nebelkoenig")
+
+
+def test_markers_and_file_names_of_maps_go_into_no_request(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    """D.18 (step 8.4): markers live in the head of ``world.md``; only the text is read."""
+    canon, manuscripts = services
+    file = canon.add_world_map(WORLD, "Festland", png()).maps[-1].file
+    canon.set_map_markers(WORLD, file, [MapMarker("aschturm", 0.3141, 0.2718)])
+
+    writing = "\n".join(m.content for m in build(services, "aschturm").messages)
+    building = "\n".join(
+        m.content
+        for m in ContextBuilder(canon, manuscripts)
+        .build_worldbuilder(WORLD, [("user", "Wer wohnt im Aschturm?")], ["aschturm"])
+        .messages
+    )
+
+    for text in (writing, building):
+        assert "Aschturm" in text
+        assert file not in text
+        assert "0.3141" not in text and "0.2718" not in text
+        assert "marken" not in text
 
 
 @pytest.mark.parametrize("budget", [1400, 1600, 3000, MAX_BUDGET])

@@ -8,7 +8,7 @@ stored; the author takes the text over as the section "Aussehen".
 
 from typing import Final
 
-from skriptorium.canon import CanonService
+from skriptorium.canon import CanonService, InvalidInput
 from skriptorium.context.parts import MAX_BUDGET, BuiltContext, Part, check_budget, fitted
 
 NO_APPEARANCE: Final = "KEIN AUSSEHEN"
@@ -31,11 +31,14 @@ def build_appearance(
 
     Raises:
         NotFound: The world or the entry does not exist.
-        InvalidInput: Budget outside 1-30,000.
+        InvalidInput: Budget outside 1-30,000, or the entry is not a figure (step 8.4,
+            ADR-083: the interface offers this only for figures; the server checks it too).
         ContextTooLarge: The entry does not fit the budget.
     """
     check_budget(budget)
     entry = canon.get_entry(world_id, entry_id)
+    if entry.category != "figur":
+        raise InvalidInput("Das Aussehen lässt sich nur bei Figuren herauslösen.")
     text = f"# {entry.name}\n\n{entry.body.strip()}".strip()
     return fitted(
         [Part("rahmen", "Rahmen", _FRAME)],

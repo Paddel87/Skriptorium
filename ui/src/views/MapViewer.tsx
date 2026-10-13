@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { api, type World, type WorldMap } from "../api";
 import { ErrorText } from "./Common";
-import { ImageDescription, withSection } from "./ImageDescription";
+import { ImageDescription } from "./ImageDescription";
 import { MapStage } from "./MapStage";
 import { MapToolbar } from "./MapToolbar";
 import { MarkerPicker } from "./MapMarkers";
 import { MarkingBar } from "./MarkingBar";
+import { SectionConflict } from "./SectionConflict";
 import { useMapChange } from "./useMapChange";
 import { useMapMarking } from "./useMapMarking";
 import { useMapZoom } from "./useMapZoom";
+import { useSectionChoice } from "./useSectionChoice";
 
 /** One map over the page with zoom and panning; Escape closes. */
 export function MapViewer({
@@ -26,6 +28,7 @@ export function MapViewer({
 }) {
   const [describing, setDescribing] = useState(false);
   const { busy, error, setError, change } = useMapChange(onChanged);
+  const { place, asking } = useSectionChoice();
   const zoomer = useMapZoom();
   const marker = useMapMarking({
     world,
@@ -115,21 +118,23 @@ export function MapViewer({
             onTakeOver={async (text) => {
               // The current description, in case it changed elsewhere meanwhile.
               const fresh = (await api.worlds()).find((w) => w.id === world.id);
-              onChanged(
-                await api.updateWorld(world.id, {
-                  description: withSection(
-                    fresh?.description ?? world.description,
-                    `Geografie – ${map.name}`,
-                    text,
-                  ),
-                }),
+              const description = await place(
+                fresh?.description ?? world.description,
+                `Geografie – ${map.name}`,
+                text,
               );
+              if (description === null) {
+                return false;
+              }
+              onChanged(await api.updateWorld(world.id, { description }));
+              return true;
             }}
             onClose={() => {
               setDescribing(false);
             }}
           />
         )}
+        <SectionConflict asking={asking} />
         <p className="map-viewer-hint">
           {marking
             ? "Zwei Finger oder Mausrad zum Zoomen."

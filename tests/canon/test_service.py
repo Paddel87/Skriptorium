@@ -268,9 +268,12 @@ def test_slugify(name: str, expected: str) -> None:
     assert slugify(name) == expected
 
 
-def test_a_new_figure_starts_with_the_section_aussehen(canon: CanonService) -> None:
-    """Step 7.16 (ADR-078): like items with their three sections (FR-003)."""
-    assert canon.create_entry("die-salzmark", "figur", "Neue Figur").body == "## Aussehen\n"
+def test_a_new_figure_starts_with_the_sections_aussehen_and_wesen(canon: CanonService) -> None:
+    """Steps 7.16 and 8.4 (ADR-078, ADR-083): like items with their three sections (FR-003)."""
+    assert (
+        canon.create_entry("die-salzmark", "figur", "Neue Figur").body
+        == "## Aussehen\n\n## Wesen und Geschichte\n"
+    )
     written = canon.create_entry("die-salzmark", "figur", "Mit Text", body="Groß.")
     assert written.body == "Groß."
     assert canon.create_entry("die-salzmark", "ort", "Ohne Vorlage").body == ""

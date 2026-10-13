@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 8 „Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung“ (Phase 7 abgeschlossen 2026-10-13)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** keiner
-- **Nächster Schritt:** 8.4 Übernahme ersetzt Abschnitte (V.29) – Vorlage an den Eigentümer. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** 8.5 Bildvorlagen aus „Aussehen“ bzw. der Geografie (V.31) – Vorlage an den Eigentümer. Eingespielt ist noch `27506c2`; 8.1–8.4 warten auf „einspielen“. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -24,14 +24,14 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details im Archiv [`docs/archiv/fahrplan-phase-7.md`](archiv/fahrplan-phase-7.md).
 
-**Phase 8: 3 von 13 erledigt.**
+**Phase 8: 4 von 13 erledigt.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | ✅ | 8.1 | Umbau: Kanon-Dienst nach Verantwortung gliedern | erledigt 2026-10-13 (ADR-082) | – |
 | ✅ | 8.2 | Umbau: Kartenansicht in Hooks und Teilkomponenten | erledigt 2026-10-13 | – |
 | ✅ | 8.3 | Fehlende Tests nachholen, Mindestwerte anheben | erledigt 2026-10-13 | – |
-| ⚪ | 8.4 | Übernahme ersetzt Abschnitte; Vorlage „Aussehen“ (V.29) | offen | KI: Vorlage |
+| ✅ | 8.4 | Übernahme ersetzt Abschnitte; Vorlage „Aussehen“ (V.29) | erledigt 2026-10-13 (ADR-083) | – |
 | ⚪ | 8.5 | Bildvorlagen aus „Aussehen“ bzw. Geografie der Karte (V.31) | offen | KI: Vorlage |
 | ⚪ | 8.6 | Kapitel-Kurzfassung nur mit dem Stand davor (V.30) | offen | KI: Vorlage |
 | ⚪ | 8.7 | Regeln und Zeitlinie an den Weltenbauer? (V.32) | offen | KI: Vorlage mit Kosten |
@@ -234,7 +234,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 8.4: Übernahme ersetzt Abschnitte statt sie zu verdoppeln; Vorlage „Aussehen“ (V.29)
 
-- **Status:** ⚪ OFFEN
+- **Status:** ✅ ERLEDIGT (2026-10-13) – entschieden mit Mockup (ADR-083). Umgesetzt: `ui/src/sections.ts` (Abschnitt lesen, ersetzen, ergänzen, entfernen, umbenennen; Abschnitt bis zur nächsten Überschrift gleicher oder höherer Ebene; übriger Text byte-gleich); Rückfrage „Ersetzen / Darunter ergänzen / Abbrechen“ (`SectionConflict`, `useSectionChoice`) an allen drei Übernahme-Stellen; Karte entfernen fragt nach der Geografie, Umbenennen zieht die Überschrift mit; `appearanceOf` überspringt leere Abschnitte; Vorlage neuer Figuren „Aussehen“ + „Wesen und Geschichte“; Server lehnt „Aussehen herauslösen“ für Nicht-Figuren ab (422). Tests aus D.18: Weltenbauer ohne fremde Welten, Markierungen in keiner Anfrage, Vorlagen bei leerem/doppeltem/unterteiltem Abschnitt. pytest 769 (99,89 %), vitest 380 (98,78 % Zeilen, 94,93 % Zweige), Playwright 11/11 (Lauf des Unteragenten), ruff, mypy, bandit, tsc, eslint, prettier, Build grün. Sichtprobe am lokalen Testserver (KI-Antwort im Browser ersetzt): Rückfrage erscheint mit bisherigem Text, „Ersetzen“ ergibt genau einen Abschnitt, Datei byte-genau geprüft; neue Figur mit neuer Vorlage. Vom Eigentümer freigegeben; Einspielen auf Wunsch später. Umsetzung durch Unteragenten (Sonnet), geprüft von der bauenden KI
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** 8.1, 8.2
 - **Freigabepflichtig:** ja – verändert vorhandenen Text des Autors beim Übernehmen; Vorlage für neue Figuren ist Datenmodell-Konvention aus ADR-078 (Kategorie 4)

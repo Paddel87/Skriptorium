@@ -193,8 +193,8 @@ class CanonService:
         """Create a canon entry; its identifier is derived from ``name``.
 
         A new entry of category ``gegenstand`` without body gets the sections Zweck,
-        Verwendung and Auswirkung (FR-003); a new figure without body the section Aussehen
-        (step 7.16, ADR-078).
+        Verwendung and Auswirkung (FR-003); a new figure without body the sections Aussehen and
+        Wesen und Geschichte (steps 7.16 and 8.4, ADR-078, ADR-083).
 
         Raises:
             NotFound: The world does not exist.

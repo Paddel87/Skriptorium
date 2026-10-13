@@ -18,8 +18,9 @@ from skriptorium.storage import (
 )
 
 _ITEM_TEMPLATE = "## Zweck\n\n## Verwendung\n\n## Auswirkung\n"
-# The looks of a figure stand in a section of their own (step 7.16, ADR-078).
-_FIGURE_TEMPLATE = "## Aussehen\n"
+# The looks of a figure stand in a section of their own (step 7.16, ADR-078); free text goes
+# under "Wesen und Geschichte" and not under the looks (step 8.4, ADR-083).
+_FIGURE_TEMPLATE = "## Aussehen\n\n## Wesen und Geschichte\n"
 
 
 class EntryStore:
