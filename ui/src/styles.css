@@ -1914,13 +1914,143 @@ input.chapter-title {
   border-radius: 4px;
   background: #1b1916;
   touch-action: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.map-stage img {
+/* The map's box has the shape of the image once it is loaded (step 7.14), so points given as
+   shares of width and height sit on the right place; until then it fills the stage. */
+.map-content {
+  position: relative;
+  flex: none;
+  width: 100%;
+  height: 100%;
+  --marker-scale: 1;
+}
+
+.map-content img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
+  user-select: none;
+}
+
+/* Points on a map (step 7.14, ADR-079): the same size on screen at every zoom. */
+.map-marker {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  padding: 0;
+  border: 2px solid #fff8e8;
+  border-radius: 50%;
+  background: #8a6d3b;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 40%);
+  transform: translate(-50%, -50%) scale(var(--marker-scale));
+  cursor: pointer;
+  touch-action: none;
+}
+
+.map-marker.selected {
+  background: #c9a464;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.map-marker.pending {
+  background: transparent;
+  border-style: dashed;
+  pointer-events: none;
+}
+
+.map-marker-name {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.3rem 0.6rem;
+  border: none;
+  border-radius: 6px;
+  background: #fff;
+  color: #1f2328;
+  text-align: left;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 40%);
+  transform: translate(-50%, calc(-100% - 0.9rem)) scale(var(--marker-scale));
+  transform-origin: bottom center;
+}
+
+.map-marker-name.start {
+  transform: translate(-0.8rem, calc(-100% - 0.9rem)) scale(var(--marker-scale));
+  transform-origin: bottom left;
+}
+
+.map-marker-name.end {
+  transform: translate(calc(-100% + 0.8rem), calc(-100% - 0.9rem))
+    scale(var(--marker-scale));
+  transform-origin: bottom right;
+}
+
+.map-marker-name small {
+  color: #5c5647;
+  font-size: 0.75rem;
+}
+
+.map-marking-note {
+  margin: 0 0 0.5rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--warn-line);
+  border-radius: 4px;
+  background: var(--warn-bg);
+  color: var(--warn);
+  font-size: 0.85rem;
+}
+
+.map-marker-sheet {
+  margin-top: 0.6rem;
+  padding: 0.6rem;
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.map-marker-sheet label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.map-marker-sheet ul {
+  margin: 0.4rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.map-marker-sheet li button {
+  width: 100%;
+  padding: 0.3rem 0.4rem;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  color: inherit;
+  text-align: left;
+}
+
+.map-marker-sheet li button[aria-pressed="true"] {
+  background: var(--mention);
+  color: var(--mention-text);
+}
+
+.map-marker-sheet small {
+  color: var(--muted);
+}
+
+.map-marking-done {
+  border: 1px solid #c9a464;
+  border-radius: 4px;
+  background: none;
+  color: #c9a464;
 }
 
 .map-zoom {

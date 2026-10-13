@@ -51,3 +51,41 @@ def test_maps_need_a_session(logged_in: TestClient) -> None:
     file = added.json()["maps"][0]["file"]
     logged_in.cookies.clear()
     assert logged_in.get(f"{WORLD}/maps/{file}").status_code == 401
+
+
+def test_set_and_clear_markers_of_a_map(logged_in: TestClient) -> None:
+    logged_in.post("/api/worlds", json={"name": "Die Salzmark", "description": ""})
+    logged_in.post(f"{WORLD}/entries", json={"category": "ort", "name": "Karst"})
+    added = logged_in.post(f"{WORLD}/maps", json={"name": "Festland", "content": _encoded(png())})
+    file = added.json()["maps"][0]["file"]
+    assert added.json()["maps"][0]["markers"] == []
+    marked = logged_in.put(
+        f"{WORLD}/maps/{file}/markers", json={"markers": [{"entry": "karst", "x": 0.2, "y": 0.4}]}
+    )
+    assert marked.status_code == 200, marked.text
+    assert marked.json()["maps"][0]["markers"] == [{"entry": "karst", "x": 0.2, "y": 0.4}]
+    assert logged_in.get(WORLD).json()["maps"] == marked.json()["maps"]
+    cleared = logged_in.put(f"{WORLD}/maps/{file}/markers", json={"markers": []})
+    assert cleared.json()["maps"][0]["markers"] == []
+
+
+def test_refuses_markers_off_the_map_or_for_unknown_entries(logged_in: TestClient) -> None:
+    logged_in.post("/api/worlds", json={"name": "Die Salzmark", "description": ""})
+    added = logged_in.post(f"{WORLD}/maps", json={"name": "Festland", "content": _encoded(png())})
+    file = added.json()["maps"][0]["file"]
+    for marker in (
+        {"entry": "karst", "x": 0.5, "y": 0.5},
+        {"entry": "karst", "x": 1.5, "y": 0.5},
+        {"entry": "karst", "x": "NaN", "y": 0.5},
+    ):
+        refused = logged_in.put(f"{WORLD}/maps/{file}/markers", json={"markers": [marker]})
+        assert refused.status_code == 422, marker
+    too_many = [{"entry": "karst", "x": 0.5, "y": 0.5}] * 201
+    refused = logged_in.put(f"{WORLD}/maps/{file}/markers", json={"markers": too_many})
+    assert refused.status_code == 422
+    unknown_map = logged_in.put(
+        f"{WORLD}/maps/karte-0a1b2c3d4e5f.png/markers", json={"markers": []}
+    )
+    assert unknown_map.status_code == 404
+    logged_in.cookies.clear()
+    assert logged_in.put(f"{WORLD}/maps/{file}/markers", json={"markers": []}).status_code == 401

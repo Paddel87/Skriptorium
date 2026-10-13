@@ -184,7 +184,9 @@ describe("describing an image once (step 7.13)", () => {
   it("takes a map's geography over into the world description", async () => {
     const world = {
       ...WORLD,
-      maps: [{ name: "Seekarte", file: "karte-aaaaaaaaaaaa.webp" }],
+      maps: [
+        { name: "Seekarte", file: "karte-aaaaaaaaaaaa.webp", markers: [] },
+      ],
     };
     const feed = sseFeed();
     const { calls } = fakeApi({
@@ -198,7 +200,9 @@ describe("describing an image once (step 7.13)", () => {
       "PATCH /api/worlds/salzmark": ok(world),
     });
     const user = userEvent.setup();
-    render(<WorldMaps world={world} onChanged={vi.fn()} />);
+    render(
+      <WorldMaps world={world} onChanged={vi.fn()} onOpenEntry={vi.fn()} />,
+    );
     await user.click(screen.getByRole("button", { name: "Seekarte" }));
     await user.click(
       screen.getByRole("button", { name: "✨ Von der KI beschreiben lassen" }),

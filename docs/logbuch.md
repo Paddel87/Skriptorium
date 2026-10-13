@@ -29,6 +29,29 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 11:10 UTC – [BEOBACHTUNG] 7.14 Markierungen auf Karten umgesetzt
+
+- Mockup freigegeben („Passt, bauen“). Umgesetzt: `MapMarker(entry, x, y)` an `WorldMap`, `marken` im Kopf von `world.md` (4 Nachkommastellen), `set_map_markers` ersetzt die Liste (Eintrag muss existieren, je Karte einmal, höchstens 200, Lage 0–1, NaN/Unendlich/Wahrheitswerte abgelehnt); `delete_entry` entfernt die Punkte des Eintrags auf allen Karten; Umbenennen und Entfernen anderer Karten behalten die Punkte. Route `PUT …/maps/{datei}/markers`. Oberfläche: `MapMarkers.tsx` (Punkte, Namensschild, Suchliste) und `WorldMaps.tsx` (Modus „Markieren“, Leiste mit „Punkt entfernen“, „Anderer Eintrag“, „Fertig“); `WorldPage` öffnet den Eintrag über seine Adresse.
+- Reibung: Panzoom hält das Herunterdrücken des Zeigers auf der Karte an (`stopPropagation`), React sah es nicht – Tipp-Erkennung im Capture-Teil (`onPointerDownCapture`). jsdom kennt `setPointerCapture` nicht – im Test ersetzt.
+- Befund der Sichtprobe (lokaler Testserver, Chromium mit `executablePath`): Erscheinen Hinweis oder Suchliste, schrumpft die Kartenfläche, die Karte behielt aber ihre gemessene Größe und wurde abgeschnitten – neu gemessen über `ResizeObserver`. Am Handy ragte das Namensschild eines Punkts am linken Rand aus dem Bild – öffnet sich am Rand zur Mitte hin. Danach Desktop und Handy: Setzen (Lage genau 0,44/0,1 wie getippt), Ziehen, Tipp auf den Namen öffnet `#/welt/festland/kanon/karst`, Zoom mit gleich großen Punkten, keine Fehler in der Konsole.
+- KI-Anfragen unverändert: `context` liest Karten nur für die Bildbeschreibung (Name und Datei), Punkte gehen nirgends mit.
+- Prüfungen: pytest 734 (98,85 %; `canon/service.py` 98 %, neue Zeilen vollständig), vitest 273 (94,29 % Zeilen; `MapMarkers.tsx` 95 %, `WorldMaps.tsx` 86 % – Messen der Fläche braucht echtes Layout, im Browser geprüft), Playwright 11, ruff, mypy, bandit, eslint, tsc, prettier grün; `npm audit` 0. Sicherheitstest um die neue Route ergänzt (66 Routen, 63 geschützt). Keine Kategorie-6-Änderung – keine getrennte Prüfung.
+
+### 2026-10-13 10:35 UTC – [ADR-ANGELEGT] ADR-079 Markierungen auf Karten (7.14)
+
+- Auftrag „weiter mit 7.14“. Vorlage mit Auswahlfragen: „An der Karte“, „Knopf ‚Markieren‘“ (beide Empfehlung), „Nur Punkt“ (statt Punkt mit Namen). 7.14 auf IN ARBEIT; Mockup (Vorher, Ansicht, Modus „Markieren“, Handy) zur Freigabe vorgelegt.
+- Drift beim Sessionstart behoben: Fahrplan-Übersicht führte 7.12 und 7.16 noch als „PR freigeben“, obwohl gemergt und eingespielt; Teil A in `docs/decisions.md` endete bei ADR-072 – Zeilen 073–078 nachgetragen.
+- Reibung: Playwright fand den vorinstallierten Browser nicht (erwartet `chromium_headless_shell-1234`, vorhanden 1194) – für das Mockup-Foto `executablePath: /opt/pw-browsers/chromium`.
+
+### 2026-10-13 10:22 UTC – [SESSIONSTART] Neue Session (Cloud)
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 10:22) → Entscheidungs-Klasse. Kurzzeitlimit (5 Stunden) `allowed`.
+- **Kontextgröße:** 115.672 Token laut Sitzungsabfrage nach der Pflichtlektüre (Grenze 200.000).
+- **Stand:** `main` auf `0c309ec` (PR #150) gezogen, Arbeitsverzeichnis sauber.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2 (project-context; Logbuch ab dem letzten `[SESSIONENDE]` vom 2026-09-27 – danach nur Phasen-Reflexionen und Ereignis-Einträge, kein weiteres Sessionende; Fahrplan Stand, Übersicht und Phase 7; Architektur 1/2/9; Decisions A/C; aktive Blocker: keine).
+- **Offen laut Fahrplan:** Bestätigung des Eigentümers für 7.6, 7.10–7.13 und 7.16 (eingespielt); 7.14, 7.15 (nur auf Wunsch), 7.8 Planung; Phase 7 mit 16 Schritten an der Wucherungs-Schwelle – neue Wünsche als V-Schritte. Querschnitt: D.11 bis 2026-10-31.
+- **Vorhaben:** noch keins – Auftrag des Eigentümers abwarten.
+
 ### 2026-10-13 – [BEOBACHTUNG] Befund Zeitlinie: Jahr, Datum, Uhrzeit (V.28)
 
 - Eigentümer: Zeitlinie soll Jahr, Datum und Uhrzeit unterscheiden, auch nur Uhrzeit oder Datum erlauben und im Verlauf zeigen, wo die Zeitstempel sind – „für später“. Als V.28 mit Landeplatz 7.8 festgehalten.

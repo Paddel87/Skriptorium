@@ -32,7 +32,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 
 ## Quick Start
 
-Stand 2026-10-12 (v1.0.0 plus Phase 6): Server mit Anmeldung und Oberfläche für Welten, Kanon, Import (Markdown und SillyTavern) und Geschichten; KI-Weltenbauer; Export nach SillyTavern; Aufbau wie ein Chat mit Leiste links und eigener Adresse je Ansicht; Schreiben mit KI (Figuren-Schreibweise, `@`-Menü, wählbare Länge, Kapitel-Kurzfassungen, Gast-Figuren aus anderen Welten) mit `OPENROUTER_API_KEY`; markierte Textstellen in den Kanon übernehmen; Modell je Geschichte, Kosten je Anfrage und Monat; Darstellung hell, dunkel oder schwarz (AMOLED); als App installierbar.
+Stand 2026-10-13 (v1.0.0 plus Phase 6 und Teilen von Phase 7): Server mit Anmeldung und Oberfläche für Welten, Kanon, Import (Markdown und SillyTavern) und Geschichten; KI-Weltenbauer; Export nach SillyTavern; Aufbau wie ein Chat mit Leiste links und eigener Adresse je Ansicht; Schreiben mit KI (Figuren-Schreibweise, `@`-Menü, wählbare Länge, Kapitel-Kurzfassungen, Gast-Figuren aus anderen Welten) mit `OPENROUTER_API_KEY`; markierte Textstellen in den Kanon übernehmen; Modell je Geschichte, Kosten je Anfrage und Monat; Darstellung hell, dunkel oder schwarz (AMOLED); als App installierbar. Aus Phase 7: Zeitstrahl, E-Book mit Titelbild, Aussehen „Buch“, Bilder an Kanon-Einträgen, Karten mit Zoom und Markierungen, Bilder von der KI erzeugen und beschreiben lassen.
 
 ### Voraussetzungen
 
@@ -86,7 +86,7 @@ Browser (ui) ──HTTP/SSE──> api ──> canon ─────┐
 Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:8000` im Browser öffnen (ohne TLS nur über `localhost`, weil das Sitzungs-Cookie `Secure` verlangt). Mit dem Einrichtungscode ein Passwort festlegen, anmelden, Welt anlegen.
 
 - **Links:** eine schmale Symbolleiste (Liste, Welten, Kanon, Import, Darstellung, Konto, Abmelden) und daneben die einklappbare Liste mit allen Welten, ihren Geschichten und den Kapiteln der offenen Geschichte, mit Suche und „+ Kapitel“, „+ Geschichte“, „+ Welt“. Am Smartphone öffnet „☰“ beides als Menü. Jede Ansicht hat eine eigene Adresse: Neuladen, Zurück und Lesezeichen bleiben an der Stelle.
-- **Welt:** Bereiche für Geschichten, Kanon (Suche über Name und Alias, Kategorien als Filter, Liste links, Eintrag rechts zum Lesen und Bearbeiten, eigene Adresse je Eintrag), Import mit Vorschau (Markdown sowie Figurenkarten und Lorebooks aus SillyTavern), Download der Welt als Lorebook und von Figuren als Karte für SillyTavern, der KI-Weltenbauer und die Beschreibung der Welt. Passwort ändern und Sitzungen beenden unter „Konto“; „Darstellung“ wechselt zwischen wie das Gerät, hell, dunkel und schwarz (für AMOLED-Bildschirme).
+- **Welt:** Bereiche für Geschichten, Kanon (Suche über Name und Alias, Kategorien als Filter, Liste links, Eintrag rechts zum Lesen und Bearbeiten, eigene Adresse je Eintrag), Import mit Vorschau (Markdown sowie Figurenkarten und Lorebooks aus SillyTavern), Download der Welt als Lorebook und von Figuren als Karte für SillyTavern, Karten der Welt mit Zoom und Punkten, die zum Kanon-Eintrag führen, der KI-Weltenbauer und die Beschreibung der Welt. Passwort ändern und Sitzungen beenden unter „Konto“; „Darstellung“ wechselt zwischen wie das Gerät, hell, dunkel und schwarz (für AMOLED-Bildschirme).
 - **Schreibseite einer Geschichte:** aufgebaut wie ein Chat – das Manuskript scrollt, ein langes Kapitel öffnet am Textende, die Anweisung steht fest unten („/“ springt hinein). Oben Kapiteltitel und Speichern. „Kanon & Geschichte“ öffnet rechts eine Leiste mit dem Kanon zum Nachschlagen (Suche über Name und Alias) und den Einstellungen der Geschichte: Figuren-Schreibweise, Gäste aus anderen Welten (nur für diese Geschichte), Fakten dieser Geschichte, Gesamtzusammenfassung.
 - **Figuren-Schreibweise:** als Kurzzeile über der Anweisung (Perspektive, selbst geführte Figuren, „ändern“). Für die selbst geführten Figuren schreibt die KI keine Handlung, Rede oder Gedanken; beschreibt die Anweisung, was sie tun oder sagen, schreibt die KI genau das aus.
 - **Genre und Schreibweise:** in „Kanon & Geschichte“ unter „Geschichte“ als Knöpfe zum Antippen – Genre, Tonalität, Atmosphäre, Tempo, Stil, Deutlichkeit und freie Angaben als Vorgabe für neue Kapitel; jedes Kapitel hat seine eigene Schreibweise (Zeile „Schreibweise Kapitel N“ über der Anweisung, „ändern“). Die KI hält sie ein, Kanon und Figuren-Schreibweise gehen vor.
@@ -106,13 +106,9 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - ✅ **7.3:** Schreibweise folgt der Geschichte (ADR-070) – erledigt 2026-10-12.
 - ✅ **7.4:** Geschichte als E-Book (ADR-071) – erledigt 2026-10-12.
 - ✅ **7.5:** Aussehen „Buch“ – erledigt 2026-10-12.
-- 🟠 **7.6:** Bilder an Kanon-Einträgen (Galerie je Eintrag) – umgesetzt und getrennt geprüft, Einspielen steht aus (ADR-072).
-- 🟠 **7.10:** Karten der Welt mit Zoom – umgesetzt und getrennt geprüft, Einspielen steht aus (ADR-073).
-- 🟠 **7.13:** Bilder und Karten einmal von der KI beschreiben lassen – umgesetzt (ADR-074).
-- 🟠 **7.11:** Titelbild der Geschichte, auch im E-Book – umgesetzt (ADR-075).
-- 🟠 **7.12:** Bilder von der KI erzeugen (über OpenRouter) – umgesetzt (ADR-077).
-- 🟠 **7.16:** Abschnitt „Aussehen“ bei Figuren, „Aussehen herauslösen“ – umgesetzt (ADR-078).
-- ⚪ **Danach:** 7.14 Markierungen auf Karten, 7.15 nur auf Wunsch, dann 7.8 Planung.
+- 🟠 **7.6, 7.10–7.13, 7.16:** Bilder an Kanon-Einträgen, Karten mit Zoom, Titelbild, Bilder erzeugen und beschreiben lassen, Abschnitt „Aussehen“ (ADR-072 bis ADR-078) – eingespielt, deine Bestätigung steht aus.
+- 🟠 **7.14:** Markierungen auf Karten, die zum Kanon-Eintrag führen – umgesetzt (ADR-079).
+- ⚪ **Danach:** 7.15 nur auf Wunsch, dann 7.8 Planung.
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).

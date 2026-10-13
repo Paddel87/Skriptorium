@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-12, nach Abschluss von Phase 6 (6.10: Pflichtfrage ADR-067, Planung ADR-068)
+- **Stand vom:** 2026-10-13, 7.14 begonnen (ADR-079)
 - **Laufende Phase:** Phase 7 „Zeitlinie, Publizieren, Gestaltung und Bilder“ (Phase 6 abgeschlossen 2026-10-12)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner
-- **Nächster Schritt:** 7.6 Bilder an Kanon-Einträgen – umgesetzt und getrennt geprüft; PR und Einspielen auf Anweisung, dann 7.10 Karten. 7.1–7.5, 7.7, 7.9 erledigt 2026-10-12. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** 7.14 Markierungen auf Karten – umgesetzt (ADR-079), wartet auf PR, Einspielen und Bestätigung
+- **Nächster Schritt:** 7.14 PR und Einspielen auf Anweisung; danach 7.15 (nur auf Wunsch) und 7.8. 7.6, 7.10–7.13 und 7.16 eingespielt, warten auf die Bestätigung des Eigentümers. 7.1–7.5, 7.7, 7.9 erledigt 2026-10-12. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-6.md`](archiv/fahrplan-phase-6.md).
 
-**Phase 7: 7 von 16 erledigt; 7.6, 7.10, 7.11, 7.12, 7.13 eingespielt und warten auf Bestätigung; 7.16 in Arbeit.**
+**Phase 7: 7 von 16 erledigt; 7.6, 7.10, 7.11, 7.12, 7.13, 7.16 eingespielt und warten auf Bestätigung; 7.14 in Arbeit.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -39,11 +39,11 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ✅ | 7.9 | Befund: Gegenstands-Abschnitte aus dem Weltenbauer | erledigt 2026-10-12 | – |
 | 🟠 | 7.10 | Karten der Welt | gemergt (ADR-073, PR #143) | du: „einspielen“, dann ausprobieren |
 | 🟠 | 7.11 | Titelbild der Geschichte (auch im E-Book) | gemergt (ADR-075, PR #145) | du: „einspielen“, E-Book im Reader prüfen |
-| 🟠 | 7.12 | Bilder von der KI erzeugen (über OpenRouter) | umgesetzt, geprüft (ADR-076, ADR-077) | du: PR freigeben |
+| 🟠 | 7.12 | Bilder von der KI erzeugen (über OpenRouter) | eingespielt (ADR-076, ADR-077, PR #147) | du: ausprobieren (Kosten, Filter) |
 | 🟠 | 7.13 | Die KI kennt Bilder (einmal beschreiben) | gemergt (ADR-074, PR #144) | du: „einspielen“, dann echte Probe |
-| ⚪ | 7.14 | Markierungen auf Karten → Kanon-Eintrag | offen (nach 7.10) | KI |
+| 🟠 | 7.14 | Markierungen auf Karten → Kanon-Eintrag | umgesetzt (ADR-079) | du: PR freigeben, dann ausprobieren |
 | ⚪ | 7.15 | Bilder beim Schreiben auf Knopfdruck mitschicken | offen (nach 7.13, nur auf Wunsch) | du: nach 7.13 entscheiden |
-| 🟠 | 7.16 | Fester Abschnitt „Aussehen“ bei Figuren | umgesetzt (ADR-078) | du: PR freigeben |
+| 🟠 | 7.16 | Fester Abschnitt „Aussehen“ bei Figuren | eingespielt (ADR-078, PR #148) | du: an einer echten Figur ausprobieren |
 
 **Querschnitt (offen):**
 
@@ -396,7 +396,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.14: Markierungen auf Karten mit Verweis auf Kanon-Einträge
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-13) – entschieden (ADR-079): Markierungen an der Karte im Kopf von `world.md` (`marken`: Eintrag, x, y als Anteil), Setzen im Modus „Markieren“, nur Punkte (erster Tipp Name, zweiter öffnet den Eintrag), Löschen eines Eintrags entfernt seine Markierungen. Mockup (Vorher, Ansicht, Modus „Markieren“, Handy) freigegeben. Umgesetzt (2026-10-13): `MapMarker` und `set_map_markers` in `canon`, `delete_entry` entfernt Markierungen, `PUT …/maps/{datei}/markers`; Oberfläche `MapMarkers.tsx` und große Ansicht in `WorldMaps.tsx` (Kartenfläche in der Form des Bildes, misst bei Größenänderung neu; Punkte gleich groß bei jedem Zoom; Name am Rand zur Mitte hin). pytest 734, vitest 273, Playwright 11 grün; Sichtprobe Desktop und Handy an einem lokalen Testserver (Setzen, Ziehen, Entfernen, Tipp auf den Namen öffnet den Eintrag, Zoom). Keine Änderung der Kategorie 6 (keine Anmeldung, keine Dateien, keine Secrets) – keine getrennte Prüfung. Offen: PR, Einspielen, Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage und Mockup zu Beginn)
 - **Abhängigkeiten:** 7.10
 - **Freigabepflichtig:** ja – Datenmodell (Markierungen je Karte, Kategorie 4); Mockup

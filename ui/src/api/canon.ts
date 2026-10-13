@@ -20,10 +20,21 @@ export const CATEGORIES: readonly {
   { id: "kultur", label: "Kultur", plural: "Kultur" },
 ];
 
-/** A map of a world (step 7.10): the author's name for it and its file. */
+/**
+ * A point on a map that leads to a canon entry (step 7.14, ADR-079); `x` and `y` are shares
+ * of the map's width and height (0 to 1, from the top left).
+ */
+export interface MapMarker {
+  entry: string;
+  x: number;
+  y: number;
+}
+
+/** A map of a world (step 7.10): the author's name for it, its file and its markers. */
 export interface WorldMap {
   name: string;
   file: string;
+  markers: MapMarker[];
 }
 
 export interface World {
@@ -93,6 +104,11 @@ export const canonApi = {
   renameMap: (world: string, file: string, name: string) =>
     request("PATCH", `${worldPath(world)}/maps/${enc(file)}`, {
       name,
+    }) as Promise<World>,
+  /** Replaces all markers of a map (step 7.14). */
+  setMarkers: (world: string, file: string, markers: MapMarker[]) =>
+    request("PUT", `${worldPath(world)}/maps/${enc(file)}/markers`, {
+      markers,
     }) as Promise<World>,
   removeMap: (world: string, file: string) =>
     request(

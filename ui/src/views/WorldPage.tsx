@@ -86,7 +86,13 @@ export function WorldPage({
         />
       )}
       {area === "karten" && (
-        <WorldMaps world={current} onChanged={setCurrent} />
+        <WorldMaps
+          world={current}
+          onChanged={setCurrent}
+          onOpenEntry={(entry) => {
+            void navigate(canonEntryPath(current.id, entry));
+          }}
+        />
       )}
       {area === "import" && (
         <Import
