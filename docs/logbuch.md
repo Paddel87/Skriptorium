@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 10:22 UTC – [SESSIONSTART] Neue Session (Cloud)
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 10:22) → Entscheidungs-Klasse. Kurzzeitlimit (5 Stunden) `allowed`.
+- **Kontextgröße:** 115.672 Token laut Sitzungsabfrage nach der Pflichtlektüre (Grenze 200.000).
+- **Stand:** `main` auf `0c309ec` (PR #150) gezogen, Arbeitsverzeichnis sauber.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2 (project-context; Logbuch ab dem letzten `[SESSIONENDE]` vom 2026-09-27 – danach nur Phasen-Reflexionen und Ereignis-Einträge, kein weiteres Sessionende; Fahrplan Stand, Übersicht und Phase 7; Architektur 1/2/9; Decisions A/C; aktive Blocker: keine).
+- **Offen laut Fahrplan:** Bestätigung des Eigentümers für 7.6, 7.10–7.13 und 7.16 (eingespielt); 7.14, 7.15 (nur auf Wunsch), 7.8 Planung; Phase 7 mit 16 Schritten an der Wucherungs-Schwelle – neue Wünsche als V-Schritte. Querschnitt: D.11 bis 2026-10-31.
+- **Vorhaben:** noch keins – Auftrag des Eigentümers abwarten.
+
 ### 2026-10-13 – [BEOBACHTUNG] Befund Zeitlinie: Jahr, Datum, Uhrzeit (V.28)
 
 - Eigentümer: Zeitlinie soll Jahr, Datum und Uhrzeit unterscheiden, auch nur Uhrzeit oder Datum erlauben und im Verlauf zeigen, wo die Zeitstempel sind – „für später“. Als V.28 mit Landeplatz 7.8 festgehalten.
