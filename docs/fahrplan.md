@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-13, 7.14 begonnen (ADR-079)
+- **Stand vom:** 2026-10-13, D.18 erledigt (Bericht Datentrennung)
 - **Laufende Phase:** Phase 7 „Zeitlinie, Publizieren, Gestaltung und Bilder“ (Phase 6 abgeschlossen 2026-10-12)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 7.14 Markierungen auf Karten – gemergt (PR #151), wartet auf Einspielen und Bestätigung
-- **Nächster Schritt:** D.18 Prüfauftrag Datenmodell (Auftrag des Eigentümers 2026-10-13, nur lesen). Außerdem: 7.14 einspielen auf Anweisung (nur vom Mac aus); danach 7.15 (nur auf Wunsch) und 7.8. 7.6, 7.10–7.13 und 7.16 eingespielt, warten auf die Bestätigung des Eigentümers. 7.1–7.5, 7.7, 7.9 erledigt 2026-10-12. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** Eigentümer: Befunde aus D.18 ansehen und entscheiden, ob V.29 (doppelte Abschnitte „Aussehen“/„Geografie“) vorgezogen wird. Außerdem: 7.14 einspielen auf Anweisung (nur vom Mac aus); danach 7.15 (nur auf Wunsch) und 7.8. 7.6, 7.10–7.13 und 7.16 eingespielt, warten auf die Bestätigung des Eigentümers. 7.1–7.5, 7.7, 7.9 erledigt 2026-10-12. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -59,10 +59,10 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ⚪ | D.13 | Weigerungen der KI im Text erkennen – Erkundung | offen | du: Beispiele echter Sperren |
 | ⚪ | D.15 | Wechsel React Router 7 → Linie 8 | offen | KI – ab 2026-12-17 |
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
-| ⚪ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | offen | KI – nächste Session |
+| ✅ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | erledigt 2026-10-13 (V.29–V.32) | du: Vorziehen von V.29? |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 7.8): V.20, V.21, V.22, V.23, V.24, V.25 (neu 2026-10-12), V.26, V.27, V.28 (neu 2026-10-13). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 7.8): V.20, V.21, V.22, V.23, V.24, V.25 (neu 2026-10-12), V.26, V.27, V.28 (neu 2026-10-13), V.29, V.30, V.31, V.32 (aus D.18, 2026-10-13). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -729,7 +729,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.18: Prüfauftrag Datenmodell – Trennung der Daten je KI-Bereich
 
-- **Status:** ⚪ OFFEN – erteilt vom Eigentümer 2026-10-13; nächster Schritt der nächsten Session
+- **Status:** ✅ ERLEDIGT (2026-10-13) – Bericht `docs/research/datentrennung-ki-bereiche.md`: Trennung zwischen Welten, Geschichten und Gästen sichergestellt und getestet; Mischung innerhalb von Einträgen und Weltbeschreibung (doppelte Abschnitte „Aussehen“/„Geografie“, Bildvorlagen aus dem ganzen Text), Risiko bei der Kapitel-Kurzfassung. Abhilfen V.29–V.32 (Landeplatz 7.8); NFR Kanon-Treue ohne Rückstufung
 - **Phasentyp-Kontext:** ERKUNDUNG (nur lesen, nichts ändern)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein für die Prüfung; jede Abhilfe aus den Befunden ist eine eigene Vorlage (Kategorie 1 oder 4)
@@ -1200,6 +1200,74 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine (voraussichtlich)
 - **Artefakte:** ggf. ADR
 - **Notizen:** Angelegt 2026-10-13.
+
+#### V.29: Übernahme ersetzt Abschnitte statt sie zu verdoppeln; Vorlage „Aussehen“ (D.18, B1–B3, B6)
+
+- **Status:** ⏸️ VERSCHOBEN → 7.8 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 7.8 (Befunde B1–B3, B6 aus D.18, 2026-10-13); Vorziehen nur auf ausdrücklichen Wunsch des Eigentümers
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
+- **Abhängigkeiten:** 7.13, 7.16
+- **Freigabepflichtig:** ja – verändert vorhandenen Text des Autors beim Übernehmen; Vorlage für neue Figuren ist Datenmodell-Konvention aus ADR-078 (Kategorie 4)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell-Konvention (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Zählung auf dem Server (vom Mac): Einträge mit mehr als einem Abschnitt „Aussehen“, Welten mit mehr als einem Abschnitt „Geografie“ je Karte
+- **Anforderungen (ab Klasse M):** FR-035, FR-029
+- **Zu tun:** „Übernehmen als ‚Aussehen‘“ und „In die Weltbeschreibung übernehmen“ ersetzen einen vorhandenen Abschnitt gleichen Namens bzw. füllen einen leeren (Rückfrage, wenn dort schon Text steht); Geografie einer gelöschten Karte auf Nachfrage mit entfernen; `appearanceOf` überspringt leere Abschnitte und endet erst an einer Überschrift gleicher oder höherer Ebene; Vorlage neuer Figuren so, dass freier Text nicht unter „Aussehen“ fällt; Server verlangt für „Aussehen herauslösen“ die Kategorie `figur`; Tests: Weltenbauer ohne fremde Welten, Markierungen in keiner Anfrage, Vorlagen bei leerem, doppeltem und unterteiltem Abschnitt. Bericht: `docs/research/datentrennung-ki-bereiche.md`.
+- **Akzeptanzkriterien:** Vorlage bzw. ADR; Tests; nach erneutem Beschreiben genau ein Abschnitt; Eigentümer bestätigt.
+- **Betroffene Module:** ui, canon, api
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, ggf. ADR
+- **Notizen:** Angelegt 2026-10-13 aus D.18.
+
+#### V.30: Kapitel-Kurzfassung nur mit dem Stand vor dem Kapitel (D.18, B4)
+
+- **Status:** ⏸️ VERSCHOBEN → 7.8 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 7.8 (Befund B4 aus D.18, 2026-10-13)
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage und Messung nach Regel-002)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – Kontext-Zusammenstellung (Kategorie 1)
+- **Empfohlene Klasse:** Entscheidung – Kontext-Zusammenstellung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Vorlage an den Eigentümer
+- **Anforderungen (ab Klasse M):** FR-010
+- **Zu tun:** Beim Neu-Erzeugen der Kurzfassung eines früheren Kapitels enthält die mitgegebene Gesamtzusammenfassung dieses und spätere Kapitel, steht aber unter „Handlungsstand vor diesem Kapitel“ (`context/summaries.py:115-121`). Optionen: Kurzfassungen der Kapitel davor statt der Gesamtzusammenfassung; oder ehrliche Überschrift. Test: weder Kanon noch andere Geschichten in den beiden Zusammenfassungs-Anfragen.
+- **Akzeptanzkriterien:** ADR; Tests; Messung nach Regel-002; Eigentümer bestätigt.
+- **Betroffene Module:** context
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, ADR
+- **Notizen:** Angelegt 2026-10-13 aus D.18.
+
+#### V.31: Bildvorlagen aus „Aussehen“ bzw. der Geografie dieser Karte (D.18, B5)
+
+- **Status:** ⏸️ VERSCHOBEN → 7.8 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 7.8 (Befund B5 aus D.18, 2026-10-13)
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage)
+- **Abhängigkeiten:** V.29
+- **Freigabepflichtig:** ja – ändert die Vorbelegung aus ADR-077
+- **Empfohlene Klasse:** Routine – Oberfläche nach klarer Vorgabe; Vorlage nur zur Wahl beim Titelbild.
+- **Eingangskriterien:** Wahl des Eigentümers zum Titelbild
+- **Anforderungen (ab Klasse M):** FR-035
+- **Zu tun:** Orte und Gegenstände: Abschnitt „Aussehen“, wenn vorhanden; Karte: Abschnitt „Geografie – Name dieser Karte“, wenn vorhanden, sonst nur der Titel; Titelbild: unverändert oder nur Titel und Genre.
+- **Akzeptanzkriterien:** Tests; Eigentümer bestätigt.
+- **Betroffene Module:** ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests
+- **Notizen:** Angelegt 2026-10-13 aus D.18.
+
+#### V.32: Regeln und Zeitlinie im Wortlaut an den Weltenbauer? (D.18, Nebenbefund)
+
+- **Status:** ⏸️ VERSCHOBEN → 7.8 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 7.8 (Nebenbefund aus D.18, 2026-10-13)
+- **Phasentyp-Kontext:** offen
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – Kontext-Zusammenstellung (Kategorie 1)
+- **Empfohlene Klasse:** Entscheidung – Kontext-Zusammenstellung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Bedarf in 7.8 klären
+- **Anforderungen (ab Klasse M):** FR-029
+- **Zu tun:** Der Weltenbauer soll „nie dem vorhandenen Kanon widersprechen“, bekommt Regeln und Zeitlinie aber nur als Namen (`context/worldbuilder.py:64-70`). Klären, ob sie im Wortlaut mitgehen sollen (Kosten je Anfrage).
+- **Akzeptanzkriterien:** in 7.8 festzulegen
+- **Betroffene Module:** context (voraussichtlich)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** ggf. ADR
+- **Notizen:** Angelegt 2026-10-13 aus D.18.
 
 #### V.21: Veröffentlichung (öffentlicher Link zum Lesen)
 

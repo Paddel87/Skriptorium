@@ -29,6 +29,35 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 12:30 UTC – [SESSIONENDE] D.18 erledigt
+
+- **Dauer:** 11:45–12:30 UTC.
+- **Bearbeitet:** D.18 – Prüfung der Datentrennung je KI-Bereich, Bericht, V.29–V.32; PR #154 (Wahl des Eigentümers „PR anlegen und mergen“), Merge nach grüner CI.
+- **Erreichter Stand:** D.18 erledigt. Phase 7 unverändert: 7 von 16 erledigt; 7.6, 7.10–7.14, 7.16 warten auf Einspielen bzw. Bestätigung.
+- **Offen:** Zählung doppelter Abschnitte auf dem Server (vom Mac, Eingangskriterium V.29); Einspielen von 7.14 (vom Mac); D.11 bis 2026-10-31.
+- **Nächster Schritt:** Session auf dem Mac – „einspielen“ und Zählung; danach 7.15 (nur auf Wunsch) und 7.8 (mit V.29–V.32).
+- **Modell-Bilanz:** aktive Klasse Entscheidung (`claude-opus-5-5`, eingestellt und bedient laut Sitzungsabfrage 11:47). Schritte oberhalb der Empfehlung: 0 (D.18 empfiehlt Entscheidung). Abgegeben: nichts – reine Lesearbeit, an die Routine-Klasse bei gleichem Cache-Lesepreis ohne Ersparnis.
+- **Kontextgröße:** Sitzungsabfrage meldete 102.877 Token und wurde danach nicht mehr aktualisiert; geschätzt ca. 170.000 Token am Ende (unter der Grenze 200.000). Kurzzeitlimit `allowed`.
+- **Sessionende-Prüfungen:** README synchronisiert (D.18 erledigt). Drift: keine neuen ADRs (Reaktiv-Quote unverändert 0/10); V.29–V.32 verweisen auf 7.8 (vorhanden); Modul-Liste und Reifegrade unverändert; Blocker 0; Phase 7 unverändert 16 Schritte (D.18 und V-Schritte außerhalb des Schrittplans). Ablaufdaten-Register: kein Vorlauf erreicht. Archiv-Trigger: Logbuch unter 800 Zeilen; Phase 7 nicht abgeschlossen. project-context 347 Zeilen, unverändert.
+
+### 2026-10-13 12:20 UTC – [ERLEDIGT] D.18 Prüfung der Datentrennung je KI-Bereich
+
+- Nur gelesen, kein Code geändert. Bericht `docs/research/datentrennung-ki-bereiche.md`: acht Bereiche mit Beleg (Datei, Zeile) und Testlage.
+- **Sauber und getestet:** Trennung zwischen Welten, Geschichten und Gästen (Weiterschreiben, Szene); Bilder beschreiben schickt nur Bild, Name und Kategorie; Markierungen liegen im Kopf von `world.md` und gehen in keine Anfrage (nur durch Bauart); Weltenbauer-Gespräch je Welt neu (`WorldPage` mit `key`).
+- **Mischung:** `withSection` hängt beim Übernehmen immer einen neuen Abschnitt an – zweimal beschriebene Karte → zwei „Geografie“-Abschnitte in jeder Anfrage; „Aussehen herauslösen“ an einer Figur mit Vorlage `## Aussehen` → zwei Abschnitte „Aussehen“. Probe mit einer Kopie von `imagePrompts.ts` (Node 24): Vorbelegung „Bild erzeugen“ wird dann nur „Kael“ bzw. „Kael: Kael ist Schmied … hasst seinen Bruder …“ – Wesen im Bildauftrag, was 7.16 verhindern sollte. Vorlagen für Orte, Gegenstände und Karten nehmen den Anfang des ganzen Texts.
+- **Risiko:** Kurzfassung eines früheren Kapitels beim Neu-Erzeugen bekommt die ganze Gesamtzusammenfassung unter „Handlungsstand vor diesem Kapitel“; „Aussehen herauslösen“ prüft die Kategorie nur in der Oberfläche.
+- **Nicht geprüft:** echte Daten auf dem Server (Cloud-Session ohne SSH, ADR-025) – ob doppelte Abschnitte dort schon vorkommen, ist offen; Zählung ist Eingangskriterium von V.29.
+- Abhilfen als V.29–V.32 mit Landeplatz 7.8 (Phase 7 an der Wucherungs-Schwelle); NFR Kanon-Treue ohne Rückstufung, begründet im Bericht.
+- Reibung: `cat -n` über mehrere Dateien zählt die Zeilen durchgehend – erste Zeilenangaben im Bericht waren für die zweite Datei jeder Ausgabe falsch; vor dem Commit per `grep -n` nachgezogen.
+
+### 2026-10-13 11:45 UTC – [SESSIONSTART] D.18 Prüfauftrag Datentrennung (Cloud)
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 11:40) → Entscheidungs-Klasse; D.18 empfiehlt Entscheidung. Kurzzeitlimit (5 Stunden) `allowed`.
+- **Kontextgröße:** 102.877 Token laut Sitzungsabfrage während der Pflichtlektüre (Grenze 200.000).
+- **Stand:** `main` auf `9e8ea3a` (PR #153), Arbeitsverzeichnis sauber; Branch `docs/d.18-datentrennung`.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2 (project-context; Logbuch ab dem `[SESSIONENDE]` 11:08; Fahrplan Stand, Übersicht, Phase 7, D.18; Architektur 1/2/9; Decisions A/C; aktive Blocker: keine).
+- **Vorhaben:** D.18 – nur lesen, Bericht `docs/research/datentrennung-ki-bereiche.md`.
+
 ### 2026-10-13 11:35 UTC – [BEOBACHTUNG] Prüfauftrag D.18 angelegt
 
 - Eigentümer nach dem Sessionende: Prüfauftrag zur Trennung der Daten je KI-Bereich. Kontext bei 406.222 Token – nach Rückfrage „Neue Session“. Auf die Frage, wie die neue Session davon erfährt: als Querschnitt-Schritt D.18 im Fahrplan und als nächster Schritt unter „Aktueller Stand“ (Pflichtlektüre); nicht in Phase 7 (Wucherungs-Schwelle).
