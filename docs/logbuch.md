@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 11:35 UTC – [BEOBACHTUNG] Prüfauftrag D.18 angelegt
+
+- Eigentümer nach dem Sessionende: Prüfauftrag zur Trennung der Daten je KI-Bereich. Kontext bei 406.222 Token – nach Rückfrage „Neue Session“. Auf die Frage, wie die neue Session davon erfährt: als Querschnitt-Schritt D.18 im Fahrplan und als nächster Schritt unter „Aktueller Stand“ (Pflichtlektüre); nicht in Phase 7 (Wucherungs-Schwelle).
+
 ### 2026-10-13 11:08 UTC – [SESSIONENDE] 7.14 umgesetzt und gemergt
 
 - **Dauer:** 10:22–11:08 UTC.
