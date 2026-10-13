@@ -60,7 +60,8 @@ export default defineConfig({
         "ui/src/**/*.test.tsx",
         "ui/src/**/*.test.ts",
       ],
-      thresholds: { lines: 80, branches: 70 },
+      // Raised in step 8.3 (ADR-080) to just below the measured values; only ever raised.
+      thresholds: { lines: 98, statements: 98, functions: 97, branches: 94 },
       reporter: ["text"],
     },
   },

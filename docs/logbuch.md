@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [ERLEDIGT] 8.3 Tests nachgeholt, Mindestwerte angehoben
+
+- Zwei Unteragenten mit Sonnet parallel (Python unter `tests/`, Oberfläche unter `ui/src/`, getrennte Dateien). Python 734 → 765 Tests, 99,89 %; Oberfläche 289 → 345 Tests, Zeilen 98,71 %, Zweige 95,0–95,1 %. Selbst geprüft: ruff, mypy (128 Dateien), tsc, eslint, prettier, beide Testläufe; Stichprobe `test_without_provider.py` und `files.test.ts` – echtes Verhalten, keine reinen Zeilen-Berührungen.
+- Beobachtung: Die Zweigabdeckung der Oberfläche schwankt zwischen Läufen um ca. 0,06 Punkte (95,01 / 95,07 %), vermutlich durch Fake-Timer-Tests; Tests selbst stabil grün. Schwelle deshalb mit Abstand (94 %).
+- Mindestwerte angehoben (Kategorie 7, freigegeben mit ADR-080): `fail_under` 80 → 99; vitest 80/70 → Zeilen 98, Anweisungen 98, Funktionen 97, Zweige 94. Ratsche in `docs/project-context.md` Abschnitt 7. Der CI-Schritt „Coverage kritischer Pfade“ (90 % für `canon`, `context`) bleibt unverändert – liegt jetzt unter dem globalen Wert.
+
 ### 2026-10-13 – [ERLEDIGT] 8.2 Umbau der Kartenansicht
 
 - Wieder an einen Unteragenten mit Sonnet abgegeben (Routine-Klasse). Ergebnis: `WorldMaps.tsx` 716 → 86 Zeilen; `MapViewer` 141 Zeilen mit drei eigenen Hooks (`useMapZoom`, `useMapMarking`, `useMapChange`) und vier Teilkomponenten; 16 neue Tests, `WorldMaps.tsx` Zweige 64,9 → 100 %.
