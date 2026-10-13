@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [BEOBACHTUNG] Eingespielt: Phase 8 bis 8.12 (`19a5e48`)
+
+- Auf Anweisung des Eigentümers nach grüner CI auf `main` eingespielt (Runbook Abschnitt 7); Rückweg-Image `skriptorium:vorher` = `27506c2`. `/api/health` 200 nach ca. 60 s (nur HTTPS abgefragt), danach eine SSH-Prüfung: `healthy`, `REVISION` `19a5e48`.
+- Enthalten: 8.1–8.8, 8.10, 8.12 erledigt; 8.9 (wartet auf Probe des Eigentümers) und 8.11 (wartet auf Probe nach Regel-002 in einer Cloud-Session).
+
 ### 2026-10-13 – [ERLEDIGT] 8.12 Erkundung „wandernde Figuren“
 
 - Nur gelesen; Bericht `docs/research/wandernde-figuren.md` (Optionen A/B/C, Vision-Grenze Abschnitt 5). Zählung auf dem Server mit einer SSH-Abfrage, nur Anzahlen: 23 Figuren, 0 Namen in mehreren Welten, 0 Gast-Verbindungen, 0 Geschichten mit eigenen Fakten – der Wunsch ist ein Vorhaben, kein Alltagsschmerz. Kein Rateschluss bei C (Konfidenz niedrig, Umkehrbarkeit teuer).

@@ -102,13 +102,13 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 - ✅ **Phase 7** (abgeschlossen 2026-10-13): Zeitstrahl (ADR-069), Schreibweise folgt der Geschichte (ADR-070), E-Book mit Titelbild (ADR-071, ADR-075), Aussehen „Buch“, Bilder an Kanon-Einträgen, Karten mit Zoom und Markierungen, Bilder erzeugen und beschreiben lassen, Abschnitt „Aussehen“ (ADR-072 bis ADR-079). Bewertung am Phasenende: [`docs/research/bewertung-phase-7.md`](docs/research/bewertung-phase-7.md).
 - ✅ **8.1–8.3:** Umbau ohne sichtbare Änderung – Kanon-Dienst und Kartenansicht aufgeteilt, fehlende Tests, höhere Mindestwerte (ADR-080, ADR-082) – erledigt 2026-10-13.
-- ✅ **8.4:** Übernehmen ersetzt Abschnitte statt sie zu verdoppeln, neue Vorlage für Figuren (ADR-083) – erledigt 2026-10-13, noch nicht eingespielt.
-- ✅ **8.5:** Passendere Vorlagen für „Bild erzeugen“ (ADR-084) – erledigt 2026-10-13, noch nicht eingespielt.
-- ✅ **8.6:** Kapitel-Kurzfassung nur mit dem Stand davor (ADR-085) – erledigt 2026-10-13, noch nicht eingespielt.
-- ✅ **8.7:** Weltenbauer kennt Regeln und Zeitlinie im Wortlaut (ADR-086) – erledigt 2026-10-13, noch nicht eingespielt.
-- ✅ **8.8:** Weltenbauer behält das Gespräch nach „Als Kanon übernehmen“ – erledigt 2026-10-13, noch nicht eingespielt.
-- 🟠 **8.9:** Weltenbauer aus dem Manuskript (ADR-087) – gemergt, Einspielen und deine Probe stehen aus.
-- ✅ **8.10:** Zeitlinie mit Jahr, Datum und Uhrzeit – erledigt 2026-10-13, noch nicht eingespielt.
+- ✅ **8.4:** Übernehmen ersetzt Abschnitte statt sie zu verdoppeln, neue Vorlage für Figuren (ADR-083) – erledigt 2026-10-13.
+- ✅ **8.5:** Passendere Vorlagen für „Bild erzeugen“ (ADR-084) – erledigt 2026-10-13.
+- ✅ **8.6:** Kapitel-Kurzfassung nur mit dem Stand davor (ADR-085) – erledigt 2026-10-13.
+- ✅ **8.7:** Weltenbauer kennt Regeln und Zeitlinie im Wortlaut (ADR-086) – erledigt 2026-10-13.
+- ✅ **8.8:** Weltenbauer behält das Gespräch nach „Als Kanon übernehmen“ – erledigt 2026-10-13.
+- 🟠 **8.9:** Weltenbauer aus dem Manuskript (ADR-087) – eingespielt, deine Probe steht aus.
+- ✅ **8.10:** Zeitlinie mit Jahr, Datum und Uhrzeit – erledigt 2026-10-13.
 - 🟠 **8.11:** Verweise zwischen Kanon-Einträgen (ADR-088) – umgesetzt, Probe nach Regel-002 offen.
 - ✅ **8.12:** Erkundung „wandernde Figuren“ – erledigt 2026-10-13 ([Bericht](docs/research/wandernde-figuren.md)); nächster Schritt: du probierst eine Gast-Figur aus, danach Option A (V.34).
 - ⚪ **8.13:** Planung der nächsten Ausbaustufe – nach den offenen Proben zu 8.9 und 8.11.
