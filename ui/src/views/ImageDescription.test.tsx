@@ -13,7 +13,7 @@ import {
 } from "../../fake-api";
 import type { CanonEntry } from "../api";
 import { EntryImages } from "./EntryImages";
-import { ImageDescription, withSection } from "./ImageDescription";
+import { ImageDescription } from "./ImageDescription";
 import { WorldMaps } from "./WorldMaps";
 
 const PATH = "/api/worlds/salzmark/entries/kael/images/kael-a.webp/describe";
@@ -35,7 +35,7 @@ describe("describing an image once (step 7.13)", () => {
       "GET /api/models": MODELS,
       [`POST ${PATH}`]: () => ({ status: 200, stream: feed.stream }),
     });
-    const taken = vi.fn(() => Promise.resolve());
+    const taken = vi.fn(() => Promise.resolve(true));
     const closed = vi.fn();
     const user = userEvent.setup();
     render(
@@ -128,15 +128,6 @@ describe("describing an image once (step 7.13)", () => {
         "Gerade ist kein Modell verfügbar, das Bilder lesen kann.",
       ),
     ).toBeDefined();
-  });
-
-  it("adds the text as a section at the end", () => {
-    expect(withSection("", "Aussehen", " Groß. ")).toBe(
-      "## Aussehen\n\nGroß.\n",
-    );
-    expect(withSection("Wirtin.\n\n", "Aussehen", "Groß.")).toBe(
-      "Wirtin.\n\n## Aussehen\n\nGroß.\n",
-    );
   });
 
   it("takes a figure's looks over into its entry", async () => {
@@ -236,7 +227,7 @@ describe("describing an image once (step 7.13)", () => {
 
 function renderDescription(
   overrides: {
-    onTakeOver?: (text: string) => Promise<void>;
+    onTakeOver?: (text: string) => Promise<boolean>;
     onClose?: () => void;
   } = {},
 ) {
@@ -245,7 +236,7 @@ function renderDescription(
       title="Aussehen"
       path={PATH}
       takeOverLabel="Übernehmen"
-      onTakeOver={overrides.onTakeOver ?? vi.fn(() => Promise.resolve())}
+      onTakeOver={overrides.onTakeOver ?? vi.fn(() => Promise.resolve(true))}
       onClose={overrides.onClose ?? vi.fn()}
     />,
   );
@@ -308,6 +299,35 @@ describe("describing an image: edge cases (step 7.13)", () => {
       screen.getByRole("button", { name: "Beschreiben lassen" }),
     ).toHaveProperty("disabled", false);
     expect(calls.filter((c) => c.method === "POST")).toHaveLength(1);
+  });
+
+  it("stays open and unchanged when taking over is cancelled (step 8.4)", async () => {
+    const feed = sseFeed();
+    fakeApi({
+      "GET /api/models": MODELS,
+      [`POST ${PATH}`]: () => ({ status: 200, stream: feed.stream }),
+    });
+    const closed = vi.fn();
+    const taken = vi.fn(() => Promise.resolve(false));
+    const user = userEvent.setup();
+    renderDescription({ onTakeOver: taken, onClose: closed });
+    await user.click(
+      await screen.findByRole("button", { name: "Beschreiben lassen" }),
+    );
+    sendDone(feed, "Groß.");
+    await user.click(await screen.findByRole("button", { name: "Übernehmen" }));
+    await waitFor(() => {
+      expect(taken).toHaveBeenCalledWith("Groß.");
+    });
+    expect(closed).not.toHaveBeenCalled();
+    expect(screen.getByRole("button", { name: "Übernehmen" })).toHaveProperty(
+      "disabled",
+      false,
+    );
+    expect(screen.getByLabelText("Beschreibung")).toHaveProperty(
+      "value",
+      "Groß.",
+    );
   });
 
   it("keeps the text and shows the error when taking over fails", async () => {

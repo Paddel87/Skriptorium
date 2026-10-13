@@ -9,8 +9,10 @@ import { api, describeError, type CanonEntry } from "../api";
 import { base64, shrinkImage } from "../files";
 import { ErrorText } from "./Common";
 import { appearanceOf, entryPrompt } from "../imagePrompts";
-import { ImageDescription, withSection } from "./ImageDescription";
+import { ImageDescription } from "./ImageDescription";
 import { ImageGenerate } from "./ImageGenerate";
+import { SectionConflict } from "./SectionConflict";
+import { useSectionChoice } from "./useSectionChoice";
 
 /** As many images as the server keeps per entry (`MAX_IMAGES_PER_ENTRY`). */
 const MAX_IMAGES = 12;
@@ -37,6 +39,7 @@ export function EntryImages({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const picker = useRef<HTMLInputElement>(null);
+  const { place, asking } = useSectionChoice();
   const images = entry.images;
   const source = (image: string) => api.imagePath(entry.world, entry.id, image);
 
@@ -232,11 +235,14 @@ export function EntryImages({
               onTakeOver={async (text) => {
                 // The current text, in case it changed elsewhere meanwhile.
                 const fresh = await api.entry(entry.world, entry.id);
+                const body = await place(fresh.body, "Aussehen", text);
+                if (body === null) {
+                  return false;
+                }
                 onChanged(
-                  await api.updateEntry(entry.world, entry.id, {
-                    body: withSection(fresh.body, "Aussehen", text),
-                  }),
+                  await api.updateEntry(entry.world, entry.id, { body }),
                 );
+                return true;
               }}
               onClose={() => {
                 setDescribing(null);
@@ -245,6 +251,7 @@ export function EntryImages({
           )}
         </ImageViewer>
       )}
+      <SectionConflict asking={asking} />
     </div>
   );
 }

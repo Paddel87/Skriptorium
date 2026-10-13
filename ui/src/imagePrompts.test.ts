@@ -30,6 +30,28 @@ describe("starting texts for generated images (step 7.12)", () => {
     expect(entryPrompt(listed)).toBe("Tomas: breit, braune Augen.");
   });
 
+  it("skips an empty template section, takes a duplicate and subsections (step 8.4)", () => {
+    const figure = { ...ENTRY, name: "Kael" };
+    expect(
+      entryPrompt({
+        ...figure,
+        body: "## Aussehen\n\n## Wesen und Geschichte\nKael hasst seinen Bruder.\n",
+      }),
+    ).toBe("Kael");
+    expect(
+      entryPrompt({
+        ...figure,
+        body: "## Aussehen\n\n## Wesen\nSchmied.\n\n## Aussehen\n\nGroß, graue Augen.\n",
+      }),
+    ).toBe("Kael: Groß, graue Augen.");
+    expect(
+      entryPrompt({
+        ...figure,
+        body: "## Aussehen\nGroß.\n### Kleidung\nGrauer Mantel.\n## Wesen\nSchweigsam.",
+      }),
+    ).toBe("Kael: Groß. Grauer Mantel.");
+  });
+
   it("cuts long texts at a sentence", () => {
     const long = "Ein Satz über den Hafen. ".repeat(60);
     const prompt = entryPrompt({ ...ENTRY, category: "ort", body: long });

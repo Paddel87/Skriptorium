@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { api, type World, type WorldMap } from "../api";
+import { readSection, removeSection, renameSection } from "../sections";
 
 /**
  * The bar of an open map outside the mode "Markieren": mark, rename (a small form instead of
@@ -31,12 +32,25 @@ export function MapToolbar({
         className="image-viewer-bar"
         onSubmit={(event) => {
           event.preventDefault();
-          void change(() =>
-            api.renameMap(world.id, map.file, name.trim()),
-          ).then((done) => {
-            if (done) {
-              setRenaming(false);
+          const fresh = name.trim();
+          let latest: World = world;
+          void change(async () => {
+            latest = await api.renameMap(world.id, map.file, fresh);
+            return latest;
+          }).then(async (done) => {
+            if (!done) {
+              return;
             }
+            // The map's section in the description follows its name (step 8.4, ADR-083).
+            const description = renameSection(
+              latest.description,
+              `Geografie – ${map.name}`,
+              `Geografie – ${fresh}`,
+            );
+            if (description !== latest.description) {
+              await change(() => api.updateWorld(world.id, { description }));
+            }
+            setRenaming(false);
           });
         }}
       >
@@ -89,13 +103,31 @@ export function MapToolbar({
         disabled={busy}
         onClick={() => {
           if (window.confirm(`Karte „${map.name}“ wirklich entfernen?`)) {
-            void change(() => api.removeMap(world.id, map.file)).then(
-              (done) => {
-                if (done) {
-                  onClose();
-                }
-              },
-            );
+            let latest: World = world;
+            void change(async () => {
+              latest = await api.removeMap(world.id, map.file);
+              return latest;
+            }).then(async (done) => {
+              if (!done) {
+                return;
+              }
+              // The section of the map in the description stays only if the author wants it
+              // (step 8.4, ADR-083).
+              const title = `Geografie – ${map.name}`;
+              if (
+                readSection(latest.description, title) !== null &&
+                window.confirm(
+                  `Abschnitt „${title}“ auch aus der Weltbeschreibung entfernen?`,
+                )
+              ) {
+                await change(() =>
+                  api.updateWorld(world.id, {
+                    description: removeSection(latest.description, title),
+                  }),
+                );
+              }
+              onClose();
+            });
           }
         }}
       >

@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { api, describeError, streamDescription, type CanonEntry } from "../api";
 import { describeWriteError } from "../api/writing";
 import { ErrorText } from "./Common";
-import { withSection } from "./ImageDescription";
+import { SectionConflict } from "./SectionConflict";
+import { useSectionChoice } from "./useSectionChoice";
 import { describeUsage, type Usage } from "./useWriteFlow";
 
 /** The model's answer when the entry says nothing about looks (`NO_APPEARANCE`). */
@@ -32,6 +33,7 @@ export function AppearanceExtract({
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const abort = useRef<AbortController | null>(null);
+  const { place, asking } = useSectionChoice();
 
   useEffect(() => {
     let current = true;
@@ -100,11 +102,12 @@ export function AppearanceExtract({
     try {
       // The current text, in case it changed elsewhere meanwhile.
       const fresh = await api.entry(entry.world, entry.id);
-      onChanged(
-        await api.updateEntry(entry.world, entry.id, {
-          body: withSection(fresh.body, "Aussehen", text),
-        }),
-      );
+      const body = await place(fresh.body, "Aussehen", text);
+      if (body === null) {
+        setSaving(false);
+        return;
+      }
+      onChanged(await api.updateEntry(entry.world, entry.id, { body }));
       onClose();
     } catch (reason: unknown) {
       setError(describeError(reason));
@@ -198,6 +201,7 @@ export function AppearanceExtract({
           {running ? "Abbrechen" : "Verwerfen"}
         </button>
       </div>
+      <SectionConflict asking={asking} />
     </div>
   );
 }

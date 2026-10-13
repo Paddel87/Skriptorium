@@ -3,11 +3,12 @@
  * them before generating. Markdown marks are left out; long texts are cut at a sentence.
  */
 import type { CanonEntry, Story, World } from "./api";
+import { readSection } from "./sections";
 
 const LIMIT = 700;
 
 /**
- * A figure only by its looks (section "Aussehen" or line "**Aussehen:** …", step 7.16) – without
+ * A figure only by its looks (section "Aussehen" – the first one with text, up to the next heading of the same or a higher level – or line "**Aussehen:** …", step 7.16) – without
  * them just the name; any other entry by the start of its text.
  */
 export function entryPrompt(entry: CanonEntry): string {
@@ -19,7 +20,7 @@ export function entryPrompt(entry: CanonEntry): string {
 
 /** The looks written in an entry (section or labelled line), or `null` (step 7.16). */
 export function appearanceOf(body: string): string | null {
-  return section(body, "Aussehen") ?? labelled(body, "Aussehen");
+  return readSection(body, "Aussehen") ?? labelled(body, "Aussehen");
 }
 
 /** A map of the world, drawn from the world's description. */
@@ -43,25 +44,6 @@ export function coverPrompt(story: Story): string {
 function joined(head: string, text: string): string {
   const plain = plainText(text);
   return plain === "" ? head : `${head}: ${cut(plain)}`;
-}
-
-/** The text of a `## heading` section, or `null` without one. */
-function section(markdown: string, heading: string): string | null {
-  const lines = markdown.split("\n");
-  const start = lines.findIndex(
-    (line) =>
-      line
-        .replace(/^#+\s*/, "")
-        .trim()
-        .toLowerCase() === heading.toLowerCase() && line.startsWith("#"),
-  );
-  if (start < 0) {
-    return null;
-  }
-  const rest = lines.slice(start + 1);
-  const end = rest.findIndex((line) => /^#{1,6}\s/.test(line));
-  const text = (end < 0 ? rest : rest.slice(0, end)).join("\n").trim();
-  return text === "" ? null : text;
 }
 
 /** The text after a list label such as `- **Aussehen:** …`, or `null` without one. */

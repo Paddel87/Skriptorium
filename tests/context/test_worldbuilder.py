@@ -56,6 +56,17 @@ def test_request_holds_frame_world_names_and_named_entries(builder: ContextBuild
     ]
 
 
+def test_other_worlds_never_appear_in_the_request(builder: ContextBuilder) -> None:
+    """D.18 (step 8.4): neither description, entries nor names of another world go along."""
+    context = builder.build_worldbuilder(WORLD, [("user", "Wer herrscht hier?")])
+
+    text = "\n".join(message.content for message in context.messages)
+    for foreign in ("Nebelreich", "Nebelkönig", "Herrscher im Nebel", "Eine Welt aus Nebel"):
+        assert foreign not in text
+    with pytest.raises(NotFound):
+        builder.build_worldbuilder(WORLD, [("user", "Wer?")], references=["nebelkoenig"])
+
+
 def test_conversation_keeps_order_and_roles(builder: ContextBuilder) -> None:
     context = builder.build_worldbuilder(
         WORLD,

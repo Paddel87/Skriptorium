@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [ERLEDIGT] 8.4 Übernehmen ersetzt Abschnitte (ADR-083)
+
+- Vorlage mit Mockup (vorher/nachher); Eigentümer wählte alle Empfehlungen: Rückfrage, Vorlage „Aussehen“ + „Wesen und Geschichte“, Geografie beim Entfernen nachfragen, beim Umbenennen mitziehen.
+- Umsetzung durch Unteragenten (Sonnet) nach Auftrag; selbst geprüft: `sections.ts` gelesen, alle Prüfungen erneut (pytest 769, vitest 380). Abweichungen des Unteragenten: Kategorieprüfung in `context/appearance.py` statt im Flow (dort ist der Eintrag geladen); `onTakeOver` liefert jetzt `Promise<boolean>` (Abbrechen lässt den Dialog offen).
+- Sichtprobe am lokalen Testserver mit Testdaten im Scratchpad; ohne gültigen lokalen Schlüssel die KI-Antwort im Browser per `fetch`-Ersatz gestellt. Reibung: erster Ersatz mit falschen Feldern im Abschluss-Ereignis (`token_in` statt `input_tokens`) – die Oberfläche brach mit `toLocaleString` ab; beim zweiten Versuch richtig. Hinweis: Die Oberfläche fängt fehlende Felder im Abschluss-Ereignis nicht ab – vom eigenen Server kommen sie immer, kein Schritt nötig.
+- Offen, klein: Bei Figuren mit der alten Vorlage (leeres „## Aussehen“) zeigt die Bildvorlage weiter „noch kein Abschnitt ‚Aussehen‘“ – sprachlich schief, inhaltlich richtig.
+- Eigentümer: „Passt, noch nicht einspielen“ – Server bleibt auf `27506c2`.
+
 ### 2026-10-13 – [ERLEDIGT] 8.3 Tests nachgeholt, Mindestwerte angehoben
 
 - Zwei Unteragenten mit Sonnet parallel (Python unter `tests/`, Oberfläche unter `ui/src/`, getrennte Dateien). Python 734 → 765 Tests, 99,89 %; Oberfläche 289 → 345 Tests, Zeilen 98,71 %, Zweige 95,0–95,1 %. Selbst geprüft: ruff, mypy (128 Dateien), tsc, eslint, prettier, beide Testläufe; Stichprobe `test_without_provider.py` und `files.test.ts` – echtes Verhalten, keine reinen Zeilen-Berührungen.

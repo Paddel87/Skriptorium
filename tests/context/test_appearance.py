@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from skriptorium.canon import CanonService, NotFound
+from skriptorium.canon import CanonService, InvalidInput, NotFound
 from skriptorium.context import NO_APPEARANCE, ContextBuilder
 from skriptorium.manuscript import ManuscriptService
 from skriptorium.storage import DocumentStore
@@ -36,3 +36,12 @@ def test_the_request_asks_only_for_the_visible(builder: ContextBuilder) -> None:
 def test_unknown_entries(builder: ContextBuilder) -> None:
     with pytest.raises(NotFound):
         builder.build_appearance(W, "niemand")
+
+
+def test_only_figures_can_be_taken_apart(builder: ContextBuilder, tmp_path: Path) -> None:
+    """Step 8.4 (ADR-083, D.18 B6): the server checks the category, not only the interface."""
+    canon = CanonService(DocumentStore(tmp_path / "data"))
+    canon.create_entry(W, "ort", "Karst", body="Hafenstadt.")
+
+    with pytest.raises(InvalidInput, match="nur bei Figuren"):
+        builder.build_appearance(W, "karst")
