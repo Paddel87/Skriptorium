@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [ERLEDIGT] 8.2 Umbau der Kartenansicht
+
+- Wieder an einen Unteragenten mit Sonnet abgegeben (Routine-Klasse). Ergebnis: `WorldMaps.tsx` 716 → 86 Zeilen; `MapViewer` 141 Zeilen mit drei eigenen Hooks (`useMapZoom`, `useMapMarking`, `useMapChange`) und vier Teilkomponenten; 16 neue Tests, `WorldMaps.tsx` Zweige 64,9 → 100 %.
+- Selbst geprüft: tsc, eslint, prettier grün; vitest 289 grün (95,29 % / 91,95 %). Hinweis des Unteragenten zum Zurücksetzen des Namens beim Umbenennen am alten Code nachgeprüft – ohne sichtbare Folge. Playwright nur im Lauf des Unteragenten (11/11); die CI wiederholt es.
+
 ### 2026-10-13 – [ERLEDIGT] 8.1 Umbau des Kanon-Dienstes; ADR-082
 
 - Warnung zu Beginn: 8.1 empfiehlt die Routine-Klasse, aktiv ist die Entscheidungs-Klasse (Wochenkontingent). Die Gliederung (ausgabelastig) ging an einen Unteragenten mit Sonnet (Routine-Klasse, Probelauf bestanden); Befund 6 und Doku blieben hier.
