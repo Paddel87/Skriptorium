@@ -80,6 +80,7 @@ from skriptorium.context.writing import (
     last_pages,
     lookup,
     opening,
+    reference_candidates,
     remaining_room,
     requirements,
     seam,
@@ -259,12 +260,14 @@ class ContextBuilder:
 
 
 def _filler_parts(request: Request, remaining: int) -> list[Part]:
-    """Further entries of the world, then guests, while they fit into ``remaining``.
+    """Entries the named ones and the led characters refer to, then further entries of the
+    world, then guests, while they fit into ``remaining`` (step 8.11, ADR-088).
 
     Taken entries count as included, so a second call (after the last pages) adds only the rest.
     """
     filler: list[Part] = []
-    candidates = [Known(entry) for entry in in_category_order(request.entries)]
+    candidates = reference_candidates(request)
+    candidates += [Known(entry) for entry in in_category_order(request.entries)]
     candidates += sorted(request.guests, key=lambda g: category_rank(g.entry))
     for known in candidates:
         if known.key in request.included:

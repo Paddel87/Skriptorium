@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [BEOBACHTUNG] 8.11 Verweise umgesetzt, Probe offen (ADR-088)
+
+- Vorlage mit vier Fragen; Eigentümer wählte alle Empfehlungen. Umsetzung durch Unteragenten (Sonnet). Selbst angeglichen: die Mitnahme erkannte `@Kaels` nicht, die Links in der Oberfläche (`ui/src/references.ts`, Schritt 5.23) schon – jetzt beide mit Genitiv; ein Bestandstest prüfte genau das alte Verhalten und wurde umgestellt. Ein weiterer Bestandstest (`test_budget_is_never_exceeded`) brauchte eine höhere Budget-Schwelle, weil der Rahmen einen Satz länger ist.
+- Die Testwelten haben keine `@`-Verweise; die Probe nach Regel-002 prüft ohne Zusatz nur, dass der neue Rahmensatz nichts verschlechtert. Prüfauftrag mit beiden Teilen in den Notizen von 8.11; läuft nur in einer Cloud-Session (lokaler Schlüssel ungültig).
+
 ### 2026-10-13 – [ERLEDIGT] 8.10 Zeitlinie mit Jahr, Datum und Uhrzeit
 
 - Vor der Vorlage die Formen der echten Zeitlinien auf dem Server geprüft – anonymisiert (Buchstaben → „a“, Ziffern → „9“), kein Inhalt gelesen: 14 Einträge der Form „999 – Titel“, zwei „99:99 a“, keine Monate. Daraus der Vorschlag „erkennen statt vorschreiben“; Eigentümer wählte alle Empfehlungen.

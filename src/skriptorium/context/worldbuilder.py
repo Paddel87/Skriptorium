@@ -156,7 +156,10 @@ def _frame(world_name: str) -> str:
         "Wesen, Geschichte und Beziehungen stehen außerhalb davon.\n"
         "- Sachlich, im Präsens, etwa 80 bis 250 Wörter je Eintrag; bei einer Überarbeitung der "
         "vollständige neue Text, nicht nur die Änderung.\n"
-        "- Keine Tabellen, kein HTML.\n\n"
+        "- Keine Tabellen, kein HTML.\n"
+        "- Betrifft ein Sachverhalt mehrere Einträge, verteile ihn auf die passenden Einträge "
+        "und verweise mit `@Name` (Name oder Alias) von einem auf den anderen. Eine Regel, die "
+        "nur an einem Ort gilt, bekommt im Text die Zeile `Gilt nur in: @Ort`.\n\n"
         "Außerhalb des Blocks antwortest du ganz normal im Gespräch. Ohne Vorschlag zur "
         "Übernahme gibt es keinen Block."
     )
