@@ -80,3 +80,27 @@ Die Zeile „Übergabestelle“ ist **zwischen den Geschichten nicht vergleichba
 7. **Kanon-Abweichungen** (Grundlage für 5.26): Schlüssel zum Schloss in 5 von 6 Glimmergrund-Ketten anders als in Kapitel 3; Lenkas Zettel in gerader Schrift (lang-1); „Metzger Ulm“ statt Bäcker (lang-2); „Planwagen mit Kennzeichen“ (mittel-3). Eingehalten in allen Ketten: kein Kaffee für Wendt, keine Sieben, kein Pfeifen, „Brack“ ohne Vornamen, Salm nennt keine Farbe.
 
 Die Streuung zwischen den drei Läufen ist bei den Handzählungen so groß wie der Unterschied zwischen „mittel“ und „lang“ (Ausnahme: Wortzahl, Übergabe in Glimmergrund). Eine Änderung gilt nach Regel-002 erst als wirksam, wenn sie in beiden Geschichten außerhalb dieser Spannweiten liegt.
+
+### Probe zu 8.11 Verweise zwischen Kanon-Einträgen (2026-10-13, ADR-088)
+
+Cloud-Session, Modell `x-ai/grok-4.6`, Länge „mittel“. Vorher: Stand `9acc5bf` (vor 8.11) in einem Worktree, nachher: `main` `5c6a14f`. Alle Vorschläge `finish_reason: stop`, keine Fehler. Kosten zusammen 3,91 $ (Teil 1: 1,57 $ + 1,46 $; Teil 2: 0,43 $ + 0,44 $).
+
+**Teil 1 – Rahmensatz „Gilt nur in: …“ in jeder Anfrage** (`lauf.py`, je 3 Ketten an beiden Geschichten; `ergebnisse/8.11-vorher/`, `ergebnisse/8.11-nachher/`). Mittel (Spannweite):
+
+| Kennzahl | Salzmark vorher | Salzmark nachher | Glimmergrund vorher | Glimmergrund nachher |
+|---|---|---|---|---|
+| wörtlich % | 0,29 (0,08–0,50) | 0,71 (0,61–0,77) | 0,05 (0,00–0,08) | 0,41 (0,00–0,97) |
+| 6er doppelt | 0,00 (0–0) | 0,33 (0–1) | 0,00 (0–0) | 0,33 (0–1) |
+| Warte-Enden | 0,00 (0–0) | 0,00 (0–0) | 0,00 (0–0) | 0,33 (0–1) |
+| Motivfolge | 1,33 (1–2) | 2,00 (1–4) | 1,33 (1–2) | 2,00 (2–2) |
+| Wörter je Vorschlag | 128 (112–154) | 125 (115–138) | 118 (115–120) | 122 (113–132) |
+| Kosten je Kette $ | 0,14 (0,14–0,15) | 0,15 (0,14–0,16) | 0,38 (0,38–0,38) | 0,33 (0,32–0,36) |
+
+- **Nach dem Wortlaut von Regel-002 ein Befund:** „wörtlich %“ liegt nachher in beiden Geschichten im Mittel über der Spannweite von vorher (Salzmark 0,71 gegen höchstens 0,50; Glimmergrund 0,41 gegen höchstens 0,08). Alle übrigen Kennzahlen überschneiden sich mit vorher.
+- **Einordnung (Deutung, nicht belegt):** Die Werte sind klein (unter 1 % der 4-Wort-Folgen) und liegen innerhalb der Ausgangsmessung aus 5.24 (Salzmark mittel 0,73–2,73, Glimmergrund 0,00–0,31 – Glimmergrund nachher knapp darüber); der Vorher-Lauf war diesmal ungewöhnlich niedrig. Der neue Satz betrifft Regeln, nicht Wiederholung. Ob es Zufall ist, klären nur weitere Läufe.
+
+**Teil 2 – Wirkung der Verweise** (`verweise.py`, Salzmark, je 3 Ketten; `ergebnisse/8.11-verweise-vorher/`, `…-nachher/`). Zusatz nur im Lauf: Pell Sund verweist auf `@Zum Nassen Grab` und `@Gunda Hollt`, Vogtshaus auf `@Siegelring des Vogts`; Regel „Schnurgebot“ mit „Gilt nur in: @Tolm“ (rote Wollschnur am Handgelenk nach Dunkelheit). Die erste Anweisung nennt `@Pell Sund`; die Szene spielt in Kerrow.
+
+- **Herangezogen:** Bei vollem Budget ist die ganze Testwelt in beiden Varianten in der Anfrage; nachher stehen die verwiesenen Einträge (Zum Nassen Grab, Gunda Hollt) als erste der Auffüllung, vorher in Kategorie-Reihenfolge (alle 3 Ketten, `bausteine` in `01.json`). Bei knappem Budget (`BUDGET=6000`, ohne KI, `bausteine-budget-6000.json`): nachher ist „Zum Nassen Grab“ dabei, vorher nicht – die beabsichtigte Wirkung.
+- **Ortsgebundene Regel:** In keinem der 42 Vorschläge kommen Wollschnur oder Handgelenk-Schnur vor – weder vorher noch nachher. Die Regel wurde außerhalb von Tolm nicht angewendet; ein Unterschied durch den neuen Rahmensatz ist damit nicht nachweisbar (das Modell hielt sie schon ohne ihn ein). „Tolm“ kommt nur als Ziel der Nachricht an Marr vor (Schritt 7, Anweisung).
+- **Widersprüche:** Stichprobe zu Pell (Alter, Lesen, Schlafplatz): keine Abweichung („Pell ist zwölf.“). Eine vollständige Bewertung von Hand durch eine getrennte Instanz wie in 5.24 ist **nicht** erfolgt.

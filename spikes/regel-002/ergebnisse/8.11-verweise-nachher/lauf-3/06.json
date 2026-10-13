@@ -1,0 +1,171 @@
+{
+  "schritt": 6,
+  "anweisung": "Nach der fünften Nacht kommt Pell mit seinem Bericht: vier Männer in der Wachstube, Wachwechsel zur zweiten Glocke nach Mitternacht, und einmal ist Asch nachts mit einem Bündel aus dem Haus gegangen.",
+  "modell": "x-ai/grok-4.6",
+  "woerter": 125,
+  "token_ein": 8874,
+  "kosten_usd": 0.0233442,
+  "finish_reason": "stop",
+  "bausteine": [
+    [
+      "rahmen",
+      "Rahmen"
+    ],
+    [
+      "welt",
+      "Die Salzmark"
+    ],
+    [
+      "schreibweise",
+      "Figuren-Schreibweise"
+    ],
+    [
+      "regel",
+      "Monde"
+    ],
+    [
+      "regel",
+      "Salzbindung"
+    ],
+    [
+      "regel",
+      "Salzlicht"
+    ],
+    [
+      "regel",
+      "Schnurgebot"
+    ],
+    [
+      "zeitlinie",
+      "Zeitlinie der Salzmark"
+    ],
+    [
+      "verweis",
+      "Pell Sund"
+    ],
+    [
+      "gefuehrte-figur",
+      "Ilka Varn"
+    ],
+    [
+      "auffuellung",
+      "Zum Nassen Grab"
+    ],
+    [
+      "auffuellung",
+      "Gunda Hollt"
+    ],
+    [
+      "auffuellung",
+      "Anselm Drach"
+    ],
+    [
+      "auffuellung",
+      "Fenn Asch"
+    ],
+    [
+      "auffuellung",
+      "Hedda Varn"
+    ],
+    [
+      "auffuellung",
+      "Jorin Rehl"
+    ],
+    [
+      "auffuellung",
+      "Oskar Lund"
+    ],
+    [
+      "auffuellung",
+      "Schwester Mai"
+    ],
+    [
+      "auffuellung",
+      "Sera Kolb"
+    ],
+    [
+      "auffuellung",
+      "Tomas Rehl"
+    ],
+    [
+      "auffuellung",
+      "Ysolde Marr"
+    ],
+    [
+      "auffuellung",
+      "Aschturm"
+    ],
+    [
+      "auffuellung",
+      "Kerrow"
+    ],
+    [
+      "auffuellung",
+      "Salzbucht"
+    ],
+    [
+      "auffuellung",
+      "Tolm"
+    ],
+    [
+      "auffuellung",
+      "Vogtshaus"
+    ],
+    [
+      "auffuellung",
+      "Das schwarze Buch"
+    ],
+    [
+      "auffuellung",
+      "Grausalz"
+    ],
+    [
+      "auffuellung",
+      "Kerbe"
+    ],
+    [
+      "auffuellung",
+      "Runenklinge"
+    ],
+    [
+      "auffuellung",
+      "Siegelring des Vogts"
+    ],
+    [
+      "auffuellung",
+      "Salzeid"
+    ],
+    [
+      "auffuellung",
+      "Stille Schwestern"
+    ],
+    [
+      "auffuellung",
+      "Totensitte"
+    ],
+    [
+      "handlungsstand",
+      "Gesamtzusammenfassung"
+    ],
+    [
+      "seiten",
+      "Kapitel 1"
+    ],
+    [
+      "anweisung",
+      "Anschluss"
+    ],
+    [
+      "anweisung",
+      "Anweisung"
+    ],
+    [
+      "anweisung",
+      "Vorgaben"
+    ],
+    [
+      "schreibweise",
+      "Erinnerung Figuren-Schreibweise"
+    ]
+  ]
+}

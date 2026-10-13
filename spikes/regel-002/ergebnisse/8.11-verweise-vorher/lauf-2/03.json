@@ -1,0 +1,171 @@
+{
+  "schritt": 3,
+  "anweisung": "Die nächsten Tage schleppe ich Salz für einen Händler aus der Oberstadt, um nicht aufzufallen. Am dritten Abend kommt Gunda zu mir in die Kammer herauf.",
+  "modell": "x-ai/grok-4.6",
+  "woerter": 137,
+  "token_ein": 8258,
+  "kosten_usd": 0.02268882,
+  "finish_reason": "stop",
+  "bausteine": [
+    [
+      "rahmen",
+      "Rahmen"
+    ],
+    [
+      "welt",
+      "Die Salzmark"
+    ],
+    [
+      "schreibweise",
+      "Figuren-Schreibweise"
+    ],
+    [
+      "regel",
+      "Monde"
+    ],
+    [
+      "regel",
+      "Salzbindung"
+    ],
+    [
+      "regel",
+      "Salzlicht"
+    ],
+    [
+      "regel",
+      "Schnurgebot"
+    ],
+    [
+      "zeitlinie",
+      "Zeitlinie der Salzmark"
+    ],
+    [
+      "verweis",
+      "Pell Sund"
+    ],
+    [
+      "gefuehrte-figur",
+      "Ilka Varn"
+    ],
+    [
+      "auffuellung",
+      "Anselm Drach"
+    ],
+    [
+      "auffuellung",
+      "Fenn Asch"
+    ],
+    [
+      "auffuellung",
+      "Gunda Hollt"
+    ],
+    [
+      "auffuellung",
+      "Hedda Varn"
+    ],
+    [
+      "auffuellung",
+      "Jorin Rehl"
+    ],
+    [
+      "auffuellung",
+      "Oskar Lund"
+    ],
+    [
+      "auffuellung",
+      "Schwester Mai"
+    ],
+    [
+      "auffuellung",
+      "Sera Kolb"
+    ],
+    [
+      "auffuellung",
+      "Tomas Rehl"
+    ],
+    [
+      "auffuellung",
+      "Ysolde Marr"
+    ],
+    [
+      "auffuellung",
+      "Aschturm"
+    ],
+    [
+      "auffuellung",
+      "Kerrow"
+    ],
+    [
+      "auffuellung",
+      "Salzbucht"
+    ],
+    [
+      "auffuellung",
+      "Tolm"
+    ],
+    [
+      "auffuellung",
+      "Vogtshaus"
+    ],
+    [
+      "auffuellung",
+      "Zum Nassen Grab"
+    ],
+    [
+      "auffuellung",
+      "Das schwarze Buch"
+    ],
+    [
+      "auffuellung",
+      "Grausalz"
+    ],
+    [
+      "auffuellung",
+      "Kerbe"
+    ],
+    [
+      "auffuellung",
+      "Runenklinge"
+    ],
+    [
+      "auffuellung",
+      "Siegelring des Vogts"
+    ],
+    [
+      "auffuellung",
+      "Salzeid"
+    ],
+    [
+      "auffuellung",
+      "Stille Schwestern"
+    ],
+    [
+      "auffuellung",
+      "Totensitte"
+    ],
+    [
+      "handlungsstand",
+      "Gesamtzusammenfassung"
+    ],
+    [
+      "seiten",
+      "Kapitel 1"
+    ],
+    [
+      "anweisung",
+      "Anschluss"
+    ],
+    [
+      "anweisung",
+      "Anweisung"
+    ],
+    [
+      "anweisung",
+      "Vorgaben"
+    ],
+    [
+      "schreibweise",
+      "Erinnerung Figuren-Schreibweise"
+    ]
+  ]
+}
