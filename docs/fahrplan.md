@@ -61,7 +61,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 7.8): V.20, V.21, V.22, V.23, V.24, V.25 (neu 2026-10-12). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 7.8): V.20, V.21, V.22, V.23, V.24, V.25 (neu 2026-10-12), V.26, V.27, V.28 (neu 2026-10-13). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -1132,6 +1132,57 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine (voraussichtlich)
 - **Artefakte:** ADR, Spike
 - **Notizen:** Angelegt 2026-10-12. Stand heute: alle Regeln und Zeitlinien gehen immer mit (Vorrang 1), `@`-Einträge vollständig (Vorrang 2), übrige Einträge füllen auf (ADR-062); der Weltenbauer kann schon mehrere Einträge verschiedener Kategorien in einem Vorschlag anlegen, verknüpft sie aber nicht.
+
+#### V.26: Wandernde Figuren – weltneutraler Kern, Weltbezug je Welt, Erlebnisse wandern mit
+
+- **Status:** ⏸️ VERSCHOBEN → 7.8 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 7.8 (Eigentümer 2026-10-13: „In Zukunft sollten wir nochmal das gesamte Kanonsystem überdenken und überlegen, wie wir Figuren transportabel machen“; „Ja, als V.26 festhalten“)
+- **Phasentyp-Kontext:** ERKUNDUNG (Probe an echten Figuren des Eigentümers), danach Entscheidung
+- **Abhängigkeiten:** 7.16; gemeinsam mit V.25 planen
+- **Freigabepflichtig:** ja – Datenmodell (Kategorie 4), Architektur des Kanons und der Anfrage-Zusammenstellung (Kategorie 1)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell und Architektur (Eskalations-Auslöser 1, voraussichtlich `[STRATEGISCH]`).
+- **Eingangskriterien:** Erkundung und Vorlage in 7.8
+- **Anforderungen (ab Klasse M):** – (berührt FR-002, FR-016 und die Gäste aus 3.7)
+- **Zu tun:** Gedanken des Eigentümers, noch nichts entschieden: (1) Figuren ohne Bezug auf eine bestimmte Welt beschreiben, damit sie in mehreren Welten einsetzbar sind; (2) je Welt ein eigener Bezug (Herkunft, Beziehungen, Besitz, Erlebtes); (3) realistisch eingepasst, wenn eine Figur in eine neue Welt kommt (z. B. Vorschlag des Weltenbauers); (4) Erlebnisse in einer anderen Welt schreiben den Kern der Figur fort und wandern in die Ursprungswelt mit. Mögliche Richtungen: Kern und Weltteil trennen; Figurenbibliothek außerhalb der Welten; Anpassung beim Einsetzen. Erster Baustein vorhanden: Abschnitt „Aussehen“ (7.16).
+- **Akzeptanzkriterien:** in 7.8 festzulegen
+- **Betroffene Module:** canon, manuscript, context, api, ui (voraussichtlich)
+- **Reifegrad-Wirkung:** voraussichtlich ja (Datenmodell des Kanons)
+- **Artefakte:** Erkundung, Spike, ADR
+- **Notizen:** Angelegt 2026-10-13 nach dem Einspielen von 7.16; Eigentümer: „Schweres Thema“, „ich verzettel mich“ – bewusst nur festgehalten, nicht entschieden.
+
+#### V.27: Weltenbauer behält das Gespräch nach „Als Kanon übernehmen“
+
+- **Status:** ⏸️ VERSCHOBEN → 7.8 (Planung der nächsten Ausbaustufe; als einer der ersten Schritte vorschlagen)
+- **Landeplatz (nur VERSCHOBEN):** 7.8 (Befund des Eigentümers 2026-10-13; Wahl „Als V.27 vormerken“, Phase 7 an der Wucherungs-Schwelle)
+- **Phasentyp-Kontext:** UMSETZUNG (mit Mockup)
+- **Abhängigkeiten:** 6.7
+- **Freigabepflichtig:** nein bei Variante A/B (Bedienung); Variante C wäre Kategorie 6 (Texte im Gerät, gegen ADR-048)
+- **Empfohlene Klasse:** Routine – Bedienung ohne Architekturwirkung.
+- **Eingangskriterien:** Mockup freigegeben
+- **Anforderungen (ab Klasse M):** FR-029
+- **Zu tun:** Befund: „Als Kanon übernehmen“ wechselt in den Reiter „Import“, die Kanon-Seite mit dem Weltenbauer wird geschlossen, das Gespräch ist weg – der Eigentümer möchte mehrere Einträge hintereinander bauen. Vorschlag A: Import-Vorschau als Fenster auf der Kanon-Seite, danach „Zurück zum Weltenbauer“ im selben Gespräch. Alternative B: Gespräch auf Weltebene halten. Verworfen C: Gespräch im Browser speichern (ADR-048).
+- **Akzeptanzkriterien:** Mockup freigegeben; nach dem Übernehmen geht das Gespräch weiter; Tests; Eigentümer bestätigt.
+- **Betroffene Module:** ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-13.
+
+#### V.28: Zeitlinie mit Jahr, Datum und Uhrzeit
+
+- **Status:** ⏸️ VERSCHOBEN → 7.8 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 7.8 (Befund des Eigentümers 2026-10-13: „Ist was für die spätere Phase. Für später.“)
+- **Phasentyp-Kontext:** offen (vermutlich mit Vorlage zur Schreibweise von Zeitangaben)
+- **Abhängigkeiten:** 7.2
+- **Freigabepflichtig:** ja, falls die Form der Zeitangaben im Kanon festgelegt wird (Datenmodell, Kategorie 4); Darstellung allein nicht
+- **Empfohlene Klasse:** Entscheidung, falls Datenmodell; sonst Routine.
+- **Eingangskriterien:** Bedarf und Form in 7.8 klären
+- **Anforderungen (ab Klasse M):** – (Ergänzung zu FR-034)
+- **Zu tun:** Befund des Eigentümers: zwischen Jahreszahl, Datum und Uhrzeit unterscheiden; auch nur Uhrzeiten oder nur ein Datum angeben können; im Verlauf sichtbar machen, wo die Zeitstempel sind; „kann man noch besser ausbauen“. Stand heute (7.2, ADR-069): sortiert wird nach der ersten Zahl am Anfang (Jahr), Datum und Uhrzeit werden nicht unterschieden.
+- **Akzeptanzkriterien:** in 7.8 festzulegen
+- **Betroffene Module:** ui, ggf. canon (voraussichtlich)
+- **Reifegrad-Wirkung:** keine (voraussichtlich)
+- **Artefakte:** ggf. ADR
+- **Notizen:** Angelegt 2026-10-13.
 
 #### V.21: Veröffentlichung (öffentlicher Link zum Lesen)
 

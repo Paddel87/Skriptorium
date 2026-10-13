@@ -29,6 +29,24 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [BEOBACHTUNG] Befund Zeitlinie: Jahr, Datum, Uhrzeit (V.28)
+
+- Eigentümer: Zeitlinie soll Jahr, Datum und Uhrzeit unterscheiden, auch nur Uhrzeit oder Datum erlauben und im Verlauf zeigen, wo die Zeitstempel sind – „für später“. Als V.28 mit Landeplatz 7.8 festgehalten.
+
+### 2026-10-13 – [BEOBACHTUNG] Befund Weltenbauer: Gespräch weg nach „Als Kanon übernehmen“ (V.27)
+
+- Ursache: Übernahme navigiert in den Reiter „Import“, die Kanon-Seite samt Weltenbauer wird geschlossen, das Gespräch lag nur im Zustand der Komponente. Neuer Schritt 7.17 hätte die Wucherungs-Schwelle von Phase 7 überschritten (Neuplanung nötig); Eigentümer wählt „Als V.27 vormerken“ – in 7.8 als einer der ersten Schritte der nächsten Ausbaustufe vorschlagen.
+
+### 2026-10-13 – [BEOBACHTUNG] Eindruck des Eigentümers; Idee „wandernde Figuren“ (V.26)
+
+- Eigentümer: Die neuen Funktionen „funktionieren alle auch relativ gut“. Abhaken von 7.6–7.16 bewusst erst nach seinen Proben (Wahl „Noch nicht“).
+- Grundsatzgedanke: Figuren sollen ohne Bezug auf eine Welt beschrieben sein, in andere Welten wandern können, dort realistisch eingepasst werden, und ihre Erlebnisse sollen in den Kern zurückwandern. Als V.26 festgehalten, nicht entschieden; Planung in 7.8 zusammen mit V.25.
+
+### 2026-10-13 – [BEOBACHTUNG] Eingespielt: Abschnitt „Aussehen“ (`8296931`)
+
+- PR #149 (V.25) auf „merge“ nach grüner CI gemergt (zwei Anläufe, Prüfungen liefen noch; automatisches Mergen bewusst nicht eingeschaltet, da nicht ausdrücklich verlangt).
+- Auf Anweisung („einspielen“) `main` mit 7.16 eingespielt (Rückweg wie im Runbook). HTTPS `/api/health` 200 nach 60 s, neue Route ohne Anmeldung 401; eine SSH-Abfrage: `(healthy)`, `REVISION` `8296931`, keine Fehler im Protokoll. Offen: Probe des Eigentümers an einer echten Figur.
+
 ### 2026-10-12 – [BEOBACHTUNG] PR #148 gemergt; Idee „Verweise zwischen Kanon-Einträgen“ (V.25)
 
 - PR #148 (7.16) auf „merge“ nach grüner CI gemergt, noch nicht eingespielt.
