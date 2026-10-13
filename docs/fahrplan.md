@@ -61,7 +61,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 7.8): V.20, V.21, V.22, V.23, V.24, V.25 (neu 2026-10-12), V.26, V.27 (neu 2026-10-13). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 7.8): V.20, V.21, V.22, V.23, V.24, V.25 (neu 2026-10-12), V.26, V.27, V.28 (neu 2026-10-13). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -1165,6 +1165,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Betroffene Module:** ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-13.
+
+#### V.28: Zeitlinie mit Jahr, Datum und Uhrzeit
+
+- **Status:** ⏸️ VERSCHOBEN → 7.8 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 7.8 (Befund des Eigentümers 2026-10-13: „Ist was für die spätere Phase. Für später.“)
+- **Phasentyp-Kontext:** offen (vermutlich mit Vorlage zur Schreibweise von Zeitangaben)
+- **Abhängigkeiten:** 7.2
+- **Freigabepflichtig:** ja, falls die Form der Zeitangaben im Kanon festgelegt wird (Datenmodell, Kategorie 4); Darstellung allein nicht
+- **Empfohlene Klasse:** Entscheidung, falls Datenmodell; sonst Routine.
+- **Eingangskriterien:** Bedarf und Form in 7.8 klären
+- **Anforderungen (ab Klasse M):** – (Ergänzung zu FR-034)
+- **Zu tun:** Befund des Eigentümers: zwischen Jahreszahl, Datum und Uhrzeit unterscheiden; auch nur Uhrzeiten oder nur ein Datum angeben können; im Verlauf sichtbar machen, wo die Zeitstempel sind; „kann man noch besser ausbauen“. Stand heute (7.2, ADR-069): sortiert wird nach der ersten Zahl am Anfang (Jahr), Datum und Uhrzeit werden nicht unterschieden.
+- **Akzeptanzkriterien:** in 7.8 festzulegen
+- **Betroffene Module:** ui, ggf. canon (voraussichtlich)
+- **Reifegrad-Wirkung:** keine (voraussichtlich)
+- **Artefakte:** ggf. ADR
 - **Notizen:** Angelegt 2026-10-13.
 
 #### V.21: Veröffentlichung (öffentlicher Link zum Lesen)

@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [BEOBACHTUNG] Befund Zeitlinie: Jahr, Datum, Uhrzeit (V.28)
+
+- Eigentümer: Zeitlinie soll Jahr, Datum und Uhrzeit unterscheiden, auch nur Uhrzeit oder Datum erlauben und im Verlauf zeigen, wo die Zeitstempel sind – „für später“. Als V.28 mit Landeplatz 7.8 festgehalten.
+
 ### 2026-10-13 – [BEOBACHTUNG] Befund Weltenbauer: Gespräch weg nach „Als Kanon übernehmen“ (V.27)
 
 - Ursache: Übernahme navigiert in den Reiter „Import“, die Kanon-Seite samt Weltenbauer wird geschlossen, das Gespräch lag nur im Zustand der Komponente. Neuer Schritt 7.17 hätte die Wucherungs-Schwelle von Phase 7 überschritten (Neuplanung nötig); Eigentümer wählt „Als V.27 vormerken“ – in 7.8 als einer der ersten Schritte der nächsten Ausbaustufe vorschlagen.
