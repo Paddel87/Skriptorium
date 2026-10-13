@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 10:35 UTC – [ADR-ANGELEGT] ADR-079 Markierungen auf Karten (7.14)
+
+- Auftrag „weiter mit 7.14“. Vorlage mit Auswahlfragen: „An der Karte“, „Knopf ‚Markieren‘“ (beide Empfehlung), „Nur Punkt“ (statt Punkt mit Namen). 7.14 auf IN ARBEIT; Mockup (Vorher, Ansicht, Modus „Markieren“, Handy) zur Freigabe vorgelegt.
+- Drift beim Sessionstart behoben: Fahrplan-Übersicht führte 7.12 und 7.16 noch als „PR freigeben“, obwohl gemergt und eingespielt; Teil A in `docs/decisions.md` endete bei ADR-072 – Zeilen 073–078 nachgetragen.
+- Reibung: Playwright fand den vorinstallierten Browser nicht (erwartet `chromium_headless_shell-1234`, vorhanden 1194) – für das Mockup-Foto `executablePath: /opt/pw-browsers/chromium`.
+
 ### 2026-10-13 10:22 UTC – [SESSIONSTART] Neue Session (Cloud)
 
 - **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage 10:22) → Entscheidungs-Klasse. Kurzzeitlimit (5 Stunden) `allowed`.
