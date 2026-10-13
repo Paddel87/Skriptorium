@@ -104,3 +104,15 @@ Cloud-Session, Modell `x-ai/grok-4.6`, Länge „mittel“. Vorher: Stand `9acc5
 - **Herangezogen:** Bei vollem Budget ist die ganze Testwelt in beiden Varianten in der Anfrage; nachher stehen die verwiesenen Einträge (Zum Nassen Grab, Gunda Hollt) als erste der Auffüllung, vorher in Kategorie-Reihenfolge (alle 3 Ketten, `bausteine` in `01.json`). Bei knappem Budget (`BUDGET=6000`, ohne KI, `bausteine-budget-6000.json`): nachher ist „Zum Nassen Grab“ dabei, vorher nicht – die beabsichtigte Wirkung.
 - **Ortsgebundene Regel:** In keinem der 42 Vorschläge kommen Wollschnur oder Handgelenk-Schnur vor – weder vorher noch nachher. Die Regel wurde außerhalb von Tolm nicht angewendet; ein Unterschied durch den neuen Rahmensatz ist damit nicht nachweisbar (das Modell hielt sie schon ohne ihn ein). „Tolm“ kommt nur als Ziel der Nachricht an Marr vor (Schritt 7, Anweisung).
 - **Widersprüche:** Stichprobe zu Pell (Alter, Lesen, Schlafplatz): keine Abweichung („Pell ist zwölf.“). Eine vollständige Bewertung von Hand durch eine getrennte Instanz wie in 5.24 ist **nicht** erfolgt.
+
+**Nachlauf zu Teil 1 (Wahl des Eigentümers „3 weitere Läufe je Seite“):** je 3 weitere Ketten (`ergebnisse/8.11-vorher-2/`, `…/8.11-nachher-2/`, 1,46 $ + 1,45 $). Ausgewertet über alle 6 Ketten je Seite (die Läufe beider Ordner in einen gemeinsamen Ordner je Seite kopiert, `lauf-4` bis `lauf-6` für den Nachlauf), Mittel (Spannweite):
+
+| Kennzahl | Salzmark vorher | Salzmark nachher | Glimmergrund vorher | Glimmergrund nachher |
+|---|---|---|---|---|
+| wörtlich % | 0,40 (0,08–0,91) | 0,70 (0,61–0,77) | 0,10 (0,00–0,23) | 0,20 (0,00–0,97) |
+| 6er doppelt | 0,67 (0–4) | 0,50 (0–2) | 0,00 (0–0) | 0,17 (0–1) |
+| Warte-Enden | 0,00 (0–0) | 0,00 (0–0) | 0,00 (0–0) | 0,17 (0–1) |
+| Motivfolge | 1,50 (1–2) | 2,17 (1–4) | 1,50 (1–2) | 1,67 (1–2) |
+| Wörter je Vorschlag | 123 (106–154) | 125 (110–138) | 118 (115–121) | 124 (100–144) |
+
+**Ergebnis:** Alle Mittelwerte von nachher liegen in der Spannweite von vorher – nach Regel-002 keine Wirkung des neuen Rahmensatzes, der Befund aus drei Läufen war Streuung. Gesamtkosten der Probe 6,82 $.

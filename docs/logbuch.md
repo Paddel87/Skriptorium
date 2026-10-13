@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [GELÖST] 8.11 Befund „wörtlich %“ war Streuung
+
+- Wahl des Eigentümers „3 weitere Läufe je Seite“ (2,91 $). Über 6 Ketten je Seite liegen alle Mittelwerte von nachher in der Spannweite von vorher (Salzmark wörtlich 0,70 in 0,08–0,91; Glimmergrund 0,20 in 0,00–0,23) – keine Wirkung nach Regel-002. Probe 8.11 insgesamt 6,82 $; offen nur die Bestätigung des Eigentümers.
+- Reibung: Die Warteschleife mit `pgrep -f "regel-002/lauf.py"` fand sich selbst (ihr eigener Befehl enthält das Muster) – Ende der Läufe stattdessen an „Kosten gesamt“ in den Protokollen erkannt.
+
 ### 2026-10-13 – [BEOBACHTUNG] 8.11 Probe nach Regel-002 in der Cloud-Session
 
 - Auftrag des Eigentümers „Beide Teile jetzt“. Vorher-Stand `9acc5bf` in einem Worktree (`PYTHONPATH` auf dessen `src`), nachher `main` `5c6a14f`; grok-4.6, „mittel“, je 3 Ketten. Kosten 3,91 $. Ergebnisse und Tabellen: `spikes/regel-002/README.md`, Abschnitt „Probe zu 8.11“.
