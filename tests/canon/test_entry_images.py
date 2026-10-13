@@ -6,7 +6,7 @@ import pytest
 
 from skriptorium.canon import CanonService, InvalidInput, NotFound
 from skriptorium.canon.service import MAX_IMAGES_PER_ENTRY
-from skriptorium.storage import DocumentStore
+from skriptorium.storage import DocumentStore, StorageError
 from tests.image_samples import jpeg, png, webp_lossy
 
 WORLD = "die-salzmark"
@@ -142,3 +142,17 @@ def test_an_entry_with_a_broken_image_list_can_still_be_deleted(
     canon.delete_entry(WORLD, "gunda-hollt")
     assert not path.exists()
     assert (root / "worlds" / WORLD / "bilder" / image).exists()
+
+
+def test_a_failed_header_write_takes_the_new_image_file_back(
+    canon: CanonService, root: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    def fail(*_: object, **__: object) -> None:
+        raise StorageError("Datenträger voll")
+
+    monkeypatch.setattr(DocumentStore, "write", fail)
+    with pytest.raises(StorageError):
+        canon.add_entry_image(WORLD, "gunda-hollt", png())
+    monkeypatch.undo()
+    assert [p for p in (root / "worlds" / WORLD).rglob("*.png")] == []
+    assert canon.get_entry(WORLD, "gunda-hollt").images == ()

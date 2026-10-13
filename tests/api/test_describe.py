@@ -1,10 +1,14 @@
 """Describing an image or a map once over the API (roadmap step 7.13, ADR-074)."""
 
+import asyncio
 import base64
 from pathlib import Path
 
+import pytest
 from fastapi.testclient import TestClient
 
+from skriptorium.api.flows.describe import DescribeOrder, prepare_description
+from skriptorium.storage import InvalidInput
 from tests.api.conftest import FakeProvider, services_of
 from tests.api.test_writing import _events, writer
 from tests.image_samples import jpeg, png
@@ -98,3 +102,14 @@ def test_usage_is_counted_as_bildbeschreibung(writer: TestClient, data_dir: Path
     assert services_of(writer).usage.month().requests == 1
     text = next((data_dir / "system" / "verbrauch").glob("*.md")).read_text(encoding="utf-8")
     assert "art: bildbeschreibung" in text
+
+
+def test_an_order_without_image_or_map_is_refused(writer: TestClient) -> None:
+    found = services_of(writer)
+    asyncio.run(found.catalog.refresh())
+    for order in (
+        DescribeOrder("die-salzmark", "x-ai/grok-4.6"),
+        DescribeOrder("die-salzmark", "x-ai/grok-4.6", entry="kael"),
+    ):
+        with pytest.raises(InvalidInput, match="Kein Bild"):
+            prepare_description(found.canon, found.context, found.catalog, order)

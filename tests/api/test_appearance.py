@@ -35,3 +35,18 @@ def test_unknown_model_and_entry(writer: TestClient, provider: FakeProvider) -> 
     missing = writer.post("/api/worlds/die-salzmark/entries/niemand/appearance", json={})
     assert missing.status_code == 404
     assert provider.requests == []
+
+
+def test_an_entry_too_large_for_the_budget_is_refused(
+    writer: TestClient, provider: FakeProvider
+) -> None:
+    writer.post(
+        "/api/worlds/die-salzmark/entries",
+        json={"category": "figur", "name": "Riesenfigur", "body": "Narbe. " * 20_000},
+    )
+
+    response = writer.post("/api/worlds/die-salzmark/entries/riesenfigur/appearance", json={})
+
+    assert response.status_code == 422
+    assert "Eintrag (" in response.json()["detail"]
+    assert provider.requests == []

@@ -246,3 +246,150 @@ def test_a_cost_that_is_not_a_number_is_dropped() -> None:
     )
     adapter, _, _ = setup(answer)
     assert asyncio.run(adapter.generate(order())).cost_usd is None
+
+
+def catalog_with(
+    models: object, endpoints: object, clock: list[float] | None = None
+) -> tuple[ImageCatalog, list[str]]:
+    """A catalog whose model list and endpoint answers are given; records requested paths."""
+    paths: list[str] = []
+    now = clock if clock is not None else [0.0]
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        paths.append(request.url.path)
+        body = models if request.url.path == "/api/v1/images/models" else endpoints
+        return httpx.Response(200, json=body)
+
+    return ImageCatalog(transport=httpx.MockTransport(handler), clock=lambda: now[0]), paths
+
+
+def test_providers_are_kept_for_an_hour_then_loaded_again() -> None:
+    now = [0.0]
+    models = {"data": [{"id": "a/b", "name": "B"}]}
+    endpoints = {"endpoints": [{"provider_slug": "p", "pricing": []}]}
+    catalog, paths = catalog_with(models, endpoints, now)
+    asyncio.run(catalog.refresh())
+    first = asyncio.run(catalog.endpoints("a/b"))
+    assert [e.provider for e in first] == ["p"]
+    assert asyncio.run(catalog.endpoints("a/b")) == first
+    assert paths.count("/api/v1/images/models/a/b/endpoints") == 1
+    now[0] = 3601.0
+    asyncio.run(catalog.endpoints("a/b"))
+    assert paths.count("/api/v1/images/models/a/b/endpoints") == 2
+
+
+@pytest.mark.parametrize("endpoints", [{"endpoints": "keine Liste"}, ["kein Objekt"]])
+def test_unusable_provider_answers_give_no_providers(
+    endpoints: object, caplog: pytest.LogCaptureFixture
+) -> None:
+    catalog, _ = catalog_with({"data": [{"id": "a/b", "name": "B"}]}, endpoints)
+    asyncio.run(catalog.refresh())
+    with caplog.at_level(logging.WARNING):
+        assert asyncio.run(catalog.endpoints("a/b")) == ()
+        assert asyncio.run(catalog.price("a/b")) is None
+    assert "bildmodell-anbieter nicht geladen" in caplog.text
+
+
+def test_failing_provider_request_gives_no_providers() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/api/v1/images/models":
+            return httpx.Response(200, json={"data": [{"id": "a/b", "name": "B"}]})
+        return httpx.Response(500)
+
+    catalog = ImageCatalog(transport=httpx.MockTransport(handler))
+    asyncio.run(catalog.refresh())
+    assert asyncio.run(catalog.endpoints("a/b")) == ()
+
+
+@pytest.mark.parametrize("models", [{"data": "keine Liste"}, ["kein Objekt"]])
+def test_a_model_list_without_data_leaves_the_catalog_empty(
+    models: object, caplog: pytest.LogCaptureFixture
+) -> None:
+    catalog, _ = catalog_with(models, {})
+    with caplog.at_level(logging.WARNING):
+        asyncio.run(catalog.refresh())
+    assert not catalog.available
+    assert "bildmodell-katalog nicht geladen" in caplog.text
+
+
+def test_provider_entries_without_slug_or_object_are_skipped() -> None:
+    endpoints = {
+        "endpoints": [
+            "kein Objekt",
+            {"allowed_passthrough_parameters": ["x"]},
+            {"provider_slug": ""},
+            {"provider_slug": "ok", "allowed_passthrough_parameters": ["x", 3]},
+        ]
+    }
+    catalog, _ = catalog_with({"data": [{"id": "a/b", "name": "B"}]}, endpoints)
+    asyncio.run(catalog.refresh())
+    found = asyncio.run(catalog.endpoints("a/b"))
+    assert [(e.provider, e.passthrough) for e in found] == [("ok", frozenset({"x"}))]
+
+
+@pytest.mark.parametrize(
+    "pricing",
+    [
+        "kein Liste",
+        ["kein Objekt"],
+        [{"unit": "image", "cost_usd": -1}, {"cost_usd": 0.1}, {"unit": 3, "cost_usd": 0.1}],
+    ],
+)
+def test_prices_without_a_usable_entry_are_none(pricing: object) -> None:
+    endpoints = {"endpoints": [{"provider_slug": "p", "pricing": pricing}]}
+    catalog, _ = catalog_with({"data": [{"id": "a/b", "name": "B"}]}, endpoints)
+    asyncio.run(catalog.refresh())
+    assert asyncio.run(catalog.price("a/b")) is None
+
+
+def test_an_unusable_base_entry_falls_back_to_a_variant() -> None:
+    pricing = [
+        {"unit": "image", "cost_usd": -1},
+        {"variant": "4k", "unit": "image", "cost_usd": 0.5},
+    ]
+    endpoints = {"endpoints": [{"provider_slug": "p", "pricing": pricing}]}
+    catalog, _ = catalog_with({"data": [{"id": "a/b", "name": "B"}]}, endpoints)
+    asyncio.run(catalog.refresh())
+    assert asyncio.run(catalog.price("a/b")) == ImagePrice(0.5, "image")
+
+
+def test_the_list_is_not_asked_again_within_an_hour() -> None:
+    now = [0.0]
+    catalog, paths = catalog_with({"data": [{"id": "a/b", "name": "B"}]}, {}, now)
+    asyncio.run(catalog.refresh())
+    now[0] = 3599.0
+    asyncio.run(catalog.refresh())
+    assert paths == ["/api/v1/images/models"]
+    now[0] = 3601.0
+    asyncio.run(catalog.refresh())
+    assert paths == ["/api/v1/images/models"] * 2
+
+
+def test_a_failed_load_is_not_retried_at_once() -> None:
+    now = [0.0]
+    calls: list[float] = []
+
+    def handler(_: httpx.Request) -> httpx.Response:
+        calls.append(now[0])
+        return httpx.Response(503)
+
+    catalog = ImageCatalog(transport=httpx.MockTransport(handler), clock=lambda: now[0])
+    asyncio.run(catalog.refresh())
+    asyncio.run(catalog.refresh())
+    assert calls == [0.0]
+    now[0] = 10_000.0
+    asyncio.run(catalog.refresh())
+    assert calls == [0.0, 10_000.0]
+
+
+def test_a_model_without_known_providers_is_sent_without_provider_options() -> None:
+    adapter, _, server = setup(image_answer())
+    asyncio.run(adapter.generate(order("unbekannt/modell")))
+    assert "provider" not in server.sent[0]
+
+
+def test_closing_the_adapter_closes_its_client() -> None:
+    adapter, _, _ = setup()
+    asyncio.run(adapter.aclose())
+    with pytest.raises(RuntimeError):
+        asyncio.run(adapter.generate(order()))

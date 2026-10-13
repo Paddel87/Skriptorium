@@ -9,7 +9,7 @@ from xml.etree import ElementTree
 import pytest
 
 from skriptorium.manuscript import ManuscriptService
-from skriptorium.storage import DocumentStore, InvalidInput, NotFound
+from skriptorium.storage import DocumentStore, InvalidInput, NotFound, StorageError
 from tests.image_samples import jpeg, png
 
 W = "salzmark"
@@ -120,3 +120,20 @@ def test_a_missing_cover_file_does_not_stop_the_ebook(ms: ManuscriptService, roo
     (root / "worlds" / W / "stories" / S / cover).unlink()
     data = ms.epub(W, S, author=None, only_completed=False, modified=WHEN)
     assert not any("umschlag" in n for n in zipfile.ZipFile(BytesIO(data)).namelist())
+
+
+def test_a_failed_header_write_keeps_the_old_cover_and_drops_the_new_file(
+    ms: ManuscriptService, root: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    old = ms.set_story_cover(W, S, png()).cover
+    folder = root / "worlds" / W / "stories" / S
+
+    def fail(*_: object, **__: object) -> None:
+        raise StorageError("Datenträger voll")
+
+    monkeypatch.setattr(DocumentStore, "write", fail)
+    with pytest.raises(StorageError):
+        ms.set_story_cover(W, S, jpeg())
+    monkeypatch.undo()
+    assert ms.get_story(W, S).cover == old
+    assert sorted(p.name for p in folder.glob("titelbild-*")) == [old]
