@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 8 „Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung“ (Phase 7 abgeschlossen 2026-10-13)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** keiner
-- **Nächster Schritt:** 8.8 Weltenbauer behält das Gespräch (V.27) – Mockup an den Eigentümer. Eingespielt ist noch `27506c2`; 8.1–8.7 warten auf „einspielen“. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** 8.9 Weltenbauer aus dem Manuskript (V.22) – Vorlage an den Eigentümer. Eingespielt ist noch `27506c2`; 8.1–8.8 warten auf „einspielen“. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details im Archiv [`docs/archiv/fahrplan-phase-7.md`](archiv/fahrplan-phase-7.md).
 
-**Phase 8: 7 von 13 erledigt.**
+**Phase 8: 8 von 13 erledigt.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -35,7 +35,7 @@ Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details
 | ✅ | 8.5 | Bildvorlagen aus „Aussehen“ bzw. Geografie der Karte (V.31) | erledigt 2026-10-13 (ADR-084) | – |
 | ✅ | 8.6 | Kapitel-Kurzfassung nur mit dem Stand davor (V.30) | erledigt 2026-10-13 (ADR-085) | – |
 | ✅ | 8.7 | Regeln und Zeitlinie an den Weltenbauer? (V.32) | erledigt 2026-10-13 (ADR-086) | – |
-| ⚪ | 8.8 | Weltenbauer behält das Gespräch (V.27) | offen | KI: Mockup |
+| ✅ | 8.8 | Weltenbauer behält das Gespräch (V.27) | erledigt 2026-10-13 | – |
 | ⚪ | 8.9 | Weltenbauer aus dem Manuskript (V.22) | offen | KI: Vorlage |
 | ⚪ | 8.10 | Zeitlinie mit Jahr, Datum und Uhrzeit (V.28) | offen | KI: Vorlage, Mockup |
 | ⚪ | 8.11 | Verweise zwischen Kanon-Einträgen (V.25) | offen | KI: Vorlage |
@@ -298,7 +298,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 8.8: Weltenbauer behält das Gespräch nach „Als Kanon übernehmen“ (V.27)
 
-- **Status:** ⚪ OFFEN
+- **Status:** ✅ ERLEDIGT (2026-10-13) – Mockup freigegeben (Variante A, ohne ADR – Bedienung): „Als Kanon übernehmen“ öffnet die Import-Vorschau als Fenster über dem Weltenbauer (`ImportDialog`), die Vorschau ist als `ImportReview` mit dem Reiter „Import“ geteilt; nach dem Übernehmen „Zurück zum Weltenbauer“, die Liste lädt neu ohne Neuaufbau der Kanon-Seite. Sprung in den Reiter „Import“ (`state.importText`, `initialText`) entfernt. vitest 384 grün (98,78 % / 94,92 %), tsc, eslint, prettier, Build, Playwright 11/11 (Lauf des Unteragenten). Sichtprobe am lokalen Testserver mit 375 px und dunkler Darstellung (Antwort des Weltenbauers im Browser ersetzt): Fenster passt, Übernehmen legt „Fährmann Tom“ an, Gespräch bleibt, Adresse bleibt `/kanon`. Vom Eigentümer freigegeben. Umsetzung durch Unteragenten (Sonnet), geprüft von der bauenden KI
 - **Phasentyp-Kontext:** UMSETZUNG (mit Mockup zu Beginn)
 - **Abhängigkeiten:** 8.1
 - **Freigabepflichtig:** nein bei Variante A/B (Bedienung); Mockup vorher/nachher

@@ -1,5 +1,5 @@
 import { useState, type SyntheticEvent } from "react";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { api, describeError, type World } from "../api";
 import {
   canonEntryPath,
@@ -40,7 +40,6 @@ export function WorldPage({
   const { refresh } = useNavigation();
   const [current, setCurrent] = useState(world);
   const [canonRound, setCanonRound] = useState(0);
-  const importText = proposalText(useLocation().state);
 
   return (
     <div className="stack">
@@ -71,11 +70,6 @@ export function WorldPage({
           key={canonRound}
           world={current.id}
           selected={entry}
-          onTakeOver={(importText) => {
-            void navigate(worldPath(current.id, "import"), {
-              state: { importText },
-            });
-          }}
           onSelect={(chosen) => {
             void navigate(
               chosen === null
@@ -97,7 +91,6 @@ export function WorldPage({
       {area === "import" && (
         <Import
           world={current.id}
-          initialText={importText}
           onImported={() => {
             setCanonRound((round) => round + 1);
           }}
@@ -114,14 +107,6 @@ export function WorldPage({
       )}
     </div>
   );
-}
-
-/** The proposal of the world builder passed with the address (step 6.7); empty if none. */
-function proposalText(state: unknown): string {
-  if (typeof state === "object" && state !== null && "importText" in state) {
-    return typeof state.importText === "string" ? state.importText : "";
-  }
-  return "";
 }
 
 function WorldForm({

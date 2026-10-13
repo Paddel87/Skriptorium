@@ -1,38 +1,33 @@
-import { useEffect, useState, type SyntheticEvent } from "react";
+import { useState, type SyntheticEvent } from "react";
 import {
   api,
-  CATEGORIES,
   describeError,
-  type Category,
   type ImportPreview,
   type ImportResult,
   type TranslatedMaterial,
 } from "../api";
 import { base64 } from "../files";
 import { ErrorText, Field } from "./Common";
+import { ImportReview } from "./ImportReview";
 
 /** Files from SillyTavern: character cards (PNG, JSON) and lorebooks (JSON), step 6.8. */
 const SILLYTAVERN = /\.(png|json)$/i;
 
 /**
  * Import Markdown world material: preview, adjust categories and conflicts, take over. A file
- * from SillyTavern is translated into Markdown by the server first (step 6.8, ADR-065). With
- * `initialText` (a proposal of the world builder, step 6.7) the field is filled and the preview
- * is requested right away.
+ * from SillyTavern is translated into Markdown by the server first (step 6.8, ADR-065).
  */
 export function Import({
   world,
   onImported,
-  initialText = "",
 }: {
   world: string;
   onImported: () => void;
-  initialText?: string;
 }) {
-  const [markdown, setMarkdown] = useState(initialText);
+  const [markdown, setMarkdown] = useState("");
   const [preview, setPreview] = useState<ImportPreview | null>(null);
-  const [categories, setCategories] = useState<Record<string, Category>>({});
-  const [overwrite, setOverwrite] = useState<string[]>([]);
+  // Counts the previews, so that each starts with fresh choices.
+  const [round, setRound] = useState(0);
   const [result, setResult] = useState<ImportResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   // What the translation of a SillyTavern file left out, with the file's name.
@@ -41,47 +36,12 @@ export function Import({
     notes: string[];
   } | null>(null);
 
-  // A proposal handed over by the world builder is previewed right away, once.
-  useEffect(() => {
-    if (initialText.trim() === "") {
-      return;
-    }
-    let current = true;
-    api
-      .previewImport(world, initialText)
-      .then((loaded) => {
-        if (current) {
-          setPreview(loaded);
-        }
-      })
-      .catch((reason: unknown) => {
-        if (current) {
-          setError(describeError(reason));
-        }
-      });
-    return () => {
-      current = false;
-    };
-  }, [world, initialText]);
-
   async function loadPreview(text: string) {
     setError(null);
     setResult(null);
     try {
       setPreview(await api.previewImport(world, text));
-      setCategories({});
-      setOverwrite([]);
-    } catch (reason: unknown) {
-      setError(describeError(reason));
-    }
-  }
-
-  async function apply() {
-    setError(null);
-    try {
-      setResult(await api.applyImport(world, markdown, categories, overwrite));
-      setPreview(null);
-      onImported();
+      setRound((count) => count + 1);
     } catch (reason: unknown) {
       setError(describeError(reason));
     }
@@ -156,75 +116,17 @@ export function Import({
       </form>
       <ErrorText message={error} />
       {preview !== null && (
-        <div>
-          <h3>Vorschau: {preview.items.length} Einträge</h3>
-          {preview.introduction !== "" && (
-            <p className="note">
-              Die Einleitung wird an die Weltbeschreibung angehängt.
-            </p>
-          )}
-          <table>
-            <thead>
-              <tr>
-                <th>Eintrag</th>
-                <th>Kategorie</th>
-                <th>Hinweis</th>
-              </tr>
-            </thead>
-            <tbody>
-              {preview.items.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.name}</td>
-                  <td>
-                    <select
-                      aria-label={`Kategorie für ${item.name}`}
-                      value={categories[item.id] ?? item.category ?? ""}
-                      onChange={(event) => {
-                        setCategories({
-                          ...categories,
-                          [item.id]: event.target.value as Category,
-                        });
-                      }}
-                    >
-                      <option value="" disabled>
-                        – wählen –
-                      </option>
-                      {CATEGORIES.map(({ id, label }) => (
-                        <option key={id} value={id}>
-                          {label}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
-                  <td>
-                    {item.conflict !== null && (
-                      <label className="check">
-                        <input
-                          type="checkbox"
-                          checked={overwrite.includes(item.id)}
-                          onChange={(event) => {
-                            setOverwrite(
-                              event.target.checked
-                                ? [...overwrite, item.id]
-                                : overwrite.filter((id) => id !== item.id),
-                            );
-                          }}
-                        />
-                        {item.conflict === "vorhanden"
-                          ? "existiert schon"
-                          : "doppelt"}{" "}
-                        – überschreiben
-                      </label>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <button type="button" onClick={() => void apply()}>
-            Übernehmen
-          </button>
-        </div>
+        <ImportReview
+          key={round}
+          world={world}
+          markdown={markdown}
+          preview={preview}
+          onApplied={(applied) => {
+            setResult(applied);
+            setPreview(null);
+            onImported();
+          }}
+        />
       )}
       {result !== null && (
         <p className="ok">
