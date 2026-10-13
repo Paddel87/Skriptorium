@@ -106,8 +106,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - ✅ **7.3:** Schreibweise folgt der Geschichte (ADR-070) – erledigt 2026-10-12.
 - ✅ **7.4:** Geschichte als E-Book (ADR-071) – erledigt 2026-10-12.
 - ✅ **7.5:** Aussehen „Buch“ – erledigt 2026-10-12.
-- 🟠 **7.6, 7.10–7.13, 7.16:** Bilder an Kanon-Einträgen, Karten mit Zoom, Titelbild, Bilder erzeugen und beschreiben lassen, Abschnitt „Aussehen“ (ADR-072 bis ADR-078) – eingespielt, deine Bestätigung steht aus.
-- 🟠 **7.14:** Markierungen auf Karten, die zum Kanon-Eintrag führen – gemergt, Einspielen steht aus (ADR-079).
+- 🟠 **7.6, 7.10–7.14, 7.16:** Bilder an Kanon-Einträgen, Karten mit Zoom und Markierungen, Titelbild, Bilder erzeugen und beschreiben lassen, Abschnitt „Aussehen“ (ADR-072 bis ADR-079) – eingespielt, deine Bestätigung steht aus.
 - ⚪ **Danach:** 7.15 nur auf Wunsch, dann 7.8 Planung.
 - ✅ **D.18:** Prüfung der Datentrennung je KI-Bereich – Welten, Geschichten und Gäste sauber getrennt; doppelte Abschnitte „Aussehen“/„Geografie“ und Bildvorlagen aus dem ganzen Text als V.29–V.31 vorgemerkt ([Bericht](docs/research/datentrennung-ki-bereiche.md)) – erledigt 2026-10-13.
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
