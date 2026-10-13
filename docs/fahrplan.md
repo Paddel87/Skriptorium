@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 7 „Zeitlinie, Publizieren, Gestaltung und Bilder“ (Phase 6 abgeschlossen 2026-10-12)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 7.14 Markierungen auf Karten – gemergt (PR #151), wartet auf Einspielen und Bestätigung
-- **Nächster Schritt:** 7.14 einspielen auf Anweisung (nur vom Mac aus); danach 7.15 (nur auf Wunsch) und 7.8. 7.6, 7.10–7.13 und 7.16 eingespielt, warten auf die Bestätigung des Eigentümers. 7.1–7.5, 7.7, 7.9 erledigt 2026-10-12. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** D.18 Prüfauftrag Datenmodell (Auftrag des Eigentümers 2026-10-13, nur lesen). Außerdem: 7.14 einspielen auf Anweisung (nur vom Mac aus); danach 7.15 (nur auf Wunsch) und 7.8. 7.6, 7.10–7.13 und 7.16 eingespielt, warten auf die Bestätigung des Eigentümers. 7.1–7.5, 7.7, 7.9 erledigt 2026-10-12. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -59,6 +59,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ⚪ | D.13 | Weigerungen der KI im Text erkennen – Erkundung | offen | du: Beispiele echter Sperren |
 | ⚪ | D.15 | Wechsel React Router 7 → Linie 8 | offen | KI – ab 2026-12-17 |
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
+| ⚪ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | offen | KI – nächste Session |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
 Verschoben auf die übernächste Ausbaustufe (Landeplatz 7.8): V.20, V.21, V.22, V.23, V.24, V.25 (neu 2026-10-12), V.26, V.27, V.28 (neu 2026-10-13). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
@@ -725,6 +726,22 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** `.github/workflows/ci.yml`, ADR, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-10 auf Wunsch des Eigentümers. Querschnitt, nicht Teil des Schrittplans von Phase 5.
+
+#### D.18: Prüfauftrag Datenmodell – Trennung der Daten je KI-Bereich
+
+- **Status:** ⚪ OFFEN – erteilt vom Eigentümer 2026-10-13; nächster Schritt der nächsten Session
+- **Phasentyp-Kontext:** ERKUNDUNG (nur lesen, nichts ändern)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** nein für die Prüfung; jede Abhilfe aus den Befunden ist eine eigene Vorlage (Kategorie 1 oder 4)
+- **Empfohlene Klasse:** Entscheidung – Befunde zur Kontext-Zusammenstellung können eine Architektur- oder Datenmodellentscheidung nach sich ziehen; ein Fehlschluss ist teuer.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-010, FR-011 (Kanon-Treue, Kontext-Zusammenstellung)
+- **Zu tun:** Auftrag des Eigentümers: „Alle Bereiche, mit denen die KI Inhalte erstellt, brauchen ganz spezifische Daten. Diese Daten dürfen nicht mit anderen Daten vermischt sein. Prüfe, ob das sichergestellt ist.“ Für jeden Bereich – Weiterschreiben, Szenen-Einstieg, Kapitel-Kurzfassungen und Gesamtzusammenfassung, Weltenbauer, Bilder beschreiben, Aussehen herauslösen, Bilder erzeugen (Vorbelegung) – feststellen: (1) welche Daten in die Anfrage an die KI fließen, belegt an `context/` und `api/flows/`; (2) woher sie stammen (Dateien, Kopffelder, `docs/architecture.md` Abschnitt 7); (3) wo fremde Daten hineingeraten können, z. B. andere Welten oder Geschichten, Gast-Figuren, Regeln, ganzer Eintragstext statt „Aussehen“, Markierungen, Bild- oder Kartenbeschreibungen in der Weltbeschreibung; (4) ob die Trennung durch Tests abgesichert ist.
+- **Akzeptanzkriterien:** Tabelle je Bereich mit Befund (sauber / Risiko / Mischung) und Beleg (Datei, Zeile); Vorschläge je Befund; Ergebnis in `docs/research/datentrennung-ki-bereiche.md`, Logbuch-Eintrag; Abhilfen als V-Schritte mit Landeplatz 7.8 oder als Vorlage an den Eigentümer.
+- **Betroffene Module:** context, api (nur lesen)
+- **Reifegrad-Wirkung:** keine (Befunde können eine Rückstufung von NFR Kanon-Treue vorschlagen)
+- **Artefakte:** Bericht, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-13 am Ende einer Session über der Kontextgrenze, damit die nächste Session den Auftrag aus dem Fahrplan erhält. Querschnitt, nicht Teil des Schrittplans von Phase 7 (Wucherungs-Schwelle).
 
 #### M.1: Branch-Konvention festlegen
 

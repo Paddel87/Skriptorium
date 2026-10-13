@@ -109,6 +109,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - 🟠 **7.6, 7.10–7.13, 7.16:** Bilder an Kanon-Einträgen, Karten mit Zoom, Titelbild, Bilder erzeugen und beschreiben lassen, Abschnitt „Aussehen“ (ADR-072 bis ADR-078) – eingespielt, deine Bestätigung steht aus.
 - 🟠 **7.14:** Markierungen auf Karten, die zum Kanon-Eintrag führen – gemergt, Einspielen steht aus (ADR-079).
 - ⚪ **Danach:** 7.15 nur auf Wunsch, dann 7.8 Planung.
+- ⚪ **D.18:** Prüfauftrag – bekommt jeder KI-Bereich nur seine eigenen Daten, ohne Vermischung?
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).
