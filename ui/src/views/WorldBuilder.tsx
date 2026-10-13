@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useId, useRef, useState } from "react";
-import type { CanonEntry } from "../api";
+import type { CanonEntry, ManuscriptSearch } from "../api";
 import { sourceLabel, withoutLinks, withoutMarks } from "../citations";
 import { lastKanonBlock } from "../kanonBlock";
 import { formatCents, shortName, webSearchSurcharge } from "../models";
@@ -8,6 +8,7 @@ import { ModelManager } from "./ModelManager";
 import { ModelSelect } from "./ModelSelect";
 import { useModelChoice } from "./useModelChoice";
 import { useWorldbuilder, type Turn } from "./useWorldbuilder";
+import { WorldbuilderManuscript } from "./WorldbuilderManuscript";
 
 // The field with the `@` menu is the one of the writing panel; it loads with its editor.
 const InstructionEditor = lazy(() =>
@@ -45,16 +46,15 @@ export function WorldBuilder({
   });
   const [draft, setDraft] = useState("");
   const [webSearch, setWebSearch] = useState(false);
+  // Passages of the manuscript that go along with every request (step 8.9, ADR-087).
+  const [manuscript, setManuscript] = useState<ManuscriptSearch | null>(null);
   const log = useRef<HTMLDivElement>(null);
   const fieldLabel = useId();
   // Whether the author is at the end of the conversation; only then does the view follow it.
   const atEnd = useRef(true);
   const catalog = choice.modelList?.catalog ?? [];
-  const surcharge = formatCents(
-    webSearchSurcharge(
-      catalog.find((model) => model.id === choice.chosenModel),
-    ),
-  );
+  const chosen = catalog.find((model) => model.id === choice.chosenModel);
+  const surcharge = formatCents(webSearchSurcharge(chosen));
 
   useEffect(() => {
     const area = log.current;
@@ -66,7 +66,7 @@ export function WorldBuilder({
   /** Send a message; if it was taken back (no answer), `draft` is put back into the field. */
   async function send(text: string, draft?: string) {
     atEnd.current = true;
-    const keep = await flow.send(text, webSearch);
+    const keep = await flow.send(text, webSearch, manuscript);
     if (!keep && draft !== undefined) {
       setDraft(draft);
     }
@@ -128,6 +128,13 @@ export function WorldBuilder({
           }}
         />
       )}
+      <WorldbuilderManuscript
+        world={world}
+        inputPrice={chosen?.input_price ?? null}
+        busy={flow.busy}
+        active={manuscript}
+        onChange={setManuscript}
+      />
       <div className="wb-composer">
         <span id={fieldLabel} className="sr-only">
           Nachricht an den Weltenbauer

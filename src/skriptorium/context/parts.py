@@ -30,6 +30,7 @@ BlockKind = Literal[
     "schreibweise-atmo",
     "regel",
     "zeitlinie",
+    "fundstellen",
     "verweis",
     "gefuehrte-figur",
     "gast",

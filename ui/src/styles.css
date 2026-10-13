@@ -884,6 +884,26 @@ button.more-toggle {
   white-space: pre-wrap;
 }
 
+.wb-manuscript {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: flex-start;
+}
+
+.wb-manuscript .row {
+  align-items: flex-end;
+}
+
+.wb-manuscript .note.row {
+  align-items: center;
+}
+
+.wb-manuscript input,
+.wb-manuscript select {
+  max-width: 100%;
+}
+
 .wb-composer {
   display: flex;
   flex-direction: column;

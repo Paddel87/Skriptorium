@@ -5,6 +5,7 @@ from collections.abc import AsyncIterator
 from pathlib import Path
 from typing import Any
 
+import pytest
 from fastapi.testclient import TestClient
 
 from skriptorium.ai_gateway import (
@@ -202,3 +203,91 @@ def test_flow_without_recorder_and_without_aclose() -> None:
 
     names = [chunk.split("\n", 1)[0] for chunk in asyncio.run(collect())]
     assert names == ["event: start", "event: text", "event: done"]
+
+
+HITS = f"{URL}/hits"
+
+
+def test_hits_count_without_returning_text(
+    writer: TestClient, caplog: pytest.LogCaptureFixture
+) -> None:
+    writer.put(
+        "/api/worlds/die-salzmark/stories/am-ufer/chapters/1",
+        json={"text": "Kael band das Boot fest.\n\nMira sah zu.\n\nKael ging."},
+    )
+
+    with caplog.at_level("DEBUG"):
+        response = writer.post(HITS, json={"name": "Kael"})
+
+    assert response.status_code == 200
+    body = response.json()
+    assert {key: body[key] for key in ("total", "stories", "chapters", "included")} == {
+        "total": 2,
+        "stories": 1,
+        "chapters": 1,
+        "included": 2,
+    }
+    assert body["tokens"] > 0 and set(body) == {
+        "total",
+        "stories",
+        "chapters",
+        "included",
+        "tokens",
+    }
+    assert "Kael band" not in response.text and "Kael band" not in caplog.text
+    one = writer.post(HITS, json={"name": "Mira", "story": "am-ufer"}).json()
+    assert (one["total"], one["included"]) == (1, 1)
+    none = writer.post(HITS, json={"name": "Niemand"}).json()
+    assert none == {"total": 0, "stories": 0, "chapters": 0, "included": 0, "tokens": 0}
+
+
+def test_hits_refuse_bad_input(writer: TestClient) -> None:
+    assert writer.post(HITS, json={"name": "Kael", "story": "erfunden"}).status_code == 404
+    assert (
+        writer.post("/api/worlds/erfunden/worldbuilder/hits", json={"name": "Kael"}).status_code
+        == 404
+    )
+    assert writer.post(HITS, json={"name": ""}).status_code == 422
+    assert writer.post(HITS, json={"name": "   "}).status_code == 422
+    assert writer.post(HITS, json={"name": "x" * 201}).status_code == 422
+    assert writer.post(HITS, json={}).status_code == 422
+
+
+def test_hits_need_session_and_origin(writer: TestClient) -> None:
+    wrong = writer.post(HITS, json={"name": "Kael"}, headers={"Origin": "https://evil.example"})
+    assert wrong.status_code == 403
+    writer.post("/api/auth/logout")
+    assert writer.post(HITS, json={"name": "Kael"}).status_code == 401
+
+
+def test_worldbuilder_takes_passages_of_the_manuscript(
+    writer: TestClient, provider: FakeProvider
+) -> None:
+    response = writer.post(URL, json=_body(manuscript={"name": "Kael", "story": None}))
+
+    assert response.status_code == 200
+    system = provider.requests[0].messages[0].content
+    assert "# Fundstellen im Manuskript zu „Kael“" in system
+    assert "## Am Ufer, Kapitel 1:" in system
+    assert "Kael band das Boot fest." in system
+    # Every request of the conversation carries them again.
+    writer.post(URL, json=_body(manuscript={"name": "Kael", "story": "am-ufer"}))
+    assert "Fundstellen im Manuskript" in provider.requests[1].messages[0].content
+
+
+def test_old_requests_stay_unchanged(writer: TestClient, provider: FakeProvider) -> None:
+    writer.post(URL, json=_body())
+    writer.post(URL, json=_body(manuscript=None))
+
+    first, second = (request.messages[0].content for request in provider.requests)
+    assert "Fundstellen" not in first and first == second
+
+
+def test_worldbuilder_refuses_a_bad_manuscript_order(writer: TestClient) -> None:
+    assert (
+        writer.post(URL, json=_body(manuscript={"name": "Kael", "story": "erfunden"})).status_code
+        == 404
+    )
+    assert writer.post(URL, json=_body(manuscript={"name": ""})).status_code == 422
+    assert writer.post(URL, json=_body(manuscript={"name": "  "})).status_code == 422
+    assert writer.post(URL, json=_body(manuscript={})).status_code == 422

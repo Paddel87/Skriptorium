@@ -8,7 +8,7 @@ from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from skriptorium.ai_gateway import CatalogModel, ModelCatalog
 from skriptorium.ai_gateway.catalog import CHECKED_MODELS, SLOW_MODELS
@@ -30,7 +30,7 @@ from skriptorium.api.flows import (
     stream_worldbuilder,
     summarize_chapter,
 )
-from skriptorium.context import DEFAULT_LENGTH, Length
+from skriptorium.context import DEFAULT_LENGTH, HitsQuery, Length
 from skriptorium.manuscript import Chapter, Story
 
 router = APIRouter(prefix="/api", dependencies=[Depends(current_session)])
@@ -105,6 +105,23 @@ class TurnIn(BaseModel):
     content: str
 
 
+class ManuscriptIn(BaseModel):
+    """The name to look for in the manuscript; ``story`` missing: all stories of the world."""
+
+    name: str = Field(min_length=1, max_length=200)
+    story: str | None = None
+
+
+class HitsOut(BaseModel):
+    """Numbers of the passages found, no text (ADR-087); ``tokens`` is the share in a request."""
+
+    total: int
+    stories: int
+    chapters: int
+    included: int
+    tokens: int
+
+
 class WorldbuilderIn(BaseModel):
     """The conversation so far, the last message the author's (step 6.7)."""
 
@@ -114,6 +131,8 @@ class WorldbuilderIn(BaseModel):
     # Missing: the preset model.
     model: str | None = None
     web_search: bool = False
+    # Passages of the manuscript about a name (step 8.9, ADR-087).
+    manuscript: ManuscriptIn | None = None
 
 
 class DescribeIn(BaseModel):
@@ -211,12 +230,26 @@ async def worldbuilder(
         tuple(body.references),
         body.model or DEFAULT_MODEL,
         body.web_search,
+        None if body.manuscript is None else HitsQuery(body.manuscript.name, body.manuscript.story),
     )
     prepared = prepare_worldbuilder(found.context, order, found.catalog)
     return StreamingResponse(
         stream_worldbuilder(found.provider, prepared, found.usage.record),
         media_type="text/event-stream",
         headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"},
+    )
+
+
+@router.post("/worlds/{world_id}/worldbuilder/hits")
+async def worldbuilder_hits(world_id: str, body: ManuscriptIn, found: ServicesDep) -> HitsOut:
+    """Count the passages of the manuscript that mention a name; sends and saves no text."""
+    hits = found.context.find_manuscript_hits(world_id, HitsQuery(body.name, body.story))
+    return HitsOut(
+        total=hits.total,
+        stories=hits.stories,
+        chapters=hits.chapters,
+        included=hits.included,
+        tokens=hits.tokens,
     )
 
 
