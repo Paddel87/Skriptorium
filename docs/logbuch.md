@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [ERLEDIGT] 8.6 Kurzfassung nur mit dem Stand davor (ADR-085)
+
+- Eigentümer wählte A. Selbst umgesetzt in `context/summaries.py`: Teil „handlungsstand“ aus den Kurzfassungen der Kapitel davor, gefüllt nach Kapiteltext, Rahmen und Anweisung; älteste fallen zuerst weg. Drei bestehende Tests prüften das alte Verhalten und wurden umgestellt (u. a. `test_summary.py`: Gesamtzusammenfassung jetzt ausdrücklich nicht in der Kapitel-Anfrage), drei neue.
+- Reibung: ruff RUF002 an einem Gedankenstrich im Docstring; ein neuer Test setzte das Budget so klein, dass schon die Anfrage ohne Vorgeschichte nicht passte (200 → 320 Token).
+
 ### 2026-10-13 – [ERLEDIGT] 8.5 Bildvorlagen (ADR-084)
 
 - Mockup vorher/nachher; Eigentümer wählte für Orte/Gegenstände und Karten die Empfehlung, beim Titelbild „Titel + Genre + Atmosphäre“ statt der empfohlenen Zusammenfassung. Hinweis gegeben: Genres wie „Dark Erotic“/„CNC“ stehen dann wörtlich in der Vorbelegung; Filter bleibt fest (ADR-077), Text wird vor dem Erzeugen gezeigt.

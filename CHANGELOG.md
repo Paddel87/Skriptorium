@@ -6,6 +6,8 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v1.0.0)
 
+- Kapitel-Kurzfassungen ohne Blick in die Zukunft (2026-10-13, Schritt 8.6, ADR-085): Die KI bekommt für die Kurzfassung eines Kapitels nur die Kurzfassungen der Kapitel davor, nicht mehr die Gesamtzusammenfassung – auch beim nachträglichen Neu-Erzeugen eines frühen Kapitels kommt nichts aus späteren Kapiteln hinein. Die Längengrenze eines Kapitels hängt nicht mehr von der Länge der übrigen Geschichte ab.
+
 - Passendere Vorlagen für „Bild erzeugen“ (2026-10-13, Schritt 8.5, ADR-084): Bei Orten und Gegenständen steht der Abschnitt „Aussehen“ im Textfeld, wenn es ihn gibt; bei Karten nur die Geografie genau dieser Karte (sonst nur der Titel), nie mehr die ganze Weltbeschreibung; beim Titelbild Titel, Genres und Atmosphäre statt der Handlung.
 
 - Übernehmen ohne doppelte Abschnitte (2026-10-13, Schritt 8.4, ADR-083): Steht unter „Aussehen“ bzw. „Geografie – Name der Karte“ schon Text, fragt das Skriptorium beim Übernehmen „Ersetzen / Darunter ergänzen / Abbrechen“ und zeigt den bisherigen Text; ein leerer Abschnitt wird einfach gefüllt. Beim Entfernen einer Karte fragt es, ob ihre Geografie aus der Weltbeschreibung mit entfernt wird; beim Umbenennen zieht die Überschrift mit. Neue Figuren beginnen mit „Aussehen“ und „Wesen und Geschichte“ – was du frei schreibst, landet nicht mehr im Aussehen. „Bild erzeugen“ überspringt einen leeren Abschnitt „Aussehen“. „Aussehen herauslösen“ gibt es nur bei Figuren.

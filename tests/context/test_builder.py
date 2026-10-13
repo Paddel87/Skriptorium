@@ -612,7 +612,10 @@ def test_chapter_summary_request_holds_state_text_and_instruction(
     system, user = (message.content for message in context.messages)
     assert "„Das Salz der Toten“ in der Welt „Die Salzmark“" in system
     assert "Erfinde nichts hinzu" in system
-    assert user.index("Ilka sucht ihren Bruder.") < user.index("# Kapitel 2: Der Turm")
+    assert user.index("## Kapitel 1: Die Flut\n\nIlka findet die Klinge.") < user.index(
+        "# Kapitel 2: Der Turm"
+    )
+    assert "Ilka sucht ihren Bruder." not in user  # overall summary: may hold later chapters
     assert "Dritter.\n\nVierter Absatz." in user
     assert "150 bis höchstens 250 Wörtern" in user
     assert kinds(context) == ["rahmen", "handlungsstand", "kapiteltext", "anweisung"]
@@ -661,19 +664,59 @@ def test_chapter_summary_room_is_the_exact_limit(
         builder.build_chapter_summary(WORLD, STORY, 3, budget=budget)
 
 
-def test_chapter_summary_room_shrinks_with_the_overall_summary(
+def test_chapter_summary_room_does_not_depend_on_earlier_summaries(
     services: tuple[CanonService, ManuscriptService],
 ) -> None:
     canon, manuscripts = services
     builder = ContextBuilder(canon, manuscripts)
-    manuscripts.set_story_summary(WORLD, STORY, "")
+    manuscripts.set_chapter_summary(WORLD, STORY, 1, "", "erzeugt")
     without = builder.chapter_summary_room(WORLD, STORY, 2)
+    manuscripts.set_chapter_summary(WORLD, STORY, 1, "Ilka sucht. " * 300, "erzeugt")
     manuscripts.set_story_summary(WORLD, STORY, "Ilka sucht ihren Bruder. " * 200)
 
-    assert builder.chapter_summary_room(WORLD, STORY, 2) < without
+    assert builder.chapter_summary_room(WORLD, STORY, 2) == without
     assert builder.chapter_summary_room(WORLD, STORY, 2, budget=1) == 0
     with pytest.raises(InvalidInput):
         builder.chapter_summary_room(WORLD, STORY, 2, budget=0)
+
+
+def test_chapter_summary_sees_only_earlier_chapters(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    """Re-summarising chapter 2 must not see chapter 3 or the overall summary (8.6, D.18 B4)."""
+    canon, manuscripts = services
+    manuscripts.save_chapter(WORLD, STORY, 3, title="Der Verrat", text="Fünfter.")
+    manuscripts.set_chapter_summary(WORLD, STORY, 3, "Tomas verrät Ilka.", "erzeugt")
+    manuscripts.set_story_summary(WORLD, STORY, "Ilka findet die Klinge. Tomas verrät Ilka.")
+
+    user = ContextBuilder(canon, manuscripts).build_chapter_summary(WORLD, STORY, 2).messages[1]
+
+    assert "Ilka findet die Klinge." in user.content
+    assert "Tomas verrät" not in user.content
+    assert "Kapitel 3" not in user.content
+
+
+def test_chapter_summary_drops_the_oldest_summaries_first(
+    services: tuple[CanonService, ManuscriptService],
+) -> None:
+    canon, manuscripts = services
+    for number in range(3, 8):
+        manuscripts.save_chapter(WORLD, STORY, number, title=f"K{number}", text="Text.")
+        manuscripts.set_chapter_summary(
+            WORLD, STORY, number, f"Stand {number}. " + "Füllwort " * 300, "erzeugt"
+        )
+    manuscripts.save_chapter(WORLD, STORY, 8, title="Ende", text="Schluss.")
+    builder = ContextBuilder(canon, manuscripts)
+
+    full = builder.build_chapter_summary(WORLD, STORY, 8)
+    assert "Stand 3." in full.messages[1].content
+    small = builder.build_chapter_summary(WORLD, STORY, 8, budget=2_500)
+    content = small.messages[1].content
+    assert "Stand 7." in content
+    assert "Ilka findet die Klinge." not in content
+    assert small.estimated_tokens <= 2_500
+    tiny = builder.build_chapter_summary(WORLD, STORY, 8, budget=320)
+    assert "handlungsstand" not in kinds(tiny)
 
 
 def test_story_summary_request_continues_the_overall_summary(

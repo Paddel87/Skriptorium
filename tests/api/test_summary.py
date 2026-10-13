@@ -87,7 +87,8 @@ def test_summaries_are_created_and_saved(summarizer: TestClient, provider: FakeP
     assert chapter_request.model == DEFAULT_MODEL
     assert chapter_request.temperature == SUMMARY_TEMPERATURE
     assert "Ilka fand die Klinge." in chapter_request.messages[1].content
-    assert "Bisher: Sturm." in chapter_request.messages[1].content
+    # The overall summary may hold later chapters; the chapter request never sees it (8.6).
+    assert "Bisher: Sturm." not in chapter_request.messages[1].content
     assert "Bisher: Sturm." in story_request.messages[1].content
     saved = summarizer.get(f"{STORY}/chapters").json()[0]
     assert saved["summary_status"] == "erzeugt"
