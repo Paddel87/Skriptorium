@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 8 „Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung“ (Phase 7 abgeschlossen 2026-10-13)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 8.9 Weltenbauer aus dem Manuskript – wartet auf Einspielen und echte Probe
-- **Nächster Schritt:** 8.12 Erkundung „wandernde Figuren“ (V.26). Offen: Probe zu 8.11 in einer Cloud-Session (Prüfauftrag in 8.11). Eingespielt ist noch `27506c2`; 8.1–8.9 warten auf „einspielen“, 8.9 danach auf deine Probe. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** 8.13 Planung der nächsten Ausbaustufe – erst wenn 8.9 und 8.11 abgeschlossen sind. Offen dafür: Einspielen von 8.1–8.11 und deine Probe zu 8.9; Probe zu 8.11 in einer Cloud-Session (Prüfauftrag in 8.11); deine Probe mit einer Gast-Figur (Eingangskriterium V.34). Eingespielt ist noch `27506c2`; 8.1–8.9 warten auf „einspielen“, 8.9 danach auf deine Probe. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details im Archiv [`docs/archiv/fahrplan-phase-7.md`](archiv/fahrplan-phase-7.md).
 
-**Phase 8: 9 von 13 erledigt.**
+**Phase 8: 10 von 13 erledigt.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -39,7 +39,7 @@ Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details
 | 🟠 | 8.9 | Weltenbauer aus dem Manuskript (V.22) | gemergt, wartet auf Probe (ADR-087) | du: „einspielen“, dann an einer echten Figur ausprobieren |
 | ✅ | 8.10 | Zeitlinie mit Jahr, Datum und Uhrzeit (V.28) | erledigt 2026-10-13 | – |
 | 🟠 | 8.11 | Verweise zwischen Kanon-Einträgen (V.25) | umgesetzt, Probe offen (ADR-088) | KI: Probe in einer Cloud-Session |
-| ⚪ | 8.12 | Wandernde Figuren – Erkundung (V.26) | offen | KI |
+| ✅ | 8.12 | Wandernde Figuren – Erkundung (V.26) | erledigt 2026-10-13 → V.34 | – |
 | ⚪ | 8.13 | Planung der nächsten Ausbaustufe | offen | KI |
 
 **Querschnitt (offen):**
@@ -59,7 +59,7 @@ Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details
 | ✅ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | erledigt 2026-10-13 (V.29–V.32 → 8.4–8.7) | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 8.13): V.20, V.21, V.23, V.24, V.33 (aus 7.15, 2026-10-13). In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 8.13): V.20, V.21, V.23, V.24, V.33 (aus 7.15, 2026-10-13), V.34 (aus 8.12, 2026-10-13). In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -362,7 +362,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 8.12: Wandernde Figuren – Erkundung (V.26)
 
-- **Status:** ⚪ OFFEN
+- **Status:** ✅ ERLEDIGT (2026-10-13) – Bericht `docs/research/wandernde-figuren.md`: drei Optionen (A Gast-Verbindung ausbauen, B Kopie mit Herkunft, C Figurenbibliothek über den Welten) mit Kosten, Umkehrbarkeit und Vision-Grenze; Befund auf dem Server: 23 Figuren, 0 in mehreren Welten, 0 Gast-Verbindungen. Konfidenz für C niedrig bei teurer Umkehrbarkeit – kein Rateschluss (`CLAUDE.md` Abschnitt 8, Kriterium 8). Eigentümer: „Erst ausprobieren, dann A“ → V.34 (Landeplatz 8.13), B verworfen, C nicht weiter verfolgt
 - **Phasentyp-Kontext:** ERKUNDUNG innerhalb der UMSETZUNG-Phase (wie Spike 6.13)
 - **Schritt-Art (nur ERKUNDUNG):** Vergleichsstudie
 - **Zeitbox (nur ERKUNDUNG):** eine Session, dann Zwischenstand
@@ -387,7 +387,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 8
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** V.20, V.21, V.23, V.24, V.33 und die Umsetzung aus 8.12 (und neue V-Schritte) in eine neue Phase überführen oder per ADR verwerfen.
+- **Zu tun:** V.20, V.21, V.23, V.24, V.33, V.34 (Umsetzung aus 8.12) (und neue V-Schritte) in eine neue Phase überführen oder per ADR verwerfen.
 - **Akzeptanzkriterien:** Jeder verschobene Schritt hat einen neuen Schritt mit ID oder `[VERWORFEN]` mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
@@ -1240,6 +1240,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, ADR
 - **Notizen:** Angelegt 2026-10-13 aus 7.15 (ADR-074, Archiv `docs/archiv/fahrplan-phase-7.md`).
+
+#### V.34: Wandernde Figuren – Weltbezug je Gast und Einpassen (Option A aus 8.12)
+
+- **Status:** ⏸️ VERSCHOBEN → 8.13
+- **Landeplatz (nur VERSCHOBEN):** 8.13 (Eigentümer, 2026-10-13: „Erst ausprobieren, dann A“)
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
+- **Abhängigkeiten:** 8.12
+- **Freigabepflichtig:** ja – Datenmodell (Weltbezug je Gast-Verbindung, Kategorie 4), Kontext-Zusammenstellung (Kategorie 1)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell und Kontext-Zusammenstellung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Probe des Eigentümers: eine Figur per Gast-Verbindung (3.7) in einer Geschichte einer anderen Welt eingesetzt, Erlebnisse per „Kanon der Figur“ (FR-024) zurückgeschrieben; Befund, was fehlt
+- **Anforderungen (ab Klasse M):** FR-016, FR-017, FR-024
+- **Zu tun:** Option A aus `docs/research/wandernde-figuren.md`: Weltbezug („In ‹Welt›“) je Gast-Verbindung, in der Anfrage Kern + Weltbezug; Weltenbauer schlägt den Weltbezug beim Einsetzen vor (Übernahme wie 8.8); Konvention „weltneutral oben, Heimatwelt in ‚In ‹Welt›‘“.
+- **Akzeptanzkriterien:** Vorlage bzw. ADR; Tests; Probe nach Regel-002, falls die Schreib-Anfrage sich ändert; Eigentümer bestätigt.
+- **Betroffene Module:** manuscript, context, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, ADR
+- **Notizen:** Angelegt 2026-10-13 aus 8.12. Option C (Bibliothek über den Welten) nur mit eigenem ADR zur Vision-Grenze, falls sich viele dauerhaft wandernde Figuren zeigen.
 
 #### V.21: Veröffentlichung (öffentlicher Link zum Lesen)
 
