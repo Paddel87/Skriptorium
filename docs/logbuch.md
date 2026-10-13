@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [ERLEDIGT] 8.12 Erkundung „wandernde Figuren“
+
+- Nur gelesen; Bericht `docs/research/wandernde-figuren.md` (Optionen A/B/C, Vision-Grenze Abschnitt 5). Zählung auf dem Server mit einer SSH-Abfrage, nur Anzahlen: 23 Figuren, 0 Namen in mehreren Welten, 0 Gast-Verbindungen, 0 Geschichten mit eigenen Fakten – der Wunsch ist ein Vorhaben, kein Alltagsschmerz. Kein Rateschluss bei C (Konfidenz niedrig, Umkehrbarkeit teuer).
+- Eigentümer: „Erst ausprobieren, dann A“ → V.34 (Landeplatz 8.13) mit der Probe als Eingangskriterium.
+- Der Bericht entstand während die CI von PR #163 lief, zunächst im Scratchpad, und kam nach dem Merge auf einen eigenen Branch (keine Konflikte im Fahrplan).
+
 ### 2026-10-13 – [BEOBACHTUNG] 8.11 Verweise umgesetzt, Probe offen (ADR-088)
 
 - Vorlage mit vier Fragen; Eigentümer wählte alle Empfehlungen. Umsetzung durch Unteragenten (Sonnet). Selbst angeglichen: die Mitnahme erkannte `@Kaels` nicht, die Links in der Oberfläche (`ui/src/references.ts`, Schritt 5.23) schon – jetzt beide mit Genitiv; ein Bestandstest prüfte genau das alte Verhalten und wurde umgestellt. Ein weiterer Bestandstest (`test_budget_is_never_exceeded`) brauchte eine höhere Budget-Schwelle, weil der Rahmen einen Satz länger ist.
