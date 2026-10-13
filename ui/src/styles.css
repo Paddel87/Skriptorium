@@ -1471,9 +1471,9 @@ button.more-toggle {
 
 .timeline-events li {
   position: relative;
-  display: grid;
-  grid-template-columns: 8.5rem 1fr;
-  gap: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.6rem;
   padding: 0.3rem 0 0.3rem 0.9rem;
 }
 
@@ -1488,20 +1488,47 @@ button.more-toggle {
   background: var(--accent);
 }
 
-.timeline-date {
+.timeline-year {
+  margin: 1rem 0 0;
+  font-size: 1rem;
+  color: var(--link);
+}
+
+.timeline-groups > section > .note {
+  margin: 0.25rem 0 0;
+}
+
+.timeline-marks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  align-items: flex-start;
+}
+
+.timeline-mark {
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  padding: 0 0.35rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: var(--link);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.timeline-mark.loose {
+  border-color: transparent;
+  color: var(--muted);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.timeline-content {
+  min-width: 0;
 }
 
 .timeline-events li.loose::before {
   background: var(--warn-line);
-}
-
-.timeline-events li.loose .timeline-date {
-  color: var(--muted);
-  font-weight: 400;
-  font-style: italic;
 }
 
 .timeline-add {
@@ -1512,7 +1539,6 @@ button.more-toggle {
 }
 
 @media (max-width: 500px) {
-  .timeline-events li,
   .timeline-add {
     grid-template-columns: 1fr;
     gap: 0;
@@ -1524,11 +1550,7 @@ button.more-toggle {
 }
 
 /* The world's timeline entries as one time line (step 7.2): title as a link, text below. */
-.timeline-world li {
-  grid-template-columns: 5.5rem 1fr;
-}
-
-.timeline-world li.chosen {
+.timeline-events li.chosen {
   background: var(--selection);
   border-radius: 4px;
 }

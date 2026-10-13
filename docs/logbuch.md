@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [ERLEDIGT] 8.10 Zeitlinie mit Jahr, Datum und Uhrzeit
+
+- Vor der Vorlage die Formen der echten Zeitlinien auf dem Server geprüft – anonymisiert (Buchstaben → „a“, Ziffern → „9“), kein Inhalt gelesen: 14 Einträge der Form „999 – Titel“, zwei „99:99 a“, keine Monate. Daraus der Vorschlag „erkennen statt vorschreiben“; Eigentümer wählte alle Empfehlungen.
+- Umsetzung durch Unteragenten (Sonnet), der die Ansicht nicht im Browser sah; Sichtprobe hier nachgeholt (Desktop dunkel, Handy hell) – Gruppen, Marken und Hinweis wie im Mockup. Fund: Platzhalter „Jahr oder Uhrzeit“ im schmalen Feld abgeschnitten → „Zeit“. Nebenbefund des Unteragenten: Namen wurden bisher auch am Doppelpunkt geteilt, sodass „14:30 Uhr – …“ zerschnitten wurde; jetzt nur an „ – “.
+
 ### 2026-10-13 – [BEOBACHTUNG] 8.9 Weltenbauer aus dem Manuskript umgesetzt (ADR-087)
 
 - Mockup und vier Auswahlfragen; Eigentümer wählte alle Empfehlungen. Umsetzung durch Unteragenten (Sonnet). Selbst geprüft und nachgebessert: Die Suche nahm nur ganze Wörter und übersah damit den deutschen Genitiv („Kaels Hände“) – jetzt mit optionalem `s` bzw. Apostroph (auch typografisch, als `\u2019` wegen ruff RUF001); „Kaelchen“/„Klausur“ bleiben draußen. Kostenanzeige „ca. 0,0 ct“ bei wenig Text → „unter 0,1 ct“.

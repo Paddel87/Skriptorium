@@ -2,6 +2,7 @@ import { useState, type SyntheticEvent } from "react";
 import { api, describeError, type CanonEntry } from "../api";
 import { eventEntryName, worldEvents } from "../timeline";
 import { ErrorText } from "./Common";
+import { TimelineGroups } from "./TimelineGroups";
 
 /**
  * The world's timeline entries as one time line (step 7.2, ADR-069; the owner's form: one entry
@@ -56,39 +57,28 @@ export function WorldTimeline({
 
   return (
     <div className="timeline">
-      <ol
-        className="timeline-events timeline-world"
-        aria-label="Zeitstrahl der Welt"
-      >
-        {events.map((item) => (
-          <li
-            key={item.id}
-            className={[
-              item.key === null ? "loose" : "",
-              item.id === selected ? "chosen" : "",
-            ]
-              .filter((name) => name !== "")
-              .join(" ")}
-          >
-            <span className="timeline-date">{item.date ?? "ohne Jahr"}</span>
-            <span>
-              <button
-                type="button"
-                className="link timeline-title"
-                aria-current={item.id === selected ? "true" : undefined}
-                onClick={() => {
-                  onChoose(item.id);
-                }}
-              >
-                {item.title}
-              </button>
-              {item.text !== "" && (
-                <span className="timeline-text">{item.text}</span>
-              )}
-            </span>
-          </li>
-        ))}
-      </ol>
+      <TimelineGroups
+        label="Zeitstrahl der Welt"
+        events={events}
+        isChosen={(item) => item.id === selected}
+        render={(item) => (
+          <>
+            <button
+              type="button"
+              className="link timeline-title"
+              aria-current={item.id === selected ? "true" : undefined}
+              onClick={() => {
+                onChoose(item.id);
+              }}
+            >
+              {item.title}
+            </button>
+            {item.text !== "" && (
+              <span className="timeline-text">{item.text}</span>
+            )}
+          </>
+        )}
+      />
       {editable && (
         <form
           className="timeline-add timeline-add-entry"
@@ -96,7 +86,7 @@ export function WorldTimeline({
         >
           <input
             aria-label="Jahr"
-            placeholder="Jahr"
+            placeholder="Zeit"
             value={date}
             onChange={(event) => {
               setDate(event.target.value);

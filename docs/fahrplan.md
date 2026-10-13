@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 8 „Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung“ (Phase 7 abgeschlossen 2026-10-13)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 8.9 Weltenbauer aus dem Manuskript – wartet auf Einspielen und echte Probe
-- **Nächster Schritt:** 8.10 Zeitlinie mit Jahr, Datum und Uhrzeit (V.28) – Vorlage und Mockup. Eingespielt ist noch `27506c2`; 8.1–8.9 warten auf „einspielen“, 8.9 danach auf deine Probe. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** 8.11 Verweise zwischen Kanon-Einträgen (V.25) – Vorlage. Eingespielt ist noch `27506c2`; 8.1–8.9 warten auf „einspielen“, 8.9 danach auf deine Probe. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details im Archiv [`docs/archiv/fahrplan-phase-7.md`](archiv/fahrplan-phase-7.md).
 
-**Phase 8: 8 von 13 erledigt.**
+**Phase 8: 9 von 13 erledigt.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -37,7 +37,7 @@ Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details
 | ✅ | 8.7 | Regeln und Zeitlinie an den Weltenbauer? (V.32) | erledigt 2026-10-13 (ADR-086) | – |
 | ✅ | 8.8 | Weltenbauer behält das Gespräch (V.27) | erledigt 2026-10-13 | – |
 | 🟠 | 8.9 | Weltenbauer aus dem Manuskript (V.22) | gemergt, wartet auf Probe (ADR-087) | du: „einspielen“, dann an einer echten Figur ausprobieren |
-| ⚪ | 8.10 | Zeitlinie mit Jahr, Datum und Uhrzeit (V.28) | offen | KI: Vorlage, Mockup |
+| ✅ | 8.10 | Zeitlinie mit Jahr, Datum und Uhrzeit (V.28) | erledigt 2026-10-13 | – |
 | ⚪ | 8.11 | Verweise zwischen Kanon-Einträgen (V.25) | offen | KI: Vorlage |
 | ⚪ | 8.12 | Wandernde Figuren – Erkundung (V.26) | offen | KI |
 | ⚪ | 8.13 | Planung der nächsten Ausbaustufe | offen | KI |
@@ -330,7 +330,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 8.10: Zeitlinie mit Jahr, Datum und Uhrzeit (V.28)
 
-- **Status:** ⚪ OFFEN
+- **Status:** ✅ ERLEDIGT (2026-10-13) – Formen der echten Zeitlinien auf dem Server anonym geprüft (14 Einträge: „Jahr – Titel“, zwei „Uhrzeit – Titel“, keine Monate). Mit Mockup entschieden: erkennen statt vorschreiben (nur Ansicht, kein ADR – ADR-069 bleibt), Gruppe „Ohne Jahr“, Ansicht nach Jahren mit Marken für Datum und Uhrzeit. Umgesetzt in `ui/src/timeline.ts` (Uhrzeit `HH:MM`/`HH Uhr`, Datum `T.M.`/`T.M.J`/`T. Monatsname`, übrige Zahl als Jahr; Sortierung Jahr–Monat–Tag–Uhrzeit, stabil), `TimelineGroups.tsx`; Namen werden nur an „ – “ geteilt (vorher zerschnitt der Doppelpunkt „14:30 Uhr – …“). vitest 395 grün (98,84 % / 95,1 %), tsc, eslint, prettier, Build, Playwright 11/11 (Lauf des Unteragenten). Sichtprobe am lokalen Testserver (Desktop dunkel, Handy hell); Platzhalter auf Wunsch des Eigentümers auf „Zeit“ gekürzt. Vom Eigentümer freigegeben. Umsetzung durch Unteragenten (Sonnet), geprüft von der bauenden KI
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage und Mockup zu Beginn)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja, falls die Form der Zeitangaben im Kanon festgelegt wird (Datenmodell, Kategorie 4); Darstellung allein nicht
