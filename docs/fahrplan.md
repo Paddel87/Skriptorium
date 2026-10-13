@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 8 „Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung“ (Phase 7 abgeschlossen 2026-10-13)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** keiner
-- **Nächster Schritt:** 8.1 Umbau des Kanon-Dienstes (KI), dann 8.2 und 8.3. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** 8.2 Umbau der Kartenansicht (KI), dann 8.3. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -24,11 +24,11 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details im Archiv [`docs/archiv/fahrplan-phase-7.md`](archiv/fahrplan-phase-7.md).
 
-**Phase 8: 0 von 13 erledigt.**
+**Phase 8: 1 von 13 erledigt.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
-| ⚪ | 8.1 | Umbau: Kanon-Dienst nach Verantwortung gliedern | offen | KI |
+| ✅ | 8.1 | Umbau: Kanon-Dienst nach Verantwortung gliedern | erledigt 2026-10-13 (ADR-082) | – |
 | ⚪ | 8.2 | Umbau: Kartenansicht in Hooks und Teilkomponenten | offen | KI |
 | ⚪ | 8.3 | Fehlende Tests nachholen, Mindestwerte anheben | offen | KI |
 | ⚪ | 8.4 | Übernahme ersetzt Abschnitte; Vorlage „Aussehen“ (V.29) | offen | KI: Vorlage |
@@ -186,7 +186,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 8.1: Umbau: Kanon-Dienst nach Verantwortung gliedern
 
-- **Status:** ⚪ OFFEN
+- **Status:** ✅ ERLEDIGT (2026-10-13) – `CanonService` als Fassade (349 Zeilen, vorher 878) über `worlds`, `entries`, `maps`, `images`, `imports` mit `models`, `layout`, `headers`, `validation` (alle unter 150 Zeilen); keine privaten Importe über Dateigrenzen, keine Zyklen; Verhalten unverändert: pytest 734 grün ohne Änderung der Tests, Abdeckung 99 % (`canon` 95–100 % je Datei, offen nur die Rücknahme-Zweige wie vorher), ruff, mypy (73 Dateien), bandit ohne Befund. Befund 6: Fehlertypen waren schon Vertrag (Abschnitt 4); Bildprüfung und Größengrenzen per ADR-082 (`[REAKTIV]`) in der Karte festgehalten. Reifegrad-Tabelle auf Stand nach ADR-082. Umbau durch Unteragenten (Routine-Klasse), geprüft und verantwortet von der bauenden KI
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein – Umbau innerhalb von `canon` mit unveränderter Fassade (ADR-080); wenn Befund 6 nur mit Schnittstellenänderung lösbar ist: Vorlage (Kategorie 1)
