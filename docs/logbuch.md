@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [ERLEDIGT] 8.8 Weltenbauer behält das Gespräch
+
+- Mockup mit drei Spalten (vorher, A, B); Eigentümer wählte A. Warnung zu Beginn: Schritt empfiehlt Routine, aktiv ist Entscheidung – Bau an Unteragenten (Sonnet) abgegeben.
+- Selbst geprüft: `Canon` erscheint mit Weltenbauer nur auf der Kanon-Seite (Schreibseite nutzt `compact`), wie vorher; CSS-Variablen `--surface`/`--text` vorhanden. Sichtprobe, die der Unteragent nicht machen konnte: 375 px, dunkel, Weltenbauer-Antwort im Browser ersetzt. Reibung: erster Ersatz scheiterte an verschachtelten Escapes der Backticks (`String.fromCharCode(96)` half); ein Klick nach Koordinaten traf in der verkleinerten Handy-Ansicht nicht – Element-Referenzen statt Koordinaten.
+
 ### 2026-10-13 – [ERLEDIGT] 8.7 Weltenbauer mit Regeln und Zeitlinie (ADR-086)
 
 - Messung auf dem Server mit einer SSH-Abfrage (nur Größen je Welt, anonym nummeriert; kein Inhalt gelesen): Regeln und Zeitlinie 1,3–7,1 KB je Welt, ca. 400–2.100 Token. Preis grok-4.6 laut OpenRouter-Katalog 2 $ / 6 $ je 1 Mio. Token. Eigentümer wählte A.

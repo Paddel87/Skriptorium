@@ -6,6 +6,7 @@ import { CanonList } from "./CanonList";
 import { ErrorText } from "./Common";
 import { EntryArticle } from "./EntryArticle";
 import { EntryForm } from "./EntryForm";
+import { ImportDialog } from "./ImportDialog";
 import { WorldBuilder } from "./WorldBuilder";
 import { useCanonSearch } from "./useCanonSearch";
 
@@ -22,8 +23,8 @@ const NEW = " new";
  * `compact` always shows list or entry, `guests` adds the story's guests from other worlds,
  * which can be read here but are changed in their own world.
  *
- * Given `onTakeOver` (not in the compact bar), the AI world builder (step 6.7) opens where the
- * entry is shown; its proposals go to `onTakeOver` as Markdown for the import preview.
+ * Outside the compact bar the AI world builder (step 6.7) opens where the entry is shown; its
+ * proposals open the import preview as a window over it (step 8.8), so the conversation stays.
  *
  * Outside the compact bar the world downloads as a SillyTavern lorebook and a figure as a
  * character card (step 6.9).
@@ -35,7 +36,6 @@ export function Canon({
   guests,
   compact = false,
   onChanged,
-  onTakeOver,
 }: {
   world: string;
   /** Identifier of the entry shown on the right, or none. */
@@ -47,8 +47,6 @@ export function Canon({
   compact?: boolean;
   /** Called after an entry was created, changed or deleted. */
   onChanged?: () => void;
-  /** Opens the world builder's button; takes over a proposal (Markdown in the import format). */
-  onTakeOver?: (markdown: string) => void;
 }) {
   const load = useCallback(
     () =>
@@ -64,7 +62,8 @@ export function Canon({
   // keep the conversation.
   const [building, setBuilding] = useState(false);
   const [builderUsed, setBuilderUsed] = useState(false);
-  const takeOver = compact ? undefined : onTakeOver;
+  // The proposal (Markdown in the import format) being previewed in the window, if any.
+  const [proposal, setProposal] = useState<string | null>(null);
 
   const entries = data ?? [];
   const { query, setQuery, filter, setFilter, shown } = useCanonSearch(entries);
@@ -92,7 +91,7 @@ export function Canon({
         >
           Neuer Eintrag
         </button>
-        {takeOver !== undefined && (
+        {!compact && (
           <button
             type="button"
             className="primary"
@@ -148,12 +147,12 @@ export function Canon({
             }}
           />
           <div className="canon-detail">
-            {takeOver !== undefined && builderUsed && (
+            {!compact && builderUsed && (
               <div hidden={!building}>
                 <WorldBuilder
                   world={world}
                   entries={entries}
-                  onTakeOver={takeOver}
+                  onTakeOver={setProposal}
                   onClose={() => {
                     setBuilding(false);
                   }}
@@ -205,6 +204,19 @@ export function Canon({
             )}
           </div>
         </div>
+      )}
+      {proposal !== null && (
+        <ImportDialog
+          world={world}
+          markdown={proposal}
+          onImported={() => {
+            reload();
+            onChanged?.();
+          }}
+          onClose={() => {
+            setProposal(null);
+          }}
+        />
       )}
     </section>
   );

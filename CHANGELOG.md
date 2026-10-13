@@ -6,6 +6,8 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v1.0.0)
 
+- Weltenbauer behält das Gespräch (2026-10-13, Schritt 8.8): „Als Kanon übernehmen“ öffnet die Vorschau jetzt als Fenster über dem Weltenbauer statt im Reiter „Import“. Nach dem Übernehmen geht es mit „Zurück zum Weltenbauer“ im selben Gespräch weiter – mehrere Einträge hintereinander, ohne neu anzufangen.
+
 - Weltenbauer kennt die Regeln der Welt (2026-10-13, Schritt 8.7, ADR-086): Regeln und Zeitlinie gehen jetzt immer im Wortlaut mit, wie beim Schreiben – der Weltenbauer kann Vorschläge gegen die Gesetze deiner Welt erkennen. Kostet je Antwort höchstens etwa 0,4 Cent mehr.
 
 - Kapitel-Kurzfassungen ohne Blick in die Zukunft (2026-10-13, Schritt 8.6, ADR-085): Die KI bekommt für die Kurzfassung eines Kapitels nur die Kurzfassungen der Kapitel davor, nicht mehr die Gesamtzusammenfassung – auch beim nachträglichen Neu-Erzeugen eines frühen Kapitels kommt nichts aus späteren Kapiteln hinein. Die Längengrenze eines Kapitels hängt nicht mehr von der Länge der übrigen Geschichte ab.

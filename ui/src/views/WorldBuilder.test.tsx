@@ -23,11 +23,24 @@ import {
 } from "../../fake-api";
 import { renderShell } from "../../render-shell";
 import { Canon } from "./Canon";
-import { Import } from "./Import";
 import { StoryPage } from "./StoryPage";
 
 const BUILDER = "POST /api/worlds/salzmark/worldbuilder";
 const PREVIEW = "POST /api/worlds/salzmark/import/preview";
+const APPLY = "POST /api/worlds/salzmark/import";
+const PREVIEWED = {
+  world: "salzmark",
+  introduction: "",
+  items: [
+    {
+      id: "kael-brann",
+      name: "Kael Brann",
+      category: "figuren",
+      conflict: null,
+    },
+  ],
+};
+const FERRYMAN = { ...ENTRY, id: "faehrmann-tom", name: "Fährmann Tom" };
 const BLOCK = "```kanon\n# Figuren\n\n## Kael Brann\nAliasse: Brann\n```";
 
 afterEach(() => {
@@ -259,13 +272,9 @@ describe("world builder (step 6.7)", () => {
     });
   });
 
-  it("offers taking over only for a kanon block and leads to the prefilled preview", async () => {
+  it("offers taking over only for a kanon block and opens the preview as a window", async () => {
     const feed = sseFeed();
-    const { calls } = fakeApi(
-      routes([feed], {
-        [PREVIEW]: ok({ world: "salzmark", introduction: "", items: [] }),
-      }),
-    );
+    const { calls } = fakeApi(routes([feed], { [PREVIEW]: ok(PREVIEWED) }));
     const user = userEvent.setup();
     await open(user);
     await say(user, "Ein Fährmann.");
@@ -285,14 +294,13 @@ describe("world builder (step 6.7)", () => {
     await user.click(
       await screen.findByRole("button", { name: "Als Kanon übernehmen" }),
     );
+    const dialog = await screen.findByRole("dialog");
+    expect(
+      await within(dialog).findByText("Vorschau: 1 Einträge"),
+    ).toBeDefined();
     expect(screen.getByLabelText("Adresse").textContent).toBe(
-      "/welt/salzmark/import",
+      "/welt/salzmark/kanon",
     );
-    const field = screen.getByLabelText("oder Text einfügen");
-    expect((field as HTMLTextAreaElement).value).toBe(
-      "# Figuren\n\n## Kael Brann\nAliasse: Brann",
-    );
-    expect(await screen.findByText("Vorschau: 0 Einträge")).toBeDefined();
     expect(
       calls.filter((c) => c.path.endsWith("/import/preview")),
     ).toHaveLength(1);
@@ -301,7 +309,99 @@ describe("world builder (step 6.7)", () => {
     );
   });
 
-  it("shows an error of the automatic preview", async () => {
+  it("takes over, reloads the list and goes back to the unchanged conversation, twice", async () => {
+    const [first, second] = [sseFeed(), sseFeed()];
+    let listed = 0;
+    const { calls } = fakeApi(
+      routes([first, second], {
+        "GET /api/worlds/salzmark/entries": () => {
+          listed += 1;
+          return {
+            status: 200,
+            body: listed > 1 ? [ENTRY, FERRYMAN] : [ENTRY],
+          };
+        },
+        [PREVIEW]: ok(PREVIEWED),
+        [APPLY]: ok({
+          world: "salzmark",
+          created: ["kael-brann"],
+          overwritten: [],
+          skipped: [],
+        }),
+      }),
+    );
+    const user = userEvent.setup();
+    await open(user);
+    await say(user, "Ein Fährmann.");
+    answer(first, `Erster Vorschlag.\n${BLOCK}`);
+    await user.click(
+      await screen.findByRole("button", { name: "Als Kanon übernehmen" }),
+    );
+    const dialog = await screen.findByRole("dialog");
+    await user.click(
+      await within(dialog).findByRole("button", { name: "Übernehmen" }),
+    );
+    expect(
+      await within(dialog).findByText(
+        "Übernommen: 1 neu, 0 überschrieben, 0 übersprungen.",
+      ),
+    ).toBeDefined();
+    expect(calls.find((c) => c.path.endsWith("/import"))?.body).toEqual({
+      markdown: "# Figuren\n\n## Kael Brann\nAliasse: Brann",
+      categories: {},
+      overwrite: [],
+    });
+    expect(
+      await screen.findByRole("button", { name: /Fährmann Tom/ }),
+    ).toBeDefined();
+    await user.click(
+      within(dialog).getByRole("button", { name: "Zurück zum Weltenbauer" }),
+    );
+    expect(screen.queryByRole("dialog")).toBeNull();
+    expect(screen.getByText("Ein Fährmann.")).toBeDefined();
+    expect(screen.getByText(/Erster Vorschlag/)).toBeDefined();
+    // The conversation goes on and a second proposal can be taken over.
+    await say(user, "Noch einer.");
+    answer(second, `Zweiter Vorschlag.\n${BLOCK}`);
+    await screen.findByText(/Zweiter Vorschlag/);
+    const buttons = screen.getAllByRole("button", {
+      name: "Als Kanon übernehmen",
+    });
+    await user.click(buttons[buttons.length - 1] as HTMLElement);
+    const again = await screen.findByRole("dialog");
+    await user.click(
+      await within(again).findByRole("button", { name: "Übernehmen" }),
+    );
+    await within(again).findByText(/Übernommen: 1 neu/);
+    expect(calls.filter((c) => c.path.endsWith("/import"))).toHaveLength(2);
+  });
+
+  it("closes with Abbrechen or Escape without a change and keeps the builder", async () => {
+    const feed = sseFeed();
+    const { calls } = fakeApi(routes([feed], { [PREVIEW]: ok(PREVIEWED) }));
+    const user = userEvent.setup();
+    await open(user);
+    await say(user, "Ein Fährmann.");
+    answer(feed, BLOCK);
+    const take = async () => {
+      await user.click(
+        await screen.findByRole("button", { name: "Als Kanon übernehmen" }),
+      );
+      return screen.findByRole("dialog");
+    };
+    const dialog = await take();
+    await within(dialog).findByText("Vorschau: 1 Einträge");
+    await user.click(within(dialog).getByRole("button", { name: "Abbrechen" }));
+    expect(screen.queryByRole("dialog")).toBeNull();
+    await take();
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("dialog")).toBeNull();
+    expect(screen.getByRole("button", { name: "Senden" })).toBeDefined();
+    expect(screen.getByText("Ein Fährmann.")).toBeDefined();
+    expect(calls.filter((c) => c.path.endsWith("/import"))).toHaveLength(0);
+  });
+
+  it("shows a failed preview inside the window", async () => {
     const feed = sseFeed();
     fakeApi(routes([feed], { [PREVIEW]: fail(422, "Kein Eintrag erkannt") }));
     const user = userEvent.setup();
@@ -311,7 +411,56 @@ describe("world builder (step 6.7)", () => {
     await user.click(
       await screen.findByRole("button", { name: "Als Kanon übernehmen" }),
     );
-    expect(await screen.findByText("Kein Eintrag erkannt")).toBeDefined();
+    const dialog = await screen.findByRole("dialog");
+    expect(
+      await within(dialog).findByText("Kein Eintrag erkannt"),
+    ).toBeDefined();
+    await user.click(within(dialog).getByRole("button", { name: "Abbrechen" }));
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
+
+  it("keeps a failed take-over visible in the window", async () => {
+    const feed = sseFeed();
+    fakeApi(
+      routes([feed], {
+        [PREVIEW]: ok(PREVIEWED),
+        [APPLY]: fail(409, "Eintrag existiert schon"),
+      }),
+    );
+    const user = userEvent.setup();
+    await open(user);
+    await say(user, "Ein Fährmann.");
+    answer(feed, BLOCK);
+    await user.click(
+      await screen.findByRole("button", { name: "Als Kanon übernehmen" }),
+    );
+    const dialog = await screen.findByRole("dialog");
+    await user.click(
+      await within(dialog).findByRole("button", { name: "Übernehmen" }),
+    );
+    expect(
+      await within(dialog).findByText("Eintrag existiert schon"),
+    ).toBeDefined();
+    expect(
+      within(dialog).getByRole("button", { name: "Abbrechen" }),
+    ).toBeDefined();
+  });
+
+  it("ignores the answer of a preview after the window was closed", async () => {
+    const feed = sseFeed();
+    const { calls } = fakeApi(routes([feed], { [PREVIEW]: ok(PREVIEWED) }));
+    const user = userEvent.setup();
+    await open(user);
+    await say(user, "Ein Fährmann.");
+    answer(feed, BLOCK);
+    await user.click(
+      await screen.findByRole("button", { name: "Als Kanon übernehmen" }),
+    );
+    await user.keyboard("{Escape}");
+    await waitFor(() => {
+      expect(calls.some((c) => c.path.endsWith("/import/preview"))).toBe(true);
+    });
+    expect(screen.queryByRole("dialog")).toBeNull();
   });
 
   it("asks for another variant with a follow-up message", async () => {
@@ -499,9 +648,7 @@ describe("world builder (step 6.7)", () => {
       "GET /api/models": ok(modelList(["x-ai/grok-4.6"])),
     });
     const user = userEvent.setup();
-    const compact = render(
-      <Canon world="salzmark" compact onTakeOver={vi.fn()} />,
-    );
+    const compact = render(<Canon world="salzmark" compact />);
     await screen.findByRole("button", { name: /Kael/ });
     expect(screen.queryByRole("button", { name: /Weltenbauer/ })).toBeNull();
     compact.unmount();
@@ -516,33 +663,5 @@ describe("world builder (step 6.7)", () => {
     });
     await within(side).findByRole("button", { name: /Kael/ });
     expect(screen.queryByRole("button", { name: /Weltenbauer/ })).toBeNull();
-  });
-});
-
-describe("import with a proposal of the world builder", () => {
-  it("ignores the answer of a preview after leaving the page", async () => {
-    const { calls } = fakeApi({
-      [PREVIEW]: ok({ world: "salzmark", introduction: "", items: [] }),
-    });
-    const view = render(
-      <Import world="salzmark" onImported={vi.fn()} initialText="# Figuren" />,
-    );
-    view.unmount();
-    await waitFor(() => {
-      expect(calls).toHaveLength(1);
-    });
-  });
-
-  it("does not preview without text and reports a failed preview", async () => {
-    const { calls } = fakeApi({ [PREVIEW]: fail(422, "Kein Eintrag erkannt") });
-    const { unmount } = render(
-      <Import world="salzmark" onImported={vi.fn()} />,
-    );
-    expect(calls).toHaveLength(0);
-    unmount();
-    render(
-      <Import world="salzmark" onImported={vi.fn()} initialText="# Figuren" />,
-    );
-    expect(await screen.findByText("Kein Eintrag erkannt")).toBeDefined();
   });
 });
