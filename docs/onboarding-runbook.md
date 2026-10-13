@@ -23,7 +23,7 @@ Dieses Runbook führt vom frischen Klon bis zum laufenden Server mit Gesundheits
 
 **Voraussetzung an den Leser:** Grundkenntnisse in Bash; Lese-Zugriff auf das Repository.
 
-**Geprüft am:** 2026-10-08, Linux x86_64 (Cloud-Session des Coding-Agents), frischer `git worktree` von Commit `fb912f4` (Phasenabschluss 4, v0.1.0); 2026-09-27, Linux x86_64, `c0325f4` (Phasenabschluss 3); 2026-09-28, macOS arm64, frischer `git clone` von Commit `f75be2d` (Schritt 4.9) – Werkzeug-Caches unter `~/.cache/skriptorium-tools/` und `~/Library/Caches/ms-playwright/` waren schon vorhanden.
+**Geprüft am:** 2026-10-13, macOS arm64, frischer `git worktree` von Commit `f96aa16` (Phasenabschluss 7, Quick Start und `scripts/session-start.sh`); 2026-10-08, Linux x86_64 (Cloud-Session des Coding-Agents), frischer `git worktree` von Commit `fb912f4` (Phasenabschluss 4, v0.1.0); 2026-09-27, Linux x86_64, `c0325f4` (Phasenabschluss 3); 2026-09-28, macOS arm64, frischer `git clone` von Commit `f75be2d` (Schritt 4.9) – Werkzeug-Caches unter `~/.cache/skriptorium-tools/` und `~/Library/Caches/ms-playwright/` waren schon vorhanden.
 
 ## 2. Voraussetzungen pro Plattform
 
@@ -126,7 +126,7 @@ npx playwright test                            # End-to-End in Chromium (nach de
 
 - **Ursache:** `pre-commit install` wurde in einem zusätzlichen `git worktree` ausgeführt. Worktrees teilen `.git/hooks`; der Hook zeigt danach auf die venv des Worktrees und bricht, sobald der Worktree entfernt ist.
 - **Lösung:** im Haupt-Checkout erneut `uv run pre-commit install` – bei jeder Onboarding-Validierung im Worktree direkt nach dem Entfernen des Worktrees.
-- **Auftreten:** 2026-09-26 (Onboarding-Validierung in 2.1 und beim Phasenabschluss 2).
+- **Auftreten:** 2026-09-26 (Onboarding-Validierung in 2.1 und beim Phasenabschluss 2); 2026-10-12 (6.10); 2026-10-13 (7.8) – jedes Mal bei der Validierung am Phasenende. Die Wiederherstellung gehört deshalb fest zum Ablauf der Validierung (Abschnitt 8).
 
 ### Symptom: `browserType.launch: Executable doesn't exist` bei `npx playwright test`
 
@@ -204,6 +204,7 @@ Für den Eigentümer **ohne KI**. Alles läuft im Programm „Terminal“ auf de
 - **Validierungs-Pflicht:** Vor jedem Phasen-Abschluss wird dieses Runbook gegen einen frischen Worktree validiert (CLAUDE.md Abschnitt 17, Trigger 3 in Abschnitt 16).
 - **Drift-Verbot:** Wenn das Runbook nicht mehr zur Realität passt (Skript umbenannt, ENV-Variable neu, Plattform-Sonderfall geändert), ist das ein Bug und wird im selben Commit gefixt.
 - **„Geprüft am"-Datum** (Abschnitt 1) wird bei jeder Validierung aktualisiert.
+- **Nach der Validierung im Worktree:** Worktree entfernen, dann im Haupt-Checkout `uv run pre-commit install` und den nächsten Commit an `git log` prüfen – sonst zeigt der gemeinsame Hook ins Leere (Abschnitt 4, dreimal aufgetreten).
 - **Troubleshooting-Sektion wächst mit:** Bei jeder Mehrfach-Reibung wird ein Eintrag ergänzt. Einträge, die seit 12 Monaten nicht mehr aufgetreten sind, dürfen ins Archiv (`docs/archiv/onboarding-troubleshooting-YYYY.md`).
 - **Plattform-spezifische Hinweise** müssen mit der Plattform-Matrix in `docs/project-context.md` Abschnitt 3 konsistent bleiben (siehe Inter-Pflicht-Drift-Prüfung in CLAUDE.md Abschnitt 16).
 
