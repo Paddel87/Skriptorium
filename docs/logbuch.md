@@ -29,7 +29,18 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
-### 2026-10-13 11:10 UTC – [BEOBACHTUNG] 7.14 Markierungen auf Karten umgesetzt
+### 2026-10-13 11:08 UTC – [SESSIONENDE] 7.14 umgesetzt und gemergt
+
+- **Dauer:** 10:22–11:08 UTC.
+- **Bearbeitet:** 7.14 – Vorlage (ADR-079), Mockup, Bau, Sichtprobe, PR #151 nach grüner CI gemergt (`d54938b`, Wahl des Eigentümers „PR anlegen und mergen“).
+- **Erreichter Stand:** 7.14 auf `main`, nicht eingespielt. Phase 7: 7 von 16 erledigt; 7.6, 7.10–7.14, 7.16 warten auf Einspielen bzw. Bestätigung.
+- **Offen:** Einspielen von 7.14 – nur vom Mac aus (diese Cloud-Session hat keinen SSH-Zugang, ADR-025); Bestätigung des Eigentümers für 7.6, 7.10–7.14, 7.16; D.11 bis 2026-10-31.
+- **Nächster Schritt:** neue Session auf dem Mac – „einspielen“, dann Proben des Eigentümers; danach 7.15 (nur auf Wunsch) und 7.8.
+- **Modell-Bilanz:** aktive Klasse Entscheidung (`claude-opus-5-5`, eingestellt und bedient laut Sitzungsabfrage 11:01). Schritte oberhalb der Empfehlung: 0 (7.14 empfiehlt Entscheidung). Abgegeben: nichts – Bau und Dokumente mit dem geladenen Kontext, eine Abgabe hätte ihn neu laden müssen.
+- **Kontextgröße:** 204.266 Token laut Sitzungsabfrage 11:01 – über der Grenze 200.000 nach dem Bau; der laufende Schritt (PR, Mergen) wurde zu Ende geführt, kein neuer begonnen. Sitzungskosten der gesamten Cloud-Sitzung laut Abfrage ca. 132 $ (seit 2026-10-09). Kurzzeitlimit `allowed`.
+- **Sessionende-Prüfungen:** README synchronisiert (Stand, Funktionen, Nächste Schritte). Drift: ADR-079 → 7.14 vorhanden; Teil A der Entscheidungen wieder vollständig (073–079); Reaktiv-Quote 0/10 über ADR-070..079; Modul-Liste unverändert; Reifegrade unverändert; Blocker 0; FR-035 nennt 7.14; Phase 7 unverändert 16 Schritte (Schwelle nicht überschritten). Ablaufdaten-Register: kein Vorlauf erreicht (D.1 ab 2026-11-05, D.5 ab 2026-11-12). Archiv-Trigger: Logbuch unter 800 Zeilen; Phase 7 nicht abgeschlossen. project-context 347 Zeilen, unverändert.
+
+### 2026-10-13 11:00 UTC – [BEOBACHTUNG] 7.14 Markierungen auf Karten umgesetzt
 
 - Mockup freigegeben („Passt, bauen“). Umgesetzt: `MapMarker(entry, x, y)` an `WorldMap`, `marken` im Kopf von `world.md` (4 Nachkommastellen), `set_map_markers` ersetzt die Liste (Eintrag muss existieren, je Karte einmal, höchstens 200, Lage 0–1, NaN/Unendlich/Wahrheitswerte abgelehnt); `delete_entry` entfernt die Punkte des Eintrags auf allen Karten; Umbenennen und Entfernen anderer Karten behalten die Punkte. Route `PUT …/maps/{datei}/markers`. Oberfläche: `MapMarkers.tsx` (Punkte, Namensschild, Suchliste) und `WorldMaps.tsx` (Modus „Markieren“, Leiste mit „Punkt entfernen“, „Anderer Eintrag“, „Fertig“); `WorldPage` öffnet den Eintrag über seine Adresse.
 - Reibung: Panzoom hält das Herunterdrücken des Zeigers auf der Karte an (`stopPropagation`), React sah es nicht – Tipp-Erkennung im Capture-Teil (`onPointerDownCapture`). jsdom kennt `setPointerCapture` nicht – im Test ersetzt.
