@@ -29,6 +29,26 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 12:05 UTC – [BEOBACHTUNG] Eingespielt: Markierungen auf Karten (`27506c2`)
+
+- Auf Anweisung des Eigentümers: Stand `main` `27506c2` (CI grün) nach Runbook Abschnitt 7 übertragen, gebaut, gestartet; Rückweg-Image `skriptorium:vorher` = `8296931`. `/api/health` 200 nach ca. 60 s (nur HTTPS abgefragt), danach eine SSH-Prüfung: `healthy`, `REVISION` `27506c2`.
+- Entscheidungen des Eigentümers: Neustart des Servers „nicht nötig“ (2 Sicherheitsupdates und Neustart bleiben offen, kein Fahrplan-Schritt); V.29 nicht vorziehen, bleibt bei 7.8.
+
+### 2026-10-13 11:58 UTC – [BEOBACHTUNG] Lage auf dem Server; Zählung für V.29
+
+- **Erreichbarkeit:** `/api/health` 200 in 0,13 s, Startseite 200 (HTTPS). Eine gebündelte SSH-Abfrage, nur lesend.
+- **Eingespielt:** `8296931` (Rückweg-Image `eb44949`), Container seit 13 Stunden `healthy`. `main` (`27506c2`, CI grün) ist weiter: 7.14 Markierungen auf Karten (PR #151) plus Doku – 7.14 ist noch nicht eingespielt.
+- **Zählung (Eingangskriterium V.29):** 5 Welten, 133 Kanon-Einträge; Einträge mit mehr als einem Abschnitt „Aussehen“: 0; Welten mit doppelter Geografie einer Karte: 0 (bisher kein Abschnitt „Geografie“). Die Befunde B1–B3 aus D.18 sind damit Bauart-Risiken, in den echten Daten noch nicht eingetreten.
+- **Host:** 36 Tage ohne Neustart, Platte 19 %, Speicher 2,1 von 7,8 GB belegt; **Neustart ausstehend** (`/var/run/reboot-required`), 2 Sicherheitsupdates noch nicht eingespielt. Proxy 3.7.13 und Duplicati laufen. Ein Neustart betrifft alle Dienste auf dem VPS – nur auf Entscheidung des Eigentümers.
+
+### 2026-10-13 11:54 UTC – [SESSIONSTART] Bezug PR #154, Lage auf dem Server (Mac)
+
+- **Modell:** eingestellt `claude-opus-5-5` (Sitzungsabfrage 11:54) → Entscheidungs-Klasse. Kurzzeitlimit 26 %, Wochenkontingent 43 % (Zurücksetzung 2026-10-18 10:00 MESZ).
+- **Kontextgröße:** 167.091 Token laut Sitzungsabfrage nach der Pflichtlektüre (Grenze 200.000; Hinweise darauf nicht gewünscht).
+- **Stand:** `main` auf `27506c2` (PR #154), Arbeitsverzeichnis sauber; Branch `docs/serverpruefung-2026-10-13`.
+- **Pflichtlektüre:** vollständig nach `CLAUDE.md` Abschnitt 2 (project-context; Logbuch ab dem `[SESSIONENDE]` 12:30; Fahrplan Stand, Übersicht, Phase 7 mit 7.14, D.18, V.29; Architektur 1/2/9; Decisions A/C; aktive Blocker: keine).
+- **Vorhaben:** Lage auf dem Server nur lesend prüfen – eingespielter Stand gegenüber `main`, Container, Zählung doppelter Abschnitte (Eingangskriterium V.29 aus D.18). Kein Einspielen ohne Anweisung.
+
 ### 2026-10-13 12:30 UTC – [SESSIONENDE] D.18 erledigt
 
 - **Dauer:** 11:45–12:30 UTC.

@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-13, D.18 erledigt (Bericht Datentrennung)
+- **Stand vom:** 2026-10-13, 7.14 eingespielt (`27506c2`); Zählung auf dem Server: keine doppelten Abschnitte
 - **Laufende Phase:** Phase 7 „Zeitlinie, Publizieren, Gestaltung und Bilder“ (Phase 6 abgeschlossen 2026-10-12)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 7.14 Markierungen auf Karten – gemergt (PR #151), wartet auf Einspielen und Bestätigung
-- **Nächster Schritt:** Eigentümer: Befunde aus D.18 ansehen und entscheiden, ob V.29 (doppelte Abschnitte „Aussehen“/„Geografie“) vorgezogen wird. Außerdem: 7.14 einspielen auf Anweisung (nur vom Mac aus); danach 7.15 (nur auf Wunsch) und 7.8. 7.6, 7.10–7.13 und 7.16 eingespielt, warten auf die Bestätigung des Eigentümers. 7.1–7.5, 7.7, 7.9 erledigt 2026-10-12. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** 7.14 Markierungen auf Karten – eingespielt 2026-10-13, wartet auf Bestätigung
+- **Nächster Schritt:** Eigentümer: 7.14 ausprobieren. V.29 bleibt bei 7.8 (Eigentümer 2026-10-13; Zählung auf dem Server: 0 doppelte Abschnitte). Danach 7.15 (nur auf Wunsch) und 7.8. 7.6, 7.10–7.13 und 7.16 eingespielt, warten auf die Bestätigung des Eigentümers. 7.1–7.5, 7.7, 7.9 erledigt 2026-10-12. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-6.md`](archiv/fahrplan-phase-6.md).
 
-**Phase 7: 7 von 16 erledigt; 7.6, 7.10, 7.11, 7.12, 7.13, 7.16 eingespielt und warten auf Bestätigung; 7.14 in Arbeit.**
+**Phase 7: 7 von 16 erledigt; 7.6, 7.10–7.14, 7.16 eingespielt und warten auf Bestätigung.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -41,7 +41,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | 🟠 | 7.11 | Titelbild der Geschichte (auch im E-Book) | gemergt (ADR-075, PR #145) | du: „einspielen“, E-Book im Reader prüfen |
 | 🟠 | 7.12 | Bilder von der KI erzeugen (über OpenRouter) | eingespielt (ADR-076, ADR-077, PR #147) | du: ausprobieren (Kosten, Filter) |
 | 🟠 | 7.13 | Die KI kennt Bilder (einmal beschreiben) | gemergt (ADR-074, PR #144) | du: „einspielen“, dann echte Probe |
-| 🟠 | 7.14 | Markierungen auf Karten → Kanon-Eintrag | gemergt (ADR-079, PR #151) | du: „einspielen“ (vom Mac), dann ausprobieren |
+| 🟠 | 7.14 | Markierungen auf Karten → Kanon-Eintrag | eingespielt (ADR-079, PR #151) | du: ausprobieren |
 | ⚪ | 7.15 | Bilder beim Schreiben auf Knopfdruck mitschicken | offen (nach 7.13, nur auf Wunsch) | du: nach 7.13 entscheiden |
 | 🟠 | 7.16 | Fester Abschnitt „Aussehen“ bei Figuren | eingespielt (ADR-078, PR #148) | du: an einer echten Figur ausprobieren |
 
@@ -59,7 +59,7 @@ Phase 6 abgeschlossen 2026-10-12 (14 von 14 erledigt) – Details im Archiv [`do
 | ⚪ | D.13 | Weigerungen der KI im Text erkennen – Erkundung | offen | du: Beispiele echter Sperren |
 | ⚪ | D.15 | Wechsel React Router 7 → Linie 8 | offen | KI – ab 2026-12-17 |
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
-| ✅ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | erledigt 2026-10-13 (V.29–V.32) | du: Vorziehen von V.29? |
+| ✅ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | erledigt 2026-10-13 (V.29–V.32) | – (V.29 bleibt bei 7.8) |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
 Verschoben auf die übernächste Ausbaustufe (Landeplatz 7.8): V.20, V.21, V.22, V.23, V.24, V.25 (neu 2026-10-12), V.26, V.27, V.28 (neu 2026-10-13), V.29, V.30, V.31, V.32 (aus D.18, 2026-10-13). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
@@ -397,7 +397,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### 7.14: Markierungen auf Karten mit Verweis auf Kanon-Einträge
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-13) – entschieden (ADR-079): Markierungen an der Karte im Kopf von `world.md` (`marken`: Eintrag, x, y als Anteil), Setzen im Modus „Markieren“, nur Punkte (erster Tipp Name, zweiter öffnet den Eintrag), Löschen eines Eintrags entfernt seine Markierungen. Mockup (Vorher, Ansicht, Modus „Markieren“, Handy) freigegeben. Umgesetzt (2026-10-13): `MapMarker` und `set_map_markers` in `canon`, `delete_entry` entfernt Markierungen, `PUT …/maps/{datei}/markers`; Oberfläche `MapMarkers.tsx` und große Ansicht in `WorldMaps.tsx` (Kartenfläche in der Form des Bildes, misst bei Größenänderung neu; Punkte gleich groß bei jedem Zoom; Name am Rand zur Mitte hin). pytest 734, vitest 273, Playwright 11 grün; Sichtprobe Desktop und Handy an einem lokalen Testserver (Setzen, Ziehen, Entfernen, Tipp auf den Namen öffnet den Eintrag, Zoom). Keine Änderung der Kategorie 6 (keine Anmeldung, keine Dateien, keine Secrets) – keine getrennte Prüfung. Gemergt nach grüner CI (PR #151, `d54938b`). Offen: Einspielen (vom Mac, ADR-025), Bestätigung des Eigentümers
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-13) – entschieden (ADR-079): Markierungen an der Karte im Kopf von `world.md` (`marken`: Eintrag, x, y als Anteil), Setzen im Modus „Markieren“, nur Punkte (erster Tipp Name, zweiter öffnet den Eintrag), Löschen eines Eintrags entfernt seine Markierungen. Mockup (Vorher, Ansicht, Modus „Markieren“, Handy) freigegeben. Umgesetzt (2026-10-13): `MapMarker` und `set_map_markers` in `canon`, `delete_entry` entfernt Markierungen, `PUT …/maps/{datei}/markers`; Oberfläche `MapMarkers.tsx` und große Ansicht in `WorldMaps.tsx` (Kartenfläche in der Form des Bildes, misst bei Größenänderung neu; Punkte gleich groß bei jedem Zoom; Name am Rand zur Mitte hin). pytest 734, vitest 273, Playwright 11 grün; Sichtprobe Desktop und Handy an einem lokalen Testserver (Setzen, Ziehen, Entfernen, Tipp auf den Namen öffnet den Eintrag, Zoom). Keine Änderung der Kategorie 6 (keine Anmeldung, keine Dateien, keine Secrets) – keine getrennte Prüfung. Gemergt nach grüner CI (PR #151, `d54938b`). Eingespielt 2026-10-13 (Stand `27506c2`, vom Mac). Offen: Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage und Mockup zu Beginn)
 - **Abhängigkeiten:** 7.10
 - **Freigabepflichtig:** ja – Datenmodell (Markierungen je Karte, Kategorie 4); Mockup
@@ -1209,7 +1209,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Abhängigkeiten:** 7.13, 7.16
 - **Freigabepflichtig:** ja – verändert vorhandenen Text des Autors beim Übernehmen; Vorlage für neue Figuren ist Datenmodell-Konvention aus ADR-078 (Kategorie 4)
 - **Empfohlene Klasse:** Entscheidung – Datenmodell-Konvention (Eskalations-Auslöser 1).
-- **Eingangskriterien:** Zählung auf dem Server (vom Mac): Einträge mit mehr als einem Abschnitt „Aussehen“, Welten mit mehr als einem Abschnitt „Geografie“ je Karte
+- **Eingangskriterien:** Zählung auf dem Server (vom Mac): Einträge mit mehr als einem Abschnitt „Aussehen“, Welten mit mehr als einem Abschnitt „Geografie“ je Karte – erledigt 2026-10-13: 0 von 133 Einträgen, 0 von 5 Welten; Eigentümer: nicht vorziehen
 - **Anforderungen (ab Klasse M):** FR-035, FR-029
 - **Zu tun:** „Übernehmen als ‚Aussehen‘“ und „In die Weltbeschreibung übernehmen“ ersetzen einen vorhandenen Abschnitt gleichen Namens bzw. füllen einen leeren (Rückfrage, wenn dort schon Text steht); Geografie einer gelöschten Karte auf Nachfrage mit entfernen; `appearanceOf` überspringt leere Abschnitte und endet erst an einer Überschrift gleicher oder höherer Ebene; Vorlage neuer Figuren so, dass freier Text nicht unter „Aussehen“ fällt; Server verlangt für „Aussehen herauslösen“ die Kategorie `figur`; Tests: Weltenbauer ohne fremde Welten, Markierungen in keiner Anfrage, Vorlagen bei leerem, doppeltem und unterteiltem Abschnitt. Bericht: `docs/research/datentrennung-ki-bereiche.md`.
 - **Akzeptanzkriterien:** Vorlage bzw. ADR; Tests; nach erneutem Beschreiben genau ein Abschnitt; Eigentümer bestätigt.
