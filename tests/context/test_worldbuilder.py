@@ -56,6 +56,37 @@ def test_request_holds_frame_world_names_and_named_entries(builder: ContextBuild
     ]
 
 
+def test_rules_and_timeline_go_along_in_full(tmp_path: Path) -> None:
+    """As when writing, the world builder knows the laws of the world (step 8.7, ADR-086)."""
+    store = DocumentStore(tmp_path / "data")
+    canon = CanonService(store)
+    canon.create_world("Die Salzmark", "Sieben Inseln.")
+    canon.create_world("Nebelreich", "Nebel.")
+    canon.create_entry(WORLD, "regel", "Salzbindung", body="Salz bindet Tote.")
+    canon.create_entry(WORLD, "zeitlinie", "Chronik", body="- 412: Gründung")
+    canon.create_entry(WORLD, "ort", "Aschturm", body="312 Stufen.")
+    canon.create_entry("nebelreich", "regel", "Nebelgesetz", body="Nebel lügt nie.")
+    builder = ContextBuilder(canon, ManuscriptService(store))
+
+    context = builder.build_worldbuilder(
+        WORLD, [("user", "Was gilt für @Salzbindung?")], references=["salzbindung"]
+    )
+
+    system = context.messages[0].content
+    assert system.count("Salz bindet Tote.") == 1
+    assert "- 412: Gründung" in system
+    assert "312 Stufen" not in system
+    assert "Nebel lügt nie." not in system
+    assert [block.kind for block in context.blocks] == [
+        "rahmen",
+        "welt",
+        "eintraege",
+        "regel",
+        "zeitlinie",
+        "gespraech",
+    ]
+
+
 def test_other_worlds_never_appear_in_the_request(builder: ContextBuilder) -> None:
     """D.18 (step 8.4): neither description, entries nor names of another world go along."""
     context = builder.build_worldbuilder(WORLD, [("user", "Wer herrscht hier?")])
