@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-10-13, Phase 7 abgeschlossen (7.8 erledigt: Pflichtfrage ADR-080, Planung ADR-081); Phase 8 beginnt
 - **Laufende Phase:** Phase 8 „Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung“ (Phase 7 abgeschlossen 2026-10-13)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 8.9 Weltenbauer aus dem Manuskript – wartet auf Einspielen und echte Probe
-- **Nächster Schritt:** 8.13 Planung der nächsten Ausbaustufe – erst wenn 8.9 und 8.11 abgeschlossen sind. Offen dafür: Einspielen von 8.1–8.11 und deine Probe zu 8.9; Probe zu 8.11 in einer Cloud-Session (Prüfauftrag in 8.11); deine Probe mit einer Gast-Figur (Eingangskriterium V.34). Eingespielt ist noch `27506c2`; 8.1–8.9 warten auf „einspielen“, 8.9 danach auf deine Probe. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** 8.9 Weltenbauer aus dem Manuskript – eingespielt, wartet auf echte Probe
+- **Nächster Schritt:** 8.13 Planung der nächsten Ausbaustufe – erst wenn 8.9 und 8.11 abgeschlossen sind. Offen dafür (eingespielt ist `19a5e48` mit 8.1–8.12): deine Probe zu 8.9; Probe zu 8.11 in einer Cloud-Session (Prüfauftrag in 8.11); deine Probe mit einer Gast-Figur (Eingangskriterium V.34). Eingespielt ist noch `27506c2`; 8.1–8.9 warten auf „einspielen“, 8.9 danach auf deine Probe. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -36,7 +36,7 @@ Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details
 | ✅ | 8.6 | Kapitel-Kurzfassung nur mit dem Stand davor (V.30) | erledigt 2026-10-13 (ADR-085) | – |
 | ✅ | 8.7 | Regeln und Zeitlinie an den Weltenbauer? (V.32) | erledigt 2026-10-13 (ADR-086) | – |
 | ✅ | 8.8 | Weltenbauer behält das Gespräch (V.27) | erledigt 2026-10-13 | – |
-| 🟠 | 8.9 | Weltenbauer aus dem Manuskript (V.22) | gemergt, wartet auf Probe (ADR-087) | du: „einspielen“, dann an einer echten Figur ausprobieren |
+| 🟠 | 8.9 | Weltenbauer aus dem Manuskript (V.22) | eingespielt, wartet auf Probe (ADR-087) | du: an einer echten Figur ausprobieren |
 | ✅ | 8.10 | Zeitlinie mit Jahr, Datum und Uhrzeit (V.28) | erledigt 2026-10-13 | – |
 | 🟠 | 8.11 | Verweise zwischen Kanon-Einträgen (V.25) | umgesetzt, Probe offen (ADR-088) | KI: Probe in einer Cloud-Session |
 | ✅ | 8.12 | Wandernde Figuren – Erkundung (V.26) | erledigt 2026-10-13 → V.34 | – |
@@ -314,7 +314,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 8.9: Weltenbauer aus dem Manuskript – Kanon-Eintrag aus vorhandenen Textstellen (V.22)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-13) – entschieden mit Mockup (ADR-087). Umgesetzt (Unteragent, geprüft von der bauenden KI): `context/manuscript_hits.py` (Absätze mit Name/Aliassen als ganzes Wort, auch Genitiv – von der bauenden KI ergänzt; je Kapitel die Kurzfassung; erste/letzte/verteilte Stellen bis 12.000 Token), Teil `fundstellen` im Weltenbauer, `POST …/worldbuilder` optional `manuscript`, neu `POST …/worldbuilder/hits` (nur Zahlen); Bereich „📖 Aus dem Manuskript“ mit Anzahl, Token und Kosten je Antwort, „✕“. pytest 792 (99,84 %), vitest 389 (98,8 % / 94,93 %), ruff, mypy, bandit, tsc, eslint, prettier, Build, Playwright 11/11 (Lauf des Unteragenten). Sichtprobe am lokalen Testserver (ohne echte KI-Antwort). Vom Eigentümer freigegeben („Passt, nur mergen“). Offen: Einspielen und echte Probe an einer Geschichte des Eigentümers (Akzeptanzkriterium)
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-13) – entschieden mit Mockup (ADR-087). Umgesetzt (Unteragent, geprüft von der bauenden KI): `context/manuscript_hits.py` (Absätze mit Name/Aliassen als ganzes Wort, auch Genitiv – von der bauenden KI ergänzt; je Kapitel die Kurzfassung; erste/letzte/verteilte Stellen bis 12.000 Token), Teil `fundstellen` im Weltenbauer, `POST …/worldbuilder` optional `manuscript`, neu `POST …/worldbuilder/hits` (nur Zahlen); Bereich „📖 Aus dem Manuskript“ mit Anzahl, Token und Kosten je Antwort, „✕“. pytest 792 (99,84 %), vitest 389 (98,8 % / 94,93 %), ruff, mypy, bandit, tsc, eslint, prettier, Build, Playwright 11/11 (Lauf des Unteragenten). Sichtprobe am lokalen Testserver (ohne echte KI-Antwort). Vom Eigentümer freigegeben („Passt, nur mergen“). Eingespielt 2026-10-13 (`19a5e48`). Offen: echte Probe an einer Geschichte des Eigentümers (Akzeptanzkriterium)
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** 8.7, 8.8
 - **Freigabepflichtig:** ja – neuer Ablauf (Kategorie 1), ggf. Erweiterung der Anfrage-Zusammenstellung
