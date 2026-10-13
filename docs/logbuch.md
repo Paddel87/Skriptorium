@@ -29,6 +29,18 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [GELÖST] 8.11 Befund „wörtlich %“ war Streuung
+
+- Wahl des Eigentümers „3 weitere Läufe je Seite“ (2,91 $). Über 6 Ketten je Seite liegen alle Mittelwerte von nachher in der Spannweite von vorher (Salzmark wörtlich 0,70 in 0,08–0,91; Glimmergrund 0,20 in 0,00–0,23) – keine Wirkung nach Regel-002. Probe 8.11 insgesamt 6,82 $; offen nur die Bestätigung des Eigentümers.
+- Reibung: Die Warteschleife mit `pgrep -f "regel-002/lauf.py"` fand sich selbst (ihr eigener Befehl enthält das Muster) – Ende der Läufe stattdessen an „Kosten gesamt“ in den Protokollen erkannt.
+
+### 2026-10-13 – [BEOBACHTUNG] 8.11 Probe nach Regel-002 in der Cloud-Session
+
+- Auftrag des Eigentümers „Beide Teile jetzt“. Vorher-Stand `9acc5bf` in einem Worktree (`PYTHONPATH` auf dessen `src`), nachher `main` `5c6a14f`; grok-4.6, „mittel“, je 3 Ketten. Kosten 3,91 $. Ergebnisse und Tabellen: `spikes/regel-002/README.md`, Abschnitt „Probe zu 8.11“.
+- Teil 1: „wörtlich %“ nachher in beiden Geschichten im Mittel über der Vorher-Spannweite (Salzmark 0,71 gegen ≤ 0,50; Glimmergrund 0,41 gegen ≤ 0,08) – nach dem Wortlaut von Regel-002 ein Befund; Werte unter 1 % und innerhalb der Ausgangsmessung 5.24, Vorher-Lauf ungewöhnlich niedrig. Übrige Kennzahlen überschneiden sich.
+- Teil 2 (neues Skript `spikes/regel-002/verweise.py`): verwiesene Einträge stehen nachher vorn in der Auffüllung; bei Budget 6.000 ist „Zum Nassen Grab“ nur nachher dabei. Ortsgebundene Regel (Tolm) in keinem der 42 Vorschläge außerhalb angewendet – auch vorher nicht. Keine vollständige Handbewertung der Widersprüche durch eine getrennte Instanz.
+- Reibung: `auswertung.py` erwartet Unterordner je Geschichte; für Teil 2 nicht verwendbar – Auswertung per Suche in den Texten und den mitgeschriebenen Bausteinen.
+
 ### 2026-10-13 – [BEOBACHTUNG] Eingespielt: Phase 8 bis 8.12 (`19a5e48`)
 
 - Auf Anweisung des Eigentümers nach grüner CI auf `main` eingespielt (Runbook Abschnitt 7); Rückweg-Image `skriptorium:vorher` = `27506c2`. `/api/health` 200 nach ca. 60 s (nur HTTPS abgefragt), danach eine SSH-Prüfung: `healthy`, `REVISION` `19a5e48`.

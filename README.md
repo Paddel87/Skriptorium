@@ -109,7 +109,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - ✅ **8.8:** Weltenbauer behält das Gespräch nach „Als Kanon übernehmen“ – erledigt 2026-10-13.
 - 🟠 **8.9:** Weltenbauer aus dem Manuskript (ADR-087) – eingespielt, deine Probe steht aus.
 - ✅ **8.10:** Zeitlinie mit Jahr, Datum und Uhrzeit – erledigt 2026-10-13.
-- 🟠 **8.11:** Verweise zwischen Kanon-Einträgen (ADR-088) – umgesetzt, Probe nach Regel-002 offen.
+- 🟠 **8.11:** Verweise zwischen Kanon-Einträgen (ADR-088) – umgesetzt, Probe nach Regel-002 bestanden (2026-10-13); wartet auf deine Bestätigung.
 - ✅ **8.12:** Erkundung „wandernde Figuren“ – erledigt 2026-10-13 ([Bericht](docs/research/wandernde-figuren.md)); nächster Schritt: du probierst eine Gast-Figur aus, danach Option A (V.34).
 - ⚪ **8.13:** Planung der nächsten Ausbaustufe – nach den offenen Proben zu 8.9 und 8.11.
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
