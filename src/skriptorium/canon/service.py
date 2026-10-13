@@ -2,7 +2,8 @@
 
 Layout below the data directory (docs/architecture.md section 7)::
 
-    worlds/<world>/world.md                          name, optional karten (name, datei); body:
+    worlds/<world>/world.md                          name, optional karten (name, datei,
+                                                     optional marken: eintrag, x, y); body:
                                                      description and ground rules
     worlds/<world>/karten/karte-<random>.<ending>    maps of the world (step 7.10, ADR-073)
     worlds/<world>/canon/<category>/<entry>.md       name, aliasse, kategorie, optional status,
@@ -19,7 +20,7 @@ import contextlib
 import re
 import secrets
 from collections.abc import Mapping, Sequence, Set
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import Enum
 from pathlib import PurePosixPath
 from typing import Final, cast
@@ -53,6 +54,8 @@ _CANON = "canon"
 _IMAGES = "bilder"
 _MAPS = "karten"
 MAX_MAPS_PER_WORLD: Final = 20
+MAX_MARKERS_PER_MAP: Final = 200
+_MARKERS = "marken"
 _MAP_FILE = re.compile(r"karte-[0-9a-f]{12}\.(?:png|jpg|webp)")
 _MAP_NAME_LENGTH = 200
 # Control characters (line breaks included) and the marks that turn the writing direction.
@@ -75,11 +78,25 @@ KEEP: Final = _Keep.KEEP
 
 
 @dataclass(frozen=True)
+class MapMarker:
+    """A point on a map that leads to a canon entry (step 7.14, ADR-079).
+
+    ``x`` and ``y`` are shares of the map's width and height (0 to 1, from the top left), so a
+    smaller copy of the map keeps the point in place.
+    """
+
+    entry: str
+    x: float
+    y: float
+
+
+@dataclass(frozen=True)
 class WorldMap:
-    """A map of a world (step 7.10): the author's name for it and its file."""
+    """A map of a world (step 7.10): the author's name for it, its file and its markers."""
 
     name: str
     file: str
+    markers: tuple[MapMarker, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -253,7 +270,31 @@ class CanonService:
         maps = list(_world_from(document).maps)
         clean_name = _map_name(name)
         at = _map_index(maps, world_id, file)
-        maps[at] = WorldMap(clean_name, file)
+        maps[at] = replace(maps[at], name=clean_name)
+        return self._write_maps(document, maps)
+
+    def set_map_markers(self, world_id: str, file: str, markers: Sequence[MapMarker]) -> World:
+        """Replace the markers of a map (step 7.14, ADR-079).
+
+        Raises:
+            NotFound: The world or the map does not exist.
+            InvalidInput: A position outside the map, an entry that does not exist or appears
+                twice, or more than :data:`MAX_MARKERS_PER_MAP` markers.
+        """
+        document = self._store.read(_world_path(world_id))
+        maps = list(_world_from(document).maps)
+        at = _map_index(maps, world_id, file)
+        if len(markers) > MAX_MARKERS_PER_MAP:
+            raise InvalidInput(f"Höchstens {MAX_MARKERS_PER_MAP} Markierungen je Karte")
+        seen: set[str] = set()
+        for marker in markers:
+            _check_marker(marker)
+            if marker.entry in seen:
+                raise InvalidInput(f"Eintrag {marker.entry!r} ist schon auf der Karte")
+            if self._find_entry_path(world_id, marker.entry) is None:
+                raise InvalidInput(f"Eintrag {marker.entry!r} gibt es in dieser Welt nicht")
+            seen.add(marker.entry)
+        maps[at] = replace(maps[at], markers=tuple(markers))
         return self._write_maps(document, maps)
 
     def remove_world_map(self, world_id: str, file: str) -> World:
@@ -272,7 +313,7 @@ class CanonService:
     def _write_maps(self, document: Document, maps: list[WorldMap]) -> World:
         header = dict(document.header)
         if maps:
-            header[_MAPS] = list[HeaderValue]({"name": m.name, "datei": m.file} for m in maps)
+            header[_MAPS] = list[HeaderValue](_map_header(m) for m in maps)
         else:
             header.pop(_MAPS, None)
         return _world_from(self._store.write(document.path, header, document.body))
@@ -400,6 +441,19 @@ class CanonService:
         self._store.delete(path)
         for image in images:
             self._delete_image_file(world_id, image)
+        self._drop_markers(world_id, entry_id)
+
+    def _drop_markers(self, world_id: str, entry_id: str) -> None:
+        """Remove the markers of a deleted entry from every map of the world (ADR-079)."""
+        document = self._store.read(_world_path(world_id))
+        maps = _world_from(document).maps
+        if not any(m.entry == entry_id for world_map in maps for m in world_map.markers):
+            return
+        kept = [
+            replace(world_map, markers=tuple(m for m in world_map.markers if m.entry != entry_id))
+            for world_map in maps
+        ]
+        self._write_maps(document, kept)
 
     # --- images of canon entries (step 7.6, ADR-072) ------------------------------------
 
@@ -668,6 +722,45 @@ def _map_name(name: str) -> str:
     return clean
 
 
+def _is_number(value: object) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool)
+
+
+def _check_marker(marker: MapMarker) -> None:
+    checked_identifier(marker.entry)
+    for share in (marker.x, marker.y):
+        if not _is_number(share):
+            raise InvalidInput("Lage einer Markierung muss eine Zahl sein")
+        # Also refuses NaN, which compares false with everything.
+        if not 0 <= share <= 1:
+            raise InvalidInput("Markierung liegt außerhalb der Karte")
+
+
+def _map_header(world_map: WorldMap) -> dict[str, HeaderValue]:
+    header: dict[str, HeaderValue] = {"name": world_map.name, "datei": world_map.file}
+    if world_map.markers:
+        header[_MARKERS] = list[HeaderValue](
+            {"eintrag": m.entry, "x": round(m.x, 4), "y": round(m.y, 4)} for m in world_map.markers
+        )
+    return header
+
+
+def _markers_of(path: str, value: HeaderValue) -> tuple[MapMarker, ...]:
+    if not isinstance(value, list):
+        raise InvalidInput(f"{path}: marken muss eine Liste sein")
+    markers: list[MapMarker] = []
+    for item in value:
+        if not isinstance(item, dict):
+            raise InvalidInput(f"{path}: marken braucht je Markierung eintrag, x und y")
+        entry, x, y = item.get("eintrag"), item.get("x"), item.get("y")
+        if not (isinstance(entry, str) and _is_number(x) and _is_number(y)):
+            raise InvalidInput(f"{path}: marken braucht je Markierung eintrag, x und y")
+        marker = MapMarker(entry, float(cast(float, x)), float(cast(float, y)))
+        _check_marker(marker)
+        markers.append(marker)
+    return tuple(markers)
+
+
 def _map_index(maps: list[WorldMap], world_id: str, file: str) -> int:
     for at, world_map in enumerate(maps):
         if world_map.file == file:
@@ -734,7 +827,8 @@ def _maps_of(document: Document) -> tuple[WorldMap, ...]:
             and _MAP_FILE.fullmatch(file)
         ):
             raise InvalidInput(f"{document.path}: karten braucht je Karte name und datei")
-        maps.append(WorldMap(name.strip(), file))
+        markers = item.get(_MARKERS, []) if isinstance(item, dict) else []
+        maps.append(WorldMap(name.strip(), file, _markers_of(document.path, markers)))
     return tuple(maps)
 
 

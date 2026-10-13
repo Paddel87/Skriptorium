@@ -3,11 +3,13 @@
 from skriptorium.canon.categories import CATEGORIES, Category
 from skriptorium.canon.importers import TranslatedMaterial
 from skriptorium.canon.service import (
+    MAX_MARKERS_PER_MAP,
     CanonEntry,
     CanonService,
     ImportItem,
     ImportPreview,
     ImportResult,
+    MapMarker,
     World,
     WorldMap,
 )
@@ -15,6 +17,7 @@ from skriptorium.storage import AlreadyExists, InvalidInput, NotFound, StorageEr
 
 __all__ = [
     "CATEGORIES",
+    "MAX_MARKERS_PER_MAP",
     "AlreadyExists",
     "CanonEntry",
     "CanonService",
@@ -23,6 +26,7 @@ __all__ = [
     "ImportPreview",
     "ImportResult",
     "InvalidInput",
+    "MapMarker",
     "NotFound",
     "StorageError",
     "TranslatedMaterial",
