@@ -189,6 +189,8 @@ export function Canon({
                 world={world}
                 current={current}
                 compact={compact}
+                entries={entries}
+                onOpen={choose}
                 onEdit={() => {
                   setEditing(current.id);
                 }}

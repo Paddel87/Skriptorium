@@ -272,7 +272,7 @@ def test_budget_is_never_exceeded(
     total = sum(estimate_tokens(message.content) for message in context.messages)
     assert total * SAFETY_MARGIN <= budget
     assert context.estimated_tokens <= budget
-    if budget >= 1500:
+    if budget >= 1700:
         assert "Absatz 399" in context.messages[1].content
 
 

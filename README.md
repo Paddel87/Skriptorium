@@ -109,7 +109,8 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - ✅ **8.8:** Weltenbauer behält das Gespräch nach „Als Kanon übernehmen“ – erledigt 2026-10-13, noch nicht eingespielt.
 - 🟠 **8.9:** Weltenbauer aus dem Manuskript (ADR-087) – gemergt, Einspielen und deine Probe stehen aus.
 - ✅ **8.10:** Zeitlinie mit Jahr, Datum und Uhrzeit – erledigt 2026-10-13, noch nicht eingespielt.
-- ⚪ **8.11–8.12:** Verweise zwischen Kanon-Einträgen, Erkundung „wandernde Figuren“ (ADR-081).
+- 🟠 **8.11:** Verweise zwischen Kanon-Einträgen (ADR-088) – umgesetzt, Probe nach Regel-002 offen.
+- ⚪ **8.12:** Erkundung „wandernde Figuren“ (ADR-081).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).

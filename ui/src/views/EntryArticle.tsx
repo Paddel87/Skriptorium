@@ -18,17 +18,27 @@ export function EntryArticle({
   world,
   current,
   compact,
+  entries,
+  onOpen,
   onEdit,
   onSaved,
 }: {
   world: string;
   current: CanonEntry;
   compact: boolean;
+  /** The entries shown with the world; an `@Name` of the text that names one is a link. */
+  entries?: readonly CanonEntry[];
+  /** Opens the entry a link names (step 8.11, ADR-088). */
+  onOpen?: (entry: string) => void;
   onEdit: () => void;
   /** Called after the entry was changed here (an event added to a timeline, an image). */
   onSaved: () => void;
 }) {
   const guest = current.world !== world;
+  const links =
+    guest || entries === undefined || onOpen === undefined
+      ? undefined
+      : { entries: entries.filter((entry) => entry.world === world), onOpen };
   return (
     <article>
       <div className="row">
@@ -86,7 +96,7 @@ export function EntryArticle({
           onSaved={onSaved}
         />
       ) : (
-        <EntryText text={current.body} name={current.name} />
+        <EntryText text={current.body} name={current.name} links={links} />
       )}
     </article>
   );
