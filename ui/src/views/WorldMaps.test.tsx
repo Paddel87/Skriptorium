@@ -16,8 +16,8 @@ const BASE = `/api/worlds/${WORLD.id}/maps`;
 const WITH_MAPS: World = {
   ...WORLD,
   maps: [
-    { name: "Die Salzmark", file: "karte-aaaaaaaaaaaa.webp" },
-    { name: "Hafenviertel", file: "karte-bbbbbbbbbbbb.jpg" },
+    { name: "Die Salzmark", file: "karte-aaaaaaaaaaaa.webp", markers: [] },
+    { name: "Hafenviertel", file: "karte-bbbbbbbbbbbb.jpg", markers: [] },
   ],
 };
 
@@ -27,7 +27,9 @@ afterEach(() => {
 
 describe("maps of a world (step 7.10)", () => {
   it("invites to add the first map", () => {
-    render(<WorldMaps world={WORLD} onChanged={vi.fn()} />);
+    render(
+      <WorldMaps world={WORLD} onChanged={vi.fn()} onOpenEntry={vi.fn()} />,
+    );
     expect(
       screen.getByText(
         "Noch keine Karte – „＋ Karte hinzufügen“ legt die erste an.",
@@ -36,7 +38,9 @@ describe("maps of a world (step 7.10)", () => {
   });
 
   it("shows the maps as tiles with their names", () => {
-    render(<WorldMaps world={WITH_MAPS} onChanged={vi.fn()} />);
+    render(
+      <WorldMaps world={WITH_MAPS} onChanged={vi.fn()} onOpenEntry={vi.fn()} />,
+    );
     const tile = screen.getByRole("button", { name: "Hafenviertel" });
     expect(tile.querySelector("img")?.getAttribute("src")).toBe(
       `${BASE}/karte-bbbbbbbbbbbb.jpg`,
@@ -46,12 +50,16 @@ describe("maps of a world (step 7.10)", () => {
   it("adds a map: file, name from the file, shrunk to the map size", async () => {
     const after = {
       ...WORLD,
-      maps: [{ name: "Seekarte", file: "karte-cccccccccccc.webp" }],
+      maps: [
+        { name: "Seekarte", file: "karte-cccccccccccc.webp", markers: [] },
+      ],
     };
     const { calls } = fakeApi({ [`POST ${BASE}`]: created(after) });
     const changed = vi.fn();
     const user = userEvent.setup();
-    render(<WorldMaps world={WORLD} onChanged={changed} />);
+    render(
+      <WorldMaps world={WORLD} onChanged={changed} onOpenEntry={vi.fn()} />,
+    );
     await user.click(
       screen.getByRole("button", { name: "＋ Karte hinzufügen" }),
     );
@@ -77,7 +85,9 @@ describe("maps of a world (step 7.10)", () => {
   it("shows why a map was refused", async () => {
     fakeApi({ [`POST ${BASE}`]: fail(422, "Bildgröße nicht erlaubt") });
     const user = userEvent.setup();
-    render(<WorldMaps world={WORLD} onChanged={vi.fn()} />);
+    render(
+      <WorldMaps world={WORLD} onChanged={vi.fn()} onOpenEntry={vi.fn()} />,
+    );
     await user.click(
       screen.getByRole("button", { name: "＋ Karte hinzufügen" }),
     );
@@ -104,7 +114,9 @@ describe("maps of a world (step 7.10)", () => {
     vi.spyOn(window, "confirm").mockReturnValue(true);
     const changed = vi.fn();
     const user = userEvent.setup();
-    render(<WorldMaps world={WITH_MAPS} onChanged={changed} />);
+    render(
+      <WorldMaps world={WITH_MAPS} onChanged={changed} onOpenEntry={vi.fn()} />,
+    );
     await user.click(screen.getByRole("button", { name: "Hafenviertel" }));
     expect(
       screen.getByRole("dialog", { name: "Karte Hafenviertel" }),
@@ -135,7 +147,9 @@ describe("maps of a world (step 7.10)", () => {
 
   it("closes the large map with Escape", async () => {
     const user = userEvent.setup();
-    render(<WorldMaps world={WITH_MAPS} onChanged={vi.fn()} />);
+    render(
+      <WorldMaps world={WITH_MAPS} onChanged={vi.fn()} onOpenEntry={vi.fn()} />,
+    );
     await user.click(screen.getByRole("button", { name: "Die Salzmark" }));
     await user.keyboard("{Escape}");
     expect(screen.queryByRole("dialog")).toBeNull();

@@ -29,6 +29,7 @@ export type {
   CanonEntry,
   Category,
   EntryFields,
+  MapMarker,
   World,
   WorldMap,
 } from "./canon";
