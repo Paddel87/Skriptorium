@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 12:30 UTC – [SESSIONENDE] D.18 erledigt
+
+- **Dauer:** 11:45–12:30 UTC.
+- **Bearbeitet:** D.18 – Prüfung der Datentrennung je KI-Bereich, Bericht, V.29–V.32; PR #154 (Wahl des Eigentümers „PR anlegen und mergen“), Merge nach grüner CI.
+- **Erreichter Stand:** D.18 erledigt. Phase 7 unverändert: 7 von 16 erledigt; 7.6, 7.10–7.14, 7.16 warten auf Einspielen bzw. Bestätigung.
+- **Offen:** Zählung doppelter Abschnitte auf dem Server (vom Mac, Eingangskriterium V.29); Einspielen von 7.14 (vom Mac); D.11 bis 2026-10-31.
+- **Nächster Schritt:** Session auf dem Mac – „einspielen“ und Zählung; danach 7.15 (nur auf Wunsch) und 7.8 (mit V.29–V.32).
+- **Modell-Bilanz:** aktive Klasse Entscheidung (`claude-opus-5-5`, eingestellt und bedient laut Sitzungsabfrage 11:47). Schritte oberhalb der Empfehlung: 0 (D.18 empfiehlt Entscheidung). Abgegeben: nichts – reine Lesearbeit, an die Routine-Klasse bei gleichem Cache-Lesepreis ohne Ersparnis.
+- **Kontextgröße:** Sitzungsabfrage meldete 102.877 Token und wurde danach nicht mehr aktualisiert; geschätzt ca. 170.000 Token am Ende (unter der Grenze 200.000). Kurzzeitlimit `allowed`.
+- **Sessionende-Prüfungen:** README synchronisiert (D.18 erledigt). Drift: keine neuen ADRs (Reaktiv-Quote unverändert 0/10); V.29–V.32 verweisen auf 7.8 (vorhanden); Modul-Liste und Reifegrade unverändert; Blocker 0; Phase 7 unverändert 16 Schritte (D.18 und V-Schritte außerhalb des Schrittplans). Ablaufdaten-Register: kein Vorlauf erreicht. Archiv-Trigger: Logbuch unter 800 Zeilen; Phase 7 nicht abgeschlossen. project-context 347 Zeilen, unverändert.
+
 ### 2026-10-13 12:20 UTC – [ERLEDIGT] D.18 Prüfung der Datentrennung je KI-Bereich
 
 - Nur gelesen, kein Code geändert. Bericht `docs/research/datentrennung-ki-bereiche.md`: acht Bereiche mit Beleg (Datei, Zeile) und Testlage.
