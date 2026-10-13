@@ -166,22 +166,27 @@ describe("Canon", () => {
     });
     const user = userEvent.setup();
     const page = render(<CanonAt start="zeitlinie" />);
-    const line = await screen.findByRole("list", { name: "Zeitstrahl" });
+    const line = await screen.findByRole("group", { name: "Zeitstrahl" });
     expect(
       within(line)
         .getAllByRole("listitem")
         .map((item) => item.textContent),
     ).toEqual([
-      "0Flut.",
-      "399Drach wird Vogt.",
-      "401Hedda ertrinkt.",
-      "ohne JahrIrgendwann: Feuer erlischt.",
+      "Flut.",
+      "Drach wird Vogt.",
+      "Hedda ertrinkt.",
+      "ohne ZeitangabeIrgendwann: Feuer erlischt.",
     ]);
+    expect(
+      within(line)
+        .getAllByRole("heading")
+        .map((item) => item.textContent),
+    ).toEqual(["Jahr 0", "Jahr 399", "Jahr 401"]);
     expect(
       screen.getByRole("heading", { name: "Zeitlinie (n. d. F.)" }),
     ).toBeDefined();
     await user.click(screen.getByRole("button", { name: "als Text" }));
-    expect(screen.queryByRole("list", { name: "Zeitstrahl" })).toBeNull();
+    expect(screen.queryByRole("group", { name: "Zeitstrahl" })).toBeNull();
     expect(screen.getByText("401:").tagName).toBe("STRONG");
     await user.click(screen.getByRole("button", { name: "Zeitstrahl" }));
 
@@ -199,8 +204,89 @@ describe("Canon", () => {
     page.unmount();
 
     render(<Canon world="salzmark" selected="zeitlinie" compact />);
-    await screen.findByRole("list", { name: "Zeitstrahl" });
+    await screen.findByRole("group", { name: "Zeitstrahl" });
     expect(screen.queryByRole("button", { name: "+ Ereignis" })).toBeNull();
+  });
+
+  it("groups a time line by year with marks and a group without a year (step 8.10)", async () => {
+    const TIMELINE = {
+      ...ENTRY,
+      id: "zeitlinie",
+      name: "Zeitlinie",
+      category: "zeitlinie" as const,
+      aliases: [],
+      body: [
+        "- **14:30 Uhr:** Alarm.",
+        "- **3.5.412, 9 Uhr:** Aufbruch.",
+        "- **412, Spätherbst:** Handlung.",
+        "- **−40:** Frühe Zeit.",
+        "- **3. Mai:** Fest.",
+        "- Irgendwann: Feuer.",
+        "",
+      ].join("\n"),
+    };
+    fakeApi({ "GET /api/worlds/salzmark/entries": ok([TIMELINE]) });
+    render(<CanonAt start="zeitlinie" />);
+    const line = await screen.findByRole("group", { name: "Zeitstrahl" });
+    expect(
+      within(line)
+        .getAllByRole("heading")
+        .map((item) => item.textContent),
+    ).toEqual(["Jahr −40", "Jahr 412", "Ohne Jahr"]);
+    expect(
+      within(line)
+        .getAllByRole("listitem")
+        .map((item) => item.textContent),
+    ).toEqual([
+      "Frühe Zeit.",
+      "SpätherbstHandlung.",
+      "3.5.9 UhrAufbruch.",
+      "14:30 UhrAlarm.",
+      "3. MaiFest.",
+      "ohne ZeitangabeIrgendwann: Feuer.",
+    ]);
+    expect(
+      screen.getByText(
+        "Mit einem Jahr davor (z. B. „412, 14:30 Uhr“) ordnet sich ein Ereignis ins Jahr ein.",
+      ),
+    ).toBeDefined();
+  });
+
+  it("groups the world's event entries by year and time of day (step 8.10)", async () => {
+    const event = (id: string, name: string) => ({
+      ...ENTRY,
+      id,
+      name,
+      body: "",
+      aliases: [],
+      category: "zeitlinie" as const,
+    });
+    fakeApi({
+      "GET /api/worlds/salzmark/entries": ok([
+        event("a", "14:30 Uhr – Alarm"),
+        event("b", "412 – Aufbruch"),
+        event("c", "412, 8:00 Uhr – Frühstück"),
+      ]),
+    });
+    const user = userEvent.setup();
+    render(<CanonAt />);
+    await user.click(
+      await screen.findByRole("button", { name: "Zeitlinie 3" }),
+    );
+    const line = screen.getByRole("group", { name: "Zeitstrahl der Welt" });
+    expect(
+      within(line)
+        .getAllByRole("heading")
+        .map((item) => item.textContent),
+    ).toEqual(["Jahr 412", "Ohne Jahr"]);
+    expect(
+      within(line)
+        .getAllByRole("listitem")
+        .map((item) => item.textContent),
+    ).toEqual(["Aufbruch", "8:00 UhrFrühstück", "14:30 UhrAlarm"]);
+    expect(
+      screen.getByText(/ordnet sich ein Ereignis ins Jahr ein/),
+    ).toBeDefined();
   });
 
   it("shows when adding an event fails", async () => {
@@ -252,16 +338,24 @@ describe("Canon", () => {
     await user.click(
       await screen.findByRole("button", { name: "Zeitlinie 3" }),
     );
-    const line = screen.getByRole("list", { name: "Zeitstrahl der Welt" });
+    const line = screen.getByRole("group", { name: "Zeitstrahl der Welt" });
     expect(
       within(line)
         .getAllByRole("listitem")
         .map((item) => item.textContent),
     ).toEqual([
-      "1987GründungDie Akademie.",
-      "2011WiedereröffnungDer Westflügel.",
-      "ohne JahrIrgendwann",
+      "GründungDie Akademie.",
+      "WiedereröffnungDer Westflügel.",
+      "ohne ZeitangabeIrgendwann",
     ]);
+    expect(
+      within(line)
+        .getAllByRole("heading")
+        .map((item) => item.textContent),
+    ).toEqual(["Jahr 1987", "Jahr 2011"]);
+    expect(
+      screen.queryByText(/ordnet sich ein Ereignis ins Jahr ein/),
+    ).toBeNull();
     await user.click(within(line).getByRole("button", { name: "Gründung" }));
     expect(
       screen.getByRole("heading", { name: "1987 – Gründung" }),
@@ -286,12 +380,12 @@ describe("Canon", () => {
     });
     await user.click(screen.getByRole("button", { name: "Liste" }));
     expect(
-      screen.queryByRole("list", { name: "Zeitstrahl der Welt" }),
+      screen.queryByRole("group", { name: "Zeitstrahl der Welt" }),
     ).toBeNull();
     expect(screen.getByRole("button", { name: /Irgendwann/ })).toBeDefined();
     await user.click(screen.getByRole("button", { name: "Zeitstrahl" }));
     expect(
-      screen.getByRole("list", { name: "Zeitstrahl der Welt" }),
+      screen.getByRole("group", { name: "Zeitstrahl der Welt" }),
     ).toBeDefined();
     page.unmount();
 
@@ -300,7 +394,7 @@ describe("Canon", () => {
       await screen.findByRole("button", { name: "Zeitlinie 3" }),
     );
     expect(
-      screen.getByRole("list", { name: "Zeitstrahl der Welt" }),
+      screen.getByRole("group", { name: "Zeitstrahl der Welt" }),
     ).toBeDefined();
     expect(screen.queryByRole("button", { name: "+ Ereignis" })).toBeNull();
   });

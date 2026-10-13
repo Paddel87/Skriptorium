@@ -8,9 +8,10 @@ import {
 } from "../timeline";
 import { ErrorText } from "./Common";
 import { EntryText } from "./EntryText";
+import { TimelineGroups } from "./TimelineGroups";
 
 /**
- * A timeline entry as a time line (step 7.2, ADR-069): its list of events sorted by date,
+ * A timeline entry as a time line (step 7.2, ADR-069): its list of events grouped by year (step 8.10),
  * headings and paragraphs above as written; "als Text" shows the entry as before. With
  * `editable`, "+ Ereignis" writes a new event into the entry at the fitting place and saves it.
  */
@@ -79,16 +80,11 @@ export function TimelineView({
         <>
           <EntryText text={withoutEvents(entry.body)} name={entry.name} />
           {events.length > 0 && (
-            <ol className="timeline-events" aria-label="Zeitstrahl">
-              {events.map((item, index) => (
-                <li key={index} className={item.key === null ? "loose" : ""}>
-                  <span className="timeline-date">
-                    {item.date ?? "ohne Jahr"}
-                  </span>
-                  <span>{item.text}</span>
-                </li>
-              ))}
-            </ol>
+            <TimelineGroups
+              label="Zeitstrahl"
+              events={events}
+              render={(item) => <span>{item.text}</span>}
+            />
           )}
         </>
       )}
@@ -96,7 +92,7 @@ export function TimelineView({
         <form className="timeline-add" onSubmit={(event) => void add(event)}>
           <input
             aria-label="Datum"
-            placeholder="Datum, z. B. 403"
+            placeholder="Zeit, z. B. 412 oder 14:30 Uhr"
             value={date}
             onChange={(event) => {
               setDate(event.target.value);

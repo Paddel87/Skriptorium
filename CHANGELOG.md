@@ -6,6 +6,8 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v1.0.0)
 
+- Zeitlinie mit Jahr, Datum und Uhrzeit (2026-10-13, Schritt 8.10): Der Zeitstrahl erkennt Jahr, Datum („3.5.“, „3. Mai“) und Uhrzeit („14:30 Uhr“, „14 Uhr“) so, wie du sie schreibst, und sortiert danach – „14:30 Uhr“ landet nicht mehr bei Jahr 14. Ereignisse sind nach Jahren gruppiert, Datum und Uhrzeit stehen als kleine Marke davor; Ereignisse ohne Jahr stehen in einer eigenen Gruppe. Deine Einträge und was die KI liest, bleiben unverändert.
+
 - Weltenbauer aus dem Manuskript (2026-10-13, Schritt 8.9, ADR-087): Im Weltenbauer holt „📖 Aus dem Manuskript“ zu einem Namen alle Stellen aus deinen Geschichten (auch über die Aliasse eines Kanon-Eintrags und im Genitiv), dazu die Kurzfassung des jeweiligen Kapitels. Du siehst vorher, wie viele Stellen mitgehen und was das je Antwort kostet. Danach entwirfst du den Eintrag im Gespräch und übernimmst ihn wie gewohnt. „✕“ nimmt die Stellen wieder heraus. Neu `POST /api/worlds/{id}/worldbuilder/hits`; `POST …/worldbuilder` nimmt optional `manuscript`.
 
 - Weltenbauer behält das Gespräch (2026-10-13, Schritt 8.8): „Als Kanon übernehmen“ öffnet die Vorschau jetzt als Fenster über dem Weltenbauer statt im Reiter „Import“. Nach dem Übernehmen geht es mit „Zurück zum Weltenbauer“ im selben Gespräch weiter – mehrere Einträge hintereinander, ohne neu anzufangen.
