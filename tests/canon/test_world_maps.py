@@ -6,7 +6,7 @@ import pytest
 
 from skriptorium.canon import CanonService, InvalidInput, NotFound, WorldMap
 from skriptorium.canon.service import MAX_MAPS_PER_WORLD
-from skriptorium.storage import MAX_MAP_BYTES, DocumentStore
+from skriptorium.storage import MAX_MAP_BYTES, DocumentStore, StorageError
 from tests.image_samples import jpeg, png, webp_lossy
 
 WORLD = "die-salzmark"
@@ -128,3 +128,17 @@ def test_refuses_a_hand_written_map_list_that_is_not_one(
     )
     with pytest.raises(InvalidInput, match="karten"):
         canon.get_world(WORLD)
+
+
+def test_a_failed_header_write_takes_the_new_map_file_back(
+    canon: CanonService, root: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    def fail(*_: object, **__: object) -> None:
+        raise StorageError("Datenträger voll")
+
+    monkeypatch.setattr(DocumentStore, "write", fail)
+    with pytest.raises(StorageError):
+        canon.add_world_map(WORLD, "Die Küste", png())
+    monkeypatch.undo()
+    assert [p for p in (root / "worlds" / WORLD).rglob("*.png")] == []
+    assert canon.get_world(WORLD).maps == ()

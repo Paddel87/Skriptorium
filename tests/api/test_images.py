@@ -5,7 +5,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from skriptorium.ai_gateway import ModelRefused, ProviderUnavailable
+from skriptorium.ai_gateway import ModelRefused, ProviderUnavailable, RateLimited
 from skriptorium.api import create_app
 from skriptorium.api.settings import Settings
 from tests.api.conftest import ORIGIN, FakeImages, cheap_hasher, services_of, set_up_password
@@ -109,3 +109,12 @@ def test_without_a_key_generating_answers_503(data_dir: Path) -> None:
         set_up_password(client)
         client.post("/api/auth/login", json={"password": "Salzwind über der Mark 7"})
         assert client.post("/api/images/generate", json=ORDER).status_code == 503
+
+
+def test_too_many_requests_are_named_and_counted(logged_in: TestClient, images: FakeImages) -> None:
+    images.error = RateLimited("429")
+    response = logged_in.post("/api/images/generate", json=ORDER)
+    assert response.status_code == 429
+    assert "zu viele Anfragen" in response.json()["detail"]
+    assert "Wirtin" not in response.text
+    assert services_of(logged_in).usage.month().requests == 1

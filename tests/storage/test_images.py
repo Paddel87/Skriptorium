@@ -1,5 +1,6 @@
 """Tests for the image checks and the image files of DocumentStore (step 7.6, ADR-072)."""
 
+import os
 from pathlib import Path
 
 import pytest
@@ -11,6 +12,7 @@ from skriptorium.storage import (
     ImageInfo,
     InvalidInput,
     NotFound,
+    StorageError,
     inspect_image,
 )
 from tests.image_samples import jpeg, png, webp_extended, webp_lossless, webp_lossy
@@ -51,6 +53,8 @@ def test_recognises_raster_images_by_their_first_bytes(data: bytes, expected: Im
         b"\xff\xd8\xff\xe0\x00\x10JFIF",  # cut off before the frame header
         b"\xff\xd8\xff\xda\x00\x02",  # scan before any frame header
         b"\xff\xd8\xff\xe0\x00\x00",  # segment length below two
+        b"\xff\xd8\xff\xe0\x00\x02\x00\x00\x00\x00",  # junk instead of the next marker
+        b"\xff\xd8\xff\xc0\x00\x0b\x08",  # frame header cut off
         b"RIFF\x00\x00\x00\x00WEBPVP8 ",  # cut off
         b"RIFF\x00\x00\x00\x00WEBPALPH" + b"\x00" * 20,
         png(0, 3),
@@ -61,6 +65,14 @@ def test_recognises_raster_images_by_their_first_bytes(data: bytes, expected: Im
 def test_refuses_everything_else(data: bytes) -> None:
     with pytest.raises(InvalidInput):
         inspect_image(data)
+
+
+@pytest.mark.parametrize("skipped", [b"\xff", b"\xff\xd0", b"\xff\x01"])
+def test_reads_the_size_past_fill_bytes_and_standalone_markers(skipped: bytes) -> None:
+    """Fill bytes and markers without a length (restart, TEM) sit before the frame header."""
+    head = jpeg(30, 20)
+    frame = head.index(b"\xff\xc0")
+    assert inspect_image(head[:frame] + skipped + head[frame:]) == ImageInfo("jpeg", 30, 20)
 
 
 def test_refuses_images_above_the_size_limit() -> None:
@@ -119,3 +131,33 @@ def test_reads_only_image_files(store: DocumentStore, path: str) -> None:
         store.read_image(path)
     with pytest.raises(InvalidInput):
         store.delete_image(path)
+
+
+def test_a_failing_write_is_a_storage_error_and_leaves_nothing(
+    store: DocumentStore, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    def crash(*_: object, **__: object) -> None:
+        raise OSError("Datenträger voll")
+
+    monkeypatch.setattr(os, "fsync", crash)
+    with pytest.raises(StorageError, match="Datenträger voll"):
+        store.write_image(IMAGE, png())
+    monkeypatch.undo()
+    with pytest.raises(NotFound):
+        store.read_image(IMAGE)
+    assert [p for p in (tmp_path / "data" / "worlds").rglob("*") if p.is_file()] == []
+
+
+def test_a_failing_delete_is_a_storage_error_and_keeps_the_image(
+    store: DocumentStore, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    store.write_image(IMAGE, png())
+
+    def refuse(self: Path, *_: object, **__: object) -> None:
+        raise PermissionError("gesperrt")
+
+    monkeypatch.setattr(Path, "unlink", refuse)
+    with pytest.raises(StorageError, match="gesperrt"):
+        store.delete_image(IMAGE)
+    monkeypatch.undo()
+    assert store.read_image(IMAGE)[0] == png()

@@ -29,6 +29,23 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [ERLEDIGT] 8.3 Tests nachgeholt, Mindestwerte angehoben
+
+- Zwei Unteragenten mit Sonnet parallel (Python unter `tests/`, Oberfläche unter `ui/src/`, getrennte Dateien). Python 734 → 765 Tests, 99,89 %; Oberfläche 289 → 345 Tests, Zeilen 98,71 %, Zweige 95,0–95,1 %. Selbst geprüft: ruff, mypy (128 Dateien), tsc, eslint, prettier, beide Testläufe; Stichprobe `test_without_provider.py` und `files.test.ts` – echtes Verhalten, keine reinen Zeilen-Berührungen.
+- Beobachtung: Die Zweigabdeckung der Oberfläche schwankt zwischen Läufen um ca. 0,06 Punkte (95,01 / 95,07 %), vermutlich durch Fake-Timer-Tests; Tests selbst stabil grün. Schwelle deshalb mit Abstand (94 %).
+- Mindestwerte angehoben (Kategorie 7, freigegeben mit ADR-080): `fail_under` 80 → 99; vitest 80/70 → Zeilen 98, Anweisungen 98, Funktionen 97, Zweige 94. Ratsche in `docs/project-context.md` Abschnitt 7. Der CI-Schritt „Coverage kritischer Pfade“ (90 % für `canon`, `context`) bleibt unverändert – liegt jetzt unter dem globalen Wert.
+
+### 2026-10-13 – [ERLEDIGT] 8.2 Umbau der Kartenansicht
+
+- Wieder an einen Unteragenten mit Sonnet abgegeben (Routine-Klasse). Ergebnis: `WorldMaps.tsx` 716 → 86 Zeilen; `MapViewer` 141 Zeilen mit drei eigenen Hooks (`useMapZoom`, `useMapMarking`, `useMapChange`) und vier Teilkomponenten; 16 neue Tests, `WorldMaps.tsx` Zweige 64,9 → 100 %.
+- Selbst geprüft: tsc, eslint, prettier grün; vitest 289 grün (95,29 % / 91,95 %). Hinweis des Unteragenten zum Zurücksetzen des Namens beim Umbenennen am alten Code nachgeprüft – ohne sichtbare Folge. Playwright nur im Lauf des Unteragenten (11/11); die CI wiederholt es.
+
+### 2026-10-13 – [ERLEDIGT] 8.1 Umbau des Kanon-Dienstes; ADR-082
+
+- Warnung zu Beginn: 8.1 empfiehlt die Routine-Klasse, aktiv ist die Entscheidungs-Klasse (Wochenkontingent). Die Gliederung (ausgabelastig) ging an einen Unteragenten mit Sonnet (Routine-Klasse, Probelauf bestanden); Befund 6 und Doku blieben hier.
+- Ergebnis: `canon/service.py` 878 → 349 Zeilen als Fassade; Teile `worlds`, `entries`, `maps`, `images`, `imports`, dazu `models`, `layout`, `headers`, `validation`. Selbst geprüft: Diff der Fassade, Reihenfolge in `delete_entry` (Datei, Bilder, Markierungen) wie vorher; pytest 734 grün ohne Änderung der Tests, 99 %; ruff, mypy, bandit ohne Befund. Abweichung des Unteragenten: `_Keep` heißt jetzt `Keep` (öffentlich in `models`, wie in `manuscript`) – nirgends von außen genutzt.
+- Befund 6 enger als in der Bewertung: die Fehlertypen von `storage` sind seit 2.2 gemeinsamer Vertrag (`docs/architecture.md` Abschnitt 4). Ohne Vorlage entstanden waren nur Größengrenzen (7.6) und `inspect_image` (7.12) → ADR-082 `[REAKTIV]`, Option A (Karte), Reaktiv-Quote 1/10.
+
 ### 2026-10-13 – [ADR-ANGELEGT] ADR-080 Pflichtfrage nach Phase 7, ADR-081 Planung Phase 8
 
 - ADR-080: gezielt umbauen (8.1–8.3), Bewertung der getrennten Instanz unverändert in `docs/research/bewertung-phase-7.md`, Stellungnahme daneben. ADR-081: Phase 8 mit 13 Schritten; 7.15 → V.33; V.20, V.21, V.23, V.24, V.33 → 8.13. Beide `[STRATEGISCH]`, auf der Entscheidungs-Klasse vorgelegt; Reaktiv-Quote 0/10.

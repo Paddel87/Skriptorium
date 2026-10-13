@@ -233,7 +233,8 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 
 ### Coverage-Mindestwerte
 
-- **Globaler Mindestwert:** 80 % Lines, 70 % Branches (bestätigt vom Eigentümer 2026-09-26). Umsetzung: TypeScript getrennt nach Zeilen und Zweigen (`vite.config.ts`); Python mit `fail_under = 80` über Zeilen und Zweige zusammen (coverage.py kennt keine getrennten Schwellen).
+- **Globaler Mindestwert:** Python 99 % (Zeilen und Zweige zusammen, `fail_under = 99` – coverage.py kennt keine getrennten Schwellen); TypeScript 98 % Zeilen und Anweisungen, 97 % Funktionen, 94 % Zweige (`vite.config.ts`). Angehoben in 8.3 (ADR-080) auf knapp unter die gemessenen Werte (Python 99,89 %; TypeScript 98,71 / 98,5 / 97,7 / 95,0–95,1 % – die Zweige schwanken zwischen Läufen um ca. 0,1 Punkte). Ursprünglich 80 % / 70 % (Eigentümer, 2026-09-26).
+- **Ratsche:** Die Mindestwerte werden nur angehoben, nie gesenkt – wie der Warnungs-Bestand. Steigt die Abdeckung dauerhaft, wird der Wert im selben Commit nachgezogen; ein Rückgang unter den Wert färbt die CI rot und wird mit Tests behoben, nicht mit einer niedrigeren Schwelle.
 - **Kritische Pfade (höhere Anforderung):** Kontext-Zusammenstellung und Kanon-Verwaltung 90 % Lines – dort entstehen Kanon-Widersprüche und Kosten (FR-010, FR-011). CI-Schritt „Coverage kritischer Pfade" greift, sobald `src/skriptorium/canon` bzw. `context` existiert.
 - **Ausnahmen:** keine
 

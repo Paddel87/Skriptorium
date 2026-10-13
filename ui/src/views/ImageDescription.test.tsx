@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   catalogModel,
+  fail,
   ENTRY,
   fakeApi,
   modelList,
@@ -230,5 +231,191 @@ describe("describing an image once (step 7.13)", () => {
           "Salz, neu\n\n## Geografie – Seekarte\n\nGrauhang liegt im Süden.\n",
       });
     });
+  });
+});
+
+function renderDescription(
+  overrides: {
+    onTakeOver?: (text: string) => Promise<void>;
+    onClose?: () => void;
+  } = {},
+) {
+  return render(
+    <ImageDescription
+      title="Aussehen"
+      path={PATH}
+      takeOverLabel="Übernehmen"
+      onTakeOver={overrides.onTakeOver ?? vi.fn(() => Promise.resolve())}
+      onClose={overrides.onClose ?? vi.fn()}
+    />,
+  );
+}
+
+function sendDone(feed: ReturnType<typeof sseFeed>, text: string) {
+  feed.send("text", { text });
+  feed.send("done", {
+    input_tokens: 1,
+    output_tokens: 1,
+    cost_usd: null,
+    finish_reason: "stop",
+  });
+  feed.close();
+}
+
+describe("describing an image: edge cases (step 7.13)", () => {
+  it("shows why the model list could not be loaded instead of the empty note", async () => {
+    fakeApi({ "GET /api/models": fail(500, "Modelle nicht erreichbar") });
+    renderDescription();
+    expect(await screen.findByText("Modelle nicht erreichbar")).toBeDefined();
+    expect(screen.queryByText(/kein Modell verfügbar/)).toBeNull();
+    expect(
+      screen.getByRole("button", { name: "Beschreiben lassen" }),
+    ).toHaveProperty("disabled", true);
+  });
+
+  it("sends the model the author picked and groups favorites first", async () => {
+    const { calls } = fakeApi({
+      "GET /api/models": MODELS,
+      [`POST ${PATH}`]: () => ({ status: 200, stream: sseFeed().stream }),
+    });
+    const user = userEvent.setup();
+    renderDescription();
+    const select = await screen.findByLabelText("Modell (liest Bilder)");
+    expect(
+      [...select.querySelectorAll("optgroup")].map((g) => g.label),
+    ).toEqual(["Deine Favoriten", "Weitere Modelle, die Bilder lesen"]);
+    await user.selectOptions(select, "google/gemini-flash");
+    await user.click(
+      screen.getByRole("button", { name: "Beschreiben lassen" }),
+    );
+    expect(calls.at(-1)?.body).toEqual({ model: "google/gemini-flash" });
+    expect(select).toHaveProperty("disabled", true);
+    expect(screen.getByText("Die KI sieht sich das Bild an …")).toBeDefined();
+  });
+
+  it("shows a failed request and lets the author try again", async () => {
+    const { calls } = fakeApi({
+      "GET /api/models": MODELS,
+      [`POST ${PATH}`]: fail(502, "Anbieter nicht erreichbar"),
+    });
+    const user = userEvent.setup();
+    renderDescription();
+    await user.click(
+      await screen.findByRole("button", { name: "Beschreiben lassen" }),
+    );
+    expect(await screen.findByText("Anbieter nicht erreichbar")).toBeDefined();
+    expect(
+      screen.getByRole("button", { name: "Beschreiben lassen" }),
+    ).toHaveProperty("disabled", false);
+    expect(calls.filter((c) => c.method === "POST")).toHaveLength(1);
+  });
+
+  it("keeps the text and shows the error when taking over fails", async () => {
+    const feed = sseFeed();
+    fakeApi({
+      "GET /api/models": MODELS,
+      [`POST ${PATH}`]: () => ({ status: 200, stream: feed.stream }),
+    });
+    const closed = vi.fn();
+    const taken = vi.fn(() =>
+      Promise.reject(new Error("Speichern gescheitert")),
+    );
+    const user = userEvent.setup();
+    renderDescription({ onTakeOver: taken, onClose: closed });
+    await user.click(
+      await screen.findByRole("button", { name: "Beschreiben lassen" }),
+    );
+    sendDone(feed, "  Groß.  ");
+    await user.click(await screen.findByRole("button", { name: "Übernehmen" }));
+    expect(
+      await screen.findByText("Keine Verbindung zum Server."),
+    ).toBeDefined();
+    expect(taken).toHaveBeenCalledWith("Groß.");
+    expect(closed).not.toHaveBeenCalled();
+    expect(screen.getByRole("button", { name: "Übernehmen" })).toHaveProperty(
+      "disabled",
+      false,
+    );
+    expect(screen.getByLabelText("Beschreibung")).toHaveProperty(
+      "value",
+      "  Groß.  ",
+    );
+  });
+
+  it("describes anew, replacing the text and the cost line", async () => {
+    const first = sseFeed();
+    const second = sseFeed();
+    const feeds = [first, second];
+    const { calls } = fakeApi({
+      "GET /api/models": MODELS,
+      [`POST ${PATH}`]: () => ({
+        status: 200,
+        stream: (feeds.shift() ?? second).stream,
+      }),
+    });
+    const user = userEvent.setup();
+    renderDescription();
+    await user.click(
+      await screen.findByRole("button", { name: "Beschreiben lassen" }),
+    );
+    sendDone(first, "Erster Versuch.");
+    await user.click(
+      await screen.findByRole("button", { name: "Neu beschreiben" }),
+    );
+    expect(screen.queryByText(/Token ein/)).toBeNull();
+    second.send("text", { text: "Zweiter Versuch." });
+    second.close();
+    await waitFor(() => {
+      expect(screen.getByLabelText("Beschreibung")).toHaveProperty(
+        "value",
+        "Zweiter Versuch.",
+      );
+    });
+    expect(calls.filter((c) => c.method === "POST")).toHaveLength(2);
+  });
+
+  it("cancels a running description without showing an error", async () => {
+    const feed = sseFeed();
+    fakeApi({
+      "GET /api/models": MODELS,
+      [`POST ${PATH}`]: () => ({ status: 200, stream: feed.stream }),
+    });
+    const closed = vi.fn();
+    const user = userEvent.setup();
+    renderDescription({ onClose: closed });
+    await user.click(
+      await screen.findByRole("button", { name: "Beschreiben lassen" }),
+    );
+    feed.send("text", { text: "Ein Mann" });
+    await user.click(await screen.findByRole("button", { name: "Abbrechen" }));
+    expect(closed).toHaveBeenCalledOnce();
+    expect(screen.queryByRole("alert")).toBeNull();
+  });
+
+  it("discards a finished description", async () => {
+    const feed = sseFeed();
+    fakeApi({
+      "GET /api/models": MODELS,
+      [`POST ${PATH}`]: () => ({ status: 200, stream: feed.stream }),
+    });
+    const closed = vi.fn();
+    const user = userEvent.setup();
+    renderDescription({ onClose: closed });
+    await user.click(
+      await screen.findByRole("button", { name: "Beschreiben lassen" }),
+    );
+    sendDone(feed, "Fertig.");
+    await user.click(await screen.findByRole("button", { name: "Verwerfen" }));
+    expect(closed).toHaveBeenCalledOnce();
+  });
+
+  it("ignores the model list when closed before it arrives", () => {
+    const errors = vi.spyOn(console, "error").mockImplementation(() => {
+      // nothing to print
+    });
+    fakeApi({ "GET /api/models": MODELS });
+    const { unmount } = renderDescription();
+    unmount();
+    expect(errors).not.toHaveBeenCalled();
   });
 });

@@ -46,11 +46,11 @@ graph LR
   CANON -.-> STORE[storage]
   MS -.-> STORE
   AI -.->|HTTPS| OR[(OpenRouter und weitere Anbieter)]
-  API -.->|nur system/| STORE
+  API -.->|system/, Bildprüfung| STORE
   API -.->|HTTPS| HIBP[(Pwned Passwords)]
 ```
 
-**Leitregeln:** `context` liest nur, schreibt nie. `ai_gateway` kennt keine Fachbegriffe (Welt, Kanon), nur Nachrichten, Modelle und Token. `storage` ist die einzige Stelle, die Dateien und den Index berührt; `api` nutzt `storage` nur für die Zugangsdaten und – seit 3.9 – die Verbrauchsdaten, seit 5.12 die Modell-Favoriten (ADR-055) unter `system/` und fragt beim Festlegen eines Passworts Pwned Passwords ab (ADR-018, 2026-09-26; ADR-023, 2026-09-27). Die Ablauf-Steuerung (z. B. „Kapitel abschließen → Kurzfassung erzeugen → speichern") liegt in `api`, damit zwischen den Fachmodulen keine Zyklen entstehen.
+**Leitregeln:** `context` liest nur, schreibt nie. `ai_gateway` kennt keine Fachbegriffe (Welt, Kanon), nur Nachrichten, Modelle und Token. `storage` ist die einzige Stelle, die Dateien und den Index berührt; `api` nutzt `storage` nur für die Zugangsdaten und – seit 3.9 – die Verbrauchsdaten, seit 5.12 die Modell-Favoriten (ADR-055) unter `system/`; seit 7.6/7.12 außerdem die Größengrenzen für Bilder und die Bildprüfung `inspect_image` ohne Schreibzugriff (ADR-082) und fragt beim Festlegen eines Passworts Pwned Passwords ab (ADR-018, 2026-09-26; ADR-023, 2026-09-27). Die Ablauf-Steuerung (z. B. „Kapitel abschließen → Kurzfassung erzeugen → speichern") liegt in `api`, damit zwischen den Fachmodulen keine Zyklen entstehen.
 
 <!-- ANCHOR:module -->
 ## 3. Module (detailliert)
@@ -61,7 +61,7 @@ graph LR
 - **Verantwortung:** Welten und ihre Kanon-Einträge (Figur, Ort/Geografie, Gegenstand, Zeitlinie, Regel, Kultur) anlegen, ändern, löschen, finden; Aliasse für die Namenserkennung; einmaliger Import von Welt-Material, zunächst als Markdown (ADR-012); Importer für TypingMind und Notion später (Schritte V.4, V.5) (FR-001–FR-005, FR-023).
 - **Nicht-Verantwortung:** keine Entscheidung, welche Einträge in eine KI-Anfrage gehören (→ `context`); keine geschichtenbezogenen Fakten (→ `manuscript`).
 - **Öffentliche Schnittstellen:** `CanonService` (Abschnitt 4)
-- **Interne Struktur:** Import als eigenes Untermodul `canon.importers` mit je einem Importer pro Quelle; erste Ausbaustufe nur Markdown (ADR-012). Seit 6.8 (ADR-065) `canon.importers.sillytavern`: übersetzt Figurenkarten (PNG/JSON) und Lorebooks (JSON) aus SillyTavern in das Import-Markdown; gespeichert wird weiterhin nur über den Markdown-Import. Seit 6.9 (ADR-066) gibt dasselbe Untermodul Welten als Lorebook und Figuren als Karte für SillyTavern aus (`lorebook_for`, `card_for`).
+- **Interne Struktur:** Import als eigenes Untermodul `canon.importers` mit je einem Importer pro Quelle; erste Ausbaustufe nur Markdown (ADR-012). Seit 6.8 (ADR-065) `canon.importers.sillytavern`: übersetzt Figurenkarten (PNG/JSON) und Lorebooks (JSON) aus SillyTavern in das Import-Markdown; gespeichert wird weiterhin nur über den Markdown-Import. Seit 6.9 (ADR-066) gibt dasselbe Untermodul Welten als Lorebook und Figuren als Karte für SillyTavern aus (`lorebook_for`, `card_for`). Seit 8.1 (ADR-080): Fassade `CanonService` in `service.py`; `models`, `layout`, `validation`, `headers`, `worlds`, `entries`, `maps` (Karten und Markierungen), `images` (Bilder an Einträgen), `imports` (Import-Vorschau, Import, SillyTavern).
 - **Abhängigkeiten (andere Module):** `storage`
 - **Abhängigkeiten (extern):** keine
 - **Offene Fragen:** Inhalt des TypingMind-Agenten-Exports – für die erste Ausbaustufe gegenstandslos (ADR-012), Klärung in Schritt V.4.
@@ -341,19 +341,19 @@ data/
 - **Denk-Token von grok-4.7 deckeln (1.024) / Denken abschalten:** Deckel verlängert das Vorab-Denken auf 162–244 s, Abschalten lehnt der Anbieter ab – siehe ADR-052 (D.16)
 
 <!-- ANCHOR:reifegrad-uebersicht -->
-## 9. Reifegrad-Übersicht (Stand vom 2026-10-10, nach ADR-052; Neuplanung ADR-042 ohne Reifegrad-Wirkung)
+## 9. Reifegrad-Übersicht (Stand vom 2026-10-13, nach ADR-082; Phase 7 ohne Reifegrad-Wirkung)
 
 | Bestandteil | Reifegrad | Seit | Validiert durch / wartet auf |
 |---|---|---|---|
 | Architektur-Pattern Modularer Monolith | BELASTBAR | 2026-09-26 | ADR-003 |
 | Kommunikations-Grundmodus synchron + SSE | BELASTBAR | 2026-09-26 | ADR-013 (httpx-Streaming 1.3); HTTP/JSON zwischen ui und api durch Umsetzung validiert in 2.6/2.7 (End-to-End-Tests); SSE durch Umsetzung validiert in 3.3 (Probeschreiben mit echtem Anbieter, Abbruch) |
-| Modul canon | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.3 und 2.4 (61 Tests, 100 %); Markdown-Import (ADR-012) |
-| Modul manuscript | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.5 (30 Tests, 100 %) |
-| Modul context | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.5; durch Umsetzung validiert in 3.2 (24 Tests, 100 %; FR-003/FR-004 mit echten Läufen) |
-| Modul ai_gateway | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.3; durch Umsetzung validiert in 3.1 (49 Tests, 100 %; Sicherheitsprüfung durch getrennte Instanz); echte Anbieter-Aufrufe in 3.2 und 3.3 |
-| Modul storage | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.2 (ADR-016, 59 Tests, 100 %); Tempo im Referenzumfang gemessen in 4.1 (alle Vorgänge unter 1 s, `spikes/storage-tempo/README.md`) |
-| Modul api | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.6 (ADR-017, ADR-018; Sicherheitsprüfung durch getrennte Instanz, 74 Tests, 99 %) |
-| Modul ui | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.7 (ADR-019; Sicherheitsprüfung durch getrennte Instanz; 32 Komponenten-, 4 End-to-End-Tests, 99 %); Smartphone-Test in 5.2 |
+| Modul canon | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.3 und 2.4 (61 Tests, 100 %); Markdown-Import (ADR-012); erweitert in Phase 7 durch Umsetzung: Karten und Markierungen (7.10, 7.14, ADR-073, ADR-079), Bilder an Einträgen (7.6, ADR-072), Abschnitt „Aussehen“ (7.16, ADR-078); nach Verantwortung gegliedert in 8.1 |
+| Modul manuscript | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.5 (30 Tests, 100 %); erweitert in Phase 7: Schreibweise folgt der Vorgabe (7.3, ADR-070), E-Book (7.4, ADR-071), Titelbild (7.11, ADR-075) |
+| Modul context | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.5; durch Umsetzung validiert in 3.2 (24 Tests, 100 %; FR-003/FR-004 mit echten Läufen); erweitert in Phase 7: Bilder beschreiben und Aussehen herauslösen (7.13, 7.16, ADR-074, ADR-078); Datentrennung geprüft in D.18 |
+| Modul ai_gateway | BELASTBAR | 2026-09-26 | ADR-013; erprobt in 1.1, 1.3; durch Umsetzung validiert in 3.1 (49 Tests, 100 %; Sicherheitsprüfung durch getrennte Instanz); echte Anbieter-Aufrufe in 3.2 und 3.3; erweitert in Phase 7: Bilder erzeugen und Bildlesen über OpenRouter (7.12, 7.13, ADR-074, ADR-076, ADR-077; getrennte Prüfung) |
+| Modul storage | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.2 (ADR-016, 59 Tests, 100 %); Tempo im Referenzumfang gemessen in 4.1 (alle Vorgänge unter 1 s, `spikes/storage-tempo/README.md`); erweitert in 7.6 um die Bildablage (ADR-072; getrennte Prüfung), in der Sicherung enthalten |
+| Modul api | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.6 (ADR-017, ADR-018; Sicherheitsprüfung durch getrennte Instanz, 74 Tests, 99 %); Beziehung zu `storage` für Bildprüfung und Größengrenzen (ADR-082) |
+| Modul ui | BELASTBAR | 2026-09-26 | ADR-013; durch Umsetzung validiert in 2.7 (ADR-019; Sicherheitsprüfung durch getrennte Instanz; 32 Komponenten-, 4 End-to-End-Tests, 99 %); Smartphone-Test in 5.2; Phase 7: Aussehen „Buch“ (7.5), Bilder, Karten mit Zoom (`@panzoom/panzoom`, ADR-073) und Markierungen |
 | Alle Schnittstellen (Abschnitt 4) | BELASTBAR | 2026-09-26 | ADR-013 (Grobverträge) |
 | Datenmodell (Abschnitt 7) | BELASTBAR | 2026-09-26 | ADR-013 (Kopffelder an Testwelt erprobt) |
 | NFR Token-Budget | BELASTBAR | 2026-09-26 | ADR-010, ADR-013 |
