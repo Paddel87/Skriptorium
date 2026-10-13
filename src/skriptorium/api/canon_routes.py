@@ -10,11 +10,13 @@ from pydantic import BaseModel, Field
 
 from skriptorium.api.context import ServicesDep, current_session
 from skriptorium.canon import (
+    MAX_MARKERS_PER_MAP,
     CanonEntry,
     Category,
     ImportPreview,
     ImportResult,
     InvalidInput,
+    MapMarker,
     TranslatedMaterial,
     World,
 )
@@ -92,6 +94,20 @@ class MapChange(BaseModel):
     name: str
 
 
+class MarkerPoint(BaseModel):
+    """A point on a map: the entry it leads to and its place as shares of width and height."""
+
+    entry: str
+    x: Annotated[float, Field(ge=0, le=1, allow_inf_nan=False)]
+    y: Annotated[float, Field(ge=0, le=1, allow_inf_nan=False)]
+
+
+class MapMarkers(BaseModel):
+    """All markers of a map (step 7.14, ADR-079); the list replaces the previous one."""
+
+    markers: Annotated[list[MarkerPoint], Field(max_length=MAX_MARKERS_PER_MAP)]
+
+
 class ImportApply(BaseModel):
     """Markdown world material to take over, with the author's choices from the preview."""
 
@@ -141,6 +157,13 @@ def get_world_map(world_id: str, file: str, found: ServicesDep) -> Response:
 def rename_world_map(world_id: str, file: str, body: MapChange, found: ServicesDep) -> World:
     """Give a map another name."""
     return found.canon.rename_world_map(world_id, file, body.name)
+
+
+@router.put("/{world_id}/maps/{file}/markers")
+def set_map_markers(world_id: str, file: str, body: MapMarkers, found: ServicesDep) -> World:
+    """Replace the markers of a map (step 7.14, ADR-079)."""
+    markers = [MapMarker(m.entry, m.x, m.y) for m in body.markers]
+    return found.canon.set_map_markers(world_id, file, markers)
 
 
 @router.delete("/{world_id}/maps/{file}")
