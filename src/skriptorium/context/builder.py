@@ -50,6 +50,7 @@ from typing import Final
 from skriptorium.canon import CanonService, InvalidInput, NotFound
 from skriptorium.context.appearance import build_appearance
 from skriptorium.context.describe import build_entry_image_description, build_map_description
+from skriptorium.context.manuscript_hits import HitsQuery, ManuscriptHits, find_hits
 from skriptorium.context.parts import (
     MAX_BUDGET,
     SAFETY_MARGIN,
@@ -176,10 +177,20 @@ class ContextBuilder:
         conversation: Sequence[tuple[Role, str]],
         references: Sequence[str] = (),
         budget: int = MAX_BUDGET,
+        findings: HitsQuery | None = None,
     ) -> BuiltContext:
         """Request for the next answer of the world builder (step 6.7); see
-        :func:`skriptorium.context.worldbuilder.build_worldbuilder`."""
-        return build_worldbuilder(self._canon, world_id, conversation, references, budget)
+        :func:`skriptorium.context.worldbuilder.build_worldbuilder`.
+
+        ``findings`` adds passages of the manuscript about a name (step 8.9, ADR-087).
+        """
+        hits = None if findings is None else self.find_manuscript_hits(world_id, findings)
+        return build_worldbuilder(self._canon, world_id, conversation, references, budget, hits)
+
+    def find_manuscript_hits(self, world_id: str, query: HitsQuery) -> ManuscriptHits:
+        """Passages of the world's stories that mention a name (step 8.9); see
+        :func:`skriptorium.context.manuscript_hits.find_hits`."""
+        return find_hits(self._canon, self._manuscripts, world_id, query)
 
     def build_entry_image_description(
         self, world_id: str, entry_id: str, image: str, budget: int = MAX_BUDGET

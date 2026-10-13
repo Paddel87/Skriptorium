@@ -64,6 +64,8 @@ export type {
 export type { DescribeEvent } from "./describe";
 export { streamWorldbuilder } from "./worldbuilder";
 export type {
+  ManuscriptHits,
+  ManuscriptSearch,
   WorldbuilderEvent,
   WorldbuilderMessage,
   WorldbuilderOrder,

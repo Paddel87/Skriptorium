@@ -5,6 +5,7 @@ import {
   describeWriteError,
   streamWorldbuilder,
   type CanonEntry,
+  type ManuscriptSearch,
   type Source,
 } from "../api";
 import { referencedEntries } from "../references";
@@ -53,7 +54,11 @@ export function useWorldbuilder({
     [],
   );
 
-  async function send(text: string, webSearch: boolean): Promise<boolean> {
+  async function send(
+    text: string,
+    webSearch: boolean,
+    manuscript: ManuscriptSearch | null = null,
+  ): Promise<boolean> {
     const abort = new AbortController();
     controller.current = abort;
     const user: Turn = {
@@ -92,6 +97,7 @@ export function useWorldbuilder({
           references,
           model,
           web_search: webSearch,
+          ...(manuscript !== null && { manuscript }),
         },
         (event) => {
           if (event.type === "start") {

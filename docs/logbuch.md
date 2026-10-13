@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-13 – [BEOBACHTUNG] 8.9 Weltenbauer aus dem Manuskript umgesetzt (ADR-087)
+
+- Mockup und vier Auswahlfragen; Eigentümer wählte alle Empfehlungen. Umsetzung durch Unteragenten (Sonnet). Selbst geprüft und nachgebessert: Die Suche nahm nur ganze Wörter und übersah damit den deutschen Genitiv („Kaels Hände“) – jetzt mit optionalem `s` bzw. Apostroph (auch typografisch, als `\u2019` wegen ruff RUF001); „Kaelchen“/„Klausur“ bleiben draußen. Kostenanzeige „ca. 0,0 ct“ bei wenig Text → „unter 0,1 ct“.
+- Sichtprobe am lokalen Testserver mit Testgeschichte: 3 Stellen (inkl. Genitiv), Anzeige und „✕“ wie im Mockup; eine echte Antwort war lokal nicht möglich (Schlüssel ungültig).
+- Eigentümer: „Passt, nur mergen“ – Einspielen und echte Probe stehen aus; 8.9 bleibt bis dahin in Arbeit.
+
 ### 2026-10-13 – [ERLEDIGT] 8.8 Weltenbauer behält das Gespräch
 
 - Mockup mit drei Spalten (vorher, A, B); Eigentümer wählte A. Warnung zu Beginn: Schritt empfiehlt Routine, aktiv ist Entscheidung – Bau an Unteragenten (Sonnet) abgegeben.

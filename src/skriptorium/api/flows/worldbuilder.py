@@ -24,7 +24,7 @@ from skriptorium.ai_gateway import (
 )
 from skriptorium.api.flows.writing import TEMPERATURE, PreparedRequest, error_kind
 from skriptorium.api.usage import Kind
-from skriptorium.context import ContextBuilder, ContextTooLarge
+from skriptorium.context import ContextBuilder, ContextTooLarge, HitsQuery
 from skriptorium.storage import InvalidInput
 
 # Bounds of what the interface may send; the context budget limits the rest.
@@ -53,6 +53,8 @@ class WorldOrder:
     references: tuple[str, ...]
     model: str
     web_search: bool
+    # Passages of the manuscript about a name go along with every request (step 8.9, ADR-087).
+    findings: HitsQuery | None = None
 
 
 def prepare_worldbuilder(
@@ -63,7 +65,7 @@ def prepare_worldbuilder(
     Raises:
         InvalidInput: Unknown model, too many or too long messages, the last message is not the
             author's, or the context does not fit the budget.
-        NotFound: World or a referenced entry does not exist.
+        NotFound: World, a referenced entry or the story of ``findings`` does not exist.
     """
     if order.model not in models:
         raise InvalidInput(f"Unbekanntes Modell: {order.model}")
@@ -73,7 +75,9 @@ def prepare_worldbuilder(
         raise InvalidInput(f"Eine Nachricht hat mehr als {MAX_TURN_CHARS} Zeichen")
     conversation = [(turn.role, turn.content) for turn in order.turns]
     try:
-        built = builder.build_worldbuilder(order.world, conversation, order.references)
+        built = builder.build_worldbuilder(
+            order.world, conversation, order.references, findings=order.findings
+        )
     except ContextTooLarge as error:
         raise InvalidInput(str(error)) from error
     messages = tuple(Message(message.role, message.content) for message in built.messages)

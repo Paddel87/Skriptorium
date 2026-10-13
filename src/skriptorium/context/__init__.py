@@ -2,6 +2,7 @@
 
 from skriptorium.context.appearance import NO_APPEARANCE
 from skriptorium.context.builder import ContextBuilder
+from skriptorium.context.manuscript_hits import MAX_HITS_TOKENS, HitsQuery, ManuscriptHits
 from skriptorium.context.parts import (
     CHARS_PER_TOKEN,
     MAX_BUDGET,
@@ -28,6 +29,7 @@ __all__ = [
     "DEFAULT_LENGTH",
     "LENGTHS",
     "MAX_BUDGET",
+    "MAX_HITS_TOKENS",
     "NO_APPEARANCE",
     "OPENING_WORDS",
     "PROPOSAL_FENCE",
@@ -36,7 +38,9 @@ __all__ = [
     "ContextBlock",
     "ContextBuilder",
     "ContextTooLarge",
+    "HitsQuery",
     "Length",
+    "ManuscriptHits",
     "PromptMessage",
     "Role",
     "estimate_tokens",

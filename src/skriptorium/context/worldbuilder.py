@@ -14,6 +14,7 @@ from collections.abc import Sequence
 from typing import Final
 
 from skriptorium.canon import CanonEntry, CanonService, InvalidInput, NotFound
+from skriptorium.context.manuscript_hits import ManuscriptHits
 from skriptorium.context.parts import (
     CATEGORY_LABELS,
     MAX_BUDGET,
@@ -39,12 +40,14 @@ def build_worldbuilder(
     conversation: Sequence[tuple[Role, str]],
     references: Sequence[str] = (),
     budget: int = MAX_BUDGET,
+    hits: ManuscriptHits | None = None,
 ) -> BuiltContext:
     """Build the request for the next answer of the world builder.
 
     ``conversation`` holds the turns so far, oldest first, as ``("user" | "assistant", text)``;
     the last turn is the author's. ``references`` are identifiers of entries of the world named
-    with ``@``.
+    with ``@``. ``hits`` are passages of the manuscript about one name (step 8.9, ADR-087);
+    without any passage nothing is added.
 
     Raises:
         InvalidInput: Budget outside 1-30,000, no turn, or the last turn is not the author's.
@@ -77,6 +80,11 @@ def build_worldbuilder(
         Part("welt", world.name, f"# Welt: {world.name}\n\n{world.description}".strip()),
         Part("eintraege", "Einträge der Welt", _index(entries)),
         *laws,
+        *(
+            [Part("fundstellen", f"Fundstellen zu {hits.name}", hits.text)]
+            if hits is not None and hits.passages
+            else []
+        ),
         *(Part("verweis", entry.name, render(entry)) for entry in named if entry not in in_laws),
     ]
     turns = [Part("gespraech", role, text.strip()) for role, text in conversation]
