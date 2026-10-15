@@ -602,17 +602,18 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
   - **B4:** Bei der Kartenerstellung ist nichts vorausgefüllt, obwohl Orte vorhanden sind. Skriptorium: keine Kartenfunktion (V.2).
   - **B5:** Geschichten sollen sich löschen oder archivieren lassen (Wunsch). Skriptorium: beides fehlt, auch für Welten.
   - **B6:** Das Standardmodell für Bilder lässt sich nicht festlegen und muss jedes Mal neu gewählt werden. Skriptorium: Modell je Geschichte gespeichert (ADR-023), Standardmodell fest im Code.
+  - **B7:** Beim Erstellen von Bildern sollen vorhandene Bilder als Grundlage dienen können – nicht nur Text-zu-Bild, auch Bild-zu-Bild. Skriptorium: keine Bildfunktion (V.2).
   - **G1:** Kanon-Einträge als gegliederte Texte, für Figuren evtl. mit festen Feldern (aus B2, B3).
   - **G2:** Alle Kanon-Kategorien prüfen, ob strukturiert abgelegt oder als durch Überschriften gegliederter Textblock; die Trennung über Rautezeichen hält der Eigentümer nicht für zielführend. Berührt ADR-003 (Markdown-Dateien als Quelle der Wahrheit).
   - **G3:** Einstellungsseite mit Modellen je Aufgabe (aus B6).
   - **G4:** Vom Bedarf her denken – für jeden Bereich mit KI-Bildern vorab festlegen, welche Daten das Bild braucht, und prüfen, ob sie zuverlässig abrufbar vorliegen.
   - **H1:** Es gibt zahlreiche Worldbuilding-Anleitungen und Seiten zur Namensbildung (z. B. erfundene, kanadisch klingende Städtenamen); in die Erkundung einbeziehen, Verlässlichkeit und Nutzungsbedingungen prüfen.
   - **V1:** Recherche-Baustein in der Software, um Kosten zu sparen und nicht alles über OpenRouter laufen zu lassen.
-- **Akzeptanzkriterien:** Jeder Befund (B1–B6, G1–G4, H1, V1) hat einen Landeplatz mit Schritt-ID oder ist per ADR verworfen; die grundsätzliche Sicht des Eigentümers je Befund ist festgehalten.
+- **Akzeptanzkriterien:** Jeder Befund (B1–B7, G1–G4, H1, V1) hat einen Landeplatz mit Schritt-ID oder ist per ADR verworfen; die grundsätzliche Sicht des Eigentümers je Befund ist festgehalten.
 - **Betroffene Module:** noch offen (absehbar canon, manuscript, ui, ai_gateway)
 - **Reifegrad-Wirkung:** keine (Folgeschritte können Datenmodell und Module berühren)
 - **Artefakte:** Folgeschritte, ggf. ADRs, Logbuch
-- **Notizen:** Angelegt 2026-10-16 auf Wunsch des Eigentümers („erstmal nur sammeln“). B1 und B4 werden absehbar Anforderungen an V.2.
+- **Notizen:** Angelegt 2026-10-16 auf Wunsch des Eigentümers („erstmal nur sammeln“). B1, B4 und B7 werden absehbar Anforderungen an V.2.
 
 #### M.1: Branch-Konvention festlegen
 
@@ -662,7 +663,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Betroffene Module:** noch offen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** –
-- **Notizen:** 2026-10-16: Befunde B1 (Herkunft der Bilder: Modell und Prompt) und B4 (Karten mit vorhandenen Orten vorausfüllen) sowie G4 (Datenbedarf je Bildbereich) aus D.11 betreffen diesen Schritt; Einordnung in D.11.
+- **Notizen:** 2026-10-16: Befunde B1 (Herkunft der Bilder: Modell und Prompt) und B4 (Karten mit vorhandenen Orten vorausfüllen), B7 (Bild-zu-Bild mit vorhandenen Bildern als Grundlage) sowie G4 (Datenbedarf je Bildbereich) aus D.11 betreffen diesen Schritt; Einordnung in D.11.
 
 #### V.3: Weitere KI-Anbieter neben OpenRouter
 

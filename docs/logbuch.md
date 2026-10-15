@@ -32,7 +32,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 ### 2026-10-16 – [SESSIONENDE] Befunde gesammelt (D.11)
 
 - **Dauer:** 2026-10-15 21:51 UTC bis 2026-10-16 (Uhrzeit des Endes nicht feststellbar).
-- **Bearbeitet:** kein Code. Der Eigentümer nannte Befunde aus seiner bisherigen Arbeitsweise; die KI glich jeden mit dem Stand des Skriptoriums ab (nur lesend). Ergebnis: B1–B6, G1–G4, H1, V1, gesammelt im neuen Schritt D.11 `[OFFEN]` (Wunsch des Eigentümers: „erstmal nur sammeln“, er will zu jedem Befund noch Grundsätzliches sagen). Notiz an V.2 (B1, B4, G4). README „Nächste Schritte“ um D.11 ergänzt.
+- **Bearbeitet:** kein Code. Der Eigentümer nannte Befunde aus seiner bisherigen Arbeitsweise; die KI glich jeden mit dem Stand des Skriptoriums ab (nur lesend). Ergebnis: B1–B7, G1–G4, H1, V1 (B7 nach dem ersten Commit nachgereicht), gesammelt im neuen Schritt D.11 `[OFFEN]` (Wunsch des Eigentümers: „erstmal nur sammeln“, er will zu jedem Befund noch Grundsätzliches sagen). Notiz an V.2 (B1, B4, B7, G4). Commits nur lokal auf `docs/d.11-befunde-sammeln`, nicht gepusht (Eigentümer). README „Nächste Schritte“ um D.11 ergänzt.
 - **Wichtige Feststellung:** G2 (Kanon strukturiert statt Textblock mit Überschriften) stellt ADR-003 (Markdown-Dateien als Quelle der Wahrheit, strategisch) in Frage – beim Durchgehen auf der Entscheidungs-Klasse mit `ENTSCHEIDUNG ERFORDERLICH`.
 - **Offen:** D.8 (Rotation, Frist 2026-10-05) laut Fahrplan weiter `[OFFEN]` und überfällig – Eigentümer fragen, ob erledigt. 4.3 wartet auf eine Mac-Session.
 - **Nächster Schritt:** D.11 mit dem Eigentümer durchgehen, oder 4.3 auf dem Mac fortsetzen.
