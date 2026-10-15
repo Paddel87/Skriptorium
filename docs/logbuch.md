@@ -29,6 +29,30 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-16 – [SESSIONENDE] Befunde gesammelt (V.35)
+
+- **Dauer:** 2026-10-15 21:51 UTC bis 2026-10-16 (Ende nicht genau feststellbar).
+- **Bearbeitet:** kein Code. Befunde des Eigentümers (B1–B7, G1–G4, H1, V1) gesammelt und gegen `main` `b20d48a` abgeglichen (Abgleich durch einen Such-Agenten, Stichproben selbst geprüft) → V.35 `[VERSCHOBEN]` → 8.13, auf Wunsch des Eigentümers ohne Einordnung. Doku-Drift behoben: `docs/architecture.md` Abschnitt 7 nannte für neue Figuren nur „## Aussehen“ (seit ADR-083 auch „## Wesen und Geschichte“). README „Nächste Schritte“ um V.35 ergänzt.
+- **Wichtig für das Durchgehen:** G1/G2 stellt ADR-003, ADR-078, ADR-083 und ADR-088 in Frage (Inhalt als Markdown-Abschnitte statt Felder) – auf der Entscheidungs-Klasse mit `ENTSCHEIDUNG ERFORDERLICH`. B2 hat einen konkreten Ansatzpunkt: Der Weltenbauer verlangt bei Figuren nur `### Aussehen`, bei Orten nichts.
+- **Nächster Schritt:** unverändert 8.9 (Probe), 8.11 (Bestätigung), dann 8.13 mit V.35.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session`); Sammeln und Doku-Pflege sind Routine (1 Schritt oberhalb der Empfehlung); Abgleich als Lesearbeit an einen Such-Agenten abgegeben (gleicher Cache-Lesepreis, aber der Hauptkontext blieb klein).
+- **Kontextgröße:** nicht über die Sitzungsabfrage feststellbar; unter der Grenze.
+- **Sessionende-Prüfungen:** README nachgezogen; kein neuer ADR, Reifegrade unverändert, keine aktiven Blocker; V.35 als V-Schritt ohne Wirkung auf den Schrittplan von Phase 8 (13); Ablaufdaten-Register: kein Vorlauf erreicht (nächste: mypy 2 am 2026-11-06, D.1 ab 2026-11-05); Logbuch ca. 315 Zeilen, project-context 348 Zeilen – kein Trigger.
+
+### 2026-10-16 – [GELÖST] Veralteter lokaler Stand: Befunde zuerst gegen `main` vom 30.09. abgeglichen
+
+- **Anlass:** Session auf dem Windows-Rechner; der lokale `main` stand auf `b3681eb` (2026-09-30), 554 Commits hinter `origin/main`. Die Mindest-Lektüre und der erste Abgleich der Befunde liefen auf diesem Stand – u. a. „keine Bildfunktion“, „keine Verweise“, eine Frage nach D.8 (längst verworfen, ADR-040). Der erste Pull Request (#167) legte die Sammlung als „D.11“ an, das auf `main` schon belegt ist; GitHub meldete einen Konflikt.
+- **Lösung:** PR #167 geschlossen (Kommentar mit Grund), `main` per Fast-Forward nachgezogen, Mindest-Lektüre wiederholt, jeder Befund neu abgeglichen, Sammlung als V.35.
+- **Lehre:** Bestätigt die Lehre aus Phase 5 („vor Beginn eines Schritts Stand von `origin/main` prüfen“) – sie gilt schon vor der Mindest-Lektüre, besonders auf einem selten genutzten Rechner: zuerst `git fetch` und Abstand zu `origin/main` prüfen.
+- **Abweichung:** Rückfragen gingen zunächst als Text statt als Auswahlfragen (`docs/project-context.md` Abschnitt 9) – die Regel stand im veralteten Stand noch nicht.
+
+### 2026-10-15 21:55 – [SESSIONSTART] Befunde sammeln
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, laut `get_session`), Entscheidungs-Klasse; Aufwand „high“.
+- **Umgebung:** Windows-Rechner des Eigentümers, nicht der Mac – kein SSH zum VPS (ADR-025); Pre-Commit-Hook hier nicht eingerichtet.
+- **Auftrag:** Befunde des Eigentümers sammeln.
+- **Mindest-Lektüre:** zuerst auf veraltetem Stand (siehe [GELÖST] oben), am 2026-10-16 auf `b20d48a` wiederholt.
+
 ### 2026-10-13 – [GELÖST] 8.11 Befund „wörtlich %“ war Streuung
 
 - Wahl des Eigentümers „3 weitere Läufe je Seite“ (2,91 $). Über 6 Ketten je Seite liegen alle Mittelwerte von nachher in der Spannweite von vorher (Salzmark wörtlich 0,70 in 0,08–0,91; Glimmergrund 0,20 in 0,00–0,23) – keine Wirkung nach Regel-002. Probe 8.11 insgesamt 6,82 $; offen nur die Bestätigung des Eigentümers.
