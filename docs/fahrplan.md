@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-09-30
+- **Stand vom:** 2026-10-16
 - **Laufende Phase:** Phase 4 „Stabilisierung und erstes öffentliches Deployment" (Phase 3 abgeschlossen 2026-09-27, ADR-024: weiterbauen)
 - **Phasentyp:** STABILISIERUNG
 - **Aktiver Schritt:** 4.3 Backups `[IN ARBEIT]` – Sicherungsziel entschieden (ADR-036, MEGA S4); Einrichtung auf dem VPS und Wiederherstellungs-Test stehen aus und laufen in einer Session auf dem Mac (SSH nur von dort, ADR-025)
-- **Nächster Schritt:** 4.3 fortsetzen (Mac-Session); danach 4.4, Gate 4.6, 4.7/4.8. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. In 4.7 zusätzlich die optionalen Kopfzeilen aus 4.5. Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
+- **Nächster Schritt:** 4.3 fortsetzen (Mac-Session); danach 4.4, Gate 4.6, 4.7/4.8. Eigentümer 2026-09-28: kein Gate-Punkt wird übersprungen. In 4.7 zusätzlich die optionalen Kopfzeilen aus 4.5. Gesammelt 2026-10-15/16: Befunde des Eigentümers in D.11, Durchgehen mit dem Eigentümer steht aus. Datiert: D.8 Rotation bis 2026-10-05 (Eigentümer); D.5 ab 2026-11-12; D.9 2026-12-28
 - **Offene STOPP-Situationen:** keine
 
 <!-- ANCHOR:phasen-typen -->
@@ -586,6 +586,34 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Artefakte:** `docs/project-context.md` Abschnitt 6, Logbuch
 - **Notizen:** Angelegt 2026-09-28 auf Wunsch des Eigentümers.
 
+#### D.11: Befunde des Eigentümers vom 2026-10-15 durchgehen
+
+- **Status:** OFFEN
+- **Phasentyp-Kontext:** querschnittlich (Sammlung; Einordnung folgt)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** das Durchgehen nein; was daraus folgt, je Befund (absehbar: Datenmodell und ADR-003 bei G1/G2, neues Modul und externe Abhängigkeit bei V1)
+- **Empfohlene Klasse:** Entscheidung – absehbar `ENTSCHEIDUNG ERFORDERLICH` zu Architektur und Datenmodell (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Eigentümer hat Zeit, zu jedem Befund seine grundsätzliche Sicht zu sagen
+- **Anforderungen (ab Klasse M):** noch keine – entstehen erst beim Durchgehen
+- **Zu tun:** Befunde einzeln mit dem Eigentümer durchgehen (er will zu jedem noch Grundsätzliches sagen), dann je Befund einen Landeplatz festlegen: eigener Schritt, Anforderung an V.2 oder Verwerfen per ADR. Die Sammlung ist bewusst noch nicht eingeordnet. Bezug: bisherige Arbeitsweise des Eigentümers, abgeglichen mit dem Stand des Skriptoriums (2026-10-15).
+  - **B1:** Bei Bildern zu Figuren und Kanon ist nicht nachvollziehbar, mit welchem Modell und welchem Prompt sie entstanden sind. Skriptorium: keine Bildfunktion (V.2). Offene Nebenfrage: dasselbe für KI-Text festhalten?
+  - **B2:** Figuren entstehen beim Anlegen durch die KI als ein Textblock; gewünscht ist eine Trennung von vornherein (Name, Erscheinungsbild, Persönlichkeit …), damit z. B. das Aussehen gezielt abrufbar ist. Orte gelingen besser, Gegenstände ungeprüft. Skriptorium: nur Gegenstände haben eine Vorlage (Zweck, Verwendung, Auswirkung), Figuren und Orte sind freier Text.
+  - **B3:** Verbindungen zwischen Figuren (z. B. ein Paar) sollen sichtbar und gegliedert eingetragen sein, auch wenn die KI mehrere Figuren in einem Auftrag anlegt. Skriptorium: keine Verbindungen zwischen Kanon-Einträgen.
+  - **B4:** Bei der Kartenerstellung ist nichts vorausgefüllt, obwohl Orte vorhanden sind. Skriptorium: keine Kartenfunktion (V.2).
+  - **B5:** Geschichten sollen sich löschen oder archivieren lassen (Wunsch). Skriptorium: beides fehlt, auch für Welten.
+  - **B6:** Das Standardmodell für Bilder lässt sich nicht festlegen und muss jedes Mal neu gewählt werden. Skriptorium: Modell je Geschichte gespeichert (ADR-023), Standardmodell fest im Code.
+  - **G1:** Kanon-Einträge als gegliederte Texte, für Figuren evtl. mit festen Feldern (aus B2, B3).
+  - **G2:** Alle Kanon-Kategorien prüfen, ob strukturiert abgelegt oder als durch Überschriften gegliederter Textblock; die Trennung über Rautezeichen hält der Eigentümer nicht für zielführend. Berührt ADR-003 (Markdown-Dateien als Quelle der Wahrheit).
+  - **G3:** Einstellungsseite mit Modellen je Aufgabe (aus B6).
+  - **G4:** Vom Bedarf her denken – für jeden Bereich mit KI-Bildern vorab festlegen, welche Daten das Bild braucht, und prüfen, ob sie zuverlässig abrufbar vorliegen.
+  - **H1:** Es gibt zahlreiche Worldbuilding-Anleitungen und Seiten zur Namensbildung (z. B. erfundene, kanadisch klingende Städtenamen); in die Erkundung einbeziehen, Verlässlichkeit und Nutzungsbedingungen prüfen.
+  - **V1:** Recherche-Baustein in der Software, um Kosten zu sparen und nicht alles über OpenRouter laufen zu lassen.
+- **Akzeptanzkriterien:** Jeder Befund (B1–B6, G1–G4, H1, V1) hat einen Landeplatz mit Schritt-ID oder ist per ADR verworfen; die grundsätzliche Sicht des Eigentümers je Befund ist festgehalten.
+- **Betroffene Module:** noch offen (absehbar canon, manuscript, ui, ai_gateway)
+- **Reifegrad-Wirkung:** keine (Folgeschritte können Datenmodell und Module berühren)
+- **Artefakte:** Folgeschritte, ggf. ADRs, Logbuch
+- **Notizen:** Angelegt 2026-10-16 auf Wunsch des Eigentümers („erstmal nur sammeln“). B1 und B4 werden absehbar Anforderungen an V.2.
+
 #### M.1: Branch-Konvention festlegen
 
 - **Status:** ERLEDIGT (2026-09-26)
@@ -634,7 +662,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Betroffene Module:** noch offen
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** –
-- **Notizen:** –
+- **Notizen:** 2026-10-16: Befunde B1 (Herkunft der Bilder: Modell und Prompt) und B4 (Karten mit vorhandenen Orten vorausfüllen) sowie G4 (Datenbedarf je Bildbereich) aus D.11 betreffen diesen Schritt; Einordnung in D.11.
 
 #### V.3: Weitere KI-Anbieter neben OpenRouter
 

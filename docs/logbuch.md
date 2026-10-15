@@ -29,6 +29,25 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-16 – [SESSIONENDE] Befunde gesammelt (D.11)
+
+- **Dauer:** 2026-10-15 21:51 UTC bis 2026-10-16 (Uhrzeit des Endes nicht feststellbar).
+- **Bearbeitet:** kein Code. Der Eigentümer nannte Befunde aus seiner bisherigen Arbeitsweise; die KI glich jeden mit dem Stand des Skriptoriums ab (nur lesend). Ergebnis: B1–B6, G1–G4, H1, V1, gesammelt im neuen Schritt D.11 `[OFFEN]` (Wunsch des Eigentümers: „erstmal nur sammeln“, er will zu jedem Befund noch Grundsätzliches sagen). Notiz an V.2 (B1, B4, G4). README „Nächste Schritte“ um D.11 ergänzt.
+- **Wichtige Feststellung:** G2 (Kanon strukturiert statt Textblock mit Überschriften) stellt ADR-003 (Markdown-Dateien als Quelle der Wahrheit, strategisch) in Frage – beim Durchgehen auf der Entscheidungs-Klasse mit `ENTSCHEIDUNG ERFORDERLICH`.
+- **Offen:** D.8 (Rotation, Frist 2026-10-05) laut Fahrplan weiter `[OFFEN]` und überfällig – Eigentümer fragen, ob erledigt. 4.3 wartet auf eine Mac-Session.
+- **Nächster Schritt:** D.11 mit dem Eigentümer durchgehen, oder 4.3 auf dem Mac fortsetzen.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session`) durchgehend; Sammeln und Doku-Pflege sind Routine-Arbeit (1 Schritt oberhalb der Empfehlung), nicht abgegeben – kleiner Umfang mit bereits geladenem Kontext.
+- **Kontextgröße:** nicht über die Sitzungsabfrage feststellbar; deutlich unter der Grenze.
+- **Sessionende-Prüfungen:** README nachgezogen (D.11); kein neuer ADR, Reifegrade unverändert, keine aktiven Blocker; D.11 als Querschnitt-Schritt ohne Wirkung auf den Schrittplan von Phase 4; Ablaufdaten-Register: Vorlauf des Guthabens (Ablauf 2026-11-05) beginnt 2026-10-22, noch nicht erreicht; Logbuch ca. 500 Zeilen, project-context 343 Zeilen – kein Trigger.
+
+### 2026-10-15 21:55 – [SESSIONSTART] Befunde sammeln
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, laut `get_session`), Entscheidungs-Klasse; Aufwand „high“.
+- **Umgebung:** Windows-Rechner des Eigentümers (`D:\GitHub\Skriptorium`), nicht der Mac – kein SSH zum VPS (ADR-025).
+- **Auftrag:** Befunde des Eigentümers sammeln; Gegenstand noch offen.
+- **Mindest-Lektüre:** vollständig. Auffällig: D.8 (Rotation, Frist 2026-10-05) überfällig ohne Eintrag; Vorlauf des Guthabens (Ablauf 2026-11-05) beginnt 2026-10-22.
+- **Kontextgröße:** nicht über die Sitzungsabfrage feststellbar.
+
 ### 2026-09-30 – [ADR-ANGELEGT] ADR-036 Sicherungsziel MEGA S4, 4.3 → IN ARBEIT
 
 - Tarif des Eigentümers enthält MEGA S4. Ob Schlüssel auf einen Bucket beschränkbar sind, war zunächst unklar; Recherche: WebFetch auf mega.io gesperrt, Websuche lieferte nur Anleitungen anderer Anbieter; S4-Spezifikation (github.com/meganz/s4-specs) zeigt IAM-Benutzer, verwaltete Richtlinien nur für alle Buckets und Bucket-Richtlinien mit Principal; Mega-Hilfe im eingebauten Browser (help.mega.io, „Bucket-Richtlinien“, „Policies hierarchy“) belegt: Bucket-Richtlinie für einen einzelnen IAM-Benutzer, Standard ist Verweigern.
