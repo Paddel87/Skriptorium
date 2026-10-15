@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-13, Phase 7 abgeschlossen (7.8 erledigt: Pflichtfrage ADR-080, Planung ADR-081); Phase 8 beginnt
+- **Stand vom:** 2026-10-16 (V.35 angelegt); 2026-10-13 Phase 7 abgeschlossen (7.8 erledigt: Pflichtfrage ADR-080, Planung ADR-081); Phase 8 beginnt
 - **Laufende Phase:** Phase 8 „Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung“ (Phase 7 abgeschlossen 2026-10-13)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 8.9 Weltenbauer aus dem Manuskript – eingespielt, wartet auf echte Probe
-- **Nächster Schritt:** 8.13 Planung der nächsten Ausbaustufe – erst wenn 8.9 und 8.11 abgeschlossen sind. Offen dafür (eingespielt ist `19a5e48` mit 8.1–8.12): deine Probe zu 8.9; deine Bestätigung zu 8.11 (Probe gelaufen 2026-10-13); deine Probe mit einer Gast-Figur (Eingangskriterium V.34). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** 8.13 Planung der nächsten Ausbaustufe – erst wenn 8.9 und 8.11 abgeschlossen sind. Offen dafür (eingespielt ist `19a5e48` mit 8.1–8.12): deine Probe zu 8.9; deine Bestätigung zu 8.11 (Probe gelaufen 2026-10-13); deine Probe mit einer Gast-Figur (Eingangskriterium V.34); deine Befunde vom 2026-10-15/16 gemeinsam durchgehen (V.35). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -59,7 +59,7 @@ Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details
 | ✅ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | erledigt 2026-10-13 (V.29–V.32 → 8.4–8.7) | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 8.13): V.20, V.21, V.23, V.24, V.33 (aus 7.15, 2026-10-13), V.34 (aus 8.12, 2026-10-13). In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 8.13): V.20, V.21, V.23, V.24, V.33 (aus 7.15, 2026-10-13), V.34 (aus 8.12, 2026-10-13), V.35 (Befunde des Eigentümers, 2026-10-16). In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -387,7 +387,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 8
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** V.20, V.21, V.23, V.24, V.33, V.34 (Umsetzung aus 8.12) (und neue V-Schritte) in eine neue Phase überführen oder per ADR verwerfen.
+- **Zu tun:** V.20, V.21, V.23, V.24, V.33, V.34 (Umsetzung aus 8.12), V.35 (Befunde des Eigentümers, zuerst mit ihm durchgehen) (und neue V-Schritte) in eine neue Phase überführen oder per ADR verwerfen.
 - **Akzeptanzkriterien:** Jeder verschobene Schritt hat einen neuen Schritt mit ID oder `[VERWORFEN]` mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
@@ -1257,6 +1257,35 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, ADR
 - **Notizen:** Angelegt 2026-10-13 aus 8.12. Option C (Bibliothek über den Welten) nur mit eigenem ADR zur Vision-Grenze, falls sich viele dauerhaft wandernde Figuren zeigen.
+
+#### V.35: Befunde des Eigentümers vom 2026-10-15/16 durchgehen (Sammlung)
+
+- **Status:** ⏸️ VERSCHOBEN → 8.13
+- **Landeplatz (nur VERSCHOBEN):** 8.13 (Eigentümer, 2026-10-16: „erstmal nur sammeln“; er will zu jedem Befund noch Grundsätzliches sagen)
+- **Phasentyp-Kontext:** offen (Sammlung; je Befund UMSETZUNG oder zuerst ERKUNDUNG)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** das Durchgehen nein; die Folgen je Befund absehbar ja – Datenmodell (B1, B5, B6, G3; Kategorie 4), Architektur und Kontext-Zusammenstellung (B2, B3, G1/G2; Kategorie 1), neue Abhängigkeit (V1; Kategorie 3)
+- **Empfohlene Klasse:** Entscheidung – mündet in `ENTSCHEIDUNG ERFORDERLICH` zu Datenmodell und Architektur (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Eigentümer hat Zeit, zu jedem Befund seine grundsätzliche Sicht zu sagen
+- **Anforderungen (ab Klasse M):** noch keine – entstehen beim Durchgehen
+- **Zu tun:** Befunde einzeln mit dem Eigentümer durchgehen, dann je Befund einen Landeplatz festlegen: eigener V-Schritt bzw. Schritt der nächsten Phase oder `[VERWORFEN]` per ADR. Wortlaut der Befunde nach dem Eigentümer; Stand im Skriptorium geprüft am 2026-10-16 auf `main` `b20d48a` (nur gelesen).
+  - **B1 – Herkunft von Bildern:** Bei Bildern zu Figuren und Kanon ist nicht nachvollziehbar, mit welchem Modell und welchem Prompt sie erzeugt wurden. Stand: Bei der Übernahme wird nur die Bilddatei gespeichert (Kopffeld `bilder` = Dateinamen, `canon/images.py`); Modell und Prompt gehen verloren, nur die Verbrauchszeile `bilderzeugung` nennt Modell und Kosten ohne Bezug zum Bild. Beim Schreiben hält der Verlauf Anweisung, KI-Text und Modell fest (ADR-056); der Weltenbauer speichert nichts (ADR-064). Offene Nebenfrage: auch für KI-Text die vollständige Anfrage festhalten?
+  - **B2 – Figuren gegliedert anlegen:** Legt die KI eine Figur an, entsteht ein zusammenhängender Text; gewünscht ist eine Trennung von vornherein (Name, Erscheinungsbild, Persönlichkeit …), damit z. B. das Aussehen gezielt abrufbar ist. Bei Orten entstehen feste Blöcke, Gegenstände ungeprüft. Stand: Vorlage für Figuren „Aussehen“ + „Wesen und Geschichte“ nur beim Anlegen von Hand (ADR-083); der Weltenbauer verlangt bei Figuren nur `### Aussehen`, „Wesen, Geschichte und Beziehungen stehen außerhalb davon“ (`context/worldbuilder.py`); für Orte, Zeitlinie, Regeln, Kultur keine Vorlage – die Blöcke bei Orten macht das Modell von sich aus. Fallstrick: Der Import erkennt als Unterabschnitte nur Zweck, Verwendung, Auswirkung, Aussehen (`canon/importers/markdown.py`); ein anderer Abschnitt auf Namensebene würde zu einem eigenen Eintrag.
+  - **B3 – Verbindungen zwischen Figuren:** Verbindungen (z. B. ein Paar) sollen sichtbar und gegliedert im Text stehen, auch wenn die KI mehrere Figuren in einem Auftrag anlegt. Stand: Mehrere Einträge je Auftrag gehen (8.8); `@Name` verweist einseitig (8.11, ADR-088, wartet auf Bestätigung), ohne Art der Beziehung, ohne Abschnitt „Beziehungen“, ohne Rückverweise; ein Feld „Verbunden mit“ wurde verworfen (ADR-088).
+  - **B4 – Karte erzeugen ohne Vorbelegung:** Bei „Karte erzeugen“ ist nichts vorausgefüllt, obwohl die Welt Orte hat. Stand: Vorbelegung nur aus „Geografie – ‹Kartenname›“ der Weltbeschreibung, sonst nur der Titel (ADR-084, `ui/src/imagePrompts.ts`); Orts-Einträge werden nicht gelesen; bei einer neuen Karte gibt es den Abschnitt noch nie, er entsteht erst über „Karte beschreiben“ (ADR-074).
+  - **B5 – Geschichten löschen oder archivieren (Wunsch):** Stand: weder für Geschichten noch für Welten oder Kapitel möglich – keine Route, kein Knopf.
+  - **B6 – Standardmodell für Bilder:** Das Bildmodell lässt sich nicht festlegen und muss jedes Mal neu gewählt werden. Stand: Voreinstellung fest im Code (`ai_gateway/images.py`, FLUX.2 Pro, ADR-077), Wahl wird nicht gespeichert; keine Favoriten für Bildmodelle (für Textmodelle ADR-055).
+  - **B7 – Bild zu Bild:** Vorhandene Bilder sollen als Grundlage dienen können, nicht nur Text zu Bild. Stand: fehlt; die Anfrage kennt nur Modell, Prompt, Seitenverhältnis und Anzahl. Bilder an die KI gehen nur zum Beschreiben (ADR-074); V.33 ist etwas anderes.
+  - **G1/G2 – Gegliederte Kanon-Einträge statt Textblöcke:** Kanon-Einträge sollen gegliedert sein, für Figuren evtl. mit festen Feldern; alle Kategorien prüfen, ob strukturiert abgelegt oder als Textblock mit `##`-Überschriften – die Trennung über Rautezeichen hält der Eigentümer nicht für zielführend. Stand: Markdown-Dateien mit YAML-Kopf (`name`, `aliasse`, `kategorie`, `status`, `bilder`) als Quelle der Wahrheit (ADR-003), Inhalt als Abschnitte nach Konvention; eigene Felder für Aussehen und Verweise bewusst verworfen (ADR-078, ADR-083, ADR-088). Der Befund stellt diese Entscheidungen in Frage.
+  - **G3 – Einstellungsseite für Modelle je Aufgabe:** Stand: keine; Schreiben je Geschichte gespeichert (ADR-023), Weltenbauer und Bilder ohne Speicherung, Kurzfassungen fest im Code (`api/flows/summary.py`), Beschreiben und Aussehen herauslösen nach Voreinstellung oder erstem Favoriten.
+  - **G4 – Vom Bedarf her denken:** Für jeden Bereich mit KI-Bildern (Figur, Gegenstand, Ort, Karte, Sonstiges) vorab festlegen, welche Daten das Bild braucht, und prüfen, ob sie zuverlässig abrufbar vorliegen. Stand: nur die Vorbelegung in `ui/src/imagePrompts.ts` (ADR-084, Bericht D.18); keine fachliche Vorgabe je Bereich.
+  - **H1 – Worldbuilding- und Namensquellen:** Es gibt zahlreiche Anleitungen zum Worldbuilding und Seiten zur Namensbildung (z. B. erfundene, kanadisch klingende Städtenamen); in die Erkundung einbeziehen, Verlässlichkeit und Nutzungsbedingungen prüfen. Stand: keine Namenshilfen; V.20 betrifft Figurenkarten, nicht Namen.
+  - **V1 – Recherche-Baustein:** Recherche in der Software, um Kosten zu sparen und nicht alles über OpenRouter laufen zu lassen. Stand: Websuche im Weltenbauer über das OpenRouter-Plugin `web` (ADR-064) – läuft selbst über OpenRouter.
+- **Akzeptanzkriterien:** Jeder Befund (B1–B7, G1–G4, H1, V1) hat einen Landeplatz mit Schritt-ID oder ist per ADR verworfen; die grundsätzliche Sicht des Eigentümers je Befund ist festgehalten.
+- **Betroffene Module:** offen (absehbar canon, manuscript, context, ai_gateway, api, ui)
+- **Reifegrad-Wirkung:** offen (G1/G2 können das Datenmodell berühren)
+- **Artefakte:** Folgeschritte, ggf. ADRs, Logbuch
+- **Notizen:** Angelegt 2026-10-16. Ein erster Entwurf (PR #167, geschlossen) war auf einem veralteten lokalen Stand vom 2026-09-30 entstanden und ist ersetzt.
 
 #### V.21: Veröffentlichung (öffentlicher Link zum Lesen)
 
