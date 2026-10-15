@@ -551,7 +551,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Betroffene Module:** keine (Betrieb)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Logbuch-Eintrag
-- **Notizen:** Server-Details nur lokal.
+- **Notizen:** Server-Details nur lokal. 2026-10-16: Frist überschritten; der Eigentümer weiß nicht mehr, ob rotiert wurde – in der nächsten Mac-Session gemeinsam am Proxy prüfen.
 
 #### D.9: Nachprüfung Unterstützung des Reverse Proxys
 
