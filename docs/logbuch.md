@@ -58,6 +58,23 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - **Auftrag:** Frage des Eigentümers, ob sich bei Anbietern wie OpenRouter oder Grok prüfen lässt, ob der Zwischenspeicher (Cache) genutzt wird; danach „leg den Schritt an“.
 - **Kontextgröße:** über die Sitzungsabfrage feststellbar (`context_usage.used_tokens`).
 
+### 2026-10-18 – [ERLEDIGT] 8.11 Verweise zwischen Kanon-Einträgen
+
+- Eigentümer wollte zuerst Deutsch im Gespräch (Erinnerung angelegt) und den nächsten Fahrplanschritt wissen; Wahl „8.11 bestätigen“. Nach einer Zusammenfassung der Probe vom 2026-10-13 bestätigt → 8.11 `[ERLEDIGT]`, Phase 8: 11 von 13. Offen vor 8.13 nur noch 8.9 (Probe des Eigentümers).
+- **Korrektur im Probebericht:** Die Tabellen über 6 Ketten je Seite mit `auswertung.py` nachgerechnet (Läufe beider Ordner in einen gemeinsamen Ordner je Seite im Scratchpad kopiert) – Zahlen stimmen. Falsch war der Satz „Alle Mittelwerte von nachher liegen in der Spannweite von vorher“ (auch im `[GELÖST]`-Eintrag vom 2026-10-13): vier Mittelwerte liegen außerhalb, je nur in einer Geschichte (Salzmark Motivfolge 2,17; Glimmergrund 6er doppelt 0,17, Warte-Enden 0,17, Wörter 124). Nach Regel-002 keine Wirkung, Ergebnis unverändert. Das eine Warte-Ende ist ein Treffer der Wortliste in wörtlicher Rede („Berta schweigt, …“). Satz in `spikes/regel-002/README.md` richtiggestellt, mit Vermerk.
+- **Reibung:** In der ersten Zusammenfassung an den Eigentümer stand, alle vier Werte lägen innerhalb der Ausgangsmessung 5.24 – für die Warte-Enden in Glimmergrund falsch (dort ebenfalls 0–0). Erst beim Schreiben des Berichts bemerkt; dem Eigentümer nachträglich gemeldet. Lehre: Vergleichswerte vor dem Vorlegen Zeile für Zeile gegen die Quelle prüfen, nicht aus dem Gedächtnis der Tabelle.
+- Dem Eigentümer vor der Bestätigung genannt: keine vollständige Handbewertung der Widersprüche durch eine getrennte Instanz (nur Stichprobe zu Pell).
+- `docs/requirements.md`: FR-011 (ortsgebundene Regeln) und FR-013 (Verweise zwischen Einträgen) um 8.11 ergänzt. CHANGELOG enthielt 8.11 schon (2026-10-13).
+
+### 2026-10-18 00:48 – [SESSIONSTART] Auftrag noch offen
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, laut `get_session`), Entscheidungs-Klasse; Aufwand „xhigh“.
+- **Umgebung:** Mac des Eigentümers (macOS arm64) – SSH zum VPS möglich (ADR-025); Pre-Commit-Hook über den SessionStart-Hook eingerichtet.
+- **Stand:** Zuerst `main` per Fast-Forward von `5c6a14f` auf `ea7543b` nachgezogen (PR #166 Probe 8.11, PR #168 V.35), danach die Mindest-Lektüre – Reihenfolge nach der Lehre vom 2026-10-16.
+- **Wiedereinstieg:** aktiv 8.9 (wartet auf die Probe des Eigentümers) und 8.11 (wartet auf seine Bestätigung); danach 8.13 mit V.34 und V.35. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); nächste datierte Schritte D.1 ab 2026-11-05, D.5 ab 2026-11-12. Keine aktiven Blocker, keine offenen STOPP-Situationen, Reaktiv-Quote 1 / 10.
+- **Kontextgröße:** über die Sitzungsabfrage nicht feststellbar (kein Wert in `get_session`) – Regel „Sessiongröße“ entfällt (`CLAUDE.md` Abschnitt 0).
+- **Auftrag:** beim Start noch offen; danach nächster Fahrplanschritt erfragt → 8.11 bestätigt (Eintrag oben).
+
 ### 2026-10-16 – [SESSIONENDE] Befunde gesammelt (V.35)
 
 - **Dauer:** 2026-10-15 21:51 UTC bis 2026-10-16 (Ende nicht genau feststellbar).

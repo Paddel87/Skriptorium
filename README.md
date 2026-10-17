@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 8 – Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung (Umsetzung), begonnen 2026-10-13 (ADR-080, ADR-081); Phase 7 abgeschlossen 2026-10-13. Fortschritt: 10 von 13 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
+- **Projektphase:** Phase 8 – Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung (Umsetzung), begonnen 2026-10-13 (ADR-080, ADR-081); Phase 7 abgeschlossen 2026-10-13. Fortschritt: 11 von 13 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
 - **Version:** v1.0.0 – erstes produktives Release (2026-10-11, ADR-058); davor v0.1.0 als Vorabversion (ADR-043)
 - **Status:** In Betrieb
 - **Letzte Änderung:** 2026-10-13
@@ -109,9 +109,9 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - ✅ **8.8:** Weltenbauer behält das Gespräch nach „Als Kanon übernehmen“ – erledigt 2026-10-13.
 - 🟠 **8.9:** Weltenbauer aus dem Manuskript (ADR-087) – eingespielt, deine Probe steht aus.
 - ✅ **8.10:** Zeitlinie mit Jahr, Datum und Uhrzeit – erledigt 2026-10-13.
-- 🟠 **8.11:** Verweise zwischen Kanon-Einträgen (ADR-088) – umgesetzt, Probe nach Regel-002 bestanden (2026-10-13); wartet auf deine Bestätigung.
+- ✅ **8.11:** Verweise zwischen Kanon-Einträgen (ADR-088) – erledigt 2026-10-18 (Probe nach Regel-002 bestanden, von dir bestätigt).
 - ✅ **8.12:** Erkundung „wandernde Figuren“ – erledigt 2026-10-13 ([Bericht](docs/research/wandernde-figuren.md)); nächster Schritt: du probierst eine Gast-Figur aus, danach Option A (V.34).
-- ⚪ **8.13:** Planung der nächsten Ausbaustufe – nach den offenen Proben zu 8.9 und 8.11; dabei deine Befunde vom 2026-10-15/16 durchgehen (V.35: Herkunft von Bildern, gegliederte Figuren, Verbindungen, Karten, Löschen/Archivieren, Modelle je Aufgabe, Bild zu Bild), V.36 (Cache-Treffer der KI-Anbieter festhalten) und V.37 (Verbrauchsstatistik je Welt und Geschichte).
+- ⚪ **8.13:** Planung der nächsten Ausbaustufe – nach deiner Probe zu 8.9; dabei deine Befunde vom 2026-10-15/16 durchgehen (V.35: Herkunft von Bildern, gegliederte Figuren, Verbindungen, Karten, Löschen/Archivieren, Modelle je Aufgabe, Bild zu Bild), V.36 (Cache-Treffer der KI-Anbieter festhalten) und V.37 (Verbrauchsstatistik je Welt und Geschichte).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).

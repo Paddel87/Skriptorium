@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-18 (V.36 und V.37 angelegt); 2026-10-16 (V.35 angelegt); 2026-10-13 Phase 7 abgeschlossen (7.8 erledigt: Pflichtfrage ADR-080, Planung ADR-081); Phase 8 beginnt
+- **Stand vom:** 2026-10-18 (V.36 und V.37 angelegt; 8.11 bestätigt und abgeschlossen); 2026-10-16 (V.35 angelegt); 2026-10-13 Phase 7 abgeschlossen (7.8 erledigt: Pflichtfrage ADR-080, Planung ADR-081); Phase 8 beginnt
 - **Laufende Phase:** Phase 8 „Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung“ (Phase 7 abgeschlossen 2026-10-13)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 8.9 Weltenbauer aus dem Manuskript – eingespielt, wartet auf echte Probe
-- **Nächster Schritt:** 8.13 Planung der nächsten Ausbaustufe – erst wenn 8.9 und 8.11 abgeschlossen sind. Offen dafür (eingespielt ist `19a5e48` mit 8.1–8.12): deine Probe zu 8.9; deine Bestätigung zu 8.11 (Probe gelaufen 2026-10-13); deine Probe mit einer Gast-Figur (Eingangskriterium V.34); deine Befunde vom 2026-10-15/16 gemeinsam durchgehen (V.35). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** 8.13 Planung der nächsten Ausbaustufe – erst wenn 8.9 abgeschlossen ist (8.11 erledigt 2026-10-18). Offen dafür (eingespielt ist `19a5e48` mit 8.1–8.12): deine Probe zu 8.9; deine Probe mit einer Gast-Figur (Eingangskriterium V.34); deine Befunde vom 2026-10-15/16 gemeinsam durchgehen (V.35). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details im Archiv [`docs/archiv/fahrplan-phase-7.md`](archiv/fahrplan-phase-7.md).
 
-**Phase 8: 10 von 13 erledigt.**
+**Phase 8: 11 von 13 erledigt.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -38,7 +38,7 @@ Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details
 | ✅ | 8.8 | Weltenbauer behält das Gespräch (V.27) | erledigt 2026-10-13 | – |
 | 🟠 | 8.9 | Weltenbauer aus dem Manuskript (V.22) | eingespielt, wartet auf Probe (ADR-087) | du: an einer echten Figur ausprobieren |
 | ✅ | 8.10 | Zeitlinie mit Jahr, Datum und Uhrzeit (V.28) | erledigt 2026-10-13 | – |
-| 🟠 | 8.11 | Verweise zwischen Kanon-Einträgen (V.25) | umgesetzt, Probe gelaufen (ADR-088) | du: bestätigen |
+| ✅ | 8.11 | Verweise zwischen Kanon-Einträgen (V.25) | erledigt 2026-10-18 (ADR-088) | – |
 | ✅ | 8.12 | Wandernde Figuren – Erkundung (V.26) | erledigt 2026-10-13 → V.34 | – |
 | ⚪ | 8.13 | Planung der nächsten Ausbaustufe | offen | KI |
 
@@ -346,7 +346,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 8.11: Verweise zwischen Kanon-Einträgen; ortsgebundene Regeln (V.25)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-13) – entschieden (ADR-088) und umgesetzt (Unteragent, geprüft von der bauenden KI): `find_references` und `reference_candidates` in `context/writing.py` (`@Name`/Alias derselben Welt, längster Treffer, Genitiv wie in der Oberfläche – von der bauenden KI angeglichen), Verweise vorn in beiden Auffüllungsläufen, eine Stufe tief; Rahmensatz „Eine Regel mit der Zeile „Gilt nur in: …“ gilt nur an diesem Ort.“; Weltenbauer verteilt und verknüpft mit `@Name`; `@Name` als Link in der Kanon-Ansicht. pytest 805 (99,84 %), vitest 398 (98,84 % / 95,12 %), ruff, mypy, bandit, tsc, eslint, prettier, Build, Playwright 11/11 (Lauf des Unteragenten). Probe nach Regel-002 gelaufen (2026-10-13, Cloud-Session, `spikes/regel-002/README.md`): Verweise wirken wie vorgesehen; Regel außerhalb des Orts nicht angewendet (auch vorher nicht); „wörtlich %“ nach 3 Läufen über der Vorher-Spannweite, nach 6 Läufen je Seite innerhalb – keine Verschlechterung (Regel-002). **Offen: Bestätigung des Eigentümers**
+- **Status:** ✅ ERLEDIGT (2026-10-18) – vom Eigentümer bestätigt am 2026-10-18 nach Zusammenfassung der Probe; dabei Satz im Probebericht richtiggestellt (vier Mittelwerte außerhalb der Vorher-Spannweite, je nur in einer Geschichte – Ergebnis nach Regel-002 unverändert, `spikes/regel-002/README.md`). Vorher: entschieden (ADR-088) und umgesetzt (Unteragent, geprüft von der bauenden KI): `find_references` und `reference_candidates` in `context/writing.py` (`@Name`/Alias derselben Welt, längster Treffer, Genitiv wie in der Oberfläche – von der bauenden KI angeglichen), Verweise vorn in beiden Auffüllungsläufen, eine Stufe tief; Rahmensatz „Eine Regel mit der Zeile „Gilt nur in: …“ gilt nur an diesem Ort.“; Weltenbauer verteilt und verknüpft mit `@Name`; `@Name` als Link in der Kanon-Ansicht. pytest 805 (99,84 %), vitest 398 (98,84 % / 95,12 %), ruff, mypy, bandit, tsc, eslint, prettier, Build, Playwright 11/11 (Lauf des Unteragenten). Probe nach Regel-002 gelaufen (2026-10-13, Cloud-Session, `spikes/regel-002/README.md`): Verweise wirken wie vorgesehen; Regel außerhalb des Orts nicht angewendet (auch vorher nicht); „wörtlich %“ nach 3 Läufen über der Vorher-Spannweite, nach 6 Läufen je Seite innerhalb – keine Verschlechterung (Regel-002). Nicht erfolgt: vollständige Handbewertung der Widersprüche durch eine getrennte Instanz (nur Stichprobe) – dem Eigentümer vor der Bestätigung genannt
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** 8.1, 8.7
 - **Freigabepflichtig:** ja – Anfrage-Zusammenstellung (Kategorie 1), ggf. Datenmodell (Kategorie 4)
