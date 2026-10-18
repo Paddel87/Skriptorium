@@ -115,4 +115,6 @@ Cloud-Session, Modell `x-ai/grok-4.6`, Länge „mittel“. Vorher: Stand `9acc5
 | Motivfolge | 1,50 (1–2) | 2,17 (1–4) | 1,50 (1–2) | 1,67 (1–2) |
 | Wörter je Vorschlag | 123 (106–154) | 125 (110–138) | 118 (115–121) | 124 (100–144) |
 
-**Ergebnis:** Alle Mittelwerte von nachher liegen in der Spannweite von vorher – nach Regel-002 keine Wirkung des neuen Rahmensatzes, der Befund aus drei Läufen war Streuung. Gesamtkosten der Probe 6,82 $.
+**Ergebnis:** Keine Kennzahl liegt nachher in beiden Geschichten außerhalb der Spannweite von vorher – nach Regel-002 keine Wirkung des neuen Rahmensatzes; der Befund „wörtlich %“ aus drei Läufen war Streuung. Gesamtkosten der Probe 6,82 $.
+
+*Korrigiert 2026-10-18:* Die erste Fassung lautete „Alle Mittelwerte von nachher liegen in der Spannweite von vorher“. Nachgerechnet mit `auswertung.py` über dieselben 6 Ketten je Seite (Tabelle oben bestätigt) liegen vier Mittelwerte außerhalb, jeweils nur in einer Geschichte: Salzmark Motivfolge 2,17 (vorher 1–2); Glimmergrund 6er doppelt 0,17 (vorher 0–0), Warte-Enden 0,17 (vorher 0–0) und Wörter 124 (vorher 115–121). Motivfolge, 6er doppelt und Wörter liegen innerhalb der Ausgangsmessung 5.24. Das eine Warte-Ende (`8.11-nachher/glimmergrund/lauf-2`, Schritt 2) ist ein Treffer der Wortliste in wörtlicher Rede („Berta schweigt, und die Klappe zu – …“), kein Ende mit Warten oder Schweigen. Am Ergebnis nach Regel-002 ändert das nichts.

@@ -29,6 +29,22 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-18 15:51 MESZ – [SESSIONENDE] 8.9 und 8.11 abgeschlossen
+
+- **Dauer:** 2026-10-18 00:48 bis 15:51 (MESZ), mit langer Pause des Eigentümers; reine Arbeitszeit kurz.
+- **Bearbeitet:** kein Code. 8.11 nach Zusammenfassung der Probe bestätigt, Ergebnissatz im Probebericht richtiggestellt; 8.9 nach Probe des Eigentümers abgeschlossen. Phase 8: 12 von 13 – offen nur 8.13.
+- **Nächster Schritt:** 8.13 mit Phasenabschluss wie 7.8: Vision-Abgleich gegen `docs/vision.md`, Onboarding-Pfad auf frischem Worktree, Pflichtfrage mit getrennter Instanz, Planung von Phase 9 per ADR. Dafür vom Eigentümer: Probe mit einer Gast-Figur (V.34) und gemeinsames Durchgehen von V.35 (G1/G2 auf der Entscheidungs-Klasse); in die Planung gehen außerdem V.36 und V.37 aus der parallelen Cloud-Session (V.37 mit Datenmodell-Vorlage gegen ADR-023). Vorschlag beim Start: KI bereitet vor, Eigentümer probiert parallel V.34.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session` am Ende erneut abgefragt). 0 Schritte oberhalb der Empfehlung (8.9 und 8.11 empfehlen Entscheidung); Routine-Teilarbeiten (Logbuch, README, Fahrplan-Status) klein und im geladenen Kontext, daher nicht abgegeben.
+- **Kontextgröße:** über die Sitzungsabfrage nicht feststellbar; Regel „Sessiongröße“ entfiel.
+- **Sessionende-Prüfungen:** README synchron (12 von 13, 8.9/8.11 erledigt, 8.13 als Nächstes); Drift behoben: `docs/project-context.md` Abschnitt 1 nannte noch „offen: 5.5“ (erledigt seit 2026-10-11) → „offen: 8.13 (Phasenabschluss), D.11“. Kein neuer ADR, Reifegrade unverändert, Reaktiv-Quote 1 / 10, keine aktiven Blocker, kein `[BLOCKIERT]`-Schritt; Phase 8 bei 13 Schritten (Schwelle 26). Ablaufdaten-Register: kein Vorlauf erreicht (nächste: D.1 ab 2026-11-05, mypy 2 am 2026-11-06). Logbuch ca. 350 Zeilen, project-context 348 Zeilen – kein Trigger. Vision-Abgleich erst an der Phasengrenze (8.13).
+- **Abweichung:** Erste Antwort der Session auf Englisch; Eigentümer wünscht Deutsch (Erinnerung angelegt).
+- **Reibung – parallele Session:** Während der Pause lief eine Cloud-Session (ca. 06:26–06:45 MESZ, V.36/V.37, PR #169 und #170) auf `ea7543b`; sie kannte die lokalen, nicht hochgeladenen Commits zu 8.11 nicht und vermerkte 8.11 noch als offen. Erst vor dem Hochladen per `git fetch` bemerkt (5 Commits Abstand). Branch auf `5cde988` neu aufgesetzt; Konflikte in Fahrplan, README und Logbuch von Hand zusammengeführt, Logbuch zeitlich geordnet (Cloud-Einträge in UTC, diese Session in MESZ). Lehre: Nach einer langen Pause innerhalb einer Session vor dem nächsten Schritt `origin/main` prüfen – nicht nur zum Sessionstart.
+
+### 2026-10-18 – [ERLEDIGT] 8.9 Weltenbauer aus dem Manuskript
+
+- Eigentümer: „8.9 habe ich schon getestet, das hat … funktioniert“ (Spracheingabe; ein Wort unklar, „der Vorrat“ – vermutlich „hervorragend“, Aussage eindeutig positiv). Damit ist das letzte Akzeptanzkriterium erfüllt (echte Probe an einer Geschichte des Eigentümers, Bestätigung) → 8.9 `[ERLEDIGT]`, Phase 8: 12 von 13. Keine Einzelheiten zur Probe erfragt (Geschichtentitel bleiben ohnehin draußen); Auffälligkeiten aus der Probe kämen als V-Schritt mit Landeplatz 8.13.
+- `docs/requirements.md` FR-029 um 8.9 ergänzt; README und Fahrplan nachgezogen. Es bleibt nur 8.13 mit dem Phasenabschluss.
+
 ### 2026-10-18 04:45 – [SESSIONENDE] V.36 und V.37 vorgemerkt
 
 - **Dauer:** 2026-10-18 04:26 bis ca. 04:45 UTC.
@@ -57,6 +73,23 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - **Umgebung:** Cloud-Session (Linux), kein SSH zum VPS (ADR-025); Stand `main` `ea7543b`, gleich `origin/main` (vor der Mindest-Lektüre per `git fetch` geprüft – Lehre vom 2026-10-16).
 - **Auftrag:** Frage des Eigentümers, ob sich bei Anbietern wie OpenRouter oder Grok prüfen lässt, ob der Zwischenspeicher (Cache) genutzt wird; danach „leg den Schritt an“.
 - **Kontextgröße:** über die Sitzungsabfrage feststellbar (`context_usage.used_tokens`).
+
+### 2026-10-18 – [ERLEDIGT] 8.11 Verweise zwischen Kanon-Einträgen
+
+- Eigentümer wollte zuerst Deutsch im Gespräch (Erinnerung angelegt) und den nächsten Fahrplanschritt wissen; Wahl „8.11 bestätigen“. Nach einer Zusammenfassung der Probe vom 2026-10-13 bestätigt → 8.11 `[ERLEDIGT]`, Phase 8: 11 von 13. Offen vor 8.13 nur noch 8.9 (Probe des Eigentümers).
+- **Korrektur im Probebericht:** Die Tabellen über 6 Ketten je Seite mit `auswertung.py` nachgerechnet (Läufe beider Ordner in einen gemeinsamen Ordner je Seite im Scratchpad kopiert) – Zahlen stimmen. Falsch war der Satz „Alle Mittelwerte von nachher liegen in der Spannweite von vorher“ (auch im `[GELÖST]`-Eintrag vom 2026-10-13): vier Mittelwerte liegen außerhalb, je nur in einer Geschichte (Salzmark Motivfolge 2,17; Glimmergrund 6er doppelt 0,17, Warte-Enden 0,17, Wörter 124). Nach Regel-002 keine Wirkung, Ergebnis unverändert. Das eine Warte-Ende ist ein Treffer der Wortliste in wörtlicher Rede („Berta schweigt, …“). Satz in `spikes/regel-002/README.md` richtiggestellt, mit Vermerk.
+- **Reibung:** In der ersten Zusammenfassung an den Eigentümer stand, alle vier Werte lägen innerhalb der Ausgangsmessung 5.24 – für die Warte-Enden in Glimmergrund falsch (dort ebenfalls 0–0). Erst beim Schreiben des Berichts bemerkt; dem Eigentümer nachträglich gemeldet. Lehre: Vergleichswerte vor dem Vorlegen Zeile für Zeile gegen die Quelle prüfen, nicht aus dem Gedächtnis der Tabelle.
+- Dem Eigentümer vor der Bestätigung genannt: keine vollständige Handbewertung der Widersprüche durch eine getrennte Instanz (nur Stichprobe zu Pell).
+- `docs/requirements.md`: FR-011 (ortsgebundene Regeln) und FR-013 (Verweise zwischen Einträgen) um 8.11 ergänzt. CHANGELOG enthielt 8.11 schon (2026-10-13).
+
+### 2026-10-18 00:48 MESZ – [SESSIONSTART] Auftrag noch offen
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, laut `get_session`), Entscheidungs-Klasse; Aufwand „xhigh“.
+- **Umgebung:** Mac des Eigentümers (macOS arm64) – SSH zum VPS möglich (ADR-025); Pre-Commit-Hook über den SessionStart-Hook eingerichtet.
+- **Stand:** Zuerst `main` per Fast-Forward von `5c6a14f` auf `ea7543b` nachgezogen (PR #166 Probe 8.11, PR #168 V.35), danach die Mindest-Lektüre – Reihenfolge nach der Lehre vom 2026-10-16.
+- **Wiedereinstieg:** aktiv 8.9 (wartet auf die Probe des Eigentümers) und 8.11 (wartet auf seine Bestätigung); danach 8.13 mit V.34 und V.35. Querschnitt: D.11 bis 2026-10-31 (Eigentümer); nächste datierte Schritte D.1 ab 2026-11-05, D.5 ab 2026-11-12. Keine aktiven Blocker, keine offenen STOPP-Situationen, Reaktiv-Quote 1 / 10.
+- **Kontextgröße:** über die Sitzungsabfrage nicht feststellbar (kein Wert in `get_session`) – Regel „Sessiongröße“ entfällt (`CLAUDE.md` Abschnitt 0).
+- **Auftrag:** beim Start noch offen; danach nächster Fahrplanschritt erfragt → 8.11 bestätigt (Eintrag oben).
 
 ### 2026-10-16 – [SESSIONENDE] Befunde gesammelt (V.35)
 
