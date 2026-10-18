@@ -29,6 +29,15 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-18 – [ADR-ANGELEGT] ADR-092 Feste Abschnitte je Art (9.3)
+
+- Mockup vorher/nachher (Formular „Neuer Eintrag“, Figur Anselm Drach, Ort Aschturm; Testwelt Salzmark, Desktop und Smartphone, vom Unteragenten gebaut) und vier Auswahlfragen. Eigentümer: A (Vorlage im Formular, Weltenbauer, Import; Bestand bleibt), Figur mit „Fähigkeiten“ (Aussehen · Wesen · Fähigkeiten · Geschichte · Beziehungen), übrige Arten wie vorgeschlagen, Abschnitte in der KI-Anfrage unter dem Namen mit Probe nach Regel-002. `[OPERATIV]`, in 9.3 als Vorlage vorgesehen – nicht reaktiv; Reaktiv-Quote 0/10 (ADR-083–092). Auf der Entscheidungs-Klasse vorgelegt (Opus 5.5).
+- Befund beim Lesen: In der Anfrage an die KI steht ein von Hand angelegtes `## Aussehen` auf derselben Ebene wie `## Kael (Figur)`; aus dem Weltenbauer übernommene Einträge haben `### Aussehen`. Mit mehr Abschnitten je Eintrag wäre die Zuordnung für die KI unsicher – deshalb Teil von ADR-092.
+
+### 2026-10-18 – [BEOBACHTUNG] 9.3 in derselben Session begonnen
+
+- Auf „weiter“ des Eigentümers nach dem Abschluss von 9.2 beginnt 9.3 in dieser Session, obwohl die Kontextgröße über 200.000 Token liegt (Abweichung von `CLAUDE.md` Abschnitt 0, „Sessiongröße“, nach dem dauerhaften „weiter hier“ des Eigentümers). Modell weiter Opus 5.5, Entscheidungs-Klasse – 9.3 empfiehlt Entscheidung, keine Arbeit oberhalb der Empfehlung. Branch `feat/9.3-gegliederte-eintraege` von `main` `2ac204b`. Zuerst Vorlage mit Mockup (Kategorien 1 und 4); das Mockup baut ein Unteragent der Routine-Klasse.
+
 ### 2026-10-18 – [ERLEDIGT] 9.2 End-to-End-Tests für die Abläufe der Phasen 6–8
 
 - PR #175, CI grün (4 von 4; End-to-End 1 min 18 s), auf Anweisung des Eigentümers („merge“) zusammengeführt (`65a0f13`). Im CI-Protokoll nur der bekannte Hinweis „ubuntu-latest → Ubuntu 26 ab 2026-10-19“ (D.19, Lauf noch vor dem Stichtag), keine Bündelgrößen-Warnung. Auto-fix für #175 auf Wunsch des Eigentümers eingeschaltet, nicht gebraucht. Lokal zuvor: Playwright 15/15, pytest 887 (99,85 %), vitest 467 (98,66 / 95,3 / 97,87 / 98,85 %). Phase 9: 2 von 15 erledigt; nächster Schritt 9.3 (Vorlage mit Mockup, Entscheidungs-Klasse) – in einer neuen Session.
