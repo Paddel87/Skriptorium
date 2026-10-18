@@ -192,9 +192,10 @@ class CanonService:
     ) -> CanonEntry:
         """Create a canon entry; its identifier is derived from ``name``.
 
-        A new entry of category ``gegenstand`` without body gets the sections Zweck,
-        Verwendung and Auswirkung (FR-003); a new figure without body the sections Aussehen and
-        Wesen und Geschichte (steps 7.16 and 8.4, ADR-078, ADR-083).
+        A new entry without body gets the empty sections of its category (FR-003, ADR-092):
+        a figure Aussehen, Wesen, Fähigkeiten, Geschichte and Beziehungen, a place Lage,
+        Aussehen, Bewohner and Geschichte, an item Aussehen, Zweck, Verwendung and Auswirkung,
+        a culture Gesellschaft, Glaube und Bräuche and Geschichte; rules and timeline have none.
 
         Raises:
             NotFound: The world does not exist.

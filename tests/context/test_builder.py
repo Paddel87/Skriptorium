@@ -115,7 +115,8 @@ def test_named_item_brings_purpose_use_and_effect(
     assert labels(context, "verweis") == ["Runenklinge"]
     system = context.messages[0].content
     assert "## Runenklinge (Gegenstand)" in system
-    assert BLADE_BODY in system
+    # Step 9.3 (ADR-092): the sections stand one level below the name, whatever the author wrote.
+    assert BLADE_BODY.replace("## ", "### ") in system
 
 
 def test_led_characters_and_story_facts_are_included(

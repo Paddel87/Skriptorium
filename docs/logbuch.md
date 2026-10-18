@@ -29,6 +29,36 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-18 23:40 MESZ – [SESSIONENDE] 9.3 entschieden und lokal umgesetzt, Proben offen
+
+- **Dauer:** Fortsetzung nach dem `[SESSIONENDE]` von 22:10 MESZ: 9.2 zusammengeführt (PR #175, #176), dann auf „weiter“ 9.3 bis 23:40 MESZ.
+- **Bearbeitet:** 9.2 abgeschlossen (CI grün, `65a0f13`, Abschluss `2ac204b`). 9.3: Mockup vorher/nachher, Entscheidung per Auswahlfragen → ADR-092, Umsetzung (Unteragent, geprüft und nachgebessert), V.38 angelegt. Commits lokal auf `feat/9.3-gegliederte-eintraege` (`1529ac3` … `a409878`), nicht hochgeladen.
+- **Stand:** Phase 9, 2 von 15 erledigt; 9.3 🟠 umgesetzt, offen: Probe nach Regel-002 und Probe des Weltenbauers mit echter KI (Cloud-Session; Plan in den Notizen von 9.3), Bestätigung des Eigentümers. Keine offenen STOPP-Situationen, keine aktiven Blocker.
+- **Nächster Schritt:** Branch hochladen und Pull Request nach Freigabe; die Proben in einer Cloud-Session vom Branch; danach Bestätigung und Zusammenführen. Dann 9.4 (Beziehungen, baut auf dem Abschnitt „Beziehungen“).
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, laut `get_session`; Abfrage um 22:09, seither kein Modellwechsel gemeldet). 9.3 empfiehlt Entscheidung – 0 Schritte oberhalb der Empfehlung in diesem Teil. Abgegeben an Unteragenten der Routine-Klasse (Sonnet): Mockup (ca. 5 min, 37 Aufrufe) und Umsetzung (ca. 14 min, 72 Aufrufe); Vorlage, ADR, Prüfung, Nachbesserung des Imports, Doku und Commits hier.
+- **Kontextgröße:** 509.699 Token (`get_usage`), über der Grenze von 200.000; weitergearbeitet nach dem dauerhaften „weiter hier“ des Eigentümers (Abweichung nach `CLAUDE.md` Abschnitt 0, „Sessiongröße“).
+- **Sessionende-Prüfungen:** README synchron (Fortschritt 2 von 15; „Nächste Schritte“ 9.3 umgesetzt, Proben offen). Drift: ADR-092 verweist auf 9.3, 9.4, 9.5 – vorhanden; V.38 mit Landeplatz 9.15, in 9.15 und der Übersicht genannt; `docs/architecture.md` Abschnitte 7–9 auf Stand ADR-092; Modulnamen unverändert; FR-002, FR-029 unverändert erledigt (9.3 noch offen); keine aktiven Blocker und keine `[BLOCKIERT]`-Schritte; Reaktiv-Quote 0/10 (ADR-083–092); Phase 9 mit 15 Schritten (Schwelle 30). Ablaufdaten-Register: kein Vorlauf erreicht (D.1 ab 2026-11-05, mypy 2 am 2026-11-06; D.19 ab dem ersten CI-Lauf nach dem 2026-10-19). Archiv: Logbuch ca. 340 Zeilen, project-context 349 Zeilen – kein Trigger. Keine Phasengrenze. Quick-Start nicht berührt.
+
+### 2026-10-18 – [BEOBACHTUNG] 9.3 lokal umgesetzt; Messung der Anfrage an den Testwelten
+
+- Umsetzung von ADR-092 durch einen Unteragenten der Routine-Klasse (Sonnet, ca. 14 min, 72 Werkzeugaufrufe), geprüft von der bauenden KI. Lokal grün: pytest 931 (99,85 %; canon 100 %, context 99 %), vitest 485 (98,67 / 95,29 / 97,88 / 98,86 %), Playwright 15/15, ruff, mypy, bandit, eslint, prettier, tsc. Bildschirmfotos des echten Formulars (Desktop, Smartphone; Figur und Wechsel auf Ort) entsprechen dem Mockup.
+- Messung `render` alt gegen neu an den 52 Einträgen von Salzmark und Glimmergrund: alle 52 ändern sich, weil ihr Text mit `# Name` beginnt (wird `### Name`); +104 Zeichen gesamt; keine leeren Abschnitte, nichts erreicht Ebene 6. Die Anfrage beim Schreiben ändert sich also in beiden Testgeschichten – die Probe nach Regel-002 misst genau das.
+- Vertragsdatei: Gegenstand und Kultur bekommen die neue Vorlage; geschätzte Token beim Schreiben 1.477 → 1.450 (leere Abschnitte fallen weg), beim Weltenbauer 816 → 994 (längerer Rahmen, ca. +180 Token je Antwort).
+- Befund SillyTavern-Export: trennt „Wesen“ an der wörtlichen Zeile `### Wesen` (Abweichung von Regel-003); mit der neuen Vorlage (`## Wesen`) bleibt `personality` leer → V.38, Landeplatz 9.15.
+
+### 2026-10-18 – [GELÖST] Import zerlegte eine Figur mit eigenem Zusatz-Abschnitt
+
+- Bericht des Unteragenten: Eine Überschrift ohne eigenen Text galt nur dann als Eintrag, wenn alle Unterüberschriften feste Abschnitte waren; eine Figur des Weltenbauers mit „Aussehen“, „Wesen“ und einem eigenen „Herkunft“ wäre in der Import-Vorschau in mehrere Einträge zerfallen – mit 9.3 wahrscheinlicher. Nachgebessert von der bauenden KI: Bei bekannter Art reicht ein fester Abschnitt dieser Art (`_holds_item_sections`); bei unbekannter Art bleibt die strenge Regel. Zwei Tests ergänzt.
+
+### 2026-10-18 – [ADR-ANGELEGT] ADR-092 Feste Abschnitte je Art (9.3)
+
+- Mockup vorher/nachher (Formular „Neuer Eintrag“, Figur Anselm Drach, Ort Aschturm; Testwelt Salzmark, Desktop und Smartphone, vom Unteragenten gebaut) und vier Auswahlfragen. Eigentümer: A (Vorlage im Formular, Weltenbauer, Import; Bestand bleibt), Figur mit „Fähigkeiten“ (Aussehen · Wesen · Fähigkeiten · Geschichte · Beziehungen), übrige Arten wie vorgeschlagen, Abschnitte in der KI-Anfrage unter dem Namen mit Probe nach Regel-002. `[OPERATIV]`, in 9.3 als Vorlage vorgesehen – nicht reaktiv; Reaktiv-Quote 0/10 (ADR-083–092). Auf der Entscheidungs-Klasse vorgelegt (Opus 5.5).
+- Befund beim Lesen: In der Anfrage an die KI steht ein von Hand angelegtes `## Aussehen` auf derselben Ebene wie `## Kael (Figur)`; aus dem Weltenbauer übernommene Einträge haben `### Aussehen`. Mit mehr Abschnitten je Eintrag wäre die Zuordnung für die KI unsicher – deshalb Teil von ADR-092.
+
+### 2026-10-18 – [BEOBACHTUNG] 9.3 in derselben Session begonnen
+
+- Auf „weiter“ des Eigentümers nach dem Abschluss von 9.2 beginnt 9.3 in dieser Session, obwohl die Kontextgröße über 200.000 Token liegt (Abweichung von `CLAUDE.md` Abschnitt 0, „Sessiongröße“, nach dem dauerhaften „weiter hier“ des Eigentümers). Modell weiter Opus 5.5, Entscheidungs-Klasse – 9.3 empfiehlt Entscheidung, keine Arbeit oberhalb der Empfehlung. Branch `feat/9.3-gegliederte-eintraege` von `main` `2ac204b`. Zuerst Vorlage mit Mockup (Kategorien 1 und 4); das Mockup baut ein Unteragent der Routine-Klasse.
+
 ### 2026-10-18 – [ERLEDIGT] 9.2 End-to-End-Tests für die Abläufe der Phasen 6–8
 
 - PR #175, CI grün (4 von 4; End-to-End 1 min 18 s), auf Anweisung des Eigentümers („merge“) zusammengeführt (`65a0f13`). Im CI-Protokoll nur der bekannte Hinweis „ubuntu-latest → Ubuntu 26 ab 2026-10-19“ (D.19, Lauf noch vor dem Stichtag), keine Bündelgrößen-Warnung. Auto-fix für #175 auf Wunsch des Eigentümers eingeschaltet, nicht gebraucht. Lokal zuvor: Playwright 15/15, pytest 887 (99,85 %), vitest 467 (98,66 / 95,3 / 97,87 / 98,85 %). Phase 9: 2 von 15 erledigt; nächster Schritt 9.3 (Vorlage mit Mockup, Entscheidungs-Klasse) – in einer neuen Session.

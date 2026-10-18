@@ -178,8 +178,35 @@ def test_the_frame_asks_for_the_fixed_sections_of_the_canon(builder: ContextBuil
         assert f"`### {name}`" in system
 
 
-def test_figures_are_proposed_with_the_section_aussehen(builder: ContextBuilder) -> None:
+def test_the_frame_names_the_sections_of_each_category_in_their_order(
+    builder: ContextBuilder,
+) -> None:
+    """Step 9.3 (ADR-092, rule 003): one rule from ``SECTIONS``, not a list of its own."""
+    system = builder.build_worldbuilder(WORLD, [("user", "Etwas Neues")]).messages[0].content
+    groups = ("Figuren", "Orte", "Gegenstände", "Kultur")
+    assert list(SECTIONS) == ["figur", "ort", "gegenstand", "kultur"]
+    for group, names in zip(groups, SECTIONS.values(), strict=True):
+        listed = ", ".join(f"`### {name}`" for name in names)
+        assert f"  - {group}: {listed}\n" in system
+    assert "eine Ebene tiefer als der Name" in system
+    assert "Lass einen Abschnitt weg, wenn dazu nichts bekannt ist" in system
+    assert "erfinde nichts, um ihn zu füllen" in system
+    assert "Regeln und die Zeitlinie haben keine Abschnitte" in system
+    # The two single rules of before are gone.
+    assert "Gegenstände haben immer" not in system
+    assert "Figuren haben immer" not in system
+
+
+def test_the_example_of_the_frame_is_a_figure_with_its_sections(builder: ContextBuilder) -> None:
+    system = builder.build_worldbuilder(WORLD, [("user", "Eine Figur")]).messages[0].content
+    example = "".join(f"  ### {name}\n  …\n" for name in SECTIONS["figur"])
+    assert f"  # Figuren\n  ## Name der Figur\n  Aliasse: Zweitname\n{example}\n" in system
+
+
+def test_the_looks_are_only_the_outside(builder: ContextBuilder) -> None:
     """Step 7.16 (ADR-078): the frame asks for `### Aussehen` with only the visible."""
     system = builder.build_worldbuilder(WORLD, [("user", "Eine Figur")]).messages[0].content
-    assert "Figuren haben immer die Unterüberschrift `### Aussehen`" in system
-    assert "nur das Äußere" in system
+    assert (
+        f"Der Abschnitt `### {APPEARANCE}` enthält nur das Äußere (Gesicht, Haare, Statur, "
+        "Kleidung, Haltung, sichtbare Merkmale)"
+    ) in system

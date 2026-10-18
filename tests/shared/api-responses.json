@@ -260,7 +260,7 @@
         "name": "Mondvolk",
         "aliases": [],
         "status": null,
-        "body": "",
+        "body": "## Gesellschaft\n\n## Glaube und Bräuche\n\n## Geschichte\n",
         "images": []
       },
       {
@@ -270,7 +270,7 @@
         "name": "Runenklinge",
         "aliases": [],
         "status": null,
-        "body": "## Zweck\n\n## Verwendung\n\n## Auswirkung\n",
+        "body": "## Aussehen\n\n## Zweck\n\n## Verwendung\n\n## Auswirkung\n",
         "images": []
       },
       {
@@ -1007,7 +1007,7 @@
     "type": "Omit<Extract<WriteEvent, { type: \"start\" }>, \"type\">",
     "body": {
       "model": "x-ai/grok-4.7",
-      "estimated_tokens": 1477
+      "estimated_tokens": 1450
     }
   },
   "writeText": {
@@ -1067,7 +1067,7 @@
     "type": "Omit<Extract<WorldbuilderEvent, { type: \"start\" }>, \"type\">",
     "body": {
       "model": "x-ai/grok-4.6",
-      "estimated_tokens": 816,
+      "estimated_tokens": 994,
       "web_search": false
     }
   },
@@ -1093,7 +1093,7 @@
     "type": "Omit<Extract<WorldbuilderEvent, { type: \"start\" }>, \"type\">",
     "body": {
       "model": "x-ai/grok-4.6",
-      "estimated_tokens": 816,
+      "estimated_tokens": 994,
       "web_search": true
     }
   },

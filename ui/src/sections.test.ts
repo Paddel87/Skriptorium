@@ -9,8 +9,11 @@ import {
   readSection,
   removeSection,
   renameSection,
+  SECTIONS,
+  templateFor,
   type SectionMode,
 } from "./sections";
+import type { Category } from "./api/canon";
 
 interface Case {
   about?: string;
@@ -23,6 +26,7 @@ const shared = JSON.parse(
   readFileSync("tests/shared/sections.json", "utf8"),
 ) as {
   categories: Record<string, string[]>;
+  templates: { about: string; category: Category; expected: string }[];
   read: (Case & { heading: string })[];
   labelled: (Case & { label: string })[];
   part: (Case & { name: string })[];
@@ -68,6 +72,17 @@ describe("the rule shared with the server (step 9.1)", () => {
   it("names the looks as the server does", () => {
     expect(shared.categories.figur).toContain(APPEARANCE);
   });
+
+  it("lists the sections of each category as the server does (rule 003)", () => {
+    expect(SECTIONS).toEqual(shared.categories);
+  });
+
+  it.each(shared.templates)(
+    "makes the template: $about",
+    ({ category, expected }) => {
+      expect(templateFor(category)).toBe(expected);
+    },
+  );
 });
 
 describe("removing and renaming a section (step 8.4)", () => {

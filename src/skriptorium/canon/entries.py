@@ -61,8 +61,8 @@ class EntryStore:
         entry_id = slugify(clean_name)
         if self.find_entry_path(world_id, entry_id) is not None:
             raise AlreadyExists(f"{world_id}/{entry_id}")
-        # Items get Zweck, Verwendung, Auswirkung (FR-003); figures Aussehen and, for free text
-        # below the looks, Wesen und Geschichte (ADR-078, ADR-083); from the one list (ADR-091).
+        # A new entry without text gets the empty sections of its category, e.g. Zweck,
+        # Verwendung and Auswirkung for items (FR-003); from the one list (ADR-091, ADR-092).
         template = template_for(checked)
         if template and not body.strip():
             body = template
