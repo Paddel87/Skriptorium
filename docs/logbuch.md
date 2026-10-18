@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-18 – [ERLEDIGT] 8.9 Weltenbauer aus dem Manuskript
+
+- Eigentümer: „8.9 habe ich schon getestet, das hat … funktioniert“ (Spracheingabe; ein Wort unklar, „der Vorrat“ – vermutlich „hervorragend“, Aussage eindeutig positiv). Damit ist das letzte Akzeptanzkriterium erfüllt (echte Probe an einer Geschichte des Eigentümers, Bestätigung) → 8.9 `[ERLEDIGT]`, Phase 8: 12 von 13. Keine Einzelheiten zur Probe erfragt (Geschichtentitel bleiben ohnehin draußen); Auffälligkeiten aus der Probe kämen als V-Schritt mit Landeplatz 8.13.
+- `docs/requirements.md` FR-029 um 8.9 ergänzt; README und Fahrplan nachgezogen. Es bleibt nur 8.13 mit dem Phasenabschluss.
+
 ### 2026-10-18 04:45 – [SESSIONENDE] V.36 und V.37 vorgemerkt
 
 - **Dauer:** 2026-10-18 04:26 bis ca. 04:45 UTC.
