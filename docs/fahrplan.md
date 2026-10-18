@@ -8,7 +8,7 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-18 (V.36 angelegt); 2026-10-16 (V.35 angelegt); 2026-10-13 Phase 7 abgeschlossen (7.8 erledigt: Pflichtfrage ADR-080, Planung ADR-081); Phase 8 beginnt
+- **Stand vom:** 2026-10-18 (V.36 und V.37 angelegt); 2026-10-16 (V.35 angelegt); 2026-10-13 Phase 7 abgeschlossen (7.8 erledigt: Pflichtfrage ADR-080, Planung ADR-081); Phase 8 beginnt
 - **Laufende Phase:** Phase 8 „Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung“ (Phase 7 abgeschlossen 2026-10-13)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 8.9 Weltenbauer aus dem Manuskript – eingespielt, wartet auf echte Probe
@@ -59,7 +59,7 @@ Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details
 | ✅ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | erledigt 2026-10-13 (V.29–V.32 → 8.4–8.7) | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 8.13): V.20, V.21, V.23, V.24, V.33 (aus 7.15, 2026-10-13), V.34 (aus 8.12, 2026-10-13), V.35 (Befunde des Eigentümers, 2026-10-16), V.36 (Cache-Treffer, 2026-10-18). In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 8.13): V.20, V.21, V.23, V.24, V.33 (aus 7.15, 2026-10-13), V.34 (aus 8.12, 2026-10-13), V.35 (Befunde des Eigentümers, 2026-10-16), V.36 (Cache-Treffer, 2026-10-18), V.37 (Verbrauchsstatistik je Welt und Geschichte, 2026-10-18). In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -387,7 +387,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 8
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** V.20, V.21, V.23, V.24, V.33, V.34 (Umsetzung aus 8.12), V.35 (Befunde des Eigentümers, zuerst mit ihm durchgehen), V.36 (Cache-Treffer festhalten) (und neue V-Schritte) in eine neue Phase überführen oder per ADR verwerfen.
+- **Zu tun:** V.20, V.21, V.23, V.24, V.33, V.34 (Umsetzung aus 8.12), V.35 (Befunde des Eigentümers, zuerst mit ihm durchgehen), V.36 (Cache-Treffer festhalten), V.37 (Verbrauchsstatistik je Welt und Geschichte) (und neue V-Schritte) in eine neue Phase überführen oder per ADR verwerfen.
 - **Akzeptanzkriterien:** Jeder verschobene Schritt hat einen neuen Schritt mit ID oder `[VERWORFEN]` mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
@@ -1303,6 +1303,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, Logbuch-Eintrag, ggf. ADR
 - **Notizen:** Angelegt 2026-10-18 nach der Frage des Eigentümers, ob sich die Cache-Nutzung bei Anbietern prüfen lässt. Ergebnis der Recherche: Kein Anbieter meldet vor der Anfrage, ob der Zwischenspeicher gefüllt ist; sichtbar ist es erst in der Antwort. OpenRouter zeigt es zusätzlich auf der Activity-Seite und über `/api/v1/generation` (`cache_discount`); aufeinanderfolgende Anfragen an dasselbe Modell gehen an denselben ausführenden Anbieter, solange dort das Lesen aus dem Zwischenspeicher günstiger ist. xAI direkt: `usage.prompt_tokens_details.cached_tokens`, Treffer nur bei unverändertem Anfang der Anfrage. Bildanfragen (`ai_gateway/openrouter_images.py`) nicht betroffen.
+
+#### V.37: Verbrauchsstatistik je Welt und je Geschichte
+
+- **Status:** ⏸️ VERSCHOBEN → 8.13
+- **Landeplatz (nur VERSCHOBEN):** 8.13 (Eigentümer, 2026-10-18: „Beide vormerken, ein PR“; neuer Wunsch während Phase 8)
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
+- **Abhängigkeiten:** keine; mit V.36 zusammen denken (Cache-Token als weitere Kennzahl)
+- **Freigabepflichtig:** ja – Datenmodell (Kategorie 4): Die Verbrauchszeile bekommt Welt und Geschichte; das ist Option C aus ADR-023, die damals bewusst nicht gewählt wurde. Neuer Endpunkt für die Auswertung (Kategorie 5, additiv)
+- **Empfohlene Klasse:** Entscheidung – Datenmodelländerung gegen eine bestehende Entscheidung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** berührte Bestandteile (`api`, `ui`, Datenmodell, Observability Metriken) sind `[BELASTBAR]`; Vorlage zur Zuordnung freigegeben
+- **Anforderungen (ab Klasse M):** keine (Kostenziel Vision 4); neue Anforderung beim Durchgehen in 8.13 anlegen
+- **Zu tun:** Wunsch des Eigentümers: „ein umfangreiches Statistik-System“. (1) Jede Verbrauchszeile (`api/usage.py`, `system/verbrauch/JJJJ-MM.md`) trägt künftig Welt und, wo es eine gibt, Geschichte – nur Kennungen, kein Text (ADR-021 bleibt). (2) Übersicht **je Welt**: Anzahl der Anfragen, Token ein, Token aus, Token gesamt, Kosten gesamt, Anfragen ohne Kostenangabe, Aufteilung nach Art (Schreiben, Kurzfassung, Gesamtzusammenfassung, Weltenbauer, Bildbeschreibung, Bilderzeugung, Aussehen); dazu die Summe ihrer Geschichten. (3) Dieselbe Übersicht **je Geschichte** (Roman, Kurzgeschichte, Fragment). (4) **Modell-Verlauf** je Welt und je Geschichte: alle verwendeten Modelle mit Anzahl der Anfragen, Token und Kosten, sortierbar nach Häufigkeit oder nach Token-Menge (Eigentümer, 2026-10-18: „Menge“, nicht Tempo). (5) Ort in der Oberfläche als Mockup vorlegen.
+- **Akzeptanzkriterien:** Vorlage mit Mockup und ADR (Änderung zu ADR-023); Tests für Zuordnung, Summen, Sortierung und alte Zeilen ohne Welt; Summen je Welt plus Anfragen ohne Welt ergeben die Monatssumme; Eigentümer bestätigt.
+- **Betroffene Module:** api, ui; ggf. canon und manuscript (Namen der Welten und Geschichten)
+- **Reifegrad-Wirkung:** keine (Datenmodell bleibt `[BELASTBAR]` nach ADR)
+- **Artefakte:** Code, Tests, ADR, Mockup
+- **Notizen:** Angelegt 2026-10-18. **Alte Anfragen lassen sich nicht nachträglich zuordnen** – die Zeilen enthalten bewusst weder Welt noch Geschichte (ADR-023); rückblickend wären nur die Modelle übernommener Vorschläge je Kapitel aus dem Verlauf (ADR-056) zu holen, ohne Token und Kosten. Die Statistik beginnt also mit dem Umbau; die Monatssummen bleiben vollständig. Offen für die Vorlage: Zuordnung von Weltenbauer aus dem Manuskript (8.9: Welt und Geschichte?), Bildern an Kanon-Einträgen (Welt) und Titelbildern (Geschichte); Verhalten bei Gast-Figuren (Anfrage zählt zur Geschichte, nicht zur Heimatwelt der Figur); was beim Löschen einer Welt oder Geschichte mit ihren Zeilen geschieht (B5 in V.35). Tempo (Token je Sekunde) bewusst nicht gewünscht – dafür müsste die Dauer je Anfrage gespeichert werden.
 
 #### V.21: Veröffentlichung (öffentlicher Link zum Lesen)
 

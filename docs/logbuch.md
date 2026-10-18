@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-18 – [BEOBACHTUNG] V.37 angelegt: Verbrauchsstatistik je Welt und Geschichte
+
+- Wunsch des Eigentümers: Übersicht je Welt und je Geschichte mit Token ein/aus, Kosten und dem Verlauf der Modelle, sortiert nach Häufigkeit oder Token-Menge („Menge“, nicht Tempo – Auswahlfrage).
+- Befund: `api/usage.py` speichert je Anfrage Zeit, Art, Modell, Ergebnis, Token und Kosten, aber bewusst weder Welt noch Geschichte (ADR-023, Option C damals nicht gewählt). Folge: Datenmodelländerung mit Freigabe; alte Anfragen nicht zuzuordnen, die Statistik beginnt mit dem Umbau.
+- V.37 mit Landeplatz 8.13; V.36 und V.37 auf Wunsch des Eigentümers in einem Pull Request.
+
 ### 2026-10-18 – [BEOBACHTUNG] V.36 angelegt: Cache-Treffer festhalten
 
 - Recherche (Doku OpenRouter und xAI, 2026-10-18): Kein Anbieter meldet vor einer Anfrage, ob der Zwischenspeicher gefüllt ist; jede Antwort nennt die gelesenen Cache-Token (`usage.prompt_tokens_details.cached_tokens`), OpenRouter zusätzlich `cache_write_tokens`, `cache_discount` und die Activity-Seite.
