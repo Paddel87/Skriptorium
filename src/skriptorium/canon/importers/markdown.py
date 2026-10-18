@@ -5,8 +5,9 @@
 2. A group heading is a heading whose text names a category (e.g. "Figuren", "Orte"), or a
    heading without own text that has subheadings (e.g. "Sonstiges"). Exception (step 4.16): a
    heading whose subheadings are only fixed sections of an entry (Zweck, Verwendung and
-   Auswirkung, FR-003; Aussehen and Wesen und Geschichte, steps 7.16 and 9.1; the list of
-   ``canon.sections``, ADR-091) is an entry, even without own text.
+   Auswirkung, FR-003; Aussehen, Lage, Geschichte and the others of the list of
+   ``canon.sections``, ADR-091, ADR-092) is an entry, even without own text; where its category
+   is known (rule 6), one fixed section of that category among the subheadings is enough.
    Entries below a group heading that names a category get that category; a line
    ``Kategorie: …`` in the entry takes precedence. Entries without a recognised category get none.
 3. A line ``Aliasse: …`` or ``Auch genannt: …`` gives the aliases (separated by commas or
@@ -16,11 +17,17 @@
 5. A fixed section heading never starts an entry of its own: standing on the same level as the
    entry before it, it becomes a section of that entry (step 7.9; the world builder's model wrote
    them so; Aussehen since step 7.16, ADR-078; Wesen und Geschichte since step 9.1, ADR-091).
+6. The names of fixed sections count only in entries of the category they belong to (step 9.3,
+   ADR-092), so material with a heading of its own "Geschichte" or "Lage" is not mistaken for a
+   section: the category is that of the group heading or of the ``Kategorie: …`` line of the
+   entry. Where it is not known, all names count. Former names (Wesen und Geschichte, ADR-083)
+   are still read as sections of their category.
 
 Headings inside fenced code blocks are ignored.
 """
 
 import re
+from collections.abc import Iterable
 from dataclasses import dataclass, field
 from typing import Final
 
@@ -84,7 +91,7 @@ def parse_markdown(text: str) -> ParsedMaterial:
         stack[-1].children.append(section)
         stack.append(section)
 
-    _attach_item_sections(root)
+    _attach_item_sections(root, None)
     entries: list[ParsedEntry] = []
     not_taken_over: list[str] = []
     for child in root.children:
@@ -118,7 +125,9 @@ def _collect(
 ) -> None:
     own_text = _trimmed(section.lines)
     named = category_for(section.title)
-    if named is None and _has_only_item_sections(section):
+    if named is None and _holds_item_sections(
+        section, _declared_category(section.lines) or group_category
+    ):
         entries.append(_entry(section, group_category))
         return
     if named is not None or (not own_text and section.children):
@@ -130,28 +139,32 @@ def _collect(
     entries.append(_entry(section, group_category))
 
 
-def _attach_item_sections(section: _Section) -> None:
-    """Move item sections that stand beside an entry into that entry (rule 5)."""
+def _attach_item_sections(section: _Section, group_category: Category | None) -> None:
+    """Move item sections that stand beside an entry into that entry (rule 5).
+
+    ``group_category`` is the category of the group heading above ``section``, if known (rule 6).
+    """
     kept: list[_Section] = []
     for child in section.children:
         previous = kept[-1] if kept else None
-        if (
-            previous is not None
-            and _is_item_section(child)
-            and not _is_item_section(previous)
-            and category_for(previous.title) is None
-        ):
-            _shift(child, previous.level + 1 - child.level)
-            previous.children.append(child)
-        else:
-            kept.append(child)
+        if previous is not None and category_for(previous.title) is None:
+            category = _declared_category(previous.lines) or group_category
+            if _is_item_section(child, category) and not _is_item_section(previous, category):
+                _shift(child, previous.level + 1 - child.level)
+                previous.children.append(child)
+                continue
+        kept.append(child)
     section.children = kept
     for child in kept:
-        _attach_item_sections(child)
+        # Only a group holds entries; the subheadings of an entry with text are its own parts.
+        named = category_for(child.title)
+        if named is not None or (not _trimmed(child.lines) and child.children):
+            _attach_item_sections(child, named or group_category)
 
 
-def _is_item_section(section: _Section) -> bool:
-    return is_section_name(section.title.strip("*_: "))
+def _is_item_section(section: _Section, category: Category | None) -> bool:
+    """Whether the heading is a fixed section of ``category`` (``None``: of any category)."""
+    return is_section_name(section.title.strip("*_: "), category)
 
 
 def _shift(section: _Section, by: int) -> None:
@@ -160,26 +173,40 @@ def _shift(section: _Section, by: int) -> None:
         _shift(child, by)
 
 
-def _has_only_item_sections(section: _Section) -> bool:
-    """Whether all subheadings are fixed sections of an entry (FR-003, steps 4.16 and 9.1)."""
-    return bool(section.children) and all(_is_item_section(c) for c in section.children)
+def _holds_item_sections(section: _Section, category: Category | None) -> bool:
+    """Whether the subheadings make a heading without text an entry (FR-003, steps 4.16 and 9.3).
+
+    With a known ``category`` one fixed section of it is enough, so an entry keeps a section of
+    its own beside them (a world builder's figure with "Herkunft"); otherwise all subheadings have
+    to be fixed sections.
+    """
+    found = [_is_item_section(child, category) for child in section.children]
+    return bool(found) and (any(found) if category is not None else all(found))
+
+
+def _declared_category(lines: Iterable[str]) -> Category | None:
+    """The category of the last recognised ``Kategorie: …`` line, or ``None``."""
+    declared: Category | None = None
+    for line in lines:
+        match = _FIELD.match(line)
+        if match is not None and match.group(1).lower() == "kategorie":
+            declared = category_for(match.group(2)) or declared
+    return declared
 
 
 def _entry(section: _Section, group_category: Category | None) -> ParsedEntry:
+    lines = _flatten(section)
     aliases: list[str] = []
-    category = group_category
     body_lines: list[str] = []
-    for line in _flatten(section):
+    for line in lines:
         match = _FIELD.match(line)
         if match is None:
             body_lines.append(line)
-        elif match.group(1).lower() == "kategorie":
-            category = category_for(match.group(2)) or category
-        else:
+        elif match.group(1).lower() != "kategorie":
             aliases.extend(a.strip() for a in re.split(r"[,;]", match.group(2)) if a.strip())
     return ParsedEntry(
         name=section.title,
-        category=category,
+        category=_declared_category(lines) or group_category,
         aliases=tuple(aliases),
         body=_trimmed(body_lines),
     )

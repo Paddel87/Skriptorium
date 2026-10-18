@@ -147,13 +147,12 @@ def test_item_with_only_item_sections_is_one_entry() -> None:
 
 
 def test_heading_without_text_and_other_subheadings_stays_a_group() -> None:
-    material = (
-        "# Figuren\n\n## Hauptfiguren\n\n### Kael\nFährmann.\n\n### Zweck\nKein Gegenstand.\n"
-    )
+    material = "# Figuren\n\n## Hauptfiguren\n\n### Kael\nFährmann.\n\n### Aussehen\nHager.\n"
     entries = parse_markdown(material).entries
-    # "Hauptfiguren" stays a group; since step 7.9 "Zweck" is a section of the entry before.
+    # "Hauptfiguren" stays a group; since step 7.9 "Aussehen" is a section of the entry before
+    # (the example said "Zweck" before step 9.3: that is a section of items only, ADR-092).
     assert [e.name for e in entries] == ["Kael"]
-    assert entries[0].body == "Fährmann.\n\n#### Zweck\nKein Gegenstand.\n"
+    assert entries[0].body == "Fährmann.\n\n#### Aussehen\nHager.\n"
 
 
 def test_item_sections_beside_an_entry_belong_to_it() -> None:
@@ -219,3 +218,110 @@ def test_wesen_und_geschichte_beside_a_figure_belongs_to_it() -> None:
     material = parse_markdown("# Figuren\n## Kael\nWirt.\n## Wesen und Geschichte\nTreu.\n")
     assert [entry.name for entry in material.entries] == ["Kael"]
     assert material.entries[0].body == "Wirt.\n### Wesen und Geschichte\nTreu.\n"
+
+
+FIGURE_SECTIONS = (
+    "### Aussehen\nGroß.\n### Wesen\nTreu.\n### Fähigkeiten\nSteuert Kähne.\n"
+    "### Geschichte\nKam mit der Flut.\n### Beziehungen\nBruder von Mira.\n"
+)
+
+
+def test_a_figure_with_all_its_sections_and_no_text_of_its_own_is_one_entry() -> None:
+    """Step 9.3 (ADR-092): the five sections of a figure are sections, not entries."""
+    material = parse_markdown(f"# Figuren\n## Kael\n{FIGURE_SECTIONS}")
+    assert material.entries == (ParsedEntry("Kael", "figur", (), FIGURE_SECTIONS),)
+
+
+def test_a_place_and_a_culture_with_their_sections_are_one_entry_each() -> None:
+    place = (
+        "### Lage\nIm Norden.\n### Aussehen\nWeit.\n### Bewohner\nKeine.\n### Geschichte\nAlt.\n"
+    )
+    culture = "### Gesellschaft\nZünfte.\n### Glaube und Bräuche\nSalz.\n### Geschichte\nAlt.\n"
+    material = parse_markdown(f"# Orte\n## Salzsee\n{place}\n# Kultur\n## Salzeid\n{culture}")
+    assert material.entries == (
+        ParsedEntry("Salzsee", "ort", (), place),
+        ParsedEntry("Salzeid", "kultur", (), culture),
+    )
+
+
+def test_a_section_of_another_category_is_an_entry_of_its_own() -> None:
+    """Step 9.3 (ADR-092): "Lage" under a figure was no section before and is none now."""
+    material = parse_markdown("# Figuren\n## Kael\nFährmann.\n## Lage\nEin Ort.\n")
+    assert [(e.name, e.category, e.body) for e in material.entries] == [
+        ("Kael", "figur", "Fährmann.\n"),
+        ("Lage", "figur", "Ein Ort.\n"),
+    ]
+    # The same name is a section where it belongs: "Geschichte" of a figure, "Zweck" of an item.
+    material = parse_markdown("# Figuren\n## Kael\nFährmann.\n## Geschichte\nKam mit der Flut.\n")
+    assert [(e.name, e.body) for e in material.entries] == [
+        ("Kael", "Fährmann.\n### Geschichte\nKam mit der Flut.\n")
+    ]
+    material = parse_markdown("# Gegenstände\n## Klinge\nScharf.\n## Geschichte\nGeschmiedet.\n")
+    assert [(e.name, e.category) for e in material.entries] == [
+        ("Klinge", "gegenstand"),
+        ("Geschichte", "gegenstand"),
+    ]
+
+
+def test_a_section_of_a_foreign_category_does_not_hold_an_entry_together() -> None:
+    """With only "Zweck" below it, a figure is a group of one entry, as with any other heading."""
+    material = parse_markdown("# Figuren\n## Kael\n### Zweck\nKein Gegenstand.\n")
+    assert [(e.name, e.category) for e in material.entries] == [("Zweck", "figur")]
+
+
+def test_a_figure_without_text_keeps_a_section_of_its_own() -> None:
+    """One fixed section of its category is enough; "Herkunft" stays a part of it (ADR-092)."""
+    material = parse_markdown(
+        "# Figuren\n## Kael\n### Aussehen\nHager.\n### Herkunft\nVom Salzsee.\n"
+    )
+    assert [(e.name, e.category) for e in material.entries] == [("Kael", "figur")]
+    assert material.entries[0].body == "### Aussehen\nHager.\n### Herkunft\nVom Salzsee.\n"
+
+
+def test_without_a_known_category_a_mixed_heading_stays_a_group() -> None:
+    """Unknown category: only subheadings that are all fixed sections make an entry."""
+    material = parse_markdown("## Sonstiges\n### Geschichte\nAlt.\n### Der Brand\nGroß.\n")
+    assert [e.name for e in material.entries] == ["Geschichte", "Der Brand"]
+
+
+def test_the_category_line_decides_which_names_count() -> None:
+    declared = parse_markdown("## Salzsee\nKategorie: Ort\n\n## Lage\nIm Norden.\n")
+    assert [(e.name, e.category, e.body) for e in declared.entries] == [
+        ("Salzsee", "ort", "### Lage\nIm Norden.\n")
+    ]
+    # In a group of figures the line of the entry takes precedence, as for its category.
+    own = parse_markdown("# Figuren\n## Kael\nKategorie: Ort\n## Lage\nIm Norden.\n")
+    assert [(e.name, e.category) for e in own.entries] == [("Kael", "ort")]
+    elsewhere = parse_markdown("## Kael\nKategorie: Figur\n## Lage\nIm Norden.\n")
+    assert [(e.name, e.category) for e in elsewhere.entries] == [("Kael", "figur"), ("Lage", None)]
+
+
+def test_without_a_known_category_all_names_count() -> None:
+    """Unknown category: as before, every name of every category is a section."""
+    material = parse_markdown("## Kael\nFährmann.\n## Lage\nIm Norden.\n## Zweck\nKeiner.\n")
+    assert [e.name for e in material.entries] == ["Kael"]
+    assert material.entries[0].body == "Fährmann.\n### Lage\nIm Norden.\n### Zweck\nKeiner.\n"
+
+
+def test_a_group_heading_called_geschichte_stays_a_group() -> None:
+    """Step 9.3: material with a group "Geschichte" on the top level behaves as before."""
+    material = parse_markdown(
+        "# Geschichte\n\n## Gründung\nIm Jahr 12.\n\n## Krieg\nIm Jahr 395.\n"
+    )
+    assert [(e.name, e.category) for e in material.entries] == [("Gründung", None), ("Krieg", None)]
+    after_entries = parse_markdown(
+        "# Orte\n## Kerrow\nHafen.\n# Geschichte\n## Gründung\nIm Jahr 12.\n"
+    )
+    assert [(e.name, e.category) for e in after_entries.entries] == [
+        ("Kerrow", "ort"),
+        ("Gründung", None),
+    ]
+
+
+def test_the_former_name_is_read_in_a_figure_only() -> None:
+    inside = parse_markdown(
+        "# Figuren\n## Kael\n### Aussehen\nGroß.\n### Wesen und Geschichte\nTreu.\n"
+    )
+    assert [e.name for e in inside.entries] == ["Kael"]
+    elsewhere = parse_markdown("# Orte\n## Kerrow\nHafen.\n## Wesen und Geschichte\nTreu.\n")
+    assert [e.name for e in elsewhere.entries] == ["Kerrow", "Wesen und Geschichte"]
