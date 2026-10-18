@@ -62,7 +62,7 @@ jobs:
         run: uv run --frozen bandit -r src/ -c pyproject.toml
       - name: Dependency-Audit
         run: uv run --frozen pip-audit --skip-editable
-      - name: Tests mit Coverage (global 80 %, Zeilen und Zweige zusammen gemessen)
+      - name: Tests mit Coverage (global 99 %, Zeilen und Zweige zusammen gemessen)
         run: uv run --frozen pytest --cov --cov-report=term
       - name: Coverage kritischer Pfade (canon, context – 90 % Lines)
         run: |
@@ -93,7 +93,7 @@ jobs:
         run: npx tsc --noEmit
       - name: Dependency-Audit
         run: npm audit --audit-level=high
-      - name: Tests mit Coverage (80 % Lines, 70 % Branches)
+      - name: Tests mit Coverage (98 % Lines und Statements, 97 % Functions, 94 % Branches)
         run: npx vitest run --coverage
       - name: Build
         run: npx vite build
