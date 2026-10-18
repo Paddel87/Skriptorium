@@ -1,0 +1,14 @@
+{
+  "auftrag": "Entwirf als neue Kultur die Gemeinschaft der Fischer vom Nordkai in @Kerrow mit ihren Bräuchen; beachte die @Totensitte. Gib sie mir als Eintrag zur Übernahme.",
+  "verweise": [
+    "kerrow",
+    "totensitte"
+  ],
+  "modell": "x-ai/grok-4.6",
+  "geschaetzte_token": 3330,
+  "sekunden": 16.3,
+  "token_ein": 3044,
+  "token_aus": 756,
+  "kosten_usd": 0.01032768,
+  "finish_reason": "stop"
+}

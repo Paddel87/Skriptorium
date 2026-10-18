@@ -1,0 +1,14 @@
+{
+  "auftrag": "Entwirf das Zollhaus in der Oberstadt von @Kerrow als eigenen Ort; dort arbeitet @Tomas Rehl. Gib es mir als Eintrag zur Übernahme.",
+  "verweise": [
+    "kerrow",
+    "tomas-rehl"
+  ],
+  "modell": "x-ai/grok-4.6",
+  "geschaetzte_token": 3594,
+  "sekunden": 25.0,
+  "token_ein": 3291,
+  "token_aus": 1031,
+  "kosten_usd": 0.01245024,
+  "finish_reason": "stop"
+}

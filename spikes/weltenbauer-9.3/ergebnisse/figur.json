@@ -1,0 +1,13 @@
+{
+  "auftrag": "Entwirf eine Fischerin aus @Kerrow, die ihr Boot am Nordkai liegen hat. Gib sie mir als Eintrag zur Übernahme.",
+  "verweise": [
+    "kerrow"
+  ],
+  "modell": "x-ai/grok-4.6",
+  "geschaetzte_token": 3133,
+  "sekunden": 21.6,
+  "token_ein": 2883,
+  "token_aus": 872,
+  "kosten_usd": 0.01069794,
+  "finish_reason": "stop"
+}
