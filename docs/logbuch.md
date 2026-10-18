@@ -29,6 +29,16 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-18 04:45 – [SESSIONENDE] V.36 und V.37 vorgemerkt
+
+- **Dauer:** 2026-10-18 04:26 bis ca. 04:45 UTC.
+- **Bearbeitet:** kein Code. Frage des Eigentümers zur Cache-Nutzung bei KI-Anbietern beantwortet (Doku OpenRouter und xAI); daraus V.36 „Cache-Treffer der KI-Anbieter festhalten“. Neuer Wunsch „umfangreiches Statistik-System“ → V.37 „Verbrauchsstatistik je Welt und je Geschichte“ (Sortierung der Modelle nach Häufigkeit oder Token-Menge, nicht Tempo). Beide mit Landeplatz 8.13, gemeinsam in PR #169, nach grüner CI gemerged (`f9dec02`, auf Anweisung des Eigentümers).
+- **Wichtig für 8.13:** V.37 ändert ADR-023 (Option C: Welt und Geschichte je Verbrauchszeile) – Vorlage mit `ENTSCHEIDUNG ERFORDERLICH`; alte Anfragen sind nicht zuzuordnen.
+- **Nächster Schritt:** unverändert 8.9 (Probe des Eigentümers), 8.11 (Bestätigung), dann 8.13 mit V.35–V.37.
+- **Modell-Bilanz:** Entscheidungs-Klasse (`claude-opus-5-5`, eingestellt und bedient laut `get_session` 04:41); 2 Schritte oberhalb der Empfehlung (Anlegen von V.36 und V.37 ist Fahrplan-Pflege, Routine) – Hinweis nach V.36 gegeben; nichts abgegeben (Doku-Arbeit im geladenen Kontext, Abgabe hätte ihn neu laden müssen).
+- **Kontextgröße:** 251.573 Token (`get_session` 04:41) – **über der Grenze von 200.000**. Abweichung: Die Sitzungsabfrage meldete bis zum Anlegen von V.36 unverändert 121.144 Token; nach V.37 wurde nicht erneut geprüft. Ab dem Merge kein neuer Schritt mehr, nur dieser Abschluss.
+- **Sessionende-Prüfungen:** Fahrplan „Aktueller Stand“ und Übersicht nachgezogen, README „Nächste Schritte“ synchron; kein neuer ADR, Reifegrade unverändert, keine aktiven Blocker; V.36/V.37 als V-Schritte ohne Wirkung auf den Schrittplan von Phase 8 (13); Ablaufdaten-Register: kein Vorlauf ohne Schritt (nächste: D.1 ab 2026-11-05, mypy 2 am 2026-11-06 in D.5); Logbuch ca. 350 Zeilen, project-context 348 Zeilen – kein Trigger.
+
 ### 2026-10-18 – [BEOBACHTUNG] V.37 angelegt: Verbrauchsstatistik je Welt und Geschichte
 
 - Wunsch des Eigentümers: Übersicht je Welt und je Geschichte mit Token ein/aus, Kosten und dem Verlauf der Modelle, sortiert nach Häufigkeit oder Token-Menge („Menge“, nicht Tempo – Auswahlfrage).
