@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-19 (Proben zu 9.3 im dritten Versuch gelaufen – Regel-002 und Weltenbauer; zuvor zweiter Versuch ohne Schlüssel, Werkzeug für die Weltenbauer-Probe vorbereitet); 2026-10-18 (9.2 erledigt – vier End-to-End-Tests, Vertragstest Server ↔ Oberfläche, CI-Schrittnamen; PR #175; 9.1 erledigt – ADR-091, PR #173; D.19 angelegt; zuvor Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
+- **Stand vom:** 2026-10-19 (9.3 erledigt – feste Abschnitte je Art, ADR-092; Code PR #177, Proben PR #179, beide mit grüner CI zusammengeführt; Proben zu 9.3 im dritten Versuch gelaufen – Regel-002 und Weltenbauer; zuvor zweiter Versuch ohne Schlüssel, Werkzeug für die Weltenbauer-Probe vorbereitet); 2026-10-18 (9.2 erledigt – vier End-to-End-Tests, Vertragstest Server ↔ Oberfläche, CI-Schrittnamen; PR #175; 9.1 erledigt – ADR-091, PR #173; D.19 angelegt; zuvor Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
 - **Laufende Phase:** Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (Phase 8 abgeschlossen 2026-10-18)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 9.3 Gegliederte Einträge je Art (seit 2026-10-18) – entschieden (ADR-092) und lokal umgesetzt, PR #177 offen; Proben mit echter KI gelaufen (2026-10-19, Branch `spike/9.3-proben-ki`): Regel-002 mit Nachlauf (je 6 Ketten) ohne Wirkung und ohne Verschlechterung, der Befund bei den Widersprüchen aus drei Läufen war Streuung; Weltenbauer gliedert in allen vier Arten; vom Eigentümer bestätigt (2026-10-19); offen: Zusammenführen durch die lokale Session (Proben-Branch `spike/9.3-proben-ki`, PR #177), dann `[ERLEDIGT]`
-- **Nächster Schritt:** Proben-Branch `spike/9.3-proben-ki` übernehmen (lokale Session) und PR #177 zusammenführen, 9.3 auf `[ERLEDIGT]`; dann 9.4; D.19 ab dem ersten CI-Lauf nach dem 2026-10-19. Offen bei dir: Probe mit einer Gast-Figur (Eingangskriterium 9.13). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** keiner – 9.3 erledigt am 2026-10-19
+- **Nächster Schritt:** 9.4 Beziehungen mit Art und Rückverweis – zu Beginn Vorlage (Entscheidungs-Klasse), in einer neuen Session. D.19: Der Lauf zu PR #179 (2026-10-18 23:44 UTC) lief noch auf Ubuntu 24.04.5; geprüft wird mit dem ersten Lauf ab dem 2026-10-19 (UTC). Offen bei dir: Probe mit einer Gast-Figur (Eingangskriterium 9.13). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -24,15 +24,15 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-8.md`](archiv/fahrplan-phase-8.md).
 
-**Phase 9: 1 von 15 erledigt.**
+**Phase 9: 3 von 15 erledigt.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | ✅ | 9.1 | Gliederung im Server verlässlich – Abschnitte und Namen | erledigt 2026-10-18 (ADR-091) | – |
 | ✅ | 9.2 | End-to-End-Tests für die Abläufe der Phasen 6–8 | erledigt 2026-10-18 | – |
-| 🟠 | 9.3 | Gegliederte Einträge je Art (B2, G1/G2) | umgesetzt (ADR-092), Proben offen | KI: Proben in der Cloud; du: bestätigen |
-| ⚪ | 9.4 | Beziehungen mit Art und Rückverweis (B3) | offen | KI: nach 9.3 Vorlage |
-| ⚪ | 9.5 | Bilder vom Bedarf her; Karte aus den Orten (G4, B4) | offen | KI: nach 9.3 Vorlage |
+| ✅ | 9.3 | Gegliederte Einträge je Art (B2, G1/G2) | erledigt 2026-10-19 (ADR-092) | – |
+| ⚪ | 9.4 | Beziehungen mit Art und Rückverweis (B3) | offen | KI: Vorlage |
+| ⚪ | 9.5 | Bilder vom Bedarf her; Karte aus den Orten (G4, B4) | offen | KI: Vorlage |
 | ⚪ | 9.6 | Herkunft von Bildern (B1) | offen | KI: Vorlage |
 | ⚪ | 9.7 | Einstellungsseite – Modell je Aufgabe (G3, B6) | offen | KI: Mockup und Vorlage |
 | ⚪ | 9.8 | Bild zu Bild (B7) | offen | KI: nach 9.6 Vorlage |
@@ -225,7 +225,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 9.3: Gegliederte Einträge je Art (V.35 B2, G1/G2)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-18, Branch `feat/9.3-gegliederte-eintraege`) – entschieden mit Mockup (ADR-092) und lokal umgesetzt; Proben mit echter KI gelaufen (2026-10-19, mit Nachlauf; Notiz unten): keine Verschlechterung; vom Eigentümer bestätigt (2026-10-19, im Chat: „9.3 bestätigt“); offen: Zusammenführen und grüne CI (lokale Session)
+- **Status:** ✅ ERLEDIGT (2026-10-19) – entschieden mit Mockup (ADR-092); Code PR #177: CI grün (4 von 4 Pflicht-Checks), zusammengeführt (`5878215`); Proben mit echter KI (Regel-002 mit Nachlauf, Weltenbauer; Notiz unten) PR #179: CI grün (4 von 4), auf Anweisung des Eigentümers zusammengeführt (`273813d`); keine Verschlechterung; vom Eigentümer bestätigt (2026-10-19, im Chat: „9.3 bestätigt“)
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage und Mockup zu Beginn)
 - **Abhängigkeiten:** 9.1
 - **Freigabepflichtig:** ja – Gliederung je Kategorie ist Datenmodell-Konvention (Kategorie 4); Anfrage des Weltenbauers (Kategorie 1)
@@ -756,7 +756,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Betroffene Module:** keine (CI)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Logbuch-Eintrag, ggf. `.github/workflows/ci.yml` und ADR
-- **Notizen:** Angelegt 2026-10-18 nach `CLAUDE.md` Abschnitt 15 („Warnungsquellen ohne Schalter“, „Jede Abkündigung wird ein Fahrplan-Schritt mit Frist“). Frist 2026-11-02: Die Umstellung läuft schrittweise; spätestens dann soll ein Lauf auf dem neuen Abbild geprüft sein.
+- **Notizen:** Angelegt 2026-10-18 nach `CLAUDE.md` Abschnitt 15 („Warnungsquellen ohne Schalter“, „Jede Abkündigung wird ein Fahrplan-Schritt mit Frist“). Frist 2026-11-02: Die Umstellung läuft schrittweise; spätestens dann soll ein Lauf auf dem neuen Abbild geprüft sein. Beobachtung 2026-10-19: Der Lauf zu PR #179 (2026-10-18 23:44 UTC, also vor dem Beginn) lief in allen vier Jobs noch auf `ubuntu-24.04` (Ubuntu 24.04.5, Abbild 20261012.334.1), grün, ohne Plattform-Hinweis im Protokoll – der Schritt bleibt offen.
 
 #### M.1: Branch-Konvention festlegen
 

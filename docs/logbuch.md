@@ -29,6 +29,32 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-19 02:00 MESZ – [SESSIONENDE] 9.3 erledigt, 9.4 in neuer Session
+
+- **Dauer:** ca. 01:50 bis 02:00 MESZ (Fortsetzung der Cloud-Session des zweiten Versuchs mit der Übergabe aus dem dritten).
+- **Bearbeitet:** 9.3 abgeschlossen – Pflichtlektüre (Änderungen seit `1371264`), Titel und Beschreibung von PR #179 berichtigt („spike(9.3): Proben mit echter KI – Regel-002 und Weltenbauer“, Deutsch, „-2“ als Nachlauf erklärt), CI-Protokolle von #179 gelesen, #179 auf Anweisung zusammengeführt (`273813d`), 9.3 auf `[ERLEDIGT]` (Fahrplan-Schritt, Übersicht, „Aktueller Stand“), README „3 von 15“, FR-002 und FR-029 nachgetragen; Beobachtung bei D.19. Abschluss-PR von `scp/wizardly-ride-p7n55n`; der Eigentümer hat das Zusammenführen nach grüner CI vorab freigegeben.
+- **Stand:** Phase 9, 3 von 15; kein aktiver Schritt. Keine offenen STOPP-Situationen, keine aktiven Blocker.
+- **Offen:** Branches `feat/9.3-gegliederte-eintraege`, `scp/affectionate-pare-f0afee`, `spike/9.3-proben-ki`, `scp/wizardly-ride-p7n55n` – Löschen erfragt, keine Auswahl getroffen, daher nicht gelöscht. D.19 offen (siehe dort).
+- **Nächster Schritt:** 9.4 Beziehungen mit Art und Rückverweis in einer neuen Session – zu Beginn Vorlage (Entscheidungs-Klasse); dabei D.19 am ersten CI-Lauf ab dem 2026-10-19 (UTC) prüfen.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, eingestellt und bedient laut `get_session` um 01:49 und 01:55). 9.3 empfiehlt Entscheidung – 0 Schritte oberhalb der Empfehlung; die Abschlussarbeit selbst (Status, Logbuch, README) ist Routine-Arbeit, wegen kleinen Umfangs und geladenen Kontexts nicht abgegeben.
+- **Kontextgröße:** mindestens 348.610 Token (`get_session`, Wert seit 01:49 unverändert gemeldet) – über der Grenze von 200.000; deshalb kein neuer Schritt in dieser Session (Abschnitt 0, „Sessiongröße“).
+- **Sessionende-Prüfungen:** README synchron (3 von 15, 9.3 ✅, 0 Blocker, „Nächste Schritte“ ab 9.4). Drift: Übersicht im Fahrplan nannte „1 von 15“ (seit 9.2 veraltet) – auf „3 von 15“ berichtigt; ADR-092 → 9.3, 9.4, 9.5 vorhanden; Modulnamen unverändert; FR-002 und FR-029 erledigt mit Verweis auf 9.3; keine `[BLOCKIERT]`-Schritte, keine aktiven Blocker; Reaktiv-Quote 0 / 10 (ADR-083–092, keine neuen ADRs); Phase 9 mit 15 Schritten (Schwelle 30). Ablaufdaten-Register: Ubuntu 26 ab 2026-10-19 hat seinen Schritt (D.19); sonst kein Vorlauf erreicht (D.1 ab 2026-11-05, mypy 2 am 2026-11-06). Archiv: Logbuch ca. 445 Zeilen, project-context 349 Zeilen – kein Trigger. Keine Phasengrenze. Quick-Start nicht berührt.
+
+### 2026-10-19 01:58 MESZ – [ERLEDIGT] 9.3 Gegliederte Einträge je Art
+
+- **Definition of Done:** Code und Tests in PR #177 (CI grün, 4 von 4 Pflicht-Checks; zusammengeführt `5878215`; lokal pytest 931 mit 99,85 %, vitest 485, Playwright 15/15); Proben mit echter KI in PR #179 (CI grün, 4 von 4: pytest 931 / 99,85 %, vitest 485 / 98,67 – 95,24 – 97,88 – 98,86 %, Playwright 15/15, Pre-Commit alle Hooks; keine Warnung über dem Bestand, kein Hinweis der Plattform, keine Bündelgrößen-Warnung; auf Anweisung zusammengeführt `273813d`); CHANGELOG-Eintrag vorhanden; Bestätigung des Eigentümers 2026-10-19.
+- **Ergebnisse der Proben:** Regel-002 über je 6 Ketten ohne Wirkung und ohne Verschlechterung; Weltenbauer gliedert in allen vier Arten, Import ganz, zwei knappe Kanon-Abweichungen ohne Bezug zur Gliederung; Kosten 5,88 $ (Einzelheiten in den READMEs unter `spikes/regel-002/` und `spikes/weltenbauer-9.3/`).
+- **Nachgezogen:** Fahrplan (Schritt, Übersicht, „Aktueller Stand“), README „3 von 15“, FR-002 und FR-029 in `docs/requirements.md`. Reifegrad-Wirkung keine.
+- **D.19 (Beobachtung):** alle vier Jobs zu #179 noch auf `ubuntu-24.04` (24.04.5, Abbild 20261012.334.1) – der Lauf war um 23:44 UTC am 2026-10-18, vor dem Beginn der Umstellung.
+
+### 2026-10-19 01:50 MESZ – [SESSIONSTART] Abschluss von 9.3 nach den Proben
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, eingestellt und bedient laut `get_session`), Entscheidungs-Klasse. 9.3 empfiehlt Entscheidung – kein Schritt oberhalb der Empfehlung.
+- **Umgebung:** dieselbe Cloud-Session wie der zweite Versuch (Umgebung „Flight_Research“, Branch des Werkzeugs `scp/wizardly-ride-p7n55n`), fortgesetzt mit der Übergabe aus der Session „Proben 9.3 (3. Versuch)“. Branch per Fast-Forward auf `spike/9.3-proben-ki` (`a1d5b6b`) gebracht, keine Historie umgeschrieben.
+- **Wiedereinstieg:** PR #177 in `main` zusammengeführt (`5878215`); PR #179 (`spike/9.3-proben-ki` → `main`, nur `spikes/` und Doku) offen, alle vier Pflicht-Checks grün (23:44–23:45 UTC); 9.3 vom Eigentümer bestätigt. PR #178 auf Anweisung geschlossen (Commits in #179 enthalten). `project-context`, `architecture`, `decisions`, `blockers` unverändert gegenüber `1371264`. Keine aktiven Blocker, keine offenen STOPP-Situationen.
+- **Kontextgröße:** 348.610 Token (`get_session`) – über der Grenze von 200.000. Nach `CLAUDE.md` Abschnitt 0 („Sessiongröße“) beginnt diese Session keinen neuen Schritt: Sie schließt nur den laufenden Schritt 9.3 ab (PR #179, `[ERLEDIGT]`, Branches nach Rückfrage); D.19 hier nur als Beobachtung aus der CI von #179; 9.4 in einer neuen Session, außer der Eigentümer sagt ausdrücklich „weiter hier“.
+- **Berichtigung der Zeiten des zweiten Versuchs:** Laut `get_session` begann diese Session um 00:06 MESZ, die Session des dritten Versuchs um 00:19 MESZ. Die Uhrzeiten 00:12 und 00:30 in den Einträgen des zweiten Versuchs waren geschätzt und zu spät; der zweite Versuch endete gegen 00:18 MESZ. Das erklärt die Abweichung, die der dritte Versuch in seinem `[SESSIONSTART]` vermerkt hat.
+
 ### 2026-10-19 – [BEOBACHTUNG] Eigentümer bestätigt 9.3
 
 - Im Chat: „9.3 bestätigt“ – nach Weltenbauer-Probe und Probe nach Regel-002 mit Nachlauf (keine Verschlechterung). Akzeptanzkriterium „Eigentümer bestätigt“ erfüllt. 9.3 bleibt `[IN ARBEIT]`, bis die lokale Session `spike/9.3-proben-ki` übernommen, PR #177 mit grüner CI zusammengeführt und den Schritt auf `[ERLEDIGT]` gesetzt hat.
