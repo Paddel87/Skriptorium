@@ -29,6 +29,19 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-18 – [BEOBACHTUNG] V.36 angelegt: Cache-Treffer festhalten
+
+- Recherche (Doku OpenRouter und xAI, 2026-10-18): Kein Anbieter meldet vor einer Anfrage, ob der Zwischenspeicher gefüllt ist; jede Antwort nennt die gelesenen Cache-Token (`usage.prompt_tokens_details.cached_tokens`), OpenRouter zusätzlich `cache_write_tokens`, `cache_discount` und die Activity-Seite.
+- Befund im Code: `ai_gateway/openrouter.py` fordert die Verbrauchsdaten schon an, wertet aber nur `prompt_tokens`, `completion_tokens` und `cost` aus – die Cache-Zahl kommt an und geht verloren. Deshalb blieb der Nebenbefund in `docs/research/modell-eignungstest.md` ungemessen.
+- V.36 mit Landeplatz 8.13 (Regel der Phase 8 für neue Wünsche); Freigabepflicht nur, falls Verbrauchsdateien oder `/api/usage` erweitert werden.
+
+### 2026-10-18 04:40 – [SESSIONSTART] Cache-Treffer der KI-Anbieter
+
+- **Modell:** eingestellt und bedient `claude-opus-5-5` (Sitzungsabfrage `get_session`), Entscheidungs-Klasse; Aufwand „high“.
+- **Umgebung:** Cloud-Session (Linux), kein SSH zum VPS (ADR-025); Stand `main` `ea7543b`, gleich `origin/main` (vor der Mindest-Lektüre per `git fetch` geprüft – Lehre vom 2026-10-16).
+- **Auftrag:** Frage des Eigentümers, ob sich bei Anbietern wie OpenRouter oder Grok prüfen lässt, ob der Zwischenspeicher (Cache) genutzt wird; danach „leg den Schritt an“.
+- **Kontextgröße:** über die Sitzungsabfrage feststellbar (`context_usage.used_tokens`).
+
 ### 2026-10-16 – [SESSIONENDE] Befunde gesammelt (V.35)
 
 - **Dauer:** 2026-10-15 21:51 UTC bis 2026-10-16 (Ende nicht genau feststellbar).
