@@ -1,0 +1,18 @@
+{
+  "salzmark": {
+    "K1": "vorher-9.3-2/lauf-2",
+    "K2": "vorher-9.3-2/lauf-3",
+    "K3": "nachher-9.3-2/lauf-3",
+    "K4": "nachher-9.3-2/lauf-1",
+    "K5": "vorher-9.3-2/lauf-1",
+    "K6": "nachher-9.3-2/lauf-2"
+  },
+  "glimmergrund": {
+    "K1": "nachher-9.3-2/lauf-2",
+    "K2": "vorher-9.3-2/lauf-3",
+    "K3": "nachher-9.3-2/lauf-1",
+    "K4": "nachher-9.3-2/lauf-3",
+    "K5": "vorher-9.3-2/lauf-2",
+    "K6": "vorher-9.3-2/lauf-1"
+  }
+}

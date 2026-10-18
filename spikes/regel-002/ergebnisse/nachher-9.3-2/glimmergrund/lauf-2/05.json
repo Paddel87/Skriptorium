@@ -1,0 +1,12 @@
+{
+  "geschichte": "glimmergrund",
+  "schritt": 5,
+  "anweisung": "(leer: Weiter)",
+  "modell": "x-ai/grok-4.6",
+  "woerter": 129,
+  "sekunden": 20.7,
+  "token_ein": 24265,
+  "token_aus": 944,
+  "kosten_usd": 0.02913174,
+  "finish_reason": "stop"
+}
