@@ -26,7 +26,7 @@ PRUEFEN=1 uv run python spikes/weltenbauer-9.3/probe.py
 
 - Jede Anfrage läuft über `prepare_worldbuilder` wie `POST /api/worlds/{id}/worldbuilder`, Modell `x-ai/grok-4.6` (Voreinstellung, `MODELL` ändert es), ohne Websuche, ein Gesprächszug.
 - Die Aufträge nennen vorhandene Einträge mit `@` (`@Kerrow`, `@Tomas Rehl`, `@Totensitte`), wie der Autor es in der Oberfläche tut; die Verweise werden nach der gemeinsamen Namensregel (`canon/names.py`) aufgelöst. Ohne `@` sieht der Weltenbauer von den übrigen Einträgen nur die Namen – ein Widerspruch zum Kanon wäre dann kaum prüfbar. So geht außerdem die neue Gliederung der Verweise in der Anfrage (`render`, ADR-092) mit.
-- Ergebnisse unter `ergebnisse/`: `<auftrag>.md` (Rohantwort), `<auftrag>.json` (Verweise, Token, Kosten, `finish_reason`, Dauer), `<auftrag>-anfrage.txt` (Systemteil der Anfrage), `pruefung.md` (Tabelle und Einzelheiten).
+- Ergebnisse unter `ergebnisse/`: `<auftrag>.txt` (Rohantwort; `.txt`, weil markdownlint jede `.md`-Datei prüft), `<auftrag>.json` (Verweise, Token, Kosten, `finish_reason`, Dauer), `<auftrag>-anfrage.txt` (Systemteil der Anfrage), `pruefung.md` (Tabelle und Einzelheiten).
 - Schlüssel aus `OPENROUTER_API_KEY`, nur im scharfen Lauf.
 
 ### Vorbereitung und Selbsttest (2026-10-19, ohne KI)

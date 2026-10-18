@@ -279,7 +279,7 @@ def bericht(ausgabe: Path) -> str:
     ]
     details: list[str] = []
     for kurz, art, auftrag in AUFTRAEGE:
-        pfad = ausgabe / f"{kurz}.md"
+        pfad = ausgabe / f"{kurz}.txt"
         if not pfad.exists():
             kopf.append(f"| {kurz} | keine Antwort gespeichert | | | | | | | |")
             continue
@@ -361,7 +361,7 @@ async def lauf(
                 except GatewayError as error:
                     # Wie „Neu“ nach einem Fehler in der Oberfläche.
                     print(kurz, "Versuch", versuch + 1, "Fehler:", error, flush=True)
-            (ausgabe / f"{kurz}.md").write_text(antwort, encoding="utf-8")
+            (ausgabe / f"{kurz}.txt").write_text(antwort, encoding="utf-8")
             meta = {
                 "auftrag": auftrag,
                 "verweise": list(verweise(canon, world, auftrag)),

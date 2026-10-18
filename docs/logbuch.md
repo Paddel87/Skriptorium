@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-19 00:20 MESZ – [SESSIONSTART] Proben zu 9.3 (dritter Versuch): Regel-002 und Weltenbauer
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, eingestellt und bedient laut `get_session`), Entscheidungs-Klasse. 9.3 empfiehlt Entscheidung – kein Schritt oberhalb der Empfehlung.
+- **Umgebung:** Cloud-Session in der Umgebung „OPENROUTER_API_KEY“; `OPENROUTER_API_KEY` **gesetzt** (nur Vorhandensein geprüft). Ausgangs-Commit `40a02eb` (Branch `scp/wizardly-ride-p7n55n`); `git diff --stat 1371264 HEAD -- src ui tests` leer, `canon/sections.py` enthält „Fähigkeiten“. Das Werkzeug hat der Session `scp/wizardly-ride-p7n55n` zugewiesen, auf den nicht gepusht werden soll – deshalb eigener Branch `spike/9.3-proben-ki` (Konvention aus `docs/project-context.md` Abschnitt 10).
+- **Zeit:** Die Uhr der Session zeigt 00:20 MESZ; die Einträge der Vorsession tragen 00:07–00:30 MESZ desselben Tages – deren Zeitangaben stimmen offenbar nicht mit dieser Uhr überein (Reihenfolge der Einträge gilt).
+- **Wiedereinstieg:** Phase 9, 2 von 15; 9.3 🟠 umgesetzt (PR #177), offen: Probe nach Regel-002 und Weltenbauer-Probe in der Salzmark, beide vom Eigentümer freigegeben. Keine aktiven Blocker, keine offenen STOPP-Situationen.
+- **Kontextgröße:** `get_session` meldet `used_tokens` 0 – nicht verlässlich feststellbar, Regel „Sessiongröße“ entfällt.
+
 ### 2026-10-19 00:30 MESZ – [SESSIONENDE] Proben zu 9.3 nicht gelaufen (kein Schlüssel), Weltenbauer-Probe vorbereitet
 
 - **Dauer:** ca. 00:07 bis 00:30 MESZ (Cloud-Session).
