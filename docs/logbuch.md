@@ -29,6 +29,85 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-19 – [BEOBACHTUNG] Eigentümer bestätigt 9.3
+
+- Im Chat: „9.3 bestätigt“ – nach Weltenbauer-Probe und Probe nach Regel-002 mit Nachlauf (keine Verschlechterung). Akzeptanzkriterium „Eigentümer bestätigt“ erfüllt. 9.3 bleibt `[IN ARBEIT]`, bis die lokale Session `spike/9.3-proben-ki` übernommen, PR #177 mit grüner CI zusammengeführt und den Schritt auf `[ERLEDIGT]` gesetzt hat.
+
+### 2026-10-19 01:15 MESZ – [SESSIONENDE] Nachlauf zu 9.3: Befund war Streuung
+
+- **Dauer:** Fortsetzung nach dem `[SESSIONENDE]` von 00:45 MESZ, ca. 00:50 bis 01:15 MESZ (nach Neustart des Arbeitsprozesses; Schlüssel, Branch und Worktree erneut geprüft).
+- **Bearbeitet:** 9.3 – Eigentümer wählte per Auswahlfrage „3 weitere Läufe je Seite (Empfohlen)“; Nachlauf (`76d0ea2`), zweite verblindete Bewertung, Auswertung über je 6 Ketten; Spike-README, Fahrplan, README nachgezogen.
+- **Stand:** Phase 9, 2 von 15; 9.3 🟠 – beide Proben abgeschlossen, keine Verschlechterung; offen nur die Bestätigung des Eigentümers, danach Zusammenführen durch die lokale Session (Branch `spike/9.3-proben-ki`, PR #177). Keine aktiven Blocker, keine offenen STOPP-Situationen.
+- **Kosten bei OpenRouter (Session gesamt):** 2,98 $ + 2,91 $ (Nachlauf: 1,472 $ + 1,433 $) = 5,88 $.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5), 0 Schritte oberhalb der Empfehlung; abgegeben an Unteragenten der Routine-Klasse (Sonnet): vier verblindete Bewertungen (je ca. 2–3 min), Funde nachgeprüft.
+- **Kontextgröße:** nicht feststellbar; Regel entfiel.
+- **Sessionende-Prüfungen:** README-Zeile 9.3 nachgezogen; sonst wie im Eintrag 00:45 (keine neuen ADRs, Schritt-IDs, Module, Blocker; kein Vorlauf im Ablaufdaten-Register erreicht; Logbuch unter 420 Zeilen).
+
+### 2026-10-19 01:10 MESZ – [BEOBACHTUNG] Nachlauf nach Regel-002 zu 9.3: keine Wirkung über je 6 Ketten
+
+- **Aufbau:** wie der erste Lauf, je 3 weitere Ketten (`vorher-9.3-2`, `nachher-9.3-2`), 84 Vorschläge, alle `stop`.
+- **Ergebnis über je 6 Ketten:** keine Kennzahl nachher in beiden Geschichten außerhalb der Vorher-Spannweite – auch nicht die von Hand bewerteten Widersprüche: Salzmark vorher 0 / nachher 1, Glimmergrund vorher 1 (`vorher-9.3-2/lauf-3`: „Dreizehn“ statt zwölf geborgener Toter) / nachher 1. Nur in einer Geschichte außerhalb: Salzmark ein echtes Warte-Ende (`nachher-9.3-2/lauf-2`, Schritt 6) und der Widerspruch, Glimmergrund 6er doppelt 0,50 (innerhalb 5.24). Der Befund aus drei Läufen war Streuung – wie bei 8.11.
+
+### 2026-10-19 00:45 MESZ – [SESSIONENDE] Proben zu 9.3 gelaufen und ausgewertet
+
+- **Dauer:** ca. 00:20 bis 00:45 MESZ (Cloud-Session, dritter Versuch).
+- **Bearbeitet:** 9.3 – Schlüssel geprüft (gesetzt), Ausgangs-Commit `40a02eb`; Weltenbauer-Probe (4 Aufträge) und Probe nach Regel-002 (12 Ketten, vorher im Worktree `2ac204b`) gelaufen, ausgewertet, verblindete Widerspruchs-Bewertung durch zwei getrennte Instanzen; README beider Spikes, Fahrplan-Notiz bei 9.3, „Aktueller Stand“, README-Zeile 9.3.
+- **Stand:** Phase 9, 2 von 15; 9.3 🟠 – Proben gelaufen; offen: Entscheidung des Eigentümers zum Befund der Regel-002-Probe (Widersprüche nachher 1 von 3 Ketten je Geschichte, vorher 0) und seine Bestätigung; Zusammenführen durch die lokale Session. Keine aktiven Blocker, keine offenen STOPP-Situationen.
+- **Nächster Schritt:** Eigentümer entscheidet über weitere Läufe; lokale Session übernimmt `spike/9.3-proben-ki`, dann PR #177 nach Bestätigung; danach 9.4.
+- **Kosten bei OpenRouter:** 0,045 $ (Weltenbauer) + 1,500 $ (vorher) + 1,438 $ (nachher) = 2,98 $.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5 laut `get_session`, 00:20). 9.3 empfiehlt Entscheidung – 0 Schritte oberhalb der Empfehlung. Abgegeben an zwei Unteragenten der Routine-Klasse (Sonnet): verblindete Widerspruchs-Bewertung je Geschichte (je ca. 2–3 min); Ergebnisse an Text und Kanon nachgeprüft.
+- **Kontextgröße:** nicht feststellbar (`used_tokens` 0); Regel entfiel.
+- **Sessionende-Prüfungen:** README: Zeile 9.3 nachgezogen, Fortschritt 2 von 15 und 0 Blocker unverändert. Drift: keine neuen ADRs, Schritt-IDs oder Module; Reaktiv-Quote unverändert; keine `[BLOCKIERT]`-Schritte; Phase 9 mit 15 Schritten. Ablaufdaten-Register: kein Vorlauf erreicht, keine CI gelaufen. Archiv: Logbuch unter 400 Zeilen. Quick-Start nicht berührt. Worktree `../vorher` liegt außerhalb des Klons und verfällt mit dem Container.
+
+### 2026-10-19 00:40 MESZ – [BEOBACHTUNG] Probe nach Regel-002 zu 9.3: gezählt keine Wirkung, ein Befund bei den Widersprüchen
+
+- **Aufbau:** grok-4.6, mittel, je 3 Ketten an Salzmark und Glimmergrund; vorher `2ac204b` (Worktree, eigener Code geprüft: `skriptorium.__file__` im Worktree), nachher `40a02eb`; 84 Vorschläge, alle `stop`, keine Fehler; Ergebnisse `spikes/regel-002/ergebnisse/vorher-9.3/`, `nachher-9.3/`, Bewertung `9.3-bewertung/`.
+- **Gezählt:** einzig „wörtlich %“ in beiden Geschichten außerhalb der Vorher-Spannweite, gegenläufig (Salzmark 0,40 gegen 0,44–0,76; Glimmergrund 0,71 gegen 0,00–0,39) – keine Wirkung. Glimmergrund 0,71 ist der höchste bisher gemessene Mittelwert dieser Geschichte.
+- **Widersprüche (verblindet, Sonnet):** nachher je ein eindeutiger (Salzmark `lauf-2` Schritt 5: „Heddas Kind“ am Abend; Glimmergrund `lauf-3` Schritt 6: „mein Teuerster“ zu Wendt), vorher keiner; 12 Kanon-Proben in Glimmergrund überall ohne Widerspruch. Nach dem Wortlaut von Regel-002 ein Befund; Rate wie grok-4.6 in 5.26; beide Einzelheiten stehen in beiden Ständen im Wortlaut in der Anfrage (ohne KI nachgebaut).
+
+### 2026-10-19 00:30 MESZ – [GELÖST] markdownlint prüft Rohantworten unter `spikes/`
+
+- **Problem:** Der Commit des Logbuchs scheiterte am Pre-Commit: `markdownlint-cli2` meldete 8 Fehler in `spikes/weltenbauer-9.3/ergebnisse/*.md` (MD041, MD047). Der erste Commit mit den Antworten (`3970465`) war durchgegangen, weil Pre-Commit `spikes/` per `exclude` auslässt – markdownlint selbst sucht aber mit `**/*.md` im ganzen Repo, sobald irgendeine `.md`-Datei geändert ist.
+- **Lösung:** Rohantworten als `.txt` abgelegt (wie die Texte unter `spikes/regel-002/ergebnisse/`), `probe.py` und README nachgezogen (`8f64fc9`); `PRUEFEN=1` liefert dieselbe Tabelle.
+
+### 2026-10-19 00:27 MESZ – [BEOBACHTUNG] Weltenbauer-Probe zu 9.3 mit echter KI
+
+- **Ergebnis:** vier Aufträge (Figur, Ort, Gegenstand, Kultur), grok-4.6, alle `stop`, 0,045 $. (a), (b), (d) maschinell in allen vier erfüllt: Abschnitte der Art vollständig in Reihenfolge auf Ebene 3, kein Füllwerk, Import ganz, keine Ebenen-Korrektur nötig.
+- **(c) von Hand:** Ort erkennt die Falle im Auftrag (Rehl ist ehemaliger Zöllner); knapp: Haken für den Siegelring im Zollhaus (Drach trägt ihn stets – Text des Rings nicht in der Anfrage); Figur „meidet den Südhafen“, obwohl der Nordkai dazugehört. Gegenstand und Kultur ohne Widerspruch. Einzelheiten `spikes/weltenbauer-9.3/README.md`.
+
+### 2026-10-19 00:20 MESZ – [SESSIONSTART] Proben zu 9.3 (dritter Versuch): Regel-002 und Weltenbauer
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, eingestellt und bedient laut `get_session`), Entscheidungs-Klasse. 9.3 empfiehlt Entscheidung – kein Schritt oberhalb der Empfehlung.
+- **Umgebung:** Cloud-Session in der Umgebung „OPENROUTER_API_KEY“; `OPENROUTER_API_KEY` **gesetzt** (nur Vorhandensein geprüft). Ausgangs-Commit `40a02eb` (Branch `scp/wizardly-ride-p7n55n`); `git diff --stat 1371264 HEAD -- src ui tests` leer, `canon/sections.py` enthält „Fähigkeiten“. Das Werkzeug hat der Session `scp/wizardly-ride-p7n55n` zugewiesen, auf den nicht gepusht werden soll – deshalb eigener Branch `spike/9.3-proben-ki` (Konvention aus `docs/project-context.md` Abschnitt 10).
+- **Zeit:** Die Uhr der Session zeigt 00:20 MESZ; die Einträge der Vorsession tragen 00:07–00:30 MESZ desselben Tages – deren Zeitangaben stimmen offenbar nicht mit dieser Uhr überein (Reihenfolge der Einträge gilt).
+- **Wiedereinstieg:** Phase 9, 2 von 15; 9.3 🟠 umgesetzt (PR #177), offen: Probe nach Regel-002 und Weltenbauer-Probe in der Salzmark, beide vom Eigentümer freigegeben. Keine aktiven Blocker, keine offenen STOPP-Situationen.
+- **Kontextgröße:** `get_session` meldet `used_tokens` 0 – nicht verlässlich feststellbar, Regel „Sessiongröße“ entfällt.
+
+### 2026-10-19 00:30 MESZ – [SESSIONENDE] Proben zu 9.3 nicht gelaufen (kein Schlüssel), Weltenbauer-Probe vorbereitet
+
+- **Dauer:** ca. 00:07 bis 00:30 MESZ (Cloud-Session).
+- **Bearbeitet:** 9.3 – Stand geprüft (Start auf `1371264`, „Fähigkeiten“ in `canon/sections.py`), Schlüssel fehlt (Eintrag 00:12). Ohne KI vorbereitet: `spikes/weltenbauer-9.3/probe.py` und README (vier Aufträge mit `@`-Verweisen, maschinelle Prüfung (a), (b), (d), Trockenlauf, Selbsttest der Prüflogik mit sechs konstruierten Antworten im Scratchpad); Vorher-Worktree auf `2ac204b` geprüft (eigener Code, Anfrage ändert sich wie erwartet: Salzmark 38 → 9 Überschriften der Ebene 1, Glimmergrund 36 → 13). Notiz bei 9.3 und „Aktueller Stand“ im Fahrplan.
+- **Stand:** Phase 9, 2 von 15; 9.3 🟠 umgesetzt, PR #177 offen; beide Proben weiterhin offen, Bestätigung des Eigentümers offen. Keine offenen STOPP-Situationen, keine aktiven Blocker (fehlender Schlüssel ist eine Frage der gewählten Umgebung, kein Blocker nach Abschnitt 10).
+- **Nächster Schritt:** Cloud-Session in der Umgebung „OPENROUTER_API_KEY“ vom Branch `scp/wizardly-ride-p7n55n`; zuerst Schlüssel prüfen, dann Regel-002 (vorher `2ac204b` im Worktree, nachher Stand des Branches – `src/` gleich `1371264`) und `uv run python spikes/weltenbauer-9.3/probe.py`, auswerten (c von Hand), festhalten.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, eingestellt und bedient laut `get_session` um 00:07 und 00:29). 9.3 empfiehlt Entscheidung – 0 Schritte oberhalb der Empfehlung; nichts an Unteragenten abgegeben (Werkzeug klein, Kontext schon geladen).
+- **Kontextgröße:** nicht feststellbar – `get_session` meldet `used_tokens` 0; Regel „Sessiongröße“ entfiel (vermerkt im `[SESSIONSTART]`).
+- **Sessionende-Prüfungen:** README synchron (2 von 15, 9.3 „Proben mit echter KI offen“, 0 Blocker) – keine Änderung. Drift: keine neuen ADRs, Schritt-IDs oder Module; Reaktiv-Quote unverändert 0 / 10; keine `[BLOCKIERT]`-Schritte; Phase 9 mit 15 Schritten. Ablaufdaten-Register: kein Vorlauf erreicht (D.19 greift ab dem ersten CI-Lauf nach dem 2026-10-19 – in dieser Session lief keine CI). Archiv: Logbuch ca. 370 Zeilen, kein Trigger. Quick-Start nicht berührt.
+
+### 2026-10-19 00:12 MESZ – [BEOBACHTUNG] Zweiter Versuch der Proben zu 9.3: Cloud-Session in der falschen Umgebung, kein Schlüssel
+
+- **Befund:** `OPENROUTER_API_KEY` ist in dieser Cloud-Session nicht gesetzt (nur Vorhandensein geprüft). Auch keine andere Variable mit „openrouter“ im Namen, keine Datei im Home-Verzeichnis; `https://openrouter.ai/api/v1/key` antwortet ohne Schlüssel mit 401, der Proxy fügt also nichts ein.
+- **Ursache:** Die Session läuft laut `get_session` in der Cloud-Umgebung „Flight_Research“ (dort ist nur ein Zugang für einen fremden Dienst hinterlegt). Laut `list_environments` gibt es eine eigene Umgebung „OPENROUTER_API_KEY“ – vermutlich die mit dem Schlüssel. Der erste Versuch scheiterte am fehlenden Branch auf GitHub, dieser an der Umgebung.
+- **Folge:** Keine der beiden Proben ist gelaufen; keine Kosten bei OpenRouter. Stand unverändert: Branch `scp/affectionate-pare-f0afee` = `1371264` ist korrekt, `canon/sections.py` enthält „Fähigkeiten“, `2ac204b` (Vorher-Stand) ist im Klon vorhanden.
+- **Für den nächsten Versuch:** Cloud-Session in der Umgebung „OPENROUTER_API_KEY“ starten und zuerst prüfen, ob `OPENROUTER_API_KEY` gesetzt ist (nur gesetzt/nicht gesetzt), bevor irgendetwas anderes läuft.
+
+### 2026-10-19 00:07 MESZ – [SESSIONSTART] Proben zu 9.3 (zweiter Versuch): Regel-002 und Weltenbauer
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, eingestellt und bedient laut `get_session`), Entscheidungs-Klasse; Aufwand „xhigh“. 9.3 empfiehlt Entscheidung – kein Schritt oberhalb der Empfehlung.
+- **Umgebung:** Cloud-Session (Linux), gestartet vom Branch `scp/affectionate-pare-f0afee` (`1371264`, gleich `feat/9.3-gegliederte-eintraege`, PR #177 offen); eigener Branch des Werkzeugs `scp/wizardly-ride-p7n55n`, zweigt von `1371264` ab. Pre-Commit-Hook über den SessionStart-Hook eingerichtet.
+- **Wiedereinstieg:** Phase 9, 2 von 15; 9.3 🟠 umgesetzt, offen: Probe nach Regel-002 (vorher `2ac204b`, nachher `1371264`, je 3 Läufe an Salzmark und Glimmergrund, grok-4.6, mittel) und Weltenbauer-Probe in der Salzmark (Figur, Ort, Gegenstand, Kultur); Eigentümer hat beide freigegeben. Keine aktiven Blocker, keine offenen STOPP-Situationen, Reaktiv-Quote 0 / 10.
+- **Kontextgröße:** `get_session` meldet `context_usage.used_tokens` 0 (vermutlich noch nicht aktualisiert); Größe damit nicht verlässlich feststellbar, Regel „Sessiongröße“ entfällt für diese Session.
+- **Auftrag:** beide Proben ausführen, auswerten und festhalten; Commits nur auf `scp/wizardly-ride-p7n55n`, kein Pull Request, nichts zusammenführen.
+
 ### 2026-10-18 23:40 MESZ – [SESSIONENDE] 9.3 entschieden und lokal umgesetzt, Proben offen
 
 - **Dauer:** Fortsetzung nach dem `[SESSIONENDE]` von 22:10 MESZ: 9.2 zusammengeführt (PR #175, #176), dann auf „weiter“ 9.3 bis 23:40 MESZ.

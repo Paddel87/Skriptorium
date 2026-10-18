@@ -118,3 +118,54 @@ Cloud-Session, Modell `x-ai/grok-4.6`, Länge „mittel“. Vorher: Stand `9acc5
 **Ergebnis:** Keine Kennzahl liegt nachher in beiden Geschichten außerhalb der Spannweite von vorher – nach Regel-002 keine Wirkung des neuen Rahmensatzes; der Befund „wörtlich %“ aus drei Läufen war Streuung. Gesamtkosten der Probe 6,82 $.
 
 *Korrigiert 2026-10-18:* Die erste Fassung lautete „Alle Mittelwerte von nachher liegen in der Spannweite von vorher“. Nachgerechnet mit `auswertung.py` über dieselben 6 Ketten je Seite (Tabelle oben bestätigt) liegen vier Mittelwerte außerhalb, jeweils nur in einer Geschichte: Salzmark Motivfolge 2,17 (vorher 1–2); Glimmergrund 6er doppelt 0,17 (vorher 0–0), Warte-Enden 0,17 (vorher 0–0) und Wörter 124 (vorher 115–121). Motivfolge, 6er doppelt und Wörter liegen innerhalb der Ausgangsmessung 5.24. Das eine Warte-Ende (`8.11-nachher/glimmergrund/lauf-2`, Schritt 2) ist ein Treffer der Wortliste in wörtlicher Rede („Berta schweigt, und die Klappe zu – …“), kein Ende mit Warten oder Schweigen. Am Ergebnis nach Regel-002 ändert das nichts.
+
+### Probe zu 9.3 Gegliederte Einträge je Art (2026-10-19, ADR-092)
+
+Cloud-Session, Modell `x-ai/grok-4.6`, Länge „mittel“, je 3 Ketten an beiden Geschichten. Vorher: `2ac204b` (`main` vor 9.3) in einem Worktree, nachher: `40a02eb` (`src/`, `ui/`, `tests/` gleich `1371264`, Branch `feat/9.3-gegliederte-eintraege`). Geändert ist nur die Form der Anfrage: Die Abschnitte eines Eintrags stehen eine Ebene unter seinem Namen (die Eintragsüberschrift `# Name` wird `### Name`), leere Abschnitte fallen weg. 84 Vorschläge, alle `finish_reason: stop`, keine Fehler. Kosten 1,50 $ (vorher) + 1,44 $ (nachher) = 2,94 $. Ergebnisse in `ergebnisse/vorher-9.3/` und `ergebnisse/nachher-9.3/` (je `auswertung.md`), verblindete Bewertung in `ergebnisse/9.3-bewertung/`.
+
+**Gezählt (`auswertung.py`), Mittel (Spannweite):**
+
+| Kennzahl | Salzmark vorher | Salzmark nachher | Glimmergrund vorher | Glimmergrund nachher |
+|---|---|---|---|---|
+| wörtlich % | 0,64 (0,44–0,76) | 0,40 (0,16–0,71) | 0,15 (0,00–0,39) | 0,71 (0,14–1,05) |
+| 6er doppelt | 0,33 (0–1) | 0,00 (0–0) | 0,00 (0–0) | 1,00 (0–3) |
+| Warte-Enden | 0,00 (0–0) | 0,00 (0–0) | 0,00 (0–0) | 0,00 (0–0) |
+| Motivfolge | 1,00 (1–1) | 2,00 (1–3) | 1,33 (1–2) | 1,33 (1–2) |
+| Wörter je Vorschlag | 105 (102–107) | 113 (94–140) | 126 (110–142) | 132 (129–137) |
+| Kosten je Kette $ | 0,15 (0,15–0,16) | 0,14 (0,13–0,16) | 0,35 (0,32–0,38) | 0,33 (0,32–0,37) |
+
+- **Außerhalb der Vorher-Spannweite in beiden Geschichten:** nur „wörtlich %“, und zwar **gegenläufig** – Salzmark niedriger (0,40 gegen mindestens 0,44), Glimmergrund höher (0,71 gegen höchstens 0,39). Eine gleichgerichtete Wirkung zeigt sich damit nicht; nach Regel-002 keine Wirkung und keine Verschlechterung. Glimmergrund 0,71 liegt über der Ausgangsmessung 5.24 (0,00–0,31) und über allen bisherigen Mittelwerten dieser Geschichte (8.11 nachher 0,41); Einzelwerte bis 1,05 % – klein, aber zu beobachten.
+- **Nur in einer Geschichte außerhalb:** Salzmark Motivfolge 2,00 (vorher 1–1), Wörter 113 (vorher 102–107), Kosten 0,14 (vorher 0,15–0,16); Glimmergrund 6er doppelt 1,00 (vorher 0–0). Motivfolge, Wörter und 6er doppelt liegen innerhalb der Ausgangsmessung 5.24 (Salzmark 1–3 bzw. 109–124; Glimmergrund 0–3).
+
+**Widersprüche zum Kanon** (je Geschichte eine getrennte Instanz, Sonnet, verblindet: Ketten K1–K6 in zufälliger Reihenfolge, Zuordnung in `mapping.json`; die beiden eindeutigen Funde von der bauenden KI am Text und am Kanon nachgeprüft):
+
+| | Salzmark vorher | Salzmark nachher | Glimmergrund vorher | Glimmergrund nachher |
+|---|---|---|---|---|
+| eindeutig je Kette | 0,00 (0–0) | 0,33 (0–1) | 0,00 (0–0) | 0,33 (0–1) |
+| knapp je Kette (nur Salzmark erhoben) | 0,33 (0–1) | 0,67 (0–1) | – | – |
+| Kanon-Proben widersprochen (12 je Kette) | – | – | 0 | 0 |
+
+- Salzmark nachher `lauf-2`, Schritt 5: Gunda sagt am Abend „nicht ‚Heddas Kind‘“ – Name einer Toten nach Sonnenuntergang (`kultur/totensitte.md`); ob die Szene schon nach Sonnenuntergang spielt, sagt der Text nicht ausdrücklich („Am dritten Abend“, „bevor die Mitternachtsglocke schlägt“).
+- Glimmergrund nachher `lauf-3`, Schritt 6: Salm nennt Wendt „mein Teuerster“, laut `figuren/benedikt-salm.md` nur gegenüber Männern („gnädige Frau“ gegenüber Damen).
+- Knapp (Salzmark): Asch „stottert nur, wenn’s ihn was kostet“ (nachher `lauf-3`), Säcke „von der Bucht“ (vorher `lauf-3`), Marr habe „das Buch versprochen“ (nachher `lauf-2`).
+- Kaffee: In drei Glimmergrund-Ketten (vorher `lauf-1`, nachher `lauf-1` und `lauf-3`) bringt Frau Farnow „Kaffee für alle“; Wendt trinkt nicht, die Szene endet vorher – als „nicht berührt“ gewertet, kein Verstoß.
+
+**Ergebnis:** Gezählt keine Wirkung nach Regel-002. Bei den Widersprüchen liegt nachher in beiden Geschichten je **ein** eindeutiger Widerspruch in drei Ketten, vorher keiner – nach dem Wortlaut von Regel-002 („in beiden Geschichten außerhalb der Spannweite von vorher“) ein **Befund**. Einordnung (Deutung, nicht belegt): Die Rate von nachher (2 in 6 Ketten) entspricht der für grok-4.6 in 5.26 gemessenen (3 eindeutige in 12 Ketten); vorher lag diesmal bei 0. Beide Funde betreffen Einzelheiten, die vorher wie nachher im Wortlaut in der Anfrage stehen (ohne KI nachgebaut für die Schritte 1, 5 und 6 vom Kettenanfang: „Nach Sonnenuntergang wird kein Toter …“ und „mein Teuerster“ / „gnädige Frau“ in beiden Ständen enthalten; geschätzt 9.303 → 9.326 bzw. 28.733 → 28.749 Token); die Änderung verschiebt nur Überschriften-Ebenen. Ob es Streuung ist, klären nur weitere Läufe (vgl. den Befund „wörtlich %“ zu 8.11, der sich im Nachlauf als Streuung erwies). **Nachlauf unten: auch hier Streuung.**
+
+**Nachlauf zu 9.3 (Wahl des Eigentümers „3 weitere Läufe je Seite“, 2026-10-19):** je 3 weitere Ketten vorher und nachher im gleichen Aufbau (`ergebnisse/vorher-9.3-2/`, `…/nachher-9.3-2/`; 84 Vorschläge, alle `stop`, keine Fehler; 1,47 $ + 1,43 $). Ausgewertet über alle 6 Ketten je Seite (Läufe beider Ordner in einen gemeinsamen Ordner je Seite kopiert, `lauf-4` bis `lauf-6` für den Nachlauf; Tabellen in `ergebnisse/9.3-bewertung-2/auswertung-*-6-ketten.md`, die gemeinsamen Ordner selbst nicht abgelegt). Mittel (Spannweite):
+
+| Kennzahl | Salzmark vorher | Salzmark nachher | Glimmergrund vorher | Glimmergrund nachher |
+|---|---|---|---|---|
+| wörtlich % | 0,64 (0,21–1,06) | 0,51 (0,16–0,87) | 0,20 (0,00–0,76) | 0,45 (0,08–1,05) |
+| 6er doppelt | 0,33 (0–1) | 0,00 (0–0) | 0,00 (0–0) | 0,50 (0–3) |
+| Warte-Enden | 0,00 (0–0) | 0,17 (0–1) | 0,00 (0–0) | 0,00 (0–0) |
+| Motivfolge | 1,50 (1–3) | 2,00 (1–3) | 1,50 (1–2) | 1,50 (1–2) |
+| Wörter je Vorschlag | 112 (102–135) | 116 (94–140) | 123 (97–153) | 129 (113–147) |
+| Kosten je Kette $ | 0,15 (0,14–0,16) | 0,14 (0,13–0,16) | 0,34 (0,31–0,38) | 0,34 (0,29–0,38) |
+| eindeutige Widersprüche je Kette | 0,00 (0–0) | 0,17 (0–1) | 0,17 (0–1) | 0,17 (0–1) |
+| knappe Widersprüche je Kette (nur Salzmark) | 0,50 (0–1) | 0,83 (0–2) | – | – |
+
+- **Widersprüche im Nachlauf** (zweite verblindete Bewertung, neue Zufallsfolge, `ergebnisse/9.3-bewertung-2/`): Salzmark in keiner der 6 Ketten ein eindeutiger; Glimmergrund einer, und zwar **vorher** (`vorher-9.3-2/lauf-3`, Schritt 6: Salm „Dreizehn hat man mit den Leibern heraufgebracht“ – laut `orte/tiefe-sohle.md` 14 Tote, „bis auf zwei geborgen“, also zwölf; vom Bewerter „mäßig eindeutig“ genannt, von der bauenden KI am Text nachgeprüft; ähnlich „vierzehn Lampen“ in 5.24). Kanon-Proben in Glimmergrund wieder in allen Ketten ohne Widerspruch. Knapp in Salzmark: vorher 2 (`vorher-9.3-2/lauf-1` und `lauf-3`), nachher 3 (`nachher-9.3-2/lauf-1` 1, `lauf-2` 2).
+- **Außerhalb der Vorher-Spannweite** liegen nur noch Einzelwerte in **einer** Geschichte: Salzmark Warte-Enden 0,17 (vorher 0–0) und eindeutige Widersprüche 0,17 (vorher 0–0); Glimmergrund 6er doppelt 0,50 (vorher 0–0). Die 6er-Doppelungen liegen innerhalb der Ausgangsmessung 5.24 (Glimmergrund 0–3). Das Warte-Ende ist echt (`nachher-9.3-2/salzmark/lauf-2`, Schritt 6: „Pell nickte, wartete aber, … als erwarte er noch ein Wort von mir.“), ein Einzelfall in 42 Vorschlägen; 5.24 hatte bei „mittel“ 0–0, bei „lang“ 0–1.
+
+**Ergebnis über je 6 Ketten:** Keine Kennzahl – gezählt oder von Hand bewertet – liegt nachher in beiden Geschichten außerhalb der Spannweite von vorher. Nach Regel-002 **keine Wirkung und keine Verschlechterung** durch 9.3; der Befund bei den Widersprüchen aus drei Läufen war Streuung (in Glimmergrund hat vorher jetzt ebenfalls einen eindeutigen Widerspruch). Eindeutige Widersprüche über alle 24 Ketten: 3 (vorher 1, nachher 2) – im Bereich von grok-4.6 aus 5.26 (3 in 12 Ketten). Gesamtkosten der Probe zu 9.3 mit Nachlauf: 5,84 $ (Regel-002) + 0,045 $ (Weltenbauer).
