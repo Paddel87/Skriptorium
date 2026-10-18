@@ -1,9 +1,43 @@
 {
   "_about": "Shared cases for the section rule (step 9.1, ADR-091, rule 003): read by tests/canon/test_sections.py and ui/src/sections.test.ts. A new case goes here, not into one side only.",
   "categories": {
-    "figur": ["Aussehen", "Wesen und Geschichte"],
-    "gegenstand": ["Zweck", "Verwendung", "Auswirkung"]
+    "figur": ["Aussehen", "Wesen", "Fähigkeiten", "Geschichte", "Beziehungen"],
+    "ort": ["Lage", "Aussehen", "Bewohner", "Geschichte"],
+    "gegenstand": ["Aussehen", "Zweck", "Verwendung", "Auswirkung"],
+    "kultur": ["Gesellschaft", "Glaube und Bräuche", "Geschichte"]
   },
+  "templates": [
+    {
+      "about": "a figure",
+      "category": "figur",
+      "expected": "## Aussehen\n\n## Wesen\n\n## Fähigkeiten\n\n## Geschichte\n\n## Beziehungen\n"
+    },
+    {
+      "about": "a place",
+      "category": "ort",
+      "expected": "## Lage\n\n## Aussehen\n\n## Bewohner\n\n## Geschichte\n"
+    },
+    {
+      "about": "an item",
+      "category": "gegenstand",
+      "expected": "## Aussehen\n\n## Zweck\n\n## Verwendung\n\n## Auswirkung\n"
+    },
+    {
+      "about": "a culture",
+      "category": "kultur",
+      "expected": "## Gesellschaft\n\n## Glaube und Bräuche\n\n## Geschichte\n"
+    },
+    {
+      "about": "a rule has no sections",
+      "category": "regel",
+      "expected": ""
+    },
+    {
+      "about": "a timeline has no sections",
+      "category": "zeitlinie",
+      "expected": ""
+    }
+  ],
   "read": [
     {
       "about": "a heading of any level, in any case",
@@ -64,6 +98,18 @@
       "text": "## Aussehen\n\n## Wesen und Geschichte\n",
       "heading": "Aussehen",
       "expected": null
+    },
+    {
+      "about": "the empty template of a figure (9.3)",
+      "text": "## Aussehen\n\n## Wesen\n\n## Fähigkeiten\n\n## Geschichte\n\n## Beziehungen\n",
+      "heading": "Geschichte",
+      "expected": null
+    },
+    {
+      "about": "a section of a place, the template filled in part (9.3)",
+      "text": "## Lage\n\nAm Salzsee.\n\n## Aussehen\n\n## Bewohner\n\n## Geschichte\n",
+      "heading": "Lage",
+      "expected": "Am Salzsee."
     },
     {
       "about": "no space after the hashes",
@@ -306,6 +352,14 @@
       "section": "Neu.",
       "mode": "replace",
       "expected": "## Aussehen\n\nNeu.\n\n## Wesen\n"
+    },
+    {
+      "about": "fills the template of a figure and keeps the rest (9.3)",
+      "text": "## Aussehen\n\n## Wesen\n\n## Fähigkeiten\n\n## Geschichte\n\n## Beziehungen\n",
+      "heading": "Wesen",
+      "section": "Treu.",
+      "mode": "replace",
+      "expected": "## Aussehen\n\n## Wesen\n\nTreu.\n\n## Fähigkeiten\n\n## Geschichte\n\n## Beziehungen\n"
     },
     {
       "about": "a nested duplicate inside the section",

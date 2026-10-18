@@ -105,7 +105,7 @@ def test_entry_file_layout_follows_data_model(canon: CanonService, root: Path) -
 
 def test_item_gets_purpose_usage_and_effect_sections(canon: CanonService) -> None:
     item = canon.create_entry("die-salzmark", "gegenstand", "Runenklinge")
-    assert item.body == "## Zweck\n\n## Verwendung\n\n## Auswirkung\n"
+    assert item.body == "## Aussehen\n\n## Zweck\n\n## Verwendung\n\n## Auswirkung\n"
     own = canon.create_entry("die-salzmark", "gegenstand", "Siegelring", body="Schwarzes Eisen.")
     assert own.body == "Schwarzes Eisen."
 
@@ -268,12 +268,18 @@ def test_slugify(name: str, expected: str) -> None:
     assert slugify(name) == expected
 
 
-def test_a_new_figure_starts_with_the_sections_aussehen_and_wesen(canon: CanonService) -> None:
-    """Steps 7.16 and 8.4 (ADR-078, ADR-083): like items with their three sections (FR-003)."""
-    assert (
-        canon.create_entry("die-salzmark", "figur", "Neue Figur").body
-        == "## Aussehen\n\n## Wesen und Geschichte\n"
+def test_a_new_entry_starts_with_the_sections_of_its_category(canon: CanonService) -> None:
+    """Step 9.3 (ADR-092): the sections of the category, from the one list (FR-003, rule 003)."""
+    figure = canon.create_entry("die-salzmark", "figur", "Neue Figur")
+    assert figure.body == (
+        "## Aussehen\n\n## Wesen\n\n## Fähigkeiten\n\n## Geschichte\n\n## Beziehungen\n"
     )
+    place = canon.create_entry("die-salzmark", "ort", "Neuer Ort")
+    assert place.body == "## Lage\n\n## Aussehen\n\n## Bewohner\n\n## Geschichte\n"
+    culture = canon.create_entry("die-salzmark", "kultur", "Neue Kultur")
+    assert culture.body == "## Gesellschaft\n\n## Glaube und Bräuche\n\n## Geschichte\n"
     written = canon.create_entry("die-salzmark", "figur", "Mit Text", body="Groß.")
     assert written.body == "Groß."
-    assert canon.create_entry("die-salzmark", "ort", "Ohne Vorlage").body == ""
+    # Rules and the timeline have no sections.
+    assert canon.create_entry("die-salzmark", "regel", "Ohne Vorlage").body == ""
+    assert canon.create_entry("die-salzmark", "zeitlinie", "Ohne Abschnitte").body == ""

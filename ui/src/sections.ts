@@ -10,8 +10,31 @@
  * checked against the shared cases in `tests/shared/sections.json`.
  */
 
-/** The looks of a figure (ADR-078); one of the fixed sections the server keeps per category. */
+import type { Category } from "./api/canon";
+
+/** The looks of a figure, a place or an item (ADR-078, ADR-092); a fixed section of those. */
 export const APPEARANCE = "Aussehen";
+
+/**
+ * The fixed sections of an entry by category, in order (ADR-092): the list of `SECTIONS` in
+ * `canon/sections.py`, a test couples both to `tests/shared/sections.json` (rule 003). Rules and
+ * the timeline have none.
+ */
+export const SECTIONS: Readonly<Partial<Record<Category, readonly string[]>>> =
+  {
+    figur: [APPEARANCE, "Wesen", "Fähigkeiten", "Geschichte", "Beziehungen"],
+    ort: ["Lage", APPEARANCE, "Bewohner", "Geschichte"],
+    gegenstand: [APPEARANCE, "Zweck", "Verwendung", "Auswirkung"],
+    kultur: ["Gesellschaft", "Glaube und Bräuche", "Geschichte"],
+  };
+
+/** The empty sections of a new entry of `category`, or `""` if it has none (as the server's). */
+export function templateFor(category: Category): string {
+  const names = SECTIONS[category] ?? [];
+  return names.length === 0
+    ? ""
+    : `${names.map((name) => `## ${name}`).join("\n\n")}\n`;
+}
 
 // Only the start is a pattern; the rest is cut with string operations, because a pattern for the
 // closing hashes backtracks on long runs of spaces (as in the server, review of step 6.8).

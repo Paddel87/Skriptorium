@@ -7,8 +7,9 @@ under ``## Aussehen``) belong to it. A closing run of ``#`` after a space is not
 heading text; headings inside fenced code blocks do not count. Names are compared without regard
 to case. Everything outside the section stays as it was, byte for byte (line endings, blank lines).
 
-The section names of each category stand in :data:`SECTIONS`; templates of new entries and the
-Markdown import take them from here.
+The section names of each category stand in :data:`SECTIONS` (ADR-092); templates of new entries,
+the Markdown import and the world builder's frame take them from here. For the request to the AI
+:func:`drop_empty_sections` and :func:`nest_headings` shape the text of an entry by the same rule.
 """
 
 import re
@@ -34,15 +35,28 @@ _LIST_MARK: Final = re.compile("^[" + _SPACE + "]*[-*][" + _SPACE + "]+")
 _LINE_BREAKS: Final = "\r" + chr(0x2028) + chr(0x2029)
 
 APPEARANCE: Final = "Aussehen"
-"""The looks of a figure (ADR-078)."""
+"""The looks of a figure, a place or an item (ADR-078, ADR-092)."""
 
 SECTIONS: Final[dict[Category, tuple[str, ...]]] = {
-    "figur": (APPEARANCE, "Wesen und Geschichte"),
-    "gegenstand": ("Zweck", "Verwendung", "Auswirkung"),
+    "figur": (APPEARANCE, "Wesen", "Fähigkeiten", "Geschichte", "Beziehungen"),
+    "ort": ("Lage", APPEARANCE, "Bewohner", "Geschichte"),
+    "gegenstand": (APPEARANCE, "Zweck", "Verwendung", "Auswirkung"),
+    "kultur": ("Gesellschaft", "Glaube und Bräuche", "Geschichte"),
 }
-"""Fixed sections of an entry by category, in order (FR-003, ADR-078, ADR-083); 9.3 adds more."""
+"""Fixed sections of an entry by category, in order (FR-003, ADR-092); rules and the timeline
+have none. The interface mirrors this list (``ui/src/sections.ts``, rule 003)."""
 
-_NAMES: Final = frozenset(name.lower() for names in SECTIONS.values() for name in names)
+FORMER_SECTIONS: Final[dict[Category, tuple[str, ...]]] = {
+    "figur": ("Wesen und Geschichte",),
+}
+"""Former names of sections, still read as such by the import but no longer in templates
+(ADR-083: "Wesen und Geschichte" of a figure, since ADR-092 split into Wesen and Geschichte)."""
+
+_NAMES: Final[dict[Category, frozenset[str]]] = {
+    category: frozenset(name.lower() for name in (*names, *FORMER_SECTIONS.get(category, ())))
+    for category, names in SECTIONS.items()
+}
+_ALL_NAMES: Final = frozenset(name for names in _NAMES.values() for name in names)
 
 SectionMode = Literal["replace", "append"]
 """What to do with a section that already has text."""
@@ -57,15 +71,62 @@ class _Found:
     level: int
 
 
-def is_section_name(text: str) -> bool:
-    """Whether ``text`` is the name of a fixed section of some category, in any case."""
-    return _trim(text).lower() in _NAMES
+def is_section_name(text: str, category: Category | None = None) -> bool:
+    """Whether ``text`` is the name of a fixed section, in any case.
+
+    With ``category`` only the sections of that category count (its former names too, ADR-092);
+    without one the sections of all categories do.
+    """
+    name = _trim(text).lower()
+    return name in _ALL_NAMES if category is None else name in _NAMES.get(category, frozenset())
 
 
 def template_for(category: Category) -> str:
     """The empty sections of a new entry of ``category``, or ``""`` if it has none."""
     names = SECTIONS.get(category, ())
     return "\n\n".join(f"## {name}" for name in names) + "\n" if names else ""
+
+
+def drop_empty_sections(markdown: str) -> str:
+    """``markdown`` without the sections that have no text (step 9.3, ADR-092).
+
+    A section without text is a heading whose lines up to the next heading of the same or a
+    higher level hold nothing but blanks and deeper headings, so a section with only empty
+    subsections goes with them. Everything else stays as it was, byte for byte.
+    """
+    lines = _lines_of(markdown)
+    headings = _headings(lines)
+    kept: list[str] = []
+    at = 0
+    while at < len(lines):
+        head = headings[at]
+        end = _section_end(headings, at, head[0]) if head is not None else at + 1
+        if head is not None and all(
+            headings[i] is not None or _is_blank(lines[i]) for i in range(at + 1, end)
+        ):
+            at = end
+        else:
+            kept.append(lines[at])
+            at += 1
+    return "".join(kept)
+
+
+def nest_headings(markdown: str, top: int) -> str:
+    """``markdown`` with its headings moved down until none is flatter than level ``top``.
+
+    The distances between the headings stay, no level goes beyond 6 (step 9.3, ADR-092). A text
+    without headings, or whose flattest heading is at ``top`` or deeper, stays as it was, byte
+    for byte; the rest of a heading line does too.
+    """
+    lines = _lines_of(markdown)
+    headings = _headings(lines)
+    shift = top - min((head[0] for head in headings if head is not None), default=top)
+    if shift <= 0:
+        return markdown
+    return "".join(
+        line if head is None else "#" * min(head[0] + shift, 6) + line[head[0] :]
+        for line, head in zip(lines, headings, strict=True)
+    )
 
 
 def read_section(markdown: str, heading: str) -> str | None:
@@ -191,14 +252,19 @@ def _sections_named(lines: list[str], heading: str) -> list[_Found]:
     for start, head in enumerate(headings):
         if head is None or _trim(head[1]).lower() != wanted:
             continue
-        end = start + 1
-        while end < len(lines):
-            following = headings[end]
-            if following is not None and following[0] <= head[0]:
-                break
-            end += 1
-        found.append(_Found(start, end, head[0]))
+        found.append(_Found(start, _section_end(headings, start, head[0]), head[0]))
     return found
+
+
+def _section_end(headings: list[tuple[int, str] | None], start: int, level: int) -> int:
+    """Index after the last line of the section whose heading of ``level`` is at ``start``."""
+    end = start + 1
+    while end < len(headings):
+        following = headings[end]
+        if following is not None and following[0] <= level:
+            break
+        end += 1
+    return end
 
 
 def _body_of(lines: list[str], section: _Found) -> str:

@@ -6,6 +6,8 @@ from skriptorium.canon.names import name_pattern
 from skriptorium.canon.sections import (
     APPEARANCE,
     SECTIONS,
+    drop_empty_sections,
+    nest_headings,
     put_section,
     read_part,
     read_section,
@@ -42,7 +44,9 @@ __all__ = [
     "TranslatedMaterial",
     "World",
     "WorldMap",
+    "drop_empty_sections",
     "name_pattern",
+    "nest_headings",
     "put_section",
     "read_part",
     "read_section",
