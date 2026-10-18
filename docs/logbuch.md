@@ -29,6 +29,21 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-19 01:15 MESZ – [SESSIONENDE] Nachlauf zu 9.3: Befund war Streuung
+
+- **Dauer:** Fortsetzung nach dem `[SESSIONENDE]` von 00:45 MESZ, ca. 00:50 bis 01:15 MESZ (nach Neustart des Arbeitsprozesses; Schlüssel, Branch und Worktree erneut geprüft).
+- **Bearbeitet:** 9.3 – Eigentümer wählte per Auswahlfrage „3 weitere Läufe je Seite (Empfohlen)“; Nachlauf (`76d0ea2`), zweite verblindete Bewertung, Auswertung über je 6 Ketten; Spike-README, Fahrplan, README nachgezogen.
+- **Stand:** Phase 9, 2 von 15; 9.3 🟠 – beide Proben abgeschlossen, keine Verschlechterung; offen nur die Bestätigung des Eigentümers, danach Zusammenführen durch die lokale Session (Branch `spike/9.3-proben-ki`, PR #177). Keine aktiven Blocker, keine offenen STOPP-Situationen.
+- **Kosten bei OpenRouter (Session gesamt):** 2,98 $ + 2,91 $ (Nachlauf: 1,472 $ + 1,433 $) = 5,88 $.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5), 0 Schritte oberhalb der Empfehlung; abgegeben an Unteragenten der Routine-Klasse (Sonnet): vier verblindete Bewertungen (je ca. 2–3 min), Funde nachgeprüft.
+- **Kontextgröße:** nicht feststellbar; Regel entfiel.
+- **Sessionende-Prüfungen:** README-Zeile 9.3 nachgezogen; sonst wie im Eintrag 00:45 (keine neuen ADRs, Schritt-IDs, Module, Blocker; kein Vorlauf im Ablaufdaten-Register erreicht; Logbuch unter 420 Zeilen).
+
+### 2026-10-19 01:10 MESZ – [BEOBACHTUNG] Nachlauf nach Regel-002 zu 9.3: keine Wirkung über je 6 Ketten
+
+- **Aufbau:** wie der erste Lauf, je 3 weitere Ketten (`vorher-9.3-2`, `nachher-9.3-2`), 84 Vorschläge, alle `stop`.
+- **Ergebnis über je 6 Ketten:** keine Kennzahl nachher in beiden Geschichten außerhalb der Vorher-Spannweite – auch nicht die von Hand bewerteten Widersprüche: Salzmark vorher 0 / nachher 1, Glimmergrund vorher 1 (`vorher-9.3-2/lauf-3`: „Dreizehn“ statt zwölf geborgener Toter) / nachher 1. Nur in einer Geschichte außerhalb: Salzmark ein echtes Warte-Ende (`nachher-9.3-2/lauf-2`, Schritt 6) und der Widerspruch, Glimmergrund 6er doppelt 0,50 (innerhalb 5.24). Der Befund aus drei Läufen war Streuung – wie bei 8.11.
+
 ### 2026-10-19 00:45 MESZ – [SESSIONENDE] Proben zu 9.3 gelaufen und ausgewertet
 
 - **Dauer:** ca. 00:20 bis 00:45 MESZ (Cloud-Session, dritter Versuch).
