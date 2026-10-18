@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-18 (Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090; Phase 9 beginnt); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
+- **Stand vom:** 2026-10-18 (9.1 erledigt – ADR-091, PR #173; D.19 angelegt; zuvor Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
 - **Laufende Phase:** Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (Phase 8 abgeschlossen 2026-10-18)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 9.1 – α gewählt (ADR-091), umgesetzt und lokal geprüft (2026-10-18); offen: Pull Request mit grüner CI nach deiner Freigabe
-- **Nächster Schritt:** 9.1 Gliederung im Server verlässlich – zu Beginn Vorlage α (Abschnitte in Markdown) gegen β (Felder im Dateikopf), Entscheidungs-Klasse; 9.2 (End-to-End-Tests, Routine) kann daneben laufen. Offen bei dir: Probe mit einer Gast-Figur (Eingangskriterium 9.13). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** keiner – 9.1 erledigt (2026-10-18, PR #173, ADR-091)
+- **Nächster Schritt:** 9.2 End-to-End-Tests für die Abläufe der Phasen 6–8 (Routine) und 9.3 Gegliederte Einträge je Art – zu Beginn Vorlage mit Mockup (Entscheidungs-Klasse); D.19 ab dem ersten CI-Lauf nach dem 2026-10-19. Offen bei dir: Probe mit einer Gast-Figur (Eingangskriterium 9.13). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -24,11 +24,11 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-8.md`](archiv/fahrplan-phase-8.md).
 
-**Phase 9: 0 von 15 erledigt.**
+**Phase 9: 1 von 15 erledigt.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
-| 🟠 | 9.1 | Gliederung im Server verlässlich – Abschnitte und Namen | in Arbeit – lokal fertig, CI offen | du: Pull Request freigeben |
+| ✅ | 9.1 | Gliederung im Server verlässlich – Abschnitte und Namen | erledigt 2026-10-18 (ADR-091) | – |
 | ⚪ | 9.2 | End-to-End-Tests für die Abläufe der Phasen 6–8 | offen | KI |
 | ⚪ | 9.3 | Gegliederte Einträge je Art (B2, G1/G2) | offen | KI: nach 9.1 Vorlage mit Mockup |
 | ⚪ | 9.4 | Beziehungen mit Art und Rückverweis (B3) | offen | KI: nach 9.3 Vorlage |
@@ -59,6 +59,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ⚪ | D.15 | Wechsel React Router 7 → Linie 8 | offen | KI – ab 2026-12-17 |
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | erledigt 2026-10-13 (V.29–V.32 → 8.4–8.7) | – |
+| ⚪ | D.19 | CI-Runner `ubuntu-latest` wechselt auf Ubuntu 26 | offen | KI – ab 2026-10-19, bis 2026-11-02 |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
 Verschoben auf die übernächste Ausbaustufe (Landeplatz 9.15): V.20, V.21, V.23, V.24, V.33 (weiter verschoben 2026-10-18, ADR-090). In Phase 9 übernommen (2026-10-18, ADR-090): V.35 → 9.3–9.9 und 9.12, V.36 → 9.10, V.37 → 9.11, V.34 → 9.13. In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
@@ -192,7 +193,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 9.1: Gliederung im Server verlässlich – Abschnitte und Namenserkennung
 
-- **Status:** 🟠 IN ARBEIT – Vorlage α/β am 2026-10-18 vorgelegt (Empfehlung α, Konfidenz hoch); Eigentümer am selben Tag per Auswahlfrage: „A – Text mit Überschriften (Empfohlen)“ → ADR-091, Regel-003. Umgesetzt und lokal geprüft am selben Tag; offen für die Definition of Done: Pull Request mit grüner CI (nach Freigabe des Eigentümers)
+- **Status:** ✅ ERLEDIGT (2026-10-18) – Vorlage α/β vorgelegt (Empfehlung α, Konfidenz hoch); Eigentümer per Auswahlfrage: „A – Text mit Überschriften (Empfohlen)“ → ADR-091, Regel-003. PR #173: CI grün (4 von 4 Pflicht-Checks), auf Anweisung des Eigentümers zusammengeführt (`f479509`)
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – zu Beginn Vorlage α (Abschnitte bleiben in Markdown, der Server kennt sie je Kategorie) gegen β (Felder im Dateikopf): Datenmodell (Kategorie 4). Der Umbau selbst bleibt innerhalb der Module, Schnittstellen höchstens additiv (ADR-089)
@@ -737,6 +738,22 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine (Befunde können eine Rückstufung von NFR Kanon-Treue vorschlagen)
 - **Artefakte:** Bericht, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-13 am Ende einer Session über der Kontextgrenze, damit die nächste Session den Auftrag aus dem Fahrplan erhält. Querschnitt, nicht Teil des Schrittplans von Phase 7 (Wucherungs-Schwelle).
+
+#### D.19: CI-Runner `ubuntu-latest` wechselt auf Ubuntu 26
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (Querschnitt)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** nein für die Beobachtung; ja für jede Änderung an `.github/workflows/ci.yml` (Kategorie 7), etwa ein festes `ubuntu-24.04`
+- **Empfohlene Klasse:** Routine – CI-Läufe lesen und Befund festhalten; Entscheidung nur, falls die CI geändert werden muss.
+- **Eingangskriterien:** erster CI-Lauf ab 2026-10-19
+- **Anforderungen (ab Klasse M):** keine
+- **Zu tun:** Hinweis der CI-Plattform im Lauf zu PR #173 (2026-10-18, alle vier Jobs): „The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026“ (actions/runner-images#14748). Die vier Pflicht-Jobs laufen auf `ubuntu-latest`. Ab dem ersten Lauf nach dem 2026-10-19 prüfen, auf welchem Abbild er lief und ob Python 3.14 (`actions/setup-python`), Node 24, `playwright install --with-deps chromium` und die übrigen Werkzeuge unverändert grün sind; bei Brüchen beheben oder dem Eigentümer ein festes Abbild vorlegen.
+- **Akzeptanzkriterien:** ein grüner Lauf aller vier Jobs auf Ubuntu 26 im Logbuch, oder ein festes Abbild per ADR; Eintrag im Ablaufdaten-Register erledigt.
+- **Betroffene Module:** keine (CI)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Logbuch-Eintrag, ggf. `.github/workflows/ci.yml` und ADR
+- **Notizen:** Angelegt 2026-10-18 nach `CLAUDE.md` Abschnitt 15 („Warnungsquellen ohne Schalter“, „Jede Abkündigung wird ein Fahrplan-Schritt mit Frist“). Frist 2026-11-02: Die Umstellung läuft schrittweise; spätestens dann soll ein Lauf auf dem neuen Abbild geprüft sein.
 
 #### M.1: Branch-Konvention festlegen
 

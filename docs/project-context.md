@@ -276,6 +276,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 | vitest 5 – neue Linie, noch nicht reif | Nachprüfung 2027-03-03 | – | npm-Registry (ADR-015) | D.2 (mit erledigen) |
 | Reverse Proxy auf dem VPS, Linie 3.7 (seit 2026-09-28, ADR-033; 2.11 ohne Unterstützung seit 2026-09-07) | Nachprüfung 2026-12-28 | – | doc.traefik.io, Release-Tabelle (D.7, 2026-09-28) | D.9 |
 | React Router 7 – Linie 8 mindestreif, v7 vermutlich bis zu v9 (ca. Mai 2027) gepflegt | 2026-12-17 | – | npm-Registry; remix.run-Blog (ADR-046) | D.15 – Wechsel auf Linie 8 |
+| GitHub-Runner `ubuntu-latest` → Ubuntu 26 | ab 2026-10-19 (schrittweise), Prüfung bis 2026-11-02 | – | Hinweis der CI-Plattform im Lauf zu PR #173; actions/runner-images#14748 | D.19 |
 | Wochenkontingent der KI | wöchentlich, So 10:00 (MESZ) | – | Sitzungsabfrage 2026-09-26 | – |
 
 ### Kosten

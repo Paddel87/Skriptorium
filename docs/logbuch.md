@@ -29,6 +29,21 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-18 20:31 MESZ – [SESSIONENDE] 9.1 erledigt
+
+- **Dauer:** 2026-10-18 17:58 bis 20:31 MESZ; Neben-Session, gestartet aus der Session des Eigentümers mit dem Auftrag „Vorlage α/β“, auf seine Frage „Können wir weitermachen?“ bis zum Abschluss von 9.1 fortgesetzt.
+- **Bearbeitet:** 9.1 – Vorlage α/β, Entscheidung α (ADR-091, Regel-003), Umsetzung, PR #173 mit grüner CI, auf Anweisung des Eigentümers („merge“) zusammengeführt (`f479509`). Neu D.19 (Ubuntu 26 auf den CI-Runnern).
+- **Stand:** Phase 9, 1 von 15 erledigt. Keine offenen STOPP-Situationen, keine aktiven Blocker.
+- **Nächster Schritt:** 9.2 (End-to-End-Tests, Routine) und 9.3 (gegliederte Einträge je Art, Vorlage mit Mockup, Entscheidungs-Klasse); D.19 ab dem ersten CI-Lauf nach dem 2026-10-19. Beim Eigentümer: Probe mit einer Gast-Figur (9.13), D.11 bis 2026-10-31.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session` um 20:31 erneut abgefragt). 0 Schritte oberhalb der Empfehlung (9.1 empfiehlt Entscheidung). Keine Teilarbeit abgegeben – Logbuch, Fahrplan und README im geladenen Kontext erledigt.
+- **Kontextgröße:** 458.017 Token (`get_usage`), über der Grenze von 200.000; weitergearbeitet nach dem dauerhaften „weiter hier“ des Eigentümers (Abweichung nach `CLAUDE.md` Abschnitt 0, „Sessiongröße“).
+- **Sessionende-Prüfungen:** README synchron (Phase 9, 1 von 15; „Nächste Schritte“ 9.1 erledigt). Drift: ADR-091 verweist auf 9.1, 9.3 – vorhanden; `docs/architecture.md` Abschnitt 9 auf Stand ADR-091 (Modul canon ergänzt, Reifegrad unverändert `[BELASTBAR]`); Modulnamen unverändert; FR-002, FR-003 unverändert erledigt; keine aktiven Blocker und keine `[BLOCKIERT]`-Schritte; Reaktiv-Quote 1/10 (ADR-082–091, nur ADR-082); Phase 9 mit 15 Schritten (Schwelle 30). Ablaufdaten-Register: neu Ubuntu 26 → D.19; sonst kein Vorlauf erreicht (D.1 ab 2026-11-05, mypy 2 am 2026-11-06). Archiv: Logbuch 260 Zeilen, project-context 349 Zeilen – kein Trigger. Keine Phasengrenze, kein Vision-Abgleich fällig.
+- **Arbeitskopie:** eigener Worktree im Scratchpad (`docs/9.1-abschluss`); der gemeinsame Checkout des Eigentümers steht sauber auf `main`.
+
+### 2026-10-18 – [ERLEDIGT] 9.1 Gliederung im Server verlässlich
+
+- PR #173, CI grün (4 von 4), zusammengeführt `f479509`. `canon/sections.py` und `canon/names.py` mit gemeinsamen Testfällen (47 und 27) für Server und Oberfläche; Import erkennt „Wesen und Geschichte“; Namenserkennung an vier Stellen eine Regel. Lokal pytest 886 (99,85 %), vitest 459, Playwright 11. Anfrage beim Schreiben unverändert (274 Kombinationen, 0 Unterschiede). CI-Hinweis „ubuntu-latest → Ubuntu 26 ab 2026-10-19“ → D.19 mit Frist 2026-11-02; keine Bündelgrößen-Warnung.
+
 ### 2026-10-18 – [GELÖST] `ruff format` machte aus Escape-Folgen echte Sonderzeichen
 
 - Die Leerzeichen-Konstante in `canon/sections.py` stand als zwei verkettete Zeilen mit `\u00a0` usw.; `ruff format` fügte sie zu einer zusammen und schrieb dabei die Zeichen selbst hinein, `ruff check` meldete sie danach als mehrdeutig (RUF001). Lösung: Konstante aus `chr(...)` zusammengesetzt. Merken: unsichtbare Zeichen im Code nie als Escape-Folgen in verketteten Literalen.

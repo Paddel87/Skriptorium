@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 9 – Verlässlicher Kanon, Bilder und Verwaltung (Umsetzung), begonnen 2026-10-18 (ADR-089, ADR-090); Phase 8 abgeschlossen 2026-10-18. Fortschritt: 0 von 15 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
+- **Projektphase:** Phase 9 – Verlässlicher Kanon, Bilder und Verwaltung (Umsetzung), begonnen 2026-10-18 (ADR-089, ADR-090); Phase 8 abgeschlossen 2026-10-18. Fortschritt: 1 von 15 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
 - **Version:** v1.0.0 – erstes produktives Release (2026-10-11, ADR-058); davor v0.1.0 als Vorabversion (ADR-043)
 - **Status:** In Betrieb
 - **Letzte Änderung:** 2026-10-13
@@ -101,7 +101,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 ## Nächste Schritte
 
 - ✅ **Phase 8** (abgeschlossen 2026-10-18): Umbau von Kanon-Dienst und Kartenansicht mit höheren Mindestwerten der Tests, Übernehmen ersetzt Abschnitte, passendere Bildvorlagen, Kurzfassung nur mit dem Stand davor, Weltenbauer mit Regeln und Zeitlinie, aus dem Manuskript und mit Gespräch über die Übernahme hinweg, Zeitlinie mit Datum und Uhrzeit, Verweise zwischen Kanon-Einträgen (ADR-080 bis ADR-088). Bewertung am Phasenende: [`docs/research/bewertung-phase-8.md`](docs/research/bewertung-phase-8.md).
-- 🟠 **9.1–9.2:** Fundament – Programm und KI finden Teile eines Eintrags wie „Aussehen“ verlässlich über eine gemeinsame Regel; Einträge bleiben Markdown mit festen Überschriften (ADR-091, 9.1 in Arbeit); End-to-End-Tests für die Abläufe der Phasen 6–8 (ADR-089).
+- 🟠 **9.1–9.2:** Fundament – Programm und KI finden Teile eines Eintrags wie „Aussehen“ verlässlich über eine gemeinsame Regel; Einträge bleiben Markdown mit festen Überschriften (9.1 erledigt, ADR-091); End-to-End-Tests für die Abläufe der Phasen 6–8 (ADR-089).
 - ⚪ **9.3–9.14:** gegliederte Einträge je Art, Beziehungen mit Art und Rückverweis; Bilder vom Bedarf her, Karte aus den Orten, Herkunft der Bilder, Modell je Aufgabe, Bild zu Bild; Löschen oder Archivieren, Cache-Treffer, Verbrauchsstatistik je Welt und Geschichte; Erkundung zu Quellen und Recherche; Gast-Figuren ausbauen (nach deiner Probe); Kontexttreue erneut prüfen (ADR-090).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
