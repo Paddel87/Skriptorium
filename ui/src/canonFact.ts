@@ -1,6 +1,5 @@
 import type { CanonEntry } from "./api";
-
-const WORD_CHARACTER = /[\p{L}\p{N}]/u;
+import { nameRanges } from "./references";
 
 /** A marked passage of at most this many words is taken as the name of a new entry. */
 export const NAME_WORDS = 4;
@@ -39,28 +38,14 @@ export function suggestFact(
 
 /**
  * The entry mentioned first in `text` by its name or an alias, case-insensitive and as a whole
- * word; at the same position the longest name wins (as with `@` references). `null` if none.
+ * word, also in the genitive (`Kaels`, step 9.1); at the same position the longest name wins –
+ * the rule of `@` references (`nameRanges`). `null` if none.
  */
 export function mentionedEntry(
   text: string,
   entries: readonly CanonEntry[],
 ): CanonEntry | null {
-  const lower = text.toLocaleLowerCase("de");
-  let best: { at: number; length: number; entry: CanonEntry } | null = null;
-  for (const entry of entries) {
-    for (const label of [entry.name, ...entry.aliases]) {
-      const at = wholeWordIndex(lower, label.toLocaleLowerCase("de"));
-      if (
-        at !== -1 &&
-        (best === null ||
-          at < best.at ||
-          (at === best.at && label.length > best.length))
-      ) {
-        best = { at, length: label.length, entry };
-      }
-    }
-  }
-  return best?.entry ?? null;
+  return nameRanges(text, entries)[0]?.entry ?? null;
 }
 
 /** The body of a canon entry with `addition` as a new paragraph at its end. */
@@ -73,24 +58,6 @@ export function appendParagraph(body: string, addition: string): string {
 /** A story fact is one line in the AI context (`- Name: fact`), so line breaks become spaces. */
 export function oneLine(text: string): string {
   return text.trim().replace(/\s+/gu, " ");
-}
-
-function wholeWordIndex(text: string, label: string): number {
-  if (label === "") {
-    return -1;
-  }
-  for (
-    let at = text.indexOf(label);
-    at !== -1;
-    at = text.indexOf(label, at + 1)
-  ) {
-    const before = at === 0 ? "" : text.charAt(at - 1);
-    const after = text.charAt(at + label.length);
-    if (!WORD_CHARACTER.test(before) && !WORD_CHARACTER.test(after)) {
-      return at;
-    }
-  }
-  return -1;
 }
 
 function stripPunctuation(text: string): string {

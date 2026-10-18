@@ -1,139 +1,72 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
+  APPEARANCE,
   appendSection,
   putSection,
+  readLabelled,
+  readPart,
   readSection,
   removeSection,
   renameSection,
+  type SectionMode,
 } from "./sections";
 
-const TEMPLATE = "## Aussehen\n\n## Wesen und Geschichte\n";
+interface Case {
+  about?: string;
+  text: string;
+  expected: string | null;
+}
 
-describe("reading a section (step 8.4)", () => {
-  it("finds a heading of any level, in any case", () => {
-    expect(readSection("# aussehen\nGroß.", "Aussehen")).toBe("Groß.");
-    expect(readSection("###### AUSSEHEN\nKlein.", "aussehen")).toBe("Klein.");
-    expect(readSection("##   Aussehen   \nText", "Aussehen")).toBe("Text");
+/** The cases the interface shares with the server (step 9.1, ADR-091, rule 003). */
+const shared = JSON.parse(
+  readFileSync("tests/shared/sections.json", "utf8"),
+) as {
+  categories: Record<string, string[]>;
+  read: (Case & { heading: string })[];
+  labelled: (Case & { label: string })[];
+  part: (Case & { name: string })[];
+  append: (Case & { heading: string; section: string; expected: string })[];
+  put: (Case & {
+    heading: string;
+    section: string;
+    mode: SectionMode;
+    expected: string;
+  })[];
+};
+
+describe("the rule shared with the server (step 9.1)", () => {
+  it.each(shared.read)("reads: $about", ({ text, heading, expected }) => {
+    expect(readSection(text, heading)).toBe(expected);
   });
 
-  it("ends at a heading of the same or a higher level only", () => {
-    const body =
-      "## Aussehen\nGroß.\n### Kleidung\nMantel.\n## Wesen\nSchweigsam.";
-    expect(readSection(body, "Aussehen")).toBe("Groß.\n### Kleidung\nMantel.");
-    expect(readSection(body, "Kleidung")).toBe("Mantel.");
-    expect(readSection("### Kleidung\nMantel.\n# Oben\nx", "Kleidung")).toBe(
-      "Mantel.",
-    );
+  it.each(shared.labelled)(
+    "reads a labelled line: $about",
+    ({ text, label, expected }) => {
+      expect(readLabelled(text, label)).toBe(expected);
+    },
+  );
+
+  it.each(shared.part)("reads a part: $about", ({ text, name, expected }) => {
+    expect(readPart(text, name)).toBe(expected);
   });
 
-  it("takes the first section with text and skips empty ones", () => {
-    const body = "## Aussehen\n\n## Wesen\nx\n## Aussehen\nGroß.\n";
-    expect(readSection(body, "Aussehen")).toBe("Groß.");
-  });
+  it.each(shared.append)(
+    "appends to $text",
+    ({ text, heading, section, expected }) => {
+      expect(appendSection(text, heading, section)).toBe(expected);
+    },
+  );
 
-  it("returns null without a section or without text", () => {
-    expect(readSection("", "Aussehen")).toBeNull();
-    expect(readSection("Aussehen\nGroß.", "Aussehen")).toBeNull();
-    expect(readSection(TEMPLATE, "Aussehen")).toBeNull();
-    expect(readSection("##Aussehen\nx", "Aussehen")).toBeNull();
-    expect(readSection("####### Aussehen\nx", "Aussehen")).toBeNull();
-  });
+  it.each(shared.put)(
+    "puts ($mode): $about",
+    ({ text, heading, section, mode, expected }) => {
+      expect(putSection(text, heading, section, mode)).toBe(expected);
+    },
+  );
 
-  it("works with Windows line endings", () => {
-    expect(
-      readSection("## Aussehen\r\nGroß.\r\n## Wesen\r\n", "Aussehen"),
-    ).toBe("Groß.");
-  });
-});
-
-describe("appending a section (step 8.4)", () => {
-  it("starts a text or follows after a blank line", () => {
-    expect(appendSection("", "Aussehen", " Groß. ")).toBe(
-      "## Aussehen\n\nGroß.\n",
-    );
-    expect(appendSection("Wirtin.\n\n", "Aussehen", "Groß.")).toBe(
-      "Wirtin.\n\n## Aussehen\n\nGroß.\n",
-    );
-    expect(appendSection("A\r\n", "B", "c")).toBe("A\r\n\r\n## B\r\n\r\nc\r\n");
-  });
-});
-
-describe("putting text into a section (step 8.4)", () => {
-  it("appends the section when it is missing", () => {
-    expect(putSection("Kael.\n", "Aussehen", "Groß.", "replace")).toBe(
-      "Kael.\n\n## Aussehen\n\nGroß.\n",
-    );
-    expect(putSection("Kael.\n", "Aussehen", "Groß.", "append")).toBe(
-      "Kael.\n\n## Aussehen\n\nGroß.\n",
-    );
-  });
-
-  it("fills an empty section of the template and keeps the rest", () => {
-    expect(putSection(TEMPLATE, "Aussehen", "Groß.", "replace")).toBe(
-      "## Aussehen\n\nGroß.\n\n## Wesen und Geschichte\n",
-    );
-    expect(putSection(TEMPLATE, "Aussehen", "Groß.", "append")).toBe(
-      "## Aussehen\n\nGroß.\n\n## Wesen und Geschichte\n",
-    );
-  });
-
-  it("replaces the text including subsections and keeps what follows", () => {
-    const body =
-      "Vorn.\n\n## Aussehen\n\nAlt.\n### Kleidung\nMantel.\n\n## Wesen\nTreu.\n";
-    expect(putSection(body, "aussehen", "Neu.", "replace")).toBe(
-      "Vorn.\n\n## Aussehen\n\nNeu.\n\n## Wesen\nTreu.\n",
-    );
-  });
-
-  it("adds below the old text, in the same section", () => {
-    const body = "## Aussehen\nAlt.\n\n\n## Wesen\nTreu.\n";
-    expect(putSection(body, "Aussehen", "Neu.", "append")).toBe(
-      "## Aussehen\nAlt.\n\nNeu.\n\n\n## Wesen\nTreu.\n",
-    );
-  });
-
-  it("works at the end of a text without a final line break", () => {
-    expect(putSection("## Aussehen\nAlt.", "Aussehen", "Neu.", "append")).toBe(
-      "## Aussehen\nAlt.\n\nNeu.\n",
-    );
-    expect(putSection("## Aussehen\nAlt.", "Aussehen", "Neu.", "replace")).toBe(
-      "## Aussehen\n\nNeu.\n",
-    );
-    expect(putSection("## Aussehen", "Aussehen", "Neu.", "replace")).toBe(
-      "## Aussehen\n\nNeu.\n",
-    );
-  });
-
-  it("keeps the line endings of the text", () => {
-    expect(
-      putSection(
-        "## Aussehen\r\n\r\n## Wesen\r\n",
-        "Aussehen",
-        "Groß.",
-        "replace",
-      ),
-    ).toBe("## Aussehen\r\n\r\nGroß.\r\n\r\n## Wesen\r\n");
-  });
-
-  it("takes the first section with text and removes empty duplicates", () => {
-    const body = "## Aussehen\n\n## Wesen\nx\n## Aussehen\nAlt.\n## Aussehen\n";
-    expect(putSection(body, "Aussehen", "Neu.", "replace")).toBe(
-      "## Wesen\nx\n## Aussehen\n\nNeu.\n",
-    );
-  });
-
-  it("fills the first of several empty duplicates", () => {
-    const body = "## Aussehen\n## Wesen\n## Aussehen\n";
-    expect(putSection(body, "Aussehen", "Neu.", "replace")).toBe(
-      "## Aussehen\n\nNeu.\n\n## Wesen\n",
-    );
-  });
-
-  it("leaves a nested duplicate inside the replaced section alone", () => {
-    const body = "## Aussehen\nAlt.\n### Aussehen\n";
-    expect(putSection(body, "Aussehen", "Neu.", "replace")).toBe(
-      "## Aussehen\n\nNeu.\n",
-    );
+  it("names the looks as the server does", () => {
+    expect(shared.categories.figur).toContain(APPEARANCE);
   });
 });
 
@@ -156,6 +89,15 @@ describe("removing and renaming a section (step 8.4)", () => {
   it("returns the text unchanged without such a section", () => {
     expect(removeSection("A.\n", "Geo")).toBe("A.\n");
     expect(renameSection("A.\n", "Geo", "Neu")).toBe("A.\n");
+  });
+
+  it("leaves headings in fenced code and closing hashes alone (step 9.1)", () => {
+    expect(
+      removeSection("## Geo ##\nx\n```\n## Geo\n```\n## Rest\n", "Geo"),
+    ).toBe("## Rest\n");
+    expect(renameSection("```\n## Alt\n```\n## Alt\n", "Alt", "Neu")).toBe(
+      "```\n## Alt\n```\n## Neu\n",
+    );
   });
 
   it("renames the heading and keeps its level and line ending", () => {

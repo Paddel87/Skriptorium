@@ -1,5 +1,10 @@
 import type { CanonEntry } from "./api";
 
+/**
+ * Finding names and aliases of canon entries in a text. The same rule as `canon/names.py` in the
+ * server (step 9.1, ADR-091); both sides are checked against the shared cases in
+ * `tests/shared/names.json`.
+ */
 const WORD_CHARACTER = /[\p{L}\p{N}]/u;
 
 /**
@@ -36,16 +41,7 @@ export function mentionRanges(
   text: string,
   entries: readonly CanonEntry[],
 ): Mention[] {
-  const labels = entries
-    .flatMap((entry) =>
-      [entry.name, ...entry.aliases].map((label) => ({
-        label,
-        lower: label.toLocaleLowerCase("de"),
-        entry,
-      })),
-    )
-    .filter((item) => item.label !== "")
-    .sort((a, b) => b.label.length - a.label.length);
+  const labels = labelsOf(entries);
   const found: Mention[] = [];
   for (let at = text.indexOf("@"); at !== -1; at = text.indexOf("@", at + 1)) {
     if (at > 0 && WORD_CHARACTER.test(text.charAt(at - 1))) {
@@ -72,7 +68,8 @@ export function mentionRanges(
 /**
  * Length of the mention when a name or alias of `length` characters starts `rest`: the name
  * itself if no letter or digit follows, the name with a genitive „s“ (`@Kaels Hammer`, owner,
- * step 5.23) if only that follows, otherwise 0 – the name is part of a longer word.
+ * step 5.23; only a small „s“, also in the server since step 9.1) if only that follows,
+ * otherwise 0 – the name is part of a longer word.
  */
 function labelEnd(rest: string, length: number): number {
   if (!WORD_CHARACTER.test(rest.charAt(length))) {
@@ -85,6 +82,59 @@ function labelEnd(rest: string, length: number): number {
     return length + 1;
   }
   return 0;
+}
+
+/**
+ * Every place a name or alias of `entries` stands in the text as a whole word, with or without
+ * `@`, in order and without overlap; the longest name wins (step 9.1, as `canon.name_pattern`).
+ */
+export function nameRanges(
+  text: string,
+  entries: readonly CanonEntry[],
+): Mention[] {
+  const labels = labelsOf(entries);
+  const found: Mention[] = [];
+  let at = 0;
+  while (at < text.length) {
+    if (at > 0 && WORD_CHARACTER.test(text.charAt(at - 1))) {
+      at += 1;
+      continue;
+    }
+    const rest = text.slice(at);
+    let length = 0;
+    const hit = labels.find((item) => {
+      if (
+        rest.slice(0, item.label.length).toLocaleLowerCase("de") !== item.lower
+      ) {
+        return false;
+      }
+      length = labelEnd(rest, item.label.length);
+      return length > 0;
+    });
+    if (hit === undefined) {
+      at += 1;
+      continue;
+    }
+    found.push({ from: at, to: at + length, entry: hit.entry });
+    at += length;
+  }
+  return found;
+}
+
+/** Names and aliases of `entries`, the longest first. */
+function labelsOf(
+  entries: readonly CanonEntry[],
+): { label: string; lower: string; entry: CanonEntry }[] {
+  return entries
+    .flatMap((entry) =>
+      [entry.name, ...entry.aliases].map((label) => ({
+        label,
+        lower: label.toLocaleLowerCase("de"),
+        entry,
+      })),
+    )
+    .filter((item) => item.label !== "")
+    .sort((a, b) => b.label.length - a.label.length);
 }
 
 /** A name or alias written without `@`, offered as a suggestion (step 5.1, FR-014). */
@@ -109,17 +159,7 @@ export function suggestions(
 ): Suggestion[] {
   const mentions = mentionRanges(text, entries);
   const named = new Set(mentions.map((mention) => mention.entry.id));
-  const labels = entries
-    .filter((entry) => !named.has(entry.id))
-    .flatMap((entry) =>
-      [entry.name, ...entry.aliases].map((label) => ({
-        label,
-        lower: label.toLocaleLowerCase("de"),
-        entry,
-      })),
-    )
-    .filter((item) => item.label !== "")
-    .sort((a, b) => b.label.length - a.label.length);
+  const labels = labelsOf(entries.filter((entry) => !named.has(entry.id)));
   const found = new Map<string, Suggestion>();
   let at = 0;
   while (at < text.length) {

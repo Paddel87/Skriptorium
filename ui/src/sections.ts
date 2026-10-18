@@ -1,11 +1,23 @@
 /**
  * Sections of a Markdown text (step 8.4, ADR-083). A section starts at a heading of any level
  * (`#` to `######`) and reaches up to the next heading of the same or a higher level, so
- * subsections (`### Kleidung` under `## Aussehen`) belong to it. All functions are pure and leave
- * everything outside the section as it was, byte for byte (line endings, blank lines).
+ * subsections (`### Kleidung` under `## Aussehen`) belong to it. A closing run of `#` after a
+ * space is not part of the heading text; headings inside fenced code blocks do not count (step
+ * 9.1). All functions are pure and leave everything outside the section as it was, byte for byte
+ * (line endings, blank lines).
+ *
+ * The same rule as `canon/sections.py` in the server (step 9.1, ADR-091, rule 003); both sides are
+ * checked against the shared cases in `tests/shared/sections.json`.
  */
 
-const HEADING = /^(#{1,6})[ \t]+(.*?)[ \t]*$/;
+/** The looks of a figure (ADR-078); one of the fixed sections the server keeps per category. */
+export const APPEARANCE = "Aussehen";
+
+// Only the start is a pattern; the rest is cut with string operations, because a pattern for the
+// closing hashes backtracks on long runs of spaces (as in the server, review of step 6.8).
+const HEADING_START = /^(#{1,6})[ \t]+/;
+const FENCE = /^[ \t]*(?:```|~~~)/;
+const LINE_BREAK = /[\r\u2028\u2029]/;
 
 /** What to do with a section that already has text. */
 export type SectionMode = "replace" | "append";
@@ -25,11 +37,54 @@ function linesOf(markdown: string): string[] {
 }
 
 function headingOf(line: string): { level: number; text: string } | null {
-  const match = HEADING.exec(line.replace(/\r?\n$/, ""));
-  if (match === null) {
+  const bare = line.replace(/\r?\n$/, "");
+  const start = HEADING_START.exec(bare);
+  if (start === null) {
     return null;
   }
-  return { level: (match[1] ?? "").length, text: match[2] ?? "" };
+  const rest = bare.slice(start[0].length);
+  if (LINE_BREAK.test(rest)) {
+    return null;
+  }
+  const level = (start[1] ?? "").length;
+  const text = trimTabsAndSpaces(rest);
+  const open = trimHashes(text);
+  if (open === "") {
+    return { level, text: "" };
+  }
+  return open !== text && /[ \t]$/.test(open)
+    ? { level, text: trimTabsAndSpaces(open) }
+    : { level, text };
+}
+
+/** Level and text of each line that is a heading, outside fenced code blocks. */
+function headingsOf(
+  lines: readonly string[],
+): ({ level: number; text: string } | null)[] {
+  let inFence = false;
+  return lines.map((line) => {
+    if (FENCE.test(line)) {
+      inFence = !inFence;
+      return null;
+    }
+    return inFence ? null : headingOf(line);
+  });
+}
+
+function trimTabsAndSpaces(text: string): string {
+  let end = text.length;
+  while (end > 0 && (text[end - 1] === " " || text[end - 1] === "\t")) {
+    end -= 1;
+  }
+  return text.slice(0, end);
+}
+
+function trimHashes(text: string): string {
+  let end = text.length;
+  while (end > 0 && text[end - 1] === "#") {
+    end -= 1;
+  }
+  return text.slice(0, end);
 }
 
 function isBlank(line: string): boolean {
@@ -42,15 +97,15 @@ function same(a: string, b: string): boolean {
 
 /** All sections called `heading` (any case, any level), in order. */
 function sectionsNamed(lines: readonly string[], heading: string): Found[] {
+  const headings = headingsOf(lines);
   const found: Found[] = [];
-  lines.forEach((line, start) => {
-    const head = headingOf(line);
+  headings.forEach((head, start) => {
     if (head === null || !same(head.text, heading)) {
       return;
     }
     let end = start + 1;
     while (end < lines.length) {
-      const next = headingOf(lines[end] ?? "");
+      const next = headings[end] ?? null;
       if (next !== null && next.level <= head.level) {
         break;
       }
@@ -82,6 +137,26 @@ export function readSection(markdown: string, heading: string): string | null {
     }
   }
   return null;
+}
+
+/** The text after a list label such as `- **Aussehen:** …`, or `null` without one (7.16). */
+export function readLabelled(markdown: string, label: string): string | null {
+  for (const line of markdown.split("\n")) {
+    const plain = line
+      .replace(/^\s*[-*]\s+/, "")
+      .replace(/\*\*/g, "")
+      .trim();
+    if (plain.toLowerCase().startsWith(`${label.toLowerCase()}:`)) {
+      const text = plain.slice(label.length + 1).trim();
+      return text === "" ? null : text;
+    }
+  }
+  return null;
+}
+
+/** A part of an entry: the section `name`, else the labelled line, else `null` (step 9.1). */
+export function readPart(markdown: string, name: string): string | null {
+  return readSection(markdown, name) ?? readLabelled(markdown, name);
 }
 
 /** `markdown` with a new `## heading` section at its end, separated by a blank line. */

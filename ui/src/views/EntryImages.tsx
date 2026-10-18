@@ -9,6 +9,7 @@ import { api, describeError, type CanonEntry } from "../api";
 import { base64, shrinkImage } from "../files";
 import { ErrorText } from "./Common";
 import { appearanceOf, entryPrompt } from "../imagePrompts";
+import { APPEARANCE } from "../sections";
 import { ImageDescription } from "./ImageDescription";
 import { ImageGenerate } from "./ImageGenerate";
 import { SectionConflict } from "./SectionConflict";
@@ -235,7 +236,7 @@ export function EntryImages({
               onTakeOver={async (text) => {
                 // The current text, in case it changed elsewhere meanwhile.
                 const fresh = await api.entry(entry.world, entry.id);
-                const body = await place(fresh.body, "Aussehen", text);
+                const body = await place(fresh.body, APPEARANCE, text);
                 if (body === null) {
                   return false;
                 }
