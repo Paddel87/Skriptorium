@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 8 – Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung (Umsetzung), begonnen 2026-10-13 (ADR-080, ADR-081); Phase 7 abgeschlossen 2026-10-13. Fortschritt: 12 von 13 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
+- **Projektphase:** Phase 9 – Verlässlicher Kanon, Bilder und Verwaltung (Umsetzung), begonnen 2026-10-18 (ADR-089, ADR-090); Phase 8 abgeschlossen 2026-10-18. Fortschritt: 0 von 15 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
 - **Version:** v1.0.0 – erstes produktives Release (2026-10-11, ADR-058); davor v0.1.0 als Vorabversion (ADR-043)
 - **Status:** In Betrieb
 - **Letzte Änderung:** 2026-10-13
@@ -100,18 +100,9 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 
 ## Nächste Schritte
 
-- ✅ **Phase 7** (abgeschlossen 2026-10-13): Zeitstrahl (ADR-069), Schreibweise folgt der Geschichte (ADR-070), E-Book mit Titelbild (ADR-071, ADR-075), Aussehen „Buch“, Bilder an Kanon-Einträgen, Karten mit Zoom und Markierungen, Bilder erzeugen und beschreiben lassen, Abschnitt „Aussehen“ (ADR-072 bis ADR-079). Bewertung am Phasenende: [`docs/research/bewertung-phase-7.md`](docs/research/bewertung-phase-7.md).
-- ✅ **8.1–8.3:** Umbau ohne sichtbare Änderung – Kanon-Dienst und Kartenansicht aufgeteilt, fehlende Tests, höhere Mindestwerte (ADR-080, ADR-082) – erledigt 2026-10-13.
-- ✅ **8.4:** Übernehmen ersetzt Abschnitte statt sie zu verdoppeln, neue Vorlage für Figuren (ADR-083) – erledigt 2026-10-13.
-- ✅ **8.5:** Passendere Vorlagen für „Bild erzeugen“ (ADR-084) – erledigt 2026-10-13.
-- ✅ **8.6:** Kapitel-Kurzfassung nur mit dem Stand davor (ADR-085) – erledigt 2026-10-13.
-- ✅ **8.7:** Weltenbauer kennt Regeln und Zeitlinie im Wortlaut (ADR-086) – erledigt 2026-10-13.
-- ✅ **8.8:** Weltenbauer behält das Gespräch nach „Als Kanon übernehmen“ – erledigt 2026-10-13.
-- ✅ **8.9:** Weltenbauer aus dem Manuskript (ADR-087) – erledigt 2026-10-18 (von dir an einer echten Geschichte ausprobiert).
-- ✅ **8.10:** Zeitlinie mit Jahr, Datum und Uhrzeit – erledigt 2026-10-13.
-- ✅ **8.11:** Verweise zwischen Kanon-Einträgen (ADR-088) – erledigt 2026-10-18 (Probe nach Regel-002 bestanden, von dir bestätigt).
-- ✅ **8.12:** Erkundung „wandernde Figuren“ – erledigt 2026-10-13 ([Bericht](docs/research/wandernde-figuren.md)); nächster Schritt: du probierst eine Gast-Figur aus, danach Option A (V.34).
-- ⚪ **8.13:** Planung der nächsten Ausbaustufe mit Abschluss von Phase 8 – als Nächstes; dabei deine Befunde vom 2026-10-15/16 durchgehen (V.35: Herkunft von Bildern, gegliederte Figuren, Verbindungen, Karten, Löschen/Archivieren, Modelle je Aufgabe, Bild zu Bild), V.36 (Cache-Treffer der KI-Anbieter festhalten) und V.37 (Verbrauchsstatistik je Welt und Geschichte).
+- ✅ **Phase 8** (abgeschlossen 2026-10-18): Umbau von Kanon-Dienst und Kartenansicht mit höheren Mindestwerten der Tests, Übernehmen ersetzt Abschnitte, passendere Bildvorlagen, Kurzfassung nur mit dem Stand davor, Weltenbauer mit Regeln und Zeitlinie, aus dem Manuskript und mit Gespräch über die Übernahme hinweg, Zeitlinie mit Datum und Uhrzeit, Verweise zwischen Kanon-Einträgen (ADR-080 bis ADR-088). Bewertung am Phasenende: [`docs/research/bewertung-phase-8.md`](docs/research/bewertung-phase-8.md).
+- ⚪ **9.1–9.2:** Fundament – Programm und KI finden Teile eines Eintrags wie „Aussehen“ verlässlich über eine gemeinsame Regel; End-to-End-Tests für die Abläufe der Phasen 6–8 (ADR-089).
+- ⚪ **9.3–9.14:** gegliederte Einträge je Art, Beziehungen mit Art und Rückverweis; Bilder vom Bedarf her, Karte aus den Orten, Herkunft der Bilder, Modell je Aufgabe, Bild zu Bild; Löschen oder Archivieren, Cache-Treffer, Verbrauchsstatistik je Welt und Geschichte; Erkundung zu Quellen und Recherche; Gast-Figuren ausbauen (nach deiner Probe); Kontexttreue erneut prüfen (ADR-090).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).
