@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from skriptorium.canon import CanonService, InvalidInput, NotFound
+from skriptorium.canon import APPEARANCE, SECTIONS, CanonService, InvalidInput, NotFound
 from skriptorium.context import (
     PROPOSAL_FENCE,
     ContextBuilder,
@@ -169,6 +169,13 @@ def test_unknown_world_reference_or_budget(builder: ContextBuilder) -> None:
         builder.build_worldbuilder(WORLD, [("user", "x")], budget=0)
     with pytest.raises(ContextTooLarge):
         builder.build_worldbuilder(WORLD, [("user", "Wort " * 5000)], budget=2000)
+
+
+def test_the_frame_asks_for_the_fixed_sections_of_the_canon(builder: ContextBuilder) -> None:
+    """Step 9.1 (rule 003): the sections the world builder asks for are those of the one list."""
+    system = builder.build_worldbuilder(WORLD, [("user", "x")]).messages[0].content
+    for name in (APPEARANCE, *SECTIONS["gegenstand"]):
+        assert f"`### {name}`" in system
 
 
 def test_figures_are_proposed_with_the_section_aussehen(builder: ContextBuilder) -> None:

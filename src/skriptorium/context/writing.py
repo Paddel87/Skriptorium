@@ -1,12 +1,11 @@
 """Parts of the request for writing on: sources in the order of precedence (ADR-003, step 3.2)."""
 
 import math
-import re
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 from typing import Final, Literal
 
-from skriptorium.canon import CanonEntry, NotFound, World
+from skriptorium.canon import CanonEntry, NotFound, World, name_pattern
 from skriptorium.context.parts import (
     CHARS_PER_TOKEN,
     SAFETY_MARGIN,
@@ -45,11 +44,11 @@ DEFAULT_LENGTH: Final[Length] = "mittel"
 def find_references(text: str, entries: Sequence[CanonEntry], own: str | None = None) -> list[str]:
     """Identifiers of the entries that ``text`` names with ``@Name`` (step 8.11, ADR-088).
 
-    A name or alias of an entry of ``entries`` (one world), without regard to case; the longest
-    name wins (``@Gunda Hollt`` before ``@Gunda``) and ends at a word boundary, so punctuation
-    may follow; a genitive "s" counts as in the interface (``@Kaels``, ``ui/src/references.ts``).
-    In order of appearance, each entry once; ``own`` (the entry the text belongs to) and unknown
-    words are left out.
+    A name or alias of an entry of ``entries`` (one world), found by the rule of
+    ``canon.name_pattern`` (step 9.1): without regard to case, the longest name wins
+    (``@Gunda Hollt`` before ``@Gunda``), a genitive "s" counts (``@Kaels``). In order of
+    appearance, each entry once; ``own`` (the entry the text belongs to) and unknown words are
+    left out.
     """
     owners: dict[str, str] = {}
     for entry in entries:
@@ -58,13 +57,9 @@ def find_references(text: str, entries: Sequence[CanonEntry], own: str | None = 
                 owners.setdefault(name.strip().casefold(), entry.id)
     if not owners:
         return []
-    names = sorted(owners, key=lambda name: (-len(name), name))
-    pattern = re.compile(
-        r"(?<!\w)@(" + "|".join(re.escape(name) for name in names) + r")s?(?!\w)", re.IGNORECASE
-    )
     found: list[str] = []
-    for match in pattern.finditer(text):
-        entry_id = owners[match.group(1).casefold()]
+    for match in name_pattern(owners, mention=True).finditer(text):
+        entry_id = owners[match.group("label").casefold()]
         if entry_id != own and entry_id not in found:
             found.append(entry_id)
     return found
