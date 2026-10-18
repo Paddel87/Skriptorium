@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { api, describeError, streamDescription, type CanonEntry } from "../api";
 import { describeWriteError } from "../api/writing";
+import { APPEARANCE } from "../sections";
 import { ErrorText } from "./Common";
 import { SectionConflict } from "./SectionConflict";
 import { useSectionChoice } from "./useSectionChoice";
@@ -102,7 +103,7 @@ export function AppearanceExtract({
     try {
       // The current text, in case it changed elsewhere meanwhile.
       const fresh = await api.entry(entry.world, entry.id);
-      const body = await place(fresh.body, "Aussehen", text);
+      const body = await place(fresh.body, APPEARANCE, text);
       if (body === null) {
         setSaving(false);
         return;

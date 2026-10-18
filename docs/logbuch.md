@@ -29,6 +29,32 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-18 – [GELÖST] `ruff format` machte aus Escape-Folgen echte Sonderzeichen
+
+- Die Leerzeichen-Konstante in `canon/sections.py` stand als zwei verkettete Zeilen mit `\u00a0` usw.; `ruff format` fügte sie zu einer zusammen und schrieb dabei die Zeichen selbst hinein, `ruff check` meldete sie danach als mehrdeutig (RUF001). Lösung: Konstante aus `chr(...)` zusammengesetzt. Merken: unsichtbare Zeichen im Code nie als Escape-Folgen in verketteten Literalen.
+
+### 2026-10-18 – [GELÖST] Genitiv mit großem „S“: Server und Oberfläche waren verschieden
+
+- Beim Angleichen der Namenserkennung schlug `ui/src/references.test.ts` („@KaelS“ zählt nicht, Schritt 5.23) fehl, weil zuerst die Oberfläche an den Server angepasst war (dort zählte `@KAELS` wegen `IGNORECASE`). Gelöst in Richtung der bestätigten Regel aus 5.23: Genitiv nur mit kleinem „s“, im Server mit `(?-i:s)`. Bestehende Erwartungen unverändert.
+
+### 2026-10-18 – [BEOBACHTUNG] Figur in Vorlage-Form zerfiel beim Import
+
+- Probe vor 9.1: `# Figuren / ## Kael / ### Aussehen / ### Wesen und Geschichte` ergab die Einträge „Aussehen“ und „Wesen und Geschichte“, nicht „Kael“ – der Import kannte „Wesen und Geschichte“ nicht. Behoben mit der Namensliste aus `canon/sections.py` (Test `test_a_figure_in_the_form_of_its_template_stays_one_entry`).
+
+### 2026-10-18 – [ADR-ANGELEGT] ADR-091 Gliederung bleibt Markdown (α), Regel-003
+
+- Eigentümer per Auswahlfrage: „A – Text mit Überschriften (Empfohlen)“. β (Felder im Dateikopf) verworfen, in `docs/architecture.md` Abschnitt 8. Regel-003: Teile eines Eintrags nur über die gemeinsame Abschnittsregel. `[OPERATIV]`, in 9.1 als Vorlage vorgesehen – nicht reaktiv; Reaktiv-Quote 1/10 (ADR-082–091). Auf der Entscheidungs-Klasse vorgelegt (Opus 5.5).
+- Arbeitsweise: Neben-Session im gemeinsamen Checkout des Eigentümers; damit dort kein Branch gewechselt wird, läuft 9.1 in einem eigenen Worktree im Scratchpad (Branch `feat/9.1-gliederung-server`), die Doku-Änderungen vom Sessionstart sind dorthin umgezogen.
+
+### 2026-10-18 17:58 MESZ – [SESSIONSTART] Vorlage α/β zu 9.1
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, laut `get_session`), Entscheidungs-Klasse; Aufwand „xhigh“. 9.1 empfiehlt Entscheidung – keine Arbeit oberhalb der Empfehlung.
+- **Umgebung:** Mac des Eigentümers (macOS arm64); Neben-Session, gestartet aus der Session des Eigentümers; Pre-Commit-Hook über den SessionStart-Hook eingerichtet.
+- **Stand:** vor der Mindest-Lektüre `git fetch` – `main` `fb705d8` gleich `origin/main`, kein Fast-Forward nötig.
+- **Wiedereinstieg:** Phase 9, 0 von 15; nächster Schritt 9.1 mit Vorlage α (Abschnitte in Markdown) gegen β (Felder im Dateikopf). Keine aktiven Blocker, keine offenen STOPP-Situationen, Reaktiv-Quote 1 / 10. Querschnitt: D.11 bis 2026-10-31 (Eigentümer).
+- **Kontextgröße:** über `get_usage` feststellbar (181.169 Token nach der Mindest-Lektüre).
+- **Auftrag:** Vorlage α gegen β als `ENTSCHEIDUNG ERFORDERLICH` (Kategorie 4) vorlegen; nichts bauen vor der Entscheidung.
+
 ### 2026-10-18 17:32 MESZ – [SESSIONENDE] Phase 8 abgeschlossen, Phase 9 geplant
 
 - **Dauer:** Fortsetzung derselben Session nach dem `[SESSIONENDE]` von 15:51 MESZ (jetzt in `docs/archiv/logbuch-phase-8.md`), ca. 15:55 bis 17:32 MESZ; Session insgesamt 2026-10-18 00:48 bis 17:32 MESZ mit langen Pausen.

@@ -6,6 +6,7 @@ from skriptorium.canon.categories import CATEGORIES, Category
 from skriptorium.canon.headers import entry_from, entry_header, images_of
 from skriptorium.canon.layout import CANON, WORLDS, entry_path, is_entry_path
 from skriptorium.canon.models import KEEP, CanonEntry, Keep
+from skriptorium.canon.sections import template_for
 from skriptorium.canon.validation import checked_category, clean_aliases, required_text
 from skriptorium.canon.worlds import WorldStore
 from skriptorium.storage import (
@@ -16,11 +17,6 @@ from skriptorium.storage import (
     checked_identifier,
     slugify,
 )
-
-_ITEM_TEMPLATE = "## Zweck\n\n## Verwendung\n\n## Auswirkung\n"
-# The looks of a figure stand in a section of their own (step 7.16, ADR-078); free text goes
-# under "Wesen und Geschichte" and not under the looks (step 8.4, ADR-083).
-_FIGURE_TEMPLATE = "## Aussehen\n\n## Wesen und Geschichte\n"
 
 
 class EntryStore:
@@ -65,10 +61,11 @@ class EntryStore:
         entry_id = slugify(clean_name)
         if self.find_entry_path(world_id, entry_id) is not None:
             raise AlreadyExists(f"{world_id}/{entry_id}")
-        if checked == "gegenstand" and not body.strip():
-            body = _ITEM_TEMPLATE
-        elif checked == "figur" and not body.strip():
-            body = _FIGURE_TEMPLATE
+        # Items get Zweck, Verwendung, Auswirkung (FR-003); figures Aussehen and, for free text
+        # below the looks, Wesen und Geschichte (ADR-078, ADR-083); from the one list (ADR-091).
+        template = template_for(checked)
+        if template and not body.strip():
+            body = template
         header = entry_header({}, clean_name, clean_aliases(aliases), checked, status)
         document = self._store.write(
             entry_path(world_id, checked, entry_id), header, body, create=True

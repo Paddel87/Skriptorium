@@ -4,17 +4,18 @@
    entry; its name is the heading text. Deeper headings stay in the entry's body.
 2. A group heading is a heading whose text names a category (e.g. "Figuren", "Orte"), or a
    heading without own text that has subheadings (e.g. "Sonstiges"). Exception (step 4.16): a
-   heading whose subheadings are only the item sections Zweck, Verwendung and Auswirkung
-   (FR-003) or the figure section Aussehen (step 7.16) is an entry, even without own text.
+   heading whose subheadings are only fixed sections of an entry (Zweck, Verwendung and
+   Auswirkung, FR-003; Aussehen and Wesen und Geschichte, steps 7.16 and 9.1; the list of
+   ``canon.sections``, ADR-091) is an entry, even without own text.
    Entries below a group heading that names a category get that category; a line
    ``Kategorie: …`` in the entry takes precedence. Entries without a recognised category get none.
 3. A line ``Aliasse: …`` or ``Auch genannt: …`` gives the aliases (separated by commas or
    semicolons) and is removed from the body, as is the ``Kategorie:`` line.
 4. Text before the first heading is the introduction (appended to the world description);
    text of group headings is reported as not taken over.
-5. A heading Zweck, Verwendung, Auswirkung or Aussehen never starts an entry of its own: standing
-   on the same level as the entry before it, it becomes a section of that entry (step 7.9; the
-   world builder's model wrote them so; Aussehen since step 7.16, ADR-078).
+5. A fixed section heading never starts an entry of its own: standing on the same level as the
+   entry before it, it becomes a section of that entry (step 7.9; the world builder's model wrote
+   them so; Aussehen since step 7.16, ADR-078; Wesen und Geschichte since step 9.1, ADR-091).
 
 Headings inside fenced code blocks are ignored.
 """
@@ -24,12 +25,11 @@ from dataclasses import dataclass, field
 from typing import Final
 
 from skriptorium.canon.categories import Category, category_for
+from skriptorium.canon.sections import is_section_name
 
 # Only the start is a pattern; the end is cut with string operations, because a pattern for
 # the closing hashes backtracks cubically on long runs of spaces (review of step 6.8).
 _HEADING_START: Final = re.compile(r"(#{1,6})[ \t]")
-# Section titles of an item entry (FR-003); the canon module creates new items with them.
-_ITEM_SECTIONS: Final = frozenset({"zweck", "verwendung", "auswirkung", "aussehen"})
 _FENCE: Final = re.compile(r"^[ \t]*(```|~~~)")
 _FIELD: Final = re.compile(
     r"^[ \t]*(?:[-*][ \t]+)?(?:\*\*|__)?(aliasse|auch genannt|kategorie)[ \t]*:[ \t]*(?:\*\*|__)?"
@@ -151,7 +151,7 @@ def _attach_item_sections(section: _Section) -> None:
 
 
 def _is_item_section(section: _Section) -> bool:
-    return section.title.strip("*_: ").casefold() in _ITEM_SECTIONS
+    return is_section_name(section.title.strip("*_: "))
 
 
 def _shift(section: _Section, by: int) -> None:
@@ -161,7 +161,7 @@ def _shift(section: _Section, by: int) -> None:
 
 
 def _has_only_item_sections(section: _Section) -> bool:
-    """Whether all subheadings are the sections of an item entry (FR-003, step 4.16)."""
+    """Whether all subheadings are fixed sections of an entry (FR-003, steps 4.16 and 9.1)."""
     return bool(section.children) and all(_is_item_section(c) for c in section.children)
 
 

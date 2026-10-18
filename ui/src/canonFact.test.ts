@@ -64,6 +64,9 @@ describe("mentionedEntry", () => {
     expect(mentionedEntry("der fährmann schwieg", [KAEL])).toBe(KAEL);
     expect(mentionedEntry("Kaelion kam", [KAEL])).toBeNull();
     expect(mentionedEntry("Sie rief Kael2", [KAEL])).toBeNull();
+    // Step 9.1: the genitive counts, as with `@` references and in the server.
+    expect(mentionedEntry("Kaels Klinge glomm", [KAEL])).toBe(KAEL);
+    expect(mentionedEntry("KaelS Klinge", [KAEL])).toBeNull();
   });
 
   it("prefers the first mention, then the longest name", () => {

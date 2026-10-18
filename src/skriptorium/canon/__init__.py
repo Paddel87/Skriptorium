@@ -2,6 +2,14 @@
 
 from skriptorium.canon.categories import CATEGORIES, Category
 from skriptorium.canon.importers import TranslatedMaterial
+from skriptorium.canon.names import name_pattern
+from skriptorium.canon.sections import (
+    APPEARANCE,
+    SECTIONS,
+    put_section,
+    read_part,
+    read_section,
+)
 from skriptorium.canon.service import (
     MAX_MARKERS_PER_MAP,
     CanonEntry,
@@ -16,8 +24,10 @@ from skriptorium.canon.service import (
 from skriptorium.storage import AlreadyExists, InvalidInput, NotFound, StorageError
 
 __all__ = [
+    "APPEARANCE",
     "CATEGORIES",
     "MAX_MARKERS_PER_MAP",
+    "SECTIONS",
     "AlreadyExists",
     "CanonEntry",
     "CanonService",
@@ -32,4 +42,8 @@ __all__ = [
     "TranslatedMaterial",
     "World",
     "WorldMap",
+    "name_pattern",
+    "put_section",
+    "read_part",
+    "read_section",
 ]

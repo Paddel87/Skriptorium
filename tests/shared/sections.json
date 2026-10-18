@@ -1,0 +1,327 @@
+{
+  "_about": "Shared cases for the section rule (step 9.1, ADR-091, rule 003): read by tests/canon/test_sections.py and ui/src/sections.test.ts. A new case goes here, not into one side only.",
+  "categories": {
+    "figur": ["Aussehen", "Wesen und Geschichte"],
+    "gegenstand": ["Zweck", "Verwendung", "Auswirkung"]
+  },
+  "read": [
+    {
+      "about": "a heading of any level, in any case",
+      "text": "# aussehen\nGroß.",
+      "heading": "Aussehen",
+      "expected": "Groß."
+    },
+    {
+      "about": "a heading of any level, in any case",
+      "text": "###### AUSSEHEN\nKlein.",
+      "heading": "aussehen",
+      "expected": "Klein."
+    },
+    {
+      "about": "spaces around the heading text",
+      "text": "##   Aussehen   \nText",
+      "heading": "Aussehen",
+      "expected": "Text"
+    },
+    {
+      "about": "subsections belong to the section",
+      "text": "## Aussehen\nGroß.\n### Kleidung\nMantel.\n## Wesen\nSchweigsam.",
+      "heading": "Aussehen",
+      "expected": "Groß.\n### Kleidung\nMantel."
+    },
+    {
+      "about": "a subsection ends at the next heading of its level",
+      "text": "## Aussehen\nGroß.\n### Kleidung\nMantel.\n## Wesen\nSchweigsam.",
+      "heading": "Kleidung",
+      "expected": "Mantel."
+    },
+    {
+      "about": "a section ends at a higher heading",
+      "text": "### Kleidung\nMantel.\n# Oben\nx",
+      "heading": "Kleidung",
+      "expected": "Mantel."
+    },
+    {
+      "about": "the first section with text, empty ones skipped",
+      "text": "## Aussehen\n\n## Wesen\nx\n## Aussehen\nGroß.\n",
+      "heading": "Aussehen",
+      "expected": "Groß."
+    },
+    {
+      "about": "empty text",
+      "text": "",
+      "heading": "Aussehen",
+      "expected": null
+    },
+    {
+      "about": "no heading",
+      "text": "Aussehen\nGroß.",
+      "heading": "Aussehen",
+      "expected": null
+    },
+    {
+      "about": "the empty template",
+      "text": "## Aussehen\n\n## Wesen und Geschichte\n",
+      "heading": "Aussehen",
+      "expected": null
+    },
+    {
+      "about": "no space after the hashes",
+      "text": "##Aussehen\nx",
+      "heading": "Aussehen",
+      "expected": null
+    },
+    {
+      "about": "seven hashes are no heading",
+      "text": "####### Aussehen\nx",
+      "heading": "Aussehen",
+      "expected": null
+    },
+    {
+      "about": "Windows line endings",
+      "text": "## Aussehen\r\nGroß.\r\n## Wesen\r\n",
+      "heading": "Aussehen",
+      "expected": "Groß."
+    },
+    {
+      "about": "closing hashes are not part of the heading (9.1)",
+      "text": "## Aussehen ##\nGroß.\n## Wesen ##\nTreu.",
+      "heading": "Aussehen",
+      "expected": "Groß."
+    },
+    {
+      "about": "hashes without a space before them are part of the heading (9.1)",
+      "text": "## Aussehen#\nGroß.",
+      "heading": "Aussehen#",
+      "expected": "Groß."
+    },
+    {
+      "about": "headings in fenced code do not count (9.1)",
+      "text": "## Aussehen\nGroß.\n```\n## Wesen\n```\nMantel.\n## Wesen\nTreu.",
+      "heading": "Aussehen",
+      "expected": "Groß.\n```\n## Wesen\n```\nMantel."
+    },
+    {
+      "about": "headings in fenced code are never found (9.1)",
+      "text": "~~~\n## Aussehen\nGroß.\n~~~\n",
+      "heading": "Aussehen",
+      "expected": null
+    },
+    {
+      "about": "a long run of spaces is read quickly (9.1)",
+      "text": "## Aussehen                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                x\nGroß.",
+      "heading": "Aussehen",
+      "expected": null
+    },
+    {
+      "about": "a lone carriage return is no line end, so no heading (9.1)",
+      "text": "## Aussehen\rGroß.",
+      "heading": "Aussehen",
+      "expected": null
+    },
+    {
+      "about": "a line separator inside makes it no heading, as in JavaScript (9.1)",
+      "text": "## Aus sehen\nGroß.",
+      "heading": "Aus sehen",
+      "expected": null
+    },
+    {
+      "about": "a heading of hashes only has no text (9.1)",
+      "text": "## ##\nGroß.",
+      "heading": "##",
+      "expected": null
+    },
+    {
+      "about": "a heading of hashes only has no text (9.1)",
+      "text": "## ##\nGroß.",
+      "heading": "",
+      "expected": "Groß."
+    }
+  ],
+  "labelled": [
+    {
+      "about": "a list line with a bold label (7.16)",
+      "text": "- **Alter:** 22\n- **Aussehen:** lang, dünn.\n",
+      "label": "Aussehen",
+      "expected": "lang, dünn."
+    },
+    {
+      "about": "a plain line, any case",
+      "text": "aussehen: hell",
+      "label": "Aussehen",
+      "expected": "hell"
+    },
+    {
+      "about": "an empty label line",
+      "text": "- **Aussehen:**\n",
+      "label": "Aussehen",
+      "expected": null
+    },
+    {
+      "about": "not in the middle of a line",
+      "text": "Er sagt - Aussehen: x",
+      "label": "Aussehen",
+      "expected": null
+    }
+  ],
+  "part": [
+    {
+      "about": "the section before the labelled line",
+      "text": "- **Aussehen:** alt\n\n## Aussehen\nneu\n",
+      "name": "Aussehen",
+      "expected": "neu"
+    },
+    {
+      "about": "the labelled line without a section",
+      "text": "- **Aussehen:** lang\n",
+      "name": "Aussehen",
+      "expected": "lang"
+    },
+    {
+      "about": "an empty section falls back to the line",
+      "text": "## Aussehen\n\n## Wesen\n- Aussehen: klein\n",
+      "name": "Aussehen",
+      "expected": "klein"
+    },
+    {
+      "about": "neither",
+      "text": "Wirtin.",
+      "name": "Aussehen",
+      "expected": null
+    }
+  ],
+  "append": [
+    {
+      "text": "",
+      "heading": "Aussehen",
+      "section": " Groß. ",
+      "expected": "## Aussehen\n\nGroß.\n"
+    },
+    {
+      "text": "Wirtin.\n\n",
+      "heading": "Aussehen",
+      "section": "Groß.",
+      "expected": "Wirtin.\n\n## Aussehen\n\nGroß.\n"
+    },
+    {
+      "text": "A\r\n",
+      "heading": "B",
+      "section": "c",
+      "expected": "A\r\n\r\n## B\r\n\r\nc\r\n"
+    }
+  ],
+  "put": [
+    {
+      "about": "appends a missing section",
+      "text": "Kael.\n",
+      "heading": "Aussehen",
+      "section": "Groß.",
+      "mode": "replace",
+      "expected": "Kael.\n\n## Aussehen\n\nGroß.\n"
+    },
+    {
+      "about": "appends a missing section",
+      "text": "Kael.\n",
+      "heading": "Aussehen",
+      "section": "Groß.",
+      "mode": "append",
+      "expected": "Kael.\n\n## Aussehen\n\nGroß.\n"
+    },
+    {
+      "about": "fills the template and keeps the rest",
+      "text": "## Aussehen\n\n## Wesen und Geschichte\n",
+      "heading": "Aussehen",
+      "section": "Groß.",
+      "mode": "replace",
+      "expected": "## Aussehen\n\nGroß.\n\n## Wesen und Geschichte\n"
+    },
+    {
+      "about": "fills the template and keeps the rest",
+      "text": "## Aussehen\n\n## Wesen und Geschichte\n",
+      "heading": "Aussehen",
+      "section": "Groß.",
+      "mode": "append",
+      "expected": "## Aussehen\n\nGroß.\n\n## Wesen und Geschichte\n"
+    },
+    {
+      "about": "replaces with subsections, keeps what follows",
+      "text": "Vorn.\n\n## Aussehen\n\nAlt.\n### Kleidung\nMantel.\n\n## Wesen\nTreu.\n",
+      "heading": "aussehen",
+      "section": "Neu.",
+      "mode": "replace",
+      "expected": "Vorn.\n\n## Aussehen\n\nNeu.\n\n## Wesen\nTreu.\n"
+    },
+    {
+      "about": "adds below the old text",
+      "text": "## Aussehen\nAlt.\n\n\n## Wesen\nTreu.\n",
+      "heading": "Aussehen",
+      "section": "Neu.",
+      "mode": "append",
+      "expected": "## Aussehen\nAlt.\n\nNeu.\n\n\n## Wesen\nTreu.\n"
+    },
+    {
+      "about": "end of text without line break",
+      "text": "## Aussehen\nAlt.",
+      "heading": "Aussehen",
+      "section": "Neu.",
+      "mode": "append",
+      "expected": "## Aussehen\nAlt.\n\nNeu.\n"
+    },
+    {
+      "about": "end of text without line break",
+      "text": "## Aussehen\nAlt.",
+      "heading": "Aussehen",
+      "section": "Neu.",
+      "mode": "replace",
+      "expected": "## Aussehen\n\nNeu.\n"
+    },
+    {
+      "about": "a heading as the last line",
+      "text": "## Aussehen",
+      "heading": "Aussehen",
+      "section": "Neu.",
+      "mode": "replace",
+      "expected": "## Aussehen\n\nNeu.\n"
+    },
+    {
+      "about": "keeps the line endings",
+      "text": "## Aussehen\r\n\r\n## Wesen\r\n",
+      "heading": "Aussehen",
+      "section": "Groß.",
+      "mode": "replace",
+      "expected": "## Aussehen\r\n\r\nGroß.\r\n\r\n## Wesen\r\n"
+    },
+    {
+      "about": "first with text, empty duplicates removed",
+      "text": "## Aussehen\n\n## Wesen\nx\n## Aussehen\nAlt.\n## Aussehen\n",
+      "heading": "Aussehen",
+      "section": "Neu.",
+      "mode": "replace",
+      "expected": "## Wesen\nx\n## Aussehen\n\nNeu.\n"
+    },
+    {
+      "about": "the first of several empty duplicates",
+      "text": "## Aussehen\n## Wesen\n## Aussehen\n",
+      "heading": "Aussehen",
+      "section": "Neu.",
+      "mode": "replace",
+      "expected": "## Aussehen\n\nNeu.\n\n## Wesen\n"
+    },
+    {
+      "about": "a nested duplicate inside the section",
+      "text": "## Aussehen\nAlt.\n### Aussehen\n",
+      "heading": "Aussehen",
+      "section": "Neu.",
+      "mode": "replace",
+      "expected": "## Aussehen\n\nNeu.\n"
+    },
+    {
+      "about": "a heading in fenced code is no duplicate (9.1)",
+      "text": "## Aussehen\nAlt.\n\n```\n## Aussehen\n```\n",
+      "heading": "Aussehen",
+      "section": "Neu.",
+      "mode": "replace",
+      "expected": "## Aussehen\n\nNeu.\n"
+    }
+  ]
+}

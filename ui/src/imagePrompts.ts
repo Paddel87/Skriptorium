@@ -3,7 +3,7 @@
  * them before generating. Markdown marks are left out; long texts are cut at a sentence.
  */
 import type { CanonEntry, Story, World } from "./api";
-import { readSection } from "./sections";
+import { APPEARANCE, readPart, readSection } from "./sections";
 
 const LIMIT = 700;
 
@@ -23,7 +23,7 @@ export function entryPrompt(entry: CanonEntry): string {
 
 /** The looks written in an entry (section or labelled line), or `null` (step 7.16). */
 export function appearanceOf(body: string): string | null {
-  return readSection(body, "Aussehen") ?? labelled(body, "Aussehen");
+  return readPart(body, APPEARANCE);
 }
 
 /**
@@ -64,21 +64,6 @@ export function coverPrompt(story: Story): string {
 function joined(head: string, text: string): string {
   const plain = plainText(text);
   return plain === "" ? head : `${head}: ${cut(plain)}`;
-}
-
-/** The text after a list label such as `- **Aussehen:** …`, or `null` without one. */
-function labelled(markdown: string, label: string): string | null {
-  for (const line of markdown.split("\n")) {
-    const plain = line
-      .replace(/^\s*[-*]\s+/, "")
-      .replace(/\*\*/g, "")
-      .trim();
-    if (plain.toLowerCase().startsWith(`${label.toLowerCase()}:`)) {
-      const text = plain.slice(label.length + 1).trim();
-      return text === "" ? null : text;
-    }
-  }
-  return null;
 }
 
 function plainText(markdown: string): string {

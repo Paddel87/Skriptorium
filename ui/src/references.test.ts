@@ -1,9 +1,11 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import type { CanonEntry } from "./api";
 import {
   acceptSuggestion,
   mentionRanges,
   menuItems,
+  nameRanges,
   referencedEntries,
   suggestions,
 } from "./references";
@@ -179,5 +181,39 @@ describe("suggestions (step 5.1, FR-014)", () => {
         (e) => e.id,
       ),
     ).toEqual(["kael"]);
+  });
+});
+
+interface NameCase {
+  about: string;
+  text: string;
+  labels: string[];
+  expected: [string, string][];
+}
+
+/** The cases the interface shares with the server (step 9.1, ADR-091). */
+const shared = JSON.parse(readFileSync("tests/shared/names.json", "utf8")) as {
+  mentions: NameCase[];
+  names: NameCase[];
+};
+
+function hits(
+  find: typeof mentionRanges,
+  { text, labels }: NameCase,
+): [string, string][] {
+  const entries = labels.map((label) => entry(label, label));
+  return find(text, entries).map((hit) => [
+    text.slice(hit.from, hit.to),
+    hit.entry.name,
+  ]);
+}
+
+describe("the name rule shared with the server (step 9.1)", () => {
+  it.each(shared.mentions)("mentions: $about", (one) => {
+    expect(hits(mentionRanges, one)).toEqual(one.expected);
+  });
+
+  it.each(shared.names)("names: $about", (one) => {
+    expect(hits(nameRanges, one)).toEqual(one.expected);
   });
 });

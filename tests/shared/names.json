@@ -1,0 +1,177 @@
+{
+  "_about": "Shared cases for finding names (step 9.1, ADR-091): read by tests/canon/test_names.py and ui/src/references.test.ts. Each expected hit is [text as written, name or alias].",
+  "mentions": [
+    {
+      "about": "a name after @",
+      "text": "@Kael kommt.",
+      "labels": ["Kael"],
+      "expected": [["@Kael", "Kael"]]
+    },
+    {
+      "about": "any case",
+      "text": "Dann @kael.",
+      "labels": ["Kael"],
+      "expected": [["@kael", "Kael"]]
+    },
+    {
+      "about": "the longest name wins",
+      "text": "@Kael der Alte lacht",
+      "labels": ["Kael", "Kael der Alte"],
+      "expected": [["@Kael der Alte", "Kael der Alte"]]
+    },
+    {
+      "about": "a longer name inside a word gives way to the shorter",
+      "text": "@Kael der Altenburg",
+      "labels": ["Kael", "Kael der Alte"],
+      "expected": [["@Kael", "Kael"]]
+    },
+    {
+      "about": "genitive s",
+      "text": "@Kaels Hammer",
+      "labels": ["Kael"],
+      "expected": [["@Kaels", "Kael"]]
+    },
+    {
+      "about": "only a small genitive s (5.23)",
+      "text": "@KAELs Hammer, @KaelS Hut",
+      "labels": ["Kael"],
+      "expected": [["@KAELs", "Kael"]]
+    },
+    {
+      "about": "apostrophe after the name",
+      "text": "@Klaus' Hammer",
+      "labels": ["Klaus"],
+      "expected": [["@Klaus", "Klaus"]]
+    },
+    {
+      "about": "typographic apostrophe",
+      "text": "@Klaus’ Hut",
+      "labels": ["Klaus"],
+      "expected": [["@Klaus", "Klaus"]]
+    },
+    {
+      "about": "not inside a longer word",
+      "text": "@Kaelin kommt",
+      "labels": ["Kael"],
+      "expected": []
+    },
+    {
+      "about": "no word after the genitive",
+      "text": "@Kaelsx",
+      "labels": ["Kael"],
+      "expected": []
+    },
+    {
+      "about": "not after a letter",
+      "text": "mail@Kael",
+      "labels": ["Kael"],
+      "expected": []
+    },
+    {
+      "about": "not followed by a digit",
+      "text": "@Kael2",
+      "labels": ["Kael"],
+      "expected": []
+    },
+    {
+      "about": "an underscore is no letter",
+      "text": "_@Kael_",
+      "labels": ["Kael"],
+      "expected": [["@Kael", "Kael"]]
+    },
+    {
+      "about": "punctuation around",
+      "text": "(@Kael).",
+      "labels": ["Kael"],
+      "expected": [["@Kael", "Kael"]]
+    },
+    {
+      "about": "umlauts are letters",
+      "text": "@Ölmühle, nicht @Ölmühlen",
+      "labels": ["Ölmühle"],
+      "expected": [["@Ölmühle", "Ölmühle"]]
+    },
+    {
+      "about": "every mention in order",
+      "text": "@Kael und @Lenka, dann @Kael",
+      "labels": ["Kael", "Lenka"],
+      "expected": [
+        ["@Kael", "Kael"],
+        ["@Lenka", "Lenka"],
+        ["@Kael", "Kael"]
+      ]
+    },
+    {
+      "about": "unknown names",
+      "text": "@Niemand",
+      "labels": ["Kael"],
+      "expected": []
+    }
+  ],
+  "names": [
+    {
+      "about": "a whole word",
+      "text": "Kael kommt",
+      "labels": ["Kael"],
+      "expected": [["Kael", "Kael"]]
+    },
+    {
+      "about": "genitive s",
+      "text": "Kaels Hammer",
+      "labels": ["Kael"],
+      "expected": [["Kaels", "Kael"]]
+    },
+    {
+      "about": "only a small genitive s (5.23)",
+      "text": "KaelS Hut",
+      "labels": ["Kael"],
+      "expected": []
+    },
+    {
+      "about": "apostrophe after the name",
+      "text": "Klaus’ Hut",
+      "labels": ["Klaus"],
+      "expected": [["Klaus", "Klaus"]]
+    },
+    {
+      "about": "not inside a longer word",
+      "text": "Kaelin",
+      "labels": ["Kael"],
+      "expected": []
+    },
+    {
+      "about": "an alias in any case",
+      "text": "Der Vogt kommt",
+      "labels": ["Anselm Drach", "der Vogt"],
+      "expected": [["Der Vogt", "der Vogt"]]
+    },
+    {
+      "about": "the @ does not matter",
+      "text": "@Kael",
+      "labels": ["Kael"],
+      "expected": [["Kael", "Kael"]]
+    },
+    {
+      "about": "an underscore is no letter",
+      "text": "Kael_",
+      "labels": ["Kael"],
+      "expected": [["Kael", "Kael"]]
+    },
+    {
+      "about": "every place in order",
+      "text": "Kael, Lenka und Kael",
+      "labels": ["Kael", "Lenka"],
+      "expected": [
+        ["Kael", "Kael"],
+        ["Lenka", "Lenka"],
+        ["Kael", "Kael"]
+      ]
+    },
+    {
+      "about": "the longest name wins",
+      "text": "Gunda Hollt nickt",
+      "labels": ["Gunda", "Gunda Hollt"],
+      "expected": [["Gunda Hollt", "Gunda Hollt"]]
+    }
+  ]
+}

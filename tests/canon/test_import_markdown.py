@@ -201,3 +201,21 @@ def test_a_section_aussehen_beside_a_figure_belongs_to_it() -> None:
     ]
     only = parse_markdown("# Figuren\n\n## Kael\n### Aussehen\nHager.\n")
     assert [e.name for e in only.entries] == ["Kael"]
+
+
+def test_a_figure_in_the_form_of_its_template_stays_one_entry() -> None:
+    """Step 9.1 (ADR-091): "Wesen und Geschichte" is a fixed section like "Aussehen"; before, a
+    figure with only these two sections fell apart into entries named after them."""
+    material = parse_markdown(
+        "# Figuren\n## Kael\n### Aussehen\nGroß.\n### Wesen und Geschichte\nTreu.\n"
+    )
+    assert material.entries == (
+        ParsedEntry("Kael", "figur", (), "### Aussehen\nGroß.\n### Wesen und Geschichte\nTreu.\n"),
+    )
+
+
+def test_wesen_und_geschichte_beside_a_figure_belongs_to_it() -> None:
+    """Step 9.1: on the level of the name, as the import already does with "Aussehen"."""
+    material = parse_markdown("# Figuren\n## Kael\nWirt.\n## Wesen und Geschichte\nTreu.\n")
+    assert [entry.name for entry in material.entries] == ["Kael"]
+    assert material.entries[0].body == "Wirt.\n### Wesen und Geschichte\nTreu.\n"

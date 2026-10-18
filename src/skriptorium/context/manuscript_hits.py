@@ -16,7 +16,7 @@ from collections.abc import Iterator, Sequence
 from dataclasses import dataclass
 from typing import Final
 
-from skriptorium.canon import CanonService, InvalidInput
+from skriptorium.canon import CanonService, InvalidInput, name_pattern
 from skriptorium.context.parts import estimate_tokens
 from skriptorium.manuscript import Chapter, ManuscriptService, Story
 
@@ -147,10 +147,9 @@ def _terms(canon: CanonService, world_id: str, name: str) -> list[str]:
 
 
 def _pattern(terms: Sequence[str]) -> re.Pattern[str]:
-    """Whole-word match of any term, also in the German genitive ("Kaels", "Klaus'", also with
-    the typographic apostrophe); longest first so that a longer name wins."""
-    alternatives = "|".join(re.escape(term) for term in sorted(terms, key=lambda t: -len(t)))
-    return re.compile(rf"(?<!\w)(?:{alternatives})(?:s|['\u2019])?(?!\w)", re.IGNORECASE)
+    """Whole-word match of any term by the rule of ``canon.name_pattern`` (step 9.1), also in
+    the German genitive ("Kaels", "Klaus'"); the longest name wins."""
+    return name_pattern(terms)
 
 
 def _passages(story: Story, chapter: Chapter, pattern: re.Pattern[str]) -> Iterator[Passage]:
