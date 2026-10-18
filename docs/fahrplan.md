@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-10-18 (Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090; Phase 9 beginnt); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
 - **Laufende Phase:** Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (Phase 8 abgeschlossen 2026-10-18)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner – Phase 9 beginnt mit 9.1
+- **Aktiver Schritt:** 9.1 – α gewählt (ADR-091), umgesetzt und lokal geprüft (2026-10-18); offen: Pull Request mit grüner CI nach deiner Freigabe
 - **Nächster Schritt:** 9.1 Gliederung im Server verlässlich – zu Beginn Vorlage α (Abschnitte in Markdown) gegen β (Felder im Dateikopf), Entscheidungs-Klasse; 9.2 (End-to-End-Tests, Routine) kann daneben laufen. Offen bei dir: Probe mit einer Gast-Figur (Eingangskriterium 9.13). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
@@ -28,7 +28,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
-| ⚪ | 9.1 | Gliederung im Server verlässlich – Abschnitte und Namen | offen | KI: Vorlage α/β |
+| 🟠 | 9.1 | Gliederung im Server verlässlich – Abschnitte und Namen | in Arbeit – lokal fertig, CI offen | du: Pull Request freigeben |
 | ⚪ | 9.2 | End-to-End-Tests für die Abläufe der Phasen 6–8 | offen | KI |
 | ⚪ | 9.3 | Gegliederte Einträge je Art (B2, G1/G2) | offen | KI: nach 9.1 Vorlage mit Mockup |
 | ⚪ | 9.4 | Beziehungen mit Art und Rückverweis (B3) | offen | KI: nach 9.3 Vorlage |
@@ -192,7 +192,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 9.1: Gliederung im Server verlässlich – Abschnitte und Namenserkennung
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT – Vorlage α/β am 2026-10-18 vorgelegt (Empfehlung α, Konfidenz hoch); Eigentümer am selben Tag per Auswahlfrage: „A – Text mit Überschriften (Empfohlen)“ → ADR-091, Regel-003. Umgesetzt und lokal geprüft am selben Tag; offen für die Definition of Done: Pull Request mit grüner CI (nach Freigabe des Eigentümers)
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – zu Beginn Vorlage α (Abschnitte bleiben in Markdown, der Server kennt sie je Kategorie) gegen β (Felder im Dateikopf): Datenmodell (Kategorie 4). Der Umbau selbst bleibt innerhalb der Module, Schnittstellen höchstens additiv (ADR-089)
@@ -204,7 +204,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** canon, context, ui
 - **Reifegrad-Wirkung:** keine (Datenmodell bleibt `[BELASTBAR]` nach ADR)
 - **Artefakte:** Code, Tests, ADR
-- **Notizen:** Aus ADR-089. Trägt 9.3–9.5 und 9.13.
+- **Notizen:** Aus ADR-089. Trägt 9.3–9.5 und 9.13. Umsetzung (ADR-091): `canon/sections.py`, `canon/names.py`, gemeinsame Testfälle `tests/shared/sections.json` (47 Fälle) und `tests/shared/names.json` (27 Fälle) in Server und Oberfläche; Vorlage und Import nehmen die Abschnittsnamen aus `SECTIONS` (Import erkennt jetzt „Wesen und Geschichte“); Namenserkennung an vier Stellen auf eine Regel. Lokal: pytest 886 grün, Abdeckung 99,85 % (`canon/sections.py` und `canon/names.py` je 100 %); vitest 459 grün, 98,66 / 95,35 / 97,87 / 98,85 % (Anweisungen / Zweige / Funktionen / Zeilen); Playwright 11 grün; ruff, mypy, bandit, eslint, prettier, tsc, Pre-Commit grün; bestehende Tests ohne geänderte Erwartungen (die Fälle aus `ui/src/sections.test.ts` liegen unverändert in der gemeinsamen Datei). Anfrage beim Schreiben unverändert: `find_references` alt und neu an 274 Kombinationen, 0 Unterschiede.
 
 #### 9.2: End-to-End-Tests für die Abläufe der Phasen 6–8
 

@@ -60,6 +60,7 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Behoben (nach v1.0.0)
 
+- Figuren in der Form ihrer Vorlage beim Import (2026-10-18, Schritt 9.1, ADR-091): Stand eine Figur nur mit „Aussehen“ und „Wesen und Geschichte“ im Material, entstanden beim Import zwei falsche Einträge mit diesen Namen; jetzt bleibt es eine Figur. Beim Markieren einer Stelle „in den Kanon“ erkennt das Skriptorium einen Namen auch im Genitiv („Kaels Klinge“). Server und Oberfläche finden Abschnitte wie „Aussehen“ und Namen jetzt nach derselben Regel; deine Dateien bleiben unverändert.
 - Cursor im Anweisungsfeld (2026-10-12): Im leeren Feld saß der Cursor über und links neben dem grauen Beispieltext; jetzt steht er an der richtigen Stelle. Der Beispieltext erklärt das Feld: leer lassen zum Weiterschreiben, `@` für Kanon-Einträge.
 - Gegenstände aus dem Weltenbauer (2026-10-12, Schritt 7.9): Schrieb die KI „Zweck“, „Verwendung“ und „Auswirkung“ auf dieselbe Ebene wie den Gegenstand, entstanden beim Import vier Einträge. Diese Abschnitte gehören jetzt immer zum Eintrag davor – auch beim Import von Hand.
 
