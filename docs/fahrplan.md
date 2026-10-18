@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-10-18 (9.2 erledigt – vier End-to-End-Tests, Vertragstest Server ↔ Oberfläche, CI-Schrittnamen; PR #175; 9.1 erledigt – ADR-091, PR #173; D.19 angelegt; zuvor Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
 - **Laufende Phase:** Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (Phase 8 abgeschlossen 2026-10-18)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 9.3 Gegliederte Einträge je Art (seit 2026-10-18) – Vorlage mit Mockup in Arbeit, gebaut wird nach deiner Entscheidung
+- **Aktiver Schritt:** 9.3 Gegliederte Einträge je Art (seit 2026-10-18) – entschieden (ADR-092) und lokal umgesetzt; offen: Proben mit echter KI in einer Cloud-Session (Regel-002 und Weltenbauer), deine Bestätigung
 - **Nächster Schritt:** 9.3 Gegliederte Einträge je Art – zu Beginn Vorlage mit Mockup (Entscheidungs-Klasse); D.19 ab dem ersten CI-Lauf nach dem 2026-10-19. Offen bei dir: Probe mit einer Gast-Figur (Eingangskriterium 9.13). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
@@ -30,7 +30,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 |---|---|---|---|---|
 | ✅ | 9.1 | Gliederung im Server verlässlich – Abschnitte und Namen | erledigt 2026-10-18 (ADR-091) | – |
 | ✅ | 9.2 | End-to-End-Tests für die Abläufe der Phasen 6–8 | erledigt 2026-10-18 | – |
-| 🟠 | 9.3 | Gegliederte Einträge je Art (B2, G1/G2) | Vorlage mit Mockup in Arbeit | KI: Vorlage |
+| 🟠 | 9.3 | Gegliederte Einträge je Art (B2, G1/G2) | umgesetzt (ADR-092), Proben offen | KI: Proben in der Cloud; du: bestätigen |
 | ⚪ | 9.4 | Beziehungen mit Art und Rückverweis (B3) | offen | KI: nach 9.3 Vorlage |
 | ⚪ | 9.5 | Bilder vom Bedarf her; Karte aus den Orten (G4, B4) | offen | KI: nach 9.3 Vorlage |
 | ⚪ | 9.6 | Herkunft von Bildern (B1) | offen | KI: Vorlage |
@@ -62,7 +62,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ⚪ | D.19 | CI-Runner `ubuntu-latest` wechselt auf Ubuntu 26 | offen | KI – ab 2026-10-19, bis 2026-11-02 |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 9.15): V.20, V.21, V.23, V.24, V.33 (weiter verschoben 2026-10-18, ADR-090). In Phase 9 übernommen (2026-10-18, ADR-090): V.35 → 9.3–9.9 und 9.12, V.36 → 9.10, V.37 → 9.11, V.34 → 9.13. In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 9.15): V.20, V.21, V.23, V.24, V.33 (weiter verschoben 2026-10-18, ADR-090), V.38 (Befund in 9.3, 2026-10-18). In Phase 9 übernommen (2026-10-18, ADR-090): V.35 → 9.3–9.9 und 9.12, V.36 → 9.10, V.37 → 9.11, V.34 → 9.13. In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -225,7 +225,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 9.3: Gegliederte Einträge je Art (V.35 B2, G1/G2)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-18, Branch `feat/9.3-gegliederte-eintraege`) – Vorlage mit Mockup in Arbeit; gebaut wird erst nach der Entscheidung
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-18, Branch `feat/9.3-gegliederte-eintraege`) – entschieden mit Mockup (ADR-092) und lokal umgesetzt; offen: Probe nach Regel-002 und Probe des Weltenbauers mit echter KI (Cloud-Session, gültiger Schlüssel nur dort), Bestätigung des Eigentümers
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage und Mockup zu Beginn)
 - **Abhängigkeiten:** 9.1
 - **Freigabepflichtig:** ja – Gliederung je Kategorie ist Datenmodell-Konvention (Kategorie 4); Anfrage des Weltenbauers (Kategorie 1)
@@ -237,7 +237,8 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** canon, context, ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, ADR, Mockup
-- **Notizen:** Aus V.35 (ADR-090).
+- **Notizen:** Aus V.35 (ADR-090). Entschieden 2026-10-18 mit Mockup vorher/nachher (Formular, Figur Anselm Drach, Ort Aschturm; Testwelt Salzmark) → ADR-092. Umsetzung (Unteragent der Routine-Klasse, geprüft und nachgebessert von der bauenden KI): `canon/sections.py` – `SECTIONS` je Art, frühere Namen (`FORMER_SECTIONS`: „Wesen und Geschichte“), `is_section_name` je Art, `drop_empty_sections`, `nest_headings`; gemeinsame Liste und Vorlagen-Fälle in `tests/shared/sections.json`, Spiegel und `templateFor` in `ui/src/sections.ts`; Import erkennt die Namen nur in Einträgen der passenden Art (Gruppe oder `Kategorie:`-Zeile), bei bekannter Art reicht ein fester Abschnitt, damit eine Überschrift ohne Text ein Eintrag bleibt (eigener Abschnitt wie „Herkunft“ zerfällt nicht – Nachbesserung der bauenden KI); Formular mit Vorlage, Wechsel der Art, Hinweis, 12 Zeilen; Weltenbauer-Rahmen aus `SECTIONS`; `render` rückt die Überschriften eines Eintrags unter den Namen (Ebene 3) und lässt leere Abschnitte weg. Messung an den Testwelten: alle 52 Einträge ändern sich in der Anfrage (ihr Text beginnt mit `# Name`, wird `### Name`), +104 Zeichen gesamt, keine leeren Abschnitte. Lokal: pytest 931 (99,85 %; canon 100 %, context 99 %), vitest 485 (98,67 / 95,29 / 97,88 / 98,86 %), Playwright 15/15, ruff, mypy, bandit, eslint, prettier, tsc grün; Bildschirmfotos des echten Formulars (Desktop, Smartphone) entsprechen dem Mockup. Befund SillyTavern-Export → V.38.
+  - **Offene Proben (Cloud-Session, Branch `feat/9.3-gegliederte-eintraege`):** (1) Regel-002 mit `spikes/regel-002/lauf.py`: `VARIANTE=vorher` auf `main`, `VARIANTE=nachher` auf dem Branch, je 3 Läufe an Salzmark und Glimmergrund, Modell grok-4.6, Länge mittel; Auswertung mit `auswertung.py` – Wirkung nur, was in beiden Geschichten außerhalb der Vorher-Spannweite liegt; erwartet: keine Verschlechterung. (2) Weltenbauer mit echter Antwort in der Salzmark: je eine neue Figur, ein Ort, ein Gegenstand, eine Kultur; geprüft wird, dass die Abschnitte der Art in der Reihenfolge stehen, leere fehlen, nichts erfunden ist und die Import-Vorschau jeden Eintrag ganz lässt.
 
 #### 9.4: Beziehungen mit Art und Rückverweis (V.35 B3)
 
@@ -428,7 +429,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 9
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** V.20, V.21, V.23, V.24, V.33 (und neue V-Schritte, auch aus 9.12) in eine neue Phase überführen oder per ADR verwerfen.
+- **Zu tun:** V.20, V.21, V.23, V.24, V.33, V.38 (und neue V-Schritte, auch aus 9.12) in eine neue Phase überführen oder per ADR verwerfen.
 - **Akzeptanzkriterien:** Jeder verschobene Schritt hat einen neuen Schritt mit ID oder `[VERWORFEN]` mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
@@ -1378,6 +1379,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine (Datenmodell bleibt `[BELASTBAR]` nach ADR)
 - **Artefakte:** Code, Tests, ADR, Mockup
 - **Notizen:** Angelegt 2026-10-18. **Alte Anfragen lassen sich nicht nachträglich zuordnen** – die Zeilen enthalten bewusst weder Welt noch Geschichte (ADR-023); rückblickend wären nur die Modelle übernommener Vorschläge je Kapitel aus dem Verlauf (ADR-056) zu holen, ohne Token und Kosten. Die Statistik beginnt also mit dem Umbau; die Monatssummen bleiben vollständig. Offen für die Vorlage: Zuordnung von Weltenbauer aus dem Manuskript (8.9: Welt und Geschichte?), Bildern an Kanon-Einträgen (Welt) und Titelbildern (Geschichte); Verhalten bei Gast-Figuren (Anfrage zählt zur Geschichte, nicht zur Heimatwelt der Figur); was beim Löschen einer Welt oder Geschichte mit ihren Zeilen geschieht (B5 in V.35). Tempo (Token je Sekunde) bewusst nicht gewünscht – dafür müsste die Dauer je Anfrage gespeichert werden.
+
+#### V.38: SillyTavern-Export liest „Wesen“ über die Abschnittsregel
+
+- **Status:** ⏸️ VERSCHOBEN → 9.15 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 9.15 (Befund in 9.3, 2026-10-18; neue Punkte während Phase 9 → Landeplatz 9.15, ADR-090)
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
+- **Abhängigkeiten:** 9.3
+- **Freigabepflichtig:** ja – Ausgabe der Figurenkarte ändert sich (Kategorie 5, ADR-066)
+- **Empfohlene Klasse:** Entscheidung – Änderung eines per ADR festgelegten Ausgabeformats (Eskalations-Auslöser 1).
+- **Eingangskriterien:** 9.3 erledigt
+- **Anforderungen (ab Klasse M):** FR-030
+- **Zu tun:** `card_for` in `canon/importers/sillytavern.py` trennt `personality` an der wörtlichen Zeile `### Wesen` und nimmt alles danach; Abweichung von Regel-003. Seit ADR-092 legt die Vorlage `## Wesen` an (Ebene 2) – solche Figuren gehen ganz in `description`, `personality` bleibt leer; bei `### Wesen` gehen Fähigkeiten, Geschichte und Beziehungen mit in `personality`. Vorlage: `personality` = nur der Abschnitt „Wesen“ (über `canon/sections.py`), Rest in `description`; Folgen für den Rückimport (Reihenfolge der Abschnitte) prüfen.
+- **Akzeptanzkriterien:** Vorlage und ADR (Änderung zu ADR-066); Tests für beide Ebenen und den Rückimport.
+- **Betroffene Module:** canon
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, ADR
+- **Notizen:** Angelegt 2026-10-18 in 9.3 (Bericht des Unteragenten, geprüft von der bauenden KI). Bisher kein Schaden gemeldet; betrifft nur den Export als Figurenkarte.
 
 #### V.21: Veröffentlichung (öffentlicher Link zum Lesen)
 

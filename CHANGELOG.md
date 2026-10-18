@@ -6,6 +6,8 @@ Alle nutzerrelevanten Änderungen werden hier festgehalten. Format angelehnt an 
 
 ### Hinzugefügt (nach v1.0.0)
 
+- Feste Abschnitte je Art (2026-10-18, Schritt 9.3, ADR-092): „Neuer Eintrag“ zeigt die Abschnitte der gewählten Art schon im Textfeld – Figur: Aussehen, Wesen, Fähigkeiten, Geschichte, Beziehungen; Ort: Lage, Aussehen, Bewohner, Geschichte; Gegenstand: Aussehen, Zweck, Verwendung, Auswirkung; Kultur: Gesellschaft, Glaube und Bräuche, Geschichte. Freier Text davor, eigene und leere Abschnitte bleiben erlaubt; vorhandene Einträge bleiben, wie sie sind. Der Weltenbauer schreibt neue und überarbeitete Einträge in diese Abschnitte, der Import erkennt sie. In der Anfrage an die KI stehen die Abschnitte eines Eintrags jetzt unter seinem Namen, leere fallen weg.
+
 - Verweise zwischen Kanon-Einträgen (2026-10-13, Schritt 8.11, ADR-088): Schreibst du im Text eines Eintrags `@Name`, kommt der genannte Eintrag beim Schreiben mit, sobald du den ersten per `@` ansprichst oder er zu einer geführten Figur gehört (im Rahmen des Budgets). Eine Regel mit der Zeile „Gilt nur in: @Ort“ gilt für die KI nur dort. Der Weltenbauer verknüpft Einträge selbst so, und in der Kanon-Ansicht führt `@Name` per Klick zum Eintrag.
 
 - Zeitlinie mit Jahr, Datum und Uhrzeit (2026-10-13, Schritt 8.10): Der Zeitstrahl erkennt Jahr, Datum („3.5.“, „3. Mai“) und Uhrzeit („14:30 Uhr“, „14 Uhr“) so, wie du sie schreibst, und sortiert danach – „14:30 Uhr“ landet nicht mehr bei Jahr 14. Ereignisse sind nach Jahren gruppiert, Datum und Uhrzeit stehen als kleine Marke davor; Ereignisse ohne Jahr stehen in einer eigenen Gruppe. Deine Einträge und was die KI liest, bleiben unverändert.

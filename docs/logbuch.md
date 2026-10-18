@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-18 – [BEOBACHTUNG] 9.3 lokal umgesetzt; Messung der Anfrage an den Testwelten
+
+- Umsetzung von ADR-092 durch einen Unteragenten der Routine-Klasse (Sonnet, ca. 14 min, 72 Werkzeugaufrufe), geprüft von der bauenden KI. Lokal grün: pytest 931 (99,85 %; canon 100 %, context 99 %), vitest 485 (98,67 / 95,29 / 97,88 / 98,86 %), Playwright 15/15, ruff, mypy, bandit, eslint, prettier, tsc. Bildschirmfotos des echten Formulars (Desktop, Smartphone; Figur und Wechsel auf Ort) entsprechen dem Mockup.
+- Messung `render` alt gegen neu an den 52 Einträgen von Salzmark und Glimmergrund: alle 52 ändern sich, weil ihr Text mit `# Name` beginnt (wird `### Name`); +104 Zeichen gesamt; keine leeren Abschnitte, nichts erreicht Ebene 6. Die Anfrage beim Schreiben ändert sich also in beiden Testgeschichten – die Probe nach Regel-002 misst genau das.
+- Vertragsdatei: Gegenstand und Kultur bekommen die neue Vorlage; geschätzte Token beim Schreiben 1.477 → 1.450 (leere Abschnitte fallen weg), beim Weltenbauer 816 → 994 (längerer Rahmen, ca. +180 Token je Antwort).
+- Befund SillyTavern-Export: trennt „Wesen“ an der wörtlichen Zeile `### Wesen` (Abweichung von Regel-003); mit der neuen Vorlage (`## Wesen`) bleibt `personality` leer → V.38, Landeplatz 9.15.
+
+### 2026-10-18 – [GELÖST] Import zerlegte eine Figur mit eigenem Zusatz-Abschnitt
+
+- Bericht des Unteragenten: Eine Überschrift ohne eigenen Text galt nur dann als Eintrag, wenn alle Unterüberschriften feste Abschnitte waren; eine Figur des Weltenbauers mit „Aussehen“, „Wesen“ und einem eigenen „Herkunft“ wäre in der Import-Vorschau in mehrere Einträge zerfallen – mit 9.3 wahrscheinlicher. Nachgebessert von der bauenden KI: Bei bekannter Art reicht ein fester Abschnitt dieser Art (`_holds_item_sections`); bei unbekannter Art bleibt die strenge Regel. Zwei Tests ergänzt.
+
 ### 2026-10-18 – [ADR-ANGELEGT] ADR-092 Feste Abschnitte je Art (9.3)
 
 - Mockup vorher/nachher (Formular „Neuer Eintrag“, Figur Anselm Drach, Ort Aschturm; Testwelt Salzmark, Desktop und Smartphone, vom Unteragenten gebaut) und vier Auswahlfragen. Eigentümer: A (Vorlage im Formular, Weltenbauer, Import; Bestand bleibt), Figur mit „Fähigkeiten“ (Aussehen · Wesen · Fähigkeiten · Geschichte · Beziehungen), übrige Arten wie vorgeschlagen, Abschnitte in der KI-Anfrage unter dem Namen mit Probe nach Regel-002. `[OPERATIV]`, in 9.3 als Vorlage vorgesehen – nicht reaktiv; Reaktiv-Quote 0/10 (ADR-083–092). Auf der Entscheidungs-Klasse vorgelegt (Opus 5.5).
