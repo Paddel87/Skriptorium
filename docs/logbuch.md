@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-18 17:32 MESZ – [SESSIONENDE] Phase 8 abgeschlossen, Phase 9 geplant
+
+- **Dauer:** Fortsetzung derselben Session nach dem `[SESSIONENDE]` von 15:51 MESZ (jetzt in `docs/archiv/logbuch-phase-8.md`), ca. 15:55 bis 17:32 MESZ; Session insgesamt 2026-10-18 00:48 bis 17:32 MESZ mit langen Pausen.
+- **Bearbeitet:** kein Produktcode. 8.9 und 8.11 bestätigt und abgeschlossen (PR #171, gemergt `ad05dce`). 8.13 erledigt: Vision-Abgleich mit Drift-Korrekturen, Onboarding-Pfad auf frischem Worktree, V.35 mit dem Eigentümer durchgegangen, Pflichtfrage mit getrennter Instanz (ADR-089), Planung von Phase 9 (ADR-090). Phase 8 abgeschlossen und archiviert, Logbuch verdichtet.
+- **Nächster Schritt:** 9.1 Gliederung im Server verlässlich – zu Beginn Vorlage α (Abschnitte in Markdown) gegen β (Felder im Dateikopf), Entscheidungs-Klasse; 9.2 (End-to-End-Tests, Routine) kann daneben laufen. Beim Eigentümer: Probe mit einer Gast-Figur (Eingangskriterium 9.13), D.11 bis 2026-10-31.
+- **Offen:** Pull Request für den Phasenabschluss (Branch `docs/8.13-phasenabschluss`) nach grüner CI zusammenführen; NFR Kontexttreue bleibt bis 9.14 `[VORLÄUFIG]`.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session` um 17:32 erneut abgefragt). 0 Schritte oberhalb der Empfehlung (8.13 empfiehlt Entscheidung). Die getrennte Bewertung lief als Unteragent mit Sonnet (Methodik, nicht Kostenabgabe; ca. 20 min, 100 Werkzeugaufrufe). Routine-Teilarbeiten (Archivierung, Logbuch-Verdichtung, README, Fahrplan-Status) per Skript im geladenen Kontext, nicht abgegeben.
+- **Kontextgröße:** über die Sitzungsabfrage nicht feststellbar; Regel „Sessiongröße“ entfiel.
+- **Sessionende-Prüfungen:** README synchron (Phase 9, 0 von 15, „Nächste Schritte“). Drift: ADR-089 und ADR-090 verweisen auf vorhandene Schritte 9.1–9.15; Modulnamen und FR-IDs der Phase 9 vorhanden; Reifegrade unverändert, `docs/architecture.md` Abschnitt 9 auf Stand ADR-088; Reaktiv-Quote 1/10 (ADR-081–090, nur ADR-082); keine aktiven Blocker; Phase 9 mit 15 Schritten (Schwelle 30). Ablaufdaten-Register: kein Vorlauf erreicht (D.1 ab 2026-11-05, mypy 2 am 2026-11-06). Archiv: Phase 8 → `docs/archiv/fahrplan-phase-8.md`; Logbuch 223 Zeilen, project-context 348 Zeilen – kein Trigger. Vision-Abgleich an der Phasengrenze in 8.13 erledigt.
+- **Abweichungen:** Das Zusammenführen von #171 auf ein bloßes „Weiter“ lehnte die Rechteprüfung ab; danach per Auswahlfrage ausdrücklich freigegeben. Erste Antwort der Session auf Englisch (Erinnerung „Antworten auf Deutsch“ angelegt).
+
 ### 2026-10-18 – [ADR-ANGELEGT] ADR-089 Pflichtfrage nach Phase 8, ADR-090 Planung Phase 9
 
 - ADR-089: gezielt umbauen (9.1 Gliederung im Server verlässlich mit Vorlage α/β, 9.2 End-to-End-Tests), Bewertung der getrennten Instanz unverändert in `docs/research/bewertung-phase-8.md`, Stellungnahme daneben. ADR-090: Phase 9 mit 15 Schritten in der Reihenfolge des Eigentümers (Fundament, Kanon, Bilder, Verwaltung, Erkundung, Gäste, Kontexttreue); V.34–V.37 übernommen, V.20, V.21, V.23, V.24, V.33 → 9.15. Kontexttreue auf Wunsch des Eigentümers nicht jetzt befördert, sondern in 9.14 neu gemessen. Beide `[STRATEGISCH]`, auf der Entscheidungs-Klasse vorgelegt (Opus 5.5); Reaktiv-Quote 1/10.
