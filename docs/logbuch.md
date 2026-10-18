@@ -29,6 +29,16 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-18 23:40 MESZ – [SESSIONENDE] 9.3 entschieden und lokal umgesetzt, Proben offen
+
+- **Dauer:** Fortsetzung nach dem `[SESSIONENDE]` von 22:10 MESZ: 9.2 zusammengeführt (PR #175, #176), dann auf „weiter“ 9.3 bis 23:40 MESZ.
+- **Bearbeitet:** 9.2 abgeschlossen (CI grün, `65a0f13`, Abschluss `2ac204b`). 9.3: Mockup vorher/nachher, Entscheidung per Auswahlfragen → ADR-092, Umsetzung (Unteragent, geprüft und nachgebessert), V.38 angelegt. Commits lokal auf `feat/9.3-gegliederte-eintraege` (`1529ac3` … `a409878`), nicht hochgeladen.
+- **Stand:** Phase 9, 2 von 15 erledigt; 9.3 🟠 umgesetzt, offen: Probe nach Regel-002 und Probe des Weltenbauers mit echter KI (Cloud-Session; Plan in den Notizen von 9.3), Bestätigung des Eigentümers. Keine offenen STOPP-Situationen, keine aktiven Blocker.
+- **Nächster Schritt:** Branch hochladen und Pull Request nach Freigabe; die Proben in einer Cloud-Session vom Branch; danach Bestätigung und Zusammenführen. Dann 9.4 (Beziehungen, baut auf dem Abschnitt „Beziehungen“).
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, laut `get_session`; Abfrage um 22:09, seither kein Modellwechsel gemeldet). 9.3 empfiehlt Entscheidung – 0 Schritte oberhalb der Empfehlung in diesem Teil. Abgegeben an Unteragenten der Routine-Klasse (Sonnet): Mockup (ca. 5 min, 37 Aufrufe) und Umsetzung (ca. 14 min, 72 Aufrufe); Vorlage, ADR, Prüfung, Nachbesserung des Imports, Doku und Commits hier.
+- **Kontextgröße:** 509.699 Token (`get_usage`), über der Grenze von 200.000; weitergearbeitet nach dem dauerhaften „weiter hier“ des Eigentümers (Abweichung nach `CLAUDE.md` Abschnitt 0, „Sessiongröße“).
+- **Sessionende-Prüfungen:** README synchron (Fortschritt 2 von 15; „Nächste Schritte“ 9.3 umgesetzt, Proben offen). Drift: ADR-092 verweist auf 9.3, 9.4, 9.5 – vorhanden; V.38 mit Landeplatz 9.15, in 9.15 und der Übersicht genannt; `docs/architecture.md` Abschnitte 7–9 auf Stand ADR-092; Modulnamen unverändert; FR-002, FR-029 unverändert erledigt (9.3 noch offen); keine aktiven Blocker und keine `[BLOCKIERT]`-Schritte; Reaktiv-Quote 0/10 (ADR-083–092); Phase 9 mit 15 Schritten (Schwelle 30). Ablaufdaten-Register: kein Vorlauf erreicht (D.1 ab 2026-11-05, mypy 2 am 2026-11-06; D.19 ab dem ersten CI-Lauf nach dem 2026-10-19). Archiv: Logbuch ca. 340 Zeilen, project-context 349 Zeilen – kein Trigger. Keine Phasengrenze. Quick-Start nicht berührt.
+
 ### 2026-10-18 – [BEOBACHTUNG] 9.3 lokal umgesetzt; Messung der Anfrage an den Testwelten
 
 - Umsetzung von ADR-092 durch einen Unteragenten der Routine-Klasse (Sonnet, ca. 14 min, 72 Werkzeugaufrufe), geprüft von der bauenden KI. Lokal grün: pytest 931 (99,85 %; canon 100 %, context 99 %), vitest 485 (98,67 / 95,29 / 97,88 / 98,86 %), Playwright 15/15, ruff, mypy, bandit, eslint, prettier, tsc. Bildschirmfotos des echten Formulars (Desktop, Smartphone; Figur und Wechsel auf Ort) entsprechen dem Mockup.
