@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-18 – [ERLEDIGT] 9.2 End-to-End-Tests für die Abläufe der Phasen 6–8
+
+- PR #175, CI grün (4 von 4; End-to-End 1 min 18 s), auf Anweisung des Eigentümers („merge“) zusammengeführt (`65a0f13`). Im CI-Protokoll nur der bekannte Hinweis „ubuntu-latest → Ubuntu 26 ab 2026-10-19“ (D.19, Lauf noch vor dem Stichtag), keine Bündelgrößen-Warnung. Auto-fix für #175 auf Wunsch des Eigentümers eingeschaltet, nicht gebraucht. Lokal zuvor: Playwright 15/15, pytest 887 (99,85 %), vitest 467 (98,66 / 95,3 / 97,87 / 98,85 %). Phase 9: 2 von 15 erledigt; nächster Schritt 9.3 (Vorlage mit Mockup, Entscheidungs-Klasse) – in einer neuen Session.
+- `gh pr merge --delete-branch` brach beim Wechsel auf das lokale `main` ab (im Haupt-Checkout belegt); der entfernte Branch blieb stehen und wurde von Hand gelöscht. Merken: aus einem Worktree heraus den entfernten Branch nach dem Merge prüfen.
+
 ### 2026-10-18 22:10 MESZ – [SESSIONENDE] 9.2 lokal fertig, Pull Request nach Freigabe
 
 - **Dauer:** 2026-10-18 21:48 bis 22:10 MESZ; Neben-Session, gestartet aus der Session des Eigentümers mit dem Auftrag 9.2.
