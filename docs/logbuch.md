@@ -29,6 +29,31 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-19 00:30 MESZ – [SESSIONENDE] Proben zu 9.3 nicht gelaufen (kein Schlüssel), Weltenbauer-Probe vorbereitet
+
+- **Dauer:** ca. 00:07 bis 00:30 MESZ (Cloud-Session).
+- **Bearbeitet:** 9.3 – Stand geprüft (Start auf `1371264`, „Fähigkeiten“ in `canon/sections.py`), Schlüssel fehlt (Eintrag 00:12). Ohne KI vorbereitet: `spikes/weltenbauer-9.3/probe.py` und README (vier Aufträge mit `@`-Verweisen, maschinelle Prüfung (a), (b), (d), Trockenlauf, Selbsttest der Prüflogik mit sechs konstruierten Antworten im Scratchpad); Vorher-Worktree auf `2ac204b` geprüft (eigener Code, Anfrage ändert sich wie erwartet: Salzmark 38 → 9 Überschriften der Ebene 1, Glimmergrund 36 → 13). Notiz bei 9.3 und „Aktueller Stand“ im Fahrplan.
+- **Stand:** Phase 9, 2 von 15; 9.3 🟠 umgesetzt, PR #177 offen; beide Proben weiterhin offen, Bestätigung des Eigentümers offen. Keine offenen STOPP-Situationen, keine aktiven Blocker (fehlender Schlüssel ist eine Frage der gewählten Umgebung, kein Blocker nach Abschnitt 10).
+- **Nächster Schritt:** Cloud-Session in der Umgebung „OPENROUTER_API_KEY“ vom Branch `scp/wizardly-ride-p7n55n`; zuerst Schlüssel prüfen, dann Regel-002 (vorher `2ac204b` im Worktree, nachher Stand des Branches – `src/` gleich `1371264`) und `uv run python spikes/weltenbauer-9.3/probe.py`, auswerten (c von Hand), festhalten.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, eingestellt und bedient laut `get_session` um 00:07 und 00:29). 9.3 empfiehlt Entscheidung – 0 Schritte oberhalb der Empfehlung; nichts an Unteragenten abgegeben (Werkzeug klein, Kontext schon geladen).
+- **Kontextgröße:** nicht feststellbar – `get_session` meldet `used_tokens` 0; Regel „Sessiongröße“ entfiel (vermerkt im `[SESSIONSTART]`).
+- **Sessionende-Prüfungen:** README synchron (2 von 15, 9.3 „Proben mit echter KI offen“, 0 Blocker) – keine Änderung. Drift: keine neuen ADRs, Schritt-IDs oder Module; Reaktiv-Quote unverändert 0 / 10; keine `[BLOCKIERT]`-Schritte; Phase 9 mit 15 Schritten. Ablaufdaten-Register: kein Vorlauf erreicht (D.19 greift ab dem ersten CI-Lauf nach dem 2026-10-19 – in dieser Session lief keine CI). Archiv: Logbuch ca. 370 Zeilen, kein Trigger. Quick-Start nicht berührt.
+
+### 2026-10-19 00:12 MESZ – [BEOBACHTUNG] Zweiter Versuch der Proben zu 9.3: Cloud-Session in der falschen Umgebung, kein Schlüssel
+
+- **Befund:** `OPENROUTER_API_KEY` ist in dieser Cloud-Session nicht gesetzt (nur Vorhandensein geprüft). Auch keine andere Variable mit „openrouter“ im Namen, keine Datei im Home-Verzeichnis; `https://openrouter.ai/api/v1/key` antwortet ohne Schlüssel mit 401, der Proxy fügt also nichts ein.
+- **Ursache:** Die Session läuft laut `get_session` in der Cloud-Umgebung „Flight_Research“ (dort ist nur ein Zugang für einen fremden Dienst hinterlegt). Laut `list_environments` gibt es eine eigene Umgebung „OPENROUTER_API_KEY“ – vermutlich die mit dem Schlüssel. Der erste Versuch scheiterte am fehlenden Branch auf GitHub, dieser an der Umgebung.
+- **Folge:** Keine der beiden Proben ist gelaufen; keine Kosten bei OpenRouter. Stand unverändert: Branch `scp/affectionate-pare-f0afee` = `1371264` ist korrekt, `canon/sections.py` enthält „Fähigkeiten“, `2ac204b` (Vorher-Stand) ist im Klon vorhanden.
+- **Für den nächsten Versuch:** Cloud-Session in der Umgebung „OPENROUTER_API_KEY“ starten und zuerst prüfen, ob `OPENROUTER_API_KEY` gesetzt ist (nur gesetzt/nicht gesetzt), bevor irgendetwas anderes läuft.
+
+### 2026-10-19 00:07 MESZ – [SESSIONSTART] Proben zu 9.3 (zweiter Versuch): Regel-002 und Weltenbauer
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, eingestellt und bedient laut `get_session`), Entscheidungs-Klasse; Aufwand „xhigh“. 9.3 empfiehlt Entscheidung – kein Schritt oberhalb der Empfehlung.
+- **Umgebung:** Cloud-Session (Linux), gestartet vom Branch `scp/affectionate-pare-f0afee` (`1371264`, gleich `feat/9.3-gegliederte-eintraege`, PR #177 offen); eigener Branch des Werkzeugs `scp/wizardly-ride-p7n55n`, zweigt von `1371264` ab. Pre-Commit-Hook über den SessionStart-Hook eingerichtet.
+- **Wiedereinstieg:** Phase 9, 2 von 15; 9.3 🟠 umgesetzt, offen: Probe nach Regel-002 (vorher `2ac204b`, nachher `1371264`, je 3 Läufe an Salzmark und Glimmergrund, grok-4.6, mittel) und Weltenbauer-Probe in der Salzmark (Figur, Ort, Gegenstand, Kultur); Eigentümer hat beide freigegeben. Keine aktiven Blocker, keine offenen STOPP-Situationen, Reaktiv-Quote 0 / 10.
+- **Kontextgröße:** `get_session` meldet `context_usage.used_tokens` 0 (vermutlich noch nicht aktualisiert); Größe damit nicht verlässlich feststellbar, Regel „Sessiongröße“ entfällt für diese Session.
+- **Auftrag:** beide Proben ausführen, auswerten und festhalten; Commits nur auf `scp/wizardly-ride-p7n55n`, kein Pull Request, nichts zusammenführen.
+
 ### 2026-10-18 23:40 MESZ – [SESSIONENDE] 9.3 entschieden und lokal umgesetzt, Proben offen
 
 - **Dauer:** Fortsetzung nach dem `[SESSIONENDE]` von 22:10 MESZ: 9.2 zusammengeführt (PR #175, #176), dann auf „weiter“ 9.3 bis 23:40 MESZ.
