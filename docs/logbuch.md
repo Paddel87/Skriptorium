@@ -29,6 +29,38 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-18 22:10 MESZ – [SESSIONENDE] 9.2 lokal fertig, Pull Request nach Freigabe
+
+- **Dauer:** 2026-10-18 21:48 bis 22:10 MESZ; Neben-Session, gestartet aus der Session des Eigentümers mit dem Auftrag 9.2.
+- **Bearbeitet:** 9.2 – vier Playwright-Tests, Vertragstest Server ↔ Oberfläche, Typ `DescribeEvent` berichtigt, CI-Schrittnamen auf die geltenden Schwellen (ADR-090). Commits lokal auf `feat/9.2-e2e-ablaeufe`, nicht hochgeladen.
+- **Stand:** Phase 9, 1 von 15 erledigt; 9.2 🟠 lokal fertig, offen ist nur das Akzeptanzkriterium „grün in der CI“. Keine offenen STOPP-Situationen, keine aktiven Blocker.
+- **Nächster Schritt:** Pull Request für `feat/9.2-e2e-ablaeufe` nach Freigabe des Eigentümers, CI grün → 9.2 erledigt, README-Fortschritt 2 von 15; fällt der Lauf auf oder nach den 2026-10-19, gleich D.19 mit prüfen. Danach 9.3 (Vorlage mit Mockup, Entscheidungs-Klasse).
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, `get_session` um 22:09 erneut abgefragt). 1 Schritt oberhalb der Empfehlung (9.2 empfiehlt Routine; Warnung zu Beginn ausgesprochen). Abgegeben an zwei Unteragenten der Routine-Klasse (Sonnet): Playwright-Tests (ca. 10 min, 51 Werkzeugaufrufe) und Vertragstest (ca. 12 min, 63 Werkzeugaufrufe); Prüfung, Typ-Berichtigung, Fake-Modellliste typisiert, Prüfkette, Doku und Commits hier.
+- **Kontextgröße:** 315.539 Token (`get_usage`), über der Grenze von 200.000 – in dieser Session beginnt kein neuer Schritt.
+- **Sessionende-Prüfungen:** README synchron („Nächste Schritte“: 9.2 lokal fertig; Fortschritt bleibt 1 von 15 bis zur grünen CI). Drift: kein neuer ADR; FR-029 und FR-035 nur Test-Spalte ergänzt, Status unverändert; Modulnamen unverändert; keine aktiven Blocker, keine `[BLOCKIERT]`-Schritte; Reaktiv-Quote 1/10 unverändert; Phase 9 mit 15 Schritten (Schwelle 30). Ablaufdaten-Register: kein Vorlauf erreicht; Zusatz an D.2 (Compiler-API in `ui/src/api/contract.test.ts`); D.19 ohne CI-Lauf in dieser Session. Archiv: Logbuch unter 300 Zeilen, project-context 349 Zeilen – kein Trigger. Keine Phasengrenze. Nicht Quick-Start-relevant (keine der Dateien aus `CLAUDE.md` Abschnitt 17); kein CHANGELOG-Eintrag (nur Tests und CI-Namen).
+
+### 2026-10-18 – [BEOBACHTUNG] Vertragstest fand `web_search` im Start der Beschreibungen
+
+- `tests/api/test_ui_contract.py` zeichnet 73 echte Antworten und Strom-Ereignisse auf; `ui/src/api/contract.test.ts` prüft sie mit der Compiler-API von `typescript` gegen die Typen in `ui/src/api/` (Gegenprobe: umbenanntes, zusätzliches, fehlendes Feld, Wert außerhalb einer Literal-Union, falscher Typ – jeweils genau die beschädigte Antwort gemeldet). Einziger Befund: Das `start`-Ereignis von „Bild/Karte beschreiben“ und „Aussehen herauslösen“ trägt `web_search`, weil der Server dafür `stream_answer` des Weltenbauers nutzt (`api/flows/worldbuilder.py`); `DescribeEvent` war der Start des Schreib-Stroms ohne das Feld. Zur Laufzeit harmlos. Berichtigt auf der Typseite (`DescribeEvent` aus `WorldbuilderEvent`) – den Server zu ändern wäre eine nicht-additive API-Änderung (Kategorie 5) gewesen.
+- Merken: Ein Vertragstest mit aufgezeichneten Antworten prüft nur die Fälle, die die Daten zeigen; Varianten (null/gesetzt, Fehlerarten) sind deshalb einzeln aufgenommen.
+
+### 2026-10-18 – [GELÖST] Reibungen beim Schreiben der Tests (9.2)
+
+- Playwright: `getByLabel("Kategorie", { exact: true })` fand das Auswahlfeld nicht (30 s Wartezeit), weil der Beschriftungstext die Optionen mitzählt → `getByRole("combobox", { name: /^Kategorie/ })`. „Beschreiben lassen“ traf auch „✨ Von der KI beschreiben lassen“ → `exact: true`.
+- Playwright: „Bild beschreiben“ braucht ein Modell, das Bilder liest; die Liste kommt sonst live von OpenRouter → in zwei Tests durch eine an `ModelList` typisierte Liste ersetzt, damit der Lauf nicht am Netz hängt.
+- Playwright: Alle Tests eines Laufs teilen ein Datenverzeichnis; feste Weltnamen vertragen kein `--repeat-each` – Wiederholung als getrennte Läufe.
+- Vertragstest: `ui/test-setup.ts` braucht jsdom (`Range`), also kein `@vitest-environment node`; Zufalls-Dateinamen standen auch in der Route und mussten dort ebenfalls ersetzt werden; eine Gast-Verbindung auf eine Figur der eigenen Welt gibt 422.
+- Eigene Reibung: Ein Python-Heredoc mit Umlauten im Terminal brach mit „Non-UTF-8 code“ ab; Skripte für Doku-Ersetzungen mit vielen Umlauten als Datei im Scratchpad ablegen.
+
+### 2026-10-18 21:48 MESZ – [SESSIONSTART] 9.2 End-to-End-Tests
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, laut `get_session`), Entscheidungs-Klasse; Aufwand „xhigh“. 9.2 empfiehlt Routine – Schritt läuft oberhalb der Empfehlung; das Schreiben der Tests (ausgabelastig) geht an einen Unteragenten der Routine-Klasse (Sonnet), Prüfung und Commit hier.
+- **Umgebung:** Mac des Eigentümers (macOS arm64); Neben-Session, gestartet aus der Session des Eigentümers, eigener Worktree (`.claude/worktrees/affectionate-pare-f0afee`), Branch `feat/9.2-e2e-ablaeufe`; Pre-Commit-Hook über den SessionStart-Hook eingerichtet.
+- **Stand:** vor der Mindest-Lektüre `git fetch` – `main` `993863d` gleich `origin/main`, kein Fast-Forward nötig.
+- **Wiedereinstieg:** Phase 9, 1 von 15; nächster Schritt 9.2. Keine aktiven Blocker, keine offenen STOPP-Situationen, Reaktiv-Quote 1 / 10. Querschnitt: D.19 (Ubuntu 26 ab 2026-10-19), D.11 bis 2026-10-31 (Eigentümer).
+- **Kontextgröße:** über `get_usage` feststellbar (189.298 Token nach der Mindest-Lektüre).
+- **Auftrag:** 9.2 umsetzen – mindestens drei neue Playwright-Tests (Weltenbauer mit Übernahme-Fenster, „Abschnitt ersetzen“, Karte oder Bild), Antwortformen gegen `ui/src/api/` ohne neues Werkzeug, CI-Schrittnamen auf die geltenden Schwellen (ADR-090); lokal committen, Pull Request erst nach Freigabe.
+
 ### 2026-10-18 20:31 MESZ – [SESSIONENDE] 9.1 erledigt
 
 - **Dauer:** 2026-10-18 17:58 bis 20:31 MESZ; Neben-Session, gestartet aus der Session des Eigentümers mit dem Auftrag „Vorlage α/β“, auf seine Frage „Können wir weitermachen?“ bis zum Abschluss von 9.1 fortgesetzt.
