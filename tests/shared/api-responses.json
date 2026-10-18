@@ -1,0 +1,1498 @@
+{
+  "createWorld": {
+    "route": "POST /api/worlds",
+    "type": "World",
+    "body": {
+      "id": "die-salzmark",
+      "name": "Die Salzmark",
+      "description": "Salz und Nebel.",
+      "maps": []
+    }
+  },
+  "createEntry": {
+    "route": "POST /api/worlds/die-salzmark/entries",
+    "type": "CanonEntry",
+    "body": {
+      "world": "die-salzmark",
+      "id": "kael",
+      "category": "figur",
+      "name": "Kael",
+      "aliases": ["Fährmann"],
+      "status": "lebt",
+      "body": "Fährmann, schweigsam.",
+      "images": []
+    }
+  },
+  "createEntryWithoutStatus": {
+    "route": "POST /api/worlds/die-salzmark/entries",
+    "type": "CanonEntry",
+    "body": {
+      "world": "die-salzmark",
+      "id": "hafen-von-grauwasser",
+      "category": "ort",
+      "name": "Hafen von Grauwasser",
+      "aliases": [],
+      "status": null,
+      "body": "Kalter Hafen.",
+      "images": []
+    }
+  },
+  "updateWorld": {
+    "route": "PATCH /api/worlds/die-salzmark",
+    "type": "World",
+    "body": {
+      "id": "die-salzmark",
+      "name": "Die Salzmark",
+      "description": "Salz, Nebel, Wind.",
+      "maps": []
+    }
+  },
+  "updateEntry": {
+    "route": "PATCH /api/worlds/die-salzmark/entries/kael",
+    "type": "CanonEntry",
+    "body": {
+      "world": "die-salzmark",
+      "id": "kael",
+      "category": "figur",
+      "name": "Kael",
+      "aliases": ["Fährmann"],
+      "status": "lebt",
+      "body": "Fährmann, schweigsam, narbig.",
+      "images": []
+    }
+  },
+  "addImage": {
+    "route": "POST /api/worlds/die-salzmark/entries/kael/images",
+    "type": "CanonEntry",
+    "body": {
+      "world": "die-salzmark",
+      "id": "kael",
+      "category": "figur",
+      "name": "Kael",
+      "aliases": ["Fährmann"],
+      "status": "lebt",
+      "body": "Fährmann, schweigsam, narbig.",
+      "images": ["kael-000000000001.png"]
+    }
+  },
+  "setMainImage": {
+    "route": "POST /api/worlds/die-salzmark/entries/kael/images/kael-000000000002.jpg/main",
+    "type": "CanonEntry",
+    "body": {
+      "world": "die-salzmark",
+      "id": "kael",
+      "category": "figur",
+      "name": "Kael",
+      "aliases": ["Fährmann"],
+      "status": "lebt",
+      "body": "Fährmann, schweigsam, narbig.",
+      "images": ["kael-000000000002.jpg", "kael-000000000001.png"]
+    }
+  },
+  "removeImage": {
+    "route": "DELETE /api/worlds/die-salzmark/entries/kael/images/kael-000000000001.png",
+    "type": "CanonEntry",
+    "body": {
+      "world": "die-salzmark",
+      "id": "kael",
+      "category": "figur",
+      "name": "Kael",
+      "aliases": ["Fährmann"],
+      "status": "lebt",
+      "body": "Fährmann, schweigsam, narbig.",
+      "images": ["kael-000000000002.jpg"]
+    }
+  },
+  "addMap": {
+    "route": "POST /api/worlds/die-salzmark/maps",
+    "type": "World",
+    "body": {
+      "id": "die-salzmark",
+      "name": "Die Salzmark",
+      "description": "Salz, Nebel, Wind.",
+      "maps": [
+        {
+          "name": "Seekarte",
+          "file": "karte-000000000003.png",
+          "markers": []
+        }
+      ]
+    }
+  },
+  "renameMap": {
+    "route": "PATCH /api/worlds/die-salzmark/maps/karte-000000000004.jpg",
+    "type": "World",
+    "body": {
+      "id": "die-salzmark",
+      "name": "Die Salzmark",
+      "description": "Salz, Nebel, Wind.",
+      "maps": [
+        {
+          "name": "Seekarte",
+          "file": "karte-000000000003.png",
+          "markers": []
+        },
+        {
+          "name": "Das Festland",
+          "file": "karte-000000000004.jpg",
+          "markers": []
+        }
+      ]
+    }
+  },
+  "setMarkers": {
+    "route": "PUT /api/worlds/die-salzmark/maps/karte-000000000003.png/markers",
+    "type": "World",
+    "body": {
+      "id": "die-salzmark",
+      "name": "Die Salzmark",
+      "description": "Salz, Nebel, Wind.",
+      "maps": [
+        {
+          "name": "Seekarte",
+          "file": "karte-000000000003.png",
+          "markers": [
+            {
+              "entry": "hafen-von-grauwasser",
+              "x": 0.25,
+              "y": 0.5
+            }
+          ]
+        },
+        {
+          "name": "Das Festland",
+          "file": "karte-000000000004.jpg",
+          "markers": []
+        }
+      ]
+    }
+  },
+  "removeMap": {
+    "route": "DELETE /api/worlds/die-salzmark/maps/karte-000000000004.jpg",
+    "type": "World",
+    "body": {
+      "id": "die-salzmark",
+      "name": "Die Salzmark",
+      "description": "Salz, Nebel, Wind.",
+      "maps": [
+        {
+          "name": "Seekarte",
+          "file": "karte-000000000003.png",
+          "markers": [
+            {
+              "entry": "hafen-von-grauwasser",
+              "x": 0.25,
+              "y": 0.5
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "worlds": {
+    "route": "GET /api/worlds",
+    "type": "World[]",
+    "body": [
+      {
+        "id": "die-salzmark",
+        "name": "Die Salzmark",
+        "description": "Salz, Nebel, Wind.",
+        "maps": [
+          {
+            "name": "Seekarte",
+            "file": "karte-000000000003.png",
+            "markers": [
+              {
+                "entry": "hafen-von-grauwasser",
+                "x": 0.25,
+                "y": 0.5
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "nebelreich",
+        "name": "Nebelreich",
+        "description": "Nebel.",
+        "maps": []
+      }
+    ]
+  },
+  "entries": {
+    "route": "GET /api/worlds/die-salzmark/entries",
+    "type": "CanonEntry[]",
+    "body": [
+      {
+        "world": "die-salzmark",
+        "id": "die-grosse-flut",
+        "category": "zeitlinie",
+        "name": "Die Große Flut",
+        "aliases": [],
+        "status": null,
+        "body": "",
+        "images": []
+      },
+      {
+        "world": "die-salzmark",
+        "id": "hafen-von-grauwasser",
+        "category": "ort",
+        "name": "Hafen von Grauwasser",
+        "aliases": [],
+        "status": null,
+        "body": "Kalter Hafen.",
+        "images": []
+      },
+      {
+        "world": "die-salzmark",
+        "id": "kael",
+        "category": "figur",
+        "name": "Kael",
+        "aliases": ["Fährmann"],
+        "status": "lebt",
+        "body": "Fährmann, schweigsam, narbig.",
+        "images": ["kael-000000000002.jpg"]
+      },
+      {
+        "world": "die-salzmark",
+        "id": "mondvolk",
+        "category": "kultur",
+        "name": "Mondvolk",
+        "aliases": [],
+        "status": null,
+        "body": "",
+        "images": []
+      },
+      {
+        "world": "die-salzmark",
+        "id": "runenklinge",
+        "category": "gegenstand",
+        "name": "Runenklinge",
+        "aliases": [],
+        "status": null,
+        "body": "## Zweck\n\n## Verwendung\n\n## Auswirkung\n",
+        "images": []
+      },
+      {
+        "world": "die-salzmark",
+        "id": "salzgesetz",
+        "category": "regel",
+        "name": "Salzgesetz",
+        "aliases": [],
+        "status": null,
+        "body": "",
+        "images": []
+      }
+    ]
+  },
+  "entry": {
+    "route": "GET /api/worlds/die-salzmark/entries/kael",
+    "type": "CanonEntry",
+    "body": {
+      "world": "die-salzmark",
+      "id": "kael",
+      "category": "figur",
+      "name": "Kael",
+      "aliases": ["Fährmann"],
+      "status": "lebt",
+      "body": "Fährmann, schweigsam, narbig.",
+      "images": ["kael-000000000002.jpg"]
+    }
+  },
+  "createStory": {
+    "route": "POST /api/worlds/die-salzmark/stories",
+    "type": "Story",
+    "body": {
+      "world": "die-salzmark",
+      "id": "die-ueberfahrt",
+      "title": "Die Überfahrt",
+      "form": "roman",
+      "perspective": "ich",
+      "controlled_characters": [],
+      "guest_links": [],
+      "facts": [],
+      "summary": "",
+      "model": null,
+      "genres": [],
+      "writing_style": {
+        "tone": [],
+        "atmosphere": [],
+        "style": [],
+        "tempo": null,
+        "explicitness": null,
+        "free": ""
+      },
+      "cover": null
+    }
+  },
+  "createStoryWithoutPerspective": {
+    "route": "POST /api/worlds/die-salzmark/stories",
+    "type": "Story",
+    "body": {
+      "world": "die-salzmark",
+      "id": "am-ufer",
+      "title": "Am Ufer",
+      "form": "kurzgeschichte",
+      "perspective": null,
+      "controlled_characters": [],
+      "guest_links": [],
+      "facts": [],
+      "summary": "",
+      "model": null,
+      "genres": [],
+      "writing_style": {
+        "tone": [],
+        "atmosphere": [],
+        "style": [],
+        "tempo": null,
+        "explicitness": null,
+        "free": ""
+      },
+      "cover": null
+    }
+  },
+  "updateStory": {
+    "route": "PATCH /api/worlds/die-salzmark/stories/die-ueberfahrt",
+    "type": "Story",
+    "body": {
+      "world": "die-salzmark",
+      "id": "die-ueberfahrt",
+      "title": "Die Überfahrt",
+      "form": "roman",
+      "perspective": "er",
+      "controlled_characters": ["kael"],
+      "guest_links": [],
+      "facts": [],
+      "summary": "",
+      "model": "x-ai/grok-4.7",
+      "genres": ["Thriller"],
+      "writing_style": {
+        "tone": ["düster", "kalt"],
+        "atmosphere": ["angespannt"],
+        "style": ["knapp"],
+        "tempo": "atemlos",
+        "explicitness": "angedeutet",
+        "free": "Kurze Absätze."
+      },
+      "cover": null
+    }
+  },
+  "addGuest": {
+    "route": "POST /api/worlds/die-salzmark/stories/die-ueberfahrt/guests",
+    "type": "Story",
+    "body": {
+      "world": "die-salzmark",
+      "id": "die-ueberfahrt",
+      "title": "Die Überfahrt",
+      "form": "roman",
+      "perspective": "er",
+      "controlled_characters": ["kael"],
+      "guest_links": [
+        {
+          "world": "nebelreich",
+          "entry": "nebelkoenig"
+        }
+      ],
+      "facts": [],
+      "summary": "",
+      "model": "x-ai/grok-4.7",
+      "genres": ["Thriller"],
+      "writing_style": {
+        "tone": ["düster", "kalt"],
+        "atmosphere": ["angespannt"],
+        "style": ["knapp"],
+        "tempo": "atemlos",
+        "explicitness": "angedeutet",
+        "free": "Kurze Absätze."
+      },
+      "cover": null
+    }
+  },
+  "removeGuest": {
+    "route": "DELETE /api/worlds/die-salzmark/stories/die-ueberfahrt/guests/nebelreich/reifpalast",
+    "type": "Story",
+    "body": {
+      "world": "die-salzmark",
+      "id": "die-ueberfahrt",
+      "title": "Die Überfahrt",
+      "form": "roman",
+      "perspective": "er",
+      "controlled_characters": ["kael"],
+      "guest_links": [
+        {
+          "world": "nebelreich",
+          "entry": "nebelkoenig"
+        }
+      ],
+      "facts": [],
+      "summary": "",
+      "model": "x-ai/grok-4.7",
+      "genres": ["Thriller"],
+      "writing_style": {
+        "tone": ["düster", "kalt"],
+        "atmosphere": ["angespannt"],
+        "style": ["knapp"],
+        "tempo": "atemlos",
+        "explicitness": "angedeutet",
+        "free": "Kurze Absätze."
+      },
+      "cover": null
+    }
+  },
+  "addFact": {
+    "route": "POST /api/worlds/die-salzmark/stories/die-ueberfahrt/facts",
+    "type": "Story",
+    "body": {
+      "world": "die-salzmark",
+      "id": "die-ueberfahrt",
+      "title": "Die Überfahrt",
+      "form": "roman",
+      "perspective": "er",
+      "controlled_characters": ["kael"],
+      "guest_links": [
+        {
+          "world": "nebelreich",
+          "entry": "nebelkoenig"
+        }
+      ],
+      "facts": [
+        {
+          "entry": "kael",
+          "fact": "Kael fürchtet das Wasser."
+        }
+      ],
+      "summary": "",
+      "model": "x-ai/grok-4.7",
+      "genres": ["Thriller"],
+      "writing_style": {
+        "tone": ["düster", "kalt"],
+        "atmosphere": ["angespannt"],
+        "style": ["knapp"],
+        "tempo": "atemlos",
+        "explicitness": "angedeutet",
+        "free": "Kurze Absätze."
+      },
+      "cover": null
+    }
+  },
+  "removeFact": {
+    "route": "DELETE /api/worlds/die-salzmark/stories/die-ueberfahrt/facts",
+    "type": "Story",
+    "body": {
+      "world": "die-salzmark",
+      "id": "die-ueberfahrt",
+      "title": "Die Überfahrt",
+      "form": "roman",
+      "perspective": "er",
+      "controlled_characters": ["kael"],
+      "guest_links": [
+        {
+          "world": "nebelreich",
+          "entry": "nebelkoenig"
+        }
+      ],
+      "facts": [
+        {
+          "entry": "kael",
+          "fact": "Kael fürchtet das Wasser."
+        }
+      ],
+      "summary": "",
+      "model": "x-ai/grok-4.7",
+      "genres": ["Thriller"],
+      "writing_style": {
+        "tone": ["düster", "kalt"],
+        "atmosphere": ["angespannt"],
+        "style": ["knapp"],
+        "tempo": "atemlos",
+        "explicitness": "angedeutet",
+        "free": "Kurze Absätze."
+      },
+      "cover": null
+    }
+  },
+  "setStorySummary": {
+    "route": "PUT /api/worlds/die-salzmark/stories/die-ueberfahrt/summary",
+    "type": "Story",
+    "body": {
+      "world": "die-salzmark",
+      "id": "die-ueberfahrt",
+      "title": "Die Überfahrt",
+      "form": "roman",
+      "perspective": "er",
+      "controlled_characters": ["kael"],
+      "guest_links": [
+        {
+          "world": "nebelreich",
+          "entry": "nebelkoenig"
+        }
+      ],
+      "facts": [
+        {
+          "entry": "kael",
+          "fact": "Kael fürchtet das Wasser."
+        }
+      ],
+      "summary": "Kael setzt über.",
+      "model": "x-ai/grok-4.7",
+      "genres": ["Thriller"],
+      "writing_style": {
+        "tone": ["düster", "kalt"],
+        "atmosphere": ["angespannt"],
+        "style": ["knapp"],
+        "tempo": "atemlos",
+        "explicitness": "angedeutet",
+        "free": "Kurze Absätze."
+      },
+      "cover": null
+    }
+  },
+  "setCover": {
+    "route": "POST /api/worlds/die-salzmark/stories/die-ueberfahrt/cover",
+    "type": "Story",
+    "body": {
+      "world": "die-salzmark",
+      "id": "die-ueberfahrt",
+      "title": "Die Überfahrt",
+      "form": "roman",
+      "perspective": "er",
+      "controlled_characters": ["kael"],
+      "guest_links": [
+        {
+          "world": "nebelreich",
+          "entry": "nebelkoenig"
+        }
+      ],
+      "facts": [
+        {
+          "entry": "kael",
+          "fact": "Kael fürchtet das Wasser."
+        }
+      ],
+      "summary": "Kael setzt über.",
+      "model": "x-ai/grok-4.7",
+      "genres": ["Thriller"],
+      "writing_style": {
+        "tone": ["düster", "kalt"],
+        "atmosphere": ["angespannt"],
+        "style": ["knapp"],
+        "tempo": "atemlos",
+        "explicitness": "angedeutet",
+        "free": "Kurze Absätze."
+      },
+      "cover": "titelbild-000000000005.jpg"
+    }
+  },
+  "removeCover": {
+    "route": "DELETE /api/worlds/die-salzmark/stories/die-ueberfahrt/cover",
+    "type": "Story",
+    "body": {
+      "world": "die-salzmark",
+      "id": "die-ueberfahrt",
+      "title": "Die Überfahrt",
+      "form": "roman",
+      "perspective": "er",
+      "controlled_characters": ["kael"],
+      "guest_links": [
+        {
+          "world": "nebelreich",
+          "entry": "nebelkoenig"
+        }
+      ],
+      "facts": [
+        {
+          "entry": "kael",
+          "fact": "Kael fürchtet das Wasser."
+        }
+      ],
+      "summary": "Kael setzt über.",
+      "model": "x-ai/grok-4.7",
+      "genres": ["Thriller"],
+      "writing_style": {
+        "tone": ["düster", "kalt"],
+        "atmosphere": ["angespannt"],
+        "style": ["knapp"],
+        "tempo": "atemlos",
+        "explicitness": "angedeutet",
+        "free": "Kurze Absätze."
+      },
+      "cover": null
+    }
+  },
+  "saveChapter": {
+    "route": "PUT /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1",
+    "type": "Chapter",
+    "body": {
+      "world": "die-salzmark",
+      "story": "die-ueberfahrt",
+      "number": 1,
+      "title": "Aufbruch",
+      "status": "in-arbeit",
+      "summary": "",
+      "summary_status": "fehlt",
+      "text": "Kael band das Boot fest.",
+      "writing_style": null
+    }
+  },
+  "saveChapterWithStyle": {
+    "route": "PUT /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1",
+    "type": "Chapter",
+    "body": {
+      "world": "die-salzmark",
+      "story": "die-ueberfahrt",
+      "number": 1,
+      "title": "Aufbruch",
+      "status": "in-arbeit",
+      "summary": "",
+      "summary_status": "fehlt",
+      "text": "Kael band das Boot fest.",
+      "writing_style": {
+        "tone": ["zärtlich"],
+        "atmosphere": [],
+        "style": [],
+        "tempo": "langsam",
+        "explicitness": null,
+        "free": ""
+      }
+    }
+  },
+  "completeChapter": {
+    "route": "POST /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1/complete",
+    "type": "Chapter",
+    "body": {
+      "world": "die-salzmark",
+      "story": "die-ueberfahrt",
+      "number": 1,
+      "title": "Aufbruch",
+      "status": "abgeschlossen",
+      "summary": "",
+      "summary_status": "fehlt",
+      "text": "Kael band das Boot fest.",
+      "writing_style": {
+        "tone": ["zärtlich"],
+        "atmosphere": [],
+        "style": [],
+        "tempo": "langsam",
+        "explicitness": null,
+        "free": ""
+      }
+    }
+  },
+  "summaryRoom": {
+    "route": "GET /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1/summary-room",
+    "type": "{ max_chars: number }",
+    "body": {
+      "max_chars": 89154
+    }
+  },
+  "setChapterSummary": {
+    "route": "PUT /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/2/summary",
+    "type": "Chapter",
+    "body": {
+      "world": "die-salzmark",
+      "story": "die-ueberfahrt",
+      "number": 2,
+      "title": "Überfahrt",
+      "status": "in-arbeit",
+      "summary": "Kael fährt ab.",
+      "summary_status": "geprüft",
+      "text": "Es regnete.",
+      "writing_style": null
+    }
+  },
+  "addInstruction": {
+    "route": "POST /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1/instructions",
+    "type": "InstructionNote[]",
+    "body": [
+      {
+        "at": "2026-09-26T12:00:00Z",
+        "instruction": "Weiter",
+        "text": "Der Nebel hob sich.",
+        "model": "x-ai/grok-4.6"
+      }
+    ]
+  },
+  "instructions": {
+    "route": "GET /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1/instructions",
+    "type": "InstructionNote[]",
+    "body": [
+      {
+        "at": "2026-09-26T12:00:00Z",
+        "instruction": "Weiter",
+        "text": "Der Nebel hob sich.",
+        "model": "x-ai/grok-4.6"
+      },
+      {
+        "at": "2026-09-26T12:00:00Z",
+        "instruction": "Neue Szene",
+        "text": "Mira kam dazu.",
+        "model": null
+      }
+    ]
+  },
+  "chapters": {
+    "route": "GET /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters",
+    "type": "Chapter[]",
+    "body": [
+      {
+        "world": "die-salzmark",
+        "story": "die-ueberfahrt",
+        "number": 1,
+        "title": "Aufbruch",
+        "status": "abgeschlossen",
+        "summary": "",
+        "summary_status": "fehlt",
+        "text": "Kael band das Boot fest.",
+        "writing_style": {
+          "tone": ["zärtlich"],
+          "atmosphere": [],
+          "style": [],
+          "tempo": "langsam",
+          "explicitness": null,
+          "free": ""
+        }
+      },
+      {
+        "world": "die-salzmark",
+        "story": "die-ueberfahrt",
+        "number": 2,
+        "title": "Überfahrt",
+        "status": "in-arbeit",
+        "summary": "Kael fährt ab.",
+        "summary_status": "geprüft",
+        "text": "Es regnete.",
+        "writing_style": null
+      }
+    ]
+  },
+  "stories": {
+    "route": "GET /api/worlds/die-salzmark/stories",
+    "type": "Story[]",
+    "body": [
+      {
+        "world": "die-salzmark",
+        "id": "am-ufer",
+        "title": "Am Ufer",
+        "form": "kurzgeschichte",
+        "perspective": null,
+        "controlled_characters": [],
+        "guest_links": [],
+        "facts": [],
+        "summary": "",
+        "model": null,
+        "genres": [],
+        "writing_style": {
+          "tone": [],
+          "atmosphere": [],
+          "style": [],
+          "tempo": null,
+          "explicitness": null,
+          "free": ""
+        },
+        "cover": null
+      },
+      {
+        "world": "die-salzmark",
+        "id": "die-ueberfahrt",
+        "title": "Die Überfahrt",
+        "form": "roman",
+        "perspective": "er",
+        "controlled_characters": ["kael"],
+        "guest_links": [
+          {
+            "world": "nebelreich",
+            "entry": "nebelkoenig"
+          }
+        ],
+        "facts": [
+          {
+            "entry": "kael",
+            "fact": "Kael fürchtet das Wasser."
+          }
+        ],
+        "summary": "Kael setzt über.",
+        "model": "x-ai/grok-4.7",
+        "genres": ["Thriller"],
+        "writing_style": {
+          "tone": ["düster", "kalt"],
+          "atmosphere": ["angespannt"],
+          "style": ["knapp"],
+          "tempo": "atemlos",
+          "explicitness": "angedeutet",
+          "free": "Kurze Absätze."
+        },
+        "cover": "titelbild-000000000006.png"
+      }
+    ]
+  },
+  "summarizeChapter": {
+    "route": "POST /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1/summarize",
+    "type": "SummaryResult",
+    "body": {
+      "chapter": {
+        "world": "die-salzmark",
+        "story": "die-ueberfahrt",
+        "number": 1,
+        "title": "Aufbruch",
+        "status": "abgeschlossen",
+        "summary": "Der Nebel hob sich.",
+        "summary_status": "erzeugt",
+        "text": "Kael band das Boot fest.",
+        "writing_style": {
+          "tone": ["zärtlich"],
+          "atmosphere": [],
+          "style": [],
+          "tempo": "langsam",
+          "explicitness": null,
+          "free": ""
+        }
+      },
+      "story": {
+        "world": "die-salzmark",
+        "id": "die-ueberfahrt",
+        "title": "Die Überfahrt",
+        "form": "roman",
+        "perspective": "er",
+        "controlled_characters": ["kael"],
+        "guest_links": [
+          {
+            "world": "nebelreich",
+            "entry": "nebelkoenig"
+          }
+        ],
+        "facts": [
+          {
+            "entry": "kael",
+            "fact": "Kael fürchtet das Wasser."
+          }
+        ],
+        "summary": "Der Nebel hob sich.",
+        "model": "x-ai/grok-4.7",
+        "genres": ["Thriller"],
+        "writing_style": {
+          "tone": ["düster", "kalt"],
+          "atmosphere": ["angespannt"],
+          "style": ["knapp"],
+          "tempo": "atemlos",
+          "explicitness": "angedeutet",
+          "free": "Kurze Absätze."
+        },
+        "cover": "titelbild-000000000006.png"
+      },
+      "failure": null
+    }
+  },
+  "summarizeChapterRefused": {
+    "route": "POST /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1/summarize",
+    "type": "SummaryResult",
+    "body": {
+      "chapter": {
+        "world": "die-salzmark",
+        "story": "die-ueberfahrt",
+        "number": 1,
+        "title": "Aufbruch",
+        "status": "abgeschlossen",
+        "summary": "Der Nebel hob sich.",
+        "summary_status": "erzeugt",
+        "text": "Kael band das Boot fest.",
+        "writing_style": {
+          "tone": ["zärtlich"],
+          "atmosphere": [],
+          "style": [],
+          "tempo": "langsam",
+          "explicitness": null,
+          "free": ""
+        }
+      },
+      "story": {
+        "world": "die-salzmark",
+        "id": "die-ueberfahrt",
+        "title": "Die Überfahrt",
+        "form": "roman",
+        "perspective": "er",
+        "controlled_characters": ["kael"],
+        "guest_links": [
+          {
+            "world": "nebelreich",
+            "entry": "nebelkoenig"
+          }
+        ],
+        "facts": [
+          {
+            "entry": "kael",
+            "fact": "Kael fürchtet das Wasser."
+          }
+        ],
+        "summary": "Der Nebel hob sich.",
+        "model": "x-ai/grok-4.7",
+        "genres": ["Thriller"],
+        "writing_style": {
+          "tone": ["düster", "kalt"],
+          "atmosphere": ["angespannt"],
+          "style": ["knapp"],
+          "tempo": "atemlos",
+          "explicitness": "angedeutet",
+          "free": "Kurze Absätze."
+        },
+        "cover": "titelbild-000000000006.png"
+      },
+      "failure": {
+        "stage": "kapitel",
+        "kind": "abgelehnt"
+      }
+    }
+  },
+  "summarizeChapterEmpty": {
+    "route": "POST /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1/summarize",
+    "type": "SummaryResult",
+    "body": {
+      "chapter": {
+        "world": "die-salzmark",
+        "story": "die-ueberfahrt",
+        "number": 1,
+        "title": "Aufbruch",
+        "status": "abgeschlossen",
+        "summary": "Der Nebel hob sich.",
+        "summary_status": "erzeugt",
+        "text": "Kael band das Boot fest.",
+        "writing_style": {
+          "tone": ["zärtlich"],
+          "atmosphere": [],
+          "style": [],
+          "tempo": "langsam",
+          "explicitness": null,
+          "free": ""
+        }
+      },
+      "story": {
+        "world": "die-salzmark",
+        "id": "die-ueberfahrt",
+        "title": "Die Überfahrt",
+        "form": "roman",
+        "perspective": "er",
+        "controlled_characters": ["kael"],
+        "guest_links": [
+          {
+            "world": "nebelreich",
+            "entry": "nebelkoenig"
+          }
+        ],
+        "facts": [
+          {
+            "entry": "kael",
+            "fact": "Kael fürchtet das Wasser."
+          }
+        ],
+        "summary": "Der Nebel hob sich.",
+        "model": "x-ai/grok-4.7",
+        "genres": ["Thriller"],
+        "writing_style": {
+          "tone": ["düster", "kalt"],
+          "atmosphere": ["angespannt"],
+          "style": ["knapp"],
+          "tempo": "atemlos",
+          "explicitness": "angedeutet",
+          "free": "Kurze Absätze."
+        },
+        "cover": "titelbild-000000000006.png"
+      },
+      "failure": {
+        "stage": "kapitel",
+        "kind": "leer"
+      }
+    }
+  },
+  "writeStart": {
+    "route": "POST /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1/write",
+    "type": "Omit<Extract<WriteEvent, { type: \"start\" }>, \"type\">",
+    "body": {
+      "model": "x-ai/grok-4.7",
+      "estimated_tokens": 1477
+    }
+  },
+  "writeText": {
+    "route": "POST /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1/write",
+    "type": "Omit<Extract<WriteEvent, { type: \"text\" }>, \"type\">",
+    "body": {
+      "text": "Der Nebel "
+    }
+  },
+  "writeDone": {
+    "route": "POST /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1/write",
+    "type": "Omit<Extract<WriteEvent, { type: \"done\" }>, \"type\">",
+    "body": {
+      "input_tokens": 1200,
+      "output_tokens": 40,
+      "cost_usd": 0.0021,
+      "finish_reason": "stop"
+    }
+  },
+  "writeHinweis": {
+    "route": "POST /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1/write",
+    "type": "Omit<Extract<WriteEvent, { type: \"hinweis\" }>, \"type\">",
+    "body": {
+      "text": "Kael ist tot."
+    }
+  },
+  "writeErrorModelRefused": {
+    "route": "POST /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1/write",
+    "type": "Omit<Extract<WriteEvent, { type: \"error\" }>, \"type\">",
+    "body": {
+      "kind": "abgelehnt"
+    }
+  },
+  "writeErrorRateLimited": {
+    "route": "POST /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1/write",
+    "type": "Omit<Extract<WriteEvent, { type: \"error\" }>, \"type\">",
+    "body": {
+      "kind": "zu_viele_anfragen"
+    }
+  },
+  "writeErrorInvalidRequest": {
+    "route": "POST /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1/write",
+    "type": "Omit<Extract<WriteEvent, { type: \"error\" }>, \"type\">",
+    "body": {
+      "kind": "ungueltig"
+    }
+  },
+  "writeErrorProviderUnavailable": {
+    "route": "POST /api/worlds/die-salzmark/stories/die-ueberfahrt/chapters/1/write",
+    "type": "Omit<Extract<WriteEvent, { type: \"error\" }>, \"type\">",
+    "body": {
+      "kind": "nicht_erreichbar"
+    }
+  },
+  "worldbuilderStart": {
+    "route": "POST /api/worlds/die-salzmark/worldbuilder",
+    "type": "Omit<Extract<WorldbuilderEvent, { type: \"start\" }>, \"type\">",
+    "body": {
+      "model": "x-ai/grok-4.6",
+      "estimated_tokens": 816,
+      "web_search": false
+    }
+  },
+  "worldbuilderText": {
+    "route": "POST /api/worlds/die-salzmark/worldbuilder",
+    "type": "Omit<Extract<WorldbuilderEvent, { type: \"text\" }>, \"type\">",
+    "body": {
+      "text": "Der Nebel "
+    }
+  },
+  "worldbuilderDone": {
+    "route": "POST /api/worlds/die-salzmark/worldbuilder",
+    "type": "Omit<Extract<WorldbuilderEvent, { type: \"done\" }>, \"type\">",
+    "body": {
+      "input_tokens": 1200,
+      "output_tokens": 40,
+      "cost_usd": 0.0021,
+      "finish_reason": "stop"
+    }
+  },
+  "worldbuilderStartSearch": {
+    "route": "POST /api/worlds/die-salzmark/worldbuilder",
+    "type": "Omit<Extract<WorldbuilderEvent, { type: \"start\" }>, \"type\">",
+    "body": {
+      "model": "x-ai/grok-4.6",
+      "estimated_tokens": 816,
+      "web_search": true
+    }
+  },
+  "worldbuilderQuellenSearch": {
+    "route": "POST /api/worlds/die-salzmark/worldbuilder",
+    "type": "Omit<Extract<WorldbuilderEvent, { type: \"quellen\" }>, \"type\">",
+    "body": {
+      "sources": [
+        {
+          "url": "https://a.example/salz",
+          "title": "Salz lagern"
+        }
+      ]
+    }
+  },
+  "worldbuilderError": {
+    "route": "POST /api/worlds/die-salzmark/worldbuilder",
+    "type": "Omit<Extract<WorldbuilderEvent, { type: \"error\" }>, \"type\">",
+    "body": {
+      "kind": "zu_viele_anfragen"
+    }
+  },
+  "manuscriptHits": {
+    "route": "POST /api/worlds/die-salzmark/worldbuilder/hits",
+    "type": "ManuscriptHits",
+    "body": {
+      "total": 1,
+      "stories": 1,
+      "chapters": 1,
+      "included": 1,
+      "tokens": 73
+    }
+  },
+  "describeImageStart": {
+    "route": "POST /api/worlds/die-salzmark/entries/kael/images/kael-000000000002.jpg/describe",
+    "type": "Omit<Extract<DescribeEvent, { type: \"start\" }>, \"type\">",
+    "body": {
+      "model": "x-ai/grok-4.6",
+      "estimated_tokens": 188,
+      "web_search": false
+    }
+  },
+  "describeImageText": {
+    "route": "POST /api/worlds/die-salzmark/entries/kael/images/kael-000000000002.jpg/describe",
+    "type": "Omit<Extract<DescribeEvent, { type: \"text\" }>, \"type\">",
+    "body": {
+      "text": "Der Nebel "
+    }
+  },
+  "describeImageDone": {
+    "route": "POST /api/worlds/die-salzmark/entries/kael/images/kael-000000000002.jpg/describe",
+    "type": "Omit<Extract<DescribeEvent, { type: \"done\" }>, \"type\">",
+    "body": {
+      "input_tokens": 1200,
+      "output_tokens": 40,
+      "cost_usd": 0.0021,
+      "finish_reason": "stop"
+    }
+  },
+  "describeMapStart": {
+    "route": "POST /api/worlds/die-salzmark/maps/karte-000000000003.png/describe",
+    "type": "Omit<Extract<DescribeEvent, { type: \"start\" }>, \"type\">",
+    "body": {
+      "model": "x-ai/grok-4.6",
+      "estimated_tokens": 270,
+      "web_search": false
+    }
+  },
+  "describeMapText": {
+    "route": "POST /api/worlds/die-salzmark/maps/karte-000000000003.png/describe",
+    "type": "Omit<Extract<DescribeEvent, { type: \"text\" }>, \"type\">",
+    "body": {
+      "text": "Der Nebel "
+    }
+  },
+  "describeMapDone": {
+    "route": "POST /api/worlds/die-salzmark/maps/karte-000000000003.png/describe",
+    "type": "Omit<Extract<DescribeEvent, { type: \"done\" }>, \"type\">",
+    "body": {
+      "input_tokens": 1200,
+      "output_tokens": 40,
+      "cost_usd": 0.0021,
+      "finish_reason": "stop"
+    }
+  },
+  "appearanceStart": {
+    "route": "POST /api/worlds/die-salzmark/entries/kael/appearance",
+    "type": "Omit<Extract<DescribeEvent, { type: \"start\" }>, \"type\">",
+    "body": {
+      "model": "x-ai/grok-4.6",
+      "estimated_tokens": 213,
+      "web_search": false
+    }
+  },
+  "appearanceText": {
+    "route": "POST /api/worlds/die-salzmark/entries/kael/appearance",
+    "type": "Omit<Extract<DescribeEvent, { type: \"text\" }>, \"type\">",
+    "body": {
+      "text": "Der Nebel "
+    }
+  },
+  "appearanceDone": {
+    "route": "POST /api/worlds/die-salzmark/entries/kael/appearance",
+    "type": "Omit<Extract<DescribeEvent, { type: \"done\" }>, \"type\">",
+    "body": {
+      "input_tokens": 1200,
+      "output_tokens": 40,
+      "cost_usd": 0.0021,
+      "finish_reason": "stop"
+    }
+  },
+  "models": {
+    "route": "GET /api/models",
+    "type": "ModelList",
+    "body": {
+      "models": ["x-ai/grok-4.6", "qwen/qwen3.8-max-0902"],
+      "default": "x-ai/grok-4.6",
+      "favorites": ["x-ai/grok-4.6", "qwen/qwen3.8-max-0902"],
+      "catalog": [
+        {
+          "id": "deepseek/deepseek-v3.2",
+          "name": "DeepSeek: DeepSeek V3.2",
+          "provider": "deepseek",
+          "input_price": 0.259,
+          "output_price": 0.8,
+          "estimated_cost": 0.00817,
+          "context_length": 163840,
+          "moderated": false,
+          "thinking": null,
+          "checked": false,
+          "reads_images": false
+        },
+        {
+          "id": "openai/gpt-5",
+          "name": "OpenAI: GPT-5",
+          "provider": "openai",
+          "input_price": 1.25,
+          "output_price": 10.0,
+          "estimated_cost": 0.0425,
+          "context_length": 400000,
+          "moderated": true,
+          "thinking": "vor",
+          "checked": false,
+          "reads_images": false
+        },
+        {
+          "id": "x-ai/grok-4.6",
+          "name": "SpaceXAI: Grok 4.6",
+          "provider": "x-ai",
+          "input_price": 2.0,
+          "output_price": 6.0,
+          "estimated_cost": 0.063,
+          "context_length": 500000,
+          "moderated": false,
+          "thinking": "vor",
+          "checked": true,
+          "reads_images": true
+        },
+        {
+          "id": "x-ai/grok-4.7",
+          "name": "SpaceXAI: Grok 4.7",
+          "provider": "x-ai",
+          "input_price": 2.0,
+          "output_price": 6.0,
+          "estimated_cost": 0.063,
+          "context_length": 500000,
+          "moderated": false,
+          "thinking": "lange",
+          "checked": false,
+          "reads_images": false
+        }
+      ],
+      "catalog_available": true
+    }
+  },
+  "setFavorites": {
+    "route": "PUT /api/models/favoriten",
+    "type": "ModelList",
+    "body": {
+      "models": ["x-ai/grok-4.6", "deepseek/deepseek-v3.2"],
+      "default": "x-ai/grok-4.6",
+      "favorites": ["x-ai/grok-4.6", "deepseek/deepseek-v3.2"],
+      "catalog": [
+        {
+          "id": "deepseek/deepseek-v3.2",
+          "name": "DeepSeek: DeepSeek V3.2",
+          "provider": "deepseek",
+          "input_price": 0.259,
+          "output_price": 0.8,
+          "estimated_cost": 0.00817,
+          "context_length": 163840,
+          "moderated": false,
+          "thinking": null,
+          "checked": false,
+          "reads_images": false
+        },
+        {
+          "id": "openai/gpt-5",
+          "name": "OpenAI: GPT-5",
+          "provider": "openai",
+          "input_price": 1.25,
+          "output_price": 10.0,
+          "estimated_cost": 0.0425,
+          "context_length": 400000,
+          "moderated": true,
+          "thinking": "vor",
+          "checked": false,
+          "reads_images": false
+        },
+        {
+          "id": "x-ai/grok-4.6",
+          "name": "SpaceXAI: Grok 4.6",
+          "provider": "x-ai",
+          "input_price": 2.0,
+          "output_price": 6.0,
+          "estimated_cost": 0.063,
+          "context_length": 500000,
+          "moderated": false,
+          "thinking": "vor",
+          "checked": true,
+          "reads_images": true
+        },
+        {
+          "id": "x-ai/grok-4.7",
+          "name": "SpaceXAI: Grok 4.7",
+          "provider": "x-ai",
+          "input_price": 2.0,
+          "output_price": 6.0,
+          "estimated_cost": 0.063,
+          "context_length": 500000,
+          "moderated": false,
+          "thinking": "lange",
+          "checked": false,
+          "reads_images": false
+        }
+      ],
+      "catalog_available": true
+    }
+  },
+  "usage": {
+    "route": "GET /api/usage",
+    "type": "MonthUsage",
+    "body": {
+      "month": "2026-09",
+      "requests": 16,
+      "input_tokens": 11700,
+      "output_tokens": 390,
+      "cost_usd": 0.0229,
+      "without_cost": 6
+    }
+  },
+  "imageModels": {
+    "route": "GET /api/images/models",
+    "type": "ImageModelList",
+    "body": {
+      "default": "black-forest-labs/flux.2-pro",
+      "models": [
+        {
+          "id": "black-forest-labs/flux.2-pro",
+          "name": "Black Forest Labs: FLUX.2 Pro"
+        },
+        {
+          "id": "bytedance-seed/seedream-4.5",
+          "name": "ByteDance Seed: Seedream 4.5"
+        }
+      ],
+      "available": true,
+      "ready": true
+    }
+  },
+  "imagePrice": {
+    "route": "GET /api/images/price",
+    "type": "ImagePrice",
+    "body": {
+      "cost_usd": 0.03,
+      "unit": "megapixel"
+    }
+  },
+  "generateImage": {
+    "route": "POST /api/images/generate",
+    "type": "GeneratedImage",
+    "body": {
+      "content": "iVBORw0KGgoAAAANSUhEUgAABAAAAAYACAYAAADogjqq",
+      "media_type": "image/png",
+      "cost_usd": 0.03,
+      "model": "black-forest-labs/flux.2-pro"
+    }
+  },
+  "generateImageWithoutCost": {
+    "route": "POST /api/images/generate",
+    "type": "GeneratedImage",
+    "body": {
+      "content": "iVBORw0KGgoAAAANSUhEUgAABAAAAAYACAYAAADogjqq",
+      "media_type": "image/png",
+      "cost_usd": null,
+      "model": "black-forest-labs/flux.2-pro"
+    }
+  },
+  "translateSillyTavern": {
+    "route": "POST /api/worlds/die-salzmark/import/sillytavern",
+    "type": "TranslatedMaterial",
+    "body": {
+      "markdown": "# Figuren\n\n## Mira Ostwind\nSchmugglerin aus dem Hafenviertel, schmal, mit Salzflecken auf dem Mantel. {{user}} schuldet ihr Geld.\n\n### Herkunft\nGeboren auf einem Salzkahn.\n\n### Wesen\nMisstrauisch, schlagfertig, loyal zu wenigen. Mira Ostwind lacht selten.\n\n# Aus SillyTavern\n\n## Die Rote Laterne\nAliasse: Rote Laterne, Laterne, Hafenkneipe\nKneipe am Kai, in der Mira Ostwind ihre Geschäfte macht.\n​Kategorie: Ort\n\n## Zollhaus\nAliasse: Zoll Wache\n```\nalter Aushang\n# Steuern\n```\n",
+      "not_taken_over": [
+        "Nicht übernommen (Chat-Zubehör): Szenario, Begrüßung, weitere Begrüßungen, Beispieldialoge, Notizen des Erstellers, Schlagwörter.",
+        "1 Lorebook-Eintrag ist in SillyTavern abgeschaltet und fehlt.",
+        "„{{user}}“ steht 1-mal im Text; bitte selbst passend umschreiben."
+      ]
+    }
+  },
+  "previewImport": {
+    "route": "POST /api/worlds/die-salzmark/import/preview",
+    "type": "ImportPreview",
+    "body": {
+      "world": "die-salzmark",
+      "introduction": "",
+      "items": [
+        {
+          "id": "mira-ostwind",
+          "name": "Mira Ostwind",
+          "category": "figur",
+          "aliases": [],
+          "body": "Schmugglerin aus dem Hafenviertel, schmal, mit Salzflecken auf dem Mantel. {{user}} schuldet ihr Geld.\n\n### Herkunft\nGeboren auf einem Salzkahn.\n\n### Wesen\nMisstrauisch, schlagfertig, loyal zu wenigen. Mira Ostwind lacht selten.\n",
+          "conflict": null
+        },
+        {
+          "id": "die-rote-laterne",
+          "name": "Die Rote Laterne",
+          "category": null,
+          "aliases": ["Rote Laterne", "Laterne", "Hafenkneipe"],
+          "body": "Kneipe am Kai, in der Mira Ostwind ihre Geschäfte macht.\n​Kategorie: Ort\n",
+          "conflict": null
+        },
+        {
+          "id": "zollhaus",
+          "name": "Zollhaus",
+          "category": null,
+          "aliases": ["Zoll Wache"],
+          "body": "```\nalter Aushang\n# Steuern\n```\n",
+          "conflict": null
+        },
+        {
+          "id": "kael",
+          "name": "Kael",
+          "category": null,
+          "aliases": [],
+          "body": "Doppelt.\n",
+          "conflict": "vorhanden"
+        },
+        {
+          "id": "treibgut",
+          "name": "Treibgut",
+          "category": null,
+          "aliases": ["Strandgut"],
+          "body": "Ohne Heimat.\n",
+          "conflict": null
+        }
+      ],
+      "not_taken_over": []
+    }
+  },
+  "applyImport": {
+    "route": "POST /api/worlds/die-salzmark/import",
+    "type": "ImportResult",
+    "body": {
+      "created": ["mira-ostwind", "die-rote-laterne", "zollhaus", "treibgut"],
+      "overwritten": ["kael"],
+      "skipped": []
+    }
+  },
+  "session": {
+    "route": "GET /api/auth/session",
+    "type": "SessionInfo",
+    "body": {
+      "id": "session-own",
+      "created": "2026-09-26T12:00:00Z",
+      "last_seen": "2026-09-26T12:05:00Z",
+      "client": "testclient",
+      "current": true
+    }
+  },
+  "sessions": {
+    "route": "GET /api/auth/sessions",
+    "type": "SessionInfo[]",
+    "body": [
+      {
+        "id": "session-other",
+        "created": "2026-09-26T12:05:00Z",
+        "last_seen": "2026-09-26T12:05:00Z",
+        "client": "Mozilla/5.0 (X11; Linux x86_64) Firefox",
+        "current": false
+      },
+      {
+        "id": "session-own",
+        "created": "2026-09-26T12:00:00Z",
+        "last_seen": "2026-09-26T12:05:00Z",
+        "client": "testclient",
+        "current": true
+      }
+    ]
+  }
+}
