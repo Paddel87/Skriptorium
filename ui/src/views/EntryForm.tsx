@@ -6,14 +6,23 @@ import {
   type CanonEntry,
   type Category,
 } from "../api";
+import { templateFor } from "../sections";
 import { ErrorText, Field } from "./Common";
 
-const HINTS: Partial<Record<Category, string>> = {
-  zeitlinie:
-    "Ereignisse in ihrer Reihenfolge untereinander, z. B. als nummerierte Liste.",
-  gegenstand:
-    "Abschnitte Zweck, Verwendung und Auswirkung werden bei leerem Text angelegt.",
-};
+const TIMELINE_HINT =
+  "Ereignisse in ihrer Reihenfolge untereinander, z. B. als nummerierte Liste.";
+
+/** What stands under the text field: a new entry shows the sections of its category (ADR-092). */
+function hintFor(category: Category, creating: boolean): string | undefined {
+  if (category === "zeitlinie") {
+    return TIMELINE_HINT;
+  }
+  if (!creating || templateFor(category) === "") {
+    return undefined;
+  }
+  const label = CATEGORIES.find(({ id }) => id === category)?.label ?? category;
+  return `Die Abschnitte gehören zur Art „${label}“. Leere Abschnitte dürfen bleiben, eigene Abschnitte kannst du ergänzen.`;
+}
 
 /** Form to create a canon entry (`entry` is `null`) or to change or delete one. */
 export function EntryForm({
@@ -32,8 +41,21 @@ export function EntryForm({
   const [name, setName] = useState(entry?.name ?? "");
   const [aliases, setAliases] = useState(entry?.aliases.join(", ") ?? "");
   const [status, setStatus] = useState(entry?.status ?? "");
-  const [body, setBody] = useState(entry?.body ?? "");
+  // A new entry starts with the empty sections of its category (step 9.3, ADR-092).
+  const [body, setBody] = useState(entry?.body ?? templateFor(category));
   const [error, setError] = useState<string | null>(null);
+  const hint = hintFor(category, entry === null);
+
+  /** The text follows the category while it is empty or still the template of the old one. */
+  function changeCategory(next: Category) {
+    if (
+      entry === null &&
+      (body.trim() === "" || body === templateFor(category))
+    ) {
+      setBody(templateFor(next));
+    }
+    setCategory(next);
+  }
 
   async function save(event: SyntheticEvent) {
     event.preventDefault();
@@ -80,7 +102,7 @@ export function EntryForm({
         <select
           value={category}
           onChange={(event) => {
-            setCategory(event.target.value as Category);
+            changeCategory(event.target.value as Category);
           }}
         >
           {CATEGORIES.map(({ id, label }) => (
@@ -117,16 +139,14 @@ export function EntryForm({
       </Field>
       <Field label="Text">
         <textarea
-          rows={10}
+          rows={12}
           value={body}
           onChange={(event) => {
             setBody(event.target.value);
           }}
         />
       </Field>
-      {HINTS[category] !== undefined && (
-        <p className="note">{HINTS[category]}</p>
-      )}
+      {hint !== undefined && <p className="note">{hint}</p>}
       <p className="note">
         Hinweis: Kommentare im Dateikopf der Markdown-Datei gehen beim Speichern
         verloren.
