@@ -13,10 +13,19 @@ import math
 from collections.abc import Sequence
 from typing import Final
 
-from skriptorium.canon import CanonEntry, CanonService, InvalidInput, NotFound
+from skriptorium.canon import (
+    APPEARANCE,
+    SECTIONS,
+    CanonEntry,
+    CanonService,
+    Category,
+    InvalidInput,
+    NotFound,
+)
 from skriptorium.context.manuscript_hits import ManuscriptHits
 from skriptorium.context.parts import (
     CATEGORY_LABELS,
+    ENTRY_BODY_LEVEL,
     MAX_BUDGET,
     SAFETY_MARGIN,
     BuiltContext,
@@ -31,7 +40,16 @@ from skriptorium.context.parts import (
 
 # Fence the interface looks for to hand a proposal to the import preview (step 6.7).
 PROPOSAL_FENCE: Final = "kanon"
-_GROUPS: Final = "Figuren, Orte, Gegenstände, Zeitlinie, Regeln, Kultur"
+# Group headings of the import format, in the order of the categories.
+_GROUP_NAMES: Final[dict[Category, str]] = {
+    "figur": "Figuren",
+    "ort": "Orte",
+    "gegenstand": "Gegenstände",
+    "zeitlinie": "Zeitlinie",
+    "regel": "Regeln",
+    "kultur": "Kultur",
+}
+_GROUPS: Final = ", ".join(_GROUP_NAMES.values())
 
 
 def build_worldbuilder(
@@ -129,6 +147,27 @@ def _index(entries: Sequence[CanonEntry]) -> str:
     return "# Einträge der Welt (nur Namen)\n\n" + "\n".join(lines)
 
 
+def _section_rules() -> str:
+    """The sections of each category as the frame asks for them, from ``SECTIONS`` (ADR-092)."""
+    level = "#" * ENTRY_BODY_LEVEL
+    per_group = "".join(
+        f"  - {_GROUP_NAMES[category]}: " + ", ".join(f"`{level} {name}`" for name in names) + "\n"
+        for category, names in SECTIONS.items()
+    )
+    example = "".join(f"  {level} {name}\n  …\n" for name in SECTIONS["figur"])
+    return (
+        "- Jeder Eintrag gliedert sich in die Abschnitte seiner Art, als Unterüberschriften der "
+        f"Ebene {ENTRY_BODY_LEVEL} (eine Ebene tiefer als der Name). Ein kurzer freier Text "
+        "direkt unter dem Namen ist erlaubt. Lass einen Abschnitt weg, wenn dazu nichts bekannt "
+        "ist; erfinde nichts, um ihn zu füllen. Regeln und die Zeitlinie haben keine "
+        f"Abschnitte. Die Abschnitte in dieser Reihenfolge:\n{per_group}"
+        f"- Der Abschnitt `{level} {APPEARANCE}` enthält nur das Äußere (Gesicht, Haare, Statur, "
+        "Kleidung, Haltung, sichtbare Merkmale); alles andere gehört in die übrigen Abschnitte.\n"
+        "- Beispiel einer Figur:\n\n"
+        f"  # Figuren\n  ## Name der Figur\n  Aliasse: Zweitname\n{example}\n"
+    )
+
+
 def _frame(world_name: str) -> str:
     """Role of the AI and the format of proposals to take over (step 6.7, ADR-064)."""
     return (
@@ -147,13 +186,7 @@ def _frame(world_name: str) -> str:
         "- Jeder Eintrag ist eine Überschrift der Ebene 2 mit seinem Namen; bei einer "
         "Überarbeitung genau der vorhandene Name.\n"
         "- Gibt es andere Namen, folgt direkt darunter eine Zeile `Aliasse: Name2, Name3`.\n"
-        "- Gegenstände haben immer die Unterüberschriften `### Zweck`, `### Verwendung` und "
-        "`### Auswirkung`, eine Ebene tiefer als der Name, zum Beispiel:\n\n"
-        "  # Gegenstände\n  ## Name des Gegenstands\n  Aliasse: Zweitname\n"
-        "  ### Zweck\n  …\n  ### Verwendung\n  …\n  ### Auswirkung\n  …\n\n"
-        "- Figuren haben immer die Unterüberschrift `### Aussehen`, eine Ebene tiefer als der "
-        "Name: nur das Äußere (Gesicht, Haare, Statur, Kleidung, Haltung, sichtbare Merkmale); "
-        "Wesen, Geschichte und Beziehungen stehen außerhalb davon.\n"
+        f"{_section_rules()}"
         "- Sachlich, im Präsens, etwa 80 bis 250 Wörter je Eintrag; bei einer Überarbeitung der "
         "vollständige neue Text, nicht nur die Änderung.\n"
         "- Keine Tabellen, kein HTML.\n"

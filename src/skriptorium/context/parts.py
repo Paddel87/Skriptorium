@@ -5,13 +5,23 @@ from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
 from typing import Final, Literal
 
-from skriptorium.canon import CATEGORIES, CanonEntry, Category, InvalidInput
+from skriptorium.canon import (
+    CATEGORIES,
+    CanonEntry,
+    Category,
+    InvalidInput,
+    drop_empty_sections,
+    nest_headings,
+)
 
 MAX_BUDGET: Final = 30_000
 CHARS_PER_TOKEN: Final = 3.3
 # Estimates differ from provider counts by -6 % to +8 % (step 1.1); 10 % margin keeps the
 # real count below the budget.
 SAFETY_MARGIN: Final = 1.1
+
+# Heading level of the first headings in an entry's text: one below its name (``##``, ADR-092).
+ENTRY_BODY_LEVEL: Final = 3
 
 CATEGORY_LABELS: Final[dict[Category, str]] = {
     "figur": "Figur",
@@ -143,14 +153,18 @@ def fitted(system: Sequence[Part], user: Sequence[Part], budget: int) -> BuiltCo
 def render(entry: CanonEntry, home: str | None = None) -> str:
     """A canon entry as Markdown; item sections and timeline events are part of the body.
 
-    A guest names its home world in the heading (step 3.7).
+    A guest names its home world in the heading (step 3.7). Below the name (level 2) no heading
+    of the text is flatter than level 3 (a heading the author wrote on level 1 or 2 moves down
+    with all the others), and sections without text are left out, so an empty template does not
+    clutter the request (step 9.3, ADR-092).
     """
     label = CATEGORY_LABELS[entry.category]
     if home is not None:
         label = f"{label}, Gast aus der Welt „{home}“"
     heading = f"## {entry.name} ({label})"
     aliases = f"\nAuch: {', '.join(entry.aliases)}" if entry.aliases else ""
-    return f"{heading}{aliases}\n\n{entry.body.strip()}".strip()
+    body = nest_headings(drop_empty_sections(entry.body), ENTRY_BODY_LEVEL).strip()
+    return f"{heading}{aliases}\n\n{body}".strip()
 
 
 def render_known(known: Known) -> str:
