@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-18 (9.1 erledigt – ADR-091, PR #173; D.19 angelegt; zuvor Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
+- **Stand vom:** 2026-10-18 (9.2 lokal fertig – vier End-to-End-Tests, Vertragstest Server ↔ Oberfläche, CI-Schrittnamen; Pull Request nach Freigabe; 9.1 erledigt – ADR-091, PR #173; D.19 angelegt; zuvor Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
 - **Laufende Phase:** Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (Phase 8 abgeschlossen 2026-10-18)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner – 9.1 erledigt (2026-10-18, PR #173, ADR-091)
-- **Nächster Schritt:** 9.2 End-to-End-Tests für die Abläufe der Phasen 6–8 (Routine) und 9.3 Gegliederte Einträge je Art – zu Beginn Vorlage mit Mockup (Entscheidungs-Klasse); D.19 ab dem ersten CI-Lauf nach dem 2026-10-19. Offen bei dir: Probe mit einer Gast-Figur (Eingangskriterium 9.13). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** 9.2 End-to-End-Tests für die Abläufe der Phasen 6–8 (seit 2026-10-18) – lokal fertig, Commits auf `feat/9.2-e2e-ablaeufe`; offen: Pull Request nach deiner Freigabe und grüne CI
+- **Nächster Schritt:** 9.2 abschließen (Pull Request, CI; dabei D.19 – erster Lauf nach dem 2026-10-19) und 9.3 Gegliederte Einträge je Art – zu Beginn Vorlage mit Mockup (Entscheidungs-Klasse); D.19 ab dem ersten CI-Lauf nach dem 2026-10-19. Offen bei dir: Probe mit einer Gast-Figur (Eingangskriterium 9.13). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -29,7 +29,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | ✅ | 9.1 | Gliederung im Server verlässlich – Abschnitte und Namen | erledigt 2026-10-18 (ADR-091) | – |
-| ⚪ | 9.2 | End-to-End-Tests für die Abläufe der Phasen 6–8 | offen | KI |
+| 🟠 | 9.2 | End-to-End-Tests für die Abläufe der Phasen 6–8 | lokal fertig, CI offen | du: Pull Request freigeben |
 | ⚪ | 9.3 | Gegliederte Einträge je Art (B2, G1/G2) | offen | KI: nach 9.1 Vorlage mit Mockup |
 | ⚪ | 9.4 | Beziehungen mit Art und Rückverweis (B3) | offen | KI: nach 9.3 Vorlage |
 | ⚪ | 9.5 | Bilder vom Bedarf her; Karte aus den Orten (G4, B4) | offen | KI: nach 9.3 Vorlage |
@@ -209,7 +209,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 9.2: End-to-End-Tests für die Abläufe der Phasen 6–8
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-18, Branch `feat/9.2-e2e-ablaeufe`) – lokal fertig und geprüft, Commits lokal; offen: CI-Lauf über den Pull Request nach Freigabe des Eigentümers (Akzeptanzkriterium „grün in der CI“)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein für die Tests; ja für das Umbenennen der CI-Schritte (Kategorie 7) – freigegeben mit ADR-090
@@ -221,7 +221,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** ui, api (nur Tests)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Tests, CI-Konfiguration
-- **Notizen:** Aus ADR-089.
+- **Notizen:** Aus ADR-089. Umsetzung (Tests von Unteragenten der Routine-Klasse geschrieben, von der bauenden KI geprüft): vier neue Playwright-Tests in `e2e/skriptorium.spec.ts` gegen den echten Server, KI-Ströme im Browser ersetzt – Weltenbauer mit Übernahme-Fenster, Gespräch bleibt, zweite Fassung überschreibt (8.8); Bild hochladen, beschreiben lassen, „Aussehen“ ersetzen (7.6, 7.13, 8.4); Karte hochladen und markieren, Punkt führt zum Eintrag (7.10, 7.14); Karte beschreiben, Rückfrage abbrechen und „Darunter ergänzen“ (7.13, 8.4). Die Modellliste von OpenRouter ist in zwei Tests durch eine an `ModelList` typisierte Liste ersetzt (sonst hinge der Lauf am Netz). Antwortformen: `tests/api/test_ui_contract.py` zeichnet 73 echte Antworten und Strom-Ereignisse auf (`tests/shared/api-responses.json`), `ui/src/api/contract.test.ts` prüft sie mit der Compiler-API des vorhandenen `typescript` gegen die Typen in `ui/src/api/` – überzählige, fehlende und falsch getypte Felder, Werte außerhalb von Literal-Unionen; Gegenprobe mit fünf absichtlich beschädigten Antworten im selben Test. Kein neues Werkzeug. Gefunden: Das `start`-Ereignis von „Bild/Karte beschreiben“ und „Aussehen herauslösen“ trägt `web_search` (der Server nutzt den Strom des Weltenbauers), `DescribeEvent` kannte das Feld nicht – Typ auf den Weltenbauer-Strom umgestellt (nur Typ, keine Laufzeitwirkung, Server unverändert). CI-Schrittnamen: Python „global 99 %“, TypeScript „98 % Lines und Statements, 97 % Functions, 94 % Branches“ (ADR-090). Lokal: Playwright 15/15 (25,6 s; Unteragent drei Läufe je 15/15), pytest 887 (99,85 %; canon 100 %, context 99 %), vitest 467 (98,66 / 95,3 / 97,87 / 98,85 % Anweisungen / Zweige / Funktionen / Zeilen), ruff, mypy, bandit, pip-audit, eslint, prettier, tsc, npm audit grün.
 
 #### 9.3: Gegliederte Einträge je Art (V.35 B2, G1/G2)
 
@@ -471,7 +471,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Betroffene Module:** ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** ADR oder Register-Eintrag
-- **Notizen:** Zusatz 2026-09-26 (ADR-015): vitest 5 mitprüfen – mindestreif erst ab 2027-03-03; ist das bei D.2 noch nicht erreicht, eigenes Nachprüf-Datum im Register setzen. Kompatibilität typescript-eslint mit TypeScript 7 prüfen (8.70.1 verlangt `typescript <6.1.0`). Zusatz 2026-09-26 (ADR-019): jsdom 30 ab 2027-01-27 mindestreif – mit prüfen.
+- **Notizen:** Zusatz 2026-09-26 (ADR-015): vitest 5 mitprüfen – mindestreif erst ab 2027-03-03; ist das bei D.2 noch nicht erreicht, eigenes Nachprüf-Datum im Register setzen. Kompatibilität typescript-eslint mit TypeScript 7 prüfen (8.70.1 verlangt `typescript <6.1.0`). Zusatz 2026-09-26 (ADR-019): jsdom 30 ab 2027-01-27 mindestreif – mit prüfen. Zusatz 2026-10-18 (9.2): `ui/src/api/contract.test.ts` nutzt die Compiler-API von TypeScript 6 (`createProgram`, `createCompilerHost`, `getPreEmitDiagnostics`) – bei TypeScript 7 prüfen, ob es sie noch gibt, sonst den Test umbauen.
 
 #### D.3: Nachprüfung httpx
 

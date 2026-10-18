@@ -1,12 +1,15 @@
 /** Letting the AI describe an image or a map once (step 7.13, ADR-074). */
 
 import { WRITE_EVENTS, streamEvents } from "./stream";
-import type { WriteEvent } from "./writing";
+import type { WorldbuilderEvent } from "./worldbuilder";
 import { enc, worldPath } from "./paths";
 
-/** Events of a description: start, text pieces, then done or error. */
+/**
+ * Events of a description: start, text pieces, then done or error. The server streams them like
+ * the world builder's answer (its "start" names the web search, which is always off here).
+ */
 export type DescribeEvent = Extract<
-  WriteEvent,
+  WorldbuilderEvent,
   { type: "start" | "text" | "done" | "error" }
 >;
 
