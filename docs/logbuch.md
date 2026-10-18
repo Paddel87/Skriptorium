@@ -29,6 +29,33 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-19 00:45 MESZ – [SESSIONENDE] Proben zu 9.3 gelaufen und ausgewertet
+
+- **Dauer:** ca. 00:20 bis 00:45 MESZ (Cloud-Session, dritter Versuch).
+- **Bearbeitet:** 9.3 – Schlüssel geprüft (gesetzt), Ausgangs-Commit `40a02eb`; Weltenbauer-Probe (4 Aufträge) und Probe nach Regel-002 (12 Ketten, vorher im Worktree `2ac204b`) gelaufen, ausgewertet, verblindete Widerspruchs-Bewertung durch zwei getrennte Instanzen; README beider Spikes, Fahrplan-Notiz bei 9.3, „Aktueller Stand“, README-Zeile 9.3.
+- **Stand:** Phase 9, 2 von 15; 9.3 🟠 – Proben gelaufen; offen: Entscheidung des Eigentümers zum Befund der Regel-002-Probe (Widersprüche nachher 1 von 3 Ketten je Geschichte, vorher 0) und seine Bestätigung; Zusammenführen durch die lokale Session. Keine aktiven Blocker, keine offenen STOPP-Situationen.
+- **Nächster Schritt:** Eigentümer entscheidet über weitere Läufe; lokale Session übernimmt `spike/9.3-proben-ki`, dann PR #177 nach Bestätigung; danach 9.4.
+- **Kosten bei OpenRouter:** 0,045 $ (Weltenbauer) + 1,500 $ (vorher) + 1,438 $ (nachher) = 2,98 $.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5 laut `get_session`, 00:20). 9.3 empfiehlt Entscheidung – 0 Schritte oberhalb der Empfehlung. Abgegeben an zwei Unteragenten der Routine-Klasse (Sonnet): verblindete Widerspruchs-Bewertung je Geschichte (je ca. 2–3 min); Ergebnisse an Text und Kanon nachgeprüft.
+- **Kontextgröße:** nicht feststellbar (`used_tokens` 0); Regel entfiel.
+- **Sessionende-Prüfungen:** README: Zeile 9.3 nachgezogen, Fortschritt 2 von 15 und 0 Blocker unverändert. Drift: keine neuen ADRs, Schritt-IDs oder Module; Reaktiv-Quote unverändert; keine `[BLOCKIERT]`-Schritte; Phase 9 mit 15 Schritten. Ablaufdaten-Register: kein Vorlauf erreicht, keine CI gelaufen. Archiv: Logbuch unter 400 Zeilen. Quick-Start nicht berührt. Worktree `../vorher` liegt außerhalb des Klons und verfällt mit dem Container.
+
+### 2026-10-19 00:40 MESZ – [BEOBACHTUNG] Probe nach Regel-002 zu 9.3: gezählt keine Wirkung, ein Befund bei den Widersprüchen
+
+- **Aufbau:** grok-4.6, mittel, je 3 Ketten an Salzmark und Glimmergrund; vorher `2ac204b` (Worktree, eigener Code geprüft: `skriptorium.__file__` im Worktree), nachher `40a02eb`; 84 Vorschläge, alle `stop`, keine Fehler; Ergebnisse `spikes/regel-002/ergebnisse/vorher-9.3/`, `nachher-9.3/`, Bewertung `9.3-bewertung/`.
+- **Gezählt:** einzig „wörtlich %“ in beiden Geschichten außerhalb der Vorher-Spannweite, gegenläufig (Salzmark 0,40 gegen 0,44–0,76; Glimmergrund 0,71 gegen 0,00–0,39) – keine Wirkung. Glimmergrund 0,71 ist der höchste bisher gemessene Mittelwert dieser Geschichte.
+- **Widersprüche (verblindet, Sonnet):** nachher je ein eindeutiger (Salzmark `lauf-2` Schritt 5: „Heddas Kind“ am Abend; Glimmergrund `lauf-3` Schritt 6: „mein Teuerster“ zu Wendt), vorher keiner; 12 Kanon-Proben in Glimmergrund überall ohne Widerspruch. Nach dem Wortlaut von Regel-002 ein Befund; Rate wie grok-4.6 in 5.26; beide Einzelheiten stehen in beiden Ständen im Wortlaut in der Anfrage (ohne KI nachgebaut).
+
+### 2026-10-19 00:30 MESZ – [GELÖST] markdownlint prüft Rohantworten unter `spikes/`
+
+- **Problem:** Der Commit des Logbuchs scheiterte am Pre-Commit: `markdownlint-cli2` meldete 8 Fehler in `spikes/weltenbauer-9.3/ergebnisse/*.md` (MD041, MD047). Der erste Commit mit den Antworten (`3970465`) war durchgegangen, weil Pre-Commit `spikes/` per `exclude` auslässt – markdownlint selbst sucht aber mit `**/*.md` im ganzen Repo, sobald irgendeine `.md`-Datei geändert ist.
+- **Lösung:** Rohantworten als `.txt` abgelegt (wie die Texte unter `spikes/regel-002/ergebnisse/`), `probe.py` und README nachgezogen (`8f64fc9`); `PRUEFEN=1` liefert dieselbe Tabelle.
+
+### 2026-10-19 00:27 MESZ – [BEOBACHTUNG] Weltenbauer-Probe zu 9.3 mit echter KI
+
+- **Ergebnis:** vier Aufträge (Figur, Ort, Gegenstand, Kultur), grok-4.6, alle `stop`, 0,045 $. (a), (b), (d) maschinell in allen vier erfüllt: Abschnitte der Art vollständig in Reihenfolge auf Ebene 3, kein Füllwerk, Import ganz, keine Ebenen-Korrektur nötig.
+- **(c) von Hand:** Ort erkennt die Falle im Auftrag (Rehl ist ehemaliger Zöllner); knapp: Haken für den Siegelring im Zollhaus (Drach trägt ihn stets – Text des Rings nicht in der Anfrage); Figur „meidet den Südhafen“, obwohl der Nordkai dazugehört. Gegenstand und Kultur ohne Widerspruch. Einzelheiten `spikes/weltenbauer-9.3/README.md`.
+
 ### 2026-10-19 00:20 MESZ – [SESSIONSTART] Proben zu 9.3 (dritter Versuch): Regel-002 und Weltenbauer
 
 - **Modell:** Opus 5.5 (`claude-opus-5-5`, eingestellt und bedient laut `get_session`), Entscheidungs-Klasse. 9.3 empfiehlt Entscheidung – kein Schritt oberhalb der Empfehlung.
