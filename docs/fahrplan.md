@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-18 (V.36 und V.37 angelegt; 8.9 und 8.11 bestätigt und abgeschlossen); 2026-10-16 (V.35 angelegt); 2026-10-13 Phase 7 abgeschlossen (7.8 erledigt: Pflichtfrage ADR-080, Planung ADR-081); Phase 8 beginnt
-- **Laufende Phase:** Phase 8 „Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung“ (Phase 7 abgeschlossen 2026-10-13)
+- **Stand vom:** 2026-10-18 (Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090; Phase 9 beginnt); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
+- **Laufende Phase:** Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (Phase 8 abgeschlossen 2026-10-18)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner – 8.1–8.12 erledigt bzw. abgeschlossen (8.9 und 8.11 am 2026-10-18 bestätigt)
-- **Nächster Schritt:** 8.13 Planung der nächsten Ausbaustufe mit Phasenabschluss (wie 7.8): Vision-Abgleich, Onboarding-Pfad auf frischem Worktree, Pflichtfrage mit getrennter Instanz, Planung der nächsten Phase per ADR. Offen dafür: deine Probe mit einer Gast-Figur (Eingangskriterium V.34); deine Befunde vom 2026-10-15/16 gemeinsam durchgehen (V.35); in die Planung gehen außerdem V.36 und V.37 (V.37 mit Datenmodell-Vorlage gegen ADR-023). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** keiner – Phase 9 beginnt mit 9.1
+- **Nächster Schritt:** 9.1 Gliederung im Server verlässlich – zu Beginn Vorlage α (Abschnitte in Markdown) gegen β (Felder im Dateikopf), Entscheidungs-Klasse; 9.2 (End-to-End-Tests, Routine) kann daneben laufen. Offen bei dir: Probe mit einer Gast-Figur (Eingangskriterium 9.13). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -22,25 +22,27 @@
 
 Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockiertes, damit ein echtes Problem auffällt): ✅ erledigt · 🟠 in Arbeit · ⚪ offen · 🔴 blockiert · 🔵 wartet auf Freigabe · ⏸️ verschoben · ❌ verworfen. „Nächster Zug“ sagt, wer als Nächstes etwas tun muss – „du“ ist der Eigentümer. Abgeleitet aus den Status-Zeilen der Schritte unten; Quelle bleibt der Schritt selbst. Wird bei jeder Statusänderung und zu Sessionende mit nachgezogen (Drift-Prüfung `CLAUDE.md` Abschnitt 16, wie „Aktueller Stand“).
 
-Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details im Archiv [`docs/archiv/fahrplan-phase-7.md`](archiv/fahrplan-phase-7.md).
+Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-8.md`](archiv/fahrplan-phase-8.md).
 
-**Phase 8: 12 von 13 erledigt.**
+**Phase 9: 0 von 15 erledigt.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
-| ✅ | 8.1 | Umbau: Kanon-Dienst nach Verantwortung gliedern | erledigt 2026-10-13 (ADR-082) | – |
-| ✅ | 8.2 | Umbau: Kartenansicht in Hooks und Teilkomponenten | erledigt 2026-10-13 | – |
-| ✅ | 8.3 | Fehlende Tests nachholen, Mindestwerte anheben | erledigt 2026-10-13 | – |
-| ✅ | 8.4 | Übernahme ersetzt Abschnitte; Vorlage „Aussehen“ (V.29) | erledigt 2026-10-13 (ADR-083) | – |
-| ✅ | 8.5 | Bildvorlagen aus „Aussehen“ bzw. Geografie der Karte (V.31) | erledigt 2026-10-13 (ADR-084) | – |
-| ✅ | 8.6 | Kapitel-Kurzfassung nur mit dem Stand davor (V.30) | erledigt 2026-10-13 (ADR-085) | – |
-| ✅ | 8.7 | Regeln und Zeitlinie an den Weltenbauer? (V.32) | erledigt 2026-10-13 (ADR-086) | – |
-| ✅ | 8.8 | Weltenbauer behält das Gespräch (V.27) | erledigt 2026-10-13 | – |
-| ✅ | 8.9 | Weltenbauer aus dem Manuskript (V.22) | erledigt 2026-10-18 (ADR-087) | – |
-| ✅ | 8.10 | Zeitlinie mit Jahr, Datum und Uhrzeit (V.28) | erledigt 2026-10-13 | – |
-| ✅ | 8.11 | Verweise zwischen Kanon-Einträgen (V.25) | erledigt 2026-10-18 (ADR-088) | – |
-| ✅ | 8.12 | Wandernde Figuren – Erkundung (V.26) | erledigt 2026-10-13 → V.34 | – |
-| ⚪ | 8.13 | Planung der nächsten Ausbaustufe | offen | KI: Phasenabschluss vorbereiten; du: V.34 ausprobieren, V.35 durchgehen |
+| ⚪ | 9.1 | Gliederung im Server verlässlich – Abschnitte und Namen | offen | KI: Vorlage α/β |
+| ⚪ | 9.2 | End-to-End-Tests für die Abläufe der Phasen 6–8 | offen | KI |
+| ⚪ | 9.3 | Gegliederte Einträge je Art (B2, G1/G2) | offen | KI: nach 9.1 Vorlage mit Mockup |
+| ⚪ | 9.4 | Beziehungen mit Art und Rückverweis (B3) | offen | KI: nach 9.3 Vorlage |
+| ⚪ | 9.5 | Bilder vom Bedarf her; Karte aus den Orten (G4, B4) | offen | KI: nach 9.3 Vorlage |
+| ⚪ | 9.6 | Herkunft von Bildern (B1) | offen | KI: Vorlage |
+| ⚪ | 9.7 | Einstellungsseite – Modell je Aufgabe (G3, B6) | offen | KI: Mockup und Vorlage |
+| ⚪ | 9.8 | Bild zu Bild (B7) | offen | KI: nach 9.6 Vorlage |
+| ⚪ | 9.9 | Löschen oder Archivieren (B5) | offen | KI: Vorlage mit Mockup |
+| ⚪ | 9.10 | Cache-Treffer festhalten (V.36) | offen | KI |
+| ⚪ | 9.11 | Verbrauchsstatistik je Welt und Geschichte (V.37) | offen | KI: nach 9.10 Vorlage |
+| ⚪ | 9.12 | Quellen und Recherche – Erkundung (H1, V1) | offen | KI |
+| ⚪ | 9.13 | Gast-Figuren ausbauen (V.34) | offen | du: Gast-Figur ausprobieren |
+| ⚪ | 9.14 | Kontexttreue erneut prüfen | offen | KI: nach 9.4 |
+| ⚪ | 9.15 | Planung der nächsten Ausbaustufe | offen | KI |
 
 **Querschnitt (offen):**
 
@@ -59,7 +61,7 @@ Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details
 | ✅ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | erledigt 2026-10-13 (V.29–V.32 → 8.4–8.7) | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 8.13): V.20, V.21, V.23, V.24, V.33 (aus 7.15, 2026-10-13), V.34 (aus 8.12, 2026-10-13), V.35 (Befunde des Eigentümers, 2026-10-16), V.36 (Cache-Treffer, 2026-10-18), V.37 (Verbrauchsstatistik je Welt und Geschichte, 2026-10-18). In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 9.15): V.20, V.21, V.23, V.24, V.33 (weiter verschoben 2026-10-18, ADR-090). In Phase 9 übernommen (2026-10-18, ADR-090): V.35 → 9.3–9.9 und 9.12, V.36 → 9.10, V.37 → 9.11, V.34 → 9.13. In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -170,229 +172,267 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 **Phasen-Bilanz:** 16 Schritte (ursprünglich 8; +7.9 Befund, +7.10–7.13 aus dem Zuschnitt von 7.6, +7.14, +7.15 aus Vorlagen, +7.16 auf Wunsch des Eigentümers; Wucherungs-Schwelle > 16 erreicht, nicht überschritten), 15 `[ERLEDIGT]` zwischen 2026-10-12 und 2026-10-13, 7.15 verschoben → V.33. Ergebnisse: Umbau (7.1), Zeitstrahl mit Kalenderdaten (7.2, ADR-069), Schreibweise wirkt auf bestehende Kapitel (7.3, ADR-070), E-Book (7.4, ADR-071), Aussehen „Buch“ (7.5), Bilder an Kanon-Einträgen (7.6, ADR-072), Karten mit Zoom und Markierungen (7.10, 7.14, ADR-073, ADR-079), Titelbild (7.11, ADR-075), Bilder erzeugen und beschreiben (7.12, 7.13, ADR-074, ADR-076, ADR-077), Abschnitt „Aussehen“ (7.16, ADR-078); Querschnitt D.18 (Datentrennung). Reaktiv-Quote am Ende 0/10. Pflichtfrage: gezielt umbauen (ADR-080). 734 Python-Tests (98,88 %), 273 Komponenten-Tests (94,45 % Zeilen), 11 End-to-End-Tests. Detail-Schritte: [`docs/archiv/fahrplan-phase-7.md`](archiv/fahrplan-phase-7.md).
 
-### Phase 8: Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung – Typ: UMSETZUNG
+### Phase 8: Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung – Typ: UMSETZUNG – ABGESCHLOSSEN (2026-10-18)
 
-**Ziel:** Das Fundament dort festigen, wo die nächsten Schritte ansetzen (Pflichtfrage, ADR-080), die Befunde der Datentrennung (D.18) beheben und den Kanon besser verknüpfen: Weltenbauer im Alltag, genauere Zeitlinie, Verweise zwischen Einträgen und eine Erkundung zu wandernden Figuren.
+**Phasen-Bilanz:** 13 Schritte (ursprünglich 13, Wucherungs-Schwelle nicht berührt), alle `[ERLEDIGT]` zwischen 2026-10-13 und 2026-10-18. Ergebnisse: Umbau von Kanon-Dienst und Kartenansicht, fehlende Tests und angehobene Mindestwerte mit Ratsche (8.1–8.3, ADR-080, ADR-082); Befunde der Datentrennung behoben – Übernehmen ersetzt Abschnitte, Bildvorlagen aus „Aussehen“ und Geografie, Kurzfassung nur mit dem Stand davor, Weltenbauer mit Regeln und Zeitlinie im Wortlaut (8.4–8.7, ADR-083 bis ADR-086); Weltenbauer behält das Gespräch und arbeitet aus dem Manuskript (8.8, 8.9, ADR-087); Zeitlinie mit Jahr, Datum und Uhrzeit (8.10); Verweise zwischen Kanon-Einträgen mit Probe nach Regel-002 (8.11, ADR-088); Erkundung wandernde Figuren (8.12 → V.34); Planung mit Vision-Abgleich und Pflichtfrage: gezielt umbauen (ADR-089), Phase 9 (ADR-090). Reifegrade unverändert; NFR Kontexttreue bleibt `[VORLÄUFIG]` bis 9.14. 805 Python-Tests (99,84 %), 398 Komponenten-Tests (98,84 % Zeilen), 11 End-to-End-Tests. Detail-Schritte: [`docs/archiv/fahrplan-phase-8.md`](archiv/fahrplan-phase-8.md).
 
-**Abschlusskriterium:** Schritte 8.1–8.13 `[ERLEDIGT]`, `[VERWORFEN]` mit ADR oder `[VERSCHOBEN]` mit Ziel-Schritt.
+### Phase 9: Verlässlicher Kanon, Bilder und Verwaltung – Typ: UMSETZUNG
 
-**Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`; Änderungen an der Kontext-Zusammenstellung (8.6, 8.7, 8.9, 8.11) und Datenmodell-Konventionen (8.4, 8.10, 8.11) werden per ADR entschieden, bevor gebaut wird; 8.12 kann eine größere Datenmodell-Entscheidung vorbereiten.
+**Ziel:** Die Gliederung der Kanon-Einträge verlässlich machen (Pflichtfrage, ADR-089) und darauf die Befunde des Eigentümers umsetzen: gegliederte Einträge und Beziehungen, Bilder vom Bedarf her mit Herkunft und festem Modell, Löschen oder Archivieren, Verbrauch je Welt und Geschichte; dazu eine Erkundung zu Quellen und Recherche, der Ausbau der Gast-Figuren und eine erneute Prüfung der Kontexttreue.
 
-**Ursprünglicher Schrittplan:** 13 Schritte, festgehalten am 2026-10-13 (ADR-080, ADR-081). Wucherungs-Schwelle: Default aus `docs/project-context.md` Abschnitt 6 (Faktor 2 und mindestens 5 zusätzliche Schritte, also mehr als 26); neue Wünsche während der Phase werden V-Schritte mit Landeplatz 8.13.
+**Abschlusskriterium:** Schritte 9.1–9.15 `[ERLEDIGT]`, `[VERWORFEN]` mit ADR oder `[VERSCHOBEN]` mit Ziel-Schritt.
 
-**Reihenfolge (Eigentümer, 2026-10-13; ADR-081):** Umbau 8.1–8.3, Datentrennung 8.4–8.7, Weltenbauer 8.8–8.9, Zeitlinie 8.10, Verweise 8.11, Erkundung wandernde Figuren 8.12; zuletzt 8.13.
+**Reifegrad-Erwartung am Phasenende:** unverändert `[BELASTBAR]`; Datenmodell- und Ablauf-Entscheidungen (9.1, 9.3, 9.4, 9.6–9.9, 9.11, 9.13) werden per ADR entschieden, bevor gebaut wird; NFR Kontexttreue nach 9.14 `[BELASTBAR]` oder begründet `[VORLÄUFIG]`.
+
+**Ursprünglicher Schrittplan:** 15 Schritte, festgehalten am 2026-10-18 (ADR-089, ADR-090). Wucherungs-Schwelle: Default aus `docs/project-context.md` Abschnitt 6 (Faktor 2 und mindestens 5 zusätzliche Schritte, also mehr als 30); neue Wünsche während der Phase werden V-Schritte mit Landeplatz 9.15.
+
+**Reihenfolge (Eigentümer, 2026-10-18; ADR-090):** Fundament 9.1–9.2, Kanon 9.3–9.4, Bilder 9.5–9.8, Verwaltung 9.9–9.11, Erkundung 9.12, Gäste 9.13 (nach der Probe des Eigentümers), Kontexttreue 9.14; zuletzt 9.15.
 
 **Pflichtfrage am Phasenende:** ADR „Weiterbauen, umbauen oder neu aufsetzen" – Nummer wird beim Phasenabschluss vergeben
 
-#### 8.1: Umbau: Kanon-Dienst nach Verantwortung gliedern
+#### 9.1: Gliederung im Server verlässlich – Abschnitte und Namenserkennung
 
-- **Status:** ✅ ERLEDIGT (2026-10-13) – `CanonService` als Fassade (349 Zeilen, vorher 878) über `worlds`, `entries`, `maps`, `images`, `imports` mit `models`, `layout`, `headers`, `validation` (alle unter 150 Zeilen); keine privaten Importe über Dateigrenzen, keine Zyklen; Verhalten unverändert: pytest 734 grün ohne Änderung der Tests, Abdeckung 99 % (`canon` 95–100 % je Datei, offen nur die Rücknahme-Zweige wie vorher), ruff, mypy (73 Dateien), bandit ohne Befund. Befund 6: Fehlertypen waren schon Vertrag (Abschnitt 4); Bildprüfung und Größengrenzen per ADR-082 (`[REAKTIV]`) in der Karte festgehalten. Reifegrad-Tabelle auf Stand nach ADR-082. Umbau durch Unteragenten (Routine-Klasse), geprüft und verantwortet von der bauenden KI
-- **Phasentyp-Kontext:** UMSETZUNG
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** keine
-- **Freigabepflichtig:** nein – Umbau innerhalb von `canon` mit unveränderter Fassade (ADR-080); wenn Befund 6 nur mit Schnittstellenänderung lösbar ist: Vorlage (Kategorie 1)
-- **Empfohlene Klasse:** Routine – durchspezifizierter Umbau ohne Verhaltensänderung, durch Tests gesichert; Entscheidung, falls Befund 6 eine Architekturfrage wird.
+- **Freigabepflichtig:** ja – zu Beginn Vorlage α (Abschnitte bleiben in Markdown, der Server kennt sie je Kategorie) gegen β (Felder im Dateikopf): Datenmodell (Kategorie 4). Der Umbau selbst bleibt innerhalb der Module, Schnittstellen höchstens additiv (ADR-089)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell-Weiche für V.35 G1/G2 (Eskalations-Auslöser 1).
 - **Eingangskriterien:** alle berührten Bestandteile `[BELASTBAR]`
-- **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Befund 1 der Bewertung: `CanonService` (`canon/service.py`, 878 Zeilen) in Teile nach Verantwortung gliedern – Welten, Karten und Markierungen, Einträge, Bilder, Import/Export – mit unveränderter Fassade, wie `ManuscriptService` in 7.3. Befund 6: Fehlertypen und `inspect_image` nicht mehr direkt aus `storage` in `api` holen, sondern über `canon`/`manuscript`. Befund 7: Reifegrad-Tabelle in `docs/architecture.md` Abschnitt 9 auf den Stand nach ADR-079 bringen.
-- **Akzeptanzkriterien:** Verhalten unverändert (alle Tests grün ohne Änderung der Erwartungen); `api` importiert `storage` nur noch für `system/`; Reifegrad-Tabelle aktuell; `canon/service.py` deutlich unter 500 Zeilen.
-- **Betroffene Module:** canon, api
-- **Reifegrad-Wirkung:** keine
-- **Artefakte:** Code, Logbuch-Eintrag
-- **Notizen:** Aus ADR-080, Bewertung `docs/research/bewertung-phase-7.md` (i), (v). Vor 8.11 und 8.12.
-
-#### 8.2: Umbau: Kartenansicht in Hooks und Teilkomponenten
-
-- **Status:** ✅ ERLEDIGT (2026-10-13) – `WorldMaps.tsx` 716 → 86 Zeilen; `MapViewer` (141 Zeilen, vorher ca. 450 mit 18 Hooks) verdrahtet die Hooks `useMapZoom`, `useMapMarking`, `useMapChange` und die Teile `MapStage`, `MapToolbar`, `MarkingBar`, `AddMap`; größte Datei `useMapMarking.ts` 162 Zeilen. DOM, Texte, Klassen und ARIA-Namen unverändert; einzige Verschiebung: der Name beim Umbenennen liegt in `MapToolbar` und wird beim Wechsel in „Markieren“ zurückgesetzt – ohne sichtbare Folge, weil „Markieren“ beim Umbenennen nicht angeboten wird (am alten Code geprüft). 16 neue Tests (`MapViewer.test.tsx`); vitest 289 grün, gesamt 95,29 % / Zweige 91,95 %; `WorldMaps.tsx` 100 % Zweige (vorher 64,9 %), Kartenteile 86–100 %; tsc, eslint, prettier, Build grün; Playwright 11/11 (Lauf des Unteragenten). Umbau durch Unteragenten (Routine-Klasse), geprüft von der bauenden KI
-- **Phasentyp-Kontext:** UMSETZUNG
-- **Abhängigkeiten:** keine
-- **Freigabepflichtig:** nein – Umbau innerhalb von `ui` ohne sichtbare Änderung (ADR-080)
-- **Empfohlene Klasse:** Routine – durchspezifizierter Umbau ohne Verhaltensänderung.
-- **Eingangskriterien:** alle berührten Bestandteile `[BELASTBAR]`
-- **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Befund 2: `MapViewer` in `ui/src/views/WorldMaps.tsx` (ca. 450 Zeilen, 18 Hooks) in eigene Hooks (Zoom, Markieren) und Teilkomponenten zerlegen, nach dem Muster `useWriteFlow`; dabei die offenen Zweige der Kartenansicht testen.
-- **Akzeptanzkriterien:** Verhalten unverändert (Komponenten- und End-to-End-Tests grün); keine Komponente der Kartenansicht über ca. 200 Zeilen; Zweigabdeckung `WorldMaps` über 85 %.
-- **Betroffene Module:** ui
-- **Reifegrad-Wirkung:** keine
-- **Artefakte:** Code, Tests, Logbuch-Eintrag
-- **Notizen:** Aus ADR-080, Bewertung (ii). Vor 8.4 und 8.5.
-
-#### 8.3: Fehlende Tests nachholen, Mindestwerte der Abdeckung anheben
-
-- **Status:** ✅ ERLEDIGT (2026-10-13) – Python: +31 Tests (765), 98,88 → 99,89 % (alle Dateien der Liste 100 %; offen 6 Zweige in Schleifen-Enden außerhalb der Liste); Oberfläche: +56 Tests (345), Zeilen 95,49 → 98,71 %, Zweige 91,95 → 95,0–95,1 % (`files.ts` 28 → 100 %, `StoryCover` 70 → 100 %, `AppearanceExtract` 75 → 100 %); Mindestwerte angehoben: `fail_under = 99`, vitest Zeilen/Anweisungen 98, Funktionen 97, Zweige 94; Ratsche in `docs/project-context.md` Abschnitt 7. Tests durch zwei Unteragenten (Routine-Klasse), Stichprobe und alle Prüfungen durch die bauende KI
-- **Phasentyp-Kontext:** UMSETZUNG
-- **Abhängigkeiten:** 8.1, 8.2
-- **Freigabepflichtig:** ja – Werkzeug-Konfiguration der CI (Kategorie 7), freigegeben mit ADR-080
-- **Empfohlene Klasse:** Routine – Test-Erstellung und Testwartung.
-- **Eingangskriterien:** 8.1 und 8.2 erledigt
-- **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** Befund 3: Tests für `ai_gateway/images.py`, `storage/images.py`, `ui/src/files.ts`, `StoryCover.tsx`, `AppearanceExtract.tsx`, `ImageGenerate.tsx`, `ImageDescription.tsx`; danach `fail_under` (`pyproject.toml`) und die vitest-Schwellen (`vite.config.ts`) auf den erreichten Stand abgerundet anheben; Regel in `docs/project-context.md` Abschnitt 7 festhalten: Schwellen werden nur angehoben.
-- **Akzeptanzkriterien:** Python wieder mindestens 99 %, Oberfläche Zeilen mindestens 97 % und Zweige mindestens 93 %; Schwellen angehoben; CI grün.
-- **Betroffene Module:** ai_gateway, storage, ui
-- **Reifegrad-Wirkung:** keine
-- **Artefakte:** Tests, Konfiguration, Logbuch-Eintrag
-- **Notizen:** Aus ADR-080, Bewertung (iii).
-
-#### 8.4: Übernahme ersetzt Abschnitte statt sie zu verdoppeln; Vorlage „Aussehen“ (V.29)
-
-- **Status:** ✅ ERLEDIGT (2026-10-13) – entschieden mit Mockup (ADR-083). Umgesetzt: `ui/src/sections.ts` (Abschnitt lesen, ersetzen, ergänzen, entfernen, umbenennen; Abschnitt bis zur nächsten Überschrift gleicher oder höherer Ebene; übriger Text byte-gleich); Rückfrage „Ersetzen / Darunter ergänzen / Abbrechen“ (`SectionConflict`, `useSectionChoice`) an allen drei Übernahme-Stellen; Karte entfernen fragt nach der Geografie, Umbenennen zieht die Überschrift mit; `appearanceOf` überspringt leere Abschnitte; Vorlage neuer Figuren „Aussehen“ + „Wesen und Geschichte“; Server lehnt „Aussehen herauslösen“ für Nicht-Figuren ab (422). Tests aus D.18: Weltenbauer ohne fremde Welten, Markierungen in keiner Anfrage, Vorlagen bei leerem/doppeltem/unterteiltem Abschnitt. pytest 769 (99,89 %), vitest 380 (98,78 % Zeilen, 94,93 % Zweige), Playwright 11/11 (Lauf des Unteragenten), ruff, mypy, bandit, tsc, eslint, prettier, Build grün. Sichtprobe am lokalen Testserver (KI-Antwort im Browser ersetzt): Rückfrage erscheint mit bisherigem Text, „Ersetzen“ ergibt genau einen Abschnitt, Datei byte-genau geprüft; neue Figur mit neuer Vorlage. Vom Eigentümer freigegeben; Einspielen auf Wunsch später. Umsetzung durch Unteragenten (Sonnet), geprüft von der bauenden KI
-- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
-- **Abhängigkeiten:** 8.1, 8.2
-- **Freigabepflichtig:** ja – verändert vorhandenen Text des Autors beim Übernehmen; Vorlage für neue Figuren ist Datenmodell-Konvention aus ADR-078 (Kategorie 4)
-- **Empfohlene Klasse:** Entscheidung – Datenmodell-Konvention (Eskalations-Auslöser 1).
-- **Eingangskriterien:** 8.1, 8.2 erledigt; Zählung auf dem Server erledigt (2026-10-13: 0 doppelte Abschnitte)
-- **Anforderungen (ab Klasse M):** FR-035, FR-029
-- **Zu tun:** wie V.29 (D.18 B1–B3, B6): „Übernehmen als ‚Aussehen‘“ und „In die Weltbeschreibung übernehmen“ ersetzen einen vorhandenen Abschnitt gleichen Namens bzw. füllen einen leeren (Rückfrage, wenn dort schon Text steht); Geografie einer gelöschten Karte auf Nachfrage mit entfernen; `appearanceOf` überspringt leere Abschnitte und endet erst an einer Überschrift gleicher oder höherer Ebene; Vorlage neuer Figuren so, dass freier Text nicht unter „Aussehen“ fällt; Server verlangt für „Aussehen herauslösen“ die Kategorie `figur`; Tests laut Bericht `docs/research/datentrennung-ki-bereiche.md`.
-- **Akzeptanzkriterien:** Vorlage bzw. ADR; Tests; nach erneutem Beschreiben genau ein Abschnitt; Eigentümer bestätigt.
-- **Betroffene Module:** ui, canon, api
-- **Reifegrad-Wirkung:** keine
-- **Artefakte:** Code, Tests, ggf. ADR
-- **Notizen:** Aus V.29 (ADR-081).
-
-#### 8.5: Bildvorlagen aus „Aussehen“ bzw. der Geografie dieser Karte (V.31)
-
-- **Status:** ✅ ERLEDIGT (2026-10-13) – entschieden mit Mockup (ADR-084): Orte und Gegenstände aus „Aussehen“, sonst Textanfang; Karten nur aus „Geografie – Name der Karte“, sonst Titel; Titelbild aus Titel, Genres und Atmosphäre (Wahl des Eigentümers abweichend von der Empfehlung). Umgesetzt in `ui/src/imagePrompts.ts` mit Tests für leeren Abschnitt, fremde Karten-Geografie, Titelbild ohne Handlung; vitest 382 grün (98,78 % / 95,01 %), tsc, eslint, prettier grün
-- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
-- **Abhängigkeiten:** 8.4
-- **Freigabepflichtig:** ja – ändert die Vorbelegung aus ADR-077
-- **Empfohlene Klasse:** Entscheidung – Änderung einer per ADR festgelegten Vorbelegung (Eskalations-Auslöser 1).
-- **Eingangskriterien:** 8.4 erledigt
-- **Anforderungen (ab Klasse M):** FR-035
-- **Zu tun:** wie V.31 (D.18 B5): Orte und Gegenstände: Abschnitt „Aussehen“, wenn vorhanden; Karte: Abschnitt „Geografie – Name dieser Karte“, wenn vorhanden, sonst nur der Titel; Titelbild: unverändert oder nur Titel und Genre (Wahl des Eigentümers).
-- **Akzeptanzkriterien:** Vorlage; Tests für leeren, doppelten und unterteilten Abschnitt; Eigentümer bestätigt.
-- **Betroffene Module:** ui
-- **Reifegrad-Wirkung:** keine
-- **Artefakte:** Code, Tests, ggf. ADR
-- **Notizen:** Aus V.31 (ADR-081).
-
-#### 8.6: Kapitel-Kurzfassung nur mit dem Stand vor dem Kapitel (V.30)
-
-- **Status:** ✅ ERLEDIGT (2026-10-13) – entschieden (ADR-085, Option A): Kurzfassungen der Kapitel davor statt der Gesamtzusammenfassung; Kapiteltext hat Vorrang, die ältesten Kurzfassungen fallen bei Platzmangel zuerst weg; Längengrenze unabhängig von der übrigen Geschichte. `context/summaries.py`; drei Tests geändert (gewolltes neues Verhalten), drei neue (nur frühere Kapitel, älteste zuerst weg, Grenze unabhängig); pytest 771 grün, 99,89 %; ruff, mypy grün. Anfrage beim Weiterschreiben nicht betroffen
-- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
-- **Abhängigkeiten:** 8.1
-- **Freigabepflichtig:** ja – Kontext-Zusammenstellung (Kategorie 1)
-- **Empfohlene Klasse:** Entscheidung – Kontext-Zusammenstellung (Eskalations-Auslöser 1).
-- **Eingangskriterien:** 8.1 erledigt
-- **Anforderungen (ab Klasse M):** FR-010
-- **Zu tun:** wie V.30 (D.18 B4): Beim Neu-Erzeugen der Kurzfassung eines früheren Kapitels nicht die Gesamtzusammenfassung unter „Handlungsstand vor diesem Kapitel“ mitgeben (`context/summaries.py`), sondern die Kurzfassungen der Kapitel davor – oder ehrliche Überschrift (Vorlage). Test: weder Kanon noch andere Geschichten in den beiden Zusammenfassungs-Anfragen.
-- **Akzeptanzkriterien:** Vorlage; Tests; Probe nach Regel-002, falls die Anfrage beim Schreiben betroffen ist.
-- **Betroffene Module:** context, api
-- **Reifegrad-Wirkung:** keine
-- **Artefakte:** Code, Tests, ggf. ADR
-- **Notizen:** Aus V.30 (ADR-081).
-
-#### 8.7: Regeln und Zeitlinie im Wortlaut an den Weltenbauer? (V.32)
-
-- **Status:** ✅ ERLEDIGT (2026-10-13) – gemessen an den fünf Welten des Eigentümers (nur Dateigrößen): 400–2.100 Token, höchstens ca. 0,4 Cent je Antwort; entschieden A (ADR-086): Regeln und Zeitlinie immer im Wortlaut, `@`-Einträge nicht doppelt. `context/worldbuilder.py`, neuer Test; pytest 772 grün, 99,89 %
-- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
-- **Abhängigkeiten:** 8.1
-- **Freigabepflichtig:** ja – Kontext-Zusammenstellung (Kategorie 1)
-- **Empfohlene Klasse:** Entscheidung – Kontext-Zusammenstellung mit Kostenwirkung (Eskalations-Auslöser 1).
-- **Eingangskriterien:** 8.1 erledigt
-- **Anforderungen (ab Klasse M):** FR-029
-- **Zu tun:** wie V.32: Der Weltenbauer bekommt Regeln und Zeitlinie nur als Namen (`context/worldbuilder.py`). Kosten je Anfrage mit und ohne Wortlaut messen und als Vorlage vorlegen; Test „Weltenbauer ohne fremde Welten“ (D.18).
-- **Akzeptanzkriterien:** Vorlage mit gemessenen Kosten; Entscheidung umgesetzt; Tests.
-- **Betroffene Module:** context
-- **Reifegrad-Wirkung:** keine
-- **Artefakte:** Code, Tests, ggf. ADR
-- **Notizen:** Aus V.32 (ADR-081).
-
-#### 8.8: Weltenbauer behält das Gespräch nach „Als Kanon übernehmen“ (V.27)
-
-- **Status:** ✅ ERLEDIGT (2026-10-13) – Mockup freigegeben (Variante A, ohne ADR – Bedienung): „Als Kanon übernehmen“ öffnet die Import-Vorschau als Fenster über dem Weltenbauer (`ImportDialog`), die Vorschau ist als `ImportReview` mit dem Reiter „Import“ geteilt; nach dem Übernehmen „Zurück zum Weltenbauer“, die Liste lädt neu ohne Neuaufbau der Kanon-Seite. Sprung in den Reiter „Import“ (`state.importText`, `initialText`) entfernt. vitest 384 grün (98,78 % / 94,92 %), tsc, eslint, prettier, Build, Playwright 11/11 (Lauf des Unteragenten). Sichtprobe am lokalen Testserver mit 375 px und dunkler Darstellung (Antwort des Weltenbauers im Browser ersetzt): Fenster passt, Übernehmen legt „Fährmann Tom“ an, Gespräch bleibt, Adresse bleibt `/kanon`. Vom Eigentümer freigegeben. Umsetzung durch Unteragenten (Sonnet), geprüft von der bauenden KI
-- **Phasentyp-Kontext:** UMSETZUNG (mit Mockup zu Beginn)
-- **Abhängigkeiten:** 8.1
-- **Freigabepflichtig:** nein bei Variante A/B (Bedienung); Mockup vorher/nachher
-- **Empfohlene Klasse:** Routine – Bedienung ohne Architekturwirkung; Entscheidung nur, falls Variante C wieder aufkäme.
-- **Eingangskriterien:** 8.1 erledigt
-- **Anforderungen (ab Klasse M):** FR-029
-- **Zu tun:** wie V.27: Vorschlag A – Import-Vorschau als Fenster auf der Kanon-Seite, danach „Zurück zum Weltenbauer“ im selben Gespräch; Alternative B – Gespräch auf Weltebene halten. Verworfen C (Gespräch im Browser speichern, gegen ADR-048).
-- **Akzeptanzkriterien:** Mockup freigegeben; mehrere Einträge hintereinander im selben Gespräch; Tests; Eigentümer bestätigt.
-- **Betroffene Module:** ui
-- **Reifegrad-Wirkung:** keine
-- **Artefakte:** Code, Tests
-- **Notizen:** Aus V.27 (ADR-081).
-
-#### 8.9: Weltenbauer aus dem Manuskript – Kanon-Eintrag aus vorhandenen Textstellen (V.22)
-
-- **Status:** ✅ ERLEDIGT (2026-10-18) – echte Probe an einer Geschichte des Eigentümers durch ihn selbst, Rückmeldung 2026-10-18: „8.9 habe ich schon getestet, das hat funktioniert“ (Wortlaut sinngemäß, Spracheingabe). Vorher: entschieden mit Mockup (ADR-087). Umgesetzt (Unteragent, geprüft von der bauenden KI): `context/manuscript_hits.py` (Absätze mit Name/Aliassen als ganzes Wort, auch Genitiv – von der bauenden KI ergänzt; je Kapitel die Kurzfassung; erste/letzte/verteilte Stellen bis 12.000 Token), Teil `fundstellen` im Weltenbauer, `POST …/worldbuilder` optional `manuscript`, neu `POST …/worldbuilder/hits` (nur Zahlen); Bereich „📖 Aus dem Manuskript“ mit Anzahl, Token und Kosten je Antwort, „✕“. pytest 792 (99,84 %), vitest 389 (98,8 % / 94,93 %), ruff, mypy, bandit, tsc, eslint, prettier, Build, Playwright 11/11 (Lauf des Unteragenten). Sichtprobe am lokalen Testserver (ohne echte KI-Antwort). Vom Eigentümer freigegeben („Passt, nur mergen“). Eingespielt 2026-10-13 (`19a5e48`)
-- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
-- **Abhängigkeiten:** 8.7, 8.8
-- **Freigabepflichtig:** ja – neuer Ablauf (Kategorie 1), ggf. Erweiterung der Anfrage-Zusammenstellung
-- **Empfohlene Klasse:** Entscheidung – neuer Ablauf und Kontext-Zusammenstellung (Eskalations-Auslöser 1).
-- **Eingangskriterien:** 8.7 und 8.8 erledigt
-- **Anforderungen (ab Klasse M):** FR-029
-- **Zu tun:** wie V.22: Fundstellen über Namen und Aliasse aus allen Kapiteln suchen, mit Kurzfassungen an die KI geben, Übernahme über die Import-Vorschau wie beim Weltenbauer; Auswahl, wenn die Fundstellen das Budget übersteigen (erste Auftritte und Wendepunkte, mehrere Durchgänge).
-- **Akzeptanzkriterien:** Vorlage und ADR; Tests; echte Probe an einer Geschichte des Eigentümers; Eigentümer bestätigt.
-- **Betroffene Module:** context, api, ui
-- **Reifegrad-Wirkung:** keine
+- **Anforderungen (ab Klasse M):** FR-002, FR-003
+- **Zu tun:** Befunde 1 und 7 der Bewertung (`docs/research/bewertung-phase-8.md`). (1) Eine Regel für Abschnitte im Server (`canon`): Lesen, Ersetzen und Ergänzen nach der Regel aus `ui/src/sections.ts`; `render` (`context/parts.py`), Markdown-Import (`canon/importers/markdown.py`) und Aussehen (`context/appearance.py`) nutzen sie; gemeinsame Testfälle für Server und Oberfläche. (2) Namenserkennung (`ui/src/references.ts`, `context/writing.py`, `context/manuscript_hits.py`, `ui/src/canonFact.ts`) auf eine Regel bringen, Genitiv einheitlich. (3) Vorlage α/β mit der Sicht des Eigentümers („Verlässlichkeit“, V.35) und Vision 7 (lesbare Dateien, FR-020).
+- **Akzeptanzkriterien:** Vorlage und ADR; dieselben Testfälle grün in Server und Oberfläche; „Aussehen“ wird an allen Stellen gleich gefunden – auch leer, doppelt, unterteilt; übriges Verhalten unverändert (Tests ohne geänderte Erwartungen); Anfrage beim Schreiben byte-gleich, sonst Probe nach Regel-002.
+- **Betroffene Module:** canon, context, ui
+- **Reifegrad-Wirkung:** keine (Datenmodell bleibt `[BELASTBAR]` nach ADR)
 - **Artefakte:** Code, Tests, ADR
-- **Notizen:** Aus V.22 (ADR-081).
+- **Notizen:** Aus ADR-089. Trägt 9.3–9.5 und 9.13.
 
-#### 8.10: Zeitlinie mit Jahr, Datum und Uhrzeit (V.28)
-
-- **Status:** ✅ ERLEDIGT (2026-10-13) – Formen der echten Zeitlinien auf dem Server anonym geprüft (14 Einträge: „Jahr – Titel“, zwei „Uhrzeit – Titel“, keine Monate). Mit Mockup entschieden: erkennen statt vorschreiben (nur Ansicht, kein ADR – ADR-069 bleibt), Gruppe „Ohne Jahr“, Ansicht nach Jahren mit Marken für Datum und Uhrzeit. Umgesetzt in `ui/src/timeline.ts` (Uhrzeit `HH:MM`/`HH Uhr`, Datum `T.M.`/`T.M.J`/`T. Monatsname`, übrige Zahl als Jahr; Sortierung Jahr–Monat–Tag–Uhrzeit, stabil), `TimelineGroups.tsx`; Namen werden nur an „ – “ geteilt (vorher zerschnitt der Doppelpunkt „14:30 Uhr – …“). vitest 395 grün (98,84 % / 95,1 %), tsc, eslint, prettier, Build, Playwright 11/11 (Lauf des Unteragenten). Sichtprobe am lokalen Testserver (Desktop dunkel, Handy hell); Platzhalter auf Wunsch des Eigentümers auf „Zeit“ gekürzt. Vom Eigentümer freigegeben. Umsetzung durch Unteragenten (Sonnet), geprüft von der bauenden KI
-- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage und Mockup zu Beginn)
-- **Abhängigkeiten:** keine
-- **Freigabepflichtig:** ja, falls die Form der Zeitangaben im Kanon festgelegt wird (Datenmodell, Kategorie 4); Darstellung allein nicht
-- **Empfohlene Klasse:** Entscheidung – mögliche Datenmodell-Konvention (Eskalations-Auslöser 1).
-- **Eingangskriterien:** keine
-- **Anforderungen (ab Klasse M):** FR-023
-- **Zu tun:** wie V.28: zwischen Jahreszahl, Datum und Uhrzeit unterscheiden; auch nur Uhrzeit oder nur Datum; im Verlauf sichtbar machen, wo die Zeitstempel sind. Stand heute (ADR-069): sortiert nach der ersten Zahl.
-- **Akzeptanzkriterien:** Vorlage bzw. ADR; Mockup freigegeben; Tests; Eigentümer bestätigt.
-- **Betroffene Module:** ui, ggf. canon
-- **Reifegrad-Wirkung:** keine
-- **Artefakte:** Code, Tests, ggf. ADR
-- **Notizen:** Aus V.28 (ADR-081).
-
-#### 8.11: Verweise zwischen Kanon-Einträgen; ortsgebundene Regeln (V.25)
-
-- **Status:** ✅ ERLEDIGT (2026-10-18) – vom Eigentümer bestätigt am 2026-10-18 nach Zusammenfassung der Probe; dabei Satz im Probebericht richtiggestellt (vier Mittelwerte außerhalb der Vorher-Spannweite, je nur in einer Geschichte – Ergebnis nach Regel-002 unverändert, `spikes/regel-002/README.md`). Vorher: entschieden (ADR-088) und umgesetzt (Unteragent, geprüft von der bauenden KI): `find_references` und `reference_candidates` in `context/writing.py` (`@Name`/Alias derselben Welt, längster Treffer, Genitiv wie in der Oberfläche – von der bauenden KI angeglichen), Verweise vorn in beiden Auffüllungsläufen, eine Stufe tief; Rahmensatz „Eine Regel mit der Zeile „Gilt nur in: …“ gilt nur an diesem Ort.“; Weltenbauer verteilt und verknüpft mit `@Name`; `@Name` als Link in der Kanon-Ansicht. pytest 805 (99,84 %), vitest 398 (98,84 % / 95,12 %), ruff, mypy, bandit, tsc, eslint, prettier, Build, Playwright 11/11 (Lauf des Unteragenten). Probe nach Regel-002 gelaufen (2026-10-13, Cloud-Session, `spikes/regel-002/README.md`): Verweise wirken wie vorgesehen; Regel außerhalb des Orts nicht angewendet (auch vorher nicht); „wörtlich %“ nach 3 Läufen über der Vorher-Spannweite, nach 6 Läufen je Seite innerhalb – keine Verschlechterung (Regel-002). Nicht erfolgt: vollständige Handbewertung der Widersprüche durch eine getrennte Instanz (nur Stichprobe) – dem Eigentümer vor der Bestätigung genannt
-- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
-- **Abhängigkeiten:** 8.1, 8.7
-- **Freigabepflichtig:** ja – Anfrage-Zusammenstellung (Kategorie 1), ggf. Datenmodell (Kategorie 4)
-- **Empfohlene Klasse:** Entscheidung – Kontext-Zusammenstellung und Datenmodell (Eskalations-Auslöser 1).
-- **Eingangskriterien:** 8.1 und 8.7 erledigt
-- **Anforderungen (ab Klasse M):** FR-011, FR-013
-- **Zu tun:** wie V.25: Kanon-Einträge verweisen auf andere; kommt ein Eintrag in den Kontext, kommen seine verwiesenen mit (Vorschlag A: `@Name` im Text eines Eintrags, eine Stufe tief, im Rahmen des Budgets); optional ortsgebundene Regeln; der Weltenbauer verknüpft verteilte Einträge.
-- **Akzeptanzkriterien:** Vorlage und ADR; Tests; Probe nach Regel-002; Eigentümer bestätigt.
-- **Betroffene Module:** context, canon, ui
-- **Reifegrad-Wirkung:** keine
-- **Artefakte:** Code, Tests, ADR
-- **Notizen:** Aus V.25 (ADR-081). Gemeinsam mit 8.12 denken (V.26 nennt V.25 als Partner). **Prüfauftrag für die Cloud-Session (Regel-002, `spikes/regel-002/README.md`):** (1) `VARIANTE=vorher` auf dem Stand vor 8.11 (`9acc5bf`), `VARIANTE=nachher` auf `main` mit 8.11, je `LAEUFE=3`, beide Testgeschichten, grok-4.6 – Kennzahlen dürfen nicht außerhalb der Spannweite schlechter werden (der neue Rahmensatz wirkt in jeder Anfrage). (2) Wirkung der Verweise: in der Testwelt Salzmark zwei bis drei Einträgen `@Name`-Verweise und einer Regel „Gilt nur in: @Ort“ geben (nur im Spike-Verzeichnis), eine Anweisung nennt einen davon mit `@`; vorher/nachher je 3 Läufe – Erwartung: die verwiesenen Einträge stehen unter „Herangezogen“, keine neuen Widersprüche; die ortsgebundene Regel wird außerhalb des Orts nicht angewendet. Kosten ca. 0,2–0,4 $ je Kette, insgesamt ca. 5–8 $. Ergebnis in `spikes/regel-002/README.md` und Logbuch; danach 8.11 abschließen.
-
-#### 8.12: Wandernde Figuren – Erkundung (V.26)
-
-- **Status:** ✅ ERLEDIGT (2026-10-13) – Bericht `docs/research/wandernde-figuren.md`: drei Optionen (A Gast-Verbindung ausbauen, B Kopie mit Herkunft, C Figurenbibliothek über den Welten) mit Kosten, Umkehrbarkeit und Vision-Grenze; Befund auf dem Server: 23 Figuren, 0 in mehreren Welten, 0 Gast-Verbindungen. Konfidenz für C niedrig bei teurer Umkehrbarkeit – kein Rateschluss (`CLAUDE.md` Abschnitt 8, Kriterium 8). Eigentümer: „Erst ausprobieren, dann A“ → V.34 (Landeplatz 8.13), B verworfen, C nicht weiter verfolgt
-- **Phasentyp-Kontext:** ERKUNDUNG innerhalb der UMSETZUNG-Phase (wie Spike 6.13)
-- **Schritt-Art (nur ERKUNDUNG):** Vergleichsstudie
-- **Zeitbox (nur ERKUNDUNG):** eine Session, dann Zwischenstand
-- **Abhängigkeiten:** 8.1, 8.11
-- **Freigabepflichtig:** nein für die Erkundung; jede Umsetzung ist Datenmodell und Architektur (Kategorien 1 und 4)
-- **Empfohlene Klasse:** Entscheidung – kann eine Architektur- und Datenmodellentscheidung vorbereiten; Fehlschluss teuer.
-- **Eingangskriterien:** 8.1 und 8.11 erledigt
-- **Anforderungen (ab Klasse M):** FR-016, FR-017
-- **Zu tun:** Fragen aus V.26 klären: weltneutraler Kern einer Figur; Weltbezug je Welt (Herkunft, Beziehungen, Besitz, Erlebtes); Einpassen in eine neue Welt; Erlebnisse wandern mit. Wie trägt das Datenmodell das (jede Ablage hängt an `world_id`)? Verhältnis zu Gast-Verbindungen (3.7) und Verweisen (8.11). Mindestens zwei Optionen mit Kosten und Umkehrbarkeit; Vision-Abgrenzung „keine Multiversums-Ebene“ beachten.
-- **Akzeptanzkriterien:** Erkenntnisdokument `docs/research/wandernde-figuren.md` mit Optionen; Vorlage an den Eigentümer; Umsetzung als eigener Schritt mit Landeplatz 8.13.
-- **Betroffene Module:** keine (nur lesen)
-- **Reifegrad-Wirkung:** keine
-- **Artefakte:** Erkenntnisdokument, Logbuch-Eintrag
-- **Notizen:** Aus V.26 (ADR-081). Eigentümer: „Schweres Thema“ – zuerst verstehen, nicht bauen.
-
-#### 8.13: Planung der nächsten Ausbaustufe
+#### 9.2: End-to-End-Tests für die Abläufe der Phasen 6–8
 
 - **Status:** ⚪ OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG
-- **Abhängigkeiten:** 8.1–8.12
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** nein für die Tests; ja für das Umbenennen der CI-Schritte (Kategorie 7) – freigegeben mit ADR-090
+- **Empfohlene Klasse:** Routine – Test-Erstellung und Testwartung.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-029, FR-035
+- **Zu tun:** Befund 3 der Bewertung: Playwright-Pfade für den Weltenbauer mit Übernahme-Fenster (8.8), „Abschnitt ersetzen“ (8.4) sowie Karte oder Bild (7.6, 7.10); Antwortformen des Servers gegen die Typen in `ui/src/api/` prüfen, soweit es ohne neues Werkzeug geht (ein Generator nur mit Vorlage, Kategorie 3). CI-Schrittnamen auf die geltenden Schwellen berichtigen (`.github/workflows/ci.yml` Zeilen 65 und 96).
+- **Akzeptanzkriterien:** mindestens drei neue End-to-End-Tests grün in der CI; Schrittnamen nennen dieselben Schwellen wie `pyproject.toml` und `vite.config.ts`.
+- **Betroffene Module:** ui, api (nur Tests)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Tests, CI-Konfiguration
+- **Notizen:** Aus ADR-089.
+
+#### 9.3: Gegliederte Einträge je Art (V.35 B2, G1/G2)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage und Mockup zu Beginn)
+- **Abhängigkeiten:** 9.1
+- **Freigabepflichtig:** ja – Gliederung je Kategorie ist Datenmodell-Konvention (Kategorie 4); Anfrage des Weltenbauers (Kategorie 1)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell-Konvention (Eskalations-Auslöser 1).
+- **Eingangskriterien:** 9.1 erledigt
+- **Anforderungen (ab Klasse M):** FR-002, FR-029
+- **Zu tun:** Für jede Kategorie eine feste Gliederung (z. B. Figur: Aussehen, Wesen, Geschichte, Beziehungen; eigene für Ort, Gegenstand, Regel, Kultur, Zeitlinie) – beim Anlegen von Hand (Vorlage, ADR-083) und durch den Weltenbauer (`context/worldbuilder.py`); der Import erkennt die Abschnitte (Fallstrick aus V.35: ein unbekannter Abschnitt auf Namensebene wird ein eigener Eintrag); Bestand bleibt lesbar.
+- **Akzeptanzkriterien:** Vorlage mit Mockup und ADR; Tests je Kategorie; der Weltenbauer liefert gegliederte Einträge (Probe mit echter KI-Antwort); Eigentümer bestätigt.
+- **Betroffene Module:** canon, context, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, ADR, Mockup
+- **Notizen:** Aus V.35 (ADR-090).
+
+#### 9.4: Beziehungen mit Art und Rückverweis (V.35 B3)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
+- **Abhängigkeiten:** 9.1, 9.3
+- **Freigabepflichtig:** ja – Datenmodell-Konvention (Kategorie 4), ggf. Anfrage-Zusammenstellung (Kategorie 1); ADR-088 hatte ein Feld „Verbunden mit“ verworfen
+- **Empfohlene Klasse:** Entscheidung – Datenmodell und Kontext-Zusammenstellung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** 9.3 erledigt
+- **Anforderungen (ab Klasse M):** FR-002, FR-013
+- **Zu tun:** Beziehungen zwischen Figuren sichtbar und gegliedert festhalten (z. B. Abschnitt „Beziehungen“ mit Art: „verheiratet mit @Kael“), auch wenn der Weltenbauer mehrere Figuren in einem Auftrag anlegt; anzeigen, wer auf einen Eintrag verweist; Wirkung auf die Auffüllung nach ADR-088 prüfen.
+- **Akzeptanzkriterien:** Vorlage und ADR; Tests; Probe nach Regel-002, falls die Anfrage beim Schreiben betroffen ist; Eigentümer bestätigt.
+- **Betroffene Module:** canon, context, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, ADR
+- **Notizen:** Aus V.35 (ADR-090).
+
+#### 9.5: Bilder vom Bedarf her; Karte aus den Orten (V.35 G4, B4)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
+- **Abhängigkeiten:** 9.3
+- **Freigabepflichtig:** ja – ändert die Vorbelegung aus ADR-084
+- **Empfohlene Klasse:** Entscheidung – Änderung einer per ADR festgelegten Vorbelegung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** 9.3 erledigt
+- **Anforderungen (ab Klasse M):** FR-035
+- **Zu tun:** Je Bildart (Figur, Gegenstand, Ort, Karte, Sonstiges) festlegen, welche Angaben das Bild braucht, und prüfen, ob sie nach 9.3 verlässlich vorliegen (G4); „Karte erzeugen“ mit den Orten der Welt vorbelegen statt nur mit „Geografie – Name der Karte“ (B4, `ui/src/imagePrompts.ts`).
+- **Akzeptanzkriterien:** Vorlage mit Tabelle je Bildart und ADR; Tests; Eigentümer bestätigt.
+- **Betroffene Module:** ui, ggf. canon
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, ADR
+- **Notizen:** Aus V.35 (ADR-090).
+
+#### 9.6: Herkunft von Bildern – Modell und Anweisung speichern (V.35 B1)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – neue Angaben im Dateikopf (Kategorie 4)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell (Eskalations-Auslöser 1).
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-035
+- **Zu tun:** Beim Übernehmen eines erzeugten Bildes Modell und Anweisung mit dem Bild ablegen (Kopffeld `bilder`, `canon/images.py`), ebenso bei Titelbildern und Karten; in der Oberfläche anzeigen. Nebenfrage aus V.35 mit vorlegen: auch für KI-Text die vollständige Anfrage festhalten?
+- **Akzeptanzkriterien:** Vorlage und ADR; Tests; Bilder ohne Angaben bleiben gültig; Eigentümer bestätigt.
+- **Betroffene Module:** canon, manuscript, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, ADR
+- **Notizen:** Aus V.35 (ADR-090).
+
+#### 9.7: Einstellungsseite – Modell je Aufgabe (V.35 G3, B6)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Mockup und Vorlage zu Beginn)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – neue Ablage unter `system/` und neue Endpunkte (Kategorien 4 und 5, additiv)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell und API-Vertrag (Eskalations-Auslöser 1).
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-018, FR-028
+- **Zu tun:** Eine Seite, auf der der Eigentümer je Aufgabe ein Modell festlegt – Schreiben (Voreinstellung), Weltenbauer, Kapitel-Kurzfassung, Gesamtzusammenfassung, Bild beschreiben, Aussehen herauslösen, Bilder erzeugen – nach dem Muster der Favoriten (ADR-055); das Bildmodell wird gespeichert (B6). Das Modell je Geschichte (ADR-023) bleibt.
+- **Akzeptanzkriterien:** Mockup und ADR; Tests; Eigentümer bestätigt.
+- **Betroffene Module:** api, ai_gateway, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, ADR, Mockup
+- **Notizen:** Aus V.35 (ADR-090).
+
+#### 9.8: Bild zu Bild (V.35 B7)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
+- **Abhängigkeiten:** 9.6
+- **Freigabepflichtig:** ja – Bild geht an den Anbieter (Kategorie 6 prüfen), neue Eingabe der Schnittstelle (Kategorie 5)
+- **Empfohlene Klasse:** Entscheidung – neuer Ablauf mit Datenfluss nach außen (Eskalations-Auslöser 1).
+- **Eingangskriterien:** 9.6 erledigt (Herkunft auch für abgeleitete Bilder)
+- **Anforderungen (ab Klasse M):** FR-035
+- **Zu tun:** Ein vorhandenes Bild als Grundlage einer Bilderzeugung nutzen (`ai_gateway/images.py`, `ImageOrder`); welche Modelle über OpenRouter das können und was es kostet, gehört in die Vorlage; getrennte Prüfung, falls Kategorie 6 berührt ist.
+- **Akzeptanzkriterien:** Vorlage mit unterstützten Modellen und Kosten, ADR; Tests; Probe mit echtem Bild; Eigentümer bestätigt.
+- **Betroffene Module:** ai_gateway, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, ADR
+- **Notizen:** Aus V.35 (ADR-090). V.33 (Bilder beim Schreiben mitschicken) ist etwas anderes und bleibt bei 9.15.
+
+#### 9.9: Geschichten, Welten und Kapitel löschen oder archivieren (V.35 B5)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage und Mockup zu Beginn)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – Löschen ist destruktiv (`CLAUDE.md` Abschnitt 8, Kriterium 6), Datenmodell und API (Kategorien 4 und 5)
+- **Empfohlene Klasse:** Entscheidung – destruktiver Ablauf und Datenmodell (Eskalations-Auslöser 1).
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** neue Anforderung, in der Vorlage anzulegen
+- **Zu tun:** Für Geschichten, Welten und Kapitel klären, ob gelöscht, archiviert oder beides; die Kaskade festlegen (Bilder, Karten, Verlauf, Gast-Verbindungen, Markierungen, Verbrauchszeilen); Rückweg über die Sicherung (ADR-036) benennen.
+- **Akzeptanzkriterien:** Vorlage mit Mockup und ADR; Tests der Kaskade; Eigentümer bestätigt.
+- **Betroffene Module:** canon, manuscript, storage, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, ADR, Mockup
+- **Notizen:** Aus V.35 (ADR-090).
+
+#### 9.10: Cache-Treffer der KI-Anbieter festhalten (V.36)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** wie V.36 – nein für die Protokollzeile; ja, falls Verbrauchsdateien oder `/api/usage` ein neues Feld bekommen (Kategorien 4 bzw. 5, additiv)
+- **Empfohlene Klasse:** Routine – klar umrissene Erweiterung des Adapters mit Tests; Entscheidung, falls Verbrauchsdateien oder `/api/usage` erweitert werden.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** keine (Kostenziel Vision 4)
+- **Zu tun:** wie V.36.
+- **Akzeptanzkriterien:** wie V.36.
+- **Betroffene Module:** ai_gateway, ggf. api und ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, Logbuch-Eintrag, ggf. ADR
+- **Notizen:** Aus V.36 (ADR-090).
+
+#### 9.11: Verbrauchsstatistik je Welt und je Geschichte (V.37)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage und Mockup zu Beginn)
+- **Abhängigkeiten:** 9.10
+- **Freigabepflichtig:** ja – wie V.37: Datenmodell (Option C aus ADR-023, Kategorie 4), neuer Endpunkt (Kategorie 5, additiv)
+- **Empfohlene Klasse:** Entscheidung – Datenmodelländerung gegen eine bestehende Entscheidung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** 9.10 erledigt
+- **Anforderungen (ab Klasse M):** neue Anforderung, in der Vorlage anzulegen
+- **Zu tun:** wie V.37; dazu das Speicherlayout der Verbrauchsdateien entscheiden – Befund 2 der Bewertung (je Anfrage wird die ganze Monatsdatei neu geschrieben: 83 ms bei 400, 431 ms bei 2.000 Einträgen) mit der echten Zahl der Anfragen je Monat auf dem Server (nur Anzahl, lesend).
+- **Akzeptanzkriterien:** wie V.37.
+- **Betroffene Module:** api, ui; ggf. canon und manuscript
+- **Reifegrad-Wirkung:** keine (Datenmodell bleibt `[BELASTBAR]` nach ADR)
+- **Artefakte:** Code, Tests, ADR, Mockup
+- **Notizen:** Aus V.37 (ADR-090).
+
+#### 9.12: Quellen für Worldbuilding und Namen; eigener Recherche-Baustein – Erkundung (V.35 H1, V1)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** ERKUNDUNG innerhalb der UMSETZUNG-Phase (wie 8.12)
+- **Schritt-Art (nur ERKUNDUNG):** Vergleichsstudie
+- **Zeitbox (nur ERKUNDUNG):** eine Session, dann Zwischenstand
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** nein für die Erkundung; jede Anbindung ist eine neue externe Abhängigkeit (Kategorie 3)
+- **Empfohlene Klasse:** Entscheidung – bereitet eine Abhängigkeits- und Kostenentscheidung vor.
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-029
+- **Zu tun:** H1: Anleitungen zum Worldbuilding und Seiten zur Namensbildung sichten – Verlässlichkeit, Nutzungsbedingungen, Einbindung in den Weltenbauer. V1: eigener Recherche-Baustein gegen die Websuche über OpenRouter (ADR-064) – Kosten je Anfrage, Abhängigkeit, Datenschutz.
+- **Akzeptanzkriterien:** Erkenntnisdokument `docs/research/quellen-und-recherche.md` mit Optionen und Kosten; Vorlage an den Eigentümer; Umsetzung als eigener Schritt mit Landeplatz 9.15.
+- **Betroffene Module:** keine (nur lesen)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Erkenntnisdokument, Logbuch-Eintrag
+- **Notizen:** Aus V.35 (ADR-090).
+
+#### 9.13: Gast-Figuren ausbauen – Weltbezug je Gast (V.34)
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
+- **Abhängigkeiten:** 9.1
+- **Freigabepflichtig:** ja – wie V.34: Datenmodell und Kontext-Zusammenstellung (Kategorien 1 und 4)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell und Kontext-Zusammenstellung (Eskalations-Auslöser 1).
+- **Eingangskriterien:** Probe des Eigentümers mit einer Gast-Figur (Eingangskriterium aus V.34); 9.1 erledigt
+- **Anforderungen (ab Klasse M):** FR-016, FR-017
+- **Zu tun:** wie V.34 (Option A aus `docs/research/wandernde-figuren.md`).
+- **Akzeptanzkriterien:** wie V.34.
+- **Betroffene Module:** manuscript, context, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, ADR
+- **Notizen:** Aus V.34 (ADR-090). Eigentümer 2026-10-18: Probe „später“.
+
+#### 9.14: Kontexttreue beim Referenzumfang erneut prüfen
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** ERKUNDUNG innerhalb der UMSETZUNG-Phase
+- **Schritt-Art (nur ERKUNDUNG):** Messung
+- **Zeitbox (nur ERKUNDUNG):** eine Session
+- **Abhängigkeiten:** 9.4 (9.1–9.4 können die Anfrage ändern)
+- **Freigabepflichtig:** nein für die Messung; die Beförderung per ADR
+- **Empfohlene Klasse:** Entscheidung – kann die NFR Kontexttreue auf `[BELASTBAR]` befördern (Eskalations-Auslöser 4).
+- **Eingangskriterien:** 9.4 erledigt
+- **Anforderungen (ab Klasse M):** FR-010
+- **Zu tun:** An der dann längsten Geschichte des Eigentümers messen, ob Handlungsstand und genannte Kanon-Einträge vollständig in der Anfrage stehen und die Anfrage unter 30.000 Token bleibt – Verfahren wie D.4 (ADR-057), lesend und mit Freigabe des Eigentümers.
+- **Akzeptanzkriterien:** Messung im Logbuch; ADR mit Beförderung auf `[BELASTBAR]` oder begründetem Erkundungsbedarf.
+- **Betroffene Module:** keine (nur lesen)
+- **Reifegrad-Wirkung:** NFR Kontexttreue Referenzumfang `[VORLÄUFIG]` → `[BELASTBAR]` oder bleibt mit Begründung
+- **Artefakte:** Logbuch-Eintrag, ADR
+- **Notizen:** Befund des Vision-Abgleichs in 8.13: Die Bedingung aus ADR-062 (Abnahme durch den Eigentümer) ist seit 2026-10-11 erfüllt; Eigentümer 2026-10-18: „Erst später messen“ (ADR-090).
+
+#### 9.15: Planung der nächsten Ausbaustufe
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** UMSETZUNG
+- **Abhängigkeiten:** 9.1–9.14
 - **Freigabepflichtig:** ja – neue Phasen sind Replanning
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich.
-- **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 8
+- **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 9
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** V.20, V.21, V.23, V.24, V.33, V.34 (Umsetzung aus 8.12), V.35 (Befunde des Eigentümers, zuerst mit ihm durchgehen), V.36 (Cache-Treffer festhalten), V.37 (Verbrauchsstatistik je Welt und Geschichte) (und neue V-Schritte) in eine neue Phase überführen oder per ADR verwerfen.
+- **Zu tun:** V.20, V.21, V.23, V.24, V.33 (und neue V-Schritte, auch aus 9.12) in eine neue Phase überführen oder per ADR verwerfen.
 - **Akzeptanzkriterien:** Jeder verschobene Schritt hat einen neuen Schritt mit ID oder `[VERWORFEN]` mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Logbuch-Eintrag, ADR
-- **Notizen:** Angelegt 2026-10-13 (ADR-081).
+- **Notizen:** Angelegt 2026-10-18 (ADR-090).
 
 ### Querschnitt: datierte, ausgelöste und verschobene Schritte
 
@@ -1056,8 +1096,8 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.23: Bilder im Manuskript
 
-- **Status:** ⏸️ VERSCHOBEN → 8.13 (Planung der nächsten Ausbaustufe) – weiter verschoben 2026-10-13 (ADR-081)
-- **Landeplatz (nur VERSCHOBEN):** 7.8 (aus dem Zuschnitt von 7.11, Wahl des Eigentümers „Nur Titelbild“, 2026-10-12, ADR-075) – weiter 2026-10-13: 8.13 (ADR-081)
+- **Status:** ⏸️ VERSCHOBEN → 9.15 (Planung der nächsten Ausbaustufe) – weiter verschoben 2026-10-18 (ADR-090)
+- **Landeplatz (nur VERSCHOBEN):** 7.8 (aus dem Zuschnitt von 7.11, Wahl des Eigentümers „Nur Titelbild“, 2026-10-12, ADR-075) – weiter 2026-10-13: 8.13 (ADR-081) – weiter 2026-10-18: 9.15 (ADR-090)
 - **Phasentyp-Kontext:** offen
 - **Abhängigkeiten:** 7.11
 - **Freigabepflichtig:** ja – Datenmodell (Bildverweise im Kapiteltext, Kategorie 4), Editor
@@ -1073,8 +1113,8 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.24: Weitere Bildanbieter (Runware, Replicate, fal.ai)
 
-- **Status:** ⏸️ VERSCHOBEN → 8.13 (Planung der nächsten Ausbaustufe) – weiter verschoben 2026-10-13 (ADR-081)
-- **Landeplatz (nur VERSCHOBEN):** 7.8 (Eigentümer 2026-10-12: „weitere Anbieter in einer späteren Phase … später mehr Diversität“, ADR-076) – weiter 2026-10-13: 8.13 (ADR-081)
+- **Status:** ⏸️ VERSCHOBEN → 9.15 (Planung der nächsten Ausbaustufe) – weiter verschoben 2026-10-18 (ADR-090)
+- **Landeplatz (nur VERSCHOBEN):** 7.8 (Eigentümer 2026-10-12: „weitere Anbieter in einer späteren Phase … später mehr Diversität“, ADR-076) – weiter 2026-10-13: 8.13 (ADR-081) – weiter 2026-10-18: 9.15 (ADR-090)
 - **Phasentyp-Kontext:** offen
 - **Abhängigkeiten:** 7.12
 - **Freigabepflichtig:** ja – neuer externer Dienst (Kategorie 3), Schlüssel im Betrieb (Kategorie 6)
@@ -1226,8 +1266,8 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.33: Bilder beim Schreiben auf Knopfdruck mitschicken (aus 7.15)
 
-- **Status:** ⏸️ VERSCHOBEN → 8.13
-- **Landeplatz (nur VERSCHOBEN):** 8.13 (Eigentümer, 2026-10-13: 7.15 „in die nächste Ausbaustufe“; ADR-081)
+- **Status:** ⏸️ VERSCHOBEN → 9.15 (Planung der nächsten Ausbaustufe) – weiter verschoben 2026-10-18 (ADR-090)
+- **Landeplatz (nur VERSCHOBEN):** 8.13 (Eigentümer, 2026-10-13: 7.15 „in die nächste Ausbaustufe“; ADR-081) – weiter 2026-10-18: 9.15 (ADR-090)
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** 7.13
 - **Freigabepflichtig:** ja – Anfrage-Zusammenstellung (Kategorie 1)
@@ -1243,8 +1283,8 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.34: Wandernde Figuren – Weltbezug je Gast und Einpassen (Option A aus 8.12)
 
-- **Status:** ⏸️ VERSCHOBEN → 8.13
-- **Landeplatz (nur VERSCHOBEN):** 8.13 (Eigentümer, 2026-10-13: „Erst ausprobieren, dann A“)
+- **Status:** ⏸️ VERSCHOBEN → 9.13 (in Phase 9 übernommen 2026-10-18, ADR-090)
+- **Landeplatz (nur VERSCHOBEN):** 8.13 (Eigentümer, 2026-10-13: „Erst ausprobieren, dann A“) – weiter 2026-10-18: 9.13 (ADR-090)
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** 8.12
 - **Freigabepflichtig:** ja – Datenmodell (Weltbezug je Gast-Verbindung, Kategorie 4), Kontext-Zusammenstellung (Kategorie 1)
@@ -1260,8 +1300,8 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.35: Befunde des Eigentümers vom 2026-10-15/16 durchgehen (Sammlung)
 
-- **Status:** ⏸️ VERSCHOBEN → 8.13
-- **Landeplatz (nur VERSCHOBEN):** 8.13 (Eigentümer, 2026-10-16: „erstmal nur sammeln“; er will zu jedem Befund noch Grundsätzliches sagen)
+- **Status:** ⏸️ VERSCHOBEN → 9.3–9.9, 9.12 (in Phase 9 übernommen 2026-10-18, ADR-090: B1 → 9.6, B2/G1/G2 → 9.3, B3 → 9.4, B4/G4 → 9.5, B5 → 9.9, B6/G3 → 9.7, B7 → 9.8, H1/V1 → 9.12)
+- **Landeplatz (nur VERSCHOBEN):** 8.13 (Eigentümer, 2026-10-16: „erstmal nur sammeln“; er will zu jedem Befund noch Grundsätzliches sagen) – weiter 2026-10-18: 9.3–9.9, 9.12 (ADR-090)
 - **Phasentyp-Kontext:** offen (Sammlung; je Befund UMSETZUNG oder zuerst ERKUNDUNG)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** das Durchgehen nein; die Folgen je Befund absehbar ja – Datenmodell (B1, B5, B6, G3; Kategorie 4), Architektur und Kontext-Zusammenstellung (B2, B3, G1/G2; Kategorie 1), neue Abhängigkeit (V1; Kategorie 3)
@@ -1281,6 +1321,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
   - **G4 – Vom Bedarf her denken:** Für jeden Bereich mit KI-Bildern (Figur, Gegenstand, Ort, Karte, Sonstiges) vorab festlegen, welche Daten das Bild braucht, und prüfen, ob sie zuverlässig abrufbar vorliegen. Stand: nur die Vorbelegung in `ui/src/imagePrompts.ts` (ADR-084, Bericht D.18); keine fachliche Vorgabe je Bereich.
   - **H1 – Worldbuilding- und Namensquellen:** Es gibt zahlreiche Anleitungen zum Worldbuilding und Seiten zur Namensbildung (z. B. erfundene, kanadisch klingende Städtenamen); in die Erkundung einbeziehen, Verlässlichkeit und Nutzungsbedingungen prüfen. Stand: keine Namenshilfen; V.20 betrifft Figurenkarten, nicht Namen.
   - **V1 – Recherche-Baustein:** Recherche in der Software, um Kosten zu sparen und nicht alles über OpenRouter laufen zu lassen. Stand: Websuche im Weltenbauer über das OpenRouter-Plugin `web` (ADR-064) – läuft selbst über OpenRouter.
+  - **Sicht des Eigentümers (2026-10-18, in 8.13 per Auswahlfragen durchgegangen):** B1, B2, B3, B4, B5, B6, B7, G3, G4, H1 und V1 je „wichtig, bald“ (Antworten: bald / später / brauche ich nicht). G1/G2: Es geht ihm um **Verlässlichkeit** – Programm und KI sollen Teile wie „Aussehen“ sicher finden und getrennt nutzen; „Bedienung (Felder statt Rauten)“ und „eigene Gliederung je Art“ nicht angekreuzt (Letzteres ist als B2 schon „wichtig, bald“). B5: Löschen oder Archivieren wird per Vorlage geklärt. Landeplätze folgen in der Planung von Phase 9 (8.13); weil alles „bald“ ist, legt die Planung die Reihenfolge fest.
 - **Akzeptanzkriterien:** Jeder Befund (B1–B7, G1–G4, H1, V1) hat einen Landeplatz mit Schritt-ID oder ist per ADR verworfen; die grundsätzliche Sicht des Eigentümers je Befund ist festgehalten.
 - **Betroffene Module:** offen (absehbar canon, manuscript, context, ai_gateway, api, ui)
 - **Reifegrad-Wirkung:** offen (G1/G2 können das Datenmodell berühren)
@@ -1289,8 +1330,8 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.36: Cache-Treffer der KI-Anbieter festhalten
 
-- **Status:** ⏸️ VERSCHOBEN → 8.13
-- **Landeplatz (nur VERSCHOBEN):** 8.13 (Eigentümer, 2026-10-18: „Ja, leg den Schritt an“; neuer Wunsch während Phase 8)
+- **Status:** ⏸️ VERSCHOBEN → 9.10 (in Phase 9 übernommen 2026-10-18, ADR-090)
+- **Landeplatz (nur VERSCHOBEN):** 8.13 (Eigentümer, 2026-10-18: „Ja, leg den Schritt an“; neuer Wunsch während Phase 8) – weiter 2026-10-18: 9.10 (ADR-090)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein für die Protokollzeile (nur Token-Zahlen, wie ADR-021 und `docs/project-context.md` Abschnitt 6 erlauben); ja, falls die Verbrauchsdateien (ADR-023) oder die Antwort von `/api/usage` ein neues Feld bekommen (Kategorie 4 bzw. 5, rein additiv)
@@ -1306,8 +1347,8 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.37: Verbrauchsstatistik je Welt und je Geschichte
 
-- **Status:** ⏸️ VERSCHOBEN → 8.13
-- **Landeplatz (nur VERSCHOBEN):** 8.13 (Eigentümer, 2026-10-18: „Beide vormerken, ein PR“; neuer Wunsch während Phase 8)
+- **Status:** ⏸️ VERSCHOBEN → 9.11 (in Phase 9 übernommen 2026-10-18, ADR-090)
+- **Landeplatz (nur VERSCHOBEN):** 8.13 (Eigentümer, 2026-10-18: „Beide vormerken, ein PR“; neuer Wunsch während Phase 8) – weiter 2026-10-18: 9.11 (ADR-090)
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** keine; mit V.36 zusammen denken (Cache-Token als weitere Kennzahl)
 - **Freigabepflichtig:** ja – Datenmodell (Kategorie 4): Die Verbrauchszeile bekommt Welt und Geschichte; das ist Option C aus ADR-023, die damals bewusst nicht gewählt wurde. Neuer Endpunkt für die Auswertung (Kategorie 5, additiv)
@@ -1323,8 +1364,8 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.21: Veröffentlichung (öffentlicher Link zum Lesen)
 
-- **Status:** ⏸️ VERSCHOBEN → 8.13 (Planung der nächsten Ausbaustufe) – weiter verschoben 2026-10-13 (ADR-081)
-- **Landeplatz (nur VERSCHOBEN):** 7.8 (Eigentümer 2026-10-12 in 7.4: „Als V-Schritt vormerken“, ADR-071) – weiter 2026-10-13: 8.13 (ADR-081)
+- **Status:** ⏸️ VERSCHOBEN → 9.15 (Planung der nächsten Ausbaustufe) – weiter verschoben 2026-10-18 (ADR-090)
+- **Landeplatz (nur VERSCHOBEN):** 7.8 (Eigentümer 2026-10-12 in 7.4: „Als V-Schritt vormerken“, ADR-071) – weiter 2026-10-13: 8.13 (ADR-081) – weiter 2026-10-18: 9.15 (ADR-090)
 - **Phasentyp-Kontext:** offen
 - **Abhängigkeiten:** 7.4
 - **Freigabepflichtig:** ja – öffentlicher Zugang ohne Anmeldung (Kategorie 6), Architektur (Kategorie 1)
@@ -1340,8 +1381,8 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### V.20: Figurenkarten im Netz finden, ohne auf Bezahlseiten zu landen
 
-- **Status:** ⏸️ VERSCHOBEN → 8.13 (in 6.10 weiter zurückgestellt 2026-10-12, ADR-068) – weiter verschoben 2026-10-13 (ADR-081)
-- **Landeplatz (nur VERSCHOBEN):** 7.8 (Eigentümer 2026-10-12: zuerst „später aufgreifen“, in 6.10 „weiter zurückstellen“) – weiter 2026-10-13: 8.13 (ADR-081)
+- **Status:** ⏸️ VERSCHOBEN → 9.15 (Planung der nächsten Ausbaustufe) – weiter verschoben 2026-10-18 (ADR-090)
+- **Landeplatz (nur VERSCHOBEN):** 7.8 (Eigentümer 2026-10-12: zuerst „später aufgreifen“, in 6.10 „weiter zurückstellen“) – weiter 2026-10-13: 8.13 (ADR-081) – weiter 2026-10-18: 9.15 (ADR-090)
 - **Phasentyp-Kontext:** offen (zuerst ERKUNDUNG: was genau fehlt)
 - **Abhängigkeiten:** 6.8
 - **Freigabepflichtig:** offen – je nach Form ggf. externe Abhängigkeit (Kategorie 3), z. B. Anbindung einer Kartensammlung oder Websuche
