@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-18 (9.2 lokal fertig – vier End-to-End-Tests, Vertragstest Server ↔ Oberfläche, CI-Schrittnamen; Pull Request nach Freigabe; 9.1 erledigt – ADR-091, PR #173; D.19 angelegt; zuvor Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
+- **Stand vom:** 2026-10-18 (9.2 erledigt – vier End-to-End-Tests, Vertragstest Server ↔ Oberfläche, CI-Schrittnamen; PR #175; 9.1 erledigt – ADR-091, PR #173; D.19 angelegt; zuvor Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
 - **Laufende Phase:** Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (Phase 8 abgeschlossen 2026-10-18)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 9.2 End-to-End-Tests für die Abläufe der Phasen 6–8 (seit 2026-10-18) – lokal fertig, Commits auf `feat/9.2-e2e-ablaeufe`; offen: Pull Request nach deiner Freigabe und grüne CI
-- **Nächster Schritt:** 9.2 abschließen (Pull Request, CI; dabei D.19 – erster Lauf nach dem 2026-10-19) und 9.3 Gegliederte Einträge je Art – zu Beginn Vorlage mit Mockup (Entscheidungs-Klasse); D.19 ab dem ersten CI-Lauf nach dem 2026-10-19. Offen bei dir: Probe mit einer Gast-Figur (Eingangskriterium 9.13). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** keiner – 9.2 erledigt (2026-10-18, PR #175)
+- **Nächster Schritt:** 9.3 Gegliederte Einträge je Art – zu Beginn Vorlage mit Mockup (Entscheidungs-Klasse); D.19 ab dem ersten CI-Lauf nach dem 2026-10-19. Offen bei dir: Probe mit einer Gast-Figur (Eingangskriterium 9.13). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -29,7 +29,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
 | ✅ | 9.1 | Gliederung im Server verlässlich – Abschnitte und Namen | erledigt 2026-10-18 (ADR-091) | – |
-| 🟠 | 9.2 | End-to-End-Tests für die Abläufe der Phasen 6–8 | lokal fertig, CI offen | du: Pull Request freigeben |
+| ✅ | 9.2 | End-to-End-Tests für die Abläufe der Phasen 6–8 | erledigt 2026-10-18 | – |
 | ⚪ | 9.3 | Gegliederte Einträge je Art (B2, G1/G2) | offen | KI: nach 9.1 Vorlage mit Mockup |
 | ⚪ | 9.4 | Beziehungen mit Art und Rückverweis (B3) | offen | KI: nach 9.3 Vorlage |
 | ⚪ | 9.5 | Bilder vom Bedarf her; Karte aus den Orten (G4, B4) | offen | KI: nach 9.3 Vorlage |
@@ -209,7 +209,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 9.2: End-to-End-Tests für die Abläufe der Phasen 6–8
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-18, Branch `feat/9.2-e2e-ablaeufe`) – lokal fertig und geprüft, Commits lokal; offen: CI-Lauf über den Pull Request nach Freigabe des Eigentümers (Akzeptanzkriterium „grün in der CI“)
+- **Status:** ✅ ERLEDIGT (2026-10-18) – PR #175: CI grün (4 von 4 Pflicht-Checks; im Protokoll nur der bekannte Hinweis zu Ubuntu 26 → D.19, keine Bündelgrößen-Warnung), auf Anweisung des Eigentümers zusammengeführt (`65a0f13`)
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein für die Tests; ja für das Umbenennen der CI-Schritte (Kategorie 7) – freigegeben mit ADR-090
