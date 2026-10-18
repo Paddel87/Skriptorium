@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-10-18 (V.36 und V.37 angelegt; 8.9 und 8.11 bestätigt und abgeschlossen); 2026-10-16 (V.35 angelegt); 2026-10-13 Phase 7 abgeschlossen (7.8 erledigt: Pflichtfrage ADR-080, Planung ADR-081); Phase 8 beginnt
 - **Laufende Phase:** Phase 8 „Fundament, Datentrennung, Weltenbauer und Kanon-Verknüpfung“ (Phase 7 abgeschlossen 2026-10-13)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner – 8.1–8.12 erledigt bzw. abgeschlossen (8.9 und 8.11 am 2026-10-18 bestätigt)
+- **Aktiver Schritt:** 8.13 Planung der nächsten Ausbaustufe mit Phasenabschluss (seit 2026-10-18) – Vision-Abgleich und Onboarding-Pfad grün, Pflichtfrage in Arbeit
 - **Nächster Schritt:** 8.13 Planung der nächsten Ausbaustufe mit Phasenabschluss (wie 7.8): Vision-Abgleich, Onboarding-Pfad auf frischem Worktree, Pflichtfrage mit getrennter Instanz, Planung der nächsten Phase per ADR. Offen dafür: deine Probe mit einer Gast-Figur (Eingangskriterium V.34); deine Befunde vom 2026-10-15/16 gemeinsam durchgehen (V.35); in die Planung gehen außerdem V.36 und V.37 (V.37 mit Datenmodell-Vorlage gegen ADR-023). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
@@ -40,7 +40,7 @@ Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details
 | ✅ | 8.10 | Zeitlinie mit Jahr, Datum und Uhrzeit (V.28) | erledigt 2026-10-13 | – |
 | ✅ | 8.11 | Verweise zwischen Kanon-Einträgen (V.25) | erledigt 2026-10-18 (ADR-088) | – |
 | ✅ | 8.12 | Wandernde Figuren – Erkundung (V.26) | erledigt 2026-10-13 → V.34 | – |
-| ⚪ | 8.13 | Planung der nächsten Ausbaustufe | offen | KI: Phasenabschluss vorbereiten; du: V.34 ausprobieren, V.35 durchgehen |
+| 🟠 | 8.13 | Planung der nächsten Ausbaustufe | in Arbeit: Vision-Abgleich und Onboarding grün, Bewertung läuft | KI: Pflichtfrage vorlegen; du: V.34 ausprobieren, V.35 durchgehen |
 
 **Querschnitt (offen):**
 
@@ -380,14 +380,14 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 8.13: Planung der nächsten Ausbaustufe
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-18) – Vision-Abgleich bestanden (keine verwaisten Elemente; Drift in `docs/architecture.md` Abschnitt 6 und `docs/requirements.md` Übersicht behoben); Onboarding-Pfad auf frischem Worktree grün; Pflichtfrage: Bewertung der getrennten Instanz läuft. Offen: Stellungnahme und Vorlage der Pflichtfrage, V.34 (Probe des Eigentümers), V.35 durchgehen, Planung von Phase 9 per ADR
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 8.1–8.12
 - **Freigabepflichtig:** ja – neue Phasen sind Replanning
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 8
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** V.20, V.21, V.23, V.24, V.33, V.34 (Umsetzung aus 8.12), V.35 (Befunde des Eigentümers, zuerst mit ihm durchgehen), V.36 (Cache-Treffer festhalten), V.37 (Verbrauchsstatistik je Welt und Geschichte) (und neue V-Schritte) in eine neue Phase überführen oder per ADR verwerfen.
+- **Zu tun:** V.20, V.21, V.23, V.24, V.33, V.34 (Umsetzung aus 8.12), V.35 (Befunde des Eigentümers, zuerst mit ihm durchgehen), V.36 (Cache-Treffer festhalten), V.37 (Verbrauchsstatistik je Welt und Geschichte) (und neue V-Schritte) in eine neue Phase überführen oder per ADR verwerfen. Dazu (Befund des Vision-Abgleichs 2026-10-18): Beförderung der NFR Kontexttreue von `[VORLÄUFIG]` auf `[BELASTBAR]` entscheiden – die Bedingung aus ADR-062 (Abnahme durch den Eigentümer) ist seit 2026-10-11 erfüllt, ein Schritt dafür fehlte.
 - **Akzeptanzkriterien:** Jeder verschobene Schritt hat einen neuen Schritt mit ID oder `[VERWORFEN]` mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine

@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-18 – [ONBOARDING-VALIDATION] Phasengrenze Phase 8 (8.13)
+
+- Frischer Worktree von `main` (`ad05dce`) im Scratchpad: Quick Start der README genau wie dokumentiert (`uv python install 3.14.7`, `uv sync --frozen --python 3.14.7`, `npm ci`, `uv run pre-commit install`, `uv run skriptorium-einrichtung`, `npx vite build`, `uvicorn`) – alle Schritte Exit 0, `/api/health` → `{"status":"ok"}` nach 1 s; `scripts/session-start.sh` Exit 0. `npm ci` und Build ohne Warnung. Keine Befunde; Worktree entfernt, Hook im Haupt-Checkout danach mit `uv run pre-commit install` neu eingerichtet (Lehre aus 7.8).
+
+### 2026-10-18 – [BEOBACHTUNG] 8.13 begonnen: Vision-Abgleich an der Phasengrenze
+
+- Fortsetzung nach dem `[SESSIONENDE]` auf „Weiter“ des Eigentümers. PR #171 nach ausdrücklicher Freigabe gemergt (`ad05dce`); der erste Versuch auf das bloße „Weiter“ wurde von der Rechteprüfung abgelehnt („Merge Without Review“) – danach auch harmlose Befehle, bis der Eigentümer per Auswahlfrage freigab.
+- **Getrennte Instanz** für die Pflichtfrage gestartet: Unteragent mit Sonnet, ohne Gesprächsverlauf, nur lesend; Auftrag wie in 7.8, zusätzlich die Frage, ob Datenmodell und Schnittstellen V.20, V.21, V.23, V.24, V.33–V.37 tragen (besonders V.35 G1/G2 und V.37).
+- **Vision-Abgleich** gegen `docs/vision.md` und `docs/requirements.md`: Zielbild, Szenarien 1–5 und Erfolgskriterien haben je eine erledigte Anforderung (FR-001–FR-035; alle 19 Muss erledigt, FR-006 verworfen mit ADR-009). Vision 5: Satz und Export erledigt (FR-034), Veröffentlichung → V.21, Bilder im Manuskript → V.23, weitere Bildanbieter → V.24, Kartensuche → V.20 – alle mit Landeplatz 8.13. Vision 9 „manuelle Kanon-Pflege“: mit 8.9 (Weltenbauer aus dem Manuskript) angegangen. Alle `[VERSCHOBEN]`-Schritte zeigen auf erledigte Schritte oder auf 8.13 (V.20, V.21, V.23, V.24, V.33–V.37). **Keine verwaisten Elemente.**
+- **Befunde des Abgleichs:** (1) NFR Kontexttreue steht seit 2026-10-11 auf `[VORLÄUFIG]`; ADR-062 knüpfte die Beförderung an die Abnahme durch den Eigentümer, die am 2026-10-11 erfolgte – seitdem ohne Schritt und ohne ADR. Landeplatz jetzt 8.13 (Entscheidung mit der Planung). (2) Drift behoben: `docs/architecture.md` Abschnitt 6 nannte Kontexttreue noch `[OFFEN]` mit Auslöser D.4 und Reaktionszeit noch `[VORLÄUFIG]` mit alten Zielen – jetzt wie die Reifegrad-Tabelle (ADR-057, ADR-052). (3) Drift behoben: `docs/requirements.md` Übersicht zählte 25 Anforderungen (19/4/1) – jetzt 35 (19/10/5, FR-006 verworfen); FR-018 verwies auf V.3 (verworfen, ADR-059), FR-032 nannte V.13 als „künftig“ (erledigt in 6.4). (4) Für V.35 G1/G2 gilt Vision 7 „offene Formate“ (FR-020): Felder statt Abschnitten dürfen die Lesbarkeit als Datei nicht aufgeben.
+
 ### 2026-10-18 15:51 MESZ – [SESSIONENDE] 8.9 und 8.11 abgeschlossen
 
 - **Dauer:** 2026-10-18 00:48 bis 15:51 (MESZ), mit langer Pause des Eigentümers; reine Arbeitszeit kurz.
