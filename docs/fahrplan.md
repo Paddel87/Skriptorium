@@ -40,7 +40,7 @@ Phase 7 abgeschlossen 2026-10-13 (15 von 16 erledigt, 7.15 → V.33) – Details
 | ✅ | 8.10 | Zeitlinie mit Jahr, Datum und Uhrzeit (V.28) | erledigt 2026-10-13 | – |
 | ✅ | 8.11 | Verweise zwischen Kanon-Einträgen (V.25) | erledigt 2026-10-18 (ADR-088) | – |
 | ✅ | 8.12 | Wandernde Figuren – Erkundung (V.26) | erledigt 2026-10-13 → V.34 | – |
-| 🟠 | 8.13 | Planung der nächsten Ausbaustufe | in Arbeit: Vision-Abgleich und Onboarding grün, Bewertung läuft | KI: Pflichtfrage vorlegen; du: V.34 ausprobieren, V.35 durchgehen |
+| 🟠 | 8.13 | Planung der nächsten Ausbaustufe | in Arbeit: Vision-Abgleich und Onboarding grün, V.35 durchgegangen, Bewertung läuft | KI: Pflichtfrage vorlegen; du: V.34 ausprobieren |
 
 **Querschnitt (offen):**
 
@@ -380,7 +380,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 8.13: Planung der nächsten Ausbaustufe
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-18) – Vision-Abgleich bestanden (keine verwaisten Elemente; Drift in `docs/architecture.md` Abschnitt 6 und `docs/requirements.md` Übersicht behoben); Onboarding-Pfad auf frischem Worktree grün; Pflichtfrage: Bewertung der getrennten Instanz läuft. Offen: Stellungnahme und Vorlage der Pflichtfrage, V.34 (Probe des Eigentümers), V.35 durchgehen, Planung von Phase 9 per ADR
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-18) – Vision-Abgleich bestanden (keine verwaisten Elemente; Drift in `docs/architecture.md` Abschnitt 6 und `docs/requirements.md` Übersicht behoben); Onboarding-Pfad auf frischem Worktree grün; V.35 mit dem Eigentümer durchgegangen (Sicht je Befund in V.35); Pflichtfrage: Bewertung der getrennten Instanz läuft. Offen: Stellungnahme und Vorlage der Pflichtfrage, V.34 (Probe des Eigentümers), Planung von Phase 9 per ADR
 - **Phasentyp-Kontext:** UMSETZUNG
 - **Abhängigkeiten:** 8.1–8.12
 - **Freigabepflichtig:** ja – neue Phasen sind Replanning
@@ -1281,6 +1281,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
   - **G4 – Vom Bedarf her denken:** Für jeden Bereich mit KI-Bildern (Figur, Gegenstand, Ort, Karte, Sonstiges) vorab festlegen, welche Daten das Bild braucht, und prüfen, ob sie zuverlässig abrufbar vorliegen. Stand: nur die Vorbelegung in `ui/src/imagePrompts.ts` (ADR-084, Bericht D.18); keine fachliche Vorgabe je Bereich.
   - **H1 – Worldbuilding- und Namensquellen:** Es gibt zahlreiche Anleitungen zum Worldbuilding und Seiten zur Namensbildung (z. B. erfundene, kanadisch klingende Städtenamen); in die Erkundung einbeziehen, Verlässlichkeit und Nutzungsbedingungen prüfen. Stand: keine Namenshilfen; V.20 betrifft Figurenkarten, nicht Namen.
   - **V1 – Recherche-Baustein:** Recherche in der Software, um Kosten zu sparen und nicht alles über OpenRouter laufen zu lassen. Stand: Websuche im Weltenbauer über das OpenRouter-Plugin `web` (ADR-064) – läuft selbst über OpenRouter.
+  - **Sicht des Eigentümers (2026-10-18, in 8.13 per Auswahlfragen durchgegangen):** B1, B2, B3, B4, B5, B6, B7, G3, G4, H1 und V1 je „wichtig, bald“ (Antworten: bald / später / brauche ich nicht). G1/G2: Es geht ihm um **Verlässlichkeit** – Programm und KI sollen Teile wie „Aussehen“ sicher finden und getrennt nutzen; „Bedienung (Felder statt Rauten)“ und „eigene Gliederung je Art“ nicht angekreuzt (Letzteres ist als B2 schon „wichtig, bald“). B5: Löschen oder Archivieren wird per Vorlage geklärt. Landeplätze folgen in der Planung von Phase 9 (8.13); weil alles „bald“ ist, legt die Planung die Reihenfolge fest.
 - **Akzeptanzkriterien:** Jeder Befund (B1–B7, G1–G4, H1, V1) hat einen Landeplatz mit Schritt-ID oder ist per ADR verworfen; die grundsätzliche Sicht des Eigentümers je Befund ist festgehalten.
 - **Betroffene Module:** offen (absehbar canon, manuscript, context, ai_gateway, api, ui)
 - **Reifegrad-Wirkung:** offen (G1/G2 können das Datenmodell berühren)

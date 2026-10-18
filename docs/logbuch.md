@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-18 – [BEOBACHTUNG] V.35 mit dem Eigentümer durchgegangen
+
+- Während die getrennte Instanz bewertete, auf Wahl des Eigentümers („Ja, jetzt“). Je Befund eine Kurzfassung mit heutigem Stand, dann Auswahlfrage „wichtig, bald / gern, später / brauche ich nicht“ (bei G1/G2: was stört – Bedienung, Verlässlichkeit, Gliederung je Art; Mehrfachwahl).
+- Ergebnis: alle zwölf Befunde mit Priorität (B1–B7, G3, G4, H1, V1) „wichtig, bald“; G1/G2 nur „Verlässlichkeit“. Festgehalten in V.35.
+- **Für die Planung wichtig:** Zusammen mit V.20, V.21, V.23, V.24, V.33, V.34, V.36, V.37 ist die Menge für eine Phase zu groß (Wucherungs-Schwelle: Faktor 2 des Schrittplans). Die Planung braucht eine Reihenfolge, die der Eigentümer festlegt. Bei G1/G2 zielt die Frage damit auf verlässliches Finden von Teilen eines Eintrags – das lässt auch Lösungen ohne Abkehr von Markdown-Dateien zu (Vision 7, FR-020); Entscheidung mit `ENTSCHEIDUNG ERFORDERLICH`.
+
 ### 2026-10-18 – [ONBOARDING-VALIDATION] Phasengrenze Phase 8 (8.13)
 
 - Frischer Worktree von `main` (`ad05dce`) im Scratchpad: Quick Start der README genau wie dokumentiert (`uv python install 3.14.7`, `uv sync --frozen --python 3.14.7`, `npm ci`, `uv run pre-commit install`, `uv run skriptorium-einrichtung`, `npx vite build`, `uvicorn`) – alle Schritte Exit 0, `/api/health` → `{"status":"ok"}` nach 1 s; `scripts/session-start.sh` Exit 0. `npm ci` und Build ohne Warnung. Keine Befunde; Worktree entfernt, Hook im Haupt-Checkout danach mit `uv run pre-commit install` neu eingerichtet (Lehre aus 7.8).
