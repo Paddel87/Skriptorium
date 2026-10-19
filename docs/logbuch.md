@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-19 22:45 MESZ – [ADR-ANGELEGT] ADR-093 Beziehungen mit Art und Rückverweis (9.4)
+
+- Vorlage mit vier Fragen vorgelegt (Schreibweise, Gegenseite, Weltenbauer, Auffüllung), Eigentümer wählte per Auswahlfragen jeweils die Empfehlung: Zeile `- verheiratet mit @Kael` im Abschnitt „Beziehungen“; Block „Verweise hierher“ berechnet in der Oberfläche; Weltenbauer schreibt beide Seiten; Anfrage beim Schreiben unverändert (keine Probe nach Regel-002). Reaktiv-Quote 0 / 10 (ADR-084–093). 9.4 auf `[IN ARBEIT]`.
+
 ### 2026-10-19 22:28 MESZ – [SESSIONSTART] 9.4 Beziehungen mit Art und Rückverweis
 
 - **Modell:** Opus 5.5 (`claude-opus-5-5`, eingestellt und bedient laut `get_session`), Entscheidungs-Klasse. 9.4 empfiehlt Entscheidung – kein Schritt oberhalb der Empfehlung.
