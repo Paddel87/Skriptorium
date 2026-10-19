@@ -36,9 +36,11 @@ _LINE_BREAKS: Final = "\r" + chr(0x2028) + chr(0x2029)
 
 APPEARANCE: Final = "Aussehen"
 """The looks of a figure, a place or an item (ADR-078, ADR-092)."""
+RELATIONS: Final = "Beziehungen"
+"""The relations of a figure, one list line with one ``@Name`` each (ADR-093)."""
 
 SECTIONS: Final[dict[Category, tuple[str, ...]]] = {
-    "figur": (APPEARANCE, "Wesen", "Fähigkeiten", "Geschichte", "Beziehungen"),
+    "figur": (APPEARANCE, "Wesen", "Fähigkeiten", "Geschichte", RELATIONS),
     "ort": ("Lage", APPEARANCE, "Bewohner", "Geschichte"),
     "gegenstand": (APPEARANCE, "Zweck", "Verwendung", "Auswirkung"),
     "kultur": ("Gesellschaft", "Glaube und Bräuche", "Geschichte"),
