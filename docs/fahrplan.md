@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-10-19 (9.3 erledigt – feste Abschnitte je Art, ADR-092; Code PR #177, Proben PR #179, beide mit grüner CI zusammengeführt; Proben zu 9.3 im dritten Versuch gelaufen – Regel-002 und Weltenbauer; zuvor zweiter Versuch ohne Schlüssel, Werkzeug für die Weltenbauer-Probe vorbereitet); 2026-10-18 (9.2 erledigt – vier End-to-End-Tests, Vertragstest Server ↔ Oberfläche, CI-Schrittnamen; PR #175; 9.1 erledigt – ADR-091, PR #173; D.19 angelegt; zuvor Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
 - **Laufende Phase:** Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (Phase 8 abgeschlossen 2026-10-18)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner – 9.3 erledigt am 2026-10-19
+- **Aktiver Schritt:** 9.4 Beziehungen mit Art und Rückverweis – entschieden (ADR-093), Umsetzung läuft (Cloud-Session 2026-10-19)
 - **Nächster Schritt:** 9.4 Beziehungen mit Art und Rückverweis – zu Beginn Vorlage (Entscheidungs-Klasse), in einer neuen Session. D.19: Der Lauf zu PR #179 (2026-10-18 23:44 UTC) lief noch auf Ubuntu 24.04.5; geprüft wird mit dem ersten Lauf ab dem 2026-10-19 (UTC). Offen bei dir: Probe mit einer Gast-Figur (Eingangskriterium 9.13). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
@@ -31,7 +31,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ✅ | 9.1 | Gliederung im Server verlässlich – Abschnitte und Namen | erledigt 2026-10-18 (ADR-091) | – |
 | ✅ | 9.2 | End-to-End-Tests für die Abläufe der Phasen 6–8 | erledigt 2026-10-18 | – |
 | ✅ | 9.3 | Gegliederte Einträge je Art (B2, G1/G2) | erledigt 2026-10-19 (ADR-092) | – |
-| ⚪ | 9.4 | Beziehungen mit Art und Rückverweis (B3) | offen | KI: Vorlage |
+| 🟠 | 9.4 | Beziehungen mit Art und Rückverweis (B3) | in Arbeit (ADR-093) | KI: Umsetzung, Weltenbauer-Probe |
 | ⚪ | 9.5 | Bilder vom Bedarf her; Karte aus den Orten (G4, B4) | offen | KI: Vorlage |
 | ⚪ | 9.6 | Herkunft von Bildern (B1) | offen | KI: Vorlage |
 | ⚪ | 9.7 | Einstellungsseite – Modell je Aufgabe (G3, B6) | offen | KI: Mockup und Vorlage |
@@ -244,7 +244,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 9.4: Beziehungen mit Art und Rückverweis (V.35 B3)
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-19) – Vorlage vorgelegt, Eigentümer per Auswahlfragen: 1A, 2A, Weltenbauer beide Seiten, 4A → ADR-093
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** 9.1, 9.3
 - **Freigabepflichtig:** ja – Datenmodell-Konvention (Kategorie 4), ggf. Anfrage-Zusammenstellung (Kategorie 1); ADR-088 hatte ein Feld „Verbunden mit“ verworfen
@@ -256,7 +256,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** canon, context, ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, ADR
-- **Notizen:** Aus V.35 (ADR-090).
+- **Notizen:** Aus V.35 (ADR-090). Entschieden 2026-10-19 → ADR-093. Umsetzung (Cloud-Session 2026-10-19): `RELATIONS` in `canon/sections.py` und gespiegelt in `ui/src/sections.ts` (Regel-003); `ui/src/relations.ts` (`relationsOf`, `incomingOf`) nach Abschnitts- und Namensregel; Block „Verweise hierher“ (`ui/src/views/IncomingLinks.tsx`) unter jedem Eintrag der eigenen Welt; Rahmen des Weltenbauers (`context/worldbuilder.py`) mit Zeile je Beziehung, beiden Seiten und vorhandener Figur nur mit Text in der Anfrage. Anfrage beim Schreiben unverändert; die des Weltenbauers +163 geschätzte Token (`tests/shared/api-responses.json` 994 → 1.157). Probe mit echter KI (`spikes/weltenbauer-9.4/README.md`, grok-4.6, 0,037 $): drei von drei Aufträgen mit Beziehung je Zeile, beiden Seiten und ganzem Import; Tomas Rehl überarbeitet ohne Verlust, Ilka Varn (ohne `@`) nicht angefasst, Gegenseite im Gespräch genannt. Lokal: pytest 932 (99 %; `canon/sections.py`, `context/worldbuilder.py` je 100 %), vitest 492 (98,68 / 95,36 / 97,9 / 98,88 % Anweisungen / Zweige / Funktionen / Zeilen; `relations.ts`, `IncomingLinks.tsx` 100 %), Playwright 15/15, ruff, mypy, bandit, eslint, prettier, tsc grün. Offen: CI, Bestätigung des Eigentümers.
 
 #### 9.5: Bilder vom Bedarf her; Karte aus den Orten (V.35 G4, B4)
 

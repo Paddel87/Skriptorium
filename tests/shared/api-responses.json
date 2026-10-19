@@ -1067,7 +1067,7 @@
     "type": "Omit<Extract<WorldbuilderEvent, { type: \"start\" }>, \"type\">",
     "body": {
       "model": "x-ai/grok-4.6",
-      "estimated_tokens": 994,
+      "estimated_tokens": 1157,
       "web_search": false
     }
   },
@@ -1093,7 +1093,7 @@
     "type": "Omit<Extract<WorldbuilderEvent, { type: \"start\" }>, \"type\">",
     "body": {
       "model": "x-ai/grok-4.6",
-      "estimated_tokens": 994,
+      "estimated_tokens": 1157,
       "web_search": true
     }
   },

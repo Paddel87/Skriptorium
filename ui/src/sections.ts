@@ -15,6 +15,9 @@ import type { Category } from "./api/canon";
 /** The looks of a figure, a place or an item (ADR-078, ADR-092); a fixed section of those. */
 export const APPEARANCE = "Aussehen";
 
+/** The relations of a figure (ADR-093), one list line with one `@Name` each; see `relations.ts`. */
+export const RELATIONS = "Beziehungen";
+
 /**
  * The fixed sections of an entry by category, in order (ADR-092): the list of `SECTIONS` in
  * `canon/sections.py`, a test couples both to `tests/shared/sections.json` (rule 003). Rules and
@@ -22,7 +25,7 @@ export const APPEARANCE = "Aussehen";
  */
 export const SECTIONS: Readonly<Partial<Record<Category, readonly string[]>>> =
   {
-    figur: [APPEARANCE, "Wesen", "Fähigkeiten", "Geschichte", "Beziehungen"],
+    figur: [APPEARANCE, "Wesen", "Fähigkeiten", "Geschichte", RELATIONS],
     ort: ["Lage", APPEARANCE, "Bewohner", "Geschichte"],
     gegenstand: [APPEARANCE, "Zweck", "Verwendung", "Auswirkung"],
     kultur: ["Gesellschaft", "Glaube und Bräuche", "Geschichte"],

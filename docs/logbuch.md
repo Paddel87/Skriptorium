@@ -29,6 +29,18 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-19 22:45 MESZ – [ADR-ANGELEGT] ADR-093 Beziehungen mit Art und Rückverweis (9.4)
+
+- Vorlage mit vier Fragen vorgelegt (Schreibweise, Gegenseite, Weltenbauer, Auffüllung), Eigentümer wählte per Auswahlfragen jeweils die Empfehlung: Zeile `- verheiratet mit @Kael` im Abschnitt „Beziehungen“; Block „Verweise hierher“ berechnet in der Oberfläche; Weltenbauer schreibt beide Seiten; Anfrage beim Schreiben unverändert (keine Probe nach Regel-002). Reaktiv-Quote 0 / 10 (ADR-084–093). 9.4 auf `[IN ARBEIT]`.
+
+### 2026-10-19 22:28 MESZ – [SESSIONSTART] 9.4 Beziehungen mit Art und Rückverweis
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, eingestellt und bedient laut `get_session`), Entscheidungs-Klasse. 9.4 empfiehlt Entscheidung – kein Schritt oberhalb der Empfehlung.
+- **Umgebung:** Cloud-Session (Umgebung `env_01E4xYkAExv13rZdZH7cdo1B`), Branch des Werkzeugs `claude/new-session-7c9ptj` auf `416f706` (= `origin/main`, PR #180).
+- **Wiedereinstieg:** letzter `[SESSIONENDE]` 2026-10-19 02:00 – 9.3 erledigt, kein aktiver Schritt, keine aktiven Blocker, keine offenen STOPP-Situationen. Die dort als offen genannten Branches (`feat/9.3-gegliederte-eintraege`, `scp/affectionate-pare-f0afee`, `spike/9.3-proben-ki`, `scp/wizardly-ride-p7n55n`) bestehen auf `origin` nicht mehr – nur `main` und der Branch dieser Session.
+- **Kontextgröße:** `get_session` meldet `used_tokens` 0 (Wert beim Start noch nicht gefüllt); Prüfung nach jedem Schritt erneut.
+- **Vorhaben:** 9.4 beginnt mit einer Vorlage (Datenmodell-Konvention, Kategorie 4; ggf. Kategorie 1). D.19 am ersten CI-Lauf dieser Session prüfen (erster Lauf ab 2026-10-19 UTC).
+
 ### 2026-10-19 02:00 MESZ – [SESSIONENDE] 9.3 erledigt, 9.4 in neuer Session
 
 - **Dauer:** ca. 01:50 bis 02:00 MESZ (Fortsetzung der Cloud-Session des zweiten Versuchs mit der Übergabe aus dem dritten).

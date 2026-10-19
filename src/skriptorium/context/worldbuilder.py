@@ -15,6 +15,7 @@ from typing import Final
 
 from skriptorium.canon import (
     APPEARANCE,
+    RELATIONS,
     SECTIONS,
     CanonEntry,
     CanonService,
@@ -148,7 +149,10 @@ def _index(entries: Sequence[CanonEntry]) -> str:
 
 
 def _section_rules() -> str:
-    """The sections of each category as the frame asks for them, from ``SECTIONS`` (ADR-092)."""
+    """The sections of each category as the frame asks for them, from ``SECTIONS`` (ADR-092).
+
+    Relations stand on both sides, one line with one ``@Name`` each (ADR-093).
+    """
     level = "#" * ENTRY_BODY_LEVEL
     per_group = "".join(
         f"  - {_GROUP_NAMES[category]}: " + ", ".join(f"`{level} {name}`" for name in names) + "\n"
@@ -163,6 +167,12 @@ def _section_rules() -> str:
         f"Abschnitte. Die Abschnitte in dieser Reihenfolge:\n{per_group}"
         f"- Der Abschnitt `{level} {APPEARANCE}` enthält nur das Äußere (Gesicht, Haare, Statur, "
         "Kleidung, Haltung, sichtbare Merkmale); alles andere gehört in die übrigen Abschnitte.\n"
+        f"- Im Abschnitt `{level} {RELATIONS}` steht je Beziehung eine Listenzeile mit genau einem "
+        "`@Name` (Name oder Alias), die Art der Beziehung davor, z. B. `- verheiratet mit @Kael`. "
+        "Schreibe jede Beziehung auf beiden Seiten: Legst du mehrere Figuren an oder überarbeitest "
+        "sie, steht die Gegenseite im Eintrag der anderen Figur. Ist die andere Figur schon im "
+        "Kanon, überarbeite sie nur, wenn ihr vollständiger Text oben steht; sonst nenne die "
+        "Gegenseite im Gespräch, damit der Autor sie ergänzt.\n"
         "- Beispiel einer Figur:\n\n"
         f"  # Figuren\n  ## Name der Figur\n  Aliasse: Zweitname\n{example}\n"
     )

@@ -4,7 +4,14 @@ from pathlib import Path
 
 import pytest
 
-from skriptorium.canon import APPEARANCE, SECTIONS, CanonService, InvalidInput, NotFound
+from skriptorium.canon import (
+    APPEARANCE,
+    RELATIONS,
+    SECTIONS,
+    CanonService,
+    InvalidInput,
+    NotFound,
+)
 from skriptorium.context import (
     PROPOSAL_FENCE,
     ContextBuilder,
@@ -210,3 +217,16 @@ def test_the_looks_are_only_the_outside(builder: ContextBuilder) -> None:
         f"Der Abschnitt `### {APPEARANCE}` enthält nur das Äußere (Gesicht, Haare, Statur, "
         "Kleidung, Haltung, sichtbare Merkmale)"
     ) in system
+
+
+def test_relations_are_one_line_each_and_on_both_sides(builder: ContextBuilder) -> None:
+    """Step 9.4 (ADR-093): one `@Name` per line under `### Beziehungen`, written on both sides."""
+    system = builder.build_worldbuilder(WORLD, [("user", "Ein Paar")]).messages[0].content
+    assert SECTIONS["figur"][-1] == RELATIONS
+    assert (
+        f"Im Abschnitt `### {RELATIONS}` steht je Beziehung eine Listenzeile mit genau einem "
+        "`@Name` (Name oder Alias), die Art der Beziehung davor, z. B. `- verheiratet mit @Kael`."
+    ) in system
+    assert "Schreibe jede Beziehung auf beiden Seiten" in system
+    # An existing figure is only revised when its full text is in the request.
+    assert "überarbeite sie nur, wenn ihr vollständiger Text oben steht" in system

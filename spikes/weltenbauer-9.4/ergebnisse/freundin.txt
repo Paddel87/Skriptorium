@@ -1,0 +1,24 @@
+Drei kurze Varianten, bevor der Eintrag steht:
+
+1. **Mara Pell** – ehemalige Siegelgehilfin in Tolm, heute Buchführerin bei einem Salzherrn in der Oberstadt. Nüchtern, rechnet alles, meidet Ilka öffentlich.
+2. **Lenne Holm** – Fischerwitwe im Grauhang, kennt Ilka noch aus der Lehrzeit bei den Schwestern. Warm, abergläubisch, bringt ihr heimlich Tran.
+3. **Brida Kess** – ehemalige Novizin, die den Orden verließ; betreibt in Kerrow eine Tranlaternen-Werkstatt. Hart im Ton, schuldet Ilka noch einen ungelösten Streit um einen Namen.
+
+Unten die Übernahme als **Mara Pell** (Variante 1). Wenn du 2 oder 3 willst, sag Bescheid – der Block wird dann neu gesetzt.
+
+Gegenseite: Im Eintrag von **Ilka Varn** fehlt noch die Zeile zur Freundschaft (z. B. `- alte Freundin aus Tolm: @Mara Pell`). Der volle Text von Ilka steht hier nicht, deshalb nicht von mir nachgetragen.
+
+```kanon
+# Figuren
+## Mara Pell
+### Aussehen
+Schlank, Anfang vierzig, graues Haar straff am Nacken. Schmale Lippen, eine Narbe am linken Daumen vom Siegellack. Trägt dunkle Wollkleider der Oberstadt, keinen Schmuck außer einem kleinen Salzkristall am Halsband.
+### Wesen
+Nüchtern und rechnerisch. Spricht leise, hält Distanz. Fürchtet den Rat und das Gerede mehr als das Meer. Hilft, wenn niemand zusieht.
+### Fähigkeiten
+Liest und schreibt sauber; kennt Zolltarife und Siegel der Salzherren. Führt Bücher ohne Fehler.
+### Geschichte
+In Tolm als Kind mit @Ilka Varn befreundet, als Ilka noch bei den Stillen Schwestern lernte. Nach dem Salzkrieg zog Mara nach Kerrow, heiratete einen Schreiber, der 407 starb. Seitdem führt sie die Bücher des Salzherrn Korr in der Oberstadt. Sie kennt Ilkas Bindung, hat sie nie gemeldet.
+### Beziehungen
+- alte Freundin aus Tolm von @Ilka Varn
+```

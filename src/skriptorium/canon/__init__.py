@@ -5,6 +5,7 @@ from skriptorium.canon.importers import TranslatedMaterial
 from skriptorium.canon.names import name_pattern
 from skriptorium.canon.sections import (
     APPEARANCE,
+    RELATIONS,
     SECTIONS,
     drop_empty_sections,
     nest_headings,
@@ -29,6 +30,7 @@ __all__ = [
     "APPEARANCE",
     "CATEGORIES",
     "MAX_MARKERS_PER_MAP",
+    "RELATIONS",
     "SECTIONS",
     "AlreadyExists",
     "CanonEntry",
