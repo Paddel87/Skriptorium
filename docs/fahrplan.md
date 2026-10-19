@@ -256,7 +256,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** canon, context, ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, ADR
-- **Notizen:** Aus V.35 (ADR-090).
+- **Notizen:** Aus V.35 (ADR-090). Entschieden 2026-10-19 → ADR-093. Umsetzung (Cloud-Session 2026-10-19): `RELATIONS` in `canon/sections.py` und gespiegelt in `ui/src/sections.ts` (Regel-003); `ui/src/relations.ts` (`relationsOf`, `incomingOf`) nach Abschnitts- und Namensregel; Block „Verweise hierher“ (`ui/src/views/IncomingLinks.tsx`) unter jedem Eintrag der eigenen Welt; Rahmen des Weltenbauers (`context/worldbuilder.py`) mit Zeile je Beziehung, beiden Seiten und vorhandener Figur nur mit Text in der Anfrage. Anfrage beim Schreiben unverändert; die des Weltenbauers +163 geschätzte Token (`tests/shared/api-responses.json` 994 → 1.157). Probe mit echter KI (`spikes/weltenbauer-9.4/README.md`, grok-4.6, 0,037 $): drei von drei Aufträgen mit Beziehung je Zeile, beiden Seiten und ganzem Import; Tomas Rehl überarbeitet ohne Verlust, Ilka Varn (ohne `@`) nicht angefasst, Gegenseite im Gespräch genannt. Lokal: pytest 932 (99 %; `canon/sections.py`, `context/worldbuilder.py` je 100 %), vitest 492 (98,68 / 95,36 / 97,9 / 98,88 % Anweisungen / Zweige / Funktionen / Zeilen; `relations.ts`, `IncomingLinks.tsx` 100 %), Playwright 15/15, ruff, mypy, bandit, eslint, prettier, tsc grün. Offen: CI, Bestätigung des Eigentümers.
 
 #### 9.5: Bilder vom Bedarf her; Karte aus den Orten (V.35 G4, B4)
 
