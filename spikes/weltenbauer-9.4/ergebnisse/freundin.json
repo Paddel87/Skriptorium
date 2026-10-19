@@ -1,0 +1,13 @@
+{
+  "auftrag": "Entwirf eine alte Freundin von Ilka Varn aus Tolm, die heute in @Kerrow lebt. Gib sie mir als Eintrag zur Übernahme.",
+  "verweise": [
+    "kerrow"
+  ],
+  "modell": "x-ai/grok-4.6",
+  "geschaetzte_token": 3298,
+  "sekunden": 22.0,
+  "token_ein": 3006,
+  "token_aus": 984,
+  "kosten_usd": 0.01160676,
+  "finish_reason": "stop"
+}

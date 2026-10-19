@@ -1,0 +1,13 @@
+{
+  "auftrag": "Entwirf einen jungen Lehrling, dem @Tomas Rehl im Hafen das Rudern beibringt. Gib mir ihn als Eintrag zur Übernahme, und die Beziehung soll auch bei Tomas stehen.",
+  "verweise": [
+    "tomas-rehl"
+  ],
+  "modell": "x-ai/grok-4.6",
+  "geschaetzte_token": 3516,
+  "sekunden": 33.5,
+  "token_ein": 3192,
+  "token_aus": 1215,
+  "kosten_usd": 0.01334718,
+  "finish_reason": "stop"
+}

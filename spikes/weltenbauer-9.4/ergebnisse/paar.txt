@@ -1,0 +1,34 @@
+Drei Namens- und Ton-Varianten, damit du wählen kannst, bevor etwas fest wird:
+
+1. **Mara und Bren Kess** – älteres Paar (Mitte fünfzig), keine lebenden Kinder, still, vom Hafenwetter gezeichnet; sie flickt am Nordkai, er trägt Säcke zwischen Kai und Siedereien. Trocken, fast wortlos.
+2. **Lise und Hauk Drel** – jünger (um die dreißig), ein Kleinkind bei der Schwester; sie arbeitet im Grauhang, er ist oft betrunken nach Schicht. Mehr Reibung, weniger Idylle.
+3. **Nessa und Pellor Watt** – sie gilt als die schnellste Flickerin am Südhafen, er hat einen krummen Rücken vom Tragen; sie reden vom Wegzug nach Tolm und tun es nie.
+
+Unten steht Variante 1 als übernahmefähiger Entwurf (Namen, Alter, Kinderlosigkeit sind Vorschläge; Beziehung zum Plot absichtlich leer). Wenn du 2 oder 3 willst, oder Bindung an vorhandene Figuren (Gunda, Tomas, Ilka), sag Bescheid.
+
+```kanon
+# Figuren
+## Mara Kess
+### Aussehen
+Mager, breitschultrig, graues Haar fest unter einem öligen Kopftuch. Gesicht lederbraun, Mund schmal, Hände vernarbt von Netz und Nadel. Trägt grobe Wollröcke, eine geflickte Weste und barfuß in Holzschuhen, wenn sie am Kai sitzt.
+### Wesen
+Wortkarg, praktisch, abergläubisch ohne Pathos. Zählt Maschen statt Tage. Humor trocken, selten.
+### Fähigkeiten
+Flickt Fischer- und Zollnetze schnell und dicht; kennt die Knoten der Kerrower Boote. Näht auch Segelrisse, wenn man zahlt.
+### Geschichte
+Geboren in Kerrow, Grauhang. Arbeitet seit der Jugend am Nordkai. Heiratete @Bren Kess vor der Jahrhundertwende n. d. F. Keine lebenden Kinder.
+### Beziehungen
+- verheiratet mit @Bren Kess
+
+## Bren Kess
+### Aussehen
+Kurz, stämmig, krummer Nacken. Haar dünn und sandfarben, Bart stoppelig. Hände schwielig, ein Finger der linken Hand steif. Trägt eine verschlissene Trägerweste, Gurt mit Haken, grobe Hosen, stets salzverkrustet.
+### Wesen
+Müde, zuverlässig, redet wenig. Trinkt nach Schicht ein Bier im Grab, nicht zwei. Fürchtet den Doppelmond für Fahrten, nicht für sich.
+### Fähigkeiten
+Träger im Südhafen: Säcke, Fässer, Salzballen zwischen Kai, Hundekarren und Siedereien. Kennt die Kaischichten und wer schuldet.
+### Geschichte
+Geboren in Kerrow. Seit jungen Jahren Lastträger am Hafen. Heiratete @Mara Kess. Lebt mit ihr in einer Kammer über einem Schuppen im Grauhang.
+### Beziehungen
+- verheiratet mit @Mara Kess
+```

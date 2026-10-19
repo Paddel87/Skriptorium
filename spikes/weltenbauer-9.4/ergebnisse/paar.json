@@ -1,0 +1,13 @@
+{
+  "auftrag": "Entwirf ein Ehepaar aus @Kerrow: eine Netzflickerin und ihren Mann, der als Träger im Hafen arbeitet. Gib mir beide als Einträge zur Übernahme.",
+  "verweise": [
+    "kerrow"
+  ],
+  "modell": "x-ai/grok-4.6",
+  "geschaetzte_token": 3307,
+  "sekunden": 31.7,
+  "token_ein": 3008,
+  "token_aus": 1113,
+  "kosten_usd": 0.01237698,
+  "finish_reason": "stop"
+}
