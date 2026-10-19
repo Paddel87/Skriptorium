@@ -67,3 +67,57 @@ describe("@Name in the text of an entry (step 8.11, ADR-088)", () => {
     expect(screen.queryByRole("button", { name: "@Gunda" })).toBeNull();
   });
 });
+
+describe("„Verweise hierher“ below an entry (step 9.4, ADR-093)", () => {
+  function shown(
+    entries: CanonEntry[],
+    current: CanonEntry,
+    world = "salzmark",
+  ) {
+    const open = vi.fn();
+    render(
+      <EntryArticle
+        world={world}
+        current={current}
+        compact={false}
+        entries={entries}
+        onOpen={open}
+        onEdit={vi.fn()}
+        onSaved={vi.fn()}
+      />,
+    );
+    return open;
+  }
+
+  it("shows relations with their kind and mentions, each a link", async () => {
+    const gunda = {
+      ...GUNDA,
+      body: "## Beziehungen\n- verheiratet mit @Kael",
+    };
+    const turm = { ...TURM, category: "ort" as const, body: "Kael? @Kael." };
+    const open = shown([ENTRY, gunda, turm, ELSEWHERE], ENTRY);
+    const user = userEvent.setup();
+
+    const block = screen.getByRole("region", { name: "Verweise hierher" });
+    expect(block.textContent).toContain("Gunda Hollt – verheiratet mit");
+    expect(block.textContent).toContain("Aschturm (Ort / Geografie)");
+    await user.click(screen.getByRole("button", { name: "Gunda Hollt" }));
+    expect(open).toHaveBeenLastCalledWith("gunda-hollt");
+    await user.click(screen.getByRole("button", { name: "Aschturm" }));
+    expect(open).toHaveBeenLastCalledWith("aschturm");
+  });
+
+  it("is missing without references and for guests", () => {
+    shown([ENTRY, GUNDA, TURM], ENTRY);
+    expect(
+      screen.queryByRole("region", { name: "Verweise hierher" }),
+    ).toBeNull();
+
+    const nebel = { ...ELSEWHERE, body: "" };
+    const visitor = { ...ENTRY, body: "- verheiratet mit @Nebelkönig" };
+    shown([visitor, nebel], nebel);
+    expect(
+      screen.queryByRole("region", { name: "Verweise hierher" }),
+    ).toBeNull();
+  });
+});

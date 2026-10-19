@@ -4,6 +4,7 @@ import { appearanceOf } from "../imagePrompts";
 import { AppearanceExtract } from "./AppearanceExtract";
 import { EntryImages } from "./EntryImages";
 import { EntryText } from "./EntryText";
+import { IncomingLinks } from "./IncomingLinks";
 import { timelineEvents } from "../timeline";
 import { TimelineView } from "./TimelineView";
 
@@ -12,7 +13,8 @@ import { TimelineView } from "./TimelineView";
  * character card download is offered outside the compact bar (step 6.9). A timeline entry
  * holding a list of dated events reads as a time line, with "+ Ereignis" outside the compact
  * bar (step 7.2); a timeline entry for a single event reads as text. The entry's images stand
- * above the text; they are changed outside the compact bar (step 7.6).
+ * above the text; they are changed outside the compact bar (step 7.6). Below the text stand the
+ * entries of the world that refer to this one (step 9.4, ADR-093).
  */
 export function EntryArticle({
   world,
@@ -98,6 +100,7 @@ export function EntryArticle({
       ) : (
         <EntryText text={current.body} name={current.name} links={links} />
       )}
+      {links !== undefined && <IncomingLinks current={current} links={links} />}
     </article>
   );
 }
