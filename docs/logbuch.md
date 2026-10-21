@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-21 – [ERLEDIGT] Abnahme 9.4
+
+- Eigentümer fand die Funktion zunächst nicht (der Block „Verweise hierher“ erscheint nur, wenn ein anderer Eintrag verweist); nach Anleitung: „9.4 funktioniert, der Block erscheint“ → 9.4 `[ERLEDIGT]`. Phase 9: 4 von 15. Nächster Schritt 9.5 mit Vorlage.
+- Erklärt auf Nachfrage (ohne Änderung): D.1, D.5 (httpx2 auf PyPI nachgesehen: Fortführung von httpx durch das Pydantic-Team, 2.0 am 2026-05-12, heute 2.15.1 – keine neuen Funktionen fürs Skriptorium, Gewinn ist Pflege und Sicherheitsupdates), D.15.
+
 ### 2026-10-20 – [BEOBACHTUNG] Deployment `67fc36e` (8.9–9.4)
 
 - In der fortgesetzten Mac-Session (`claude-opus-5-5`) auf Anweisung des Eigentümers („einspielen“), vorher „Pull from Main und prüfe offene PRs“: keine offenen PRs, `main` auf `67fc36e` (#181), CI grün. Auf dem Server lief `19a5e48`; seitdem 15 PRs (#165–#181). Geprüft vor dem Einspielen: keine Änderung an Dockerfile, Compose, `pyproject.toml` oder `package.json`; laut ADR-091 bis ADR-093 keine Umwandlung bestehender Dateien.
