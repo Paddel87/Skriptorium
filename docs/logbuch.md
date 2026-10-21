@@ -29,6 +29,19 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-21 – [ERLEDIGT] Abnahme 9.4
+
+- Eigentümer zusätzlich: „Gastfiguren funktionieren auch“ – Eingangskriterium von 9.13 (Probe mit einer Gast-Figur) erfüllt.
+
+- Eigentümer fand die Funktion zunächst nicht (der Block „Verweise hierher“ erscheint nur, wenn ein anderer Eintrag verweist); nach Anleitung: „9.4 funktioniert, der Block erscheint“ → 9.4 `[ERLEDIGT]`. Phase 9: 4 von 15. Nächster Schritt 9.5 mit Vorlage.
+- Erklärt auf Nachfrage (ohne Änderung): D.1, D.5 (httpx2 auf PyPI nachgesehen: Fortführung von httpx durch das Pydantic-Team, 2.0 am 2026-05-12, heute 2.15.1 – keine neuen Funktionen fürs Skriptorium, Gewinn ist Pflege und Sicherheitsupdates), D.15.
+
+### 2026-10-20 – [BEOBACHTUNG] Deployment `67fc36e` (8.9–9.4)
+
+- In der fortgesetzten Mac-Session (`claude-opus-5-5`) auf Anweisung des Eigentümers („einspielen“), vorher „Pull from Main und prüfe offene PRs“: keine offenen PRs, `main` auf `67fc36e` (#181), CI grün. Auf dem Server lief `19a5e48`; seitdem 15 PRs (#165–#181). Geprüft vor dem Einspielen: keine Änderung an Dockerfile, Compose, `pyproject.toml` oder `package.json`; laut ADR-091 bis ADR-093 keine Umwandlung bestehender Dateien.
+- Ablauf nach Runbook Abschnitt 7 (ADR-039): `REVISION` `67fc36e`, Rückweg `skriptorium:vorher` = `19a5e48`; `/api/health` 200 nach ca. 63 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; danach einmal per SSH `(healthy)`, 0 Fehlerzeilen in den letzten 3 Minuten.
+- Offen: Bestätigung des Eigentümers zu 9.4 (Beziehungen mit Art und „Verweise hierher“). Diese Session hat keine Mindest-Lektüre und keinen `[SESSIONSTART]` neu angelegt – sie setzt die Session vom 2026-10-11 fort und hat nur eingespielt.
+
 ### 2026-10-21 – [GELÖST] Rote Audit-Jobs durch neue Sicherheitsfunde (D.20)
 
 - Doku-PR #182 lief rot in „Python“ und „TypeScript“, beide im Schritt Dependency-Audit: `pip-audit` meldet PYSEC-2026-4320 für certifi 2026.7.22 (Korrektur 2026.10.19 vom 2026-10-20), `npm audit` drei Hinweise hoher Stufe zu launch-editor über vite 8.3.0–8.3.2. Nicht vom PR verursacht – blockiert jeden PR.
