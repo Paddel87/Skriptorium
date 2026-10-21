@@ -1,9 +1,15 @@
-import { useState, type ChangeEvent, type SyntheticEvent } from "react";
-import { api, describeError, type World } from "../api";
+import {
+  useCallback,
+  useState,
+  type ChangeEvent,
+  type SyntheticEvent,
+} from "react";
+import { api, describeError, type CanonEntry, type World } from "../api";
 import { base64, MAP_SIDE, shrinkImage } from "../files";
 import { ErrorText } from "./Common";
 import { mapPrompt } from "../imagePrompts";
 import { ImageGenerate } from "./ImageGenerate";
+import { useLoad } from "../useLoad";
 
 /** File and name of a new map; the browser shrinks the file before upload. */
 export function AddMap({
@@ -20,6 +26,15 @@ export function AddMap({
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // The places of the world for "Karte erzeugen" (step 9.5, ADR-094); all are chosen until the
+  // author takes some out, so the set holds the ones left out.
+  const loadEntries = useCallback(() => api.entries(world.id), [world.id]);
+  const entries = useLoad(loadEntries);
+  const [leftOut, setLeftOut] = useState<ReadonlySet<string>>(new Set());
+  const places = (entries.data ?? []).filter(
+    (entry) => entry.category === "ort",
+  );
+  const chosen = places.filter((place) => !leftOut.has(place.id));
 
   function choose(event: ChangeEvent<HTMLInputElement>) {
     const chosen = event.target.files?.[0] ?? null;
@@ -68,7 +83,16 @@ export function AddMap({
       {generating && (
         <ImageGenerate
           title="Karte erzeugen"
-          initialPrompt={mapPrompt(world, name)}
+          initialPrompt={mapPrompt(world, name, chosen)}
+          extra={
+            places.length > 0 ? (
+              <MapPlaces
+                places={places}
+                leftOut={leftOut}
+                onChange={setLeftOut}
+              />
+            ) : null
+          }
           initialFormat="3:2"
           takeOverLabel="Für diese Karte verwenden"
           onTakeOver={(image) => {
@@ -116,5 +140,63 @@ export function AddMap({
       </div>
       <ErrorText message={error} />
     </form>
+  );
+}
+
+/** The places of the world to tick for a generated map (step 9.5, ADR-094). */
+function MapPlaces({
+  places,
+  leftOut,
+  onChange,
+}: {
+  places: readonly CanonEntry[];
+  leftOut: ReadonlySet<string>;
+  onChange: (leftOut: ReadonlySet<string>) => void;
+}) {
+  return (
+    <fieldset className="map-places">
+      <legend className="note">
+        Orte auf der Karte (aus dem Kanon) ·{" "}
+        <button
+          type="button"
+          className="link"
+          onClick={() => {
+            onChange(new Set());
+          }}
+        >
+          alle
+        </button>{" "}
+        ·{" "}
+        <button
+          type="button"
+          className="link"
+          onClick={() => {
+            onChange(new Set(places.map((place) => place.id)));
+          }}
+        >
+          keine
+        </button>
+      </legend>
+      <div className="map-places-list">
+        {places.map((place) => (
+          <label key={place.id}>
+            <input
+              type="checkbox"
+              checked={!leftOut.has(place.id)}
+              onChange={(event) => {
+                const next = new Set(leftOut);
+                if (event.target.checked) {
+                  next.delete(place.id);
+                } else {
+                  next.add(place.id);
+                }
+                onChange(next);
+              }}
+            />
+            {place.name}
+          </label>
+        ))}
+      </div>
+    </fieldset>
   );
 }

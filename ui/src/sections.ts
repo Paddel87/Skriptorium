@@ -18,6 +18,12 @@ export const APPEARANCE = "Aussehen";
 /** The relations of a figure (ADR-093), one list line with one `@Name` each; see `relations.ts`. */
 export const RELATIONS = "Beziehungen";
 
+/** Where a place lies (ADR-092); a map takes it for each chosen place (step 9.5, ADR-094). */
+export const LOCATION = "Lage";
+
+/** What an item is for (ADR-092); an image of an item without looks takes it (ADR-094). */
+export const PURPOSE = "Zweck";
+
 /**
  * The fixed sections of an entry by category, in order (ADR-092): the list of `SECTIONS` in
  * `canon/sections.py`, a test couples both to `tests/shared/sections.json` (rule 003). Rules and
@@ -26,8 +32,8 @@ export const RELATIONS = "Beziehungen";
 export const SECTIONS: Readonly<Partial<Record<Category, readonly string[]>>> =
   {
     figur: [APPEARANCE, "Wesen", "Fähigkeiten", "Geschichte", RELATIONS],
-    ort: ["Lage", APPEARANCE, "Bewohner", "Geschichte"],
-    gegenstand: [APPEARANCE, "Zweck", "Verwendung", "Auswirkung"],
+    ort: [LOCATION, APPEARANCE, "Bewohner", "Geschichte"],
+    gegenstand: [APPEARANCE, PURPOSE, "Verwendung", "Auswirkung"],
     kultur: ["Gesellschaft", "Glaube und Bräuche", "Geschichte"],
   };
 

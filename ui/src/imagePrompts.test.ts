@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { ENTRY, STORY, WORLD } from "../fake-api";
-import { coverPrompt, entryPrompt, mapPrompt } from "./imagePrompts";
+import {
+  coverPrompt,
+  entryPrompt,
+  lacksAppearance,
+  mapPrompt,
+} from "./imagePrompts";
 
 describe("starting texts for generated images (step 7.12)", () => {
   it("takes only a figure's looks; other entries by the start of their text (7.16)", () => {
@@ -90,6 +95,84 @@ describe("starting texts for generated images (step 7.12)", () => {
     expect(mapPrompt(world, " ")).toBe(
       "Landkarte von Die Salzmark, gezeichnet im Stil einer Fantasy-Karte",
     );
+  });
+
+  it("takes what an image needs by kind (step 9.5, ADR-094)", () => {
+    const item = { ...ENTRY, category: "gegenstand" as const, name: "Kerbe" };
+    expect(
+      entryPrompt({
+        ...item,
+        body: "Ein altes Messer, schartig.\n\n## Zweck\n\nSchneidet Taue. Und Brot.\n",
+      }),
+    ).toBe("Kerbe: Schneidet Taue.");
+    expect(
+      entryPrompt({
+        ...item,
+        body: "Ein altes Messer, schartig. Gehörte Hedda.",
+      }),
+    ).toBe("Kerbe: Ein altes Messer, schartig.");
+    expect(entryPrompt({ ...item, body: "Ohne Satzende" })).toBe(
+      "Kerbe: Ohne Satzende",
+    );
+    expect(
+      entryPrompt({ ...item, body: "## Aussehen\n\nGriff aus Walknochen.\n" }),
+    ).toBe("Kerbe: Griff aus Walknochen.");
+    const place = { ...ENTRY, category: "ort" as const, name: "Tolm" };
+    expect(
+      entryPrompt({
+        ...place,
+        body: "## Lage\n\nIm Süden.\n\n## Aussehen\n\nFlache Salzwiesen.\n",
+      }),
+    ).toBe("Tolm: Flache Salzwiesen. Lage: Im Süden.");
+    expect(
+      entryPrompt({ ...place, body: "## Aussehen\n\nFlache Salzwiesen.\n" }),
+    ).toBe("Tolm: Flache Salzwiesen.");
+  });
+
+  it("knows which entries lack the looks an image needs (step 9.5)", () => {
+    expect(lacksAppearance(ENTRY)).toBe(true);
+    expect(lacksAppearance({ ...ENTRY, body: "## Aussehen\n\nGroß.\n" })).toBe(
+      false,
+    );
+    expect(lacksAppearance({ ...ENTRY, category: "ort" })).toBe(true);
+    expect(lacksAppearance({ ...ENTRY, category: "gegenstand" })).toBe(true);
+    expect(lacksAppearance({ ...ENTRY, category: "kultur" })).toBe(false);
+  });
+
+  it("draws a map from the chosen places (step 9.5, ADR-094)", () => {
+    const place = { ...ENTRY, category: "ort" as const };
+    const kerrow = {
+      ...place,
+      id: "kerrow",
+      name: "Kerrow",
+      body: "## Lage\n\nIm Nordwesten.\n\n## Aussehen\n\nGraue Klippen.\n",
+    };
+    const tolm = {
+      ...place,
+      id: "tolm",
+      name: "Tolm",
+      body: "Größte Insel. Sitz des Rats.",
+    };
+    const blank = { ...place, id: "leer", name: "Leer", body: "" };
+    expect(mapPrompt(WORLD, "Seekarte", [kerrow, tolm, blank])).toBe(
+      "Landkarte von Seekarte (Die Salzmark), gezeichnet im Stil einer Fantasy-Karte: Orte – Kerrow: Im Nordwesten. Tolm: Größte Insel. Leer",
+    );
+    const world = {
+      ...WORLD,
+      description: "## Geografie – Seekarte\n\nSieben Inseln.\n",
+    };
+    expect(mapPrompt(world, "Seekarte", [tolm])).toBe(
+      "Landkarte von Seekarte (Die Salzmark), gezeichnet im Stil einer Fantasy-Karte: Sieben Inseln. Orte – Tolm: Größte Insel.",
+    );
+    const many = Array.from({ length: 40 }, (_, at) => ({
+      ...tolm,
+      id: `ort-${String(at)}`,
+      name: `Ort ${String(at)}`,
+      body: `## Lage\n\n${"Weit draußen im Grauen Meer. ".repeat(12)}`,
+    }));
+    const prompt = mapPrompt(WORLD, "Seekarte", many);
+    expect(prompt.length).toBeLessThan(1600);
+    expect(prompt.length).toBeGreaterThan(1000);
   });
 
   it("draws a cover from title, genres and atmosphere, never from the plot (step 8.5)", () => {

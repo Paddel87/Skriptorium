@@ -383,7 +383,9 @@ describe("images of a canon entry (step 7.6)", () => {
       screen.getByRole("menuitem", { name: "✨ Bild erzeugen" }),
     );
     expect(
-      screen.getByText(/Diese Figur hat noch kein „Aussehen“/),
+      screen.getByText(
+        /Kael hat noch kein „Aussehen“; ohne es kennt das Bild nur den/,
+      ),
     ).toBeDefined();
     expect(
       screen
@@ -405,10 +407,151 @@ describe("images of a canon entry (step 7.6)", () => {
     await user.click(
       screen.getByRole("menuitem", { name: "✨ Bild erzeugen" }),
     );
-    expect(screen.queryByText(/kein „Aussehen“/)).toBeNull();
+    expect(
+      screen.getByText(
+        /Grauhang hat noch kein „Aussehen“; das Bild nutzt nur den Anfang/,
+      ),
+    ).toBeDefined();
     expect(
       screen.getByRole("radio", { name: "Quer" }).getAttribute("aria-checked"),
     ).toBe("true");
+  });
+
+  it("offers to add the looks the image misses (step 9.5, ADR-094)", async () => {
+    fakeApi({
+      "GET /api/images/models": ok({
+        default: "x/y",
+        models: [{ id: "x/y", name: "Y" }],
+        available: true,
+        ready: true,
+      }),
+      "GET /api/images/price": ok({ cost_usd: 0.04, unit: "image" }),
+      "GET /api/models": ok(modelList(["m"])),
+    });
+    const user = userEvent.setup();
+    const onEdit = vi.fn();
+    const { unmount } = render(
+      <EntryImages
+        entry={ENTRY}
+        editable
+        onChanged={vi.fn()}
+        onEdit={onEdit}
+      />,
+    );
+    await user.click(screen.getByRole("button", { name: "Bild hinzufügen" }));
+    await user.click(
+      screen.getByRole("menuitem", { name: "✨ Bild erzeugen" }),
+    );
+    await user.click(
+      screen.getByRole("button", { name: "✨ Aussehen herauslösen" }),
+    );
+    expect(
+      await screen.findByRole("button", { name: "Herauslösen" }),
+    ).toBeDefined();
+    expect(
+      screen.queryByRole("button", { name: "✨ Aussehen herauslösen" }),
+    ).toBeNull();
+    unmount();
+
+    const item = {
+      ...ENTRY,
+      category: "gegenstand" as const,
+      name: "Kerbe",
+      body: "## Zweck\n\nSchneidet Taue. Und Brot.\n",
+    };
+    const { unmount: unmount2 } = render(
+      <EntryImages entry={item} editable onChanged={vi.fn()} onEdit={onEdit} />,
+    );
+    await user.click(screen.getByRole("button", { name: "Bild hinzufügen" }));
+    await user.click(
+      screen.getByRole("menuitem", { name: "✨ Bild erzeugen" }),
+    );
+    expect(
+      screen.getByText(
+        /Kerbe hat noch kein „Aussehen“; das Bild nutzt nur den ersten Satz/,
+      ),
+    ).toBeDefined();
+    expect(screen.getByLabelText("Bildbeschreibung (änderbar)")).toHaveProperty(
+      "value",
+      "Kerbe: Schneidet Taue.",
+    );
+    await user.click(
+      screen.getByRole("button", { name: "✎ Im Eintrag ergänzen" }),
+    );
+    expect(onEdit).toHaveBeenCalledOnce();
+    unmount2();
+    render(
+      <EntryImages
+        entry={{ ...item, body: "Ein altes Messer, schartig." }}
+        editable
+        onChanged={vi.fn()}
+      />,
+    );
+    await user.click(screen.getByRole("button", { name: "Bild hinzufügen" }));
+    await user.click(
+      screen.getByRole("menuitem", { name: "✨ Bild erzeugen" }),
+    );
+    expect(
+      screen.getByText(/das Bild nutzt nur den ersten Satz des Textes/),
+    ).toBeDefined();
+    expect(
+      screen.queryByRole("button", { name: "✎ Im Eintrag ergänzen" }),
+    ).toBeNull();
+  });
+
+  it("takes the looks out right in the window and back to it (step 9.5)", async () => {
+    const feed = sseFeed();
+    const path = `/api/worlds/${ENTRY.world}/entries/${ENTRY.id}`;
+    fakeApi({
+      "GET /api/images/models": ok({
+        default: "x/y",
+        models: [{ id: "x/y", name: "Y" }],
+        available: true,
+        ready: true,
+      }),
+      "GET /api/images/price": ok({ cost_usd: 0.04, unit: "image" }),
+      "GET /api/models": ok(modelList(["m"])),
+      [`POST ${path}/appearance`]: () => ({ status: 200, stream: feed.stream }),
+      [`GET ${path}`]: ok(ENTRY),
+      [`PATCH ${path}`]: ok({
+        ...ENTRY,
+        body: "## Aussehen\n\nGrauer Bart.\n",
+      }),
+    });
+    const changed = vi.fn();
+    const user = userEvent.setup();
+    render(<EntryImages entry={ENTRY} editable onChanged={changed} />);
+    await user.click(screen.getByRole("button", { name: "Bild hinzufügen" }));
+    await user.click(
+      screen.getByRole("menuitem", { name: "✨ Bild erzeugen" }),
+    );
+    await user.click(
+      screen.getByRole("button", { name: "✨ Aussehen herauslösen" }),
+    );
+    await user.click(await screen.findByRole("button", { name: "Verwerfen" }));
+    await user.click(
+      screen.getByRole("button", { name: "✨ Aussehen herauslösen" }),
+    );
+    await user.click(
+      await screen.findByRole("button", { name: "Herauslösen" }),
+    );
+    feed.send("text", { text: "Grauer Bart." });
+    feed.send("done", {
+      input_tokens: 5,
+      output_tokens: 5,
+      cost_usd: null,
+      finish_reason: "stop",
+    });
+    feed.close();
+    await user.click(
+      await screen.findByRole("button", { name: "Übernehmen als „Aussehen“" }),
+    );
+    await waitFor(() => {
+      expect(changed).toHaveBeenCalled();
+    });
+    expect(
+      screen.queryByRole("button", { name: "Übernehmen als „Aussehen“" }),
+    ).toBeNull();
   });
 
   it("shows why a generated image could not be stored and keeps the dialog", async () => {

@@ -99,6 +99,70 @@ describe("maps of a world (step 7.10)", () => {
     expect(await screen.findByText("Bildgröße nicht erlaubt")).toBeDefined();
   });
 
+  it("draws a generated map from the places ticked (step 9.5, ADR-094)", async () => {
+    const place = (id: string, name: string, body: string) => ({
+      world: WORLD.id,
+      id,
+      name,
+      aliases: [],
+      category: "ort" as const,
+      status: null,
+      body,
+      images: [],
+    });
+    fakeApi({
+      [`GET /api/worlds/${WORLD.id}/entries`]: ok([
+        place("kerrow", "Kerrow", "## Lage\n\nIm Nordwesten.\n"),
+        place("tolm", "Tolm", "Größte Insel."),
+        { ...place("kael", "Kael", "Fährmann."), category: "figur" },
+      ]),
+      "GET /api/images/models": ok({
+        default: "x/y",
+        models: [{ id: "x/y", name: "Y" }],
+        available: true,
+        ready: true,
+      }),
+      "GET /api/images/price": ok({ cost_usd: 0.04, unit: "image" }),
+    });
+    const user = userEvent.setup();
+    render(
+      <WorldMaps world={WORLD} onChanged={vi.fn()} onOpenEntry={vi.fn()} />,
+    );
+    await user.click(
+      screen.getByRole("button", { name: "＋ Karte hinzufügen" }),
+    );
+    await user.type(screen.getByLabelText("Name"), "Seekarte");
+    await user.click(screen.getByRole("button", { name: "✨ Karte erzeugen" }));
+    const kerrow = await screen.findByRole("checkbox", { name: "Kerrow" });
+    expect(kerrow).toHaveProperty("checked", true);
+    expect(screen.queryByRole("checkbox", { name: "Kael" })).toBeNull();
+    const description = screen.getByLabelText("Bildbeschreibung (änderbar)");
+    expect(description).toHaveProperty(
+      "value",
+      "Landkarte von Seekarte (Die Salzmark), gezeichnet im Stil einer Fantasy-Karte: Orte – Kerrow: Im Nordwesten. Tolm: Größte Insel.",
+    );
+    await user.click(kerrow);
+    expect(description).toHaveProperty(
+      "value",
+      "Landkarte von Seekarte (Die Salzmark), gezeichnet im Stil einer Fantasy-Karte: Orte – Tolm: Größte Insel.",
+    );
+    await user.click(screen.getByRole("button", { name: "keine" }));
+    expect(description).toHaveProperty(
+      "value",
+      "Landkarte von Seekarte (Die Salzmark), gezeichnet im Stil einer Fantasy-Karte",
+    );
+    await user.click(screen.getByRole("checkbox", { name: "Tolm" }));
+    expect(screen.getByRole("checkbox", { name: "Kerrow" })).toHaveProperty(
+      "checked",
+      false,
+    );
+    await user.click(screen.getByRole("button", { name: "alle" }));
+    expect(screen.getByRole("checkbox", { name: "Kerrow" })).toHaveProperty(
+      "checked",
+      true,
+    );
+  });
+
   it("opens a map large with zoom, renames and removes it", async () => {
     const file = "karte-bbbbbbbbbbbb.jpg";
     const { calls } = fakeApi({
