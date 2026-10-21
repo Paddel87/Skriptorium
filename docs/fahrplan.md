@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (Phase 8 abgeschlossen 2026-10-18)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** keiner – 9.4 erledigt 2026-10-21 (eingespielt `67fc36e`, vom Eigentümer bestätigt)
-- **Nächster Schritt:** 9.5 Bilder vom Bedarf her; Karte aus den Orten – zu Beginn Vorlage (Entscheidungs-Klasse). D.19: Der Lauf zu PR #179 (2026-10-18 23:44 UTC) lief noch auf Ubuntu 24.04.5; geprüft wird mit dem ersten Lauf ab dem 2026-10-19 (UTC). Offen bei dir: Probe mit einer Gast-Figur (Eingangskriterium 9.13). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** 9.5 Bilder vom Bedarf her; Karte aus den Orten – zu Beginn Vorlage (Entscheidungs-Klasse). D.19: Der Lauf zu PR #179 (2026-10-18 23:44 UTC) lief noch auf Ubuntu 24.04.5; geprüft wird mit dem ersten Lauf ab dem 2026-10-19 (UTC). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -40,7 +40,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ⚪ | 9.10 | Cache-Treffer festhalten (V.36) | offen | KI |
 | ⚪ | 9.11 | Verbrauchsstatistik je Welt und Geschichte (V.37) | offen | KI: nach 9.10 Vorlage |
 | ⚪ | 9.12 | Quellen und Recherche – Erkundung (H1, V1) | offen | KI |
-| ⚪ | 9.13 | Gast-Figuren ausbauen (V.34) | offen | du: Gast-Figur ausprobieren |
+| ⚪ | 9.13 | Gast-Figuren ausbauen (V.34) | offen – Probe des Eigentümers erfolgt 2026-10-21 | KI: Vorlage |
 | ⚪ | 9.14 | Kontexttreue erneut prüfen | offen | KI: nach 9.4 |
 | ⚪ | 9.15 | Planung der nächsten Ausbaustufe | offen | KI |
 
@@ -60,6 +60,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | erledigt 2026-10-13 (V.29–V.32 → 8.4–8.7) | – |
 | ⚪ | D.19 | CI-Runner `ubuntu-latest` wechselt auf Ubuntu 26 | offen | KI – ab 2026-10-19, bis 2026-11-02 |
+| 🟠 | D.20 | Sicherheitsfunde certifi und vite (Audit 2026-10-21) | behoben, Merge und Einspielen offen | KI · du: „einspielen“ |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
 Verschoben auf die übernächste Ausbaustufe (Landeplatz 9.15): V.20, V.21, V.23, V.24, V.33 (weiter verschoben 2026-10-18, ADR-090), V.38 (Befund in 9.3, 2026-10-18). In Phase 9 übernommen (2026-10-18, ADR-090): V.35 → 9.3–9.9 und 9.12, V.36 → 9.10, V.37 → 9.11, V.34 → 9.13. In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
@@ -757,6 +758,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Logbuch-Eintrag, ggf. `.github/workflows/ci.yml` und ADR
 - **Notizen:** Angelegt 2026-10-18 nach `CLAUDE.md` Abschnitt 15 („Warnungsquellen ohne Schalter“, „Jede Abkündigung wird ein Fahrplan-Schritt mit Frist“). Frist 2026-11-02: Die Umstellung läuft schrittweise; spätestens dann soll ein Lauf auf dem neuen Abbild geprüft sein. Beobachtung 2026-10-19: Der Lauf zu PR #179 (2026-10-18 23:44 UTC, also vor dem Beginn) lief in allen vier Jobs noch auf `ubuntu-24.04` (Ubuntu 24.04.5, Abbild 20261012.334.1), grün, ohne Plattform-Hinweis im Protokoll – der Schritt bleibt offen.
+
+#### D.20: Sicherheitsfunde certifi und vite (Audit 2026-10-21)
+
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-21) – behoben auf `fix/d.20-audit`: certifi 2026.7.22 → 2026.10.19 (`uv.lock`), vite 8.3.1 → 8.3.4 (`package.json`, Unterbausteine rolldown, postcss, nanoid als Patch mitgezogen); `pip-audit` und `npm audit` ohne Befund; pytest 932, vitest 492, Playwright 15 grün, Build ok. Offen: Merge, Einspielen (certifi läuft im Betrieb mit)
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** keine
+- **Frist:** sofort – rote Audit-Jobs blockieren jeden PR (#182)
+- **Freigabepflichtig:** nein – Updates innerhalb der Linie (Patch bzw. Kalenderversion), keine Breaking Changes
+- **Empfohlene Klasse:** Routine – Abhängigkeits-Update mit Tests.
+- **Eingangskriterien:** Befund der CI (Dependency-Audit, PR #182)
+- **Anforderungen (ab Klasse M):** keine (Pflichtkategorie Dependency-Audit, `CLAUDE.md` Abschnitt 15)
+- **Zu tun:** PYSEC-2026-4320 (certifi, behoben in 2026.10.19) und GHSA-698v-4r3x-3vcv, GHSA-r825-w8mm-5pxw, GHSA-587h-7wmj-h5pm (launch-editor über vite 8.3.0–8.3.2, hoch; betrifft den Entwicklungsserver, vor allem unter Windows) beheben. vite nach Regel-001: 8.3.4 (8.3.3 hat mit 8.3.4 eine Fehlerkorrektur; 8.3.5 vom selben Tag).
+- **Akzeptanzkriterien:** beide Audits ohne Befund in der CI; alle Tests grün; certifi im Betrieb eingespielt.
+- **Betroffene Module:** keine (Abhängigkeiten); certifi wirkt in `ai_gateway` und `api` (TLS)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Sperrdateien, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-21 nach dem roten Lauf zu #182.
 
 #### M.1: Branch-Konvention festlegen
 

@@ -44,7 +44,7 @@ Auswahl nach der Regel „ausgereifte Linie" (`CLAUDE.md` Abschnitt 15, „Versi
   - uvicorn 0.52 (0.52.4) — Verifiziert: 2026-09-26, Quelle: PyPI (0.53/0.54 ohne Fehlerkorrektur-Version)
   - httpx 0.28 (0.28.1) — Verifiziert: 2026-09-26, Quelle: PyPI; Python 3.14 nicht offiziell deklariert; auf 3.14.7 validiert (Schritt 1.3: Streaming, Timeout, Abbruch, sync und async, `-W error`); Nachprüfung im Ablaufdaten-Register
   - React und react-dom 19.2 (19.2.8) — Verifiziert: 2026-09-26, Quelle: npm-Registry, react.dev/versions
-  - Vite 8.3 (8.3.1) und @vitejs/plugin-react 6.1 (6.1.1) — Verifiziert: 2026-09-26, Quelle: npm-Registry, vite.dev/releases
+  - Vite 8.3 (8.3.4, seit 2026-10-21 wegen Sicherheitsfund, D.20; vorher 8.3.1) und @vitejs/plugin-react 6.1 (6.1.1) — Verifiziert: 2026-09-26, Quelle: npm-Registry, vite.dev/releases
   - PyYAML 6.0 (6.0.3, gepinnt `<7`) — Verifiziert: 2026-09-26, Quelle: PyPI; Dateikopf in `storage` (ADR-016)
   - React Router 7.18 (7.18.4, gepinnt `<7.19`) — Verifiziert: 2026-10-08, Quelle: npm-Registry, remix.run-Blog zu v8; Linie 8 erst ab 2026-12-17 mindestreif (ADR-046, D.15)
   - CodeMirror 6 (@codemirror/state 6.7.6, view 6.43.13, autocomplete 6.20.3, lang-markdown 6.5.2) — Verifiziert: 2026-09-26, Quelle: npm-Registry
