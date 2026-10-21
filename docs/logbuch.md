@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-21 – [BEOBACHTUNG] Deployment `2586ef8` (D.20 erledigt)
+
+- Auf Anweisung des Eigentümers („einspielen“); vorher #183 (D.20) und #182 gemergt, CI auf `main` grün. Runbook Abschnitt 7 (ADR-039): `REVISION` `2586ef8`, Rückweg `skriptorium:vorher` = `67fc36e`; `/api/health` 200 nach ca. 63 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; einmal per SSH `(healthy)`, 0 Fehlerzeilen, im Container certifi 2026.10.19 → D.20 `[ERLEDIGT]`.
+
 ### 2026-10-21 – [ERLEDIGT] Abnahme 9.4
 
 - Eigentümer zusätzlich: „Gastfiguren funktionieren auch“ – Eingangskriterium von 9.13 (Probe mit einer Gast-Figur) erfüllt.
