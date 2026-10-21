@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-21 – [SESSIONSTART] 9.5 Bilder vom Bedarf her; Karte aus den Orten
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, laut `get_session`), Entscheidungs-Klasse. 9.5 empfiehlt Entscheidung – kein Schritt oberhalb der Empfehlung.
+- **Umgebung:** Mac-Session (fortgesetzt seit 2026-10-11, „LocalDev (fork)“), `main` auf `2586ef8`, eingespielt `2586ef8`.
+- **Wiedereinstieg:** Mindest-Lektüre nachgeholt (Projektkontext ganz, Logbuch ab `[SESSIONENDE]` 2026-10-19 02:00, Fahrplan „Aktueller Stand“ und Phase 9, Architektur 1/2/9, Entscheidungen Teil A und C, aktive Blocker): kein aktiver Schritt, keine aktiven Blocker, keine offenen STOPP-Situationen, Reaktiv-Quote 0 / 10. Die Cloud-Session zu 9.4 hat keinen `[SESSIONENDE]` geschrieben.
+- **Kontextgröße:** über der Grenze von 200.000 Token (fortgesetzte Session); Weiterarbeit nach dauerhaftem „weiter hier“ des Eigentümers (Gedächtnis, 2026-09-28) – vermerkt nach `CLAUDE.md` Abschnitt 0.
+- **Vorhaben:** 9.5 beginnt mit einer Vorlage (ändert die Vorbelegung aus ADR-084).
+
 ### 2026-10-21 – [BEOBACHTUNG] Deployment `2586ef8` (D.20 erledigt)
 
 - Auf Anweisung des Eigentümers („einspielen“); vorher #183 (D.20) und #182 gemergt, CI auf `main` grün. Runbook Abschnitt 7 (ADR-039): `REVISION` `2586ef8`, Rückweg `skriptorium:vorher` = `67fc36e`; `/api/health` 200 nach ca. 63 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; einmal per SSH `(healthy)`, 0 Fehlerzeilen, im Container certifi 2026.10.19 → D.20 `[ERLEDIGT]`.
