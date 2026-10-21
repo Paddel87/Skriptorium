@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-21 – [BEOBACHTUNG] 9.5 umgesetzt, Prüfung offen
+
+- Mockup vorher/nachher (echte Bildschirmfotos auf einem lokalen Server mit der Testwelt Salzmark, Nachher in die echte Seite eingesetzt) freigegeben: „Passt, umbauen“, Orte vorab „Alle angekreuzt“.
+- Umgesetzt nur in `ui` (siehe Fahrplan 9.5). Bei der Durchsicht der echten Bildschirmfotos nachgebessert: Der Hinweis beim Gegenstand nannte „ersten Satz aus ‚Zweck‘“ auch ohne Abschnitt „Zweck“ – jetzt „ersten Satz des Textes“. Ein eigener Test wartete zuerst auf „Abbrechen“ des Herauslösens; der Knopf heißt dort „Verwerfen“, „Abbrechen“ gehört zum Bildfenster – Tests auf die richtigen Knöpfe umgestellt.
+- Prüfungen: vitest 498 (gesamt 98,7 % Zeilen, 95,4 % Zweige), tsc/eslint/prettier sauber, Build, Playwright 15, pytest 932. Commits lokal; Push nach Freigabe des Eigentümers.
+
 ### 2026-10-21 – [ADR-ANGELEGT] ADR-094 Bilder vom Bedarf her (9.5)
 
 - Zählung im Betrieb (nur Zahlen, keine Namen): Figuren 12/27 mit „Aussehen“, Gegenstände 3/43 (38 mit Zweck/Verwendung/Auswirkung), Orte 0/19 gegliedert, Kultur 10 ungegliedert, 0/5 Welten mit „Geografie – …“.
