@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-21 – [GELÖST] Rote Audit-Jobs durch neue Sicherheitsfunde (D.20)
+
+- Doku-PR #182 lief rot in „Python“ und „TypeScript“, beide im Schritt Dependency-Audit: `pip-audit` meldet PYSEC-2026-4320 für certifi 2026.7.22 (Korrektur 2026.10.19 vom 2026-10-20), `npm audit` drei Hinweise hoher Stufe zu launch-editor über vite 8.3.0–8.3.2. Nicht vom PR verursacht – blockiert jeden PR.
+- Behoben als neuer Querschnitt-Schritt D.20 (Routine, Updates innerhalb der Linie): certifi über `uv lock --upgrade-package certifi`, vite auf 8.3.4 nach Regel-001 (npm schlug 8.3.5 vom selben Tag vor). Beide Audits ohne Befund; pytest 932, vitest 492, Playwright 15, Build grün.
+- certifi läuft im Betrieb mit (Zertifikate für TLS zu OpenRouter und Pwned Passwords) → nach dem Merge einspielen. vite betrifft nur Bau und Entwicklung.
+
 ### 2026-10-19 22:45 MESZ – [ADR-ANGELEGT] ADR-093 Beziehungen mit Art und Rückverweis (9.4)
 
 - Vorlage mit vier Fragen vorgelegt (Schreibweise, Gegenseite, Weltenbauer, Auffüllung), Eigentümer wählte per Auswahlfragen jeweils die Empfehlung: Zeile `- verheiratet mit @Kael` im Abschnitt „Beziehungen“; Block „Verweise hierher“ berechnet in der Oberfläche; Weltenbauer schreibt beide Seiten; Anfrage beim Schreiben unverändert (keine Probe nach Regel-002). Reaktiv-Quote 0 / 10 (ADR-084–093). 9.4 auf `[IN ARBEIT]`.
