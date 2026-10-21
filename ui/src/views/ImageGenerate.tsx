@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
   api,
   describeError,
@@ -26,6 +26,7 @@ export function ImageGenerate({
   initialFormat,
   takeOverLabel = "Übernehmen",
   hint = null,
+  extra = null,
   onTakeOver,
   onClose,
 }: {
@@ -33,12 +34,23 @@ export function ImageGenerate({
   initialPrompt: string;
   initialFormat: AspectRatio;
   takeOverLabel?: string;
-  /** A note above the description, e.g. that a figure has no looks yet (step 7.16). */
-  hint?: string | null;
+  /**
+   * A note above the description, e.g. that an entry has no looks yet (step 7.16), with a button
+   * to add them (step 9.5, ADR-094).
+   */
+  hint?: ReactNode;
+  /** More choices above the description, e.g. the places of a map (step 9.5, ADR-094). */
+  extra?: ReactNode;
   onTakeOver: (image: Blob) => Promise<void>;
   onClose: () => void;
 }) {
   const [prompt, setPrompt] = useState(initialPrompt);
+  // A new starting text (places chosen, looks added) replaces the description (step 9.5).
+  const [shownInitial, setShownInitial] = useState(initialPrompt);
+  if (initialPrompt !== shownInitial) {
+    setShownInitial(initialPrompt);
+    setPrompt(initialPrompt);
+  }
   const [format, setFormat] = useState<AspectRatio>(initialFormat);
   const [models, setModels] = useState<{ id: string; name: string }[] | null>(
     null,
@@ -167,7 +179,8 @@ export function ImageGenerate({
       )}
       {result === null ? (
         <>
-          {hint !== null && <p className="note">{hint}</p>}
+          {hint !== null && <div className="image-generate-hint">{hint}</div>}
+          {extra}
           <label className="image-generate-field">
             Bildbeschreibung (änderbar)
             <textarea

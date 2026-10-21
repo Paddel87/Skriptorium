@@ -29,6 +29,29 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-21 – [BEOBACHTUNG] 9.5 umgesetzt, Prüfung offen
+
+- Mockup vorher/nachher (echte Bildschirmfotos auf einem lokalen Server mit der Testwelt Salzmark, Nachher in die echte Seite eingesetzt) freigegeben: „Passt, umbauen“, Orte vorab „Alle angekreuzt“.
+- Umgesetzt nur in `ui` (siehe Fahrplan 9.5). Bei der Durchsicht der echten Bildschirmfotos nachgebessert: Der Hinweis beim Gegenstand nannte „ersten Satz aus ‚Zweck‘“ auch ohne Abschnitt „Zweck“ – jetzt „ersten Satz des Textes“. Ein eigener Test wartete zuerst auf „Abbrechen“ des Herauslösens; der Knopf heißt dort „Verwerfen“, „Abbrechen“ gehört zum Bildfenster – Tests auf die richtigen Knöpfe umgestellt.
+- Prüfungen: vitest 498 (gesamt 98,7 % Zeilen, 95,4 % Zweige), tsc/eslint/prettier sauber, Build, Playwright 15, pytest 932. Commits lokal; Push nach Freigabe des Eigentümers.
+
+### 2026-10-21 – [ADR-ANGELEGT] ADR-094 Bilder vom Bedarf her (9.5)
+
+- Zählung im Betrieb (nur Zahlen, keine Namen): Figuren 12/27 mit „Aussehen“, Gegenstände 3/43 (38 mit Zweck/Verwendung/Auswirkung), Orte 0/19 gegliedert, Kultur 10 ungegliedert, 0/5 Welten mit „Geografie – …“.
+- Vorlage mit Tabelle je Bildart; Eigentümer per Auswahlfragen jeweils die Empfehlung: 1B Orte ankreuzen, 2A Hinweis mit Knopf, 3A Name + erster Satz „Zweck“. Danach richtiggestellt: Herauslösen gibt es nur für Figuren (ADR-083) – Eigentümer: „Nur Figuren jetzt“, Gegenstände und Orte → V.39 (Landeplatz 9.15). Reaktiv-Quote 0 / 10 (ADR-085–094). 9.5 auf `[IN ARBEIT]`, als Nächstes Mockup.
+
+### 2026-10-21 – [SESSIONSTART] 9.5 Bilder vom Bedarf her; Karte aus den Orten
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, laut `get_session`), Entscheidungs-Klasse. 9.5 empfiehlt Entscheidung – kein Schritt oberhalb der Empfehlung.
+- **Umgebung:** Mac-Session (fortgesetzt seit 2026-10-11, „LocalDev (fork)“), `main` auf `2586ef8`, eingespielt `2586ef8`.
+- **Wiedereinstieg:** Mindest-Lektüre nachgeholt (Projektkontext ganz, Logbuch ab `[SESSIONENDE]` 2026-10-19 02:00, Fahrplan „Aktueller Stand“ und Phase 9, Architektur 1/2/9, Entscheidungen Teil A und C, aktive Blocker): kein aktiver Schritt, keine aktiven Blocker, keine offenen STOPP-Situationen, Reaktiv-Quote 0 / 10. Die Cloud-Session zu 9.4 hat keinen `[SESSIONENDE]` geschrieben.
+- **Kontextgröße:** über der Grenze von 200.000 Token (fortgesetzte Session); Weiterarbeit nach dauerhaftem „weiter hier“ des Eigentümers (Gedächtnis, 2026-09-28) – vermerkt nach `CLAUDE.md` Abschnitt 0.
+- **Vorhaben:** 9.5 beginnt mit einer Vorlage (ändert die Vorbelegung aus ADR-084).
+
+### 2026-10-21 – [BEOBACHTUNG] Deployment `2586ef8` (D.20 erledigt)
+
+- Auf Anweisung des Eigentümers („einspielen“); vorher #183 (D.20) und #182 gemergt, CI auf `main` grün. Runbook Abschnitt 7 (ADR-039): `REVISION` `2586ef8`, Rückweg `skriptorium:vorher` = `67fc36e`; `/api/health` 200 nach ca. 63 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; einmal per SSH `(healthy)`, 0 Fehlerzeilen, im Container certifi 2026.10.19 → D.20 `[ERLEDIGT]`.
+
 ### 2026-10-21 – [ERLEDIGT] Abnahme 9.4
 
 - Eigentümer zusätzlich: „Gastfiguren funktionieren auch“ – Eingangskriterium von 9.13 (Probe mit einer Gast-Figur) erfüllt.

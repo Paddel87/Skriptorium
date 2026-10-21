@@ -8,8 +8,9 @@ import {
 import { api, describeError, type CanonEntry } from "../api";
 import { base64, shrinkImage } from "../files";
 import { ErrorText } from "./Common";
-import { appearanceOf, entryPrompt } from "../imagePrompts";
-import { APPEARANCE } from "../sections";
+import { entryPrompt, lacksAppearance } from "../imagePrompts";
+import { APPEARANCE, PURPOSE, readSection } from "../sections";
+import { AppearanceExtract } from "./AppearanceExtract";
 import { ImageDescription } from "./ImageDescription";
 import { ImageGenerate } from "./ImageGenerate";
 import { SectionConflict } from "./SectionConflict";
@@ -28,10 +29,13 @@ export function EntryImages({
   entry,
   editable,
   onChanged,
+  onEdit,
 }: {
   entry: CanonEntry;
   editable: boolean;
   onChanged: (entry: CanonEntry) => void;
+  /** Opens the entry for editing, offered when an image lacks the looks (step 9.5, ADR-094). */
+  onEdit?: () => void;
 }) {
   const [shown, setShown] = useState<number | null>(null);
   const [describing, setDescribing] = useState<string | null>(null);
@@ -168,9 +172,9 @@ export function EntryImages({
           title={`Bild erzeugen – ${entry.name}`}
           initialPrompt={entryPrompt(entry)}
           hint={
-            entry.category === "figur" && appearanceOf(entry.body) === null
-              ? "Diese Figur hat noch kein „Aussehen“ – im Eintrag „✨ Aussehen herauslösen“ oder beschreibe sie hier selbst."
-              : null
+            lacksAppearance(entry) ? (
+              <LooksHint entry={entry} onEdit={onEdit} onChanged={onChanged} />
+            ) : null
           }
           initialFormat={entry.category === "figur" ? "2:3" : "3:2"}
           onTakeOver={async (image) => {
@@ -407,5 +411,70 @@ function ImageViewer({
         {children}
       </div>
     </div>
+  );
+}
+
+/**
+ * What an image of an entry without "Aussehen" misses, with a way to add it (step 9.5,
+ * ADR-094): a figure "✨ Aussehen herauslösen" right here (ADR-078), a place or an item
+ * "✎ Im Eintrag ergänzen" – taking the looks out of those follows in V.39.
+ */
+function LooksHint({
+  entry,
+  onEdit,
+  onChanged,
+}: {
+  entry: CanonEntry;
+  onEdit?: () => void;
+  onChanged: (entry: CanonEntry) => void;
+}) {
+  const [extracting, setExtracting] = useState(false);
+  if (entry.category === "figur") {
+    return extracting ? (
+      <AppearanceExtract
+        entry={entry}
+        onChanged={(changed) => {
+          setExtracting(false);
+          onChanged(changed);
+        }}
+        onClose={() => {
+          setExtracting(false);
+        }}
+      />
+    ) : (
+      <p className="row appearance-hint">
+        <button
+          type="button"
+          className="ghost"
+          onClick={() => {
+            setExtracting(true);
+          }}
+        >
+          ✨ Aussehen herauslösen
+        </button>
+        <span className="note">
+          – {entry.name} hat noch kein „Aussehen“; ohne es kennt das Bild nur
+          den Namen.
+        </span>
+      </p>
+    );
+  }
+  return (
+    <p className="row appearance-hint">
+      {onEdit !== undefined && (
+        <button type="button" className="ghost" onClick={onEdit}>
+          ✎ Im Eintrag ergänzen
+        </button>
+      )}
+      <span className="note">
+        – {entry.name} hat noch kein „Aussehen“; das Bild nutzt nur{" "}
+        {entry.category !== "gegenstand"
+          ? "den Anfang des Textes"
+          : readSection(entry.body, PURPOSE) === null
+            ? "den ersten Satz des Textes"
+            : "den ersten Satz aus „Zweck“"}
+        .
+      </span>
+    </p>
   );
 }

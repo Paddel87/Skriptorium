@@ -2346,3 +2346,34 @@ button.story-cover-add {
   margin: 0;
   font-size: 1rem;
 }
+
+/* Places to tick for a generated map (step 9.5, ADR-094). */
+.map-places {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.4rem 0.7rem;
+  margin: 0.3rem 0;
+}
+
+.map-places-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 0.25rem 0.8rem;
+}
+
+.map-places-list label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 400;
+}
+
+.map-places-list input {
+  width: auto;
+  margin: 0;
+}
+
+.image-generate-hint {
+  margin: 0.3rem 0;
+}

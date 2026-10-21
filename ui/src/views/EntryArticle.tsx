@@ -81,6 +81,7 @@ export function EntryArticle({
         onChanged={() => {
           onSaved();
         }}
+        onEdit={onEdit}
       />
       {!compact && !guest && current.category === "figur" && (
         <AppearanceButton

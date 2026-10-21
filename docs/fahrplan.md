@@ -11,7 +11,7 @@
 - **Stand vom:** 2026-10-19 (9.3 erledigt – feste Abschnitte je Art, ADR-092; Code PR #177, Proben PR #179, beide mit grüner CI zusammengeführt; Proben zu 9.3 im dritten Versuch gelaufen – Regel-002 und Weltenbauer; zuvor zweiter Versuch ohne Schlüssel, Werkzeug für die Weltenbauer-Probe vorbereitet); 2026-10-18 (9.2 erledigt – vier End-to-End-Tests, Vertragstest Server ↔ Oberfläche, CI-Schrittnamen; PR #175; 9.1 erledigt – ADR-091, PR #173; D.19 angelegt; zuvor Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
 - **Laufende Phase:** Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (Phase 8 abgeschlossen 2026-10-18)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner – 9.4 erledigt 2026-10-21 (eingespielt `67fc36e`, vom Eigentümer bestätigt)
+- **Aktiver Schritt:** 9.5 Bilder vom Bedarf her; Karte aus den Orten – umgesetzt (ADR-094), Prüfung durch den Eigentümer offen
 - **Nächster Schritt:** 9.5 Bilder vom Bedarf her; Karte aus den Orten – zu Beginn Vorlage (Entscheidungs-Klasse). D.19: Der Lauf zu PR #179 (2026-10-18 23:44 UTC) lief noch auf Ubuntu 24.04.5; geprüft wird mit dem ersten Lauf ab dem 2026-10-19 (UTC). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
@@ -32,7 +32,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ✅ | 9.2 | End-to-End-Tests für die Abläufe der Phasen 6–8 | erledigt 2026-10-18 | – |
 | ✅ | 9.3 | Gegliederte Einträge je Art (B2, G1/G2) | erledigt 2026-10-19 (ADR-092) | – |
 | ✅ | 9.4 | Beziehungen mit Art und Rückverweis (B3) | erledigt 2026-10-21 (ADR-093) | – |
-| ⚪ | 9.5 | Bilder vom Bedarf her; Karte aus den Orten (G4, B4) | offen | KI: Vorlage |
+| 🟠 | 9.5 | Bilder vom Bedarf her; Karte aus den Orten (G4, B4) | umgesetzt, Prüfung offen (ADR-094) | du: prüfen |
 | ⚪ | 9.6 | Herkunft von Bildern (B1) | offen | KI: Vorlage |
 | ⚪ | 9.7 | Einstellungsseite – Modell je Aufgabe (G3, B6) | offen | KI: Mockup und Vorlage |
 | ⚪ | 9.8 | Bild zu Bild (B7) | offen | KI: nach 9.6 Vorlage |
@@ -60,10 +60,10 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | erledigt 2026-10-13 (V.29–V.32 → 8.4–8.7) | – |
 | ⚪ | D.19 | CI-Runner `ubuntu-latest` wechselt auf Ubuntu 26 | offen | KI – ab 2026-10-19, bis 2026-11-02 |
-| 🟠 | D.20 | Sicherheitsfunde certifi und vite (Audit 2026-10-21) | behoben, Merge und Einspielen offen | KI · du: „einspielen“ |
+| ✅ | D.20 | Sicherheitsfunde certifi und vite (Audit 2026-10-21) | erledigt 2026-10-21 | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 9.15): V.20, V.21, V.23, V.24, V.33 (weiter verschoben 2026-10-18, ADR-090), V.38 (Befund in 9.3, 2026-10-18). In Phase 9 übernommen (2026-10-18, ADR-090): V.35 → 9.3–9.9 und 9.12, V.36 → 9.10, V.37 → 9.11, V.34 → 9.13. In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 9.15): V.20, V.21, V.23, V.24, V.33 (weiter verschoben 2026-10-18, ADR-090), V.38 (Befund in 9.3, 2026-10-18), V.39 (aus 9.5, 2026-10-21). In Phase 9 übernommen (2026-10-18, ADR-090): V.35 → 9.3–9.9 und 9.12, V.36 → 9.10, V.37 → 9.11, V.34 → 9.13. In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -261,7 +261,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 9.5: Bilder vom Bedarf her; Karte aus den Orten (V.35 G4, B4)
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-21) – Vorlage mit Tabelle je Bildart vorgelegt (Zählung im Betrieb), Eigentümer per Auswahlfragen: Karte 1B, fehlendes Aussehen 2A, Gegenstand 3A, Herauslösen nur Figuren → ADR-094; Herauslösen für Gegenstände und Orte → V.39. Mockup freigegeben (alle Orte vorab angekreuzt). Umgesetzt (nur `ui`): `imagePrompts.ts` (`entryPrompt` je Art, `lacksAppearance`, `mapPrompt` mit Orten, Grenze 1.500 Zeichen für Karten), `ImageGenerate` (Hinweis als Element, Platz für Auswahl, Textfeld folgt neuer Vorbelegung), `EntryImages` (Hinweis mit Knopf), `AddMap` (Ortsliste), `LOCATION`/`PURPOSE` in `sections.ts` (Regel-003). Tests: vitest 498 (`imagePrompts.ts`, `AddMap.tsx`, `EntryImages.tsx` je 100 % Zeilen), Playwright 15, pytest 932. Offen: Prüfung durch den Eigentümer
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** 9.3
 - **Freigabepflichtig:** ja – ändert die Vorbelegung aus ADR-084
@@ -761,7 +761,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.20: Sicherheitsfunde certifi und vite (Audit 2026-10-21)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-21) – behoben auf `fix/d.20-audit`: certifi 2026.7.22 → 2026.10.19 (`uv.lock`), vite 8.3.1 → 8.3.4 (`package.json`, Unterbausteine rolldown, postcss, nanoid als Patch mitgezogen); `pip-audit` und `npm audit` ohne Befund; pytest 932, vitest 492, Playwright 15 grün, Build ok. Offen: Merge, Einspielen (certifi läuft im Betrieb mit)
+- **Status:** ✅ ERLEDIGT (2026-10-21) – gemergt (#183), CI mit beiden Audits grün, eingespielt `2586ef8` (certifi 2026.10.19 im Container bestätigt). Verlauf: 🟠 IN ARBEIT (seit 2026-10-21) – behoben auf `fix/d.20-audit`: certifi 2026.7.22 → 2026.10.19 (`uv.lock`), vite 8.3.1 → 8.3.4 (`package.json`, Unterbausteine rolldown, postcss, nanoid als Patch mitgezogen); `pip-audit` und `npm audit` ohne Befund; pytest 932, vitest 492, Playwright 15 grün, Build ok. Offen: Merge, Einspielen (certifi läuft im Betrieb mit)
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** keine
 - **Frist:** sofort – rote Audit-Jobs blockieren jeden PR (#182)
@@ -1416,6 +1416,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, ADR
 - **Notizen:** Angelegt 2026-10-18 in 9.3 (Bericht des Unteragenten, geprüft von der bauenden KI). Bisher kein Schaden gemeldet; betrifft nur den Export als Figurenkarte.
+
+#### V.39: „Aussehen herauslösen“ auch für Gegenstände und Orte
+
+- **Status:** ⏸️ VERSCHOBEN → 9.15 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 9.15 (aus 9.5, Eigentümer 2026-10-21: „Nur Figuren jetzt“, ADR-094)
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
+- **Abhängigkeiten:** 9.5
+- **Freigabepflichtig:** ja – ändert ADR-083 (Herauslösen nur für Figuren) und die Anweisung an die KI
+- **Empfohlene Klasse:** Entscheidung – Änderung einer per ADR festgelegten Anfrage an die KI (Eskalations-Auslöser 1).
+- **Eingangskriterien:** 9.5 erledigt
+- **Anforderungen (ab Klasse M):** FR-035
+- **Zu tun:** `context/appearance.py` und den Ablauf in `api` für Gegenstände und Orte öffnen, mit eigener Anweisung je Art (nur Sichtbares, nichts erfinden); im Fenster „Bild erzeugen“ den Knopf „Im Eintrag ergänzen“ durch „✨ Aussehen herauslösen“ ersetzen. Anlass: 3 von 43 Gegenständen und 0 von 19 Orten haben „Aussehen“ (Zählung 2026-10-21).
+- **Akzeptanzkriterien:** Vorlage und ADR; Tests; Probe mit echter KI (Cloud-Session); Eigentümer bestätigt.
+- **Betroffene Module:** context, api, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, ADR
+- **Notizen:** Angelegt 2026-10-21 in 9.5.
 
 #### V.21: Veröffentlichung (öffentlicher Link zum Lesen)
 
