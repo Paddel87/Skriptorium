@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-10-19 (9.3 erledigt – feste Abschnitte je Art, ADR-092; Code PR #177, Proben PR #179, beide mit grüner CI zusammengeführt; Proben zu 9.3 im dritten Versuch gelaufen – Regel-002 und Weltenbauer; zuvor zweiter Versuch ohne Schlüssel, Werkzeug für die Weltenbauer-Probe vorbereitet); 2026-10-18 (9.2 erledigt – vier End-to-End-Tests, Vertragstest Server ↔ Oberfläche, CI-Schrittnamen; PR #175; 9.1 erledigt – ADR-091, PR #173; D.19 angelegt; zuvor Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
 - **Laufende Phase:** Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (Phase 8 abgeschlossen 2026-10-18)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 9.5 Bilder vom Bedarf her; Karte aus den Orten – umgesetzt (ADR-094), Prüfung durch den Eigentümer offen
-- **Nächster Schritt:** 9.5 Bilder vom Bedarf her; Karte aus den Orten – zu Beginn Vorlage (Entscheidungs-Klasse). D.19: Der Lauf zu PR #179 (2026-10-18 23:44 UTC) lief noch auf Ubuntu 24.04.5; geprüft wird mit dem ersten Lauf ab dem 2026-10-19 (UTC). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** 9.5 Bilder vom Bedarf her; Karte aus den Orten – eingespielt `e886916` (2026-10-21), Prüfung durch den Eigentümer offen
+- **Nächster Schritt:** 9.5 Bilder vom Bedarf her; Karte aus den Orten – zu Beginn Vorlage (Entscheidungs-Klasse). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -32,7 +32,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ✅ | 9.2 | End-to-End-Tests für die Abläufe der Phasen 6–8 | erledigt 2026-10-18 | – |
 | ✅ | 9.3 | Gegliederte Einträge je Art (B2, G1/G2) | erledigt 2026-10-19 (ADR-092) | – |
 | ✅ | 9.4 | Beziehungen mit Art und Rückverweis (B3) | erledigt 2026-10-21 (ADR-093) | – |
-| 🟠 | 9.5 | Bilder vom Bedarf her; Karte aus den Orten (G4, B4) | umgesetzt, Prüfung offen (ADR-094) | du: prüfen |
+| 🟠 | 9.5 | Bilder vom Bedarf her; Karte aus den Orten (G4, B4) | eingespielt, Prüfung offen (ADR-094) | du: prüfen |
 | ⚪ | 9.6 | Herkunft von Bildern (B1) | offen | KI: Vorlage |
 | ⚪ | 9.7 | Einstellungsseite – Modell je Aufgabe (G3, B6) | offen | KI: Mockup und Vorlage |
 | ⚪ | 9.8 | Bild zu Bild (B7) | offen | KI: nach 9.6 Vorlage |
@@ -59,7 +59,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ⚪ | D.15 | Wechsel React Router 7 → Linie 8 | offen | KI – ab 2026-12-17 |
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | erledigt 2026-10-13 (V.29–V.32 → 8.4–8.7) | – |
-| ⚪ | D.19 | CI-Runner `ubuntu-latest` wechselt auf Ubuntu 26 | offen | KI – ab 2026-10-19, bis 2026-11-02 |
+| ✅ | D.19 | CI-Runner `ubuntu-latest` wechselt auf Ubuntu 26 | erledigt 2026-10-21 | – |
 | ✅ | D.20 | Sicherheitsfunde certifi und vite (Audit 2026-10-21) | erledigt 2026-10-21 | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
@@ -261,7 +261,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 9.5: Bilder vom Bedarf her; Karte aus den Orten (V.35 G4, B4)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-21) – Vorlage mit Tabelle je Bildart vorgelegt (Zählung im Betrieb), Eigentümer per Auswahlfragen: Karte 1B, fehlendes Aussehen 2A, Gegenstand 3A, Herauslösen nur Figuren → ADR-094; Herauslösen für Gegenstände und Orte → V.39. Mockup freigegeben (alle Orte vorab angekreuzt). Umgesetzt (nur `ui`): `imagePrompts.ts` (`entryPrompt` je Art, `lacksAppearance`, `mapPrompt` mit Orten, Grenze 1.500 Zeichen für Karten), `ImageGenerate` (Hinweis als Element, Platz für Auswahl, Textfeld folgt neuer Vorbelegung), `EntryImages` (Hinweis mit Knopf), `AddMap` (Ortsliste), `LOCATION`/`PURPOSE` in `sections.ts` (Regel-003). Tests: vitest 498 (`imagePrompts.ts`, `AddMap.tsx`, `EntryImages.tsx` je 100 % Zeilen), Playwright 15, pytest 932. Offen: Prüfung durch den Eigentümer
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-21) – Vorlage mit Tabelle je Bildart vorgelegt (Zählung im Betrieb), Eigentümer per Auswahlfragen: Karte 1B, fehlendes Aussehen 2A, Gegenstand 3A, Herauslösen nur Figuren → ADR-094; Herauslösen für Gegenstände und Orte → V.39. Mockup freigegeben (alle Orte vorab angekreuzt). Umgesetzt (nur `ui`): `imagePrompts.ts` (`entryPrompt` je Art, `lacksAppearance`, `mapPrompt` mit Orten, Grenze 1.500 Zeichen für Karten), `ImageGenerate` (Hinweis als Element, Platz für Auswahl, Textfeld folgt neuer Vorbelegung), `EntryImages` (Hinweis mit Knopf), `AddMap` (Ortsliste), `LOCATION`/`PURPOSE` in `sections.ts` (Regel-003). Tests: vitest 498 (`imagePrompts.ts`, `AddMap.tsx`, `EntryImages.tsx` je 100 % Zeilen), Playwright 15, pytest 932. Gemergt (#184), eingespielt `e886916`. Offen: Prüfung durch den Eigentümer
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** 9.3
 - **Freigabepflichtig:** ja – ändert die Vorbelegung aus ADR-084
@@ -745,7 +745,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.19: CI-Runner `ubuntu-latest` wechselt auf Ubuntu 26
 
-- **Status:** ⚪ OFFEN
+- **Status:** ✅ ERLEDIGT (2026-10-21) – Lauf zu PR #184 (2026-10-21 09:22 UTC): alle vier Jobs auf `ubuntu-26.04` (Abbild 20261012.163.1), alle grün, keine Warnung; kein festes Abbild nötig. Vorher: ⚪ OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG (Querschnitt)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein für die Beobachtung; ja für jede Änderung an `.github/workflows/ci.yml` (Kategorie 7), etwa ein festes `ubuntu-24.04`

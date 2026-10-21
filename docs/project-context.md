@@ -10,7 +10,7 @@
 
 - **Projektname:** Skriptorium
 - **Kurzbeschreibung:** Schreibwerkstatt für einen einzelnen Autor: Mehrere eigene Welten dienen als verbindlicher Kanon, Autor und KI schreiben im Wechsel Prosa darin, ohne der jeweiligen Welt zu widersprechen.
-- **Status:** In Betrieb seit v1.0.0 (2026-10-11, ADR-058), Weiterentwicklung in Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (begonnen 2026-10-18, ADR-090); seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz erreichbar (Schritt 4.7); eingespielt Stand `2586ef8` (2026-10-21); offen: Phase 9 ab 9.1, D.11 bis 2026-10-31
+- **Status:** In Betrieb seit v1.0.0 (2026-10-11, ADR-058), Weiterentwicklung in Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (begonnen 2026-10-18, ADR-090); seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz erreichbar (Schritt 4.7); eingespielt Stand `e886916` (2026-10-21); offen: Phase 9 ab 9.1, D.11 bis 2026-10-31
 - **Version (SemVer):** v1.0.0 (2026-10-11, Schritt 5.14) – erstes produktives Release (ADR-058); davor v0.1.0 (2026-10-08, Vorabversion, ADR-043)
 - **Dokumentationssprache:** Deutsch
 - **Codesprache (Kommentare, Variablennamen):** Englisch (Eigentümer, 2026-09-26); Fachbegriffe einheitlich: world, canon, canon entry, story, manuscript, guest character
@@ -276,7 +276,7 @@ Default „Warnungen sind Fehler". Benannte Ausnahmen:
 | vitest 5 – neue Linie, noch nicht reif | Nachprüfung 2027-03-03 | – | npm-Registry (ADR-015) | D.2 (mit erledigen) |
 | Reverse Proxy auf dem VPS, Linie 3.7 (seit 2026-09-28, ADR-033; 2.11 ohne Unterstützung seit 2026-09-07) | Nachprüfung 2026-12-28 | – | doc.traefik.io, Release-Tabelle (D.7, 2026-09-28) | D.9 |
 | React Router 7 – Linie 8 mindestreif, v7 vermutlich bis zu v9 (ca. Mai 2027) gepflegt | 2026-12-17 | – | npm-Registry; remix.run-Blog (ADR-046) | D.15 – Wechsel auf Linie 8 |
-| GitHub-Runner `ubuntu-latest` → Ubuntu 26 | ab 2026-10-19 (schrittweise), Prüfung bis 2026-11-02 | – | Hinweis der CI-Plattform im Lauf zu PR #173; actions/runner-images#14748 | D.19 |
+| GitHub-Runner `ubuntu-latest` → Ubuntu 26 | umgestellt, alle vier Jobs grün auf `ubuntu-26.04` (2026-10-21) | – | Lauf zu PR #184; actions/runner-images#14748 | D.19 – erledigt 2026-10-21 |
 | Wochenkontingent der KI | wöchentlich, So 10:00 (MESZ) | – | Sitzungsabfrage 2026-09-26 | – |
 
 ### Kosten

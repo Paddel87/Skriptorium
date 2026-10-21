@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-21 – [BEOBACHTUNG] Deployment `e886916` (9.5); D.19 erledigt
+
+- Auf Anweisung des Eigentümers („Pushen, mergen, einspielen“): #184 nach grüner CI gemergt, CI auf `main` grün. Runbook Abschnitt 7 (ADR-039): `REVISION` `e886916`, Rückweg `skriptorium:vorher` = `2586ef8`; `/api/health` 200 nach ca. 63 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; einmal per SSH `(healthy)`, 0 Fehlerzeilen.
+- D.19: Im Lauf zu #184 liefen alle vier Jobs auf `ubuntu-26.04` (Abbild 20261012.163.1), alle grün, keine Warnung im Protokoll → `[ERLEDIGT]`, Register-Zeile nachgezogen.
+- Offen: Prüfung von 9.5 durch den Eigentümer an seinen Welten.
+
 ### 2026-10-21 – [BEOBACHTUNG] 9.5 umgesetzt, Prüfung offen
 
 - Mockup vorher/nachher (echte Bildschirmfotos auf einem lokalen Server mit der Testwelt Salzmark, Nachher in die echte Seite eingesetzt) freigegeben: „Passt, umbauen“, Orte vorab „Alle angekreuzt“.
