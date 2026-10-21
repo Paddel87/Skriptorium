@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-21 – [ADR-ANGELEGT] ADR-094 Bilder vom Bedarf her (9.5)
+
+- Zählung im Betrieb (nur Zahlen, keine Namen): Figuren 12/27 mit „Aussehen“, Gegenstände 3/43 (38 mit Zweck/Verwendung/Auswirkung), Orte 0/19 gegliedert, Kultur 10 ungegliedert, 0/5 Welten mit „Geografie – …“.
+- Vorlage mit Tabelle je Bildart; Eigentümer per Auswahlfragen jeweils die Empfehlung: 1B Orte ankreuzen, 2A Hinweis mit Knopf, 3A Name + erster Satz „Zweck“. Danach richtiggestellt: Herauslösen gibt es nur für Figuren (ADR-083) – Eigentümer: „Nur Figuren jetzt“, Gegenstände und Orte → V.39 (Landeplatz 9.15). Reaktiv-Quote 0 / 10 (ADR-085–094). 9.5 auf `[IN ARBEIT]`, als Nächstes Mockup.
+
 ### 2026-10-21 – [SESSIONSTART] 9.5 Bilder vom Bedarf her; Karte aus den Orten
 
 - **Modell:** Opus 5.5 (`claude-opus-5-5`, laut `get_session`), Entscheidungs-Klasse. 9.5 empfiehlt Entscheidung – kein Schritt oberhalb der Empfehlung.
