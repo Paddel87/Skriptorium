@@ -29,6 +29,30 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-22 – [GELÖST] Roter Audit-Job durch Sicherheitsfunde in virtualenv (D.21)
+
+- Doku-PR #185 lief rot in „Python“, Schritt Dependency-Audit: `pip-audit` meldet fünf CVEs in virtualenv 21.13.0 (Korrekturen bis 21.14.9). Nicht vom PR verursacht, blockiert jeden PR – lokal reproduziert.
+- Behoben als D.21 im selben PR (nur dieser Branch ist für die Cloud-Session beschreibbar): `uv lock --upgrade-package virtualenv` → 21.14.12; Audit ohne Befund, Pre-Commit grün. virtualenv kommt nur über pre-commit, nicht im Betrieb – kein Einspielen.
+
+### 2026-10-22 – [SESSIONENDE] Cloud-Session zu 9.4 und Rückmeldung zu Sperren
+
+- **Dauer:** 2026-10-19 22:28 MESZ bis 23:16 MESZ (9.4), fortgesetzt 2026-10-22 (Rückmeldung zu Sperren).
+- **Bearbeitet:** 9.4 (ADR-093, PR #181, später von der Mac-Session eingespielt und abgenommen); Nachtrag D.19; D.13 erste Beispiele ohne Wortlaut, Wortlaut wechselt mit der Eingabe; V.40 angelegt (Landeplatz 9.15).
+- **Stand:** Phase 9, 4 von 15; 9.5 in Arbeit (Mac-Session, Prüfung des Eigentümers offen). Keine aktiven Blocker, keine offenen STOPP-Situationen.
+- **Offen:** Wortlaut einiger Sperren und Weigerungen von Figuren für D.13 (Eigentümer); D.19 bis 2026-11-02.
+- **Nächster Schritt:** Prüfung von 9.5 durch den Eigentümer, dann 9.6.
+- **Modell-Bilanz:** Entscheidungs-Klasse (Opus 5.5, eingestellt und bedient laut `get_session` 2026-10-19). 9.4 empfiehlt Entscheidung; die Doku-Arbeit zu D.13/V.40 ist Routine – wegen kleinen Umfangs und geladenen Kontexts nicht abgegeben. 0 Schritte oberhalb der Empfehlung, keine Abgabe.
+- **Kontextgröße:** nicht feststellbar – `get_session` meldet `used_tokens` 0; Regel zur Sessiongröße entfällt (vermerkt).
+- **Sessionende-Prüfungen:** README synchron (4 von 15, 0 Blocker; V.40 nicht nutzerrelevant). Drift: ADR-093 → 9.4 vorhanden; V.40 → 9.15 in Übersicht und „Zu tun“ von 9.15 nachgetragen; D.13-Zeile der Übersicht nachgezogen; keine `[BLOCKIERT]`-Schritte; keine neuen ADRs seit ADR-094. Ablaufdaten-Register: D.19 läuft; D.1 ab 2026-11-05 noch nicht im Vorlauf. Archiv: Logbuch ca. 520 Zeilen, project-context 349 – kein Trigger. Quick-Start nicht berührt.
+
+### 2026-10-22 – [BEOBACHTUNG] Nachtrag aus der Cloud-Session zu 9.4; Rückmeldung zu Sperren (D.13)
+
+- **Nachtrag 9.4 (2026-10-19):** Die Cloud-Session hat nach dem Merge von PR #181 (`67fc36e`, CI 4 von 4 grün 21:12–21:15 UTC) einen Doku-Commit (`b8a9aa8`) nur auf ihren Branch gepusht und keinen `[SESSIONENDE]` geschrieben – Versäumnis, nicht nachholbar. Inhalt übertragen, soweit nicht überholt: D.19 – Python-Job lief auf `ubuntu-24.04` (Abbild 20261018.339.1), ohne Warnung; nur dieser Job gelesen. Bei den Proben zu 9.4 lief Playwright lokal erst mit `PLAYWRIGHT_CHROMIUM_EXECUTABLE=/opt/pw-browsers/chromium` und nach `npm run build` (vorher 404 auf `/`).
+- **Rückmeldung des Eigentümers:** „Blockade der KI“ – per Auswahlfrage: die KI im Skriptorium sperrt. Gehört zu D.13 (Eingangskriterium: Beispiele echter Sperren). Angaben (Ablauf, Modell, Wortlaut, Form, Wiederholung) erfragt. Antwort: Sperren im Weltenbauer, im Kanon, bei Kurzfassung und „Bild beschreiben“; grok-4.5 (seltener) und grok-4.6, qwen3.8 ebenso, Hermes 4 bisher nicht; teils bei CNC-Szenarien; sah aus wie eine Antwort; „jedes Modell blockt, wenn im Verlauf zuvor ein anderes geblockt hatte – nur im Kanon“.
+- **Ursache im Code (Hypothese, nicht mit echter KI geprüft):** `ui/src/views/useWorldbuilder.ts` schickt das ganze Gespräch mit; eine als Antwort gelieferte Sperre bleibt als Antwort der KI im Verlauf und geht an jedes folgende Modell. Kurzfassung und „Bild beschreiben“ haben keinen Verlauf. Abhilfe bis dahin: Seite neu laden (Gespräch wird nicht gespeichert), Auftrag mit anderem Modell neu stellen.
+- **Landeplatz:** Eigentümer per Auswahlfrage: neuer Schritt mit Planung 9.15 „plus die Möglichkeit, die letzte Eingabe wiederholt zu senden“ → V.40 (Antwort aus dem Gespräch nehmen, letzte Eingabe erneut senden). Beispiele bei D.13 vermerkt, ohne Wortlaut.
+- **Nachtrag:** Eigentümer: Der Wortlaut der Sperren ist dynamisch, abhängig von der Eingabe. Bei D.13 vermerkt mit vier zu vergleichenden Wegen (Kennung im Rahmen, äußere Merkmale, zweites Modell, Entscheidung des Autors über V.40).
+
 ### 2026-10-21 – [BEOBACHTUNG] 9.5 umgesetzt, Prüfung offen
 
 - Mockup vorher/nachher (echte Bildschirmfotos auf einem lokalen Server mit der Testwelt Salzmark, Nachher in die echte Seite eingesetzt) freigegeben: „Passt, umbauen“, Orte vorab „Alle angekreuzt“.
