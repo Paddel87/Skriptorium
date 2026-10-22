@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-22 – [GELÖST] Roter Audit-Job durch Sicherheitsfunde in virtualenv (D.21)
+
+- Doku-PR #185 lief rot in „Python“, Schritt Dependency-Audit: `pip-audit` meldet fünf CVEs in virtualenv 21.13.0 (Korrekturen bis 21.14.9). Nicht vom PR verursacht, blockiert jeden PR – lokal reproduziert.
+- Behoben als D.21 im selben PR (nur dieser Branch ist für die Cloud-Session beschreibbar): `uv lock --upgrade-package virtualenv` → 21.14.12; Audit ohne Befund, Pre-Commit grün. virtualenv kommt nur über pre-commit, nicht im Betrieb – kein Einspielen.
+
 ### 2026-10-22 – [SESSIONENDE] Cloud-Session zu 9.4 und Rückmeldung zu Sperren
 
 - **Dauer:** 2026-10-19 22:28 MESZ bis 23:16 MESZ (9.4), fortgesetzt 2026-10-22 (Rückmeldung zu Sperren).
