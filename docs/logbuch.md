@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-22 – [BEOBACHTUNG] Nachtrag aus der Cloud-Session zu 9.4; Rückmeldung zu Sperren (D.13)
+
+- **Nachtrag 9.4 (2026-10-19):** Die Cloud-Session hat nach dem Merge von PR #181 (`67fc36e`, CI 4 von 4 grün 21:12–21:15 UTC) einen Doku-Commit (`b8a9aa8`) nur auf ihren Branch gepusht und keinen `[SESSIONENDE]` geschrieben – Versäumnis, nicht nachholbar. Inhalt übertragen, soweit nicht überholt: D.19 – Python-Job lief auf `ubuntu-24.04` (Abbild 20261018.339.1), ohne Warnung; nur dieser Job gelesen. Bei den Proben zu 9.4 lief Playwright lokal erst mit `PLAYWRIGHT_CHROMIUM_EXECUTABLE=/opt/pw-browsers/chromium` und nach `npm run build` (vorher 404 auf `/`).
+- **Rückmeldung des Eigentümers:** „Blockade der KI“ – per Auswahlfrage: die KI im Skriptorium sperrt. Gehört zu D.13 (Eingangskriterium: Beispiele echter Sperren). Angaben (Ablauf, Modell, Wortlaut, Form, Wiederholung) erfragt; noch keine erhalten.
+
 ### 2026-10-21 – [BEOBACHTUNG] 9.5 umgesetzt, Prüfung offen
 
 - Mockup vorher/nachher (echte Bildschirmfotos auf einem lokalen Server mit der Testwelt Salzmark, Nachher in die echte Seite eingesetzt) freigegeben: „Passt, umbauen“, Orte vorab „Alle angekreuzt“.
