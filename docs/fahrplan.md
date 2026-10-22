@@ -55,7 +55,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ⚪ | D.5 | Wechsel auf httpx2 und Nachprüfung mypy 2 | offen | KI – ab 2026-11-12 |
 | ⚪ | D.9 | Nachprüfung Unterstützung des Reverse Proxys | offen | KI – am 2026-12-28 |
 | ⚪ | D.11 | Sicherungs-Zugangsdaten außerhalb des Servers ablegen | offen | du – bis 2026-10-31 |
-| ⚪ | D.13 | Weigerungen der KI im Text erkennen – Erkundung | offen | du: Beispiele echter Sperren |
+| ⚪ | D.13 | Weigerungen der KI im Text erkennen – Erkundung | offen, erste Beispiele 2026-10-22 | du: Wortlaut von Sperren |
 | ⚪ | D.15 | Wechsel React Router 7 → Linie 8 | offen | KI – ab 2026-12-17 |
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | erledigt 2026-10-13 (V.29–V.32 → 8.4–8.7) | – |
@@ -63,7 +63,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ✅ | D.20 | Sicherheitsfunde certifi und vite (Audit 2026-10-21) | erledigt 2026-10-21 | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 9.15): V.20, V.21, V.23, V.24, V.33 (weiter verschoben 2026-10-18, ADR-090), V.38 (Befund in 9.3, 2026-10-18), V.39 (aus 9.5, 2026-10-21). In Phase 9 übernommen (2026-10-18, ADR-090): V.35 → 9.3–9.9 und 9.12, V.36 → 9.10, V.37 → 9.11, V.34 → 9.13. In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 9.15): V.20, V.21, V.23, V.24, V.33 (weiter verschoben 2026-10-18, ADR-090), V.38 (Befund in 9.3, 2026-10-18), V.39 (aus 9.5, 2026-10-21), V.40 (Rückmeldung des Eigentümers zu Sperren, 2026-10-22). In Phase 9 übernommen (2026-10-18, ADR-090): V.35 → 9.3–9.9 und 9.12, V.36 → 9.10, V.37 → 9.11, V.34 → 9.13. In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -432,7 +432,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 9
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** V.20, V.21, V.23, V.24, V.33, V.38 (und neue V-Schritte, auch aus 9.12) in eine neue Phase überführen oder per ADR verwerfen.
+- **Zu tun:** V.20, V.21, V.23, V.24, V.33, V.38, V.39, V.40 (und neue V-Schritte, auch aus 9.12) in eine neue Phase überführen oder per ADR verwerfen.
 - **Akzeptanzkriterien:** Jeder verschobene Schritt hat einen neuen Schritt mit ID oder `[VERWORFEN]` mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
@@ -660,7 +660,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Betroffene Module:** api, context (Erkundung)
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** `spikes/`-Bericht, Logbuch-Eintrag
-- **Notizen:** Angelegt 2026-10-08 (Neuplanung, ADR-042). Entlastung zuerst über das Startmodell (5.7).
+- **Notizen:** Angelegt 2026-10-08 (Neuplanung, ADR-042). Entlastung zuerst über das Startmodell (5.7). Rückmeldung des Eigentümers 2026-10-22 (erste echte Beispiele, Wortlaut nicht abgelegt): Sperren im Weltenbauer, bei „Bild beschreiben“ und bei Kurzfassungen; Modelle grok-4.5 (seltener), grok-4.6, qwen3.8 – Hermes 4 bisher ohne Sperre; Inhalt teils CNC-Szenarien (Genre des Eigentümers, fiktional); Sperre sah aus wie eine Antwort. Im Weltenbauer blockt danach jedes Modell, solange die Sperre im Gespräch steht → V.40. Eingangskriterium teilweise erfüllt: Beispiele ohne Wortlaut; für Trefferquote und Fehlalarme fehlen noch Texte von Sperren und von Weigerungen einer Figur.
 
 #### D.14: Zeitlimit für den End-to-End-Job
 
@@ -1416,6 +1416,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, ADR
 - **Notizen:** Angelegt 2026-10-18 in 9.3 (Bericht des Unteragenten, geprüft von der bauenden KI). Bisher kein Schaden gemeldet; betrifft nur den Export als Figurenkarte.
+
+#### V.40: Gesperrte Antwort aus dem Weltenbauer-Gespräch nehmen; letzte Eingabe erneut senden
+
+- **Status:** ⏸️ VERSCHOBEN → 9.15 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 9.15 (Eigentümer 2026-10-22: Empfehlung „neuer Schritt, Planung 9.15“ plus erneutes Senden der letzten Eingabe)
+- **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – neuer Ablauf im Weltenbauer (Kategorie 1 prüfen: was an die KI geht); Oberfläche
+- **Empfohlene Klasse:** Entscheidung – ändert, welcher Verlauf an die KI geht (Eskalations-Auslöser 1).
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-029, FR-018
+- **Zu tun:** Rückmeldung des Eigentümers (2026-10-22, D.13): Im Weltenbauer blocken alle Modelle, sobald im Gespräch schon eine Sperre steht. Ursache (im Code, nicht mit echter KI geprüft): `ui/src/views/useWorldbuilder.ts` schickt das ganze Gespräch mit; eine Sperre, die als Antwort kommt, bleibt als Antwort der KI darin stehen. Vorschlag für die Vorlage: (1) eine Antwort aus dem Gespräch nehmen (geht dann nicht mehr an die KI), (2) die letzte Eingabe erneut senden, wahlweise mit anderem Modell, ohne neu zu tippen, (3) ggf. „Neues Gespräch“. Vorher mit echter KI belegen, dass eine Sperre im Verlauf die nächste Antwort sperrt und ihr Entfernen das aufhebt (Cloud-Session mit Schlüssel).
+- **Akzeptanzkriterien:** Vorlage und ADR; Probe mit echter KI (vorher/nachher); Tests; Eigentümer bestätigt.
+- **Betroffene Module:** ui, ggf. api und context
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, ADR, Probe
+- **Notizen:** Angelegt 2026-10-22. Bis dahin: nach einer Sperre die Seite neu laden (das Gespräch wird nicht gespeichert) und den Auftrag mit einem anderen Modell neu stellen. Verwandt mit D.13 (Sperren erkennen).
 
 #### V.39: „Aussehen herauslösen“ auch für Gegenstände und Orte
 
