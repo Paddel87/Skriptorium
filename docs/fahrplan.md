@@ -61,10 +61,10 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ✅ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | erledigt 2026-10-13 (V.29–V.32 → 8.4–8.7) | – |
 | ⚪ | D.19 | CI-Runner `ubuntu-latest` wechselt auf Ubuntu 26 | offen | KI – ab 2026-10-19, bis 2026-11-02 |
 | ✅ | D.20 | Sicherheitsfunde certifi und vite (Audit 2026-10-21) | erledigt 2026-10-21 | – |
-| 🟠 | D.21 | Sicherheitsfunde virtualenv (Audit 2026-10-22) | in Arbeit (PR #185) | KI: Merge |
+| ✅ | D.21 | Sicherheitsfunde virtualenv (Audit 2026-10-22) | erledigt 2026-10-22 | – |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 9.15): V.20, V.21, V.23, V.24, V.33 (weiter verschoben 2026-10-18, ADR-090), V.38 (Befund in 9.3, 2026-10-18), V.39 (aus 9.5, 2026-10-21), V.40 (Rückmeldung des Eigentümers zu Sperren, 2026-10-22). In Phase 9 übernommen (2026-10-18, ADR-090): V.35 → 9.3–9.9 und 9.12, V.36 → 9.10, V.37 → 9.11, V.34 → 9.13. In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 9.15): V.20, V.21, V.23, V.24, V.33 (weiter verschoben 2026-10-18, ADR-090), V.38 (Befund in 9.3, 2026-10-18), V.39 (aus 9.5, 2026-10-21), V.40 (Rückmeldung des Eigentümers zu Sperren, 2026-10-22), V.41 (Textqualität von Hermes, 2026-10-22). In Phase 9 übernommen (2026-10-18, ADR-090): V.35 → 9.3–9.9 und 9.12, V.36 → 9.10, V.37 → 9.11, V.34 → 9.13. In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -433,7 +433,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 9
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** V.20, V.21, V.23, V.24, V.33, V.38, V.39, V.40 (und neue V-Schritte, auch aus 9.12) in eine neue Phase überführen oder per ADR verwerfen.
+- **Zu tun:** V.20, V.21, V.23, V.24, V.33, V.38, V.39, V.40, V.41 (und neue V-Schritte, auch aus 9.12) in eine neue Phase überführen oder per ADR verwerfen.
 - **Akzeptanzkriterien:** Jeder verschobene Schritt hat einen neuen Schritt mit ID oder `[VERWORFEN]` mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
@@ -779,7 +779,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.21: Sicherheitsfunde virtualenv (Audit 2026-10-22)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-22) – behoben auf dem Branch des Doku-PR #185 (die Cloud-Session darf nur auf ihren Branch pushen): virtualenv 21.13.0 → 21.14.12 (`uv.lock`); `pip-audit` ohne Befund, Pre-Commit auf allen Dateien grün. Offen: CI, Merge
+- **Status:** ✅ ERLEDIGT (2026-10-22) – PR #185: CI grün (4 von 4, Audit ohne Befund), nach Freigabe des Eigentümers zusammengeführt (`214b8c7`); kein Einspielen nötig. Verlauf: behoben auf dem Branch des Doku-PR #185 (die Cloud-Session darf nur auf ihren Branch pushen): virtualenv 21.13.0 → 21.14.12 (`uv.lock`); `pip-audit` ohne Befund, Pre-Commit auf allen Dateien grün
 - **Phasentyp-Kontext:** STABILISIERUNG
 - **Abhängigkeiten:** keine
 - **Frist:** sofort – roter Audit-Job blockiert jeden PR (#185)
@@ -1434,6 +1434,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, ADR
 - **Notizen:** Angelegt 2026-10-18 in 9.3 (Bericht des Unteragenten, geprüft von der bauenden KI). Bisher kein Schaden gemeldet; betrifft nur den Export als Figurenkarte.
+
+#### V.41: Textqualität von Hermes 4 – Vergleich mit Denkmodus und Einstellungen je Modell
+
+- **Status:** ⏸️ VERSCHOBEN → 9.15 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 9.15 (Eigentümer 2026-10-22: „Ja, als V-Schritt für 9.15“)
+- **Phasentyp-Kontext:** ERKUNDUNG (Messung), danach ggf. UMSETZUNG mit Vorlage
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** nein für die Messung; ja für Einstellungen je Modell (`ai_gateway/models.py`, Anfrage an die KI – Kategorie 1 prüfen) und eine neue Modell-Voreinstellung
+- **Empfohlene Klasse:** Entscheidung – Vergleich von Modellen und Einstellungen nach Regel-002, Fehlschluss teuer (Alltagsmodell).
+- **Eingangskriterien:** keine; Cloud-Session mit gültigem Schlüssel
+- **Anforderungen (ab Klasse M):** FR-018; Vision 4 (Kosten)
+- **Zu tun:** Hermes 4 (`nousresearch/hermes-4-405b`) sperrt nach Rückmeldung des Eigentümers bisher nicht (D.13), schreibt aber schwächer: „Stil / Deutsch, endlose Wiederholungen, selten“ (2026-10-22). Stand im Code: Reasoning für nicht gelistete Modelle aus (`ai_gateway/models.py`, Hermes 4 bietet es an), Temperatur fest 0,8 für alle (`api/flows/writing.py`), keine Strafe gegen Wiederholungen; Rahmen an grok erprobt. Messung nach Regel-002 an beiden Testgeschichten: grok-4.6 (Bezug), Hermes wie heute, Hermes mit Reasoning, Hermes mit `repetition_penalty`/`frequency_penalty` und ggf. niedrigerer Temperatur; Kennzahlen wie in 5.26 plus Schleifen (wiederholte Sätze/Absätze) und Bewertung des Deutschen (verblindet). Kosten vorher schätzen (Listenpreis 2026-10-22: 1 $ / 3 $ je 1 Mio. Token Ein-/Ausgabe).
+- **Akzeptanzkriterien:** Bericht in `spikes/`; Vorlage: Einstellungen je Modell übernehmen, Hermes als Wahl oder Voreinstellung, oder verwerfen (ADR); Eigentümer bestätigt im Alltag.
+- **Betroffene Module:** ai_gateway, ggf. api und context
+- **Reifegrad-Wirkung:** keine (NFR Kanon-Treue und Reaktionszeit beziehen sich auf grok-4.6; ein Wechsel der Voreinstellung bräuchte eigene Messung)
+- **Artefakte:** Bericht, Logbuch-Eintrag, ggf. ADR
+- **Notizen:** Angelegt 2026-10-22 auf Frage des Eigentümers „Wie lässt sich die Textqualität von Hermes verbessern?“. Ohne Änderung schon möglich: genauere Vorgaben je Geschichte, Länge „kurz“/„mittel“, wichtige Einträge mit `@`.
 
 #### V.40: Gesperrte Antwort aus dem Weltenbauer-Gespräch nehmen; letzte Eingabe erneut senden
 
