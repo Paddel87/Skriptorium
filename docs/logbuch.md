@@ -35,6 +35,7 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - **Rückmeldung des Eigentümers:** „Blockade der KI“ – per Auswahlfrage: die KI im Skriptorium sperrt. Gehört zu D.13 (Eingangskriterium: Beispiele echter Sperren). Angaben (Ablauf, Modell, Wortlaut, Form, Wiederholung) erfragt. Antwort: Sperren im Weltenbauer, im Kanon, bei Kurzfassung und „Bild beschreiben“; grok-4.5 (seltener) und grok-4.6, qwen3.8 ebenso, Hermes 4 bisher nicht; teils bei CNC-Szenarien; sah aus wie eine Antwort; „jedes Modell blockt, wenn im Verlauf zuvor ein anderes geblockt hatte – nur im Kanon“.
 - **Ursache im Code (Hypothese, nicht mit echter KI geprüft):** `ui/src/views/useWorldbuilder.ts` schickt das ganze Gespräch mit; eine als Antwort gelieferte Sperre bleibt als Antwort der KI im Verlauf und geht an jedes folgende Modell. Kurzfassung und „Bild beschreiben“ haben keinen Verlauf. Abhilfe bis dahin: Seite neu laden (Gespräch wird nicht gespeichert), Auftrag mit anderem Modell neu stellen.
 - **Landeplatz:** Eigentümer per Auswahlfrage: neuer Schritt mit Planung 9.15 „plus die Möglichkeit, die letzte Eingabe wiederholt zu senden“ → V.40 (Antwort aus dem Gespräch nehmen, letzte Eingabe erneut senden). Beispiele bei D.13 vermerkt, ohne Wortlaut.
+- **Nachtrag:** Eigentümer: Der Wortlaut der Sperren ist dynamisch, abhängig von der Eingabe. Bei D.13 vermerkt mit vier zu vergleichenden Wegen (Kennung im Rahmen, äußere Merkmale, zweites Modell, Entscheidung des Autors über V.40).
 
 ### 2026-10-21 – [BEOBACHTUNG] 9.5 umgesetzt, Prüfung offen
 
