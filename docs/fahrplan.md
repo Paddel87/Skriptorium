@@ -61,6 +61,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ✅ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | erledigt 2026-10-13 (V.29–V.32 → 8.4–8.7) | – |
 | ⚪ | D.19 | CI-Runner `ubuntu-latest` wechselt auf Ubuntu 26 | offen | KI – ab 2026-10-19, bis 2026-11-02 |
 | ✅ | D.20 | Sicherheitsfunde certifi und vite (Audit 2026-10-21) | erledigt 2026-10-21 | – |
+| 🟠 | D.21 | Sicherheitsfunde virtualenv (Audit 2026-10-22) | in Arbeit (PR #185) | KI: Merge |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
 Verschoben auf die übernächste Ausbaustufe (Landeplatz 9.15): V.20, V.21, V.23, V.24, V.33 (weiter verschoben 2026-10-18, ADR-090), V.38 (Befund in 9.3, 2026-10-18), V.39 (aus 9.5, 2026-10-21), V.40 (Rückmeldung des Eigentümers zu Sperren, 2026-10-22). In Phase 9 übernommen (2026-10-18, ADR-090): V.35 → 9.3–9.9 und 9.12, V.36 → 9.10, V.37 → 9.11, V.34 → 9.13. In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
@@ -775,6 +776,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Sperrdateien, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-21 nach dem roten Lauf zu #182.
+
+#### D.21: Sicherheitsfunde virtualenv (Audit 2026-10-22)
+
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-22) – behoben auf dem Branch des Doku-PR #185 (die Cloud-Session darf nur auf ihren Branch pushen): virtualenv 21.13.0 → 21.14.12 (`uv.lock`); `pip-audit` ohne Befund, Pre-Commit auf allen Dateien grün. Offen: CI, Merge
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** keine
+- **Frist:** sofort – roter Audit-Job blockiert jeden PR (#185)
+- **Freigabepflichtig:** nein – Update innerhalb der Linie, keine Breaking Changes
+- **Empfohlene Klasse:** Routine – Abhängigkeits-Update mit Tests.
+- **Eingangskriterien:** Befund der CI (Dependency-Audit, PR #185, 2026-10-22 00:42 UTC)
+- **Anforderungen (ab Klasse M):** keine (Pflichtkategorie Dependency-Audit, `CLAUDE.md` Abschnitt 15)
+- **Zu tun:** CVE-2026-113722, -113725, -113726, -113732, -113776 in virtualenv 21.13.0 beheben (Korrekturen bis 21.14.9). Nach Regel-001: Linie 21.14 (mit Fehlerkorrektur-Versionen), neueste 21.14.12 (2026-10-21). virtualenv kommt nur über `pre-commit` (Entwicklungsgruppe) und ist nicht im Container – kein Einspielen nötig.
+- **Akzeptanzkriterien:** Audit ohne Befund in der CI; alle Jobs grün.
+- **Betroffene Module:** keine (Entwicklungswerkzeug)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Sperrdatei, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-22 nach dem roten Lauf zu #185. Neue Abhängigkeitskante virtualenv → packaging (packaging war schon in der Sperrdatei).
 
 #### M.1: Branch-Konvention festlegen
 
