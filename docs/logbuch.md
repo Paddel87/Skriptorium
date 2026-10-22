@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-22 – [BEOBACHTUNG] Textqualität von Hermes 4 → V.41; D.21 erledigt
+
+- PR #185 nach grüner CI zusammengeführt (`214b8c7`) → D.21 `[ERLEDIGT]`.
+- Frage des Eigentümers: Wie lässt sich die Textqualität von Hermes verbessern? Hermes 4 wurde im Projekt nie gemessen. Befund im Code: Reasoning für nicht gelistete Modelle aus (Hermes 4 405B bietet es laut OpenRouter-Katalog an), Temperatur fest 0,8, keine Strafe gegen Wiederholungen. Schwächen laut Eigentümer: Stil/Deutsch, selten endlose Wiederholungen. Auf seine Wahl V.41 angelegt (Messung nach Regel-002, Landeplatz 9.15).
+
 ### 2026-10-22 – [GELÖST] Roter Audit-Job durch Sicherheitsfunde in virtualenv (D.21)
 
 - Doku-PR #185 lief rot in „Python“, Schritt Dependency-Audit: `pip-audit` meldet fünf CVEs in virtualenv 21.13.0 (Korrekturen bis 21.14.9). Nicht vom PR verursacht, blockiert jeden PR – lokal reproduziert.
