@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-25 – [BEOBACHTUNG] PR #187 zusammengeführt; D.23 erledigt
+
+- Zweiter Lauf nach D.23 (`cfd86c6`) grün, 4 von 4 Pflicht-Checks; ein Kommentar im PR erklärt den ersten roten Lauf. Auf Anweisung des Eigentümers („merge“) zusammengeführt als Merge-Commit (`b66196e`) → D.23 `[ERLEDIGT]`. 9.6 bleibt `[IN ARBEIT]` bis Einspielen und Bestätigung. Beobachtung des PR beendet. Dieser Doku-Stand liegt auf dem Branch der Session, neu auf `main` aufgesetzt; er braucht einen eigenen kleinen PR.
+
 ### 2026-10-25 – [GELÖST] Rote Audit-Jobs im PR #187 durch neue Sicherheitsfunde (D.23)
 
 - PR #187 (9.6) lief rot in „Python“ und „TypeScript“, jeweils im Dependency-Audit: `pip-audit` meldet drei CVEs in filelock 4.0.4, `npm audit` (Schwelle high) Funde in undici 7.30.0 und zod 4.6.5. Nicht vom PR verursacht, blockiert jeden PR – lokal reproduziert. Pre-Commit und End-to-End waren grün.
