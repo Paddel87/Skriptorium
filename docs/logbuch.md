@@ -29,6 +29,16 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-26 – [BEOBACHTUNG] 9.7 vom Eigentümer bestätigt
+
+- Eigentümer im Chat: „Funktioniert alles.“ Eingespielt war `7bc5333`. 9.7 → `[ERLEDIGT]` (Fahrplan, Schrittliste, Stand, README). Phase 9: 7 von 15 – die Zählung in der Fahrplan-Übersicht stand noch auf 5 (seit 9.6 nicht nachgezogen), mit korrigiert. Nächster Schritt: 9.8 Bild zu Bild (Vorlage, Entscheidungs-Klasse).
+
+### 2026-10-26 – [BEOBACHTUNG] Deployment `7bc5333` (9.7)
+
+- Auf Anweisung des Eigentümers („merge PR #190 und spiele main auf nodica1 ein“): PR #190 nach grüner CI (4 von 4) als Merge-Commit zusammengeführt, CI auf `main` grün. Runbook Abschnitt 7 (ADR-039): `REVISION` `7bc5333`, Rückweg `skriptorium:vorher` (Abbild `4e35b8e16068`, zuvor `adda4b9`).
+- Prüfung: Warten nur per HTTPS – `/api/health` nach rund 55 s 200 `{"status":"ok"}`, Anmeldeseite 200, `PUT /api/models/aufgaben` ohne Sitzung abgewiesen (403). Eine SSH-Prüfung: `skriptorium` `(healthy)`, `app/REVISION` `7bc5333`.
+- Offen: Prüfung von 9.7 durch den Eigentümer (Seite „Einstellungen“, Vorbelegung in den Aufgaben, Kurzfassungen mit eigenem Modell).
+
 ### 2026-10-26 – [BEOBACHTUNG] 9.7 umgesetzt, Prüfung offen
 
 - Umgesetzt nach ADR-096 in `api` und `ui` (Commits `9a7e5aa`, `6252f35`); Einzelheiten und Prüfzahlen im Fahrplan 9.7. Nebenbefund aus der Bestandsaufnahme behoben: `Favorites.set` hätte das neue Feld `aufgaben` überschrieben – beide Schreibwege ersetzen jetzt nur ihr eigenes Feld (Test `test_favorites_and_task_models_keep_each_other`).

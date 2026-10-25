@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 9 – Verlässlicher Kanon, Bilder und Verwaltung (Umsetzung), begonnen 2026-10-18 (ADR-089, ADR-090); Phase 8 abgeschlossen 2026-10-18. Fortschritt: 6 von 15 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
+- **Projektphase:** Phase 9 – Verlässlicher Kanon, Bilder und Verwaltung (Umsetzung), begonnen 2026-10-18 (ADR-089, ADR-090); Phase 8 abgeschlossen 2026-10-18. Fortschritt: 7 von 15 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
 - **Version:** v1.0.0 – erstes produktives Release (2026-10-11, ADR-058); davor v0.1.0 als Vorabversion (ADR-043)
 - **Status:** In Betrieb
 - **Letzte Änderung:** 2026-10-13
@@ -106,7 +106,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - ✅ **9.4:** Beziehungen mit Art – Zeile `- verheiratet mit @Kael` im Abschnitt „Beziehungen“, beim genannten Eintrag erscheint „Verweise hierher“ (ADR-093); erledigt 2026-10-21.
 - ✅ **9.5:** Bilder vom Bedarf her – „Bild erzeugen“ schlägt je Art die passenden Angaben vor und weist auf fehlendes „Aussehen“ hin; „Karte erzeugen“ ist mit den Orten der Welt vorbelegt (ADR-094); erledigt 2026-10-25.
 - ✅ **9.6:** Herkunft von Bildern – ein erzeugtes Bild behält Modell, Anweisung, Format und Kosten; „Herkunft“ beim Bild zeigt sie und erzeugt auf Wunsch neu (ADR-095); erledigt 2026-10-25.
-- 🟠 **9.7:** Modell je Aufgabe – Seite „Einstellungen“ legt für jede KI-Aufgabe das Startmodell fest, auch für Kurzfassungen und Bilder (ADR-096); umgesetzt, deine Prüfung offen.
+- ✅ **9.7:** Modell je Aufgabe – Seite „Einstellungen“ legt für jede KI-Aufgabe das Startmodell fest, auch für Kurzfassungen und Bilder (ADR-096); erledigt 2026-10-26.
 - ⚪ **9.8–9.14:** Bild zu Bild; Löschen oder Archivieren, Cache-Treffer, Verbrauchsstatistik je Welt und Geschichte; Erkundung zu Quellen und Recherche; Gast-Figuren ausbauen (nach deiner Probe); Kontexttreue erneut prüfen (ADR-090).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
