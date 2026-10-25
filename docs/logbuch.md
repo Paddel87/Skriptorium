@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-25 – [BEOBACHTUNG] Modellwechsel auf die Entscheidungs-Klasse; 9.5 erledigt; 9.6 begonnen
+
+- **Modell:** Eigentümer wechselt per `/model` auf `claude-opus-5-5`; `get_session` bestätigt eingestellt und bedient `claude-opus-5-5` → Entscheidungs-Klasse. Kontextgröße jetzt feststellbar: 174.394 Token (Grenze 200.000).
+- **9.5:** Eigentümer im Chat: „9.5 ist bestätigt“. Code lag bereits auf `main` (PR #184, `e886916`) → `[ERLEDIGT]`, Phase 9: 5 von 15. Ob 9.5 auf dem VPS eingespielt ist, ist hier nicht belegt (zuletzt eingespielt laut Projektkontext `2586ef8`).
+- **9.6:** auf `[IN ARBEIT]`. Befund für die Vorlage: Erzeugen speichert nichts (ADR-077), die Übernahme läuft wie ein Hochladen (Browser verkleinert, Server prüft und legt ab) – der Server sieht beim Ablegen weder Modell noch Anweisung; Herkunft muss die Oberfläche mitschicken. Drei Ablageorte mit verschiedenen Kopffeldern: `bilder` (Liste von Dateinamen, Eintrag), `karten` (Liste von Abbildungen mit `name`, `datei`, `marken`, Welt), `titelbild` (ein Dateiname, Geschichte).
+
 ### 2026-10-25 18:34 MEZ – [SESSIONSTART] Neue Cloud-Session ohne Auftrag
 
 - **Modell (Quelle: `get_session`):** eingestellt `claude-sonnet-5-5`, bedient `claude-sonnet-5-5` → Routine-Klasse. Hinweis: `docs/project-context.md` Abschnitt 6 nennt „Claude Sonnet 5“ mit bestandenem Probelauf (2026-09-28); Sonnet 5.5 ist ein Modellwechsel innerhalb der Klasse, der Probelauf ist nach `CLAUDE.md` Abschnitt 0 zu wiederholen (offen, kein Fahrplan-Schritt angelegt – dem Eigentümer vorzulegen).
