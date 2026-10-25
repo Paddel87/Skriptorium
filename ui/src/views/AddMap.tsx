@@ -4,25 +4,36 @@ import {
   type ChangeEvent,
   type SyntheticEvent,
 } from "react";
-import { api, describeError, type CanonEntry, type World } from "../api";
+import {
+  api,
+  describeError,
+  type CanonEntry,
+  type ImageOrigin,
+  type World,
+} from "../api";
 import { base64, MAP_SIDE, shrinkImage } from "../files";
 import { ErrorText } from "./Common";
 import { mapPrompt } from "../imagePrompts";
 import { ImageGenerate } from "./ImageGenerate";
+import type { GenerateSeed } from "./ImageOriginPanel";
 import { useLoad } from "../useLoad";
 
 /** File and name of a new map; the browser shrinks the file before upload. */
 export function AddMap({
   world,
+  seed = null,
   onDone,
 }: {
   world: World;
+  /** Opens "Karte erzeugen" right away with the origin of another map (step 9.6, ADR-095). */
+  seed?: GenerateSeed | null;
   onDone: (saved: World | null) => void;
 }) {
-  // A chosen file or a generated map (step 7.12); both go the same checked way.
+  // A chosen file or a generated map (step 7.12); both go the same checked way. A generated
+  // map keeps its origin (step 9.6, ADR-095).
   const [file, setFile] = useState<Blob | null>(null);
-  const [generated, setGenerated] = useState(false);
-  const [generating, setGenerating] = useState(false);
+  const [origin, setOrigin] = useState<ImageOrigin | null>(null);
+  const [generating, setGenerating] = useState(seed !== null);
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +50,7 @@ export function AddMap({
   function choose(event: ChangeEvent<HTMLInputElement>) {
     const chosen = event.target.files?.[0] ?? null;
     setFile(chosen);
-    setGenerated(false);
+    setOrigin(null);
     if (chosen !== null && name.trim() === "") {
       setName(chosen.name.replace(/\.[^.]*$/, ""));
     }
@@ -54,7 +65,7 @@ export function AddMap({
     setError(null);
     try {
       const content = await base64(await shrinkImage(file, MAP_SIDE));
-      onDone(await api.addMap(world.id, name.trim(), content));
+      onDone(await api.addMap(world.id, name.trim(), content, origin));
     } catch (reason: unknown) {
       setError(describeError(reason));
       setBusy(false);
@@ -78,14 +89,16 @@ export function AddMap({
         >
           ✨ Karte erzeugen
         </button>
-        {generated && <span className="note">Erzeugte Karte ist bereit.</span>}
+        {origin !== null && (
+          <span className="note">Erzeugte Karte ist bereit.</span>
+        )}
       </div>
       {generating && (
         <ImageGenerate
           title="Karte erzeugen"
-          initialPrompt={mapPrompt(world, name, chosen)}
+          initialPrompt={seed?.prompt ?? mapPrompt(world, name, chosen)}
           extra={
-            places.length > 0 ? (
+            seed === null && places.length > 0 ? (
               <MapPlaces
                 places={places}
                 leftOut={leftOut}
@@ -93,11 +106,12 @@ export function AddMap({
               />
             ) : null
           }
-          initialFormat="3:2"
+          initialFormat={seed?.format ?? "3:2"}
+          initialModel={seed?.model ?? null}
           takeOverLabel="Für diese Karte verwenden"
-          onTakeOver={(image) => {
+          onTakeOver={(image, taken) => {
             setFile(image);
-            setGenerated(true);
+            setOrigin(taken);
             if (name.trim() === "") {
               setName(world.name);
             }

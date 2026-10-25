@@ -59,7 +59,9 @@ export type {
   AspectRatio,
   GeneratedImage,
   ImageModelList,
+  ImageOrigin,
   ImagePrice,
+  StoredImageOrigin,
 } from "./images";
 export type { DescribeEvent } from "./describe";
 export { streamWorldbuilder } from "./worldbuilder";

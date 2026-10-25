@@ -1,9 +1,10 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { fail, fakeApi, ok, STORY } from "../../fake-api";
+import { fail, fakeApi, ok, STORY, withoutOrigins } from "../../fake-api";
 import type { Story } from "../api";
 import { shrinkImage } from "../files";
+import { coverPrompt } from "../imagePrompts";
 import { StoryCover } from "./StoryCover";
 
 vi.mock("../files", () => ({
@@ -141,7 +142,7 @@ describe("cover of a story (step 7.11)", () => {
     const user = userEvent.setup();
     render(<StoryCover story={WITH_COVER} onSaved={saved} />);
     await user.click(screen.getByRole("button", { name: "Entfernen" }));
-    expect(calls).toEqual([]);
+    expect(withoutOrigins(calls)).toEqual([]);
     expect(saved).not.toHaveBeenCalled();
   });
 
@@ -235,7 +236,15 @@ describe("cover of a story (step 7.11)", () => {
       2000,
       true,
     ]);
-    expect(calls.at(-1)?.body).toEqual({ content: "a2xlaW4=" });
+    expect(withoutOrigins(calls).at(-1)?.body).toEqual({
+      content: "a2xlaW4=",
+      herkunft: {
+        model: "black-forest-labs/flux.2-pro",
+        prompt: coverPrompt(STORY),
+        aspect_ratio: "2:3",
+        cost_usd: 0.04,
+      },
+    });
     await waitFor(() => {
       expect(
         screen.queryByRole("group", { name: "Titelbild erzeugen" }),

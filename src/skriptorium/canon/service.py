@@ -46,7 +46,7 @@ from skriptorium.canon.models import (
     WorldMap,
 )
 from skriptorium.canon.worlds import WorldStore
-from skriptorium.storage import DocumentStore
+from skriptorium.storage import DocumentStore, ImageOrigin
 
 __all__ = [
     "KEEP",
@@ -116,15 +116,19 @@ class CanonService:
 
     # --- maps of a world (step 7.10, ADR-073) -----------------------------------------------
 
-    def add_world_map(self, world_id: str, name: str, data: bytes) -> World:
+    def add_world_map(
+        self, world_id: str, name: str, data: bytes, origin: ImageOrigin | None = None
+    ) -> World:
         """Store a map (up to 6,000 pixels per side and 12 MB) and add it to the world.
+
+        A generated map keeps its ``origin`` next to the file (step 9.6, ADR-095).
 
         Raises:
             NotFound: The world does not exist.
             InvalidInput: Empty or too long name, not a PNG, JPEG or WebP image, too large,
                 or the world already has :data:`MAX_MAPS_PER_WORLD` maps.
         """
-        return self._maps.add_world_map(world_id, name, data)
+        return self._maps.add_world_map(world_id, name, data, origin)
 
     def world_map(self, world_id: str, file: str) -> tuple[bytes, str]:
         """The bytes and media type of one map of the world.
@@ -133,6 +137,15 @@ class CanonService:
             NotFound: The world or the map does not exist.
         """
         return self._maps.world_map(world_id, file)
+
+    def map_origin(self, world_id: str, file: str) -> ImageOrigin | None:
+        """The origin of one map of the world, ``None`` if it has none (ADR-095).
+
+        Raises:
+            NotFound: The world or the map does not exist.
+            InvalidInput: The origin file is unreadable.
+        """
+        return self._maps.map_origin(world_id, file)
 
     def rename_world_map(self, world_id: str, file: str, name: str) -> World:
         """Give a map of the world another name.
@@ -245,15 +258,19 @@ class CanonService:
 
     # --- images of canon entries (step 7.6, ADR-072) ------------------------------------
 
-    def add_entry_image(self, world_id: str, entry_id: str, data: bytes) -> CanonEntry:
+    def add_entry_image(
+        self, world_id: str, entry_id: str, data: bytes, origin: ImageOrigin | None = None
+    ) -> CanonEntry:
         """Store an image and append it to the entry; the first image is the main image.
+
+        A generated image keeps its ``origin`` next to the file (step 9.6, ADR-095).
 
         Raises:
             NotFound: The world or the entry does not exist.
             InvalidInput: Not a PNG, JPEG or WebP image, too large, or the entry already has
                 :data:`MAX_IMAGES_PER_ENTRY` images.
         """
-        return self._images.add_entry_image(world_id, entry_id, data)
+        return self._images.add_entry_image(world_id, entry_id, data, origin)
 
     def entry_image(self, world_id: str, entry_id: str, image: str) -> tuple[bytes, str]:
         """The bytes and media type of one image of an entry.
@@ -262,6 +279,15 @@ class CanonService:
             NotFound: World, entry or image (at this entry) does not exist.
         """
         return self._images.entry_image(world_id, entry_id, image)
+
+    def entry_image_origin(self, world_id: str, entry_id: str, image: str) -> ImageOrigin | None:
+        """The origin of one image of an entry, ``None`` if it has none (ADR-095).
+
+        Raises:
+            NotFound: World, entry or image (at this entry) does not exist.
+            InvalidInput: The origin file is unreadable.
+        """
+        return self._images.entry_image_origin(world_id, entry_id, image)
 
     def remove_entry_image(self, world_id: str, entry_id: str, image: str) -> CanonEntry:
         """Remove an image from the entry and delete its file.

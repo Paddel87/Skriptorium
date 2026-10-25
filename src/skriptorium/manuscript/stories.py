@@ -35,6 +35,7 @@ from skriptorium.storage import (
     IMAGE_SUFFIXES,
     Document,
     DocumentStore,
+    ImageOrigin,
     InvalidInput,
     NotFound,
     checked_identifier,
@@ -149,13 +150,15 @@ class StoryStore:
                     )
         return changed
 
-    def set_story_cover(self, world_id: str, story_id: str, data: bytes) -> Story:
+    def set_story_cover(
+        self, world_id: str, story_id: str, data: bytes, origin: ImageOrigin | None = None
+    ) -> Story:
         """Store a cover for the story; it replaces the previous one, whose file is deleted."""
         path = story_path(world_id, story_id)
         document = self._store.read(path)
         previous = self.get_story(world_id, story_id).cover
         file = f"titelbild-{secrets.token_hex(6)}{IMAGE_SUFFIXES[inspect_image(data).kind]}"
-        self._store.write_image(cover_path(world_id, story_id, file), data)
+        self._store.write_image(cover_path(world_id, story_id, file), data, origin=origin)
         try:
             updated = self._write_cover(document, file, world_id, story_id)
         except BaseException:
@@ -171,6 +174,13 @@ class StoryStore:
         if cover is None:
             raise NotFound(f"{world_id}/{story_id}/{COVER_KEY}")
         return self._store.read_image(cover_path(world_id, story_id, cover))
+
+    def story_cover_origin(self, world_id: str, story_id: str) -> ImageOrigin | None:
+        """The origin of the story's cover, ``None`` if it has none (ADR-095)."""
+        cover = self.get_story(world_id, story_id).cover
+        if cover is None:
+            raise NotFound(f"{world_id}/{story_id}/{COVER_KEY}")
+        return self._store.read_image_origin(cover_path(world_id, story_id, cover))
 
     def remove_story_cover(self, world_id: str, story_id: str) -> Story:
         """Remove the story's cover and delete its file."""

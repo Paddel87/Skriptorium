@@ -10,6 +10,7 @@ import {
   modelList,
   ok,
   sseFeed,
+  withoutOrigins,
 } from "../../fake-api";
 import type { CanonEntry } from "../api";
 import { EntryImages } from "./EntryImages";
@@ -117,14 +118,16 @@ describe("images of a canon entry (step 7.6)", () => {
       screen.getByRole("button", { name: "Zum Hauptbild machen" }),
     );
     await waitFor(() => {
-      expect(calls.at(-1)?.path).toBe(`${BASE}/kael-b.jpg/main`);
+      expect(withoutOrigins(calls).at(-1)?.path).toBe(
+        `${BASE}/kael-b.jpg/main`,
+      );
     });
     expect(changed).toHaveBeenCalledTimes(1);
     await user.click(screen.getByRole("button", { name: "nächstes ›" }));
     await user.click(screen.getByRole("button", { name: "nächstes ›" }));
     await user.click(screen.getByRole("button", { name: "Entfernen" }));
     await waitFor(() => {
-      expect(calls.at(-1)).toMatchObject({
+      expect(withoutOrigins(calls).at(-1)).toMatchObject({
         method: "DELETE",
         path: `${BASE}/kael-c.png`,
       });
@@ -303,7 +306,7 @@ describe("images of a canon entry (step 7.6)", () => {
       screen.getByRole("button", { name: "Bild 2 groß zeigen" }),
     );
     await user.click(screen.getByRole("button", { name: "Entfernen" }));
-    expect(calls).toEqual([]);
+    expect(withoutOrigins(calls)).toEqual([]);
     expect(screen.getByRole("dialog")).toBeDefined();
   });
 
@@ -327,7 +330,7 @@ describe("images of a canon entry (step 7.6)", () => {
         screen.getByRole("dialog", { name: "Kael, Bild 1 von 3" }),
       ).toBeDefined();
     });
-    expect(calls.at(-1)?.path).toBe(`${BASE}/kael-b.jpg`);
+    expect(withoutOrigins(calls).at(-1)?.path).toBe(`${BASE}/kael-b.jpg`);
   });
 
   it("closes the viewer after removing the only image", async () => {

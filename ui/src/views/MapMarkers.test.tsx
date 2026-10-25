@@ -199,6 +199,8 @@ describe("markers on maps (step 7.14, ADR-079)", () => {
   it("shows why the entries could not be loaded", async () => {
     fakeApi({});
     await open(worldWith([]));
-    expect(await screen.findByText(/kein Fake/)).toBeDefined();
+    expect(
+      await screen.findByText(/kein Fake für GET \S+\/entries$/),
+    ).toBeDefined();
   });
 });

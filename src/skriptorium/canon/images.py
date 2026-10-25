@@ -12,6 +12,7 @@ from skriptorium.storage import (
     Document,
     DocumentStore,
     HeaderValue,
+    ImageOrigin,
     InvalidInput,
     NotFound,
     inspect_image,
@@ -26,7 +27,9 @@ class ImageStore:
         self._store = store
         self._entries = entries
 
-    def add_entry_image(self, world_id: str, entry_id: str, data: bytes) -> CanonEntry:
+    def add_entry_image(
+        self, world_id: str, entry_id: str, data: bytes, origin: ImageOrigin | None = None
+    ) -> CanonEntry:
         """Store an image and append it to the entry; the first image is the main image."""
         path = self._entries.existing_path(world_id, entry_id)
         document = self._store.read(path)
@@ -35,7 +38,7 @@ class ImageStore:
             raise InvalidInput(f"Höchstens {MAX_IMAGES_PER_ENTRY} Bilder je Eintrag")
         suffix = IMAGE_SUFFIXES[inspect_image(data).kind]
         name = f"{image_prefix(entry_id)}{secrets.token_hex(6)}{suffix}"
-        self._store.write_image(image_path(world_id, name), data)
+        self._store.write_image(image_path(world_id, name), data, origin=origin)
         try:
             return self._write_images(document, [*current.images, name])
         except BaseException:
@@ -47,6 +50,12 @@ class ImageStore:
         if image not in self._entries.get_entry(world_id, entry_id).images:
             raise NotFound(f"{world_id}/{entry_id}/{IMAGES}")
         return self._store.read_image(image_path(world_id, image))
+
+    def entry_image_origin(self, world_id: str, entry_id: str, image: str) -> ImageOrigin | None:
+        """The origin of one image of an entry, ``None`` if it has none (ADR-095)."""
+        if image not in self._entries.get_entry(world_id, entry_id).images:
+            raise NotFound(f"{world_id}/{entry_id}/{IMAGES}")
+        return self._store.read_image_origin(image_path(world_id, image))
 
     def remove_entry_image(self, world_id: str, entry_id: str, image: str) -> CanonEntry:
         """Remove an image from the entry and delete its file."""

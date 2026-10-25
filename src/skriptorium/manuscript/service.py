@@ -55,7 +55,7 @@ from skriptorium.manuscript.models import (
 )
 from skriptorium.manuscript.stories import StoryStore
 from skriptorium.manuscript.validation import checked_chapter_style
-from skriptorium.storage import DocumentStore, InvalidInput, NotFound
+from skriptorium.storage import DocumentStore, ImageOrigin, InvalidInput, NotFound
 
 __all__ = [
     "ATMOSPHERES",
@@ -261,14 +261,18 @@ class ManuscriptService:
                 cover = self._stories.story_cover(world_id, story_id)
         return epub_for(story, chapters, author, modified, cover=cover)
 
-    def set_story_cover(self, world_id: str, story_id: str, data: bytes) -> Story:
+    def set_story_cover(
+        self, world_id: str, story_id: str, data: bytes, origin: ImageOrigin | None = None
+    ) -> Story:
         """Store a cover for the story (step 7.11, ADR-075); it replaces the previous one.
+
+        A generated cover keeps its ``origin`` next to the file (step 9.6, ADR-095).
 
         Raises:
             NotFound: The story does not exist.
             InvalidInput: Not a PNG, JPEG or WebP image, or too large.
         """
-        return self._stories.set_story_cover(world_id, story_id, data)
+        return self._stories.set_story_cover(world_id, story_id, data, origin)
 
     def story_cover(self, world_id: str, story_id: str) -> tuple[bytes, str]:
         """The bytes and media type of the story's cover.
@@ -277,6 +281,15 @@ class ManuscriptService:
             NotFound: The story does not exist or has no cover.
         """
         return self._stories.story_cover(world_id, story_id)
+
+    def story_cover_origin(self, world_id: str, story_id: str) -> ImageOrigin | None:
+        """The origin of the story's cover, ``None`` if it has none (ADR-095).
+
+        Raises:
+            NotFound: The story does not exist or has no cover.
+            InvalidInput: The origin file is unreadable.
+        """
+        return self._stories.story_cover_origin(world_id, story_id)
 
     def remove_story_cover(self, world_id: str, story_id: str) -> Story:
         """Remove the story's cover and delete its file.

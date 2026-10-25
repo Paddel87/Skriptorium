@@ -17,6 +17,26 @@ export interface ImagePrice {
 
 export type AspectRatio = "2:3" | "1:1" | "3:2";
 
+/**
+ * How a taken-over image was generated (step 9.6, ADR-095); sent along with the upload and
+ * kept by the server next to the image.
+ */
+export interface ImageOrigin {
+  model: string;
+  prompt: string;
+  aspect_ratio: AspectRatio;
+  cost_usd: number | null;
+}
+
+/** The stored origin with the date it was taken over; `null` for an uploaded image. */
+export interface StoredImageOrigin {
+  model: string;
+  prompt: string;
+  aspect_ratio: string;
+  cost_usd: number | null;
+  date: string;
+}
+
 export interface GeneratedImage {
   content: string;
   media_type: string;

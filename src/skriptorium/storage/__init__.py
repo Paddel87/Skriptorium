@@ -16,6 +16,7 @@ from skriptorium.storage.images import (
     ImageKind,
     inspect_image,
 )
+from skriptorium.storage.origins import ImageOrigin
 from skriptorium.storage.store import Document, DocumentStore, SearchHit, SearchMode
 
 __all__ = [
@@ -29,6 +30,7 @@ __all__ = [
     "HeaderValue",
     "ImageInfo",
     "ImageKind",
+    "ImageOrigin",
     "InvalidInput",
     "NotFound",
     "SearchHit",

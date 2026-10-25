@@ -24,7 +24,7 @@ from skriptorium.canon.service import (
     World,
     WorldMap,
 )
-from skriptorium.storage import AlreadyExists, InvalidInput, NotFound, StorageError
+from skriptorium.storage import AlreadyExists, ImageOrigin, InvalidInput, NotFound, StorageError
 
 __all__ = [
     "APPEARANCE",
@@ -36,6 +36,7 @@ __all__ = [
     "CanonEntry",
     "CanonService",
     "Category",
+    "ImageOrigin",
     "ImportItem",
     "ImportPreview",
     "ImportResult",
