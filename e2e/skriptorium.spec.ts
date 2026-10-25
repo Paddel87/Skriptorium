@@ -111,6 +111,15 @@ async function withImageModel(page: Page) {
       models: ["x-ai/grok-4.6"],
       default: "x-ai/grok-4.6",
       favorites: ["x-ai/grok-4.6"],
+      tasks: {
+        schreiben: null,
+        weltenbau: null,
+        kurzfassung: null,
+        gesamtzusammenfassung: null,
+        bildbeschreibung: null,
+        aussehen: null,
+        bilderzeugung: null,
+      },
       catalog: [
         {
           id: "x-ai/grok-4.6",

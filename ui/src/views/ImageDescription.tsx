@@ -6,6 +6,7 @@ import {
   type CatalogModel,
 } from "../api";
 import { describeWriteError } from "../api/writing";
+import { taskModel } from "../models";
 import { ErrorText } from "./Common";
 import { describeUsage, type Usage } from "./useWriteFlow";
 
@@ -48,7 +49,8 @@ export function ImageDescription({
           return;
         }
         const seeing = list.catalog.filter((entry) => entry.reads_images);
-        const preferred = [list.default, ...list.favorites].find((id) =>
+        const saved = taskModel(list, "bildbeschreibung");
+        const preferred = [saved, list.default, ...list.favorites].find((id) =>
           seeing.some((entry) => entry.id === id),
         );
         setModels(seeing);

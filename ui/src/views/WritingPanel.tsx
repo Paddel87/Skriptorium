@@ -106,7 +106,7 @@ export function WritingPanel({
   /** Called after the instruction of a taken-over proposal went into the history (step 5.13). */
   onNoted?: () => void;
 }) {
-  const choice = useModelChoice(storyModel, onModelChange);
+  const choice = useModelChoice(storyModel, "schreiben", onModelChange);
   const { modelList, chosenModel } = choice;
   const loadEntries = useCallback(
     () => loadStoryEntries(world, guests),

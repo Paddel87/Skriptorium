@@ -2,7 +2,12 @@
 import { screen } from "@testing-library/react";
 import type { UserEvent } from "@testing-library/user-event";
 import { vi } from "vitest";
-import type { CatalogModel, ModelList, WritingStyle } from "./src/api";
+import type {
+  CatalogModel,
+  ModelList,
+  TaskModels,
+  WritingStyle,
+} from "./src/api";
 
 export interface Call {
   method: string;
@@ -184,15 +189,31 @@ export async function openStorySettings(user: UserEvent): Promise<void> {
   await user.click(screen.getByRole("button", { name: "Geschichte" }));
 }
 
-/** Answer of `GET /api/models` (step 5.12): favorites, the first as preset, and a catalog. */
+/** No task has a model of its own (step 9.7). */
+export const NO_TASK_MODELS: TaskModels = {
+  schreiben: null,
+  weltenbau: null,
+  kurzfassung: null,
+  gesamtzusammenfassung: null,
+  bildbeschreibung: null,
+  aussehen: null,
+  bilderzeugung: null,
+};
+
+/**
+ * Answer of `GET /api/models` (steps 5.12, 9.7): favorites, the first as preset, a catalog and
+ * the model per task (`tasks` replace single tasks).
+ */
 export function modelList(
   favorites: string[],
   catalog: CatalogModel[] = [],
+  tasks: Partial<TaskModels> = {},
 ): ModelList {
   return {
     models: favorites,
     default: favorites[0] ?? "",
     favorites,
+    tasks: { ...NO_TASK_MODELS, ...tasks },
     catalog,
     catalog_available: catalog.length > 0,
   };

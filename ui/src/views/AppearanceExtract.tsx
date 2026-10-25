@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { api, describeError, streamDescription, type CanonEntry } from "../api";
 import { describeWriteError } from "../api/writing";
+import { taskModel } from "../models";
 import { APPEARANCE } from "../sections";
 import { ErrorText } from "./Common";
 import { SectionConflict } from "./SectionConflict";
@@ -45,13 +46,17 @@ export function AppearanceExtract({
           return;
         }
         const names = new Map(list.catalog.map((m) => [m.id, m.name]));
-        setModels(
-          list.favorites.map((id) => ({ id, name: names.get(id) ?? id })),
-        );
+        const saved = taskModel(list, "aussehen");
+        const offered =
+          saved === null || list.favorites.includes(saved)
+            ? list.favorites
+            : [saved, ...list.favorites];
+        setModels(offered.map((id) => ({ id, name: names.get(id) ?? id })));
         setModel(
-          list.favorites.includes(list.default)
-            ? list.default
-            : (list.favorites[0] ?? ""),
+          saved ??
+            (list.favorites.includes(list.default)
+              ? list.default
+              : (list.favorites[0] ?? "")),
         );
       })
       .catch((reason: unknown) => {
