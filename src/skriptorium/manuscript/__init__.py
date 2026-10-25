@@ -22,7 +22,7 @@ from skriptorium.manuscript.service import (
     SummaryStatus,
     WritingStyle,
 )
-from skriptorium.storage import AlreadyExists, InvalidInput, NotFound, StorageError
+from skriptorium.storage import AlreadyExists, ImageOrigin, InvalidInput, NotFound, StorageError
 
 __all__ = [
     "ATMOSPHERES",
@@ -40,6 +40,7 @@ __all__ = [
     "ChapterStatus",
     "Form",
     "GuestLink",
+    "ImageOrigin",
     "InstructionNote",
     "InvalidInput",
     "ManuscriptService",

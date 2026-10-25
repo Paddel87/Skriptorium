@@ -14,6 +14,7 @@ from fastapi import APIRouter, Depends, Response, status
 from pydantic import BaseModel, Field
 
 from skriptorium.api.context import Services, ServicesDep, current_session
+from skriptorium.api.image_routes import ImageOriginIn, ImageOriginOut, origin_from, origin_out
 from skriptorium.manuscript import (
     Chapter,
     Form,
@@ -349,6 +350,8 @@ class CoverFile(BaseModel):
     """A cover image (PNG, JPEG or WebP), base64-encoded; the browser shrinks it first."""
 
     content: Annotated[str, Field(max_length=4 * -(-MAX_IMAGE_BYTES // 3))]
+    # Only for a generated cover taken over (step 9.6, ADR-095).
+    herkunft: ImageOriginIn | None = None
 
 
 @router.post("/{story_id}/cover")
@@ -358,7 +361,7 @@ def set_cover(world_id: str, story_id: str, body: CoverFile, found: ServicesDep)
         data = base64.b64decode(body.content, validate=True)
     except binascii.Error, ValueError:
         raise InvalidInput("Datei nicht lesbar übertragen") from None
-    return found.manuscript.set_story_cover(world_id, story_id, data)
+    return found.manuscript.set_story_cover(world_id, story_id, data, origin_from(body.herkunft))
 
 
 @router.get("/{story_id}/cover")
@@ -366,6 +369,12 @@ def get_cover(world_id: str, story_id: str, found: ServicesDep) -> Response:
     """The story's cover, with the media type of its checked format."""
     data, media_type = found.manuscript.story_cover(world_id, story_id)
     return Response(data, media_type=media_type)
+
+
+@router.get("/{story_id}/cover/origin")
+def get_cover_origin(world_id: str, story_id: str, found: ServicesDep) -> ImageOriginOut | None:
+    """How the cover was generated; ``null`` for an uploaded cover (step 9.6, ADR-095)."""
+    return origin_out(found.manuscript.story_cover_origin(world_id, story_id))
 
 
 @router.delete("/{story_id}/cover")

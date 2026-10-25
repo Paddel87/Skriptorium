@@ -24,6 +24,7 @@ from skriptorium.storage import (
     Document,
     DocumentStore,
     HeaderValue,
+    ImageOrigin,
     InvalidInput,
     NotFound,
     inspect_image,
@@ -39,7 +40,9 @@ class MapStore:
         self._worlds = worlds
         self._entries = entries
 
-    def add_world_map(self, world_id: str, name: str, data: bytes) -> World:
+    def add_world_map(
+        self, world_id: str, name: str, data: bytes, origin: ImageOrigin | None = None
+    ) -> World:
         """Store a map and add it to the world."""
         document = self._store.read(world_path(world_id))
         maps = list(world_from(document).maps)
@@ -49,7 +52,11 @@ class MapStore:
         kind = inspect_image(data, max_bytes=MAX_MAP_BYTES, max_side=MAX_MAP_SIDE).kind
         file = f"karte-{secrets.token_hex(6)}{IMAGE_SUFFIXES[kind]}"
         self._store.write_image(
-            map_path(world_id, file), data, max_bytes=MAX_MAP_BYTES, max_side=MAX_MAP_SIDE
+            map_path(world_id, file),
+            data,
+            max_bytes=MAX_MAP_BYTES,
+            max_side=MAX_MAP_SIDE,
+            origin=origin,
         )
         try:
             return self._write_maps(document, [*maps, WorldMap(clean_name, file)])
@@ -62,6 +69,12 @@ class MapStore:
         if file not in {m.file for m in self._worlds.get_world(world_id).maps}:
             raise NotFound(f"{world_id}/{MAPS}")
         return self._store.read_image(map_path(world_id, file))
+
+    def map_origin(self, world_id: str, file: str) -> ImageOrigin | None:
+        """The origin of one map of the world, ``None`` if it has none (ADR-095)."""
+        if file not in {m.file for m in self._worlds.get_world(world_id).maps}:
+            raise NotFound(f"{world_id}/{MAPS}")
+        return self._store.read_image_origin(map_path(world_id, file))
 
     def rename_world_map(self, world_id: str, file: str, name: str) -> World:
         """Give a map of the world another name."""
