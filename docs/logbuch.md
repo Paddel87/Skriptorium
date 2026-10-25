@@ -29,6 +29,17 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-25 – [BEOBACHTUNG] Deployment `adda4b9` (9.6, D.21, D.23)
+
+- Auf Anweisung des Eigentümers („deploy“); vorher `git fetch`/Merge gegen `origin/main` (Konflikte in Fahrplan, Logbuch, Projektkontext aufgelöst, Merge `6487d76` lokal). CI auf `main` grün. Runbook Abschnitt 7 (ADR-039): `REVISION` `adda4b9`, Rückweg `skriptorium:vorher` (Abbild `19f6f3791ef6`, zuvor `e886916`).
+- Reibung: Der Berechtigungsprüfer lehnte den Server-Befehl (Tausch, Build, Neustart) beim ersten Mal ohne Begründung ab; nach ausdrücklicher Bestätigung des Eigentümers lief er durch. Der Upload war schon vorher erfolgt, es blieb nichts halb getauscht.
+- Prüfung: Warten nur per HTTPS – `/api/health` lieferte während des Starts 404 (Proxy), nach rund 55 s 200 `{"status":"ok"}`; Anmeldeseite 200. Eine SSH-Prüfung: `skriptorium` `(healthy)`, `app/REVISION` `adda4b9`.
+- Offen: Prüfung von 9.6 durch den Eigentümer.
+
+### 2026-10-25 – [BEOBACHTUNG] 9.6 vom Eigentümer bestätigt
+
+- Eigentümer im Chat: „9.6 hat erfolgreich funktioniert.“ Eingespielt war `adda4b9`. 9.6 → `[ERLEDIGT]` (Fahrplan, Schrittliste, Stand). Nächster Schritt: 9.7 Einstellungsseite – Modell je Aufgabe (Mockup und Vorlage zuerst).
+
 ### 2026-10-25 – [BEOBACHTUNG] PR #187 zusammengeführt; D.23 erledigt
 
 - Zweiter Lauf nach D.23 (`cfd86c6`) grün, 4 von 4 Pflicht-Checks; ein Kommentar im PR erklärt den ersten roten Lauf. Auf Anweisung des Eigentümers („merge“) zusammengeführt als Merge-Commit (`b66196e`) → D.23 `[ERLEDIGT]`. 9.6 bleibt `[IN ARBEIT]` bis Einspielen und Bestätigung. Beobachtung des PR beendet. Dieser Doku-Stand liegt auf dem Branch der Session, neu auf `main` aufgesetzt; er braucht einen eigenen kleinen PR.
@@ -102,6 +113,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - **Ursache im Code (Hypothese, nicht mit echter KI geprüft):** `ui/src/views/useWorldbuilder.ts` schickt das ganze Gespräch mit; eine als Antwort gelieferte Sperre bleibt als Antwort der KI im Verlauf und geht an jedes folgende Modell. Kurzfassung und „Bild beschreiben“ haben keinen Verlauf. Abhilfe bis dahin: Seite neu laden (Gespräch wird nicht gespeichert), Auftrag mit anderem Modell neu stellen.
 - **Landeplatz:** Eigentümer per Auswahlfrage: neuer Schritt mit Planung 9.15 „plus die Möglichkeit, die letzte Eingabe wiederholt zu senden“ → V.40 (Antwort aus dem Gespräch nehmen, letzte Eingabe erneut senden). Beispiele bei D.13 vermerkt, ohne Wortlaut.
 - **Nachtrag:** Eigentümer: Der Wortlaut der Sperren ist dynamisch, abhängig von der Eingabe. Bei D.13 vermerkt mit vier zu vergleichenden Wegen (Kennung im Rahmen, äußere Merkmale, zweites Modell, Entscheidung des Autors über V.40).
+
+### 2026-10-21 – [BEOBACHTUNG] Deployment `e886916` (9.5); D.19 erledigt
+
+- Auf Anweisung des Eigentümers („Pushen, mergen, einspielen“): #184 nach grüner CI gemergt, CI auf `main` grün. Runbook Abschnitt 7 (ADR-039): `REVISION` `e886916`, Rückweg `skriptorium:vorher` = `2586ef8`; `/api/health` 200 nach ca. 63 s (über HTTPS), `/` 200, `/api/worlds` 401, `/sw.js` 200; einmal per SSH `(healthy)`, 0 Fehlerzeilen.
+- D.19: Im Lauf zu #184 liefen alle vier Jobs auf `ubuntu-26.04` (Abbild 20261012.163.1), alle grün, keine Warnung im Protokoll → `[ERLEDIGT]`, Register-Zeile nachgezogen.
+- Offen: Prüfung von 9.5 durch den Eigentümer an seinen Welten.
 
 ### 2026-10-21 – [BEOBACHTUNG] 9.5 umgesetzt, Prüfung offen
 

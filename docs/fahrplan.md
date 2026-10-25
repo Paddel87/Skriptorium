@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-25 (9.5 erledigt – Bilder vom Bedarf her, ADR-094, PR #184, vom Eigentümer bestätigt; 9.6 begonnen); 2026-10-21 (9.4 erledigt, ADR-093); 2026-10-19 (9.3 erledigt – feste Abschnitte je Art, ADR-092; Code PR #177, Proben PR #179, beide mit grüner CI zusammengeführt; Proben zu 9.3 im dritten Versuch gelaufen – Regel-002 und Weltenbauer; zuvor zweiter Versuch ohne Schlüssel, Werkzeug für die Weltenbauer-Probe vorbereitet); 2026-10-18 (9.2 erledigt – vier End-to-End-Tests, Vertragstest Server ↔ Oberfläche, CI-Schrittnamen; PR #175; 9.1 erledigt – ADR-091, PR #173; D.19 angelegt; zuvor Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
+- **Stand vom:** 2026-10-25 (9.6 erledigt – Herkunft von Bildern, ADR-095, PR #187, eingespielt `adda4b9`, vom Eigentümer bestätigt); 2026-10-25 (9.5 erledigt – Bilder vom Bedarf her, ADR-094, PR #184, vom Eigentümer bestätigt; 9.6 begonnen); 2026-10-21 (9.4 erledigt, ADR-093); 2026-10-19 (9.3 erledigt – feste Abschnitte je Art, ADR-092; Code PR #177, Proben PR #179, beide mit grüner CI zusammengeführt; Proben zu 9.3 im dritten Versuch gelaufen – Regel-002 und Weltenbauer; zuvor zweiter Versuch ohne Schlüssel, Werkzeug für die Weltenbauer-Probe vorbereitet); 2026-10-18 (9.2 erledigt – vier End-to-End-Tests, Vertragstest Server ↔ Oberfläche, CI-Schrittnamen; PR #175; 9.1 erledigt – ADR-091, PR #173; D.19 angelegt; zuvor Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
 - **Laufende Phase:** Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (Phase 8 abgeschlossen 2026-10-18)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 9.6 Herkunft von Bildern – auf `main` (PR #187, `b66196e`), Einspielen (Mac) und Prüfung durch den Eigentümer offen
-- **Nächster Schritt:** 9.5 und 9.6 einspielen (Mac-Session, ADR-039), dann Prüfung von 9.6 durch den Eigentümer; danach 9.7 Einstellungsseite – Modell je Aufgabe. D.19: Der Lauf zu PR #181 (2026-10-19 21:12 UTC) lief noch auf Ubuntu 24.04; weiter prüfen bis 2026-11-02. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** keiner (9.6 erledigt 2026-10-25)
+- **Nächster Schritt:** 9.7 Einstellungsseite – Modell je Aufgabe. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -33,7 +33,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ✅ | 9.3 | Gegliederte Einträge je Art (B2, G1/G2) | erledigt 2026-10-19 (ADR-092) | – |
 | ✅ | 9.4 | Beziehungen mit Art und Rückverweis (B3) | erledigt 2026-10-21 (ADR-093) | – |
 | ✅ | 9.5 | Bilder vom Bedarf her; Karte aus den Orten (G4, B4) | erledigt 2026-10-25 (ADR-094) | – |
-| 🟠 | 9.6 | Herkunft von Bildern (B1) | auf `main` (PR #187), Einspielen und Prüfung offen (ADR-095) | du: einspielen lassen, prüfen |
+| ✅ | 9.6 | Herkunft von Bildern (B1) | erledigt 2026-10-25 (ADR-095) | – |
 | ⚪ | 9.7 | Einstellungsseite – Modell je Aufgabe (G3, B6) | offen | KI: Mockup und Vorlage |
 | ⚪ | 9.8 | Bild zu Bild (B7) | offen | KI: nach 9.6 Vorlage |
 | ⚪ | 9.9 | Löschen oder Archivieren (B5) | offen | KI: Vorlage mit Mockup |
@@ -59,7 +59,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ⚪ | D.15 | Wechsel React Router 7 → Linie 8 | offen | KI – ab 2026-12-17 |
 | ✅ | D.17 | CI nur für `main` und fertige Pull Requests | erledigt 2026-10-10 | – |
 | ✅ | D.18 | Prüfauftrag Datenmodell: Trennung der Daten je KI-Bereich | erledigt 2026-10-13 (V.29–V.32 → 8.4–8.7) | – |
-| ⚪ | D.19 | CI-Runner `ubuntu-latest` wechselt auf Ubuntu 26 | offen | KI – ab 2026-10-19, bis 2026-11-02 |
+| ✅ | D.19 | CI-Runner `ubuntu-latest` wechselt auf Ubuntu 26 | erledigt 2026-10-21 | – |
 | ✅ | D.20 | Sicherheitsfunde certifi und vite (Audit 2026-10-21) | erledigt 2026-10-21 | – |
 | ✅ | D.21 | Sicherheitsfunde virtualenv (Audit 2026-10-22) | erledigt 2026-10-22 | – |
 | ⚪ | D.22 | Probelauf Routine-Klasse mit Sonnet 5.5 | offen | KI – vor der nächsten Abgabe an Unteragenten |
@@ -280,7 +280,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 9.6: Herkunft von Bildern – Modell und Anweisung speichern (V.35 B1)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-25) – Vorlage vorgelegt, Eigentümer per Auswahlfragen: Begleitdatei, aufklappbar mit „Neu erzeugen“, mit Kosten, Nebenfrage KI-Text später → ADR-095, V.42. Umgesetzt (Notiz); PR #187: CI grün (4 von 4), auf Anweisung des Eigentümers zusammengeführt (`b66196e`); offen: Einspielen (Mac) und Prüfung durch den Eigentümer
+- **Status:** ✅ ERLEDIGT (2026-10-25) – eingespielt `adda4b9`, vom Eigentümer bestätigt („9.6 hat erfolgreich funktioniert“). Verlauf: 🟠 IN ARBEIT (seit 2026-10-25) – Vorlage vorgelegt, Eigentümer per Auswahlfragen: Begleitdatei, aufklappbar mit „Neu erzeugen“, mit Kosten, Nebenfrage KI-Text später → ADR-095, V.42. Umgesetzt (Notiz); PR #187: CI grün (4 von 4), auf Anweisung des Eigentümers zusammengeführt (`b66196e`); eingespielt und geprüft (siehe oben)
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – neue Angaben im Dateikopf (Kategorie 4)
@@ -748,7 +748,7 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 
 #### D.19: CI-Runner `ubuntu-latest` wechselt auf Ubuntu 26
 
-- **Status:** ⚪ OFFEN
+- **Status:** ✅ ERLEDIGT (2026-10-21) – Lauf zu PR #184 (2026-10-21 09:22 UTC): alle vier Jobs auf `ubuntu-26.04` (Abbild 20261012.163.1), alle grün, keine Warnung; kein festes Abbild nötig. Vorher: ⚪ OFFEN
 - **Phasentyp-Kontext:** UMSETZUNG (Querschnitt)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** nein für die Beobachtung; ja für jede Änderung an `.github/workflows/ci.yml` (Kategorie 7), etwa ein festes `ubuntu-24.04`
