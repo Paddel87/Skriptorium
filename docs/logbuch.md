@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-25 – [BEOBACHTUNG] Deployment `adda4b9` (9.6, D.21, D.23)
+
+- Auf Anweisung des Eigentümers („deploy“); vorher `git fetch`/Merge gegen `origin/main` (Konflikte in Fahrplan, Logbuch, Projektkontext aufgelöst, Merge `6487d76` lokal). CI auf `main` grün. Runbook Abschnitt 7 (ADR-039): `REVISION` `adda4b9`, Rückweg `skriptorium:vorher` (Abbild `19f6f3791ef6`, zuvor `e886916`).
+- Reibung: Der Berechtigungsprüfer lehnte den Server-Befehl (Tausch, Build, Neustart) beim ersten Mal ohne Begründung ab; nach ausdrücklicher Bestätigung des Eigentümers lief er durch. Der Upload war schon vorher erfolgt, es blieb nichts halb getauscht.
+- Prüfung: Warten nur per HTTPS – `/api/health` lieferte während des Starts 404 (Proxy), nach rund 55 s 200 `{"status":"ok"}`; Anmeldeseite 200. Eine SSH-Prüfung: `skriptorium` `(healthy)`, `app/REVISION` `adda4b9`.
+- Offen: Prüfung von 9.6 durch den Eigentümer.
+
 ### 2026-10-25 – [BEOBACHTUNG] PR #187 zusammengeführt; D.23 erledigt
 
 - Zweiter Lauf nach D.23 (`cfd86c6`) grün, 4 von 4 Pflicht-Checks; ein Kommentar im PR erklärt den ersten roten Lauf. Auf Anweisung des Eigentümers („merge“) zusammengeführt als Merge-Commit (`b66196e`) → D.23 `[ERLEDIGT]`. 9.6 bleibt `[IN ARBEIT]` bis Einspielen und Bestätigung. Beobachtung des PR beendet. Dieser Doku-Stand liegt auf dem Branch der Session, neu auf `main` aufgesetzt; er braucht einen eigenen kleinen PR.

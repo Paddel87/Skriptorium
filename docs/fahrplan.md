@@ -12,7 +12,7 @@
 - **Laufende Phase:** Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (Phase 8 abgeschlossen 2026-10-18)
 - **Phasentyp:** UMSETZUNG
 - **Aktiver Schritt:** 9.6 Herkunft von Bildern – auf `main` (PR #187, `b66196e`), Einspielen (Mac) und Prüfung durch den Eigentümer offen
-- **Nächster Schritt:** `main` (9.6) einspielen – 9.5 ist seit 2026-10-21 eingespielt (`e886916`) (Mac-Session, ADR-039), dann Prüfung von 9.6 durch den Eigentümer; danach 9.7 Einstellungsseite – Modell je Aufgabe. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Nächster Schritt:** Prüfung von 9.6 durch den Eigentümer (eingespielt `adda4b9`, 2026-10-25); danach 9.7 Einstellungsseite – Modell je Aufgabe. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
