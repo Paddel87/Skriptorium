@@ -62,6 +62,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ⚪ | D.19 | CI-Runner `ubuntu-latest` wechselt auf Ubuntu 26 | offen | KI – ab 2026-10-19, bis 2026-11-02 |
 | ✅ | D.20 | Sicherheitsfunde certifi und vite (Audit 2026-10-21) | erledigt 2026-10-21 | – |
 | ✅ | D.21 | Sicherheitsfunde virtualenv (Audit 2026-10-22) | erledigt 2026-10-22 | – |
+| ⚪ | D.22 | Probelauf Routine-Klasse mit Sonnet 5.5 | offen | KI – vor der nächsten Abgabe an Unteragenten |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
 Verschoben auf die übernächste Ausbaustufe (Landeplatz 9.15): V.20, V.21, V.23, V.24, V.33 (weiter verschoben 2026-10-18, ADR-090), V.38 (Befund in 9.3, 2026-10-18), V.39 (aus 9.5, 2026-10-21), V.40 (Rückmeldung des Eigentümers zu Sperren, 2026-10-22), V.41 (Textqualität von Hermes, 2026-10-22), V.42 (vollständige Anfrage beim KI-Text, aus 9.6, 2026-10-25). In Phase 9 übernommen (2026-10-18, ADR-090): V.35 → 9.3–9.9 und 9.12, V.36 → 9.10, V.37 → 9.11, V.34 → 9.13. In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
@@ -776,6 +777,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Sperrdateien, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-21 nach dem roten Lauf zu #182.
+
+#### D.22: Probelauf Routine-Klasse mit Sonnet 5.5
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** STABILISIERUNG (Methodik)
+- **Abhängigkeiten:** keine
+- **Frist:** vor der nächsten Abgabe von Routine-Arbeit an einen Unteragenten; bis dahin keine Abgabe an Sonnet 5.5
+- **Freigabepflichtig:** nein
+- **Empfohlene Klasse:** Entscheidung – Referenz-Lauf und Bewertung der Abweichungen (wie D.10).
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** keine (`CLAUDE.md` Abschnitt 0, „Probelauf“)
+- **Zu tun:** Die Routine-Klasse ist seit der Session vom 2026-10-25 mit Claude Sonnet 5.5 besetzt (`get_session`); der bestandene Probelauf (D.10, 2026-09-28) galt Sonnet 5. Nach `CLAUDE.md` Abschnitt 0 wird er nach einem Modellwechsel wiederholt: dieselben Aufgaben wie in D.10 (Drift-Prüfung mit README-Synchronisation an einer Kopie mit eingebauten Abweichungen, Logbuch-Eintrag), je einmal auf Sonnet 5.5 und auf der Entscheidungs-Klasse, Abweichungen bewerten.
+- **Akzeptanzkriterien:** Ergebnis mit Datum in `docs/project-context.md` Abschnitt 6 (Routine-Klasse: Modell, bestanden oder nicht); bei Nichtbestehen bleibt die Abgabe aus und Routine-Arbeit läuft eine Klasse höher.
+- **Betroffene Module:** keine (Methodik)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Logbuch-Eintrag, Projektkontext
+- **Notizen:** Angelegt 2026-10-25 auf Wahl des Eigentümers („Ja, als D-Schritt“).
 
 #### D.21: Sicherheitsfunde virtualenv (Audit 2026-10-22)
 
