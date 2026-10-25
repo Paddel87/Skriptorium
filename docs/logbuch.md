@@ -36,6 +36,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 - Prüfung: Warten nur per HTTPS – `/api/health` lieferte während des Starts 404 (Proxy), nach rund 55 s 200 `{"status":"ok"}`; Anmeldeseite 200. Eine SSH-Prüfung: `skriptorium` `(healthy)`, `app/REVISION` `adda4b9`.
 - Offen: Prüfung von 9.6 durch den Eigentümer.
 
+### 2026-10-25 – [BEOBACHTUNG] 9.6 vom Eigentümer bestätigt
+
+- Eigentümer im Chat: „9.6 hat erfolgreich funktioniert.“ Eingespielt war `adda4b9`. 9.6 → `[ERLEDIGT]` (Fahrplan, Schrittliste, Stand). Nächster Schritt: 9.7 Einstellungsseite – Modell je Aufgabe (Mockup und Vorlage zuerst).
+
 ### 2026-10-25 – [BEOBACHTUNG] PR #187 zusammengeführt; D.23 erledigt
 
 - Zweiter Lauf nach D.23 (`cfd86c6`) grün, 4 von 4 Pflicht-Checks; ein Kommentar im PR erklärt den ersten roten Lauf. Auf Anweisung des Eigentümers („merge“) zusammengeführt als Merge-Commit (`b66196e`) → D.23 `[ERLEDIGT]`. 9.6 bleibt `[IN ARBEIT]` bis Einspielen und Bestätigung. Beobachtung des PR beendet. Dieser Doku-Stand liegt auf dem Branch der Session, neu auf `main` aufgesetzt; er braucht einen eigenen kleinen PR.
