@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-25 – [ADR-ANGELEGT] ADR-096 Modell je Aufgabe, eigene Seite „Einstellungen“ (9.7)
+
+- Bestandsaufnahme: Jede Aufgabe nimmt ihr Modell anders; Kapitel-Kurzfassung und Gesamtzusammenfassung laufen fest mit grok-4.6 und nehmen nur Modelle der festen Liste (`summarize_chapter` ohne Katalog), Bilder erzeugen jedes Mal FLUX.2 Pro. Nebenbefund: `Favorites.set` schreibt den Kopf von `system/modelle.md` neu – ein zweites Feld ginge dabei verloren; die Umsetzung muss beide Felder erhalten.
+- Mockup `mockup-9.7.html` (lokal, nicht im Repo) und Vorlage vorgelegt; Eigentümer per Auswahlfragen jeweils die Empfehlung: eigene Seite, Wahl in der Aufgabe nur für dieses Mal, „Ja, umbauen“ → ADR-096.
+
 ### 2026-10-25 23:39 MEZ – [SESSIONSTART] 9.7 Einstellungsseite – Modell je Aufgabe
 
 - **Modell:** Opus 5.5 (`claude-opus-5-5`, eingestellt und bedient laut `get_session`), Entscheidungs-Klasse. 9.7 empfiehlt Entscheidung – kein Schritt oberhalb der Empfehlung.
