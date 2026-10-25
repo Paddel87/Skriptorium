@@ -186,7 +186,10 @@ IMAGE_MODELS = {
         {
             "id": "black-forest-labs/flux.2-pro",
             "name": "Black Forest Labs: FLUX.2 Pro",
-            "supported_parameters": {"aspect_ratio": {"type": "enum", "values": ["1:1", "2:3"]}},
+            "supported_parameters": {
+                "aspect_ratio": {"type": "enum", "values": ["1:1", "2:3"]},
+                "input_references": {"type": "range", "min": 0, "max": 8},
+            },
         },
         {
             "id": "bytedance-seed/seedream-4.5",
@@ -215,7 +218,11 @@ IMAGE_ENDPOINTS = {
             {
                 "provider_slug": "seed",
                 "allowed_passthrough_parameters": [],
-                "pricing": [{"unit": "image", "cost_usd": 0.04}],
+                # The basis first, as some providers list it: the price shown is the output's.
+                "pricing": [
+                    {"billable": "input_image", "unit": "image", "cost_usd": 0},
+                    {"unit": "image", "cost_usd": 0.04},
+                ],
             }
         ]
     },

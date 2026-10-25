@@ -1444,11 +1444,13 @@
       "models": [
         {
           "id": "black-forest-labs/flux.2-pro",
-          "name": "Black Forest Labs: FLUX.2 Pro"
+          "name": "Black Forest Labs: FLUX.2 Pro",
+          "references": 8
         },
         {
           "id": "bytedance-seed/seedream-4.5",
-          "name": "ByteDance Seed: Seedream 4.5"
+          "name": "ByteDance Seed: Seedream 4.5",
+          "references": 0
         }
       ],
       "available": true,
@@ -1460,7 +1462,9 @@
     "type": "ImagePrice",
     "body": {
       "cost_usd": 0.03,
-      "unit": "megapixel"
+      "unit": "megapixel",
+      "input_cost_usd": null,
+      "input_unit": null
     }
   },
   "generateImage": {
@@ -1474,6 +1478,16 @@
     }
   },
   "generateImageWithoutCost": {
+    "route": "POST /api/images/generate",
+    "type": "GeneratedImage",
+    "body": {
+      "content": "iVBORw0KGgoAAAANSUhEUgAABAAAAAYACAYAAADogjqq",
+      "media_type": "image/png",
+      "cost_usd": null,
+      "model": "black-forest-labs/flux.2-pro"
+    }
+  },
+  "generateImageFromImage": {
     "route": "POST /api/images/generate",
     "type": "GeneratedImage",
     "body": {
