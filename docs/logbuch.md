@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-26 – [BEOBACHTUNG] 9.7 vom Eigentümer bestätigt
+
+- Eigentümer im Chat: „Funktioniert alles.“ Eingespielt war `7bc5333`. 9.7 → `[ERLEDIGT]` (Fahrplan, Schrittliste, Stand, README). Phase 9: 7 von 15 – die Zählung in der Fahrplan-Übersicht stand noch auf 5 (seit 9.6 nicht nachgezogen), mit korrigiert. Nächster Schritt: 9.8 Bild zu Bild (Vorlage, Entscheidungs-Klasse).
+
 ### 2026-10-26 – [BEOBACHTUNG] Deployment `7bc5333` (9.7)
 
 - Auf Anweisung des Eigentümers („merge PR #190 und spiele main auf nodica1 ein“): PR #190 nach grüner CI (4 von 4) als Merge-Commit zusammengeführt, CI auf `main` grün. Runbook Abschnitt 7 (ADR-039): `REVISION` `7bc5333`, Rückweg `skriptorium:vorher` (Abbild `4e35b8e16068`, zuvor `adda4b9`).
