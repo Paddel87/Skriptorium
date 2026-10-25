@@ -323,6 +323,7 @@ data/
   worlds/<welt>/stories/<geschichte>/chapters/NN-<titel>.md   Kapiteltext, Kopf mit Kurzfassung
   worlds/<welt>/stories/<geschichte>/facts.md     nur für diese Geschichte geltende Fakten (FR-024)
   worlds/<welt>/stories/<geschichte>/titelbild-<zufall>.<endung>   Titelbild, ADR-075; nicht indexiert
+  <bilddatei>.herkunft.yml   neben einem übernommenen erzeugten Bild (Eintragsbild, Karte, Titelbild): modell, anweisung, seitenverhaeltnis, kosten_usd, datum – ADR-095; nicht indexiert, fehlt bei hochgeladenen Bildern
   worlds/<welt>/stories/<geschichte>/verlauf/NN.md   übernommene Vorschläge (Anweisung und Text) je Kapitel, ADR-056
   system/zugang.md                                Zugangsdaten (Hashes), ADR-017
   system/verbrauch/JJJJ-MM.md                     Verbrauch der KI-Anfragen je Monat, ADR-023
@@ -340,6 +341,7 @@ data/
 - **Nur Datenbank als Speicher / nur Dateien ohne Index:** Datenbank allein widerspricht offenen Formaten; Dateien ohne Index (Empfehlung der KI) vom Eigentümer zugunsten von Dateien plus Suchindex verworfen – siehe ADR-003
 - **Ganzen Verlauf bei jeder Anfrage mitschicken (Ist-Zustand TypingMind):** Kosten und Kontextgrenzen sind der Anlass des Projekts – siehe ADR-003
 - **Eigenes eingeschränktes Serverkonto für die KI / kein Serverzugriff der KI:** Docker-Zugriff ist root-gleich und der Administrator-Schlüssel liegt auf demselben Mac; ohne Zugriff hinge jede Wartung am Eigentümer – siehe ADR-037
+- **Herkunft erzeugter Bilder im Dateikopf von Eintrag, Welt und Geschichte / in einem zentralen Verzeichnis unter `system/`:** Kopf mit bis zu 4.000 Zeichen je Anweisung unübersichtlich, drei verschiedene Formen, `bilder` hätte in der Schnittstelle seine Form geändert; ein zentrales Verzeichnis liegt getrennt vom Bild und müsste bei jedem Löschen nachgezogen werden – siehe ADR-095
 - **Inhalte von Kanon-Einträgen in Feldern des Dateikopfs (Variante β zu V.35 G1/G2):** setzt dieselbe Abschnittsregel voraus, weil alle Wege in den Kanon Markdown liefern; Umschreiben des Bestands, Formular und Schnittstelle, Text im Kopf schlechter lesbar – siehe ADR-091
 - **Pflichtabschnitte oder einzelne Felder statt Textfeld (Variante C zu V.35 B2, G1/G2):** am verlässlichsten für das Programm, bremst aber beim Schreiben; „Felder statt Rauten“ vom Eigentümer nicht gewünscht – siehe ADR-092
 - **Denk-Token von grok-4.7 deckeln (1.024) / Denken abschalten:** Deckel verlängert das Vorab-Denken auf 162–244 s, Abschalten lehnt der Anbieter ab – siehe ADR-052 (D.16)

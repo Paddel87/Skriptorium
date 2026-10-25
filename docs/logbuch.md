@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-25 – [ADR-ANGELEGT] ADR-095 Herkunft erzeugter Bilder in einer Begleitdatei (9.6)
+
+- Vorlage mit drei Optionen (Kopf / Begleitdatei / zentrales Verzeichnis), Heuristiken Teil 1–3 geladen. Eigentümer per Auswahlfragen jeweils die Empfehlung: B Begleitdatei, aufklappbar mit „Mit dieser Anweisung neu erzeugen“, Kosten mit festhalten, Nebenfrage KI-Text „Später planen“ → V.42 (Landeplatz 9.15).
+- Feststellung bei der Vorlage: Der Suchindex liest jede `.md`-Datei unter dem Datenverzeichnis (`storage/store.py`, `rglob("*.md")`) – deshalb Endung `.herkunft.yml`.
+- Reaktiv-Quote 0 / 10 (ADR-086–095).
+
 ### 2026-10-25 – [BEOBACHTUNG] Modellwechsel auf die Entscheidungs-Klasse; 9.5 erledigt; 9.6 begonnen
 
 - **Modell:** Eigentümer wechselt per `/model` auf `claude-opus-5-5`; `get_session` bestätigt eingestellt und bedient `claude-opus-5-5` → Entscheidungs-Klasse. Kontextgröße jetzt feststellbar: 174.394 Token (Grenze 200.000).
