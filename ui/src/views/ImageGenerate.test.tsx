@@ -161,7 +161,15 @@ describe("generating an image (step 7.12)", () => {
     await waitFor(() => {
       expect(changed).toHaveBeenCalledWith(after);
     });
-    expect(calls.at(-1)?.body).toEqual({ content: "a2xlaW4=" });
+    expect(calls.at(-1)?.body).toEqual({
+      content: "a2xlaW4=",
+      herkunft: {
+        model: "black-forest-labs/flux.2-pro",
+        prompt: "Kael: Hager.",
+        aspect_ratio: "2:3",
+        cost_usd: 0.031,
+      },
+    });
   });
 });
 

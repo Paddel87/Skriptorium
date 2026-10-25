@@ -13,6 +13,11 @@ import { APPEARANCE, PURPOSE, readSection } from "../sections";
 import { AppearanceExtract } from "./AppearanceExtract";
 import { ImageDescription } from "./ImageDescription";
 import { ImageGenerate } from "./ImageGenerate";
+import {
+  ImageOriginPanel,
+  seedOf,
+  type GenerateSeed,
+} from "./ImageOriginPanel";
 import { SectionConflict } from "./SectionConflict";
 import { useSectionChoice } from "./useSectionChoice";
 
@@ -22,7 +27,8 @@ const MAX_IMAGES = 12;
 /**
  * The images of a canon entry (step 7.6, ADR-072): the first is the main image, large above the
  * text; the others follow as small previews, "＋" adds one. A tap shows an image large, with
- * browsing, "Zum Hauptbild machen", "Entfernen" and "Von der KI beschreiben lassen" (step 7.13).
+ * browsing, "Zum Hauptbild machen", "Entfernen" and "Von der KI beschreiben lassen" (step 7.13);
+ * a generated image shows its origin there (step 9.6, ADR-095).
  * Without `editable` (guests, the compact bar) the images are only shown.
  */
 export function EntryImages({
@@ -41,6 +47,8 @@ export function EntryImages({
   const [describing, setDescribing] = useState<string | null>(null);
   const [choosing, setChoosing] = useState(false);
   const [generating, setGenerating] = useState(false);
+  // Set when an image is generated anew from the origin of another (step 9.6).
+  const [seed, setSeed] = useState<GenerateSeed | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const picker = useRef<HTMLInputElement>(null);
@@ -170,24 +178,27 @@ export function EntryImages({
       {generating && (
         <ImageGenerate
           title={`Bild erzeugen – ${entry.name}`}
-          initialPrompt={entryPrompt(entry)}
+          initialPrompt={seed?.prompt ?? entryPrompt(entry)}
           hint={
-            lacksAppearance(entry) ? (
+            seed === null && lacksAppearance(entry) ? (
               <LooksHint entry={entry} onEdit={onEdit} onChanged={onChanged} />
             ) : null
           }
-          initialFormat={entry.category === "figur" ? "2:3" : "3:2"}
-          onTakeOver={async (image) => {
+          initialFormat={seed?.format ?? defaultFormat(entry)}
+          initialModel={seed?.model ?? null}
+          onTakeOver={async (image, origin) => {
             onChanged(
               await api.addImage(
                 entry.world,
                 entry.id,
                 await base64(await shrinkImage(image)),
+                origin,
               ),
             );
           }}
           onClose={() => {
             setGenerating(false);
+            setSeed(null);
           }}
         />
       )}
@@ -231,6 +242,22 @@ export function EntryImages({
             });
           }}
         >
+          <ImageOriginPanel
+            key={images[shown]}
+            load={() =>
+              api.imageOrigin(entry.world, entry.id, images[shown] ?? "")
+            }
+            onRegenerate={
+              editable && images.length < MAX_IMAGES
+                ? (origin) => {
+                    setSeed(seedOf(origin, defaultFormat(entry)));
+                    setGenerating(true);
+                    setShown(null);
+                    setDescribing(null);
+                  }
+                : undefined
+            }
+          />
           {describing !== null && (
             <ImageDescription
               key={describing}
@@ -259,6 +286,11 @@ export function EntryImages({
       <SectionConflict asking={asking} />
     </div>
   );
+}
+
+/** Portrait for figures, landscape for everything else. */
+function defaultFormat(entry: CanonEntry): "2:3" | "3:2" {
+  return entry.category === "figur" ? "2:3" : "3:2";
 }
 
 /** One image large over the page; arrow keys browse, Escape closes. */

@@ -102,6 +102,11 @@ export function sseFeed() {
   };
 }
 
+/** The calls without loading the origin of an image (step 9.6), which every large view does. */
+export function withoutOrigins(calls: readonly Call[]): Call[] {
+  return calls.filter((call) => !call.path.endsWith("/origin"));
+}
+
 function match(pattern: string, key: string): boolean {
   const regex = new RegExp(
     `^${pattern.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^/]+")}$`,
