@@ -1,14 +1,16 @@
 import { useCallback, useState } from "react";
-import { api, describeError, type ModelList } from "../api";
+import { api, describeError, type ModelList, type ModelTask } from "../api";
+import { taskModel } from "../models";
 import { useLoad } from "../useLoad";
 
 /**
- * Model of a request (steps 3.9, 5.12): the loaded list, favorites saved in "Modelle verwalten …"
- * which replace it, and the chosen model, preselected from the story. A new choice is passed on
- * through `onModelChange`.
+ * Model of a request (steps 3.9, 5.12, 9.7): the loaded list, favorites saved in "Modelle
+ * verwalten …" which replace it, and the chosen model, preselected from the story, else from the
+ * model of `task` in the settings (ADR-096). A new choice is passed on through `onModelChange`.
  */
 export function useModelChoice(
   storyModel: string | null,
+  task: ModelTask,
   onModelChange?: (model: string) => Promise<void>,
 ) {
   const loadModels = useCallback(() => api.models(), []);
@@ -18,7 +20,11 @@ export function useModelChoice(
   const [savedList, setSavedList] = useState<ModelList | null>(null);
   const [managing, setManaging] = useState(false);
   const modelList = savedList ?? models.data;
-  const preset = storyModel ?? modelList?.default;
+  const preset =
+    storyModel ??
+    (modelList === undefined
+      ? undefined
+      : (taskModel(modelList, task) ?? modelList.default));
   const chosenModel = model ?? preset ?? "";
   const offered = offeredModels(modelList, chosenModel);
 

@@ -470,6 +470,12 @@ def _models_images_and_usage(rec: _Recorder, images: FakeImages) -> None:
         "/api/models/favoriten",
         {"favorites": ["x-ai/grok-4.6", "deepseek/deepseek-v3.2"]},
     )
+    rec.put(
+        "setTaskModels",
+        "ModelList",
+        "/api/models/aufgaben",
+        {"tasks": {"weltenbau": "deepseek/deepseek-v3.2", "bilderzeugung": None}},
+    )
     rec.get("usage", "MonthUsage", "/api/usage")
 
     rec.get("imageModels", "ImageModelList", "/api/images/models")

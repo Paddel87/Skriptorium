@@ -46,7 +46,13 @@ export type {
   WritingStyle,
 } from "./manuscript";
 export { formatCost } from "./models";
-export type { CatalogModel, ModelList, MonthUsage } from "./models";
+export type {
+  CatalogModel,
+  ModelList,
+  ModelTask,
+  MonthUsage,
+  TaskModels,
+} from "./models";
 export type {
   ImportItem,
   ImportPreview,

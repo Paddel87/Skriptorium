@@ -244,6 +244,11 @@ export function ImageGenerate({
               </select>
             </label>
           )}
+          {models !== null && models.length > 0 && initialModel === null && (
+            <p className="note">
+              Aus den Einstellungen. Eine andere Wahl gilt nur für dieses Bild.
+            </p>
+          )}
           {models !== null && models.length === 0 && error === null && (
             <p className="note">Gerade sind keine Bildmodelle verfügbar.</p>
           )}

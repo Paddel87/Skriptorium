@@ -2377,3 +2377,40 @@ button.story-cover-add {
 .image-generate-hint {
   margin: 0.3rem 0;
 }
+
+/* Settings: model per task (step 9.7) – label and choice side by side, stacked on phones. */
+.task-models {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-model {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 0.25rem 1rem;
+  align-items: start;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.task-model .note {
+  display: block;
+  font-size: 0.85rem;
+}
+
+.task-model-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.task-model-choice select {
+  max-width: 100%;
+}
+
+@media (max-width: 40rem) {
+  .task-model {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

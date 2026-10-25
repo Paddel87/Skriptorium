@@ -26,6 +26,13 @@ const PATHS = {
       <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" />
     </>
   ),
+  settings: (
+    <>
+      <path d="M4 7h10M18 7h2M4 17h4M12 17h8" />
+      <circle cx="16" cy="7" r="2" />
+      <circle cx="10" cy="17" r="2" />
+    </>
+  ),
   account: (
     <>
       <circle cx="12" cy="8" r="4" />

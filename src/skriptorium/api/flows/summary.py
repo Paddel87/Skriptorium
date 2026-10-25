@@ -72,15 +72,21 @@ async def summarize_chapter(
     model: str = DEFAULT_MODEL,
     models: Mapping[str, ModelConfig] = DEFAULT_MODELS,
     record: UsageRecorder | None = None,
+    overall_model: str | None = None,
 ) -> SummaryOutcome:
     """Create the short summary of chapter ``number`` and continue the overall summary.
+
+    ``model`` writes the short summary, ``overall_model`` the overall one (``None``: the same,
+    ADR-096).
 
     Raises:
         InvalidInput: Unknown model or the chapter has no text.
         NotFound: World, story or chapter does not exist.
     """
-    if model not in models:
-        raise InvalidInput(f"Unbekanntes Modell: {model}")
+    overall = model if overall_model is None else overall_model
+    for name in (model, overall):
+        if name not in models:
+            raise InvalidInput(f"Unbekanntes Modell: {name}")
     failure = await _step(
         provider,
         model,
@@ -92,7 +98,7 @@ async def summarize_chapter(
     if failure is None:
         failure = await _step(
             provider,
-            model,
+            overall,
             "gesamt",
             lambda: builder.build_story_summary(world, story, number),
             lambda text: manuscripts.set_story_summary(world, story, text),

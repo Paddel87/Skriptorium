@@ -23,7 +23,7 @@ Das Skriptorium ist eine Web-App, in der ein Autor seine selbst entwickelten Wel
 <!-- Synchronisiert mit docs/project-context.md Abschnitt 1, docs/fahrplan.md „Aktueller Stand",
      docs/architecture.md Abschnitt 9, docs/decisions.md Teil A und docs/blockers.md. -->
 
-- **Projektphase:** Phase 9 – Verlässlicher Kanon, Bilder und Verwaltung (Umsetzung), begonnen 2026-10-18 (ADR-089, ADR-090); Phase 8 abgeschlossen 2026-10-18. Fortschritt: 5 von 15 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
+- **Projektphase:** Phase 9 – Verlässlicher Kanon, Bilder und Verwaltung (Umsetzung), begonnen 2026-10-18 (ADR-089, ADR-090); Phase 8 abgeschlossen 2026-10-18. Fortschritt: 6 von 15 Schritten – Übersicht mit Ampel im [Fahrplan](docs/fahrplan.md#übersicht). Seit 2026-09-30 öffentlich unter HTTPS mit Passwortschutz auf dem netcup-VPS, tägliche Sicherung mit erprobter Wiederherstellung (Phase 4)
 - **Version:** v1.0.0 – erstes produktives Release (2026-10-11, ADR-058); davor v0.1.0 als Vorabversion (ADR-043)
 - **Status:** In Betrieb
 - **Letzte Änderung:** 2026-10-13
@@ -85,7 +85,7 @@ Browser (ui) ──HTTP/SSE──> api ──> canon ─────┐
 
 Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:8000` im Browser öffnen (ohne TLS nur über `localhost`, weil das Sitzungs-Cookie `Secure` verlangt). Mit dem Einrichtungscode ein Passwort festlegen, anmelden, Welt anlegen.
 
-- **Links:** eine schmale Symbolleiste (Liste, Welten, Kanon, Import, Darstellung, Konto, Abmelden) und daneben die einklappbare Liste mit allen Welten, ihren Geschichten und den Kapiteln der offenen Geschichte, mit Suche und „+ Kapitel“, „+ Geschichte“, „+ Welt“. Am Smartphone öffnet „☰“ beides als Menü. Jede Ansicht hat eine eigene Adresse: Neuladen, Zurück und Lesezeichen bleiben an der Stelle.
+- **Links:** eine schmale Symbolleiste (Liste, Welten, Kanon, Import, Darstellung, Einstellungen, Konto, Abmelden) und daneben die einklappbare Liste mit allen Welten, ihren Geschichten und den Kapiteln der offenen Geschichte, mit Suche und „+ Kapitel“, „+ Geschichte“, „+ Welt“. Am Smartphone öffnet „☰“ beides als Menü. Jede Ansicht hat eine eigene Adresse: Neuladen, Zurück und Lesezeichen bleiben an der Stelle.
 - **Welt:** Bereiche für Geschichten, Kanon (Suche über Name und Alias, Kategorien als Filter, Liste links, Eintrag rechts zum Lesen und Bearbeiten, eigene Adresse je Eintrag), Import mit Vorschau (Markdown sowie Figurenkarten und Lorebooks aus SillyTavern), Download der Welt als Lorebook und von Figuren als Karte für SillyTavern, Karten der Welt mit Zoom und Punkten, die zum Kanon-Eintrag führen, der KI-Weltenbauer und die Beschreibung der Welt. Passwort ändern und Sitzungen beenden unter „Konto“; „Darstellung“ wechselt zwischen wie das Gerät, hell, dunkel und schwarz (für AMOLED-Bildschirme).
 - **Schreibseite einer Geschichte:** aufgebaut wie ein Chat – das Manuskript scrollt, ein langes Kapitel öffnet am Textende, die Anweisung steht fest unten („/“ springt hinein). Oben Kapiteltitel und Speichern. „Kanon & Geschichte“ öffnet rechts eine Leiste mit dem Kanon zum Nachschlagen (Suche über Name und Alias) und den Einstellungen der Geschichte: Figuren-Schreibweise, Gäste aus anderen Welten (nur für diese Geschichte), Fakten dieser Geschichte, Gesamtzusammenfassung.
 - **Figuren-Schreibweise:** als Kurzzeile über der Anweisung (Perspektive, selbst geführte Figuren, „ändern“). Für die selbst geführten Figuren schreibt die KI keine Handlung, Rede oder Gedanken; beschreibt die Anweisung, was sie tun oder sagen, schreibt die KI genau das aus.
@@ -96,7 +96,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - **In den Kanon:** Eine markierte Stelle wird zum neuen Eintrag oder ergänzt einen Eintrag – im Kanon der Welt oder nur für diese Geschichte.
 - **Als App:** Im Browser „Zum Startbildschirm“ (iPhone) bzw. „App installieren“ (Android, Chrome am Rechner) wählen – das Skriptorium öffnet dann ohne Browserleiste. Es arbeitet nur mit Netz; ohne Verbindung erscheint ein Hinweis, Texte bleiben nie auf dem Gerät.
 - **Umfang des Kapitels:** Unter dem Manuskript stehen die Wörter des Kapitels; kurz vor der Grenze für die Kurzfassung erscheint ein Hinweis zum Abschließen.
-- **Modell und Kosten:** Das Modell wählst du unten neben der Anweisung aus deinen Favoriten (voreingestellt grok-4.6), die Geschichte merkt es sich. „Modelle verwalten …“ zeigt alle Modelle von OpenRouter mit Preis, Kontextgröße und geschätzten Kosten je Vorschlag; ein Stern nimmt eines in die Favoriten auf. Unter jedem Vorschlag stehen Token und Kosten, unter „Konto“ die KI-Kosten des laufenden Monats.
+- **Modell und Kosten:** Unter „Einstellungen“ legst du je Aufgabe fest, mit welchem Modell sie beginnt (Schreiben, Weltenbauer, Kurzfassungen, Bild beschreiben, Aussehen herauslösen, Bilder erzeugen; sonst gilt grok-4.6 bzw. FLUX.2 Pro). Beim Schreiben wählst du unten neben der Anweisung aus deinen Favoriten, die Geschichte merkt es sich; in den anderen Aufgaben gilt eine andere Wahl nur für dieses Mal. „Modelle verwalten …“ zeigt alle Modelle von OpenRouter mit Preis, Kontextgröße und geschätzten Kosten je Vorschlag; ein Stern nimmt eines in die Favoriten auf. Unter jedem Vorschlag stehen Token und Kosten, unter „Konto“ die KI-Kosten des laufenden Monats.
 
 ## Nächste Schritte
 
@@ -105,8 +105,9 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - ✅ **9.3:** gegliederte Einträge je Art – neue Einträge zeigen beim Anlegen die Abschnitte ihrer Art (z. B. Figur: Aussehen, Wesen, Fähigkeiten, Geschichte, Beziehungen), der Weltenbauer schreibt in sie (ADR-092); erledigt 2026-10-19 nach Proben mit echter KI (Weltenbauer gliedert in allen Arten; Probeschreiben ohne Verschlechterung).
 - ✅ **9.4:** Beziehungen mit Art – Zeile `- verheiratet mit @Kael` im Abschnitt „Beziehungen“, beim genannten Eintrag erscheint „Verweise hierher“ (ADR-093); erledigt 2026-10-21.
 - ✅ **9.5:** Bilder vom Bedarf her – „Bild erzeugen“ schlägt je Art die passenden Angaben vor und weist auf fehlendes „Aussehen“ hin; „Karte erzeugen“ ist mit den Orten der Welt vorbelegt (ADR-094); erledigt 2026-10-25.
-- 🟠 **9.6:** Herkunft von Bildern – ein erzeugtes Bild behält Modell, Anweisung, Format und Kosten; „Herkunft“ beim Bild zeigt sie und erzeugt auf Wunsch neu (ADR-095); umgesetzt, deine Prüfung offen.
-- ⚪ **9.7–9.14:** Modell je Aufgabe, Bild zu Bild; Löschen oder Archivieren, Cache-Treffer, Verbrauchsstatistik je Welt und Geschichte; Erkundung zu Quellen und Recherche; Gast-Figuren ausbauen (nach deiner Probe); Kontexttreue erneut prüfen (ADR-090).
+- ✅ **9.6:** Herkunft von Bildern – ein erzeugtes Bild behält Modell, Anweisung, Format und Kosten; „Herkunft“ beim Bild zeigt sie und erzeugt auf Wunsch neu (ADR-095); erledigt 2026-10-25.
+- 🟠 **9.7:** Modell je Aufgabe – Seite „Einstellungen“ legt für jede KI-Aufgabe das Startmodell fest, auch für Kurzfassungen und Bilder (ADR-096); umgesetzt, deine Prüfung offen.
+- ⚪ **9.8–9.14:** Bild zu Bild; Löschen oder Archivieren, Cache-Treffer, Verbrauchsstatistik je Welt und Geschichte; Erkundung zu Quellen und Recherche; Gast-Figuren ausbauen (nach deiner Probe); Kontexttreue erneut prüfen (ADR-090).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
 Ergebnisse der Erkundung: [Modell-Eignungstest](docs/research/modell-eignungstest.md) – damals Startmodell grok-4.7, Zweitmodell grok-4.6; seit 5.7 ist grok-4.6 voreingestellt (ADR-044).

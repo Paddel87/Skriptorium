@@ -38,7 +38,7 @@ export function WorldBuilder({
   onTakeOver: (markdown: string) => void;
   onClose: () => void;
 }) {
-  const choice = useModelChoice(null);
+  const choice = useModelChoice(null, "weltenbau");
   const flow = useWorldbuilder({
     world,
     entries,
@@ -190,6 +190,7 @@ export function WorldBuilder({
             Senden
           </button>
         </div>
+        <p className="note">Beginnt mit dem Modell aus den Einstellungen.</p>
       </div>
     </section>
   );

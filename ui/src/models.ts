@@ -1,5 +1,20 @@
-/** Display of catalog models (step 5.12, ADR-055). */
-import type { CatalogModel } from "./api";
+/** Display of catalog models and the model per task (steps 5.12, 9.7, ADR-055, ADR-096). */
+import type { CatalogModel, ModelList, ModelTask } from "./api";
+
+/**
+ * The saved model of `task`, or `null` for the preset: also `null` when the loaded catalog no
+ * longer offers it – the server then uses the preset as well (ADR-096).
+ */
+export function taskModel(list: ModelList, task: ModelTask): string | null {
+  const saved = list.tasks[task];
+  if (
+    saved === null ||
+    (list.catalog_available && !list.catalog.some((m) => m.id === saved))
+  ) {
+    return null;
+  }
+  return saved;
+}
 
 /** Name without the provider prefix, e.g. "SpaceXAI: Grok 4.6" → "Grok 4.6". */
 export function shortName(model: CatalogModel | undefined, id: string): string {

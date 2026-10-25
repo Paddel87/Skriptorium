@@ -125,10 +125,10 @@ def origin_out(origin: ImageOrigin | None) -> ImageOriginOut | None:
 
 @router.get("/models")
 async def list_image_models(found: ServicesDep) -> ImageModelList:
-    """The image models of the catalog (step 7.12)."""
+    """The image models of the catalog (step 7.12); ``default`` is the saved one (ADR-096)."""
     await found.image_catalog.refresh()
     return ImageModelList(
-        default=DEFAULT_IMAGE_MODEL,
+        default=found.favorites.preset("bilderzeugung", found.image_catalog, DEFAULT_IMAGE_MODEL),
         models=[ImageModelOut(id=m.id, name=m.name) for m in found.image_catalog.models()],
         available=found.image_catalog.available,
         ready=found.images is not None,
