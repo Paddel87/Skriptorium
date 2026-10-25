@@ -4,10 +4,16 @@ import { base64, IMAGE_SIDE, shrinkImage } from "../files";
 import { coverPrompt } from "../imagePrompts";
 import { ErrorText } from "./Common";
 import { ImageGenerate } from "./ImageGenerate";
+import {
+  ImageOriginPanel,
+  seedOf,
+  type GenerateSeed,
+} from "./ImageOriginPanel";
 
 /**
  * The story's cover (step 7.11, ADR-075), at the top of the story bar: shown, changed and removed
- * here; it becomes the cover of the e-book. Stored as JPEG, which every e-book reader shows.
+ * here; it becomes the cover of the e-book. Stored as JPEG, which every e-book reader shows. A
+ * generated cover shows its origin below it and can be generated anew (step 9.6, ADR-095).
  */
 export function StoryCover({
   story,
@@ -22,6 +28,7 @@ export function StoryCover({
   const [error, setError] = useState<string | null>(null);
   const [choosing, setChoosing] = useState(false);
   const [generating, setGenerating] = useState(false);
+  const [seed, setSeed] = useState<GenerateSeed | null>(null);
 
   async function change(work: () => Promise<Story>) {
     setBusy(true);
@@ -101,6 +108,16 @@ export function StoryCover({
           </div>
         </div>
       )}
+      {story.cover !== null && (
+        <ImageOriginPanel
+          key={story.cover}
+          load={() => api.coverOrigin(story.world, story.id)}
+          onRegenerate={(origin) => {
+            setSeed(seedOf(origin, "2:3"));
+            setGenerating(true);
+          }}
+        />
+      )}
       {choosing && (
         <div className="add-choice" role="menu">
           <button
@@ -128,19 +145,22 @@ export function StoryCover({
       {generating && (
         <ImageGenerate
           title="Titelbild erzeugen"
-          initialPrompt={coverPrompt(story)}
-          initialFormat="2:3"
-          onTakeOver={async (image) => {
+          initialPrompt={seed?.prompt ?? coverPrompt(story)}
+          initialFormat={seed?.format ?? "2:3"}
+          initialModel={seed?.model ?? null}
+          onTakeOver={async (image, origin) => {
             onSaved(
               await api.setCover(
                 story.world,
                 story.id,
                 await base64(await shrinkImage(image, IMAGE_SIDE, true)),
+                origin,
               ),
             );
           }}
           onClose={() => {
             setGenerating(false);
+            setSeed(null);
           }}
         />
       )}

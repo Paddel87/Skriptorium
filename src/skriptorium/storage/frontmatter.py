@@ -78,6 +78,22 @@ def parse(text: str) -> tuple[dict[str, HeaderValue], str]:
     raise InvalidInput("Dateikopf ist nicht mit --- abgeschlossen")
 
 
+def parse_mapping(text: str) -> dict[str, HeaderValue]:
+    """Read a plain YAML file of named fields with the same strict rules as a header.
+
+    Raises:
+        InvalidInput: Not valid YAML, not a mapping or ambiguous.
+    """
+    return _load_header(text)
+
+
+def render_mapping(mapping: Mapping[str, HeaderValue]) -> str:
+    """Build the text of a plain YAML file of named fields."""
+    return yaml.safe_dump(
+        dict(mapping), allow_unicode=True, sort_keys=False, default_flow_style=False
+    )
+
+
 def _load_header(header_text: str) -> dict[str, HeaderValue]:
     loader = _StrictSafeLoader(header_text)
     try:

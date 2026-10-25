@@ -8,11 +8,11 @@
 <!-- ANCHOR:aktueller-stand -->
 ## Aktueller Stand
 
-- **Stand vom:** 2026-10-19 (9.3 erledigt – feste Abschnitte je Art, ADR-092; Code PR #177, Proben PR #179, beide mit grüner CI zusammengeführt; Proben zu 9.3 im dritten Versuch gelaufen – Regel-002 und Weltenbauer; zuvor zweiter Versuch ohne Schlüssel, Werkzeug für die Weltenbauer-Probe vorbereitet); 2026-10-18 (9.2 erledigt – vier End-to-End-Tests, Vertragstest Server ↔ Oberfläche, CI-Schrittnamen; PR #175; 9.1 erledigt – ADR-091, PR #173; D.19 angelegt; zuvor Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
+- **Stand vom:** 2026-10-25 (9.5 erledigt – Bilder vom Bedarf her, ADR-094, PR #184, vom Eigentümer bestätigt; 9.6 begonnen); 2026-10-21 (9.4 erledigt, ADR-093); 2026-10-19 (9.3 erledigt – feste Abschnitte je Art, ADR-092; Code PR #177, Proben PR #179, beide mit grüner CI zusammengeführt; Proben zu 9.3 im dritten Versuch gelaufen – Regel-002 und Weltenbauer; zuvor zweiter Versuch ohne Schlüssel, Werkzeug für die Weltenbauer-Probe vorbereitet); 2026-10-18 (9.2 erledigt – vier End-to-End-Tests, Vertragstest Server ↔ Oberfläche, CI-Schrittnamen; PR #175; 9.1 erledigt – ADR-091, PR #173; D.19 angelegt; zuvor Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
 - **Laufende Phase:** Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (Phase 8 abgeschlossen 2026-10-18)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** 9.5 Bilder vom Bedarf her; Karte aus den Orten – umgesetzt (ADR-094), Prüfung durch den Eigentümer offen
-- **Nächster Schritt:** 9.5 Bilder vom Bedarf her; Karte aus den Orten – zu Beginn Vorlage (Entscheidungs-Klasse). D.19: Der Lauf zu PR #181 (2026-10-19 21:12 UTC) lief noch auf Ubuntu 24.04; weiter prüfen bis 2026-11-02. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** 9.6 Herkunft von Bildern – umgesetzt (ADR-095), CI im Pull Request und Prüfung durch den Eigentümer offen
+- **Nächster Schritt:** Pull Request zu 9.6 nach Freigabe, Prüfung durch den Eigentümer (nach dem Einspielen); danach 9.7 Einstellungsseite – Modell je Aufgabe. D.19: Der Lauf zu PR #181 (2026-10-19 21:12 UTC) lief noch auf Ubuntu 24.04; weiter prüfen bis 2026-11-02. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -24,7 +24,7 @@ Ampel (eingeführt 2026-10-08 auf Wunsch des Eigentümers; Rot nur für Blockier
 
 Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`docs/archiv/fahrplan-phase-8.md`](archiv/fahrplan-phase-8.md).
 
-**Phase 9: 4 von 15 erledigt.**
+**Phase 9: 5 von 15 erledigt.**
 
 | | Schritt | Titel | Status | Nächster Zug |
 |---|---|---|---|---|
@@ -32,8 +32,8 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ✅ | 9.2 | End-to-End-Tests für die Abläufe der Phasen 6–8 | erledigt 2026-10-18 | – |
 | ✅ | 9.3 | Gegliederte Einträge je Art (B2, G1/G2) | erledigt 2026-10-19 (ADR-092) | – |
 | ✅ | 9.4 | Beziehungen mit Art und Rückverweis (B3) | erledigt 2026-10-21 (ADR-093) | – |
-| 🟠 | 9.5 | Bilder vom Bedarf her; Karte aus den Orten (G4, B4) | umgesetzt, Prüfung offen (ADR-094) | du: prüfen |
-| ⚪ | 9.6 | Herkunft von Bildern (B1) | offen | KI: Vorlage |
+| ✅ | 9.5 | Bilder vom Bedarf her; Karte aus den Orten (G4, B4) | erledigt 2026-10-25 (ADR-094) | – |
+| 🟠 | 9.6 | Herkunft von Bildern (B1) | umgesetzt, Prüfung offen (ADR-095) | du: prüfen |
 | ⚪ | 9.7 | Einstellungsseite – Modell je Aufgabe (G3, B6) | offen | KI: Mockup und Vorlage |
 | ⚪ | 9.8 | Bild zu Bild (B7) | offen | KI: nach 9.6 Vorlage |
 | ⚪ | 9.9 | Löschen oder Archivieren (B5) | offen | KI: Vorlage mit Mockup |
@@ -62,9 +62,11 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ⚪ | D.19 | CI-Runner `ubuntu-latest` wechselt auf Ubuntu 26 | offen | KI – ab 2026-10-19, bis 2026-11-02 |
 | ✅ | D.20 | Sicherheitsfunde certifi und vite (Audit 2026-10-21) | erledigt 2026-10-21 | – |
 | ✅ | D.21 | Sicherheitsfunde virtualenv (Audit 2026-10-22) | erledigt 2026-10-22 | – |
+| ⚪ | D.22 | Probelauf Routine-Klasse mit Sonnet 5.5 | offen | KI – vor der nächsten Abgabe an Unteragenten |
+| 🟠 | D.23 | Sicherheitsfunde filelock, undici, zod (Audit 2026-10-25) | behoben im PR #187, CI offen | KI |
 | ✅ | D.16 | Reaktionszeit erneut erkunden – grok-4.7 über 90 s | erledigt 2026-10-10 (ADR-052) | – |
 
-Verschoben auf die übernächste Ausbaustufe (Landeplatz 9.15): V.20, V.21, V.23, V.24, V.33 (weiter verschoben 2026-10-18, ADR-090), V.38 (Befund in 9.3, 2026-10-18), V.39 (aus 9.5, 2026-10-21), V.40 (Rückmeldung des Eigentümers zu Sperren, 2026-10-22), V.41 (Textqualität von Hermes, 2026-10-22). In Phase 9 übernommen (2026-10-18, ADR-090): V.35 → 9.3–9.9 und 9.12, V.36 → 9.10, V.37 → 9.11, V.34 → 9.13. In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
+Verschoben auf die übernächste Ausbaustufe (Landeplatz 9.15): V.20, V.21, V.23, V.24, V.33 (weiter verschoben 2026-10-18, ADR-090), V.38 (Befund in 9.3, 2026-10-18), V.39 (aus 9.5, 2026-10-21), V.40 (Rückmeldung des Eigentümers zu Sperren, 2026-10-22), V.41 (Textqualität von Hermes, 2026-10-22), V.42 (vollständige Anfrage beim KI-Text, aus 9.6, 2026-10-25). In Phase 9 übernommen (2026-10-18, ADR-090): V.35 → 9.3–9.9 und 9.12, V.36 → 9.10, V.37 → 9.11, V.34 → 9.13. In Phase 8 übernommen (2026-10-13, ADR-081): V.29 → 8.4, V.31 → 8.5, V.30 → 8.6, V.32 → 8.7, V.27 → 8.8, V.22 → 8.9, V.28 → 8.10, V.25 → 8.11, V.26 → 8.12 (Erkundung). In Phase 7 übernommen (2026-10-12, ADR-068): V.16 → 7.2, V.14 → 7.3, V.1 → 7.4, V.8 → 7.5, V.2 → 7.6. Früher: in Phase 6 übernommen (2026-10-11, ADR-059): V.6 → 6.8, V.7 → 6.9, V.9 → 6.7, V.10 → 6.3, V.12 und V.17 → 6.1, V.13 → 6.4, V.15 → 6.2, V.18 → 6.5, V.19 → 6.6. Verworfen (ADR-059): V.3, V.4, V.5, V.11.
 
 ---
 
@@ -262,7 +264,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 9.5: Bilder vom Bedarf her; Karte aus den Orten (V.35 G4, B4)
 
-- **Status:** 🟠 IN ARBEIT (seit 2026-10-21) – Vorlage mit Tabelle je Bildart vorgelegt (Zählung im Betrieb), Eigentümer per Auswahlfragen: Karte 1B, fehlendes Aussehen 2A, Gegenstand 3A, Herauslösen nur Figuren → ADR-094; Herauslösen für Gegenstände und Orte → V.39. Mockup freigegeben (alle Orte vorab angekreuzt). Umgesetzt (nur `ui`): `imagePrompts.ts` (`entryPrompt` je Art, `lacksAppearance`, `mapPrompt` mit Orten, Grenze 1.500 Zeichen für Karten), `ImageGenerate` (Hinweis als Element, Platz für Auswahl, Textfeld folgt neuer Vorbelegung), `EntryImages` (Hinweis mit Knopf), `AddMap` (Ortsliste), `LOCATION`/`PURPOSE` in `sections.ts` (Regel-003). Tests: vitest 498 (`imagePrompts.ts`, `AddMap.tsx`, `EntryImages.tsx` je 100 % Zeilen), Playwright 15, pytest 932. Offen: Prüfung durch den Eigentümer
+- **Status:** ✅ ERLEDIGT (2026-10-25) – PR #184 mit grüner CI zusammengeführt (`e886916`), vom Eigentümer bestätigt (2026-10-25, im Chat: „9.5 ist bestätigt“). Verlauf: 🟠 IN ARBEIT (seit 2026-10-21) – Vorlage mit Tabelle je Bildart vorgelegt (Zählung im Betrieb), Eigentümer per Auswahlfragen: Karte 1B, fehlendes Aussehen 2A, Gegenstand 3A, Herauslösen nur Figuren → ADR-094; Herauslösen für Gegenstände und Orte → V.39. Mockup freigegeben (alle Orte vorab angekreuzt). Umgesetzt (nur `ui`): `imagePrompts.ts` (`entryPrompt` je Art, `lacksAppearance`, `mapPrompt` mit Orten, Grenze 1.500 Zeichen für Karten), `ImageGenerate` (Hinweis als Element, Platz für Auswahl, Textfeld folgt neuer Vorbelegung), `EntryImages` (Hinweis mit Knopf), `AddMap` (Ortsliste), `LOCATION`/`PURPOSE` in `sections.ts` (Regel-003). Tests: vitest 498 (`imagePrompts.ts`, `AddMap.tsx`, `EntryImages.tsx` je 100 % Zeilen), Playwright 15, pytest 932
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** 9.3
 - **Freigabepflichtig:** ja – ändert die Vorbelegung aus ADR-084
@@ -278,7 +280,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 9.6: Herkunft von Bildern – Modell und Anweisung speichern (V.35 B1)
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-25) – Vorlage vorgelegt, Eigentümer per Auswahlfragen: Begleitdatei, aufklappbar mit „Neu erzeugen“, mit Kosten, Nebenfrage KI-Text später → ADR-095, V.42. Umgesetzt (Notiz); offen: CI im Pull Request, Prüfung durch den Eigentümer
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** keine
 - **Freigabepflichtig:** ja – neue Angaben im Dateikopf (Kategorie 4)
@@ -290,7 +292,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Betroffene Module:** canon, manuscript, api, ui
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, ADR
-- **Notizen:** Aus V.35 (ADR-090).
+- **Notizen:** Aus V.35 (ADR-090). Umsetzung (ADR-095): `storage/origins.py` (`ImageOrigin`, Felder `modell`, `anweisung`, `seitenverhaeltnis`, `kosten_usd`, `datum`), `DocumentStore.write_image(..., origin)` schreibt `<bild>.herkunft.yml`, `read_image_origin`, `delete_image` löscht sie mit (auch wenn das Bild von Hand gelöscht wurde); `canon` (Eintragsbild, Karte) und `manuscript` (Titelbild) reichen durch, `api` nimmt optional `herkunft` an (Länge und Form geprüft, Datum vom Server) und liest sie über `…/origin` (`null` ohne Herkunft). Oberfläche: `ImageGenerate` übergibt beim Übernehmen Modell, Anweisung, Format und gemeldete Kosten und nimmt ein vorgewähltes Modell an; `ImageOriginPanel` zeigt „Herkunft“ aufklappbar in der großen Ansicht von Eintragsbild und Karte, beim Titelbild unter dem Bild (es hat keine große Ansicht), mit „✨ Mit dieser Anweisung neu erzeugen“ (öffnet „Bild erzeugen“ bzw. „Karte erzeugen“ vorbelegt; nicht, wenn die Höchstzahl erreicht ist). Hochgeladene und vor 9.6 erzeugte Bilder zeigen nichts. Beim reinen Hochladen bleibt der Körper unverändert (kein `herkunft`). Tests: pytest 956 (Abdeckung 99 %; `storage/origins.py`, `storage/store.py`, `canon/images.py`, `canon/maps.py`, `manuscript/stories.py`, `api/*_routes.py` je 100 %), `test_security.py` zählt 3 neue geschützte Routen; vitest 506 (98,72 / 95,35 / 97,97 / 98,91 % Anweisungen / Zweige / Funktionen / Zeilen; `ImageOriginPanel.tsx` 100 %), 7 bestehende Komponenten-Tests auf die zusätzlichen Abfragen und den neuen Körper angepasst (Hilfe `withoutOrigins` in `ui/fake-api.ts`); Playwright 15/15; ruff, mypy --strict, bandit, eslint, prettier, tsc grün.
 
 #### 9.7: Einstellungsseite – Modell je Aufgabe (V.35 G3, B6)
 
@@ -433,7 +435,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 - **Empfohlene Klasse:** Entscheidung – inhaltliche Neuplanung mit Vision-Abgleich.
 - **Eingangskriterien:** Vision-Abgleich an der Phasengrenze nach Phase 9
 - **Anforderungen (ab Klasse M):** keine
-- **Zu tun:** V.20, V.21, V.23, V.24, V.33, V.38, V.39, V.40, V.41 (und neue V-Schritte, auch aus 9.12) in eine neue Phase überführen oder per ADR verwerfen.
+- **Zu tun:** V.20, V.21, V.23, V.24, V.33, V.38, V.39, V.40, V.41, V.42 (und neue V-Schritte, auch aus 9.12) in eine neue Phase überführen oder per ADR verwerfen.
 - **Akzeptanzkriterien:** Jeder verschobene Schritt hat einen neuen Schritt mit ID oder `[VERWORFEN]` mit ADR.
 - **Betroffene Module:** keine (Planung)
 - **Reifegrad-Wirkung:** keine
@@ -776,6 +778,40 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Sperrdateien, Logbuch-Eintrag
 - **Notizen:** Angelegt 2026-10-21 nach dem roten Lauf zu #182.
+
+#### D.23: Sicherheitsfunde filelock, undici, zod (Audit 2026-10-25)
+
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-25) – behoben auf dem Branch von PR #187 (die Cloud-Session darf nur auf ihren Branch pushen): filelock 4.0.4 → 4.2.4 (`uv.lock`), undici 7.30.0 → 7.30.1 und zod 4.6.5 → 4.6.7 (`package-lock.json`, `npm audit fix` ohne `--force`); `pip-audit` ohne Befund, `npm audit --audit-level=high` ohne Befund, vitest 506 und Pre-Commit grün. Offen: CI im PR
+- **Phasentyp-Kontext:** STABILISIERUNG
+- **Abhängigkeiten:** keine
+- **Frist:** sofort – rote Audit-Jobs (Python, TypeScript) blockieren jeden PR (#187)
+- **Freigabepflichtig:** nein – Updates innerhalb der Linie, keine Breaking Changes
+- **Empfohlene Klasse:** Routine – Abhängigkeits-Update mit Tests.
+- **Eingangskriterien:** Befund der CI (Lauf 40219451145, 2026-10-25 18:04 UTC)
+- **Anforderungen (ab Klasse M):** keine (Pflichtkategorie Dependency-Audit, `CLAUDE.md` Abschnitt 15)
+- **Zu tun:** CVE-2026-112940, -112913, -112907 in filelock 4.0.4 (Korrektur 4.2.1; nur über pre-commit/virtualenv und pip-audit, Entwicklungsgruppe); GHSA-4qv8-2p9j-2685, GHSA-f72v-6w45-q472, GHSA-xjj6-f33q-929c in undici ≤ 7.30.0 (nur über jsdom, Tests) und GHSA-mrhx-c7xc-m3w5 in zod < 4.6.6 (nur über eslint-plugin-react-hooks). Nach Regel-001 die neueste Korrekturversion der Linie. Alles nur Entwicklungswerkzeuge – kein Einspielen nötig.
+- **Akzeptanzkriterien:** Audits ohne Befund über der Schwelle in der CI; alle Jobs grün.
+- **Betroffene Module:** keine (Entwicklungswerkzeuge)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Sperrdateien, Logbuch-Eintrag
+- **Notizen:** Angelegt 2026-10-25 nach dem roten Lauf zu #187. Verbleibend: 3 mittlere Funde in vitest ≤ 4.1.11 (`@vitest/mocker`, `@vitest/coverage-v8`) unter der Schwelle `high`; Behebung nur mit vitest 5 (`--force`), Linie noch nicht mindestreif – Landeplatz D.2 (Nachprüfung vitest 5 am 2027-03-03, Ablaufdaten-Register).
+
+#### D.22: Probelauf Routine-Klasse mit Sonnet 5.5
+
+- **Status:** ⚪ OFFEN
+- **Phasentyp-Kontext:** STABILISIERUNG (Methodik)
+- **Abhängigkeiten:** keine
+- **Frist:** vor der nächsten Abgabe von Routine-Arbeit an einen Unteragenten; bis dahin keine Abgabe an Sonnet 5.5
+- **Freigabepflichtig:** nein
+- **Empfohlene Klasse:** Entscheidung – Referenz-Lauf und Bewertung der Abweichungen (wie D.10).
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** keine (`CLAUDE.md` Abschnitt 0, „Probelauf“)
+- **Zu tun:** Die Routine-Klasse ist seit der Session vom 2026-10-25 mit Claude Sonnet 5.5 besetzt (`get_session`); der bestandene Probelauf (D.10, 2026-09-28) galt Sonnet 5. Nach `CLAUDE.md` Abschnitt 0 wird er nach einem Modellwechsel wiederholt: dieselben Aufgaben wie in D.10 (Drift-Prüfung mit README-Synchronisation an einer Kopie mit eingebauten Abweichungen, Logbuch-Eintrag), je einmal auf Sonnet 5.5 und auf der Entscheidungs-Klasse, Abweichungen bewerten.
+- **Akzeptanzkriterien:** Ergebnis mit Datum in `docs/project-context.md` Abschnitt 6 (Routine-Klasse: Modell, bestanden oder nicht); bei Nichtbestehen bleibt die Abgabe aus und Routine-Arbeit läuft eine Klasse höher.
+- **Betroffene Module:** keine (Methodik)
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Logbuch-Eintrag, Projektkontext
+- **Notizen:** Angelegt 2026-10-25 auf Wahl des Eigentümers („Ja, als D-Schritt“).
 
 #### D.21: Sicherheitsfunde virtualenv (Audit 2026-10-22)
 
@@ -1434,6 +1470,23 @@ Diese Schritte gehören zu keiner Phase; sie werden fällig durch ein Datum, ein
 - **Reifegrad-Wirkung:** keine
 - **Artefakte:** Code, Tests, ADR
 - **Notizen:** Angelegt 2026-10-18 in 9.3 (Bericht des Unteragenten, geprüft von der bauenden KI). Bisher kein Schaden gemeldet; betrifft nur den Export als Figurenkarte.
+
+#### V.42: Vollständige Anfrage beim KI-Text festhalten
+
+- **Status:** ⏸️ VERSCHOBEN → 9.15 (Planung der nächsten Ausbaustufe)
+- **Landeplatz (nur VERSCHOBEN):** 9.15 (Eigentümer 2026-10-25 per Auswahlfrage in 9.6: „Später planen“, ADR-095)
+- **Phasentyp-Kontext:** UMSETZUNG mit Vorlage
+- **Abhängigkeiten:** keine
+- **Freigabepflichtig:** ja – neue Ablage (Kategorie 4), ggf. neue Schnittstelle (Kategorie 5)
+- **Empfohlene Klasse:** Entscheidung – Datenmodell (Eskalations-Auslöser 1).
+- **Eingangskriterien:** keine
+- **Anforderungen (ab Klasse M):** FR-013 (Nachvollziehbarkeit der Kontext-Zusammenstellung)
+- **Zu tun:** Nebenfrage aus V.35 B1: Zu einem KI-Text die vollständig zusammengestellte Anfrage (Rahmen, Kanon-Ausschnitt, Handlungsstand, letzte Seiten – bis ca. 30.000 Token, ca. 120 KB) festhalten, damit sich z. B. ein Kanon-Widerspruch nachvollziehen lässt. Heute hält der Verlauf Anweisung, KI-Text und Modell fest (ADR-056), nicht die Anfrage. Vorlage: wie viele Anfragen (z. B. die letzten 20, rollierend), wo (in der Geschichte, Datentrennung D.18), wie anzeigen.
+- **Akzeptanzkriterien:** Vorlage und ADR; Tests; Eigentümer bestätigt.
+- **Betroffene Module:** api, manuscript, ui
+- **Reifegrad-Wirkung:** keine
+- **Artefakte:** Code, Tests, ADR
+- **Notizen:** Angelegt 2026-10-25 in 9.6.
 
 #### V.41: Textqualität von Hermes 4 – Vergleich mit Denkmodus und Einstellungen je Modell
 

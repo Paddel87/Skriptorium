@@ -26,6 +26,12 @@ from skriptorium.storage.images import (
     MEDIA_TYPES,
     inspect_image,
 )
+from skriptorium.storage.origins import (
+    ORIGIN_SUFFIX,
+    ImageOrigin,
+    origin_from_mapping,
+    origin_to_mapping,
+)
 
 SearchMode = Literal["name", "fulltext"]
 
@@ -148,11 +154,13 @@ class DocumentStore:
         *,
         max_bytes: int = MAX_IMAGE_BYTES,
         max_side: int = MAX_IMAGE_SIDE,
+        origin: ImageOrigin | None = None,
     ) -> None:
         """Store a new image file atomically; nothing is indexed.
 
         The content must be a PNG, JPEG or WebP image whose format matches the ending of
-        ``path`` (``.png``, ``.jpg``, ``.webp``), within ``max_bytes`` and ``max_side``.
+        ``path`` (``.png``, ``.jpg``, ``.webp``), within ``max_bytes`` and ``max_side``. An
+        ``origin`` is written to the companion file next to it (step 9.6, ADR-095).
 
         Raises:
             AlreadyExists: A file exists at ``path``.
@@ -170,6 +178,25 @@ class DocumentStore:
             _write_atomically(file, data)
         except OSError as error:
             raise StorageError(f"{path}: {error}") from error
+        if origin is None:
+            return
+        text = frontmatter.render_mapping(origin_to_mapping(origin))
+        try:
+            _write_atomically(_origin_file(file), text.encode("utf-8"))
+        except OSError as error:
+            file.unlink(missing_ok=True)
+            raise StorageError(f"{path}: {error}") from error
+
+    def read_image_origin(self, path: str) -> ImageOrigin | None:
+        """The origin of an image, or ``None`` if it has none (step 9.6, ADR-095).
+
+        Raises:
+            InvalidInput: Bad path or an unreadable companion file.
+        """
+        companion = _origin_file(self._image_file(path))
+        if not companion.is_file():
+            return None
+        return origin_from_mapping(frontmatter.parse_mapping(companion.read_text(encoding="utf-8")))
 
     def read_image(self, path: str) -> tuple[bytes, str]:
         """Read an image file; returns its bytes and media type.
@@ -184,7 +211,7 @@ class DocumentStore:
         return file.read_bytes(), MEDIA_TYPES[file.suffix]
 
     def delete_image(self, path: str) -> None:
-        """Delete an image file.
+        """Delete an image file together with its origin, if it has one.
 
         Raises:
             NotFound: No image at ``path``.
@@ -192,6 +219,10 @@ class DocumentStore:
             StorageError: Deleting failed.
         """
         file = self._image_file(path)
+        try:
+            _origin_file(file).unlink(missing_ok=True)
+        except OSError as error:
+            raise StorageError(f"{path}: {error}") from error
         if not file.is_file():
             raise NotFound(path)
         try:
@@ -322,6 +353,11 @@ def _checked(path: str) -> PurePosixPath:
     ):
         raise InvalidInput(f"Ungültiger Pfad: {path!r}")
     return relative
+
+
+def _origin_file(image: Path) -> Path:
+    """The companion file holding the origin of ``image`` (ADR-095)."""
+    return image.with_name(image.name + ORIGIN_SUFFIX)
 
 
 def _write_atomically(file: Path, data: bytes) -> None:

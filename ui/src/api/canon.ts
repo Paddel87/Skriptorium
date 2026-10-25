@@ -1,6 +1,7 @@
 /** Worlds and their canon entries (`/api/worlds`). */
 
 import { request } from "./core";
+import type { ImageOrigin, StoredImageOrigin } from "./images";
 import { enc, worldPath } from "./paths";
 
 export type Category =
@@ -96,11 +97,23 @@ export const canonApi = {
   /** Address of one map of a world, for `<img src>` (step 7.10, ADR-073). */
   mapPath: (world: string, file: string) =>
     `${worldPath(world)}/maps/${enc(file)}`,
-  addMap: (world: string, name: string, content: string) =>
+  /** `herkunft` only for a generated map taken over (step 9.6, ADR-095). */
+  addMap: (
+    world: string,
+    name: string,
+    content: string,
+    herkunft: ImageOrigin | null = null,
+  ) =>
     request("POST", `${worldPath(world)}/maps`, {
       name,
       content,
+      ...(herkunft === null ? {} : { herkunft }),
     }) as Promise<World>,
+  mapOrigin: (world: string, file: string) =>
+    request(
+      "GET",
+      `${worldPath(world)}/maps/${enc(file)}/origin`,
+    ) as Promise<StoredImageOrigin | null>,
   renameMap: (world: string, file: string, name: string) =>
     request("PATCH", `${worldPath(world)}/maps/${enc(file)}`, {
       name,
@@ -119,11 +132,25 @@ export const canonApi = {
   /** Address of one image of an entry, for `<img src>` (step 7.6, ADR-072). */
   imagePath: (world: string, id: string, image: string) =>
     `${entryPath(world, id)}/images/${enc(image)}`,
-  /** Adds an image, sent as base64 in JSON like every other body. */
-  addImage: (world: string, id: string, content: string) =>
+  /**
+   * Adds an image, sent as base64 in JSON like every other body; `herkunft` only for a
+   * generated image taken over (step 9.6, ADR-095).
+   */
+  addImage: (
+    world: string,
+    id: string,
+    content: string,
+    herkunft: ImageOrigin | null = null,
+  ) =>
     request("POST", `${entryPath(world, id)}/images`, {
       content,
+      ...(herkunft === null ? {} : { herkunft }),
     }) as Promise<CanonEntry>,
+  imageOrigin: (world: string, id: string, image: string) =>
+    request(
+      "GET",
+      `${entryPath(world, id)}/images/${enc(image)}/origin`,
+    ) as Promise<StoredImageOrigin | null>,
   removeImage: (world: string, id: string, image: string) =>
     request(
       "DELETE",

@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import { api, type World, type WorldMap } from "../api";
 import { ErrorText } from "./Common";
 import { ImageDescription } from "./ImageDescription";
+import {
+  ImageOriginPanel,
+  seedOf,
+  type GenerateSeed,
+} from "./ImageOriginPanel";
 import { MapStage } from "./MapStage";
 import { MapToolbar } from "./MapToolbar";
 import { MarkerPicker } from "./MapMarkers";
@@ -12,18 +17,23 @@ import { useMapMarking } from "./useMapMarking";
 import { useMapZoom } from "./useMapZoom";
 import { useSectionChoice } from "./useSectionChoice";
 
-/** One map over the page with zoom and panning; Escape closes. */
+/**
+ * One map over the page with zoom and panning; Escape closes. A generated map shows its origin
+ * (step 9.6, ADR-095); with `onRegenerate` it can be generated anew from there.
+ */
 export function MapViewer({
   world,
   map,
   onChanged,
   onOpenEntry,
+  onRegenerate,
   onClose,
 }: {
   world: World;
   map: WorldMap;
   onChanged: (world: World) => void;
   onOpenEntry: (entry: string) => void;
+  onRegenerate?: (seed: GenerateSeed) => void;
   onClose: () => void;
 }) {
   const [describing, setDescribing] = useState(false);
@@ -110,6 +120,19 @@ export function MapViewer({
           />
         )}
         <ErrorText message={error} />
+        {!marking && (
+          <ImageOriginPanel
+            key={map.file}
+            load={() => api.mapOrigin(world.id, map.file)}
+            onRegenerate={
+              onRegenerate === undefined
+                ? undefined
+                : (origin) => {
+                    onRegenerate(seedOf(origin, "3:2"));
+                  }
+            }
+          />
+        )}
         {describing && (
           <ImageDescription
             title={`Geografie – ${map.name}`}

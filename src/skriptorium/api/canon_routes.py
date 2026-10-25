@@ -9,6 +9,7 @@ from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel, Field
 
 from skriptorium.api.context import ServicesDep, current_session
+from skriptorium.api.image_routes import ImageOriginIn, ImageOriginOut, origin_from, origin_out
 from skriptorium.canon import (
     MAX_MARKERS_PER_MAP,
     CanonEntry,
@@ -79,6 +80,8 @@ class ImageFile(BaseModel):
     """An image (PNG, JPEG or WebP), base64-encoded; the browser shrinks it first (ADR-072)."""
 
     content: Annotated[str, Field(max_length=4 * -(-MAX_IMAGE_BYTES // 3))]
+    # Only for a generated image taken over (step 9.6, ADR-095).
+    herkunft: ImageOriginIn | None = None
 
 
 class MapFile(BaseModel):
@@ -86,6 +89,7 @@ class MapFile(BaseModel):
 
     name: str
     content: Annotated[str, Field(max_length=4 * -(-MAX_MAP_BYTES // 3))]
+    herkunft: ImageOriginIn | None = None
 
 
 class MapChange(BaseModel):
@@ -143,7 +147,9 @@ def update_world(world_id: str, body: WorldChange, found: ServicesDep) -> World:
 @router.post("/{world_id}/maps", status_code=status.HTTP_201_CREATED)
 def add_world_map(world_id: str, body: MapFile, found: ServicesDep) -> World:
     """Add a map to a world (step 7.10, ADR-073)."""
-    return found.canon.add_world_map(world_id, body.name, _decoded(body.content))
+    return found.canon.add_world_map(
+        world_id, body.name, _decoded(body.content), origin_from(body.herkunft)
+    )
 
 
 @router.get("/{world_id}/maps/{file}")
@@ -151,6 +157,12 @@ def get_world_map(world_id: str, file: str, found: ServicesDep) -> Response:
     """One map of a world, with the media type of its checked format."""
     data, media_type = found.canon.world_map(world_id, file)
     return Response(data, media_type=media_type)
+
+
+@router.get("/{world_id}/maps/{file}/origin")
+def get_map_origin(world_id: str, file: str, found: ServicesDep) -> ImageOriginOut | None:
+    """How a map was generated; ``null`` for an uploaded map (step 9.6, ADR-095)."""
+    return origin_out(found.canon.map_origin(world_id, file))
 
 
 @router.patch("/{world_id}/maps/{file}")
@@ -216,7 +228,9 @@ def add_entry_image(
     world_id: str, entry_id: str, body: ImageFile, found: ServicesDep
 ) -> CanonEntry:
     """Add an image to a canon entry (step 7.6, ADR-072)."""
-    return found.canon.add_entry_image(world_id, entry_id, _decoded(body.content))
+    return found.canon.add_entry_image(
+        world_id, entry_id, _decoded(body.content), origin_from(body.herkunft)
+    )
 
 
 @router.get("/{world_id}/entries/{entry_id}/images/{image}")
@@ -224,6 +238,14 @@ def get_entry_image(world_id: str, entry_id: str, image: str, found: ServicesDep
     """One image of a canon entry, with the media type of its checked format."""
     data, media_type = found.canon.entry_image(world_id, entry_id, image)
     return Response(data, media_type=media_type)
+
+
+@router.get("/{world_id}/entries/{entry_id}/images/{image}/origin")
+def get_entry_image_origin(
+    world_id: str, entry_id: str, image: str, found: ServicesDep
+) -> ImageOriginOut | None:
+    """How an image of an entry was generated; ``null`` for an uploaded one (ADR-095)."""
+    return origin_out(found.canon.entry_image_origin(world_id, entry_id, image))
 
 
 @router.delete("/{world_id}/entries/{entry_id}/images/{image}")

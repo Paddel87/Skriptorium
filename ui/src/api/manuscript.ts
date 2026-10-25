@@ -2,6 +2,7 @@
 
 import { request, requestFile } from "./core";
 import { enc, storyPath, worldPath } from "./paths";
+import type { ImageOrigin, StoredImageOrigin } from "./images";
 import { describeWriteError } from "./writing";
 import type { WriteErrorKind } from "./writing";
 
@@ -109,10 +110,22 @@ export const manuscriptApi = {
   /** Address of the story's cover; the file name in the query makes a new cover load anew. */
   coverPath: (story: Story) =>
     `${storyPath(story.world, story.id)}/cover?v=${encodeURIComponent(story.cover ?? "")}`,
-  setCover: (world: string, story: string, content: string) =>
+  /** `herkunft` only for a generated cover taken over (step 9.6, ADR-095). */
+  setCover: (
+    world: string,
+    story: string,
+    content: string,
+    herkunft: ImageOrigin | null = null,
+  ) =>
     request("POST", `${storyPath(world, story)}/cover`, {
       content,
+      ...(herkunft === null ? {} : { herkunft }),
     }) as Promise<Story>,
+  coverOrigin: (world: string, story: string) =>
+    request(
+      "GET",
+      `${storyPath(world, story)}/cover/origin`,
+    ) as Promise<StoredImageOrigin | null>,
   removeCover: (world: string, story: string) =>
     request("DELETE", `${storyPath(world, story)}/cover`) as Promise<Story>,
   exportEpub: (

@@ -7,6 +7,7 @@ by its first bytes before it reaches the browser; SVG and anything else is refus
 """
 
 import base64
+from datetime import UTC, datetime
 from typing import Annotated, Final, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -21,6 +22,7 @@ from skriptorium.ai_gateway import (
     Usage,
 )
 from skriptorium.api.context import ServicesDep, current_session
+from skriptorium.canon import ImageOrigin
 from skriptorium.storage import InvalidInput, inspect_image
 
 router = APIRouter(prefix="/api/images", dependencies=[Depends(current_session)])
@@ -79,6 +81,46 @@ class GeneratedOut(BaseModel):
     media_type: str
     cost_usd: float | None
     model: str
+
+
+class ImageOriginIn(BaseModel):
+    """How a taken-over image was generated; sent along by the browser (step 9.6, ADR-095)."""
+
+    model: Annotated[str, Field(min_length=1, max_length=200)]
+    prompt: Annotated[str, Field(min_length=1, max_length=4000)]
+    aspect_ratio: AspectRatio
+    cost_usd: Annotated[float | None, Field(ge=0)] = None
+
+
+class ImageOriginOut(BaseModel):
+    """The stored origin of an image, with the date it was taken over."""
+
+    model: str
+    prompt: str
+    aspect_ratio: str
+    cost_usd: float | None
+    date: str
+
+
+def origin_from(given: ImageOriginIn | None) -> ImageOrigin | None:
+    """The origin to store, dated now; ``None`` for an uploaded image."""
+    if given is None:
+        return None
+    now = datetime.now(UTC).isoformat(timespec="seconds")
+    return ImageOrigin(given.model, given.prompt, given.aspect_ratio, given.cost_usd, now)
+
+
+def origin_out(origin: ImageOrigin | None) -> ImageOriginOut | None:
+    """The stored origin for the browser; ``None`` if the image has none."""
+    if origin is None:
+        return None
+    return ImageOriginOut(
+        model=origin.model,
+        prompt=origin.prompt,
+        aspect_ratio=origin.aspect_ratio,
+        cost_usd=origin.cost_usd,
+        date=origin.date,
+    )
 
 
 @router.get("/models")

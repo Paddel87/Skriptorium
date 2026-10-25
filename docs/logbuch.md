@@ -29,6 +29,47 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-25 – [GELÖST] Rote Audit-Jobs im PR #187 durch neue Sicherheitsfunde (D.23)
+
+- PR #187 (9.6) lief rot in „Python“ und „TypeScript“, jeweils im Dependency-Audit: `pip-audit` meldet drei CVEs in filelock 4.0.4, `npm audit` (Schwelle high) Funde in undici 7.30.0 und zod 4.6.5. Nicht vom PR verursacht, blockiert jeden PR – lokal reproduziert. Pre-Commit und End-to-End waren grün.
+- Behoben als D.23 im selben PR: `uv lock --upgrade-package filelock` → 4.2.4; `npm audit fix` (ohne `--force`) → undici 7.30.1, zod 4.6.7. Beide Audits ohne Befund über der Schwelle, vitest 506 und Pre-Commit grün. Alles nur Entwicklungswerkzeuge – kein Einspielen. Drei mittlere vitest-Funde bleiben unter der Schwelle (Landeplatz D.2).
+
+### 2026-10-25 19:01 MEZ – [SESSIONENDE] 9.5 erledigt, 9.6 entschieden und umgesetzt
+
+- **Dauer:** 18:34 bis 19:01 MEZ (Cloud-Session, Branch `claude/festive-hawking-shngn2`).
+- **Bearbeitet:** 9.5 `[ERLEDIGT]` (Bestätigung des Eigentümers); 9.6 Vorlage → ADR-095, V.42 (Landeplatz 9.15); 9.6 umgesetzt in `storage`, `canon`, `manuscript`, `api`, `ui` (Commits `1272662`, `0ec0b8f`, `0eb1767`).
+- **Stand:** Phase 9, 5 von 15; 9.6 `[IN ARBEIT]` – lokal fertig: pytest 956, vitest 506, Playwright 15/15, ruff, mypy --strict, bandit, eslint, prettier, tsc grün. Keine aktiven Blocker, keine offenen STOPP-Situationen.
+- **Offen:** Pull Request zu 9.6 (CI) nach Freigabe des Eigentümers; Einspielen von 9.5 und 9.6 auf dem VPS (nur vom Mac aus, ADR-025); Prüfung von 9.6 durch den Eigentümer. Probelauf der Routine-Klasse mit Sonnet 5.5 (Wechsel gegenüber Sonnet 5, `CLAUDE.md` Abschnitt 0) – auf Wahl des Eigentümers als D.22 angelegt; Abgabe an die Routine-Klasse bis dahin ausgesetzt (Projektkontext Abschnitt 6). D.11 bis 2026-10-31, D.19 bis 2026-11-02.
+- **Nächster Schritt:** Pull Request 9.6, nach Einspielen Prüfung durch den Eigentümer; dann 9.7 (Vorlage, Entscheidungs-Klasse).
+- **Modell-Bilanz:** Start auf Routine-Klasse (Sonnet 5.5) – nur Sessionstart, kein Schritt; nach Wechsel durch den Eigentümer Entscheidungs-Klasse (Opus 5.5, eingestellt und bedient laut `get_session`). 9.6 empfiehlt Entscheidung → 0 Schritte oberhalb der Empfehlung. Statuspflege von 9.5 und Doku nicht abgegeben: kleiner Umfang, Kontext geladen; Abgabe an Sonnet 5.5 ohne eigenen Probelauf ohnehin nicht gedeckt.
+- **Kontextgröße:** `get_session` meldete einmal 174.394 Token (nach dem Modellwechsel) und danach unverändert denselben Wert – der Wert wird offenbar nicht laufend aktualisiert; tatsächliche Größe zum Sessionende vermutlich über der Grenze von 200.000. Kein neuer Schritt begonnen; 9.6 wurde als laufender Schritt zu Ende gebaut.
+- **Sessionende-Prüfungen:** README synchron (5 von 15, 9.5 ✅, 9.6 🟠, 0 Blocker). Drift: ADR-095 → 9.6 vorhanden; V.42 → 9.15 in Übersicht und „Zu tun“; Modul-Liste unverändert; Reaktiv-Quote 0 / 10 (ADR-086–095); keine `[BLOCKIERT]`-Schritte; Phase 9 weiter 15 Schritte; Schnittstellen in `docs/architecture.md` Abschnitt 4 nachgetragen, Ablage in Abschnitt 7, Verworfenes in 8. Projektkontext-Status auf „ab 9.6“. Ablaufdaten-Register: D.19 läuft; D.1 ab 2026-11-05 noch nicht im Vorlauf. Archiv: Logbuch ca. 560 Zeilen, project-context 349 – kein Trigger. Quick-Start nicht berührt (keine Skripte, Abhängigkeiten, `.env`). Kategorie 6 nicht berührt (keine Anmeldung, Secrets oder personenbezogenen Daten; Logs nennen weiter keine Anweisung).
+
+### 2026-10-25 – [BEOBACHTUNG] Umsetzung 9.6: Tests prüfen die genaue Folge der Anfragen
+
+- Sieben bestehende Komponenten-Tests schlugen fehl, weil die große Ansicht jetzt die Herkunft lädt (zusätzliche `GET …/origin`) und `calls.at(-1)` bzw. `calls` gleich `[]` prüften; ein Test fand „kein Fake“ doppelt (Fehlertext der Herkunft). Gelöst mit `withoutOrigins(calls)` in `ui/fake-api.ts` und genauerem Muster; außerdem schickt das Hochladen `herkunft` nur mit, wenn es eine gibt – der Körper beim reinen Hochladen bleibt wie bisher.
+- `test_security.py` zählt die Routen fest (67 → 70, geschützt 64 → 67) – gewollt, prüft, dass jede neue Route ohne Sitzung abgewiesen wird.
+- Ein bestehender Speicher-Test (Löschen schlägt fehl) traf nach der Änderung zuerst die Begleitdatei; der Fehlerweg des Bildes selbst blieb ungetestet (Abdeckung 99 % statt 100 % in `store.py`) – eigener Test ergänzt.
+
+### 2026-10-25 – [ADR-ANGELEGT] ADR-095 Herkunft erzeugter Bilder in einer Begleitdatei (9.6)
+
+- Vorlage mit drei Optionen (Kopf / Begleitdatei / zentrales Verzeichnis), Heuristiken Teil 1–3 geladen. Eigentümer per Auswahlfragen jeweils die Empfehlung: B Begleitdatei, aufklappbar mit „Mit dieser Anweisung neu erzeugen“, Kosten mit festhalten, Nebenfrage KI-Text „Später planen“ → V.42 (Landeplatz 9.15).
+- Feststellung bei der Vorlage: Der Suchindex liest jede `.md`-Datei unter dem Datenverzeichnis (`storage/store.py`, `rglob("*.md")`) – deshalb Endung `.herkunft.yml`.
+- Reaktiv-Quote 0 / 10 (ADR-086–095).
+
+### 2026-10-25 – [BEOBACHTUNG] Modellwechsel auf die Entscheidungs-Klasse; 9.5 erledigt; 9.6 begonnen
+
+- **Modell:** Eigentümer wechselt per `/model` auf `claude-opus-5-5`; `get_session` bestätigt eingestellt und bedient `claude-opus-5-5` → Entscheidungs-Klasse. Kontextgröße jetzt feststellbar: 174.394 Token (Grenze 200.000).
+- **9.5:** Eigentümer im Chat: „9.5 ist bestätigt“. Code lag bereits auf `main` (PR #184, `e886916`) → `[ERLEDIGT]`, Phase 9: 5 von 15. Ob 9.5 auf dem VPS eingespielt ist, ist hier nicht belegt (zuletzt eingespielt laut Projektkontext `2586ef8`).
+- **9.6:** auf `[IN ARBEIT]`. Befund für die Vorlage: Erzeugen speichert nichts (ADR-077), die Übernahme läuft wie ein Hochladen (Browser verkleinert, Server prüft und legt ab) – der Server sieht beim Ablegen weder Modell noch Anweisung; Herkunft muss die Oberfläche mitschicken. Drei Ablageorte mit verschiedenen Kopffeldern: `bilder` (Liste von Dateinamen, Eintrag), `karten` (Liste von Abbildungen mit `name`, `datei`, `marken`, Welt), `titelbild` (ein Dateiname, Geschichte).
+
+### 2026-10-25 18:34 MEZ – [SESSIONSTART] Neue Cloud-Session ohne Auftrag
+
+- **Modell (Quelle: `get_session`):** eingestellt `claude-sonnet-5-5`, bedient `claude-sonnet-5-5` → Routine-Klasse. Hinweis: `docs/project-context.md` Abschnitt 6 nennt „Claude Sonnet 5“ mit bestandenem Probelauf (2026-09-28); Sonnet 5.5 ist ein Modellwechsel innerhalb der Klasse, der Probelauf ist nach `CLAUDE.md` Abschnitt 0 zu wiederholen (offen, kein Fahrplan-Schritt angelegt – dem Eigentümer vorzulegen).
+- **Kontextgröße:** nicht feststellbar – `get_session` meldet `used_tokens` 0 (`max_tokens` 1.000.000); Regel zur Sessiongröße entfällt.
+- **Wiedereinstieg:** Mindest-Lektüre vollständig (Projektkontext, Logbuch ab `[SESSIONENDE]` 2026-10-22, Fahrplan „Aktueller Stand“ und Phase 9, Architektur 1/2/9, Entscheidungen Teil A und C, aktive Blocker). Keine aktiven Blocker, keine offenen STOPP-Situationen, `main` = Stand dieses Branchs (`8a6b4d4`, PR #186). Phase 9: 4 von 15 erledigt; 9.5 umgesetzt, Prüfung durch den Eigentümer offen; 9.6 ist der nächste Schritt (Empfehlung Entscheidung, Datenmodell – würde in dieser Klasse einen Stopp nach Abschnitt 0 auslösen).
+- **Auftrag:** keiner genannt („neue session“); es wurde nichts am Code geändert.
+
 ### 2026-10-22 – [BEOBACHTUNG] Textqualität von Hermes 4 → V.41; D.21 erledigt
 
 - PR #185 nach grüner CI zusammengeführt (`214b8c7`) → D.21 `[ERLEDIGT]`.

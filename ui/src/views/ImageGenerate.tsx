@@ -5,6 +5,7 @@ import {
   formatCost,
   type AspectRatio,
   type GeneratedImage,
+  type ImageOrigin,
   type ImagePrice,
 } from "../api";
 import { ErrorText } from "./Common";
@@ -18,12 +19,14 @@ const FORMATS: readonly { id: AspectRatio; label: string }[] = [
 /**
  * "Bild erzeugen" (step 7.12, ADR-077): a description from the canon to change, format and model
  * with the price beforehand; "Erzeugen" shows a preview with the real cost. Nothing is stored
- * until "Übernehmen", which hands the image to the caller's usual upload.
+ * until "Übernehmen", which hands the image and its origin (model, description, format, cost;
+ * step 9.6, ADR-095) to the caller's usual upload.
  */
 export function ImageGenerate({
   title,
   initialPrompt,
   initialFormat,
+  initialModel = null,
   takeOverLabel = "Übernehmen",
   hint = null,
   extra = null,
@@ -33,6 +36,8 @@ export function ImageGenerate({
   title: string;
   initialPrompt: string;
   initialFormat: AspectRatio;
+  /** The model to preselect, e.g. when generating anew from an origin (step 9.6). */
+  initialModel?: string | null;
   takeOverLabel?: string;
   /**
    * A note above the description, e.g. that an entry has no looks yet (step 7.16), with a button
@@ -41,7 +46,7 @@ export function ImageGenerate({
   hint?: ReactNode;
   /** More choices above the description, e.g. the places of a map (step 9.5, ADR-094). */
   extra?: ReactNode;
-  onTakeOver: (image: Blob) => Promise<void>;
+  onTakeOver: (image: Blob, origin: ImageOrigin) => Promise<void>;
   onClose: () => void;
 }) {
   const [prompt, setPrompt] = useState(initialPrompt);
@@ -78,9 +83,11 @@ export function ImageGenerate({
         }
         setModels(list.models);
         setReady(list.ready);
-        const preset = list.models.some((m) => m.id === list.default)
-          ? list.default
-          : (list.models[0]?.id ?? "");
+        const wanted = [initialModel, list.default];
+        const preset =
+          wanted.find((id) => list.models.some((m) => m.id === id)) ??
+          list.models[0]?.id ??
+          "";
         setModel(preset);
       })
       .catch((reason: unknown) => {
@@ -92,7 +99,7 @@ export function ImageGenerate({
     return () => {
       current = false;
     };
-  }, []);
+  }, [initialModel]);
 
   useEffect(() => {
     if (model === "") {
@@ -156,7 +163,12 @@ export function ImageGenerate({
     setBusy(true);
     setError(null);
     try {
-      await onTakeOver(blobOf(result));
+      await onTakeOver(blobOf(result), {
+        model: result.model,
+        prompt: prompt.trim(),
+        aspect_ratio: format,
+        cost_usd: result.cost_usd,
+      });
       onClose();
     } catch (reason: unknown) {
       setError(describeError(reason));
