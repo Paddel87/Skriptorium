@@ -134,3 +134,14 @@ def test_a_failing_image_delete_after_the_origin_is_a_storage_error(
         store.delete_image(IMAGE)
     monkeypatch.undo()
     assert store.read_image(IMAGE)[0] == png()
+
+
+def test_the_basis_of_an_image_made_from_another_round_trips(store: DocumentStore) -> None:
+    """Step 9.8, ADR-097: ``grundlage`` names the image it was made from; old files lack it."""
+    made = ImageOrigin("m", "p", "1:1", None, "2026-10-26T10:00:00+00:00", "Bild 1 von Kael")
+    store.write_image(IMAGE, png(), origin=made)
+    assert store.read_image_origin(IMAGE) == made
+    assert origin_to_mapping(made)["grundlage"] == "Bild 1 von Kael"
+    assert "grundlage" not in origin_to_mapping(ORIGIN)
+    with pytest.raises(InvalidInput, match="Grundlage"):
+        origin_from_mapping({**origin_to_mapping(ORIGIN), "grundlage": 3})
