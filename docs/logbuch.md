@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-26 – [ADR-ANGELEGT] ADR-097 Bild zu Bild (9.8)
+
+- Recherche: `GET /api/v1/images/models` (61 Modelle; 57 mit `input_references` ≥ 1, FLUX.2 Pro 8) und die Anbieterpreise je Modell; Format aus der Dokumentation von OpenRouter („Image Generation“): `input_references` mit `image_url` (Base64 erlaubt) im selben Aufruf. Preis des Ausgangsbildes uneinheitlich (FLUX.2 Flex 0,06 $/MP, Seedream und Qwen 0 $, FLUX.2 Pro ohne Angabe).
+- Mockup `mockup-9.8.html` (lokal) und Vorlage vorgelegt; Eigentümer per Auswahlfragen jeweils die Empfehlung: genau ein Ausgangsbild, nur gespeicherte Bilder, „Ja, umbauen“ → ADR-097. Kategorie 6 berührt (Bild an den Bildanbieter) → getrennte Prüfung vor dem Abschluss.
+
 ### 2026-10-26 – [BEOBACHTUNG] 9.7 vom Eigentümer bestätigt
 
 - Eigentümer im Chat: „Funktioniert alles.“ Eingespielt war `7bc5333`. 9.7 → `[ERLEDIGT]` (Fahrplan, Schrittliste, Stand, README). Phase 9: 7 von 15 – die Zählung in der Fahrplan-Übersicht stand noch auf 5 (seit 9.6 nicht nachgezogen), mit korrigiert. Nächster Schritt: 9.8 Bild zu Bild (Vorlage, Entscheidungs-Klasse).
