@@ -29,6 +29,11 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-25 – [GELÖST] Rote Audit-Jobs im PR #187 durch neue Sicherheitsfunde (D.23)
+
+- PR #187 (9.6) lief rot in „Python“ und „TypeScript“, jeweils im Dependency-Audit: `pip-audit` meldet drei CVEs in filelock 4.0.4, `npm audit` (Schwelle high) Funde in undici 7.30.0 und zod 4.6.5. Nicht vom PR verursacht, blockiert jeden PR – lokal reproduziert. Pre-Commit und End-to-End waren grün.
+- Behoben als D.23 im selben PR: `uv lock --upgrade-package filelock` → 4.2.4; `npm audit fix` (ohne `--force`) → undici 7.30.1, zod 4.6.7. Beide Audits ohne Befund über der Schwelle, vitest 506 und Pre-Commit grün. Alles nur Entwicklungswerkzeuge – kein Einspielen. Drei mittlere vitest-Funde bleiben unter der Schwelle (Landeplatz D.2).
+
 ### 2026-10-25 19:01 MEZ – [SESSIONENDE] 9.5 erledigt, 9.6 entschieden und umgesetzt
 
 - **Dauer:** 18:34 bis 19:01 MEZ (Cloud-Session, Branch `claude/festive-hawking-shngn2`).
