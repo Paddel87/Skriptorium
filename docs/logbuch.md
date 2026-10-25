@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-25 23:39 MEZ – [SESSIONSTART] 9.7 Einstellungsseite – Modell je Aufgabe
+
+- **Modell:** Opus 5.5 (`claude-opus-5-5`, eingestellt und bedient laut `get_session`), Entscheidungs-Klasse. 9.7 empfiehlt Entscheidung – kein Schritt oberhalb der Empfehlung.
+- **Umgebung:** Mac-Session („Deploy“), `main` auf `aad29d2`, eingespielt `adda4b9`. Diese Session begann auf Sonnet 5.5 (Routine) mit dem Einspielen von `adda4b9` und dem PR #189 ohne eigenen `[SESSIONSTART]` – Einspielen ist kein Fahrplan-Schritt; beim Anstoß von 9.7 Stopp nach `CLAUDE.md` Abschnitt 0 (Auslöser 1), danach Wechsel durch den Eigentümer.
+- **Wiedereinstieg:** Mindest-Lektüre vollständig (Projektkontext, Logbuch ab `[SESSIONENDE]` 2026-10-25 19:01, Fahrplan „Aktueller Stand“ und Phase 9, Architektur 1/2/9, Entscheidungen Teil A und C, aktive Blocker). Keine aktiven Blocker, keine offenen STOPP-Situationen, Reaktiv-Quote 0 / 10. Phase 9: 6 von 15 erledigt.
+- **Kontextgröße:** `get_session` meldet keinen Wert – Regel zur Sessiongröße entfällt für diese Session (`CLAUDE.md` Abschnitt 0).
+- **Vorhaben:** 9.7 beginnt mit Bestandsaufnahme, Mockup vorher/nachher und Vorlage (Kategorien 4 und 5); Branch `feat/9.7-modell-je-aufgabe`.
+
 ### 2026-10-25 – [BEOBACHTUNG] Deployment `adda4b9` (9.6, D.21, D.23)
 
 - Auf Anweisung des Eigentümers („deploy“); vorher `git fetch`/Merge gegen `origin/main` (Konflikte in Fahrplan, Logbuch, Projektkontext aufgelöst, Merge `6487d76` lokal). CI auf `main` grün. Runbook Abschnitt 7 (ADR-039): `REVISION` `adda4b9`, Rückweg `skriptorium:vorher` (Abbild `19f6f3791ef6`, zuvor `e886916`).
