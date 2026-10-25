@@ -1,5 +1,5 @@
 """Endpoints for writing with the AI, summaries, models, the world builder and consumption
-(steps 3.3, 3.6, 3.9, 5.12, 6.7).
+(steps 3.3, 3.6, 3.9, 5.12, 6.7, 9.7).
 
 The routes stay thin; the flow lives in :mod:`skriptorium.api.flows` (ADR-020).
 """
@@ -10,9 +10,10 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
-from skriptorium.ai_gateway import CatalogModel, ModelCatalog
+from skriptorium.ai_gateway import CatalogModel
 from skriptorium.ai_gateway.catalog import CHECKED_MODELS, SLOW_MODELS
 from skriptorium.api.context import Services, ServicesDep, current_session
+from skriptorium.api.favorites import TASKS, Task
 from skriptorium.api.flows import (
     DEFAULT_MODEL,
     DescribeOrder,
@@ -59,15 +60,17 @@ class CatalogEntry(BaseModel):
 
 
 class ModelList(BaseModel):
-    """The favorites, the preset model and the catalog (ADR-055).
+    """The favorites, the preset model, the model per task and the catalog (ADR-055, ADR-096).
 
     ``models`` equals ``favorites`` and stays for older interfaces; ``catalog`` is empty and
-    ``catalog_available`` false while OpenRouter's list cannot be loaded.
+    ``catalog_available`` false while OpenRouter's list cannot be loaded. ``tasks`` names every
+    task with its saved model, ``None`` for the preset.
     """
 
     models: list[str]
     default: str
     favorites: list[str]
+    tasks: dict[Task, str | None]
     catalog: list[CatalogEntry]
     catalog_available: bool
 
@@ -76,6 +79,12 @@ class FavoritesIn(BaseModel):
     """The new favorites in the order of the selection field."""
 
     favorites: list[str]
+
+
+class TasksIn(BaseModel):
+    """The model per task (ADR-096); ``None`` or a missing task means the preset."""
+
+    tasks: dict[Task, str | None]
 
 
 class SceneIn(BaseModel):
@@ -170,15 +179,36 @@ class SummaryResult(BaseModel):
 async def list_models(found: ServicesDep) -> ModelList:
     """Favorites and catalog; the model chosen per story is the story's ``model`` (step 3.9)."""
     await found.catalog.refresh()
-    return _model_list(found.catalog, found.favorites.get())
+    return _model_list(found)
 
 
 @router.put("/models/favoriten")
 async def set_favorites(body: FavoritesIn, found: ServicesDep) -> ModelList:
     """Save the favorites (ADR-055); every model must be in the catalog or already a favorite."""
     await found.catalog.refresh()
-    favorites = found.favorites.set(body.favorites, found.catalog)
-    return _model_list(found.catalog, favorites)
+    found.favorites.set(body.favorites, found.catalog)
+    return _model_list(found)
+
+
+@router.put("/models/aufgaben")
+async def set_task_models(body: TasksIn, found: ServicesDep) -> ModelList:
+    """Save the model each task starts with (ADR-096).
+
+    Text tasks take models of the catalog, describing an image only models that read images
+    (while the catalog is loaded), generating images only image models.
+    """
+    await found.catalog.refresh()
+    await found.image_catalog.refresh()
+
+    def allowed(task: Task, model: str) -> bool:
+        if task == "bilderzeugung":
+            return model in found.image_catalog
+        if task == "bildbeschreibung" and found.catalog.available:
+            return found.catalog.reads_images(model)
+        return model in found.catalog
+
+    found.favorites.set_tasks(body.tasks, allowed)
+    return _model_list(found)
 
 
 @router.post("/worlds/{world_id}/stories/{story_id}/chapters/{number}/write")
@@ -195,7 +225,7 @@ async def write(
     model = body.model
     if model is None:
         found.canon.get_world(world_id)
-        model = found.manuscript.get_story(world_id, story_id).model or DEFAULT_MODEL
+        model = found.manuscript.get_story(world_id, story_id).model or _preset(found, "schreiben")
     order = WriteOrder(
         world_id,
         story_id,
@@ -228,7 +258,7 @@ async def worldbuilder(
         world_id,
         tuple(Turn(turn.role, turn.content) for turn in body.messages),
         tuple(body.references),
-        body.model or DEFAULT_MODEL,
+        body.model or _preset(found, "weltenbau"),
         body.web_search,
         None if body.manuscript is None else HitsQuery(body.manuscript.name, body.manuscript.story),
     )
@@ -271,7 +301,7 @@ async def appearance(
         raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, "KI-Anbieter nicht eingerichtet")
     await found.catalog.refresh()
     prepared = prepare_appearance(
-        found.context, world_id, entry_id, body.model or DEFAULT_MODEL, found.catalog
+        found.context, world_id, entry_id, body.model or _preset(found, "aussehen"), found.catalog
     )
     return StreamingResponse(
         stream_answer(found.provider, prepared, "aussehen", found.usage.record),
@@ -309,6 +339,7 @@ async def summarize(world_id: str, story_id: str, number: int, found: ServicesDe
     """
     if found.provider is None:
         raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, "KI-Anbieter nicht eingerichtet")
+    await found.catalog.refresh()
     outcome = await summarize_chapter(
         found.manuscript,
         found.context,
@@ -316,6 +347,9 @@ async def summarize(world_id: str, story_id: str, number: int, found: ServicesDe
         world_id,
         story_id,
         number,
+        model=_preset(found, "kurzfassung"),
+        overall_model=_preset(found, "gesamtzusammenfassung"),
+        models=found.catalog,
         record=found.usage.record,
     )
     return SummaryResult(chapter=outcome.chapter, story=outcome.story, failure=outcome.failure)
@@ -335,13 +369,21 @@ def usage(found: ServicesDep, month: str | None = None) -> UsageOut:
     )
 
 
-def _model_list(catalog: ModelCatalog, favorites: list[str]) -> ModelList:
+def _preset(found: Services, task: Task) -> str:
+    """The model ``task`` starts with when the request names none (ADR-096)."""
+    return found.favorites.preset(task, found.catalog, DEFAULT_MODEL)
+
+
+def _model_list(found: Services) -> ModelList:
+    favorites = found.favorites.get()
+    saved = found.favorites.tasks()
     return ModelList(
         models=favorites,
         default=DEFAULT_MODEL,
         favorites=favorites,
-        catalog=[_entry(model) for model in catalog.models()],
-        catalog_available=catalog.available,
+        tasks={task: saved.get(task) for task in TASKS},
+        catalog=[_entry(model) for model in found.catalog.models()],
+        catalog_available=found.catalog.available,
     )
 
 

@@ -1212,6 +1212,15 @@
       "models": ["x-ai/grok-4.6", "qwen/qwen3.8-max-0902"],
       "default": "x-ai/grok-4.6",
       "favorites": ["x-ai/grok-4.6", "qwen/qwen3.8-max-0902"],
+      "tasks": {
+        "schreiben": null,
+        "weltenbau": null,
+        "kurzfassung": null,
+        "gesamtzusammenfassung": null,
+        "bildbeschreibung": null,
+        "aussehen": null,
+        "bilderzeugung": null
+      },
       "catalog": [
         {
           "id": "deepseek/deepseek-v3.2",
@@ -1276,6 +1285,88 @@
       "models": ["x-ai/grok-4.6", "deepseek/deepseek-v3.2"],
       "default": "x-ai/grok-4.6",
       "favorites": ["x-ai/grok-4.6", "deepseek/deepseek-v3.2"],
+      "tasks": {
+        "schreiben": null,
+        "weltenbau": null,
+        "kurzfassung": null,
+        "gesamtzusammenfassung": null,
+        "bildbeschreibung": null,
+        "aussehen": null,
+        "bilderzeugung": null
+      },
+      "catalog": [
+        {
+          "id": "deepseek/deepseek-v3.2",
+          "name": "DeepSeek: DeepSeek V3.2",
+          "provider": "deepseek",
+          "input_price": 0.259,
+          "output_price": 0.8,
+          "estimated_cost": 0.00817,
+          "context_length": 163840,
+          "moderated": false,
+          "thinking": null,
+          "checked": false,
+          "reads_images": false
+        },
+        {
+          "id": "openai/gpt-5",
+          "name": "OpenAI: GPT-5",
+          "provider": "openai",
+          "input_price": 1.25,
+          "output_price": 10.0,
+          "estimated_cost": 0.0425,
+          "context_length": 400000,
+          "moderated": true,
+          "thinking": "vor",
+          "checked": false,
+          "reads_images": false
+        },
+        {
+          "id": "x-ai/grok-4.6",
+          "name": "SpaceXAI: Grok 4.6",
+          "provider": "x-ai",
+          "input_price": 2.0,
+          "output_price": 6.0,
+          "estimated_cost": 0.063,
+          "context_length": 500000,
+          "moderated": false,
+          "thinking": "vor",
+          "checked": true,
+          "reads_images": true
+        },
+        {
+          "id": "x-ai/grok-4.7",
+          "name": "SpaceXAI: Grok 4.7",
+          "provider": "x-ai",
+          "input_price": 2.0,
+          "output_price": 6.0,
+          "estimated_cost": 0.063,
+          "context_length": 500000,
+          "moderated": false,
+          "thinking": "lange",
+          "checked": false,
+          "reads_images": false
+        }
+      ],
+      "catalog_available": true
+    }
+  },
+  "setTaskModels": {
+    "route": "PUT /api/models/aufgaben",
+    "type": "ModelList",
+    "body": {
+      "models": ["x-ai/grok-4.6", "deepseek/deepseek-v3.2"],
+      "default": "x-ai/grok-4.6",
+      "favorites": ["x-ai/grok-4.6", "deepseek/deepseek-v3.2"],
+      "tasks": {
+        "schreiben": null,
+        "weltenbau": "deepseek/deepseek-v3.2",
+        "kurzfassung": null,
+        "gesamtzusammenfassung": null,
+        "bildbeschreibung": null,
+        "aussehen": null,
+        "bilderzeugung": null
+      },
       "catalog": [
         {
           "id": "deepseek/deepseek-v3.2",
