@@ -181,7 +181,7 @@ export function ImageGenerate({
         prompt: prompt.trim(),
         aspect_ratio: format,
         cost_usd: result.cost_usd,
-        ...(basis === null ? {} : { basis: basis.label }),
+        ...(basis === null ? {} : { basis: shortLabel(basis.label) }),
       });
       onClose();
     } catch (reason: unknown) {
@@ -392,6 +392,19 @@ export function describePrice(price: ImagePrice | null): string {
     return `ca. ${formatCost(price.cost_usd)} je Bild (1 Megapixel)`;
   }
   return "Abrechnung nach Verbrauch – die Kosten stehen nach dem Erzeugen da";
+}
+
+/** The server keeps at most this many characters of the basis's description (ADR-097). */
+const MAX_BASIS_LABEL = 200;
+
+/**
+ * The description of the basis as the origin keeps it: a long entry name is cut with "…", so
+ * taking over a paid image never fails on its length.
+ */
+export function shortLabel(label: string): string {
+  return label.length <= MAX_BASIS_LABEL
+    ? label
+    : `${label.slice(0, MAX_BASIS_LABEL - 1)}…`;
 }
 
 /** What the basis costs, shown after the price of the new image (step 9.8). */

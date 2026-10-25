@@ -8,6 +8,7 @@ import {
   describeBasisPrice,
   ImageGenerate,
   nearestFormat,
+  shortLabel,
 } from "./ImageGenerate";
 import { ImageOriginPanel } from "./ImageOriginPanel";
 import { StoryCover } from "./StoryCover";
@@ -222,6 +223,14 @@ describe("an image as the basis of a new one (step 9.8, ADR-097)", () => {
     expect(
       describeBasisPrice({ ...base, input_cost_usd: 0.01, input_unit: null }),
     ).toBe("Grundlage: Preis vom Anbieter nicht ausgewiesen");
+  });
+
+  it("cuts a long description of the basis to what the server keeps", () => {
+    expect(shortLabel("Bild 1 von Kael")).toBe("Bild 1 von Kael");
+    const long = `Bild 1 von ${"K".repeat(300)}`;
+    expect(shortLabel(long)).toHaveLength(200);
+    expect(shortLabel(long).endsWith("…")).toBe(true);
+    expect(shortLabel("x".repeat(200))).toBe("x".repeat(200));
   });
 
   it("finds the nearest offered format", () => {
