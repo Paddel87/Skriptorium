@@ -105,7 +105,7 @@ Oberfläche bauen (`npx vite build`) und Server starten; dann `http://localhost:
 - ✅ **9.3:** gegliederte Einträge je Art – neue Einträge zeigen beim Anlegen die Abschnitte ihrer Art (z. B. Figur: Aussehen, Wesen, Fähigkeiten, Geschichte, Beziehungen), der Weltenbauer schreibt in sie (ADR-092); erledigt 2026-10-19 nach Proben mit echter KI (Weltenbauer gliedert in allen Arten; Probeschreiben ohne Verschlechterung).
 - ✅ **9.4:** Beziehungen mit Art – Zeile `- verheiratet mit @Kael` im Abschnitt „Beziehungen“, beim genannten Eintrag erscheint „Verweise hierher“ (ADR-093); erledigt 2026-10-21.
 - ✅ **9.5:** Bilder vom Bedarf her – „Bild erzeugen“ schlägt je Art die passenden Angaben vor und weist auf fehlendes „Aussehen“ hin; „Karte erzeugen“ ist mit den Orten der Welt vorbelegt (ADR-094); erledigt 2026-10-25.
-- 🟠 **9.6:** Herkunft von Bildern – Modell und Anweisung eines erzeugten Bildes festhalten (Vorlage liegt dir vor).
+- 🟠 **9.6:** Herkunft von Bildern – ein erzeugtes Bild behält Modell, Anweisung, Format und Kosten; „Herkunft“ beim Bild zeigt sie und erzeugt auf Wunsch neu (ADR-095); umgesetzt, deine Prüfung offen.
 - ⚪ **9.7–9.14:** Modell je Aufgabe, Bild zu Bild; Löschen oder Archivieren, Cache-Treffer, Verbrauchsstatistik je Welt und Geschichte; Erkundung zu Quellen und Recherche; Gast-Figuren ausbauen (nach deiner Probe); Kontexttreue erneut prüfen (ADR-090).
 - ⚪ **D.11:** Zugangsdaten der Sicherung außerhalb des Servers ablegen (spätestens 2026-10-31).
 
