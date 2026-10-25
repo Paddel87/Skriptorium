@@ -11,8 +11,8 @@
 - **Stand vom:** 2026-10-26 (9.7 erledigt – Modell je Aufgabe, ADR-096, PR #190, eingespielt `7bc5333`, vom Eigentümer bestätigt); 2026-10-25 (9.6 erledigt – Herkunft von Bildern, ADR-095, PR #187, eingespielt `adda4b9`, vom Eigentümer bestätigt); 2026-10-25 (9.5 erledigt – Bilder vom Bedarf her, ADR-094, PR #184, vom Eigentümer bestätigt; 9.6 begonnen); 2026-10-21 (9.4 erledigt, ADR-093); 2026-10-19 (9.3 erledigt – feste Abschnitte je Art, ADR-092; Code PR #177, Proben PR #179, beide mit grüner CI zusammengeführt; Proben zu 9.3 im dritten Versuch gelaufen – Regel-002 und Weltenbauer; zuvor zweiter Versuch ohne Schlüssel, Werkzeug für die Weltenbauer-Probe vorbereitet); 2026-10-18 (9.2 erledigt – vier End-to-End-Tests, Vertragstest Server ↔ Oberfläche, CI-Schrittnamen; PR #175; 9.1 erledigt – ADR-091, PR #173; D.19 angelegt; zuvor Phase 8 abgeschlossen: 8.13 erledigt – Pflichtfrage ADR-089, Planung ADR-090); am selben Tag V.36 und V.37 angelegt, 8.9 und 8.11 bestätigt; 2026-10-16 V.35 angelegt
 - **Laufende Phase:** Phase 9 „Verlässlicher Kanon, Bilder und Verwaltung“ (Phase 8 abgeschlossen 2026-10-18)
 - **Phasentyp:** UMSETZUNG
-- **Aktiver Schritt:** keiner (9.7 erledigt 2026-10-26)
-- **Nächster Schritt:** 9.8 Bild zu Bild (Vorlage). Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
+- **Aktiver Schritt:** 9.8 Bild zu Bild (seit 2026-10-26) – Bestandsaufnahme, Mockup und Vorlage
+- **Nächster Schritt:** Mockup und Vorlage zu 9.8 zur Freigabe. Querschnitt: D.11 bis 2026-10-31 (Eigentümer). Datiert: D.1 frühestens 2026-11-05; D.5 ab 2026-11-12; D.15 ab 2026-12-17; D.9 2026-12-28. Knappe Ressource: Wochenkontingent Max 5x (Zurücksetzung sonntags 10:00 MESZ)
 - **Offene STOPP-Situationen:** keine – STOPP Phasen-Wucherung (Phase 4, 16 Schritte) aufgelöst am 2026-10-08 durch Neuplanung, Vision-Abgleich und Pflichtfrage (ADR-042; Bewertung `docs/research/bewertung-phase-4.md`). Die Befunde (a)–(h) und die Modell-Sperren haben ihren Landeplatz in 5.7–5.13, D.13, V.6–V.9.
 
 ---
@@ -35,7 +35,7 @@ Phase 8 abgeschlossen 2026-10-18 (13 von 13 erledigt) – Details im Archiv [`do
 | ✅ | 9.5 | Bilder vom Bedarf her; Karte aus den Orten (G4, B4) | erledigt 2026-10-25 (ADR-094) | – |
 | ✅ | 9.6 | Herkunft von Bildern (B1) | erledigt 2026-10-25 (ADR-095) | – |
 | ✅ | 9.7 | Einstellungsseite – Modell je Aufgabe (G3, B6) | erledigt 2026-10-26 (ADR-096) | – |
-| ⚪ | 9.8 | Bild zu Bild (B7) | offen | KI: nach 9.6 Vorlage |
+| 🟠 | 9.8 | Bild zu Bild (B7) | in Arbeit | KI: Mockup und Vorlage |
 | ⚪ | 9.9 | Löschen oder Archivieren (B5) | offen | KI: Vorlage mit Mockup |
 | ⚪ | 9.10 | Cache-Treffer festhalten (V.36) | offen | KI |
 | ⚪ | 9.11 | Verbrauchsstatistik je Welt und Geschichte (V.37) | offen | KI: nach 9.10 Vorlage |
@@ -312,7 +312,7 @@ Festgehalten am 2026-09-26 in Modus 2 Schritt 6 (Klasse M, ADR-001: fünf Phasen
 
 #### 9.8: Bild zu Bild (V.35 B7)
 
-- **Status:** ⚪ OFFEN
+- **Status:** 🟠 IN ARBEIT (seit 2026-10-26) – Bestandsaufnahme, Mockup und Vorlage
 - **Phasentyp-Kontext:** UMSETZUNG (mit Vorlage zu Beginn)
 - **Abhängigkeiten:** 9.6
 - **Freigabepflichtig:** ja – Bild geht an den Anbieter (Kategorie 6 prüfen), neue Eingabe der Schnittstelle (Kategorie 5)
