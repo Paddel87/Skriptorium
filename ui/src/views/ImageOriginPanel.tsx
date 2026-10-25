@@ -3,14 +3,29 @@ import {
   describeError,
   formatCost,
   type AspectRatio,
+  type ImageReference,
   type StoredImageOrigin,
 } from "../api";
 
-/** What "Bild erzeugen" starts with when an image is generated anew from its origin. */
+/**
+ * A stored image as the basis of a new one (step 9.8, ADR-097): where it is stored, how the
+ * origin names it, and its address for the thumbnail.
+ */
+export interface Basis {
+  reference: ImageReference;
+  label: string;
+  src: string;
+}
+
+/**
+ * What "Bild erzeugen" starts with when an image is generated anew from its origin, or from an
+ * image as its basis (step 9.8).
+ */
 export interface GenerateSeed {
   prompt: string;
   format: AspectRatio;
   model: string | null;
+  basis?: Basis;
 }
 
 const FORMATS: readonly string[] = ["2:3", "1:1", "3:2"];
@@ -84,6 +99,12 @@ export function ImageOriginPanel({
             ? "nicht gemeldet"
             : formatCost(origin.cost_usd)}
         </dd>
+        {origin.basis !== null && (
+          <>
+            <dt>Grundlage</dt>
+            <dd>{origin.basis}</dd>
+          </>
+        )}
         <dt>Anweisung</dt>
         <dd className="image-origin-prompt">{origin.prompt}</dd>
       </dl>

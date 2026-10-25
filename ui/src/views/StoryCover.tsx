@@ -98,6 +98,26 @@ export function StoryCover({
               className="ghost"
               disabled={busy}
               onClick={() => {
+                setSeed({
+                  prompt: "",
+                  format: "2:3",
+                  model: null,
+                  basis: {
+                    reference: { world: story.world, story: story.id },
+                    label: "bisheriges Titelbild",
+                    src: api.coverPath(story),
+                  },
+                });
+                setGenerating(true);
+              }}
+            >
+              ✨ Als Grundlage für ein neues Titelbild
+            </button>
+            <button
+              type="button"
+              className="ghost"
+              disabled={busy}
+              onClick={() => {
                 if (window.confirm("Titelbild wirklich entfernen?")) {
                   void change(() => api.removeCover(story.world, story.id));
                 }
@@ -144,10 +164,21 @@ export function StoryCover({
       )}
       {generating && (
         <ImageGenerate
-          title="Titelbild erzeugen"
+          title={
+            seed?.basis === undefined
+              ? "Titelbild erzeugen"
+              : "Neues Titelbild aus dem bisherigen"
+          }
           initialPrompt={seed?.prompt ?? coverPrompt(story)}
           initialFormat={seed?.format ?? "2:3"}
           initialModel={seed?.model ?? null}
+          basis={seed?.basis ?? null}
+          // A story has one cover: taking over replaces it, also when made from it (step 9.8).
+          takeOverLabel={
+            seed?.basis === undefined
+              ? "Übernehmen"
+              : "Als Titelbild übernehmen"
+          }
           onTakeOver={async (image, origin) => {
             onSaved(
               await api.setCover(

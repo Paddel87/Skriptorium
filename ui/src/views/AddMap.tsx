@@ -95,7 +95,11 @@ export function AddMap({
       </div>
       {generating && (
         <ImageGenerate
-          title="Karte erzeugen"
+          title={
+            seed?.basis === undefined
+              ? "Karte erzeugen"
+              : `Neue Karte aus ${seed.basis.label}`
+          }
           initialPrompt={seed?.prompt ?? mapPrompt(world, name, chosen)}
           extra={
             seed === null && places.length > 0 ? (
@@ -108,6 +112,7 @@ export function AddMap({
           }
           initialFormat={seed?.format ?? "3:2"}
           initialModel={seed?.model ?? null}
+          basis={seed?.basis ?? null}
           takeOverLabel="Für diese Karte verwenden"
           onTakeOver={(image, taken) => {
             setFile(image);

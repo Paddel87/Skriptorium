@@ -9,6 +9,7 @@ import {
   type ImagePrice,
 } from "../api";
 import { ErrorText } from "./Common";
+import type { Basis } from "./ImageOriginPanel";
 
 const FORMATS: readonly { id: AspectRatio; label: string }[] = [
   { id: "2:3", label: "Hochformat" },
@@ -20,7 +21,9 @@ const FORMATS: readonly { id: AspectRatio; label: string }[] = [
  * "Bild erzeugen" (step 7.12, ADR-077): a description from the canon to change, format and model
  * with the price beforehand; "Erzeugen" shows a preview with the real cost. Nothing is stored
  * until "Übernehmen", which hands the image and its origin (model, description, format, cost;
- * step 9.6, ADR-095) to the caller's usual upload.
+ * step 9.6, ADR-095) to the caller's usual upload. With a `basis` (step 9.8, ADR-097) a stored
+ * image goes along to the model: the description says what should change, only models that take
+ * a basis are offered, and the format follows the basis until the author picks one.
  */
 export function ImageGenerate({
   title,
@@ -30,6 +33,7 @@ export function ImageGenerate({
   takeOverLabel = "Übernehmen",
   hint = null,
   extra = null,
+  basis = null,
   onTakeOver,
   onClose,
 }: {
@@ -46,6 +50,8 @@ export function ImageGenerate({
   hint?: ReactNode;
   /** More choices above the description, e.g. the places of a map (step 9.5, ADR-094). */
   extra?: ReactNode;
+  /** A stored image the new one is made from (step 9.8). */
+  basis?: Basis | null;
   onTakeOver: (image: Blob, origin: ImageOrigin) => Promise<void>;
   onClose: () => void;
 }) {
@@ -57,6 +63,8 @@ export function ImageGenerate({
     setPrompt(initialPrompt);
   }
   const [format, setFormat] = useState<AspectRatio>(initialFormat);
+  // Until the author picks a format, it follows the proportions of the basis.
+  const [formatPicked, setFormatPicked] = useState(false);
   const [models, setModels] = useState<{ id: string; name: string }[] | null>(
     null,
   );
@@ -72,6 +80,7 @@ export function ImageGenerate({
   const [now, setNow] = useState(0);
   const [result, setResult] = useState<GeneratedImage | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const withBasis = basis !== null;
 
   useEffect(() => {
     let current = true;
@@ -81,12 +90,15 @@ export function ImageGenerate({
         if (!current) {
           return;
         }
-        setModels(list.models);
+        const offered = withBasis
+          ? list.models.filter((m) => m.references > 0)
+          : list.models;
+        setModels(offered);
         setReady(list.ready);
         const wanted = [initialModel, list.default];
         const preset =
-          wanted.find((id) => list.models.some((m) => m.id === id)) ??
-          list.models[0]?.id ??
+          wanted.find((id) => offered.some((m) => m.id === id)) ??
+          offered[0]?.id ??
           "";
         setModel(preset);
       })
@@ -99,7 +111,7 @@ export function ImageGenerate({
     return () => {
       current = false;
     };
-  }, [initialModel]);
+  }, [initialModel, withBasis]);
 
   useEffect(() => {
     if (model === "") {
@@ -147,6 +159,7 @@ export function ImageGenerate({
           model,
           prompt: prompt.trim(),
           aspect_ratio: format,
+          ...(basis === null ? {} : { reference: basis.reference }),
         }),
       );
     } catch (reason: unknown) {
@@ -168,6 +181,7 @@ export function ImageGenerate({
         prompt: prompt.trim(),
         aspect_ratio: format,
         cost_usd: result.cost_usd,
+        ...(basis === null ? {} : { basis: basis.label }),
       });
       onClose();
     } catch (reason: unknown) {
@@ -193,12 +207,39 @@ export function ImageGenerate({
         <>
           {hint !== null && <div className="image-generate-hint">{hint}</div>}
           {extra}
+          {basis !== null && (
+            <div className="image-generate-basis">
+              <img
+                src={basis.src}
+                alt=""
+                onLoad={(event) => {
+                  const { naturalWidth, naturalHeight } = event.currentTarget;
+                  if (!formatPicked && naturalWidth > 0 && naturalHeight > 0) {
+                    setFormat(nearestFormat(naturalWidth / naturalHeight));
+                  }
+                }}
+              />
+              <div>
+                <b>Grundlage</b>
+                <span className="note">
+                  {basis.label} · geht mit an das Bildmodell
+                </span>
+              </div>
+            </div>
+          )}
           <label className="image-generate-field">
-            Bildbeschreibung (änderbar)
+            {basis === null
+              ? "Bildbeschreibung (änderbar)"
+              : "Was soll sich ändern?"}
             <textarea
               rows={5}
               maxLength={4000}
               value={prompt}
+              placeholder={
+                basis === null
+                  ? undefined
+                  : "z. B. derselbe Mann im Winter, mit schwerem Wollmantel"
+              }
               disabled={busy}
               onChange={(event) => {
                 setPrompt(event.target.value);
@@ -220,6 +261,7 @@ export function ImageGenerate({
                 disabled={busy}
                 onClick={() => {
                   setFormat(entry.id);
+                  setFormatPicked(true);
                 }}
               >
                 {entry.label}
@@ -250,9 +292,18 @@ export function ImageGenerate({
             </p>
           )}
           {models !== null && models.length === 0 && error === null && (
-            <p className="note">Gerade sind keine Bildmodelle verfügbar.</p>
+            <p className="note">
+              {basis === null
+                ? "Gerade sind keine Bildmodelle verfügbar."
+                : "Gerade nimmt kein Bildmodell ein Ausgangsbild an."}
+            </p>
           )}
-          <p className="note">{describePrice(price)}</p>
+          <p className="note">
+            {describePrice(price)}
+            {basis !== null &&
+              price !== null &&
+              ` · ${describeBasisPrice(price)}`}
+          </p>
         </>
       ) : (
         <>
@@ -341,6 +392,35 @@ export function describePrice(price: ImagePrice | null): string {
     return `ca. ${formatCost(price.cost_usd)} je Bild (1 Megapixel)`;
   }
   return "Abrechnung nach Verbrauch – die Kosten stehen nach dem Erzeugen da";
+}
+
+/** What the basis costs, shown after the price of the new image (step 9.8). */
+export function describeBasisPrice(price: ImagePrice): string {
+  const cost = price.input_cost_usd ?? null;
+  if (cost === null || price.input_unit == null) {
+    return "Grundlage: Preis vom Anbieter nicht ausgewiesen";
+  }
+  if (cost === 0) {
+    return "Grundlage ohne Aufpreis";
+  }
+  if (price.input_unit === "image") {
+    return `Grundlage ${formatCost(cost)}`;
+  }
+  if (price.input_unit === "megapixel") {
+    return `Grundlage ${formatCost(cost)} je Megapixel`;
+  }
+  return "Grundlage nach Verbrauch";
+}
+
+/** The offered format closest to the proportions `ratio` (width / height) of an image. */
+export function nearestFormat(ratio: number): AspectRatio {
+  const distance = (id: AspectRatio) => {
+    const [width = 1, height = 1] = id.split(":").map(Number);
+    return Math.abs(Math.log(ratio / (width / height)));
+  };
+  return FORMATS.map((entry) => entry.id).reduce((best, id) =>
+    distance(id) < distance(best) ? id : best,
+  );
 }
 
 function blobOf(image: GeneratedImage): Blob {

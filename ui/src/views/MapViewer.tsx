@@ -19,7 +19,8 @@ import { useSectionChoice } from "./useSectionChoice";
 
 /**
  * One map over the page with zoom and panning; Escape closes. A generated map shows its origin
- * (step 9.6, ADR-095); with `onRegenerate` it can be generated anew from there.
+ * (step 9.6, ADR-095); with `onRegenerate` it can be generated anew from there or from the map
+ * itself as basis (step 9.8, ADR-097).
  */
 export function MapViewer({
   world,
@@ -120,6 +121,27 @@ export function MapViewer({
           />
         )}
         <ErrorText message={error} />
+        {!marking && onRegenerate !== undefined && (
+          <button
+            type="button"
+            className="ghost"
+            disabled={busy}
+            onClick={() => {
+              onRegenerate({
+                prompt: "",
+                format: "3:2",
+                model: null,
+                basis: {
+                  reference: { world: world.id, map_file: map.file },
+                  label: `Karte „${map.name}“`,
+                  src: api.mapPath(world.id, map.file),
+                },
+              });
+            }}
+          >
+            ✨ Als Grundlage für eine neue Karte
+          </button>
+        )}
         {!marking && (
           <ImageOriginPanel
             key={map.file}

@@ -34,6 +34,7 @@ const ORIGIN: StoredImageOrigin = {
   aspect_ratio: "3:2",
   cost_usd: 0.04,
   date: "2026-10-25T18:00:00+00:00",
+  basis: null,
 };
 const IMAGE_ROUTES = {
   "GET /api/images/models": ok({
