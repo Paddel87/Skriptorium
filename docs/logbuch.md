@@ -29,6 +29,13 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-25 18:34 MEZ – [SESSIONSTART] Neue Cloud-Session ohne Auftrag
+
+- **Modell (Quelle: `get_session`):** eingestellt `claude-sonnet-5-5`, bedient `claude-sonnet-5-5` → Routine-Klasse. Hinweis: `docs/project-context.md` Abschnitt 6 nennt „Claude Sonnet 5“ mit bestandenem Probelauf (2026-09-28); Sonnet 5.5 ist ein Modellwechsel innerhalb der Klasse, der Probelauf ist nach `CLAUDE.md` Abschnitt 0 zu wiederholen (offen, kein Fahrplan-Schritt angelegt – dem Eigentümer vorzulegen).
+- **Kontextgröße:** nicht feststellbar – `get_session` meldet `used_tokens` 0 (`max_tokens` 1.000.000); Regel zur Sessiongröße entfällt.
+- **Wiedereinstieg:** Mindest-Lektüre vollständig (Projektkontext, Logbuch ab `[SESSIONENDE]` 2026-10-22, Fahrplan „Aktueller Stand“ und Phase 9, Architektur 1/2/9, Entscheidungen Teil A und C, aktive Blocker). Keine aktiven Blocker, keine offenen STOPP-Situationen, `main` = Stand dieses Branchs (`8a6b4d4`, PR #186). Phase 9: 4 von 15 erledigt; 9.5 umgesetzt, Prüfung durch den Eigentümer offen; 9.6 ist der nächste Schritt (Empfehlung Entscheidung, Datenmodell – würde in dieser Klasse einen Stopp nach Abschnitt 0 auslösen).
+- **Auftrag:** keiner genannt („neue session“); es wurde nichts am Code geändert.
+
 ### 2026-10-22 – [BEOBACHTUNG] Textqualität von Hermes 4 → V.41; D.21 erledigt
 
 - PR #185 nach grüner CI zusammengeführt (`214b8c7`) → D.21 `[ERLEDIGT]`.
