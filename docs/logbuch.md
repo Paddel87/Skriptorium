@@ -29,6 +29,14 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-26 – [BEOBACHTUNG] 9.7 umgesetzt, Prüfung offen
+
+- Umgesetzt nach ADR-096 in `api` und `ui` (Commits `9a7e5aa`, `6252f35`); Einzelheiten und Prüfzahlen im Fahrplan 9.7. Nebenbefund aus der Bestandsaufnahme behoben: `Favorites.set` hätte das neue Feld `aufgaben` überschrieben – beide Schreibwege ersetzen jetzt nur ihr eigenes Feld (Test `test_favorites_and_task_models_keep_each_other`).
+- Kurzfassungen nahmen bisher nur Modelle der festen Liste (`summarize_chapter` ohne Katalog) – mit der Einstellung wäre ein Katalogmodell sonst mit „Unbekanntes Modell“ gescheitert; die Route gibt jetzt den Katalog mit.
+- Reibungen: Der Vertragstest Server ↔ Oberfläche schrieb `tests/shared/api-responses.json` erwartungsgemäß neu (neues Feld `tasks`, neuer Endpunkt aufgenommen); der Routenzähler in `test_security.py` stieg auf 71/68. Im lokalen Bildschirmstand lieferte `/einstellungen` 404 – die Oberfläche nutzt Adressen mit `#/` (`/#/einstellungen`), kein Fehler. Die Seite zeigte während des Ladens des Katalogs (ca. 5 s) eine leere Karte → Hinweis „Modelle laden …“ ergänzt. Beschriftung der Voreinstellung bei „Bild beschreiben“ und „Bilder erzeugen“ nach dem echten Katalog genauer gemacht (nennt das Modell, das die Aufgabe ohne Wahl nimmt).
+- README-Drift gefunden und behoben: 9.6 stand dort noch als „Prüfung offen“, Fortschritt 5 statt 6 von 15.
+- Lokaler Bildschirmstand mit leerem Test-Datenverzeichnis im Scratchpad und echtem Katalog: Auswahl gespeichert (`system/modelle.md` nur mit `aufgaben`), nach Neuladen erhalten, `GET /api/images/models` meldet das gewählte Bildmodell; Smartphone-Breite stapelt Beschriftung und Auswahl. Quick-Start nicht berührt (keine Skripte, Abhängigkeiten, `.env`); Kategorie 6 nicht berührt.
+
 ### 2026-10-25 – [ADR-ANGELEGT] ADR-096 Modell je Aufgabe, eigene Seite „Einstellungen“ (9.7)
 
 - Bestandsaufnahme: Jede Aufgabe nimmt ihr Modell anders; Kapitel-Kurzfassung und Gesamtzusammenfassung laufen fest mit grok-4.6 und nehmen nur Modelle der festen Liste (`summarize_chapter` ohne Katalog), Bilder erzeugen jedes Mal FLUX.2 Pro. Nebenbefund: `Favorites.set` schreibt den Kopf von `system/modelle.md` neu – ein zweites Feld ginge dabei verloren; die Umsetzung muss beide Felder erhalten.
