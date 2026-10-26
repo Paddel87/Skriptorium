@@ -29,6 +29,20 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-26 – [BEOBACHTUNG] 9.8 vom Eigentümer bestätigt
+
+- Eigentümer im Chat: „Funktioniert“ – Prüfung im Betrieb, zugleich die erste echte Probe mit einem Bild (lokal nicht möglich, Schlüssel 401). Eingespielt war `48b8f8f`. 9.8 → `[ERLEDIGT]`; Phase 9: 8 von 15. Nächster Schritt: 9.9 Löschen oder Archivieren (Vorlage mit Mockup, Entscheidungs-Klasse).
+
+### 2026-10-26 – [BEOBACHTUNG] Deployment `48b8f8f` (9.8)
+
+- Auf Anweisung des Eigentümers („Doch einspielen“). Runbook Abschnitt 7 (ADR-039): `REVISION` `48b8f8f`, Rückweg `skriptorium:vorher` (Abbild `23cdc23faf30`, zuvor `7bc5333`).
+- Prüfung: Warten nur per HTTPS – `/api/health` nach rund 55 s 200 `{"status":"ok"}`, Anmeldeseite 200. Eine SSH-Prüfung: `skriptorium` `(healthy)`, `app/REVISION` `48b8f8f`.
+- Offen: erste echte Probe mit einem Bild und Prüfung von 9.8 durch den Eigentümer.
+
+### 2026-10-26 – [BEOBACHTUNG] PR #192 zusammengeführt, Einspielen zurückgestellt
+
+- Auf Anweisung des Eigentümers („merge“) nach grüner CI (4 von 4, keine neue Warnung im Protokoll) als Merge-Commit zusammengeführt (`48b8f8f`). Einspielen auf Rückfrage zurückgestellt („Noch nicht einspielen.“) – auf nodica1 läuft weiter `7bc5333`. Dieser Doku-Stand liegt lokal auf `docs/9.8-zusammengefuehrt` und wird mit dem Einspielen gebündelt.
+
 ### 2026-10-26 – [BEOBACHTUNG] 9.8 umgesetzt, getrennt geprüft, Prüfung offen
 
 - Umgesetzt nach ADR-097 (Einzelheiten und Prüfzahlen im Fahrplan 9.8). Nebenbefund behoben: `_price` nahm die erste Preiszeile ohne Variante – bei FLUX.2 Flex ist das der Preis des Eingabebildes (zufällig gleich hoch, daher bisher unbemerkt); jetzt nur Zeilen `output_image` bzw. ohne `billable`.
