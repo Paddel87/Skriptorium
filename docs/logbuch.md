@@ -29,6 +29,12 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-26 – [BEOBACHTUNG] Deployment `48b8f8f` (9.8)
+
+- Auf Anweisung des Eigentümers („Doch einspielen“). Runbook Abschnitt 7 (ADR-039): `REVISION` `48b8f8f`, Rückweg `skriptorium:vorher` (Abbild `23cdc23faf30`, zuvor `7bc5333`).
+- Prüfung: Warten nur per HTTPS – `/api/health` nach rund 55 s 200 `{"status":"ok"}`, Anmeldeseite 200. Eine SSH-Prüfung: `skriptorium` `(healthy)`, `app/REVISION` `48b8f8f`.
+- Offen: erste echte Probe mit einem Bild und Prüfung von 9.8 durch den Eigentümer.
+
 ### 2026-10-26 – [BEOBACHTUNG] PR #192 zusammengeführt, Einspielen zurückgestellt
 
 - Auf Anweisung des Eigentümers („merge“) nach grüner CI (4 von 4, keine neue Warnung im Protokoll) als Merge-Commit zusammengeführt (`48b8f8f`). Einspielen auf Rückfrage zurückgestellt („Noch nicht einspielen.“) – auf nodica1 läuft weiter `7bc5333`. Dieser Doku-Stand liegt lokal auf `docs/9.8-zusammengefuehrt` und wird mit dem Einspielen gebündelt.
