@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-26 – [BEOBACHTUNG] PR #192 zusammengeführt, Einspielen zurückgestellt
+
+- Auf Anweisung des Eigentümers („merge“) nach grüner CI (4 von 4, keine neue Warnung im Protokoll) als Merge-Commit zusammengeführt (`48b8f8f`). Einspielen auf Rückfrage zurückgestellt („Noch nicht einspielen.“) – auf nodica1 läuft weiter `7bc5333`. Dieser Doku-Stand liegt lokal auf `docs/9.8-zusammengefuehrt` und wird mit dem Einspielen gebündelt.
+
 ### 2026-10-26 – [BEOBACHTUNG] 9.8 umgesetzt, getrennt geprüft, Prüfung offen
 
 - Umgesetzt nach ADR-097 (Einzelheiten und Prüfzahlen im Fahrplan 9.8). Nebenbefund behoben: `_price` nahm die erste Preiszeile ohne Variante – bei FLUX.2 Flex ist das der Preis des Eingabebildes (zufällig gleich hoch, daher bisher unbemerkt); jetzt nur Zeilen `output_image` bzw. ohne `billable`.
