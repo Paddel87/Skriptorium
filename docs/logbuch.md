@@ -29,6 +29,10 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-26 – [BEOBACHTUNG] 9.8 vom Eigentümer bestätigt
+
+- Eigentümer im Chat: „Funktioniert“ – Prüfung im Betrieb, zugleich die erste echte Probe mit einem Bild (lokal nicht möglich, Schlüssel 401). Eingespielt war `48b8f8f`. 9.8 → `[ERLEDIGT]`; Phase 9: 8 von 15. Nächster Schritt: 9.9 Löschen oder Archivieren (Vorlage mit Mockup, Entscheidungs-Klasse).
+
 ### 2026-10-26 – [BEOBACHTUNG] Deployment `48b8f8f` (9.8)
 
 - Auf Anweisung des Eigentümers („Doch einspielen“). Runbook Abschnitt 7 (ADR-039): `REVISION` `48b8f8f`, Rückweg `skriptorium:vorher` (Abbild `23cdc23faf30`, zuvor `7bc5333`).
