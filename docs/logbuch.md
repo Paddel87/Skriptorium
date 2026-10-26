@@ -29,6 +29,18 @@ Das Logbuch beginnt mit der ersten regulären Session nach dem Initialisierungs-
 <!-- ANCHOR:eintraege -->
 ## Einträge (neueste oben)
 
+### 2026-10-26 – [BEOBACHTUNG] 9.8 umgesetzt, getrennt geprüft, Prüfung offen
+
+- Umgesetzt nach ADR-097 (Einzelheiten und Prüfzahlen im Fahrplan 9.8). Nebenbefund behoben: `_price` nahm die erste Preiszeile ohne Variante – bei FLUX.2 Flex ist das der Preis des Eingabebildes (zufällig gleich hoch, daher bisher unbemerkt); jetzt nur Zeilen `output_image` bzw. ohne `billable`.
+- Getrennte Prüfung (Kategorie 6, CLAUDE.md Abschnitt 9 und 12): Unteragent mit Sonnet 5.5, ohne Gesprächsverlauf, Auftrag nur Diff `cb3b608..301bd67` und Bedrohungsmodell. Ergebnis: keine Befunde hoch/mittel; Pfadüberschreitung ausgeschlossen (Kennungen über `checked_identifier`, Dateinamen nur aus den Listen in den Dateiköpfen, `store._checked`), Logs nur Metadaten, `ImageReference.__repr__` ohne Bilddaten, alle Routen hinter der Sitzung. Befund 1 (niedrig): Bezeichnung „Bild N von (Name)“ kann bei langem Eintragsnamen über 200 Zeichen gehen → Übernehmen 422 nach bezahltem Bild – behoben (Kürzung im Browser, Test). Optional (über ASVS 1 hinaus, dem Eigentümer vorgelegt): Bezeichnung trimmen und Steuerzeichen ablehnen; Bezeichnung gegen die Grundlage prüfen; Obergrenze der Anfrage an den Anbieter; Anbieterpreise auf Endlichkeit prüfen – Eigentümer: „Die optionalen Härtungen lassen wir weg.“ Nicht prüfbar: Aufbewahrung beim Anbieter (Dokumentation nennt nichts, in Architektur Abschnitt 6 vermerkt), echter Lauf.
+- Reibungen: Der lokale Schlüssel wird weiter abgelehnt (HTTP 401, nur Statusabfrage) – die echte Probe läuft mit der Prüfung des Eigentümers nach dem Einspielen. `Object.defineProperty` auf `naturalWidth` im Test brauchte `configurable: true`, weil der Test die Größe zweimal setzt.
+- Quick-Start nicht berührt (keine Skripte, Abhängigkeiten, `.env`).
+
+### 2026-10-26 – [ADR-ANGELEGT] ADR-097 Bild zu Bild (9.8)
+
+- Recherche: `GET /api/v1/images/models` (61 Modelle; 57 mit `input_references` ≥ 1, FLUX.2 Pro 8) und die Anbieterpreise je Modell; Format aus der Dokumentation von OpenRouter („Image Generation“): `input_references` mit `image_url` (Base64 erlaubt) im selben Aufruf. Preis des Ausgangsbildes uneinheitlich (FLUX.2 Flex 0,06 $/MP, Seedream und Qwen 0 $, FLUX.2 Pro ohne Angabe).
+- Mockup `mockup-9.8.html` (lokal) und Vorlage vorgelegt; Eigentümer per Auswahlfragen jeweils die Empfehlung: genau ein Ausgangsbild, nur gespeicherte Bilder, „Ja, umbauen“ → ADR-097. Kategorie 6 berührt (Bild an den Bildanbieter) → getrennte Prüfung vor dem Abschluss.
+
 ### 2026-10-26 – [BEOBACHTUNG] 9.7 vom Eigentümer bestätigt
 
 - Eigentümer im Chat: „Funktioniert alles.“ Eingespielt war `7bc5333`. 9.7 → `[ERLEDIGT]` (Fahrplan, Schrittliste, Stand, README). Phase 9: 7 von 15 – die Zählung in der Fahrplan-Übersicht stand noch auf 5 (seit 9.6 nicht nachgezogen), mit korrigiert. Nächster Schritt: 9.8 Bild zu Bild (Vorlage, Entscheidungs-Klasse).

@@ -493,6 +493,14 @@ def _models_images_and_usage(rec: _Recorder, images: FakeImages) -> None:
     rec.post("generateImage", "GeneratedImage", "/api/images/generate", order)
     images.cost = None
     rec.post("generateImageWithoutCost", "GeneratedImage", "/api/images/generate", order)
+    kael = rec.client.get(f"{WORLD}/entries/kael").json()["images"][0]
+    basis = {"world": "die-salzmark", "entry": "kael", "image": kael}
+    rec.post(
+        "generateImageFromImage",
+        "GeneratedImage",
+        "/api/images/generate",
+        {**order, "reference": basis},
+    )
 
 
 def _transfer(rec: _Recorder) -> None:

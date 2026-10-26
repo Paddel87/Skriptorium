@@ -67,6 +67,7 @@ export type {
   ImageModelList,
   ImageOrigin,
   ImagePrice,
+  ImageReference,
   StoredImageOrigin,
 } from "./images";
 export type { DescribeEvent } from "./describe";

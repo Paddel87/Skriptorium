@@ -1,4 +1,5 @@
-"""Generating images (roadmap step 7.12, ADR-077): the provider interface and the catalog.
+"""Generating images (roadmap steps 7.12, 9.8, ADR-077, ADR-097): the provider interface and the
+catalog.
 
 Image providers are a building block of their own, next to the text providers: an adapter
 implements :class:`ImageProvider`, so further providers (V.24) are added without changing the
@@ -33,6 +34,8 @@ class ImageModel:
     id: str
     name: str
     aspect_ratios: tuple[str, ...]
+    # How many images it takes as a basis (``input_references``), 0 for none (ADR-097).
+    references: int = 0
 
 
 @dataclass(frozen=True)
@@ -45,20 +48,36 @@ class ImagePrice:
 
 @dataclass(frozen=True)
 class ImageEndpoint:
-    """One provider of a model: its key for passthrough options, those options, its price."""
+    """One provider of a model: its key for passthrough options, those options, its prices."""
 
     provider: str
     passthrough: frozenset[str]
     price: ImagePrice | None
+    # What an image given as a basis costs, if the provider names it (ADR-097).
+    input_price: ImagePrice | None = None
+
+
+@dataclass(frozen=True)
+class ImageReference:
+    """An image given as the basis of a new one (ADR-097)."""
+
+    data: bytes
+    media_type: str
+
+    def __repr__(self) -> str:
+        """Representation without the image."""
+        return f"ImageReference(media_type={self.media_type!r}, bytes={len(self.data)})"
 
 
 @dataclass(frozen=True)
 class ImageOrder:
-    """What the caller asks for: model, prompt and aspect ratio such as ``2:3``."""
+    """What the caller asks for: model, prompt, aspect ratio such as ``2:3`` and, optionally,
+    one image as the basis."""
 
     model: str
     prompt: str
     aspect_ratio: str
+    reference: ImageReference | None = None
 
 
 @dataclass(frozen=True)
@@ -118,6 +137,11 @@ class ImageCatalog:
         """Whether ``model`` can be chosen."""
         return model in self._models
 
+    def references(self, model: str) -> int:
+        """How many images ``model`` takes as a basis; 0 if none or unknown."""
+        found = self._models.get(model)
+        return 0 if found is None else found.references
+
     async def refresh(self) -> None:
         """Load the list unless it is younger than an hour; a failure keeps the old state."""
         now = self._clock()
@@ -156,6 +180,10 @@ class ImageCatalog:
         """The price of the model's first provider that names one."""
         return next((e.price for e in await self.endpoints(model) if e.price), None)
 
+    async def input_price(self, model: str) -> ImagePrice | None:
+        """What an image given as a basis costs at the first provider that names it."""
+        return next((e.input_price for e in await self.endpoints(model) if e.input_price), None)
+
     async def _get(self, url: str) -> object:
         async with httpx.AsyncClient(transport=self._transport, timeout=_TIMEOUT_SECONDS) as client:
             response = await client.get(url)
@@ -185,10 +213,12 @@ def _model(item: Mapping[str, object]) -> ImageModel | None:
     if "vector" in model_id or "svg" in formats:
         return None
     name = item.get("name")
+    most = _mapping(parameters.get("input_references")).get("max")
     return ImageModel(
         id=model_id,
         name=name if isinstance(name, str) and name else model_id,
         aspect_ratios=tuple(_values(parameters.get("aspect_ratio"))),
+        references=most if isinstance(most, int) and not isinstance(most, bool) and most > 0 else 0,
     )
 
 
@@ -209,15 +239,23 @@ def _endpoints(body: object) -> tuple[ImageEndpoint, ...]:
             if isinstance(passthrough, list)
             else frozenset()
         )
-        found.append(ImageEndpoint(provider, keys, _price(item.get("pricing"))))
+        pricing = item.get("pricing")
+        found.append(
+            ImageEndpoint(provider, keys, _price(pricing), _price(pricing, billable="input_image"))
+        )
     return tuple(found)
 
 
-def _price(value: object) -> ImagePrice | None:
-    """The base price: the first entry without a variant, else the first entry."""
+def _price(value: object, billable: str = "output_image") -> ImagePrice | None:
+    """The base price of ``billable``: its first entry without a variant, else its first entry.
+
+    Entries without ``billable`` count as the output image (the form before 9.8).
+    """
     if not isinstance(value, list):
         return None
-    entries = [e for e in value if isinstance(e, dict)]
+    entries = [
+        e for e in value if isinstance(e, dict) and e.get("billable", "output_image") == billable
+    ]
     plain = [e for e in entries if not e.get("variant")]
     for entry in plain + entries:
         cost, unit = entry.get("cost_usd"), entry.get("unit")

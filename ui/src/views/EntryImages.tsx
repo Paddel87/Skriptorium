@@ -177,7 +177,11 @@ export function EntryImages({
       <ErrorText message={error} />
       {generating && (
         <ImageGenerate
-          title={`Bild erzeugen – ${entry.name}`}
+          title={
+            seed?.basis === undefined
+              ? `Bild erzeugen – ${entry.name}`
+              : `Neues Bild aus ${seed.basis.label}`
+          }
           initialPrompt={seed?.prompt ?? entryPrompt(entry)}
           hint={
             seed === null && lacksAppearance(entry) ? (
@@ -186,6 +190,7 @@ export function EntryImages({
           }
           initialFormat={seed?.format ?? defaultFormat(entry)}
           initialModel={seed?.model ?? null}
+          basis={seed?.basis ?? null}
           onTakeOver={async (image, origin) => {
             onChanged(
               await api.addImage(
@@ -219,6 +224,29 @@ export function EntryImages({
             setDescribing(null);
           }}
           onDescribe={setDescribing}
+          onBuildOn={
+            editable && images.length < MAX_IMAGES
+              ? (image) => {
+                  setSeed({
+                    prompt: "",
+                    format: defaultFormat(entry),
+                    model: null,
+                    basis: {
+                      reference: {
+                        world: entry.world,
+                        entry: entry.id,
+                        image,
+                      },
+                      label: `Bild ${String(images.indexOf(image) + 1)} von ${entry.name}`,
+                      src: source(image),
+                    },
+                  });
+                  setGenerating(true);
+                  setShown(null);
+                  setDescribing(null);
+                }
+              : undefined
+          }
           onMain={(image) =>
             void change(() =>
               api.setMainImage(entry.world, entry.id, image),
@@ -306,6 +334,7 @@ function ImageViewer({
   onMain,
   onRemove,
   onDescribe,
+  onBuildOn,
   children,
 }: {
   name: string;
@@ -319,6 +348,8 @@ function ImageViewer({
   onMain: (image: string) => void;
   onRemove: (image: string) => void;
   onDescribe: (image: string) => void;
+  /** Opens "Bild erzeugen" with the image as basis (step 9.8); missing: no button. */
+  onBuildOn?: (image: string) => void;
   /** Shown under the bar: the description of the image (step 7.13). */
   children?: ReactNode;
 }) {
@@ -409,6 +440,18 @@ function ImageViewer({
               }}
             >
               ✨ Von der KI beschreiben lassen
+            </button>
+          )}
+          {onBuildOn !== undefined && (
+            <button
+              type="button"
+              className="ghost"
+              disabled={busy}
+              onClick={() => {
+                onBuildOn(image);
+              }}
+            >
+              ✨ Als Grundlage für ein neues Bild
             </button>
           )}
           <span className="image-viewer-gap" />

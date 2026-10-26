@@ -1,9 +1,10 @@
-"""Endpoints for generating images with the AI (roadmap step 7.12, ADR-077).
+"""Endpoints for generating images with the AI (roadmap steps 7.12, 9.8, ADR-077, ADR-097).
 
 Nothing is stored here: ``generate`` returns the image for a preview. Taking it over goes the
 way of an uploaded image (the browser shrinks it, the canon or manuscript routes check and store
 it), so every check of steps 7.6, 7.10 and 7.11 applies unchanged. The delivered image is checked
-by its first bytes before it reaches the browser; SVG and anything else is refused.
+by its first bytes before it reaches the browser; SVG and anything else is refused. An image to
+build on is named by where it is stored; the server reads it itself (ADR-097).
 """
 
 import base64
@@ -17,11 +18,12 @@ from skriptorium.ai_gateway import (
     DEFAULT_IMAGE_MODEL,
     GatewayError,
     ImageOrder,
+    ImageReference,
     ModelRefused,
     RateLimited,
     Usage,
 )
-from skriptorium.api.context import ServicesDep, current_session
+from skriptorium.api.context import Services, ServicesDep, current_session
 from skriptorium.canon import ImageOrigin
 from skriptorium.storage import InvalidInput, inspect_image
 
@@ -36,10 +38,11 @@ AspectRatio = Literal["2:3", "1:1", "3:2", "16:9", "9:16", "3:4", "4:3"]
 
 
 class ImageModelOut(BaseModel):
-    """One image model."""
+    """One image model; ``references`` is how many images it takes as a basis (ADR-097)."""
 
     id: str
     name: str
+    references: int
 
 
 class ImageModelList(BaseModel):
@@ -53,10 +56,29 @@ class ImageModelList(BaseModel):
 
 
 class ImagePriceOut(BaseModel):
-    """The price of one image; ``unit`` is image, megapixel or token, ``None`` if unknown."""
+    """The price of one image; ``unit`` is image, megapixel or token, ``None`` if unknown.
+
+    ``input_cost_usd`` and ``input_unit`` price an image given as the basis, if the provider
+    names it (ADR-097).
+    """
 
     cost_usd: float | None
     unit: str | None
+    input_cost_usd: float | None = None
+    input_unit: str | None = None
+
+
+_Id = Annotated[str, Field(min_length=1, max_length=200)]
+
+
+class ReferenceIn(BaseModel):
+    """A stored image as the basis: an image of an entry, a map or the cover of a story."""
+
+    world: _Id
+    entry: _Id | None = None
+    image: _Id | None = None
+    map_file: _Id | None = None
+    story: _Id | None = None
 
 
 class GenerateIn(BaseModel):
@@ -65,6 +87,8 @@ class GenerateIn(BaseModel):
     model: str
     prompt: Annotated[str, Field(min_length=1, max_length=4000)]
     aspect_ratio: AspectRatio = "1:1"
+    # One stored image to build on (ADR-097).
+    reference: ReferenceIn | None = None
 
     @field_validator("prompt")
     @classmethod
@@ -90,6 +114,8 @@ class ImageOriginIn(BaseModel):
     prompt: Annotated[str, Field(min_length=1, max_length=4000)]
     aspect_ratio: AspectRatio
     cost_usd: Annotated[float | None, Field(ge=0)] = None
+    # A short description of the image it was made from, e.g. "Bild 1 von Kael" (ADR-097).
+    basis: Annotated[str | None, Field(min_length=1, max_length=200)] = None
 
 
 class ImageOriginOut(BaseModel):
@@ -100,6 +126,7 @@ class ImageOriginOut(BaseModel):
     aspect_ratio: str
     cost_usd: float | None
     date: str
+    basis: str | None
 
 
 def origin_from(given: ImageOriginIn | None) -> ImageOrigin | None:
@@ -107,7 +134,9 @@ def origin_from(given: ImageOriginIn | None) -> ImageOrigin | None:
     if given is None:
         return None
     now = datetime.now(UTC).isoformat(timespec="seconds")
-    return ImageOrigin(given.model, given.prompt, given.aspect_ratio, given.cost_usd, now)
+    return ImageOrigin(
+        given.model, given.prompt, given.aspect_ratio, given.cost_usd, now, given.basis
+    )
 
 
 def origin_out(origin: ImageOrigin | None) -> ImageOriginOut | None:
@@ -120,6 +149,7 @@ def origin_out(origin: ImageOrigin | None) -> ImageOriginOut | None:
         aspect_ratio=origin.aspect_ratio,
         cost_usd=origin.cost_usd,
         date=origin.date,
+        basis=origin.basis,
     )
 
 
@@ -129,7 +159,10 @@ async def list_image_models(found: ServicesDep) -> ImageModelList:
     await found.image_catalog.refresh()
     return ImageModelList(
         default=found.favorites.preset("bilderzeugung", found.image_catalog, DEFAULT_IMAGE_MODEL),
-        models=[ImageModelOut(id=m.id, name=m.name) for m in found.image_catalog.models()],
+        models=[
+            ImageModelOut(id=m.id, name=m.name, references=m.references)
+            for m in found.image_catalog.models()
+        ],
         available=found.image_catalog.available,
         ready=found.images is not None,
     )
@@ -142,8 +175,12 @@ async def image_price(model: str, found: ServicesDep) -> ImagePriceOut:
     if model not in found.image_catalog:
         raise InvalidInput(f"Unbekanntes Bildmodell: {model}")
     price = await found.image_catalog.price(model)
+    given = await found.image_catalog.input_price(model)
     return ImagePriceOut(
-        cost_usd=price.cost_usd if price else None, unit=price.unit if price else None
+        cost_usd=price.cost_usd if price else None,
+        unit=price.unit if price else None,
+        input_cost_usd=given.cost_usd if given else None,
+        input_unit=given.unit if given else None,
     )
 
 
@@ -155,7 +192,12 @@ async def generate_image(body: GenerateIn, found: ServicesDep) -> GeneratedOut:
     await found.image_catalog.refresh()
     if body.model not in found.image_catalog:
         raise InvalidInput(f"Unbekanntes Bildmodell: {body.model}")
-    order = ImageOrder(body.model, body.prompt, body.aspect_ratio)
+    reference = None
+    if body.reference is not None:
+        if found.image_catalog.references(body.model) < 1:
+            raise InvalidInput("Dieses Bildmodell nimmt kein Ausgangsbild an")
+        reference = ImageReference(*_basis(body.reference, found))
+    order = ImageOrder(body.model, body.prompt, body.aspect_ratio, reference)
     try:
         image = await found.images.generate(order)
     except GatewayError as error:
@@ -176,6 +218,29 @@ async def generate_image(body: GenerateIn, found: ServicesDep) -> GeneratedOut:
         cost_usd=image.cost_usd,
         model=body.model,
     )
+
+
+def _basis(reference: ReferenceIn, found: Services) -> tuple[bytes, str]:
+    """Bytes and media type of the stored image to build on.
+
+    Raises:
+        InvalidInput: Not exactly one of entry image, map or cover named.
+        NotFound: World, entry, image, map, story or cover does not exist.
+    """
+    named = [
+        reference.entry is not None or reference.image is not None,
+        reference.map_file is not None,
+        reference.story is not None,
+    ]
+    if sum(named) != 1:
+        raise InvalidInput("Grundlage: genau ein Eintragsbild, eine Karte oder ein Titelbild")
+    if reference.map_file is not None:
+        return found.canon.world_map(reference.world, reference.map_file)
+    if reference.story is not None:
+        return found.manuscript.story_cover(reference.world, reference.story)
+    if reference.entry is None or reference.image is None:
+        raise InvalidInput("Grundlage: Eintrag und Bild angeben")
+    return found.canon.entry_image(reference.world, reference.entry, reference.image)
 
 
 def _outcome(error: GatewayError) -> str:

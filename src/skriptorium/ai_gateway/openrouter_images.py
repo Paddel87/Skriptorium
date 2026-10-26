@@ -1,9 +1,10 @@
-"""Adapter for generating images through OpenRouter (roadmap step 7.12, ADR-077).
+"""Adapter for generating images through OpenRouter (roadmap steps 7.12, 9.8, ADR-077, ADR-097).
 
 ``POST /api/v1/images`` answers with the image as base64, its media type and the cost; billing is
 all or nothing, a failed image costs nothing. The filter settings are fixed here, not
 configurable (ADR-077): FLUX ``safety_tolerance`` 5 (FLUX.3 at most 4), GPT Image
 ``moderation: low``. They go to each provider of the model that accepts them, keyed by its slug.
+An image given as the basis goes along as one ``input_references`` entry with a base64 address.
 """
 
 import base64
@@ -145,6 +146,14 @@ def _payload(order: ImageOrder, endpoints: tuple[ImageEndpoint, ...]) -> dict[st
         "aspect_ratio": order.aspect_ratio,
         "n": 1,
     }
+    if order.reference is not None:
+        encoded = base64.b64encode(order.reference.data).decode("ascii")
+        payload["input_references"] = [
+            {
+                "type": "image_url",
+                "image_url": {"url": f"data:{order.reference.media_type};base64,{encoded}"},
+            }
+        ]
     options = {
         endpoint.provider: chosen
         for endpoint in endpoints

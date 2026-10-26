@@ -19,6 +19,7 @@ from skriptorium.ai_gateway.images import (
     ImageOrder,
     ImagePrice,
     ImageProvider,
+    ImageReference,
 )
 from skriptorium.ai_gateway.models import DEFAULT_MODELS, ModelConfig, config_for
 from skriptorium.ai_gateway.openrouter import KEY_VARIABLE, OpenRouterProvider
@@ -50,6 +51,7 @@ __all__ = [
     "ImagePart",
     "ImagePrice",
     "ImageProvider",
+    "ImageReference",
     "InvalidRequest",
     "Message",
     "ModelCatalog",

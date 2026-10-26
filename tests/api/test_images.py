@@ -27,9 +27,19 @@ def test_lists_image_models_without_vector_models(logged_in: TestClient) -> None
 
 def test_names_the_price_of_a_model(logged_in: TestClient) -> None:
     flux = logged_in.get("/api/images/price", params={"model": "black-forest-labs/flux.2-pro"})
-    assert flux.json() == {"cost_usd": 0.03, "unit": "megapixel"}
+    assert flux.json() == {
+        "cost_usd": 0.03,
+        "unit": "megapixel",
+        "input_cost_usd": None,
+        "input_unit": None,
+    }
     seed = logged_in.get("/api/images/price", params={"model": "bytedance-seed/seedream-4.5"})
-    assert seed.json() == {"cost_usd": 0.04, "unit": "image"}
+    assert seed.json() == {
+        "cost_usd": 0.04,
+        "unit": "image",
+        "input_cost_usd": 0.0,
+        "input_unit": "image",
+    }
     vector = logged_in.get("/api/images/price", params={"model": "recraft/recraft-v4-vector"})
     assert vector.status_code == 422
 
